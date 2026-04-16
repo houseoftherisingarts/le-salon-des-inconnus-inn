@@ -931,7 +931,6 @@ const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigat
                     alt="Ceilidh de Mai"
                     className="w-full h-full object-cover object-center"
                     style={{ objectPosition: '50% 40%' }}
-                    loading="lazy"
                 />
                 <div className={`absolute inset-0 transition-colors duration-1000 ${
                     vibe === 'HOSTEL' ? 'bg-gradient-to-t from-[#18181b] via-[#18181b]/65 to-black/50'
@@ -950,46 +949,44 @@ const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigat
             )}
 
             <div className="relative z-10 flex flex-col justify-end items-start h-full pb-16 px-8 md:px-16 max-w-5xl mx-auto">
-                <RevealOnScroll animation="slideRight">
-                    <div className="mb-4 flex items-center gap-4">
-                        <div className={`h-px w-8 ${vibe === 'HOSTEL' ? 'bg-[#f3e5ab]' : 'bg-[#d4af37]'}`}></div>
-                        <span className={`font-cinzel text-xs uppercase tracking-[0.5em] ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : 'text-[#d4af37]'}`}>
-                            {language === 'FR' ? 'Prochain Événement' : 'Next Event'} · 21–25 Mai 2026
-                        </span>
-                    </div>
-                    <h2 className={`font-cinzel text-4xl md:text-7xl text-white mb-4 leading-tight ${vibe === 'HOSTEL' ? 'font-prata' : ''}`}>
-                        Grand Ceilidh<br />de Mai
-                    </h2>
-                    <p className={`text-lg md:text-xl max-w-xl leading-relaxed mb-8 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]/80 font-josefin' : 'text-neutral-300 font-lato'}`}>
-                        {language === 'FR'
-                            ? 'Spectacles · Woofing · Banquet · Communauté'
-                            : 'Shows · Woofing · Banquet · Community'}
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                        <button
-                            onClick={() => onNavigate('CEILIDH')}
-                            className={`px-8 py-4 font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95
-                                ${vibe === 'HOSTEL'
-                                    ? 'bg-[#f3e5ab] text-[#1e1e24] hover:bg-white font-josefin'
-                                    : vibe === 'SHIRE'
-                                    ? 'bg-[#dcb055] text-[#1a1107] hover:bg-[#f0ca70]'
-                                    : 'bg-[#d4af37] text-black hover:bg-[#f3e5ab]'}`}
-                        >
-                            {language === 'FR' ? 'S\'inscrire & Découvrir' : 'Register & Discover'}
-                        </button>
-                        <button
-                            onClick={() => onNavigate('EVENTS')}
-                            className={`px-8 py-4 bg-transparent font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105
-                                ${vibe === 'HOSTEL'
-                                    ? 'border-2 border-[#f3e5ab] text-[#f3e5ab] hover:bg-[#f3e5ab] hover:text-[#1e1e24] font-josefin'
-                                    : vibe === 'SHIRE'
-                                    ? 'border-2 border-[#dcb055] text-[#faeecd] hover:bg-[#dcb055] hover:text-[#1a1107]'
-                                    : 'border-2 border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black'}`}
-                        >
-                            {language === 'FR' ? 'Tous les Événements' : 'All Events'}
-                        </button>
-                    </div>
-                </RevealOnScroll>
+                <div className="mb-4 flex items-center gap-4">
+                    <div className={`h-px w-8 ${vibe === 'HOSTEL' ? 'bg-[#f3e5ab]' : 'bg-[#d4af37]'}`}></div>
+                    <span className={`font-cinzel text-xs uppercase tracking-[0.5em] ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : 'text-[#d4af37]'}`}>
+                        {language === 'FR' ? 'Prochain Événement' : 'Next Event'} · 21–25 Mai 2026
+                    </span>
+                </div>
+                <h2 className={`font-cinzel text-4xl md:text-7xl text-white mb-4 leading-tight ${vibe === 'HOSTEL' ? 'font-prata' : ''}`}>
+                    Grand Ceilidh<br />de Mai
+                </h2>
+                <p className={`text-lg md:text-xl max-w-xl leading-relaxed mb-8 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]/80 font-josefin' : 'text-neutral-300 font-lato'}`}>
+                    {language === 'FR'
+                        ? 'Spectacles · Woofing · Banquet · Communauté'
+                        : 'Shows · Woofing · Banquet · Community'}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                    <button
+                        onClick={() => onNavigate('CEILIDH')}
+                        className={`px-8 py-4 font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95
+                            ${vibe === 'HOSTEL'
+                                ? 'bg-[#f3e5ab] text-[#1e1e24] hover:bg-white font-josefin'
+                                : vibe === 'SHIRE'
+                                ? 'bg-[#dcb055] text-[#1a1107] hover:bg-[#f0ca70]'
+                                : 'bg-[#d4af37] text-black hover:bg-[#f3e5ab]'}`}
+                    >
+                        {language === 'FR' ? 'S\'inscrire & Découvrir' : 'Register & Discover'}
+                    </button>
+                    <button
+                        onClick={() => onNavigate('EVENTS')}
+                        className={`px-8 py-4 bg-transparent font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105
+                            ${vibe === 'HOSTEL'
+                                ? 'border-2 border-[#f3e5ab] text-[#f3e5ab] hover:bg-[#f3e5ab] hover:text-[#1e1e24] font-josefin'
+                                : vibe === 'SHIRE'
+                                ? 'border-2 border-[#dcb055] text-[#faeecd] hover:bg-[#dcb055] hover:text-[#1a1107]'
+                                : 'border-2 border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black'}`}
+                    >
+                        {language === 'FR' ? 'Tous les Événements' : 'All Events'}
+                    </button>
+                </div>
             </div>
         </div>
     );
