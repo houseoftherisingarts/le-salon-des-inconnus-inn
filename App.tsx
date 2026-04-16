@@ -10,6 +10,7 @@ import { EventsPage } from './components/EventsPage';
 import { CeilidhPage } from './components/CeilidhPage';
 import { CookieBanner, type ConsentLevel } from './components/CookieBanner';
 import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
+import { MemberPanel } from './components/MemberPanel';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
 import { getOptimizedUrl } from './utils/imageOptimizer';
 import { auth, db } from './firebase';
@@ -285,7 +286,21 @@ const App: React.FC = () => {
           />
       )}
 
-      {/* 2. Global Music Controls (Persistent across views) */}
+      {/* 2. Member Panel — top-left, never overlaps the music/language controls */}
+      {!isLoading && (
+        <div className="fixed top-6 left-8 z-[110]">
+          <MemberPanel
+            user={currentUser}
+            memberProfile={memberProfile}
+            language={language}
+            onUserChange={handleUserChange}
+            onShowPrivacy={() => setShowPrivacyPolicy(true)}
+            onNavigate={handleNavigation}
+          />
+        </div>
+      )}
+
+      {/* 3. Global Music Controls — top-right (persistent across views) */}
       <div className="fixed top-6 right-8 z-[110] flex items-center gap-4">
         
         {/* Music Dropdown Wrapper */}
