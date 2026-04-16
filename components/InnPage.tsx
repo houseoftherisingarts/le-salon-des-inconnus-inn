@@ -9,7 +9,7 @@ import { SITE_URL, CONTACT_INFO, SEMANTIC_NEIGHBORS, UPCOMING_EVENTS, PAGE_META 
 type VibeMode = 'CLASSIC' | 'HOSTEL' | 'SHIRE';
 
 interface InnPageProps {
-  onNavigate: (view: 'INN' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE') => void;
+  onNavigate: (view: 'INN' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'EVENTS' | 'CEILIDH') => void;
   language: 'EN' | 'FR';
 }
 
@@ -920,7 +920,82 @@ const LocalGuideSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNav
     );
 };
 
-const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: 'INN' | 'MASSOTHERAPY' | 'HOSTS') => void }> = ({ language, vibe, onNavigate }) => (
+const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => {
+    const daysLeft = Math.ceil((new Date('2026-05-21T12:00:00').getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    return (
+        <div className="relative overflow-hidden" style={{ height: '100vh' }}>
+            {/* Background */}
+            <div className="absolute inset-0">
+                <img
+                    src="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg"
+                    alt="Ceilidh de Mai"
+                    className="w-full h-full object-cover object-center"
+                    style={{ objectPosition: '50% 40%' }}
+                    loading="lazy"
+                />
+                <div className={`absolute inset-0 transition-colors duration-1000 ${
+                    vibe === 'HOSTEL' ? 'bg-gradient-to-t from-[#18181b] via-[#18181b]/65 to-black/50'
+                    : vibe === 'SHIRE' ? 'bg-gradient-to-t from-[#161915] via-[#161915]/65 to-black/50'
+                    : 'bg-gradient-to-t from-[#050505] via-[#050505]/65 to-black/50'}`}></div>
+            </div>
+
+            {/* Countdown badge */}
+            {daysLeft > 0 && (
+                <div className="absolute top-8 right-8 z-10 text-right">
+                    <div className={`font-cinzel text-4xl font-bold ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : 'text-[#d4af37]'}`}>{daysLeft}</div>
+                    <div className="text-neutral-500 text-[10px] uppercase tracking-[0.3em] font-cinzel mt-0.5">
+                        {language === 'FR' ? 'jours' : 'days'}
+                    </div>
+                </div>
+            )}
+
+            <div className="relative z-10 flex flex-col justify-end items-start h-full pb-16 px-8 md:px-16 max-w-5xl mx-auto">
+                <RevealOnScroll animation="slideRight">
+                    <div className="mb-4 flex items-center gap-4">
+                        <div className={`h-px w-8 ${vibe === 'HOSTEL' ? 'bg-[#f3e5ab]' : 'bg-[#d4af37]'}`}></div>
+                        <span className={`font-cinzel text-xs uppercase tracking-[0.5em] ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : 'text-[#d4af37]'}`}>
+                            {language === 'FR' ? 'Prochain Événement' : 'Next Event'} · 21–25 Mai 2026
+                        </span>
+                    </div>
+                    <h2 className={`font-cinzel text-4xl md:text-7xl text-white mb-4 leading-tight ${vibe === 'HOSTEL' ? 'font-prata' : ''}`}>
+                        Grand Ceilidh<br />de Mai
+                    </h2>
+                    <p className={`text-lg md:text-xl max-w-xl leading-relaxed mb-8 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]/80 font-josefin' : 'text-neutral-300 font-lato'}`}>
+                        {language === 'FR'
+                            ? 'Spectacles · Woofing · Banquet · Communauté'
+                            : 'Shows · Woofing · Banquet · Community'}
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                        <button
+                            onClick={() => onNavigate('CEILIDH')}
+                            className={`px-8 py-4 font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95
+                                ${vibe === 'HOSTEL'
+                                    ? 'bg-[#f3e5ab] text-[#1e1e24] hover:bg-white font-josefin'
+                                    : vibe === 'SHIRE'
+                                    ? 'bg-[#dcb055] text-[#1a1107] hover:bg-[#f0ca70]'
+                                    : 'bg-[#d4af37] text-black hover:bg-[#f3e5ab]'}`}
+                        >
+                            {language === 'FR' ? 'S\'inscrire & Découvrir' : 'Register & Discover'}
+                        </button>
+                        <button
+                            onClick={() => onNavigate('EVENTS')}
+                            className={`px-8 py-4 bg-transparent font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105
+                                ${vibe === 'HOSTEL'
+                                    ? 'border-2 border-[#f3e5ab] text-[#f3e5ab] hover:bg-[#f3e5ab] hover:text-[#1e1e24] font-josefin'
+                                    : vibe === 'SHIRE'
+                                    ? 'border-2 border-[#dcb055] text-[#faeecd] hover:bg-[#dcb055] hover:text-[#1a1107]'
+                                    : 'border-2 border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black'}`}
+                        >
+                            {language === 'FR' ? 'Tous les Événements' : 'All Events'}
+                        </button>
+                    </div>
+                </RevealOnScroll>
+            </div>
+        </div>
+    );
+};
+
+const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => (
     <div className="min-h-screen flex flex-col justify-center items-center max-w-7xl mx-auto px-6 py-32 text-center">
         <div className="w-48 h-auto mb-8 animate-fadeIn">
              <img src="https://i.imgur.com/B1YfPqn.png" alt="Maison Favier Logo" className={`w-full h-full object-contain drop-shadow-2xl transition-all duration-1000 ${vibe === 'HOSTEL' ? 'brightness-125 sepia-[.5] hue-rotate-[-30deg]' : vibe === 'SHIRE' ? 'brightness-110 sepia-[0.8] hue-rotate-[5deg] saturate-[1.4]' : 'brightness-100'}`} />
@@ -1131,9 +1206,14 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
                <LocalGuideSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
           </StickySection>
 
-          {/* 11. Hosts Layer (Footer) */}
+          {/* 11. Hosts Layer */}
           <StickySection vibe={currentVibe} zIndex={90} desktopHeight="100vh">
               <HostsSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
+          </StickySection>
+
+          {/* 12. Events Layer (Footer) */}
+          <StickySection vibe={currentVibe} zIndex={95} desktopHeight="100vh" mobileHeight="100vh">
+              <EventsSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
           </StickySection>
 
       </main>

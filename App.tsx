@@ -6,8 +6,17 @@ import { MassotherapyPage } from './components/MassotherapyPage';
 import { HostsPage } from './components/HostsPage';
 import { GuidePage } from './components/GuidePage';
 import { KitchenPage } from './components/KitchenPage';
+import { EventsPage } from './components/EventsPage';
+import { CeilidhPage } from './components/CeilidhPage';
+import { CookieBanner, type ConsentLevel } from './components/CookieBanner';
+import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
 import { getOptimizedUrl } from './utils/imageOptimizer';
+import { auth, db } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import type { User } from 'firebase/auth';
+import type { MemberProfile } from './components/AuthModal';
 
 // -4dB is approximately 0.63 on the linear 0-1 volume scale
 const TARGET_VOLUME = 0.63;
@@ -114,7 +123,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN';
+type ViewState = 'INN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH';
 
 const App: React.FC = () => {
   // App Loading State
@@ -125,6 +134,14 @@ const App: React.FC = () => {
 
   // Language State - Default to FR
   const [language, setLanguage] = useState<'EN' | 'FR'>('FR');
+
+  // Auth State
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [memberProfile, setMemberProfile] = useState<MemberProfile | null>(null);
+
+  // Privacy / Compliance State
+  const [consentLevel, setConsentLevel] = useState<ConsentLevel | null>(null);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   // Music State
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -139,6 +156,26 @@ const App: React.FC = () => {
   const handleNavigation = (destination: ViewState) => {
       setCurrentView(destination);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Auth State Listener
+  useEffect(() => {
+    if (!auth) return;
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
+      if (user && db) {
+        const snap = await getDoc(doc(db, 'members', user.uid));
+        setMemberProfile(snap.exists() ? snap.data() as MemberProfile : null);
+      } else {
+        setMemberProfile(null);
+      }
+    });
+    return unsub;
+  }, []);
+
+  const handleUserChange = (user: User | null, profile: MemberProfile | null) => {
+    setCurrentUser(user);
+    setMemberProfile(profile);
   };
 
   // Initialize Audio
@@ -354,6 +391,45 @@ const App: React.FC = () => {
         <KitchenPage
           onNavigate={() => handleNavigation('INN')}
           language={language}
+        />
+      )}
+
+      {/* VIEW 6: EVENTS */}
+      {currentView === 'EVENTS' && (
+        <EventsPage
+          onNavigate={(view) => handleNavigation(view)}
+          language={language}
+          user={currentUser}
+          memberProfile={memberProfile}
+        />
+      )}
+
+      {/* VIEW 7: CEILIDH */}
+      {currentView === 'CEILIDH' && (
+        <CeilidhPage
+          onNavigate={(view) => handleNavigation(view)}
+          language={language}
+          user={currentUser}
+          memberProfile={memberProfile}
+          onUserChange={handleUserChange}
+          onShowPrivacy={() => setShowPrivacyPolicy(true)}
+        />
+      )}
+
+      {/* GLOBAL: Cookie / Privacy Consent Banner */}
+      {!isLoading && (
+        <CookieBanner
+          language={language}
+          onShowPrivacy={() => setShowPrivacyPolicy(true)}
+          onConsentChange={(level) => setConsentLevel(level)}
+        />
+      )}
+
+      {/* GLOBAL: Privacy Policy Modal */}
+      {showPrivacyPolicy && (
+        <PrivacyPolicyModal
+          language={language}
+          onClose={() => setShowPrivacyPolicy(false)}
         />
       )}
 
