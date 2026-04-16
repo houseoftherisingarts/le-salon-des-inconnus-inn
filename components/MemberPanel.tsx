@@ -15,6 +15,9 @@ interface MemberPanelProps {
   onUserChange: (user: User | null, profile: MemberProfile | null) => void;
   onShowPrivacy: () => void;
   onNavigate?: (view: string) => void;
+  /** User who returned from a Google redirect but has no Firestore profile yet */
+  redirectPendingUser?: User | null;
+  onRedirectUserHandled?: () => void;
 }
 
 // ─── Membership badge colors ─────────────────────────────────────────────────
@@ -47,13 +50,21 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
   onUserChange,
   onShowPrivacy,
   onNavigate,
+  redirectPendingUser,
+  onRedirectUserHandled,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showAuth, setShowAuth] = useState(false);
+  // Auto-open auth modal when a redirect pending user needs to complete membership
+  const [showAuth, setShowAuth] = useState(!!redirectPendingUser);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
+
+  // Auto-open the auth modal when App.tsx detects a redirect-returned new user
+  useEffect(() => {
+    if (redirectPendingUser) setShowAuth(true);
+  }, [redirectPendingUser]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -102,12 +113,14 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
         {showAuth && (
           <AuthModal
             language={language}
-            onClose={() => setShowAuth(false)}
+            onClose={() => { setShowAuth(false); onRedirectUserHandled?.(); }}
             onAuthSuccess={(u, p) => {
               onUserChange(u, p);
               setShowAuth(false);
+              onRedirectUserHandled?.();
             }}
             onShowPrivacy={onShowPrivacy}
+            redirectPendingUser={redirectPendingUser}
           />
         )}
       </>

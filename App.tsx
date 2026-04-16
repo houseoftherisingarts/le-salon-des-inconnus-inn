@@ -14,7 +14,7 @@ import { MemberPanel } from './components/MemberPanel';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
 import { getOptimizedUrl } from './utils/imageOptimizer';
 import { auth, db } from './firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, getRedirectResult } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './components/AuthModal';
@@ -139,6 +139,8 @@ const App: React.FC = () => {
   // Auth State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [memberProfile, setMemberProfile] = useState<MemberProfile | null>(null);
+  // Set when user returns from a Google redirect sign-in but has no Firestore profile yet
+  const [redirectPendingUser, setRedirectPendingUser] = useState<User | null>(null);
 
   // Privacy / Compliance State
   const [consentLevel, setConsentLevel] = useState<ConsentLevel | null>(null);
@@ -174,9 +176,30 @@ const App: React.FC = () => {
     return unsub;
   }, []);
 
+  // Handle users returning from a Google redirect sign-in
+  useEffect(() => {
+    if (!auth || !db) return;
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (!result?.user) return;
+        const snap = await getDoc(doc(db, 'members', result.user.uid));
+        if (snap.exists()) {
+          // Returning member — profile already loaded by onAuthStateChanged, just ensure it's set
+          setCurrentUser(result.user);
+          setMemberProfile(snap.data() as MemberProfile);
+        } else {
+          // New user via redirect — need membership selection
+          setCurrentUser(result.user);
+          setRedirectPendingUser(result.user);
+        }
+      })
+      .catch(() => { /* ignore — no pending redirect */ });
+  }, []);
+
   const handleUserChange = (user: User | null, profile: MemberProfile | null) => {
     setCurrentUser(user);
     setMemberProfile(profile);
+    setRedirectPendingUser(null); // clear pending redirect state on any auth change
   };
 
   // Initialize Audio
@@ -296,6 +319,8 @@ const App: React.FC = () => {
             onUserChange={handleUserChange}
             onShowPrivacy={() => setShowPrivacyPolicy(true)}
             onNavigate={handleNavigation}
+            redirectPendingUser={redirectPendingUser}
+            onRedirectUserHandled={() => setRedirectPendingUser(null)}
           />
         </div>
       )}

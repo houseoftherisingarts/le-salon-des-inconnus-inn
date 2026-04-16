@@ -4,6 +4,7 @@ import { auth, db } from '../firebase';
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
@@ -42,6 +43,9 @@ interface AuthModalProps {
   onAuthSuccess: (user: User, profile: MemberProfile) => void;
   language: 'EN' | 'FR';
   onShowPrivacy: () => void;
+  /** If the user returned from a Google redirect and has no Firestore profile yet,
+   *  pass them here so the modal opens directly at the membership step. */
+  redirectPendingUser?: User | null;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -108,7 +112,7 @@ const GoogleIcon = () => (
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, language, onShowPrivacy }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, language, onShowPrivacy, redirectPendingUser }) => {
   const [mode, setMode] = useState<AuthMode>('login');
 
   // Email/password fields
@@ -132,6 +136,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
   const [loading, setLoading] = useState(false);
 
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
+
+  // ── Bootstrap: redirect-return new-user ─────────────────────────────────────
+  // When App.tsx detects a returning redirect user with no Firestore profile,
+  // it passes them here so we skip straight to membership selection.
+  useEffect(() => {
+    if (redirectPendingUser) {
+      setPendingUser(redirectPendingUser);
+      setPendingName(redirectPendingUser.displayName || '');
+      setMode('membership');
+    }
+  }, [redirectPendingUser]);
 
   // ── reCAPTCHA lifecycle ──────────────────────────────────────────────────────
 
@@ -166,12 +181,36 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
   const handleGoogleSignIn = async () => {
     if (!auth) { setError('Firebase non configuré'); return; }
     setLoading(true); setError('');
+
+    const provider = new GoogleAuthProvider();
+
     try {
-      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+      // Attempt popup first — fastest UX when it works
+      const result = await signInWithPopup(auth, provider);
       await afterAuth(result.user);
+      setLoading(false);
     } catch (e: any) {
-      if (e.code !== 'auth/popup-closed-by-user') setError(e.message || t('Sign-in error', 'Erreur de connexion'));
-    } finally { setLoading(false); }
+      // These codes all mean the popup was blocked / intercepted / closed prematurely.
+      // Fall back to a full-page redirect, which works in every environment.
+      const popupBlocked = [
+        'auth/popup-blocked',
+        'auth/popup-closed-by-user',
+        'auth/cancelled-popup-request',
+      ].includes(e.code);
+
+      if (popupBlocked) {
+        // signInWithRedirect navigates away — no need to reset loading or show error
+        try {
+          await signInWithRedirect(auth, provider);
+        } catch (redirectErr: any) {
+          setError(redirectErr.message || t('Sign-in error', 'Erreur de connexion'));
+          setLoading(false);
+        }
+      } else {
+        setError(e.message || t('Sign-in error', 'Erreur de connexion'));
+        setLoading(false);
+      }
+    }
   };
 
   const handleEmailAuth = async () => {
