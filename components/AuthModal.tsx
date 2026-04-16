@@ -69,8 +69,13 @@ type AuthMode = 'login' | 'signup' | 'phone' | 'phone-otp' | 'membership' | 'del
 
 async function fetchMemberProfile(user: User): Promise<MemberProfile | null> {
   if (!db) return null;
-  const snap = await getDoc(doc(db, 'members', user.uid));
-  return snap.exists() ? (snap.data() as MemberProfile) : null;
+  try {
+    const snap = await getDoc(doc(db, 'members', user.uid));
+    return snap.exists() ? (snap.data() as MemberProfile) : null;
+  } catch {
+    // Firestore unreachable or rules not yet deployed — treat as new user
+    return null;
+  }
 }
 
 async function createMemberProfile(

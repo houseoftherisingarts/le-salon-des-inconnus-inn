@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import type { User } from 'firebase/auth';
-import { signOut } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import {
   doc, getDoc, setDoc, updateDoc, deleteDoc,
@@ -587,12 +586,6 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
     setUserRegistration(reg);
   };
 
-  const handleSignOut = async () => {
-    if (auth) await signOut(auth);
-    onUserChange(null, null);
-    setUserRegistration(null);
-  };
-
   return (
     <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#050505] text-neutral-200 font-sans selection:bg-[#d4af37] selection:text-black custom-scrollbar">
 
@@ -600,29 +593,12 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
       <div className="fixed inset-0 opacity-[0.04] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
       <div className="fixed inset-0 opacity-[0.025] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paisley.png')]"></div>
 
-      {/* Header */}
+      {/* Header — auth is handled globally by MemberPanel in App.tsx */}
       <header className="fixed top-0 w-full z-[100] bg-[#050505]/90 border-b border-[#d4af37]/15 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center">
           <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => onNavigate('EVENTS')}>
             <span className="text-[#d4af37] text-xl">←</span>
             <span className="font-cinzel text-[#d4af37] text-sm hidden md:block tracking-widest">{t('Events', 'Événements')}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            {user ? (
-              <div className="flex items-center gap-3">
-                <div className="text-right hidden md:block">
-                  <div className="text-white text-xs font-cinzel">{memberProfile?.displayName || user.displayName}</div>
-                  <div className="text-neutral-600 text-[10px] font-lato uppercase tracking-wider">{memberProfile?.membershipType}</div>
-                </div>
-                <button onClick={handleSignOut} className="text-neutral-500 text-xs font-cinzel uppercase tracking-wider hover:text-white transition-colors border border-white/10 px-3 py-1.5 hover:border-white/30">
-                  {t('Sign Out', 'Déconnexion')}
-                </button>
-              </div>
-            ) : (
-              <button onClick={() => setShowAuth(true)} className="px-4 py-2 border border-[#d4af37]/40 text-[#d4af37] font-cinzel text-xs uppercase tracking-widest hover:bg-[#d4af37] hover:text-black transition-all duration-300">
-                {t('Member Space', 'Espace Membre')}
-              </button>
-            )}
           </div>
         </div>
       </header>

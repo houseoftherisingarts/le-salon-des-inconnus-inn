@@ -309,9 +309,11 @@ const App: React.FC = () => {
           />
       )}
 
-      {/* 2. Member Panel — top-left, never overlaps the music/language controls */}
-      {!isLoading && (
-        <div className="fixed top-6 left-8 z-[110]">
+      {/* 2. Global top-right bar — MemberPanel + Music + Language (never overlaps page header left nav) */}
+      <div className="fixed top-4 right-6 z-[110] flex items-center gap-3">
+
+        {/* Member Panel — leftmost in the row */}
+        {!isLoading && (
           <MemberPanel
             user={currentUser}
             memberProfile={memberProfile}
@@ -322,12 +324,8 @@ const App: React.FC = () => {
             redirectPendingUser={redirectPendingUser}
             onRedirectUserHandled={() => setRedirectPendingUser(null)}
           />
-        </div>
-      )}
+        )}
 
-      {/* 3. Global Music Controls — top-right (persistent across views) */}
-      <div className="fixed top-6 right-8 z-[110] flex items-center gap-4">
-        
         {/* Music Dropdown Wrapper */}
         <div className="relative">
           <button

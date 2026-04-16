@@ -103,11 +103,12 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
           className="flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full
                      text-[10px] font-cinzel uppercase tracking-widest text-yellow-100/60
                      hover:border-[#d4af37]/50 hover:text-yellow-100 transition-all duration-200"
+          title={t('Member Space', 'Espace Membre')}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 shrink-0">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
-          {t('Member Space', 'Espace Membre')}
+          <span className="hidden sm:block">{t('Member Space', 'Espace Membre')}</span>
         </button>
 
         {showAuth && (
@@ -172,7 +173,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
 
       {/* ── Dropdown panel ── */}
       {isOpen && (
-        <div className="absolute top-10 left-0 z-[200] w-72 bg-[#0a0a0a] border border-[#d4af37]/25
+        <div className="absolute top-10 right-0 z-[200] w-72 bg-[#0a0a0a] border border-[#d4af37]/25
                         shadow-2xl animate-fadeInPanel">
 
           {/* Corner accents */}
