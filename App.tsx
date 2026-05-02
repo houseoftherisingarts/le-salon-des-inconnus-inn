@@ -1,17 +1,40 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import { SiteHeader } from './components/SiteHeader';
 import { LoadingScreen } from './components/LoadingScreen';
-import { InnPage } from './components/InnPage';
-import { MassotherapyPage } from './components/MassotherapyPage';
-import { HostsPage } from './components/HostsPage';
-import { GuidePage } from './components/GuidePage';
-import { KitchenPage } from './components/KitchenPage';
-import { EventsPage } from './components/EventsPage';
-import { CeilidhPage } from './components/CeilidhPage';
+
+// Pages — code-split: each ships as its own chunk, fetched on first navigation.
+// Components use named exports, so we adapt with `.then(m => ({ default: m.X }))`.
+const InnPage           = lazy(() => import('./components/InnPage').then(m => ({ default: m.InnPage })));
+const InnPageTest2      = lazy(() => import('./components/InnPageTest2').then(m => ({ default: m.InnPageTest2 })));
+const InnPageTest3      = lazy(() => import('./components/InnPageTest3').then(m => ({ default: m.InnPageTest3 })));
+const MassotherapyPage  = lazy(() => import('./components/MassotherapyPage').then(m => ({ default: m.MassotherapyPage })));
+const HostsPage         = lazy(() => import('./components/HostsPage').then(m => ({ default: m.HostsPage })));
+const GuidePage         = lazy(() => import('./components/GuidePage').then(m => ({ default: m.GuidePage })));
+const KitchenPage       = lazy(() => import('./components/KitchenPage').then(m => ({ default: m.KitchenPage })));
+const EventsPage        = lazy(() => import('./components/EventsPage').then(m => ({ default: m.EventsPage })));
+const CeilidhPage       = lazy(() => import('./components/CeilidhPage').then(m => ({ default: m.CeilidhPage })));
+const CeilidhPageTest1  = lazy(() => import('./components/CeilidhPageTest1').then(m => ({ default: m.CeilidhPageTest1 })));
+const CeilidhPageTest2  = lazy(() => import('./components/CeilidhPageTest2').then(m => ({ default: m.CeilidhPageTest2 })));
+const WwoofingPage      = lazy(() => import('./components/WwoofingPage').then(m => ({ default: m.WwoofingPage })));
+const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
+const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
+const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
+const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => ({ default: m.AdminCRM })));
+
+// Suspense fallback shown briefly while a page chunk loads on navigation.
+const PageLoader: React.FC = () => (
+  <div className="fixed inset-0 bg-[#050505] z-40 flex items-center justify-center">
+    <div className="text-[#d4af37] text-[10px] font-cinzel uppercase tracking-[0.5em] animate-pulse">
+      Le Salon des Inconnus
+    </div>
+  </div>
+);
 import { CookieBanner, type ConsentLevel } from './components/CookieBanner';
 import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { MemberPanel } from './components/MemberPanel';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
+import { PAGE_META } from './config/seo.config';
 import { getOptimizedUrl } from './utils/imageOptimizer';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, getRedirectResult } from 'firebase/auth';
@@ -124,14 +147,43 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH';
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'CEILIDH_TEST1' | 'CEILIDH_TEST2' | 'WWOOFING'
+              | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN';
+
+const VIEW_PATHS: Record<ViewState, string> = {
+  INN:            '/',
+  INN_TEST2:      '/mainpagetest2',
+  INN_TEST3:      '/mainpagetest3',
+  MASSOTHERAPY:   '/massage',
+  HOSTS:          '/about',
+  GUIDE:          '/guide',
+  KITCHEN:        '/cuisine',
+  EVENTS:         '/evenements',
+  CEILIDH:        '/ceilidh',
+  CEILIDH_TEST1:  '/ceilidhtest1',
+  CEILIDH_TEST2:  '/ceilidhtest2',
+  WWOOFING:       '/wwoofing',
+  MY_PROFILE:     '/profil',
+  PUBLIC_PROFILE: '/membre',
+  MESSAGING:      '/messages',
+  ADMIN:          '/admin',
+};
+
+const PATH_VIEWS: Record<string, ViewState> = Object.fromEntries(
+  Object.entries(VIEW_PATHS).map(([v, p]) => [p, v as ViewState])
+);
+
+const pathToView = (pathname: string): ViewState =>
+  PATH_VIEWS[pathname] ?? PATH_VIEWS[pathname.replace(/\/$/, '')] ?? 'INN';
 
 const App: React.FC = () => {
   // App Loading State
   const [isLoading, setIsLoading] = useState(true);
 
-  // View State (Default to INN)
-  const [currentView, setCurrentView] = useState<ViewState>('INN');
+  // View State — initialise from current URL
+  const [currentView, setCurrentView] = useState<ViewState>(() =>
+    pathToView(window.location.pathname)
+  );
 
   // Language State - Default to FR
   const [language, setLanguage] = useState<'EN' | 'FR'>('FR');
@@ -141,6 +193,10 @@ const App: React.FC = () => {
   const [memberProfile, setMemberProfile] = useState<MemberProfile | null>(null);
   // Set when user returns from a Google redirect sign-in but has no Firestore profile yet
   const [redirectPendingUser, setRedirectPendingUser] = useState<User | null>(null);
+
+  // Social space state
+  const [publicProfileUid, setPublicProfileUid] = useState<string | null>(null);
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
 
   // Privacy / Compliance State
   const [consentLevel, setConsentLevel] = useState<ConsentLevel | null>(null);
@@ -157,9 +213,40 @@ const App: React.FC = () => {
 
   // --- 1. NAVIGATION HELPER ---
   const handleNavigation = (destination: ViewState) => {
-      setCurrentView(destination);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const path = VIEW_PATHS[destination] ?? '/';
+    if (window.location.pathname !== path) {
+      history.pushState({ view: destination }, '', path);
+    }
+    setCurrentView(destination);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Handle browser back / forward
+  useEffect(() => {
+    const onPop = (e: PopStateEvent) => {
+      setCurrentView(e.state?.view ?? pathToView(window.location.pathname));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Update document title + meta description per view (single source: config/seo.config.ts)
+  useEffect(() => {
+    const meta = PAGE_META[currentView]?.[language];
+    if (!meta) return;
+    document.title = meta.title;
+    const setMeta = (selector: string, value: string) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute('content', value);
+    };
+    setMeta('meta[name="description"]', meta.description);
+    setMeta('meta[property="og:title"]', meta.title);
+    setMeta('meta[property="og:description"]', meta.description);
+    setMeta('meta[property="og:url"]', `https://lesalondesinconnus.com${VIEW_PATHS[currentView]}`);
+    setMeta('meta[name="twitter:title"]', meta.title);
+    setMeta('meta[name="twitter:description"]', meta.description);
+  }, [currentView, language]);
 
   // Auth State Listener
   useEffect(() => {
@@ -200,6 +287,15 @@ const App: React.FC = () => {
     setCurrentUser(user);
     setMemberProfile(profile);
     setRedirectPendingUser(null); // clear pending redirect state on any auth change
+  };
+
+  const handleViewProfile = (uid: string) => {
+    setPublicProfileUid(uid);
+    handleNavigation('PUBLIC_PROFILE');
+  };
+
+  const handleStartDM = (conversationId: string) => {
+    setActiveConversationId(conversationId);
   };
 
   // Initialize Audio
@@ -309,149 +405,204 @@ const App: React.FC = () => {
           />
       )}
 
-      {/* 2. Global top-right bar — MemberPanel + Music + Language (never overlaps page header left nav) */}
-      <div className="fixed top-4 right-6 z-[110] flex items-center gap-3">
-
-        {/* Member Panel — leftmost in the row */}
-        {!isLoading && (
-          <MemberPanel
-            user={currentUser}
-            memberProfile={memberProfile}
-            language={language}
-            onUserChange={handleUserChange}
-            onShowPrivacy={() => setShowPrivacyPolicy(true)}
-            onNavigate={handleNavigation}
-            redirectPendingUser={redirectPendingUser}
-            onRedirectUserHandled={() => setRedirectPendingUser(null)}
-          />
-        )}
-
-        {/* Music Dropdown Wrapper */}
-        <div className="relative">
-          <button
-            onClick={() => setIsMusicMenuOpen(!isMusicMenuOpen)}
-            className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 border ${
-              isMusicPlaying 
-                ? 'bg-black/40 border-yellow-100/50 text-yellow-100 shadow-[0_0_10px_rgba(253,224,71,0.3)]' 
-                : 'bg-black/60 border-white/10 text-white/30'
-            }`}
-            title="Music Settings"
-          >
-            {isMusicPlaying ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-              </svg>
-            )}
-          </button>
-
-          {/* Dropdown Menu */}
-          {isMusicMenuOpen && (
-            <>
-               <div className="fixed inset-0 z-40" onClick={() => setIsMusicMenuOpen(false)} />
-               <div className="absolute top-10 right-0 z-50 w-32 bg-black/90 border border-white/10 rounded-md backdrop-blur-md shadow-xl overflow-hidden animate-fadeIn">
-                 <div className="py-1 flex flex-col">
-                   {(Object.keys(MUSIC_GENRES) as Array<keyof typeof MUSIC_GENRES>).map((genre) => (
-                     <button
-                       key={genre}
-                       onClick={() => changeGenre(genre)}
-                       className={`px-4 py-2 text-xs font-cinzel text-left transition-colors ${
-                         currentGenre === genre && isMusicPlaying
-                           ? 'text-yellow-100 bg-white/10' 
-                           : 'text-neutral-400 hover:text-white hover:bg-white/5'
-                       }`}
-                     >
-                       {genre}
-                     </button>
-                   ))}
-                   <div className="h-px bg-white/10 my-1 mx-2" />
-                   <button
-                     onClick={toggleMute}
-                     className={`px-4 py-2 text-xs font-cinzel text-left transition-colors ${
-                       !isMusicPlaying ? 'text-red-300' : 'text-neutral-400 hover:text-white hover:bg-white/5'
-                     }`}
-                   >
-                     {isMusicPlaying ? (language === 'EN' ? 'Silence' : 'Silence') : (language === 'EN' ? 'Play Music' : 'Jouer Musique')}
-                   </button>
-                 </div>
-               </div>
-            </>
-          )}
-        </div>
-
-        {/* Language Toggle */}
-        <div 
-          onClick={toggleLanguage}
-          className="flex items-center bg-black/40 backdrop-blur-md rounded-full border border-white/10 px-1 py-1 cursor-pointer hover:bg-black/60 transition-colors"
-        >
-           <span className={`text-[10px] font-cinzel font-bold px-3 py-1 rounded-full transition-all ${language === 'EN' ? 'bg-[#f3e5ab] text-[#4a3b2a]' : 'text-yellow-100/50'}`}>EN</span>
-           <span className={`text-[10px] font-cinzel font-bold px-3 py-1 rounded-full transition-all ${language === 'FR' ? 'bg-[#f3e5ab] text-[#4a3b2a]' : 'text-yellow-100/50'}`}>FR</span>
-        </div>
-      </div>
-
-      {/* VIEW 1: THE INN (DEFAULT) */}
-      {currentView === 'INN' && (
-        <InnPage 
+      {/* 2. Global site header — INN + editorial test3 (test page parity) */}
+      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3') && (
+        <SiteHeader
+          language={language}
+          currentView={currentView}
           onNavigate={handleNavigation}
-          language={language}
-        />
-      )}
-
-      {/* VIEW 2: MASSOTHERAPY */}
-      {currentView === 'MASSOTHERAPY' && (
-        <MassotherapyPage
-          onNavigate={() => handleNavigation('INN')}
-          language={language}
-        />
-      )}
-
-      {/* VIEW 3: HOSTS */}
-      {currentView === 'HOSTS' && (
-        <HostsPage
-          onNavigate={(view) => handleNavigation(view)}
-          language={language}
-        />
-      )}
-
-      {/* VIEW 4: GUIDE */}
-      {currentView === 'GUIDE' && (
-        <GuidePage
-          onNavigate={() => handleNavigation('INN')}
-          language={language}
-        />
-      )}
-
-      {/* VIEW 5: KITCHEN */}
-      {currentView === 'KITCHEN' && (
-        <KitchenPage
-          onNavigate={() => handleNavigation('INN')}
-          language={language}
-        />
-      )}
-
-      {/* VIEW 6: EVENTS */}
-      {currentView === 'EVENTS' && (
-        <EventsPage
-          onNavigate={(view) => handleNavigation(view)}
-          language={language}
-          user={currentUser}
-          memberProfile={memberProfile}
-        />
-      )}
-
-      {/* VIEW 7: CEILIDH */}
-      {currentView === 'CEILIDH' && (
-        <CeilidhPage
-          onNavigate={(view) => handleNavigation(view)}
-          language={language}
+          onToggleLanguage={toggleLanguage}
+          isMusicPlaying={isMusicPlaying}
+          isMusicMenuOpen={isMusicMenuOpen}
+          setIsMusicMenuOpen={setIsMusicMenuOpen}
+          changeGenre={changeGenre}
+          toggleMute={toggleMute}
+          currentGenre={currentGenre}
           user={currentUser}
           memberProfile={memberProfile}
           onUserChange={handleUserChange}
           onShowPrivacy={() => setShowPrivacyPolicy(true)}
+          redirectPendingUser={redirectPendingUser}
+          onRedirectUserHandled={() => setRedirectPendingUser(null)}
         />
+      )}
+
+      {/* All page views — wrapped in a single Suspense boundary so navigation
+          shows a brief loader while the next page chunk downloads. */}
+      <Suspense fallback={<PageLoader />}>
+        {/* VIEW 1: THE INN (DEFAULT) — now backed by the redesigned editorial
+            page (was at /mainpagetest3). The original InnPage.tsx still ships
+            because some inner components (TrustedPlatforms, ManorRoomsSection,
+            DetailsSection, etc.) are imported by the redesign. */}
+        {currentView === 'INN' && (
+          <InnPageTest3
+            language={language}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+          />
+        )}
+
+        {/* VIEW 1c: Inn editorial test 2 (Bespoke pattern, hero only) — /mainpagetest2 */}
+        {currentView === 'INN_TEST2' && (
+          <InnPageTest2
+            language={language}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+          />
+        )}
+
+        {/* VIEW 1d: Inn editorial test 3 — bold rebuild from scratch — /mainpagetest3 */}
+        {currentView === 'INN_TEST3' && (
+          <InnPageTest3
+            language={language}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+          />
+        )}
+
+        {/* VIEW 2: MASSOTHERAPY */}
+        {currentView === 'MASSOTHERAPY' && (
+          <MassotherapyPage
+            onNavigate={() => handleNavigation('INN')}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 3: HOSTS */}
+        {currentView === 'HOSTS' && (
+          <HostsPage
+            onNavigate={(view) => handleNavigation(view)}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 4: GUIDE */}
+        {currentView === 'GUIDE' && (
+          <GuidePage
+            onNavigate={() => handleNavigation('INN')}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 5: KITCHEN */}
+        {currentView === 'KITCHEN' && (
+          <KitchenPage
+            onNavigate={() => handleNavigation('INN')}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 6: EVENTS */}
+        {currentView === 'EVENTS' && (
+          <EventsPage
+            onNavigate={(view) => handleNavigation(view)}
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+          />
+        )}
+
+        {/* VIEW 7: CEILIDH — now backed by the redesigned chapter-cards page.
+            The original CeilidhPage.tsx file is still imported (its inner
+            components — KanbanBoard, NeedsSection, CovoiturageSection,
+            AbundanceSection, PresenceTimeline — are reused inside the new shell). */}
+        {currentView === 'CEILIDH' && (
+          <CeilidhPageTest2
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            onUserChange={handleUserChange}
+            onShowPrivacy={() => setShowPrivacyPolicy(true)}
+            onViewProfile={handleViewProfile}
+          />
+        )}
+
+        {/* VIEW 7-test1: Ceilidh redesign — Avenue A "Estate Map" — /ceilidhtest1 */}
+        {currentView === 'CEILIDH_TEST1' && (
+          <CeilidhPageTest1
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 7-test2: Ceilidh redesign — Avenue B "Chapter Cards" — /ceilidhtest2 */}
+        {currentView === 'CEILIDH_TEST2' && (
+          <CeilidhPageTest2
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            onUserChange={handleUserChange}
+            onShowPrivacy={() => setShowPrivacyPolicy(true)}
+            onViewProfile={handleViewProfile}
+          />
+        )}
+
+        {/* VIEW 7b: WWOOFING */}
+        {currentView === 'WWOOFING' && (
+          <WwoofingPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            onUserChange={handleUserChange}
+            onShowPrivacy={() => setShowPrivacyPolicy(true)}
+          />
+        )}
+
+        {/* VIEW 8: MY PROFILE */}
+        {currentView === 'MY_PROFILE' && currentUser && memberProfile && (
+          <ProfilePage
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            onProfileUpdate={(profile) => setMemberProfile(profile)}
+            onShowPrivacy={() => setShowPrivacyPolicy(true)}
+          />
+        )}
+
+        {/* VIEW 9: PUBLIC PROFILE */}
+        {currentView === 'PUBLIC_PROFILE' && publicProfileUid && (
+          <PublicProfilePage
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            targetUid={publicProfileUid}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            onStartDM={handleStartDM}
+            onRequireAuth={() => {/* MemberPanel handles this */}}
+          />
+        )}
+
+        {/* VIEW 10: MESSAGING */}
+        {currentView === 'MESSAGING' && currentUser && memberProfile && (
+          <MessagingPage
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            initialConversationId={activeConversationId}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            onViewProfile={handleViewProfile}
+          />
+        )}
+
+        {/* VIEW 11: ADMIN CRM */}
+        {currentView === 'ADMIN' && (
+          <AdminCRM
+            language={language}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            user={currentUser}
+          />
+        )}
+      </Suspense>
+
+      {/* GLOBAL: Subtle admin footer link */}
+      {!isLoading && currentView !== 'ADMIN' && (
+        <button
+          onClick={() => handleNavigation('ADMIN')}
+          className="fixed bottom-3 left-4 z-[50] text-[9px] font-cinzel text-neutral-800 hover:text-neutral-500 uppercase tracking-widest transition-colors"
+        >
+          Admin
+        </button>
       )}
 
       {/* GLOBAL: Cookie / Privacy Consent Banner */}

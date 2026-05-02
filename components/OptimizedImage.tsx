@@ -34,7 +34,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
-  
+
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -67,9 +67,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
           observer.disconnect();
         }
       },
-      { 
+      {
         rootMargin: '200px', // Start loading 200px before it hits viewport
-        threshold: 0.01 
+        threshold: 0.01
       }
     );
 
@@ -86,19 +86,18 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     <div
       ref={containerRef}
       className={`relative overflow-hidden bg-[#1a1a1a] ${className}`}
-      style={{ 
-        ...style, 
+      style={{
+        ...style,
         aspectRatio: aspectRatio,
-        display: 'block' // Ensure block
+        display: 'block',
       }}
       onClick={onClick}
     >
-      {/* Placeholder / Blur Effect */}
       {/* Fade out this overlay when loaded */}
-      <div 
+      <div
         className={`absolute inset-0 bg-white/5 transition-opacity duration-700 pointer-events-none z-10 ${
           isLoaded ? 'opacity-0' : 'opacity-100'
-        }`} 
+        }`}
       />
 
       {(isInView || priority) && (
@@ -109,10 +108,14 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
           className={`transition-opacity duration-700 ease-out ${imageClassName} ${
             isLoaded ? '' : 'opacity-0'
           }`}
-          style={{ 
+          style={{
             objectFit,
             ...imageStyle,
-            display: 'block' // Ensure block
+            display: 'block',
+            // Force GPU layer on the img itself to prevent it from escaping
+            // the parent's border-radius clip during scroll repaints
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
           }}
           decoding="async"
           // @ts-ignore - React 18/19 support fetchPriority but types might lag

@@ -134,16 +134,19 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
   const photoURL = memberProfile.photoURL || user.photoURL;
   const isAdmin = memberProfile.isAdmin;
 
+  // When logged in, the chip jumps straight to the dashboard (/profil) — the
+  // old dropdown's items now live inside the dashboard itself.
+  const goToDashboard = () => onNavigate?.('MY_PROFILE');
+
   return (
     <div ref={dropdownRef} className="relative">
 
-      {/* ── Avatar chip ── */}
+      {/* ── Avatar chip — click goes straight to the dashboard ── */}
       <button
-        onClick={() => setIsOpen(prev => !prev)}
-        className={`flex items-center gap-2 bg-black/40 backdrop-blur-md border rounded-full px-2 py-1 transition-all duration-200
-          ${isOpen ? 'border-[#d4af37]/60 shadow-[0_0_12px_rgba(212,175,55,0.2)]' : 'border-white/10 hover:border-[#d4af37]/40'}`}
+        onClick={goToDashboard}
+        className="flex items-center gap-2 bg-black/40 backdrop-blur-md border rounded-full px-2 py-1 transition-all duration-200 border-white/10 hover:border-[#d4af37]/40"
+        title={t('Member Space', 'Espace Membre')}
       >
-        {/* Avatar */}
         <div className="w-6 h-6 rounded-full overflow-hidden border border-[#d4af37]/40 shrink-0">
           {photoURL ? (
             <img src={photoURL} alt={displayName} className="w-full h-full object-cover" />
@@ -155,20 +158,10 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
             </div>
           )}
         </div>
-
-        {/* Name (hidden on very small screens) */}
         <span className="hidden sm:block text-[10px] font-cinzel text-yellow-100/80 max-w-[120px] truncate">
           {displayName.split(' ')[0]}
         </span>
-
-        {/* Chevron */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
-          className={`w-3 h-3 text-white/30 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-        </svg>
+        <span className="text-[9px] font-cinzel text-[#d4af37]/70 px-1" aria-hidden>→</span>
       </button>
 
       {/* ── Dropdown panel ── */}
@@ -222,6 +215,48 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
 
           {/* Actions */}
           <div className="py-2">
+
+            {/* My Profile */}
+            {onNavigate && (
+              <button
+                onClick={() => { onNavigate('MY_PROFILE'); setIsOpen(false); }}
+                className="w-full flex items-center gap-3 px-5 py-3 text-left
+                           text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+                <div>
+                  <div className="text-xs font-cinzel">{t('My Profile', 'Mon Profil')}</div>
+                  <div className="text-[10px] text-neutral-600 font-lato mt-0.5">
+                    {t('Edit info · Photo · Dashboard', 'Modifier · Photo · Tableau de bord')}
+                  </div>
+                </div>
+              </button>
+            )}
+
+            {/* Messages */}
+            {onNavigate && (
+              <button
+                onClick={() => { onNavigate('MESSAGING'); setIsOpen(false); }}
+                className="w-full flex items-center gap-3 px-5 py-3 text-left
+                           text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                </svg>
+                <div>
+                  <div className="text-xs font-cinzel">{t('Messages', 'Messages')}</div>
+                  <div className="text-[10px] text-neutral-600 font-lato mt-0.5">
+                    {t('DMs and group chats', 'Messages directs et groupes')}
+                  </div>
+                </div>
+              </button>
+            )}
+
+            <div className="h-px bg-white/5 mx-5 my-1" />
 
             {/* My Registrations */}
             {onNavigate && (

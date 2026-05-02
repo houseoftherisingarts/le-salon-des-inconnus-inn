@@ -10,7 +10,7 @@ const LAST_UPDATED = 'Avril 2026 / April 2026';
 const PRIVACY_OFFICER = 'Alex T. St-Laurent';
 const CONTACT_EMAIL = 'Alex@lesalondesinconnus.com';
 const CONTACT_PHONE = '514 418-3450';
-const ADDRESS = '321 Chemin de la Montagne, Namur (QC) J0V 1N0';
+const ADDRESS = '826 Côte à Favier, Namur (QC) J0V 1N0';
 
 // ─── Section Component ───────────────────────────────────────────────────────
 

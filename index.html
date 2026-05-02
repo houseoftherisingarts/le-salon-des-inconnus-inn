@@ -3,8 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <meta http-equiv="Content-Language" content="fr-CA" />
+
+    <!-- Favicon — Maison Favier / Salon des Inconnus logo. -->
+    <link rel="icon" type="image/png" href="https://i.imgur.com/B1YfPqn.png" />
+    <link rel="apple-touch-icon" href="https://i.imgur.com/B1YfPqn.png" />
+    <meta name="theme-color" content="#0a0807" />
+
+    <!-- Resource hints: warm up connections to fonts + image CDN early -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://storage.googleapis.com" />
+    <link rel="dns-prefetch" href="https://wsrv.nl" />
     <title>Le Salon des Inconnus | Auberge, Art & Golf | Outaouais</title>
     
     <meta property="og:type" content="website" />
@@ -14,7 +25,7 @@
     
     <meta property="og:description" content="L'escale idéale en Outaouais. Manoir victorien, spa, et nature. Voisin du Golf Héritage." />
     
-    <meta property="og:image" content="https://lesalondesinconnus.com/social.jpg" />
+    <meta property="og:image" content="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -22,14 +33,14 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Le Salon des Inconnus | Auberge d'Artistes, Entrepreneurs et Voyageurs">
     <meta name="twitter:description" content="Manoir victorien, spa et art à Namur.">
-    <meta name="twitter:image" content="https://lesalondesinconnus.com/social.jpg">
+    <meta name="twitter:image" content="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Hostel",
       "name": "Le Salon des Inconnus",
-      "image": "https://lesalondesinconnus.com/assets/hero.jpg",
+      "image": "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg",
       "@id": "https://lesalondesinconnus.com/#identity",
       "url": "https://lesalondesinconnus.com",
       "telephone": "+1 514-418-3450",
@@ -59,34 +70,7 @@
     }
     </script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&family=Prata&family=Josefin+Sans:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,700;1,700&family=MedievalSharp&display=swap');
-      
-      ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: #1a1a1a; }
-      ::-webkit-scrollbar-thumb { background: #4a3b2a; border-radius: 4px; }
-      ::-webkit-scrollbar-thumb:hover { background: #6b553e; }
-      
-      .font-cinzel { font-family: 'Cinzel', serif; }
-      .font-lato { font-family: 'Lato', sans-serif; }
-      .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-      .font-medieval { font-family: 'MedievalSharp', cursive; }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
-</head>
+  </head>
   <body class="bg-neutral-900 text-neutral-100 antialiased overflow-hidden">
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>

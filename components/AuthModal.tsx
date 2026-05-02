@@ -50,7 +50,7 @@ interface AuthModalProps {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const ADMIN_EMAIL = 'houseoftherisingarts@gmail.com';
+const ADMIN_EMAILS = ['houseoftherisingarts@gmail.com', 'alex@lesalondesinconnus.com'];
 const CONSENT_VERSION = '1';
 
 const MEMBERSHIP_OPTIONS: {
@@ -89,7 +89,7 @@ async function createMemberProfile(
     email: user.email || '',
     displayName,
     membershipType,
-    isAdmin: user.email === ADMIN_EMAIL,
+    isAdmin: ADMIN_EMAILS.includes(user.email.toLowerCase()),
     ...(user.phoneNumber ? { phone: user.phoneNumber } : {}),
     ...(user.photoURL   ? { photoURL: user.photoURL }  : {}),
     createdAt: serverTimestamp(),

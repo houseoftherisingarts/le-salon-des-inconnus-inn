@@ -6,10 +6,10 @@ import { OptimizedImage } from './OptimizedImage';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
 import { SITE_URL, CONTACT_INFO, SEMANTIC_NEIGHBORS, UPCOMING_EVENTS, PAGE_META } from '../config/seo.config';
 
-type VibeMode = 'CLASSIC' | 'HOSTEL' | 'SHIRE';
+export type VibeMode = 'CLASSIC' | 'HOSTEL' | 'SHIRE';
 
 interface InnPageProps {
-  onNavigate: (view: 'INN' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'EVENTS' | 'CEILIDH') => void;
+  onNavigate: (view: 'INN' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'EVENTS' | 'CEILIDH' | 'WWOOFING') => void;
   language: 'EN' | 'FR';
 }
 
@@ -123,7 +123,7 @@ const RevealOnScroll: React.FC<{ children: React.ReactNode; className?: string; 
 };
 
 // --- LAZY SECTION WRAPPER ---
-const LazySection: React.FC<{ children: React.ReactNode; placeholderHeight: string; className?: string }> = ({ children, placeholderHeight, className = "" }) => {
+export const LazySection: React.FC<{ children: React.ReactNode; placeholderHeight: string; className?: string }> = ({ children, placeholderHeight, className = "" }) => {
     const [shouldRender, setShouldRender] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -155,8 +155,11 @@ const LazySection: React.FC<{ children: React.ReactNode; placeholderHeight: stri
     );
 };
 
-// --- STICKY WRAPPER (GOLD STANDARD) ---
-// No containment, no overflow hidden, just pure sticky positioning
+// --- SECTION WRAPPER (sequential, normal-flow) ---
+// Was previously a sticky-layered stack — refactored to sequential sections
+// because the sticky pattern caused later sections (Events/Wwoofing) to overlap
+// the bottom of earlier sections (Hosts/Events title+CTA hidden behind Wwoofing).
+// `zIndex` prop kept for backward compatibility with existing call sites; unused.
 interface StickySectionProps {
     children: React.ReactNode;
     vibe: VibeMode;
@@ -166,46 +169,25 @@ interface StickySectionProps {
     mobileHeight?: string;
 }
 
-const StickySection: React.FC<StickySectionProps> = ({ children, vibe, zIndex, className = "", desktopHeight = "800px", mobileHeight = "auto" }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [top, setTop] = useState(0);
+const StickySection: React.FC<StickySectionProps> = ({ children, vibe, zIndex: _zIndex, className = "", desktopHeight = "800px", mobileHeight = "auto" }) => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
         window.addEventListener('resize', checkMobile);
-
-        const updateTop = () => {
-            if (ref.current) {
-                const height = ref.current.offsetHeight;
-                const windowHeight = window.innerHeight;
-                setTop(height > windowHeight ? windowHeight - height : 0);
-            }
-        };
-
-        updateTop();
-        window.addEventListener('resize', updateTop);
-        return () => {
-            window.removeEventListener('resize', updateTop);
-            window.removeEventListener('resize', checkMobile);
-        };
+        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    let bgClass = 'bg-[#050505] border-[#d4af37]/20'; 
-    if (vibe === 'HOSTEL') bgClass = 'bg-[#18181b] border-[#c5a059]/30'; 
-    if (vibe === 'SHIRE') bgClass = 'bg-[#161915] border-[#dcb055]/20'; 
+    let bgClass = 'bg-[#050505] border-[#d4af37]/20';
+    if (vibe === 'HOSTEL') bgClass = 'bg-[#18181b] border-[#c5a059]/30';
+    if (vibe === 'SHIRE') bgClass = 'bg-[#161915] border-[#dcb055]/20';
 
     return (
-        <section 
-            ref={ref}
+        <section
             className={`relative w-full border-t transition-colors duration-1000 ${bgClass} ${className}`}
-            style={{ 
-                position: 'sticky', 
-                top: `${top}px`, 
-                zIndex: zIndex,
-                minHeight: isMobile ? mobileHeight : desktopHeight
-                // CRITICAL: No 'overflow', No 'contain', No 'transform' on the sticky container
+            style={{
+                minHeight: isMobile ? mobileHeight : desktopHeight,
             }}
         >
             {children}
@@ -328,74 +310,395 @@ const VictorianCard: React.FC<{ children: React.ReactNode; className?: string; o
 
 // --- SECTIONS ---
 
-const InnHero: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onCycleVibe: () => void }> = ({ language, vibe, onCycleVibe }) => {
+export const INN_HERO_IMAGES = [
+  "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg",
+  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png",
+  "https://storage.googleapis.com/salondesinconnus/inn/ecrivaine%20banana.jpg",
+  "https://storage.googleapis.com/salondesinconnus/inn/musicienne%20banana%202.jpg",
+  "https://storage.googleapis.com/salondesinconnus/inn/cineast%20banana%202.jpg",
+  "https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg",
+  "https://storage.googleapis.com/salondesinconnus/inn/yourte.png",
+];
+
+// WebGL shaders — liquid glass bubble transition (ported from Collectif Sexe+)
+const HW_VERT = `varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
+const HW_FRAG = `
+  uniform sampler2D uT1, uT2;
+  uniform float uP;
+  uniform vec2 uR, uS1, uS2;
+  varying vec2 vUv;
+
+  vec2 cv(vec2 uv, vec2 ts) {
+    vec2 s = uR / ts;
+    float sc = max(s.x, s.y);
+    return (uv * uR - (uR - ts * sc) * 0.5) / (ts * sc);
+  }
+
+  void main() {
+    float time = uP * 5.0;
+    vec2 u1 = cv(vUv, uS1); vec2 u2 = cv(vUv, uS2);
+    float maxR = length(uR) * 0.85; float br = uP * maxR;
+    vec2 p = vUv * uR; vec2 c = uR * 0.5;
+    float d = length(p - c); float nd = d / max(br, 0.001);
+    float param = smoothstep(br + 3.0, br - 3.0, d);
+    vec4 img;
+    if (param > 0.0) {
+      float ro = 0.08 * pow(smoothstep(0.3, 1.0, nd), 1.5);
+      vec2 dir = (d > 0.0) ? (p - c) / d : vec2(0.0);
+      vec2 distUV = u2 - dir * ro;
+      distUV += vec2(sin(time + nd * 10.0), cos(time * 0.8 + nd * 8.0)) * 0.015 * nd * param;
+      float ca = 0.02 * pow(smoothstep(0.3, 1.0, nd), 1.2);
+      img = vec4(
+        texture2D(uT2, distUV + dir * ca * 1.2).r,
+        texture2D(uT2, distUV + dir * ca * 0.2).g,
+        texture2D(uT2, distUV - dir * ca * 0.8).b,
+        1.0
+      );
+      float rim = smoothstep(0.95, 1.0, nd) * (1.0 - smoothstep(1.0, 1.01, nd));
+      img.rgb += rim * 0.08;
+    } else { img = texture2D(uT2, u2); }
+    vec4 old = texture2D(uT1, u1);
+    if (uP > 0.95) img = mix(img, texture2D(uT2, u2), (uP - 0.95) / 0.05);
+    gl_FragColor = mix(old, img, param);
+  }
+`;
+
+export const InnHero: React.FC<{
+  language: 'EN' | 'FR';
+  vibe: VibeMode;
+  onCycleVibe: () => void;
+  onReserver: () => void;
+  onWwoofing: () => void;
+}> = ({ language, vibe, onCycleVibe, onReserver, onWwoofing }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cssBgRef  = useRef<HTMLDivElement>(null);
+  const cssFallback = useRef(false);
+
   const getVibeLabel = () => {
-      if (vibe === 'CLASSIC') return language === 'EN' ? "Classic" : "Classique";
-      if (vibe === 'HOSTEL') return language === 'EN' ? "Hostel" : "Auberge";
-      return language === 'EN' ? "Shire" : "Comté";
+    if (vibe === 'CLASSIC') return language === 'EN' ? "Classic" : "Classique";
+    if (vibe === 'HOSTEL')  return language === 'EN' ? "Hostel"  : "Auberge";
+    return language === 'EN' ? "Shire" : "Comté";
   };
 
+  useEffect(() => {
+    let dead = false;
+    let renderer: any, scene: any, camera: any, mat: any;
+    let txs: any[] = [], blobUrls: string[] = [];
+    let cur = 0, transitioning = false;
+    let auto: ReturnType<typeof setInterval> | null = null;
+
+    const loadScript = (src: string, g: string): Promise<void> =>
+      new Promise((res, rej) => {
+        if ((window as any)[g]) { res(); return; }
+        if (document.querySelector(`script[src="${src}"]`)) {
+          const t = setInterval(() => { if ((window as any)[g]) { clearInterval(t); res(); } }, 50);
+          setTimeout(() => { clearInterval(t); rej(new Error(`Timeout ${g}`)); }, 10000);
+          return;
+        }
+        const s = document.createElement('script');
+        s.src = src; s.onload = () => setTimeout(res, 80); s.onerror = () => rej(new Error(src));
+        document.head.appendChild(s);
+      });
+
+    const fetchBlobUrl = async (src: string): Promise<string | null> => {
+      try {
+        const r = await fetch(`https://images.weserv.nl/?url=${encodeURIComponent(src)}`, { mode: 'cors' });
+        if (!r.ok) return null;
+        return URL.createObjectURL(await r.blob());
+      } catch { return null; }
+    };
+
+    const loadTex = (url: string): Promise<any> =>
+      new Promise(res => {
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const THREE = (window as any).THREE;
+            const t = new THREE.Texture(img);
+            t.minFilter = t.magFilter = THREE.LinearFilter;
+            t.needsUpdate = true;
+            t.userData = { size: new THREE.Vector2(img.naturalWidth || img.width, img.naturalHeight || img.height) };
+            res(t);
+          } catch { res(null); }
+        };
+        img.onerror = () => res(null);
+        img.src = url;
+      });
+
+    const initCSSFallback = (images: string[]) => {
+      if (cssFallbackRef.current) return;
+      cssFallbackRef.current = true;
+      const canvas = canvasRef.current;
+      if (canvas) canvas.style.display = 'none';
+      const bg = cssBgRef.current;
+      if (!bg) return;
+      bg.style.display = 'block';
+      images.forEach((src, i) => {
+        const sl = document.createElement('div');
+        sl.style.cssText = `position:absolute;inset:0;background:url(${src}) center/cover no-repeat;opacity:${i === 0 ? 1 : 0};transition:opacity 1.8s ease;`;
+        bg.appendChild(sl);
+      });
+      const slides = bg.querySelectorAll<HTMLElement>('div');
+      let cssIdx = 0;
+      if (auto) clearInterval(auto);
+      auto = setInterval(() => {
+        if (dead) return;
+        slides[cssIdx].style.opacity = '0';
+        cssIdx = (cssIdx + 1) % slides.length;
+        slides[cssIdx].style.opacity = '1';
+      }, 5000);
+    };
+
+    // alias to avoid closure over ref
+    const cssFallbackRef = cssFallback;
+
+    const doTransition = (next: number) => {
+      const THREE = (window as any).THREE;
+      const gsap  = (window as any).gsap;
+      if (transitioning || !mat || txs.length < 2 || next === cur || !THREE || !gsap) return;
+      transitioning = true;
+      const f = txs[cur], t = txs[next];
+      mat.uniforms.uT1.value = f; mat.uniforms.uT2.value = t;
+      mat.uniforms.uS1.value = f.userData.size; mat.uniforms.uS2.value = t.userData.size;
+      gsap.fromTo(mat.uniforms.uP, { value: 0 }, {
+        value: 1, duration: 2.5, ease: 'power2.inOut',
+        onComplete() {
+          mat.uniforms.uT1.value = t; mat.uniforms.uS1.value = t.userData.size;
+          mat.uniforms.uP.value = 0; cur = next; transitioning = false;
+        },
+      });
+    };
+
+    const startAuto = () => {
+      if (auto) clearInterval(auto);
+      auto = setInterval(() => {
+        if (!dead) doTransition((cur + 1) % Math.max(txs.length, 1));
+      }, 5000);
+    };
+
+    const init = async () => {
+      try {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', 'gsap');
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'THREE');
+      } catch { return; }
+      if (dead) return;
+
+      const THREE = (window as any).THREE;
+      const canvas = canvasRef.current;
+      if (!canvas || !THREE) return;
+
+      const W = canvas.clientWidth  || window.innerWidth;
+      const H = canvas.clientHeight || window.innerHeight;
+
+      scene    = new THREE.Scene();
+      camera   = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+      renderer.setSize(W, H);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      mat = new THREE.ShaderMaterial({
+        uniforms: {
+          uT1: { value: null }, uT2: { value: null }, uP: { value: 0 },
+          uR:  { value: new THREE.Vector2(W, H) },
+          uS1: { value: new THREE.Vector2(1, 1) }, uS2: { value: new THREE.Vector2(1, 1) },
+        },
+        vertexShader: HW_VERT, fragmentShader: HW_FRAG,
+      });
+      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+
+      const loop = () => {
+        if (dead) return;
+        requestAnimationFrame(loop);
+        if (renderer && scene && camera) renderer.render(scene, camera);
+      };
+      loop();
+
+      let glStarted = false;
+      const tryGL = () => {
+        if (glStarted || !txs[0] || !txs[1]) return;
+        glStarted = true;
+        mat.uniforms.uT1.value = txs[0]; mat.uniforms.uT2.value = txs[1];
+        mat.uniforms.uS1.value = txs[0].userData.size; mat.uniforms.uS2.value = txs[1].userData.size;
+        startAuto();
+      };
+
+      await Promise.all(INN_HERO_IMAGES.map(async (src, i) => {
+        if (dead) return;
+        const blobUrl = await fetchBlobUrl(src);
+        if (blobUrl && !dead) {
+          blobUrls.push(blobUrl);
+          const t = await loadTex(blobUrl);
+          if (t && !dead) { txs[i] = t; tryGL(); }
+        }
+      }));
+
+      if (!glStarted) initCSSFallback(INN_HERO_IMAGES);
+
+      const onResize = () => {
+        if (!renderer || !mat || !canvas) return;
+        const nW = canvas.clientWidth  || window.innerWidth;
+        const nH = canvas.clientHeight || window.innerHeight;
+        renderer.setSize(nW, nH);
+        mat.uniforms.uR.value.set(nW, nH);
+      };
+      window.addEventListener('resize', onResize);
+      return () => window.removeEventListener('resize', onResize);
+    };
+
+    init();
+
+    return () => {
+      dead = true;
+      if (auto) clearInterval(auto);
+      blobUrls.forEach(u => URL.revokeObjectURL(u));
+      txs.forEach(t => t?.dispose?.());
+      if (renderer) renderer.dispose();
+    };
+  }, []);
+
   return (
-    <div className={`relative h-[70vh] min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden border-b transition-colors duration-1000 
-        ${vibe === 'HOSTEL' ? 'border-[#c5a059]/30' : 
-          vibe === 'SHIRE' ? 'border-[#dcb055]/40' : 
-          'border-[#d4af37]/20'}`}>
-      <div className={`absolute inset-0 z-10 bg-black transition-opacity duration-1000 ${vibe === 'SHIRE' ? 'opacity-20' : 'opacity-30'}`} />
-      <div className={`absolute inset-0 bg-gradient-to-b z-10 transition-colors duration-1000 ${vibe === 'HOSTEL' ? 'from-[#18181b]/90 via-transparent to-[#18181b]' : vibe === 'SHIRE' ? 'from-[#3a3e2a]/50 via-transparent to-[#161915]' : 'from-black/60 via-transparent to-[#0a0a0a]'}`} />
-      
-      <div className="absolute inset-0 w-full h-full">
-          <OptimizedImage
-            src="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg"
-            alt="The Inn at Salon des Inconnus"
-            className="w-full h-full"
-            imageClassName="w-full h-full object-cover transition-all duration-1000 animate-slowZoom"
-            priority={true} 
-            variant="HERO"
-          />
-          <style>{`
-            @keyframes slowZoom {
-                0% { transform: scale(1); }
-                100% { transform: scale(1.1); }
-            }
-            .animate-slowZoom {
-                animation: slowZoom 30s ease-in-out infinite alternate;
-            }
-          `}</style>
-      </div>
+    <div className={`relative h-screen min-h-[600px] overflow-hidden border-b transition-colors duration-1000
+        ${vibe === 'HOSTEL' ? 'border-[#c5a059]/30' :
+          vibe === 'SHIRE'  ? 'border-[#dcb055]/40' :
+                              'border-[#d4af37]/20'}`}
+      style={{ background: '#0a0808' }}
+    >
+      {/* CSS fallback layer (hidden until WebGL fails) */}
+      <div ref={cssBgRef} style={{ display: 'none', position: 'absolute', inset: 0, zIndex: 1 }} />
+
+      {/* WebGL canvas */}
+      <canvas
+        ref={canvasRef}
+        style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1 }}
+      />
+
+      {/* Gradient — only darkens bottom 35% to anchor text, image stays open above */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 55%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.88) 100%)',
+        }}
+      />
+
       <SmokeOverlay />
-      <div className="absolute top-24 right-6 z-30 flex flex-col items-end gap-2 animate-fadeIn" style={{ animationDelay: '1s' }}>
-          <span className="text-[9px] uppercase tracking-widest text-neutral-500 font-bold mb-1 hidden md:block">{language === 'EN' ? "Atmosphere" : "Ambiance"}</span>
-          <button onClick={onCycleVibe} className={`hidden md:flex items-center gap-3 px-4 py-2 rounded-full border bg-black/80 transition-all duration-500 hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl ${vibe === 'CLASSIC' ? 'border-[#d4af37] text-[#d4af37]' : vibe === 'HOSTEL' ? 'border-[#c5a059] text-[#f3e5ab]' : 'border-[#dcb055] text-[#dcb055]'}`}>
-              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${vibe === 'CLASSIC' ? 'bg-[#d4af37]' : vibe === 'HOSTEL' ? 'bg-[#c5a059]' : 'bg-[#dcb055]'}`}></div>
-              <span className={`text-[10px] font-bold uppercase tracking-widest ${vibe === 'HOSTEL' ? 'font-josefin' : vibe === 'SHIRE' ? 'font-medieval' : 'font-cinzel'}`}>{getVibeLabel()}</span>
+
+      {/* Vibe toggle hidden — single-identity commitment.
+          Identity stays HOSTEL; all conditional styling preserved.
+          Re-enable by removing the `false &&` wrapper to restore the toggle. */}
+      {false && (
+        <div className="absolute top-[68px] right-6 z-30 hidden md:flex flex-col items-end gap-2">
+          <span className="text-[9px] uppercase tracking-widest text-neutral-500 font-bold">{language === 'EN' ? "Atmosphere" : "Ambiance"}</span>
+          <button
+            onClick={onCycleVibe}
+            className={`flex items-center gap-3 px-4 py-2 rounded-full border bg-black/80 transition-all duration-500 hover:scale-105 active:scale-95 shadow-xl
+              ${vibe === 'CLASSIC' ? 'border-[#d4af37] text-[#d4af37]'
+              : vibe === 'HOSTEL' ? 'border-[#c5a059] text-[#f3e5ab]'
+                                  : 'border-[#dcb055] text-[#dcb055]'}`}
+          >
+            <div className={`w-2 h-2 rounded-full transition-colors duration-500
+              ${vibe === 'CLASSIC' ? 'bg-[#d4af37]' : vibe === 'HOSTEL' ? 'bg-[#c5a059]' : 'bg-[#dcb055]'}`} />
+            <span className={`text-[10px] font-bold uppercase tracking-widest
+              ${vibe === 'HOSTEL' ? 'font-josefin' : vibe === 'SHIRE' ? 'font-medieval' : 'font-cinzel'}`}>
+              {getVibeLabel()}
+            </span>
           </button>
-      </div>
-      <div className="relative z-20 text-center px-4 md:px-6 max-w-5xl mx-auto mt-12">
-          <div className="inline-block mb-6 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-              <div className={`border-y py-1 px-8 bg-black/80 transition-colors duration-500 ${vibe === 'HOSTEL' ? 'border-[#c5a059]' : vibe === 'SHIRE' ? 'border-[#dcb055] rounded-full' : 'border-[#d4af37]'}`}>
-                  <span className={`text-xs font-bold uppercase tracking-[0.5em] transition-colors duration-500 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin' : vibe === 'SHIRE' ? 'text-[#dcb055] font-medieval tracking-[0.3em]' : 'text-[#d4af37] font-cinzel'}`}>
-                      {language === 'EN' ? "Est. 1898" : "Est. 1898"}
-                  </span>
-              </div>
-          </div>
-          <h1 className={`text-5xl md:text-7xl lg:text-9xl text-white mb-8 tracking-widest drop-shadow-2xl animate-fadeIn transition-all duration-500 ${vibe === 'HOSTEL' ? 'font-prata text-[#f3e5ab]' : vibe === 'SHIRE' ? 'font-medieval text-[#dcb055] tracking-normal drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]' : 'font-cinzel text-shadow-gold'}`} style={{ animationDelay: '0.4s' }}>
-              {language === 'EN' ? "THE INN" : "L'AUBERGE"}
+        </div>
+      )}
+
+      {/* ── Option A: floor-anchored layout ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 flex items-end justify-between gap-6 px-8 md:px-14 pb-10 flex-wrap pointer-events-none">
+
+        {/* Left — badge + title + tagline */}
+        <div className="flex flex-col gap-2 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+          <span
+            className={`text-[0.6rem] font-bold uppercase tracking-[0.45em] transition-colors duration-500
+              ${vibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin'
+              : vibe === 'SHIRE'  ? 'text-[#dcb055] font-medieval'
+                                  : 'text-[#d4af37] font-cinzel'}`}
+            style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}
+          >
+            Est. 1898 · Maison Favier
+          </span>
+
+          <h1
+            className={`m-0 leading-none tracking-widest transition-all duration-500 animate-fadeIn
+              ${vibe === 'HOSTEL' ? 'font-prata text-[#f3e5ab]'
+              : vibe === 'SHIRE'  ? 'font-medieval text-[#dcb055] tracking-normal'
+                                  : 'font-cinzel text-shadow-gold text-white'}`}
+            style={{
+              animationDelay: '0.3s',
+              fontSize: 'clamp(3.2rem, 8vw, 6.5rem)',
+              textShadow: '0 4px 24px rgba(0,0,0,0.75)',
+            }}
+          >
+            {language === 'EN' ? "THE INN" : "L'AUBERGE"}
           </h1>
-          <p className={`text-sm md:text-xl text-neutral-200 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-md animate-fadeIn tracking-wide bg-black/60 p-4 rounded-xl ${vibe === 'HOSTEL' ? 'font-josefin uppercase tracking-[0.2em]' : vibe === 'SHIRE' ? 'font-medieval text-[#faeecd] tracking-wider' : 'font-lato'}`} style={{ animationDelay: '0.6s' }}>
-              {language === 'EN' ? "A sanctuary for travelers, artists, and dreamers. Step into the history of Maison Favier." : "Un sanctuaire pour voyageurs, artistes et rêveurs. Entrez dans l'histoire de la Maison Favier."}
+
+          <p
+            className={`m-0 max-w-[38ch] leading-snug transition-colors duration-500 animate-fadeIn
+              ${vibe === 'HOSTEL' ? 'font-josefin uppercase tracking-[0.1em] text-neutral-300'
+              : vibe === 'SHIRE'  ? 'font-medieval text-[#faeecd]'
+                                  : 'font-lato text-neutral-300'}`}
+            style={{
+              animationDelay: '0.45s',
+              fontSize: 'clamp(0.78rem, 1.4vw, 0.95rem)',
+              textShadow: '0 2px 10px rgba(0,0,0,0.85)',
+            }}
+          >
+            {language === 'EN'
+              ? "A sanctuary for travelers, artists, and dreamers."
+              : "Un sanctuaire pour voyageurs, artistes et rêveurs."}
           </p>
-          <div className="mt-6 animate-fadeIn" style={{ animationDelay: '0.8s' }}>
-              <a href="tel:5144183450" className={`text-lg font-bold tracking-widest hover:opacity-80 transition-opacity ${vibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin' : vibe === 'SHIRE' ? 'text-[#dcb055] font-medieval' : 'text-[#d4af37] font-cinzel'}`}>
-                  514 418 3450
-              </a>
+        </div>
+
+        {/* Right — CTA stack */}
+        <div className="flex flex-col items-end gap-2 animate-fadeIn pointer-events-auto" style={{ animationDelay: '0.6s' }}>
+          <button
+            onClick={onReserver}
+            className={`px-7 py-3 rounded-full font-bold uppercase tracking-[0.28em] transition-all hover:scale-105 active:scale-95 shadow-lg
+              ${vibe === 'HOSTEL' ? 'bg-[#c5a059] text-[#18181b] font-josefin hover:bg-[#d4b06a]'
+              : vibe === 'SHIRE'  ? 'bg-[#dcb055] text-[#161915] font-medieval hover:bg-[#e8c06a]'
+                                  : 'bg-[#d4af37] text-[#0a0808] font-cinzel hover:bg-[#e0bc45]'}`}
+            style={{ fontSize: '0.7rem', boxShadow: '0 4px 20px rgba(212,175,55,0.35)' }}
+          >
+            {language === 'EN' ? 'Book' : 'Réserver'}
+          </button>
+
+          <div className="flex gap-2">
+            <a
+              href="tel:5144183450"
+              className={`px-5 py-2 rounded-full border bg-transparent transition-all hover:bg-white/10
+                ${vibe === 'HOSTEL' ? 'border-white/25 font-josefin text-neutral-400'
+                : vibe === 'SHIRE'  ? 'border-white/25 font-medieval text-neutral-400'
+                                    : 'border-white/25 font-cinzel text-neutral-400'}`}
+              style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}
+            >
+              514 418 3450
+            </a>
+            <button
+              onClick={onWwoofing}
+              className={`px-7 py-3 rounded-full font-bold uppercase tracking-[0.28em] transition-all hover:scale-105 active:scale-95 shadow-lg
+                ${vibe === 'HOSTEL' ? 'font-josefin' : vibe === 'SHIRE' ? 'font-medieval' : 'font-cinzel'}`}
+              style={{ fontSize: '0.7rem', backgroundColor: '#3a7d44', color: '#fff', boxShadow: '0 4px 20px rgba(58,125,68,0.4)', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
+            >
+              Wwoofing
+            </button>
           </div>
+        </div>
+
       </div>
-      <style>{`.text-shadow-gold { text-shadow: 0 0 20px rgba(212,175,55,0.3); }`}</style>
+
+      <style>{`
+        .text-shadow-gold { text-shadow: 0 0 20px rgba(212,175,55,0.3); }
+        @keyframes inn-fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .animate-fadeIn { animation: inn-fadeIn 1s ease-out both; }
+      `}</style>
     </div>
   );
 };
 
-const TrustedPlatforms: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
+export const TrustedPlatforms: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
     let containerClass = 'bg-[#0f0f0f] border-[#333]';
     let gradientFrom = 'from-[#0f0f0f]';
     let badgeClass = 'border-[#d4af37] bg-[#d4af37] text-[#d4af37]';
@@ -482,7 +785,7 @@ const HistorySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ l
     <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 relative z-10">
         <div className="w-full md:w-1/2 relative group perspective-1000">
             <RevealOnScroll animation="slideRight">
-                <div className={`relative h-[300px] md:h-[500px] border shadow-2xl rotate-1 group-hover:rotate-0 transition-all duration-700 ease-out overflow-hidden ${vibe === 'HOSTEL' ? 'bg-[#1e1e24] border-[#c5a059]/50 shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-t-full' : vibe === 'SHIRE' ? 'bg-[#20241e] border-[#dcb055]/40 rounded-full rotate-0 p-8' : 'bg-[#121212] border-[#333]'}`}>
+                <div className={`relative h-[300px] md:h-[500px] border shadow-2xl rotate-1 group-hover:rotate-0 transition-all duration-700 ease-out overflow-hidden transform-gpu ${vibe === 'HOSTEL' ? 'bg-[#1e1e24] border-[#c5a059]/50 shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-t-full' : vibe === 'SHIRE' ? 'bg-[#20241e] border-[#dcb055]/40 rounded-full rotate-0 p-8' : 'bg-[#121212] border-[#333]'}`} style={{ clipPath: vibe === 'HOSTEL' ? 'inset(0% round 9999px 9999px 0px 0px)' : vibe === 'SHIRE' ? 'inset(0% round 9999px)' : 'inset(0%)' }}>
                     <div className={`absolute top-0 left-0 w-full h-full border border-white/5 pointer-events-none z-20 ${vibe === 'HOSTEL' ? 'rounded-t-full' : vibe === 'SHIRE' ? 'rounded-full' : ''}`}></div>
                     <OptimizedImage 
                         src="https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg" 
@@ -523,8 +826,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const colors = getRoomColor(item.id, vibe);
   const isComingSoon = item.status === 'COMING_SOON';
-  const isChildRoom = ['room1', 'room2', 'room3', 'room4'].includes(item.id);
-  const ctaText = isChildRoom ? (language === 'EN' ? "Book Individually" : "Réserver Individuellement") : (language === 'EN' ? "Reserve" : "Réserver");
+  const ctaText = language === 'EN' ? "Reserve" : "Réserver";
   const displayedTitle = (language === 'FR' && item.title_fr) ? item.title_fr : item.title;
   const displayedType = language === 'FR' && item.type_fr ? item.type_fr : item.type;
   const displayedDescription = language === 'FR' && item.description_fr ? item.description_fr : item.description;
@@ -535,13 +837,19 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   if (vibe === 'HOSTEL') {
       return (
         <VictorianCard vibe='HOSTEL' className={`h-full ${isHero ? 'scale-100' : 'scale-95'}`} onClick={() => window.open(item.bookingLink, '_blank')}>
-            <div className={`relative w-full overflow-hidden shadow-2xl rounded-t-full border-[3px] border-[#c5a059] bg-black ${isHero ? 'aspect-[16/9]' : 'aspect-video md:aspect-[3/4]'}`}>
+            <div className={`relative w-full overflow-hidden shadow-2xl rounded-t-full bg-black isolate transform-gpu ${isHero ? 'aspect-[16/9]' : 'aspect-video md:aspect-[3/4]'}`} style={{ clipPath: 'inset(0% round 9999px 9999px 0px 0px)' }}>
+              <div className="absolute inset-0 rounded-t-full pointer-events-none z-20" style={{ boxShadow: 'inset 0 0 0 3px #c5a059' }} />
                  {isComingSoon && (
                     <div className="absolute inset-0 z-50 bg-black/60 flex items-center justify-center">
                         <span className="font-josefin font-bold text-xl uppercase tracking-widest text-[#f3e5ab] border border-[#f3e5ab] px-4 py-1 rounded-full bg-black/40 backdrop-blur-sm">{language === 'EN' ? "Coming Soon" : "Bientôt"}</span>
                     </div>
                 )}
                 <OptimizedImage key={item.images[currentImageIdx]} src={item.images[currentImageIdx]} alt={displayedTitle} className="w-full h-full" imageClassName="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" priority={isHero} variant={isHero ? 'HERO' : 'CARD'} />
+                {!isComingSoon && (
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none px-6 py-2.5 bg-black/70 backdrop-blur-md border-2 border-[#f3e5ab] text-[#f3e5ab] font-josefin font-bold uppercase tracking-[0.3em] rounded-full text-sm shadow-2xl whitespace-nowrap">
+                        {ctaText}
+                    </span>
+                )}
                 {item.images.length > 1 && (<><button onClick={prevImage} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-[#f3e5ab] hover:bg-[#c5a059] transition-colors flex items-center justify-center z-20">←</button><button onClick={nextImage} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-[#f3e5ab] hover:bg-[#c5a059] transition-colors flex items-center justify-center z-20">→</button></>)}
             </div>
             <div className="text-center pt-6 px-4 w-full">
@@ -558,13 +866,19 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   if (vibe === 'SHIRE') {
     return (
         <VictorianCard vibe='SHIRE' className={`h-full flex flex-col`} onClick={() => window.open(item.bookingLink, '_blank')}>
-            <div className={`relative w-full overflow-hidden border-[4px] border-[#dcb055] mb-4 shadow-lg bg-[#20241e] ${isHero ? 'aspect-[16/9] rounded-[50px]' : 'aspect-video md:aspect-[4/3] rounded-[30px]'}`}>
+            <div className={`relative w-full overflow-hidden mb-4 shadow-lg bg-[#20241e] isolate transform-gpu ${isHero ? 'aspect-[16/9] rounded-[50px]' : 'aspect-video md:aspect-[4/3] rounded-[30px]'}`} style={{ clipPath: isHero ? 'inset(0% round 50px)' : 'inset(0% round 30px)' }}>
+                <div className="absolute inset-0 pointer-events-none z-20" style={{ boxShadow: 'inset 0 0 0 4px #dcb055', borderRadius: isHero ? '50px' : '30px' }} />
                  {isComingSoon && (
                     <div className="absolute inset-0 z-50 bg-[#20241e]/80 flex items-center justify-center">
                         <span className="font-medieval text-xl text-[#faeecd] border-2 border-[#dcb055] px-6 py-2 rounded-full bg-[#282d26]">{language === 'EN' ? "Coming Soon" : "Bientôt"}</span>
                     </div>
                 )}
                 <OptimizedImage key={item.images[currentImageIdx]} src={item.images[currentImageIdx]} alt={displayedTitle} className="w-full h-full" imageClassName="w-full h-full object-cover transition-all duration-700 hover:scale-105" priority={isHero} variant={isHero ? 'HERO' : 'CARD'} />
+                {!isComingSoon && (
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none px-6 py-2.5 bg-black/70 backdrop-blur-md border-2 border-[#dcb055] text-[#faeecd] font-medieval uppercase tracking-[0.25em] rounded-full text-base shadow-2xl whitespace-nowrap">
+                        {ctaText}
+                    </span>
+                )}
             </div>
             <div className="flex flex-col flex-grow text-center px-4">
                 <span className="font-medieval text-[10px] text-[#dcb055] tracking-widest mb-1 opacity-80">{displayedType}</span>
@@ -593,8 +907,13 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
               <span className={`text-[9px] font-cinzel font-bold uppercase tracking-widest ${colors.text}`}>{displayedType}</span>
               <div className="flex gap-2"><span className={`w-1.5 h-1.5 rounded-full bg-[#2a2a2a] border border-[#444]`}></span><span className={`w-1.5 h-1.5 rounded-full bg-[#2a2a2a] border border-[#444]`}></span></div>
           </div>
-          <div className={`relative overflow-hidden bg-black ${isHero ? 'aspect-[21/9] md:aspect-[16/9]' : 'aspect-video md:aspect-[4/3]'}`}>
+          <div className={`relative overflow-hidden bg-black isolate transform-gpu ${isHero ? 'aspect-[21/9] md:aspect-[16/9]' : 'aspect-video md:aspect-[4/3]'}`} style={{ clipPath: 'inset(0%)' }}>
             <OptimizedImage key={item.images[currentImageIdx]} src={item.images[currentImageIdx]} alt={displayedTitle} className="w-full h-full" imageClassName="w-full h-full object-cover transition-transform duration-700 hover:scale-105 opacity-90 hover:opacity-100" priority={isHero} variant={isHero ? 'HERO' : 'CARD'} />
+            {!isComingSoon && (
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none px-6 py-2.5 bg-black/70 backdrop-blur-md border-2 border-[#d4af37] text-[#d4af37] font-cinzel font-bold uppercase tracking-[0.3em] rounded-full text-sm shadow-2xl whitespace-nowrap">
+                    {ctaText}
+                </span>
+            )}
             {item.images.length > 1 && (<><button onClick={prevImage} className="absolute left-0 top-0 bottom-0 w-12 hover:bg-black/30 text-white/50 hover:text-white transition-all z-20">←</button><button onClick={nextImage} className="absolute right-0 top-0 bottom-0 w-12 hover:bg-black/30 text-white/50 hover:text-white transition-all z-20">→</button></>)}
           </div>
           <div className={`${isHero ? 'p-8' : 'p-5'} flex flex-col flex-grow bg-gradient-to-b from-[#121212] to-[#0a0a0a]`}>
@@ -613,7 +932,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   );
 };
 
-const PhotoGallerySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
+export const PhotoGallerySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [isTouching, setIsTouching] = useState(false);
     const [startX, setStartX] = useState(0);
@@ -700,7 +1019,7 @@ const PhotoGallerySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> =
     );
 };
 
-const SpacesGrid: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
+export const SpacesGrid: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
     const spaces = [{ title: "Ger (Yourte)", items: ["Chambre pour 5", "Foyer au Bois"] }, { title: "Chambres (5)", items: ["Musicienne", "Écrivaine", "Cinéaste", "Théâtre", "Tour"] }, { title: "Autobus", items: ["Chambre pour 5", "Foyer aux granules", "Piano inclus"] }, { title: "Salle à Manger", items: ["Tables bistro", "Table basse"] }, { title: "Salon Principal", items: ["Bibliothèque", "Sofas", "Espace doux", "Musique"] }, { title: "Cuisine", items: ["Libre Service", "Café Barista et Thé"] }, { title: "Spa / Jacuzzi", items: ["Espace détente", "Ouvert 24/7"] }, { title: "Nature", items: ["Ruisseau", "Lac", "Forêt", "Terrasse"] }, { title: "Espace Libre", items: ["3 Pits à Feux"] }, { title: "Balcons", items: ["Autour de la maison", "À l'étage"] }, { title: "Salle de Jeux", items: ["Projecteur", "Salle de meditation"] }, { title: "Jardins", items: ["Serre", "Mini Maison"] }];
     const getLink = (title: string) => {
         if (title.includes("Ger")) return ACCOMMODATIONS.find(a => a.id === 'yurt')?.bookingLink;
@@ -785,7 +1104,7 @@ const DetailFlipCard = ({ item, language }: { item: any; language: 'EN' | 'FR' }
     );
 };
 
-const DetailsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
+export const DetailsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; autoRotate?: boolean }> = ({ language, vibe, autoRotate = true }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const carouselRef = useRef<HTMLDivElement>(null);
     const rotationRef = useRef(0);
@@ -801,7 +1120,9 @@ const DetailsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ l
     }, []);
 
     useEffect(() => {
-        if (!isInView) { if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current); return; }
+        // Auto-rotation: opt-in via prop. When off, the carousel only rotates via buttons/wheel.
+        // (Continuous rAF + style.transform every frame is expensive on the main thread.)
+        if (!isInView || !autoRotate) { if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current); return; }
         const animate = () => {
             rotationRef.current -= 0.05;
             if (carouselRef.current) carouselRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
@@ -809,7 +1130,7 @@ const DetailsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ l
         };
         animate();
         return () => { if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current); };
-    }, [isInView]);
+    }, [isInView, autoRotate]);
 
     const rotate = (dir: 'left' | 'right') => {
         const step = 360 / details.length;
@@ -850,7 +1171,7 @@ const DetailsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ l
     );
 };
 
-const ServicesSection: React.FC<{ language: 'EN' | 'FR'; onNavigate: (view: 'INN' | 'KITCHEN' | 'MASSOTHERAPY') => void; vibe: VibeMode }> = ({ language, onNavigate, vibe }) => {
+export const ServicesSection: React.FC<{ language: 'EN' | 'FR'; onNavigate: (view: 'INN' | 'KITCHEN' | 'MASSOTHERAPY') => void; vibe: VibeMode }> = ({ language, onNavigate, vibe }) => {
     return (
         <div className="max-w-7xl mx-auto px-6 pb-24 relative z-10 pt-16">
             <RevealOnScroll className="text-center mb-16">
@@ -871,7 +1192,7 @@ const ServicesSection: React.FC<{ language: 'EN' | 'FR'; onNavigate: (view: 'INN
                     </div>
                 </div>
                 {/* 2. MASSAGE PORTAL */}
-                <div onClick={() => onNavigate('MASSOTHERAPY')} className={`relative group w-full min-h-[400px] md:h-full cursor-pointer overflow-hidden border-2 ${vibe === 'HOSTEL' ? 'rounded-b-[30px] md:rounded-bl-none md:rounded-r-[30px] border-[#c5a059]' : vibe === 'SHIRE' ? 'rounded-[30px] border-[#dcb055]' : 'border-[#d4af37] border-t-0 md:border-t-2 md:border-l-0 md:rounded-r-full'}`}>
+                <div onClick={() => window.open('https://www.salonlenvolee.com', '_blank', 'noopener,noreferrer')} className={`relative group w-full min-h-[400px] md:h-full cursor-pointer overflow-hidden border-2 ${vibe === 'HOSTEL' ? 'rounded-b-[30px] md:rounded-bl-none md:rounded-r-[30px] border-[#c5a059]' : vibe === 'SHIRE' ? 'rounded-[30px] border-[#dcb055]' : 'border-[#d4af37] border-t-0 md:border-t-2 md:border-l-0 md:rounded-r-full'}`}>
                     <div className="absolute inset-0 bg-black z-0 pointer-events-none overflow-hidden">
                         <OptimizedImage src="https://storage.googleapis.com/salondesinconnus/massage/massage%20andre.png" alt="Massage" className="w-full h-full" imageClassName="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 ease-out will-change-transform group-hover:scale-110" imageStyle={{ backfaceVisibility: 'hidden', transform: 'translateZ(0)' }} variant="CARD" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#001a1a] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
@@ -886,7 +1207,7 @@ const ServicesSection: React.FC<{ language: 'EN' | 'FR'; onNavigate: (view: 'INN
     );
 };
 
-const VideoTourSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => (
+export const VideoTourSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => (
     <div className={`max-w-7xl mx-auto px-6 pt-16 pb-32 border-t relative z-10 ${vibe === 'HOSTEL' ? 'border-[#c5a059]/30' : vibe === 'SHIRE' ? 'border-[#dcb055]/30' : 'border-[#d4af37]/20'}`}>
         <RevealOnScroll className="text-center mb-12">
             <h2 className={`text-3xl text-white tracking-[0.2em] mb-4 ${vibe === 'HOSTEL' ? 'font-prata' : vibe === 'SHIRE' ? 'font-medieval' : 'font-cinzel'}`}>{language === 'EN' ? "FEEL THE VIBE" : "RESSENTEZ L'AMBIANCE"}</h2>
@@ -894,7 +1215,7 @@ const VideoTourSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({
         </RevealOnScroll>
         <RevealOnScroll animation="fadeIn">
             <div className={`relative w-full aspect-video shadow-2xl bg-[#0a0a0a] group p-2 ${vibe === 'HOSTEL' ? 'border-[4px] border-[#1e1e24] outline outline-1 outline-[#c5a059] rounded-t-[50px] rounded-b-lg' : vibe === 'SHIRE' ? 'border-4 border-[#dcb055] rounded-[60px] shadow-lg' : 'border border-[#333]'}`}>
-                <div className={`w-full h-full relative overflow-hidden ${vibe === 'HOSTEL' ? 'rounded-t-[40px] rounded-b-md border border-[#c5a059]/50' : vibe === 'SHIRE' ? 'rounded-full border border-[#dcb055]/50' : 'border border-white/5'}`}>
+                <div className={`w-full h-full relative overflow-hidden transform-gpu ${vibe === 'HOSTEL' ? 'rounded-t-[40px] rounded-b-md border border-[#c5a059]/50' : vibe === 'SHIRE' ? 'rounded-full border border-[#dcb055]/50' : 'border border-white/5'}`}>
                     <video src="https://storage.googleapis.com/salondesinconnus/inn/Temp%20video%20site.mov" className={`w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity`} controls playsInline preload="metadata"><p>Your browser does not support the video tag.</p></video>
                 </div>
             </div>
@@ -902,7 +1223,7 @@ const VideoTourSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({
     </div>
 );
 
-const LocalGuideSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => {
+export const LocalGuideSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => {
     return (
         <div className="relative h-[60vh] flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
@@ -920,7 +1241,7 @@ const LocalGuideSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNav
     );
 };
 
-const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => {
+export const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => {
     const daysLeft = Math.ceil((new Date('2026-05-21T12:00:00').getTime() - Date.now()) / (1000 * 60 * 60 * 24));
     return (
         <div className="relative overflow-hidden" style={{ height: '100vh' }}>
@@ -992,7 +1313,67 @@ const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigat
     );
 };
 
-const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => (
+export const WwoofingSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => {
+    return (
+        <div className="relative overflow-hidden" style={{ height: '100vh' }}>
+            <div className="absolute inset-0">
+                <img
+                    src="https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg"
+                    alt="Wwoofing à la Maison Favier"
+                    className="w-full h-full object-cover object-center"
+                    style={{ objectPosition: '50% 40%' }}
+                />
+                <div className={`absolute inset-0 transition-colors duration-1000 ${
+                    vibe === 'HOSTEL' ? 'bg-gradient-to-t from-[#18181b] via-[#18181b]/70 to-black/55'
+                    : vibe === 'SHIRE' ? 'bg-gradient-to-t from-[#161915] via-[#161915]/70 to-black/55'
+                    : 'bg-gradient-to-t from-[#050505] via-[#050505]/70 to-black/55'}`}></div>
+            </div>
+
+            <div className="relative z-10 flex flex-col justify-end items-start h-full pb-16 px-8 md:px-16 max-w-5xl mx-auto">
+                <div className="mb-4 flex items-center gap-4">
+                    <div className={`h-px w-8 ${vibe === 'HOSTEL' ? 'bg-[#f3e5ab]' : 'bg-[#d4af37]'}`}></div>
+                    <span className={`font-cinzel text-xs uppercase tracking-[0.5em] ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : 'text-[#d4af37]'}`}>
+                        {language === 'FR' ? 'Vivre & Travailler' : 'Live & Work'}
+                    </span>
+                </div>
+                <h2 className={`font-cinzel text-4xl md:text-7xl text-white mb-4 leading-tight ${vibe === 'HOSTEL' ? 'font-prata' : ''}`}>
+                    Wwoofing
+                </h2>
+                <p className={`text-lg md:text-xl max-w-xl leading-relaxed mb-8 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]/80 font-josefin' : 'text-neutral-300 font-lato'}`}>
+                    {language === 'FR'
+                        ? 'Séjour minimum d\'une semaine · Jardins, cuisine, arts · Échange contre gîte et couvert'
+                        : 'One-week minimum stay · Gardens, kitchen, arts · In exchange for room and board'}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                    <button
+                        onClick={() => onNavigate('WWOOFING')}
+                        className={`px-8 py-4 font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95
+                            ${vibe === 'HOSTEL'
+                                ? 'bg-[#f3e5ab] text-[#1e1e24] hover:bg-white font-josefin'
+                                : vibe === 'SHIRE'
+                                ? 'bg-[#dcb055] text-[#1a1107] hover:bg-[#f0ca70]'
+                                : 'bg-[#d4af37] text-black hover:bg-[#f3e5ab]'}`}
+                    >
+                        {language === 'FR' ? 'Postuler & Découvrir' : 'Apply & Discover'}
+                    </button>
+                    <button
+                        onClick={() => onNavigate('CEILIDH')}
+                        className={`px-8 py-4 bg-transparent font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105
+                            ${vibe === 'HOSTEL'
+                                ? 'border-2 border-[#f3e5ab] text-[#f3e5ab] hover:bg-[#f3e5ab] hover:text-[#1e1e24] font-josefin'
+                                : vibe === 'SHIRE'
+                                ? 'border-2 border-[#dcb055] text-[#faeecd] hover:bg-[#dcb055] hover:text-[#1a1107]'
+                                : 'border-2 border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black'}`}
+                    >
+                        {language === 'FR' ? 'Voir le Ceilidh' : 'See the Ceilidh'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => (
     <div className="min-h-screen flex flex-col justify-center items-center max-w-7xl mx-auto px-6 py-32 text-center">
         <div className="w-48 h-auto mb-8 animate-fadeIn">
              <img src="https://i.imgur.com/B1YfPqn.png" alt="Maison Favier Logo" className={`w-full h-full object-contain drop-shadow-2xl transition-all duration-1000 ${vibe === 'HOSTEL' ? 'brightness-125 sepia-[.5] hue-rotate-[-30deg]' : vibe === 'SHIRE' ? 'brightness-110 sepia-[0.8] hue-rotate-[5deg] saturate-[1.4]' : 'brightness-100'}`} />
@@ -1002,9 +1383,134 @@ const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate
             <p className={`text-neutral-400 text-xl max-w-2xl mx-auto leading-relaxed mb-12 ${vibe === 'HOSTEL' ? 'font-josefin tracking-wide' : vibe === 'SHIRE' ? 'font-medieval text-[#faeecd]/90' : 'font-lato'}`}>{language === 'EN' ? "And the story behind the projects." : "Et l'histoire derrière les projets."}</p>
             <button onClick={() => onNavigate('HOSTS')} className={`px-10 py-5 bg-transparent border-2 font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 ${vibe === 'HOSTEL' ? 'border-[#c5a059] text-[#f3e5ab] hover:bg-[#c5a059] hover:text-[#1e1e24]' : vibe === 'SHIRE' ? 'border-[#dcb055] text-[#faeecd] hover:bg-[#dcb055] hover:text-[#1a1107]' : 'border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black'}`}>{language === 'EN' ? "Meet the Team" : "Rencontrer l'Équipe"}</button>
         </RevealOnScroll>
-        <div className={`mt-24 opacity-50 text-[10px] uppercase tracking-[0.3em] ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-500'}`}>© 2026 Le Salon des Inconnus</div>
+        <div className="mt-16 flex flex-col items-center gap-3">
+          <a href="tel:5144183450" className={`text-base font-bold tracking-widest hover:opacity-80 transition-opacity ${vibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin' : vibe === 'SHIRE' ? 'text-[#dcb055] font-medieval' : 'text-[#d4af37] font-cinzel'}`}>
+            514 418 3450
+          </a>
+          <a href="mailto:Alex@lesalondesinconnus.com" className={`text-xs opacity-50 hover:opacity-80 transition-opacity font-lato ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-400'}`}>
+            Alex@lesalondesinconnus.com
+          </a>
+        </div>
+
+        {/* Map + copyright moved to bottom of InnPage as a full-width footer section */}
     </div>
 );
+
+export const MapFooterSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => (
+    <section className={`relative w-full border-t ${vibe === 'HOSTEL' ? 'bg-[#18181b] border-[#c5a059]/30' : vibe === 'SHIRE' ? 'bg-[#161915] border-[#dcb055]/20' : 'bg-[#050505] border-[#d4af37]/20'}`}>
+        <div className="text-center pt-16 pb-8 px-6">
+            <p className={`font-cinzel text-xs uppercase tracking-[0.5em] mb-3 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#dcb055]' : 'text-[#d4af37]'}`}>
+                {language === 'EN' ? 'Find Us' : 'Nous Trouver'}
+            </p>
+            <p className={`font-lato text-sm ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]/80' : vibe === 'SHIRE' ? 'text-[#faeecd]/80' : 'text-neutral-400'}`}>
+                826 Côte à Favier · Namur, QC J0V 1N0
+            </p>
+        </div>
+        <div className="relative w-full border-y border-white/10" style={{ height: 'min(60vh, 600px)' }}>
+            <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-75.0%2C45.85%2C-74.85%2C45.95&layer=mapnik&marker=45.897%2C-74.912"
+                className="w-full h-full block"
+                title="Maison Favier"
+                loading="lazy"
+                style={{ filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }}
+            />
+        </div>
+        <div className="text-center py-6 px-6">
+            <a
+                href="https://www.openstreetmap.org/?mlat=45.897&mlon=-74.912#map=14/45.897/-74.912"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-block text-[11px] font-lato opacity-50 hover:opacity-90 transition-opacity ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-300'}`}
+            >
+                {language === 'EN' ? 'View larger map →' : 'Voir la carte plus grande →'}
+            </a>
+        </div>
+        <div className={`text-center pb-10 text-[10px] uppercase tracking-[0.3em] opacity-40 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-500'}`}>
+            © 2026 Le Salon des Inconnus
+        </div>
+    </section>
+);
+
+// ─── Manor + Connected Rooms Section (extracted from InnPage main render) ──────
+export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
+    const manor = ACCOMMODATIONS.find(a => a.id === 'manor');
+    const connectedIds = ['room3', 'room4', 'room2', 'room1', 'yurt'];
+    const connectedRooms = ACCOMMODATIONS.filter(a => connectedIds.includes(a.id));
+    const sortOrder = { 'room3': 0, 'room4': 1, 'room2': 2, 'room1': 3, 'yurt': 4 };
+    connectedRooms.sort((a, b) => sortOrder[a.id as keyof typeof sortOrder] - sortOrder[b.id as keyof typeof sortOrder]);
+    if (!manor) return null;
+    return (
+        <div className="w-full max-w-[1920px] mx-auto pb-12 relative px-6 md:px-12 pt-12">
+            <div id="rooms" />
+            <RevealOnScroll className="flex justify-center relative z-20 mb-8">
+                <div className={`w-full max-w-7xl ${vibe === 'CLASSIC' ? 'shadow-[0_0_50px_rgba(0,0,0,0.8)]' : ''}`}>
+                    <ListingCard item={manor} language={language} isHero vibe={vibe} />
+                </div>
+            </RevealOnScroll>
+            <div className="flex flex-col items-center w-full mb-8 relative z-10">
+                <div className={`h-8 w-px ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                <div className={`px-6 py-1 rounded-full z-20 border
+                    ${vibe === 'HOSTEL' ? 'bg-[#1e1e24] border-[#c5a059] text-[#f3e5ab]' :
+                      vibe === 'SHIRE' ? 'bg-[#2f2010] border-[#dcb055] text-[#faeecd]' :
+                      'bg-[#0a0a0a] border-white/20 text-neutral-400'}`}>
+                    <span className={`text-[9px] font-bold uppercase tracking-[0.2em]
+                        ${vibe === 'HOSTEL' ? 'font-josefin' :
+                          vibe === 'SHIRE' ? 'font-medieval' :
+                          'font-cinzel'}`}>
+                        {language === 'EN' ? 'Includes' : 'Inclut'}
+                    </span>
+                </div>
+                <div className={`h-8 w-px ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                <div className={`w-[90%] md:w-[82%] h-px relative
+                    ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}>
+                    <div className={`absolute top-0 left-0 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                    <div className={`absolute top-0 left-1/4 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                    <div className={`absolute top-0 left-1/2 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                    <div className={`absolute top-0 left-3/4 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                    <div className={`absolute top-0 right-0 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-20 mt-8 w-full">
+                {connectedRooms.map((room, idx) => (
+                    <RevealOnScroll key={room.id} delay={idx * 100} className="h-auto md:h-[450px]">
+                        <ListingCard item={room} language={language} vibe={vibe} />
+                    </RevealOnScroll>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// ─── Independent Stays Section (extracted) ─────────────────────────────────────
+export const IndependentStaysSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
+    const independentIds = ['tiny', 'bus'];
+    const independentRooms = ACCOMMODATIONS.filter(a => independentIds.includes(a.id));
+    return (
+        <div className="w-full max-w-[1920px] mx-auto pb-12 px-6 md:px-12 pt-24">
+            <RevealOnScroll className="text-center mb-16">
+                <h2 className={`text-3xl text-white tracking-[0.2em]
+                    ${vibe === 'HOSTEL' ? 'font-prata' :
+                      vibe === 'SHIRE' ? 'font-medieval' :
+                      'font-cinzel'}`}>
+                    {language === 'EN' ? 'INDEPENDENT STAYS' : 'SÉJOURS INDÉPENDANTS'}
+                </h2>
+                <p className={`mt-2 text-xs uppercase tracking-widest
+                    ${vibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin' :
+                      vibe === 'SHIRE' ? 'text-[#faeecd] font-medieval' :
+                      'text-neutral-500 font-lato'}`}>
+                    {language === 'EN' ? 'Off-grid / Secluded' : 'Hors-Réseau / Isolé'}
+                </p>
+            </RevealOnScroll>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
+                {independentRooms.map((room, idx) => (
+                    <RevealOnScroll key={room.id} delay={idx * 150} className="h-auto md:h-[500px]">
+                        <ListingCard item={room} language={language} vibe={vibe} />
+                    </RevealOnScroll>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
   const [currentVibe, setCurrentVibe] = useState<VibeMode>('HOSTEL');
@@ -1028,11 +1534,12 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
   const meta = PAGE_META.INN[language];
 
   return (
-    <div 
+    <div
         ref={mainRef}
-        className={`fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200 animate-fadeIn custom-scrollbar selection:text-black transition-colors duration-1000 
-        ${currentVibe === 'HOSTEL' ? 'bg-[#18181b] selection:bg-[#f3e5ab]' : 
-          currentVibe === 'SHIRE' ? 'bg-[#161915] selection:bg-[#dcb055]' : 
+        data-inn-scroll
+        className={`fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200 animate-fadeIn custom-scrollbar selection:text-black transition-colors duration-1000
+        ${currentVibe === 'HOSTEL' ? 'bg-[#18181b] selection:bg-[#f3e5ab]' :
+          currentVibe === 'SHIRE' ? 'bg-[#161915] selection:bg-[#dcb055]' :
           'bg-[#050505] selection:bg-[#d4af37]'}`}
     >
       {/* NATIVE REACT 19 SEO INJECTION */}
@@ -1046,37 +1553,24 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
       <VictorianPattern vibe={currentVibe} />
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-1000 mix-blend-overlay ${currentVibe === 'HOSTEL' ? 'opacity-20 bg-[url("https://www.transparenttextures.com/patterns/dark-leather.png")]' : 'opacity-0'}`}></div>
 
-      <header className={`fixed top-0 w-full z-[100] border-b shadow-lg transition-colors duration-1000 
-        ${currentVibe === 'HOSTEL' ? 'bg-[#18181b]/90 border-[#c5a059]/30' : 
-          currentVibe === 'SHIRE' ? 'bg-[#161915]/90 border-[#dcb055]/30' : 
-          'bg-[#050505]/90 border-[#d4af37]/20'}`}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div 
-             className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
-             onClick={() => mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-             <span className={`text-2xl transition-colors 
-                 ${currentVibe === 'HOSTEL' ? 'text-[#f3e5ab]' : 
-                   currentVibe === 'SHIRE' ? 'text-[#eebb44]' : 
-                   'text-[#d4af37]'}`}>
-                   <Icons.Key />
-             </span>
-             <span className={`font-bold text-lg tracking-[0.2em] hidden md:block transition-colors 
-                ${currentVibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin uppercase' : 
-                  currentVibe === 'SHIRE' ? 'text-[#faeecd] font-medieval tracking-[0.1em]' : 
-                  'text-[#d4af37] font-cinzel'}`}>
-                  L'Auberge
-             </span>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content Area - STICKY STACK ARCHITECTURE */}
-      <main className="pt-20 relative z-10">
+      <main className="pt-0 relative z-10">
           
-          {/* 1. Hero Layer (Base - Parallax) */}
-          <div className="relative z-0" style={{ position: 'sticky', top: 0 }}>
-             <InnHero language={language} vibe={currentVibe} onCycleVibe={cycleVibe} />
+          {/* 1. Hero (sequential — no longer sticky after stack refactor) */}
+          <div className="relative">
+             <InnHero
+                language={language}
+                vibe={currentVibe}
+                onCycleVibe={cycleVibe}
+                onReserver={() => {
+                    const target = mainRef.current?.querySelector('#rooms') as HTMLElement | null;
+                    if (target && mainRef.current) {
+                        const top = target.getBoundingClientRect().top + mainRef.current.scrollTop - 80;
+                        mainRef.current.scrollTo({ top, behavior: 'smooth' });
+                    }
+                }}
+                onWwoofing={() => onNavigate('WWOOFING')}
+             />
              <TrustedPlatforms language={language} vibe={currentVibe} />
           </div>
 
@@ -1085,6 +1579,9 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
              <HistorySection language={language} vibe={currentVibe} />
              <SectionDivider vibe={currentVibe} />
           </StickySection>
+
+          {/* Anchor: smooth-scroll target for hero "Réserver" CTA */}
+          <div id="rooms" />
 
           {/* 3. Estate Node Tree Layer */}
           {manor && (
@@ -1208,10 +1705,18 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
               <HostsSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
           </StickySection>
 
-          {/* 12. Events Layer (Footer) */}
+          {/* 12. Events Layer */}
           <StickySection vibe={currentVibe} zIndex={95} desktopHeight="100vh" mobileHeight="100vh">
               <EventsSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
           </StickySection>
+
+          {/* 13. Wwoofing Layer */}
+          <StickySection vibe={currentVibe} zIndex={97} desktopHeight="100vh" mobileHeight="100vh">
+              <WwoofingSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
+          </StickySection>
+
+          {/* 14. Footer — full-width map + copyright */}
+          <MapFooterSection language={language} vibe={currentVibe} />
 
       </main>
       
@@ -1251,6 +1756,7 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
         }
         .transform-gpu {
           transform: translate3d(0,0,0);
+          will-change: transform;
         }
         .transform-style-3d { transform-style: preserve-3d; }
         .backface-hidden { backface-visibility: hidden; }

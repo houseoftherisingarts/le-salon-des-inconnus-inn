@@ -29,7 +29,7 @@ const IntroSection: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => (
                 </div>
             </div>
             
-            <h1 className="font-cinzel text-7xl md:text-9xl text-white mb-8 tracking-widest drop-shadow-2xl text-shadow-gold">
+            <h1 className="font-cinzel text-5xl sm:text-7xl md:text-9xl text-white mb-8 tracking-widest drop-shadow-2xl text-shadow-gold break-words">
                 {language === 'EN' ? "THE HOSTS" : "L'ÉQUIPE"}
             </h1>
             
@@ -183,7 +183,7 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
     {
       name: "Andrée Dancause",
       role: "Massothérapie & Entretien",
-      image: "https://storage.googleapis.com/salondesinconnus/Artistes/Andre%CC%81e%20temp%20wide.png", 
+      image: "/andree-temp-wide-noname.png",
       flavor: language === 'EN' ? "Restoring balance to weary travelers with hands guided by intuition and experience." : "Rétablissant l'équilibre des voyageurs fatigués avec des mains guidées par l'intuition et l'expérience.",
       objectPosition: "50% 35%", // Raised 40px (approx 10%) higher in frame (panning down image)
       action: () => onNavigate('MASSOTHERAPY')
@@ -206,13 +206,22 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
        {/* Global Header */}
       <header className="fixed top-0 w-full z-50 bg-gradient-to-b from-[#050505] to-transparent backdrop-blur-[1px] transition-all duration-500">
         <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-          <div 
-             className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
-             onClick={() => onNavigate('INN')}
+          {/* Brand — matches the global SiteHeader: Maison Favier logo + "Le Salon des Inconnus" */}
+          <button
+            type="button"
+            onClick={() => onNavigate('INN')}
+            className="flex items-center gap-2.5 flex-shrink-0 group"
           >
-             <span className="text-2xl text-[#d4af37] drop-shadow-md"><Icons.FleurDeLys /></span>
-             <span className="font-cinzel font-bold text-lg tracking-widest hidden md:block text-[#d4af37]">Maison Favier</span>
-          </div>
+            <img
+              src="https://i.imgur.com/B1YfPqn.png"
+              alt="Le Salon des Inconnus"
+              className="h-7 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
+            <span className="hidden sm:block font-cinzel text-[10px] font-bold uppercase tracking-[0.25em] text-white/70 group-hover:text-white/90 transition-colors">
+              Le Salon des Inconnus
+            </span>
+          </button>
           <button 
                 onClick={() => onNavigate('INN')}
                 className="flex items-center gap-2 px-5 py-2 rounded-sm border border-[#d4af37]/30 hover:border-[#d4af37] bg-black/20 backdrop-blur hover:bg-[#d4af37] hover:text-black transition-all duration-300 font-cinzel text-xs uppercase tracking-widest text-[#d4af37]"

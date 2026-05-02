@@ -1,0 +1,38 @@
+/* Fonts (preserved from original inline import — keeps existing vibe identity intact). */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&family=Prata&family=Josefin+Sans:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,700;1,700&family=MedievalSharp&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Carried from index.html inline <style> — name-based font utilities used in code.
+   Includes Prata + Josefin which were previously only defined inside InnPage's
+   inline <style> block (so they were missing whenever InnPage didn't mount,
+   e.g. when InnHero was reused on the editorial test page). */
+@layer utilities {
+  .font-cinzel    { font-family: 'Cinzel', serif; }
+  .font-lato      { font-family: 'Lato', sans-serif; }
+  .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+  .font-medieval  { font-family: 'MedievalSharp', cursive; }
+  .font-prata     { font-family: 'Prata', serif; }
+  .font-josefin   { font-family: 'Josefin Sans', sans-serif; }
+}
+
+/* Site chrome */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1a1a1a; }
+::-webkit-scrollbar-thumb { background: #4a3b2a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #6b553e; }
+
+/* Default button radius: 15px everywhere on site EXCEPT inside the InnPage scroll-stack sections.
+   Wrapped in :where() to keep specificity at 0 so any explicit Tailwind rounded-* class on a button still wins. */
+button:where(:not([data-inn-scroll] *)) { border-radius: 15px; }
+
+/* Performance — defer rendering + animations of offscreen sections.
+   Apply to wrapper around heavy/non-lazy sections so the browser skips work
+   for content not on screen. `auto 800px` is an estimated initial size for
+   layout; the browser memoizes the actual size after first render. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}

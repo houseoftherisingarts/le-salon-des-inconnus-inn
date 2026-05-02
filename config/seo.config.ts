@@ -2,15 +2,15 @@
 export const SITE_URL = "https://www.lesalondesinconnus.com";
 
 export const CONTACT_INFO = {
-  address: "321 Chemin de la Montagne",
+  address: "826 Côte à Favier",
   locality: "Namur",
   region: "QC",
   postalCode: "J0V 1N0",
   country: "CA",
   phone: "+15144183450",
   coords: {
-    lat: 45.897,
-    lng: -74.912
+    lat: 45.8943,
+    lng: -74.9118
   }
 };
 
@@ -79,6 +79,14 @@ export const PAGE_META = {
       keywords: "Hôtel Parc Oméga, Hébergement Montebello, Lac à l'épaule Petite Nation, Hotel near Parc Omega, Bed and Breakfast Quebec, Auberge Ripon"
     }
   },
+  INN_TEST2: {
+    EN: { title: "Inn Editorial Test 2 | Le Salon des Inconnus", description: "Editorial hero test (Bespoke pattern).", keywords: "" },
+    FR: { title: "Test Éditorial 2 | Le Salon des Inconnus", description: "Test de hero éditorial (motif Bespoke).", keywords: "" },
+  },
+  INN_TEST3: {
+    EN: { title: "Inn Editorial Test 3 | Le Salon des Inconnus", description: "Bold rebuild — cinematic hero with motion.", keywords: "" },
+    FR: { title: "Test Éditorial 3 | Le Salon des Inconnus", description: "Refonte audacieuse — hero cinématique avec animations.", keywords: "" },
+  },
   KITCHEN: {
     EN: { 
         title: "The Culinary Lab | Molecular Catering & Portuguese Bistronomy", 
@@ -102,5 +110,35 @@ export const PAGE_META = {
   GUIDE: {
     EN: { title: "Le Salon des Inconnus | Local Guide Outaouais", description: "Best things to do in Montebello, Ripon, and Mont-Tremblant.", keywords: "Guide Outaouais, Things to do Montebello" },
     FR: { title: "Le Salon des Inconnus | Guide Local Outaouais", description: "Quoi faire à Montebello, Ripon et Mont-Tremblant.", keywords: "Guide Outaouais, Quoi faire Montebello" }
+  },
+  EVENTS: {
+    EN: { title: "Events | Le Salon des Inconnus", description: "Artistic and community events at Maison Favier.", keywords: "Events Outaouais, Cultural events Quebec" },
+    FR: { title: "Événements | Le Salon des Inconnus", description: "Événements artistiques et communautaires à la Maison Favier.", keywords: "Événements Outaouais, Événements culturels Québec" }
+  },
+  CEILIDH: {
+    EN: { title: "Grand Ceilidh de Mai 2026 | Le Salon des Inconnus", description: "Wwoofing, performances, banquet and community — May 21–25, 2026 in Namur, QC.", keywords: "Ceilidh Quebec, Festival communautaire 2026, Wwoofing event" },
+    FR: { title: "Grand Ceilidh de Mai 2026 | Le Salon des Inconnus", description: "Wwoofing, spectacles, banquet et communauté — 21–25 mai 2026 à Namur, QC.", keywords: "Ceilidh Québec, Festival communautaire 2026, Événement Wwoofing" }
+  },
+  WWOOFING: {
+    EN: { title: "Wwoofing | Le Salon des Inconnus", description: "Live and work at Le Salon des Inconnus — apply as a wwoofer at Maison Favier.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },
+    FR: { title: "Wwoofing | Le Salon des Inconnus", description: "Vivez et travaillez au Salon des Inconnus — postuler comme wwoofer à la Maison Favier.", keywords: "Wwoofing Québec, Wwoofing Outaouais, Ferme bénévole Québec" }
+  },
+  MY_PROFILE: {
+    EN: { title: "My Profile | Le Salon des Inconnus", description: "Your member space at Le Salon des Inconnus.", keywords: "" },
+    FR: { title: "Mon Profil | Le Salon des Inconnus", description: "Votre espace membre au Salon des Inconnus.", keywords: "" }
+  },
+  PUBLIC_PROFILE: {
+    EN: { title: "Member Profile | Le Salon des Inconnus", description: "A profile from the community.", keywords: "" },
+    FR: { title: "Profil Membre | Le Salon des Inconnus", description: "Profil d'un membre de la communauté.", keywords: "" }
+  },
+  MESSAGING: {
+    EN: { title: "Messages | Le Salon des Inconnus", description: "Your conversations with the community.", keywords: "" },
+    FR: { title: "Messages | Le Salon des Inconnus", description: "Vos conversations avec la communauté.", keywords: "" }
+  },
+  ADMIN: {
+    EN: { title: "Admin CRM | Le Salon des Inconnus", description: "Administration space.", keywords: "" },
+    FR: { title: "Admin CRM | Le Salon des Inconnus", description: "Espace d'administration.", keywords: "" }
   }
-};
+} as const;
+
+export type ViewKey = keyof typeof PAGE_META;

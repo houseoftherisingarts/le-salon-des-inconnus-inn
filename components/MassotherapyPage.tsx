@@ -105,6 +105,21 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Hide this page from search engines — massotherapy has been spun off to
+    // salonlenvolee.com. Page kept available at /massage for emergency reference only.
+    let prev: string | null = null;
+    let tag = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (tag) prev = tag.content;
+    else {
+      tag = document.createElement('meta');
+      tag.name = 'robots';
+      document.head.appendChild(tag);
+    }
+    tag.content = 'noindex, nofollow';
+    return () => {
+      if (tag && prev !== null) tag.content = prev;
+      else if (tag) tag.remove();
+    };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {

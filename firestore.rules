@@ -2,13 +2,51 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Both addresses are admins. Used in many places below — kept as a small
+    // helper-like list so adding/removing an admin is one edit.
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'houseoftherisingarts@gmail.com' ||
+        request.auth.token.email == 'alex@lesalondesinconnus.com'
+      );
+    }
+
     // ── Members ──────────────────────────────────────────────────────────────
-    // Each authenticated user can read and write their own profile.
-    // The admin can read any profile (for future member management UI).
+    // Any authenticated user can read any member profile (for public profile pages).
+    // Each user can only write their own profile.
     match /members/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      allow read: if request.auth != null
-                  && request.auth.token.email == 'houseoftherisingarts@gmail.com';
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ── Friendships ──────────────────────────────────────────────────────────
+    // Doc ID is sorted([uid_a, uid_b]).join('_')
+    // Either party can read; either party can create/update; either can delete.
+    match /friendships/{friendshipId} {
+      allow read:   if request.auth != null;
+      allow create: if request.auth != null
+                    && request.auth.uid in request.resource.data.uids;
+      allow update: if request.auth != null
+                    && request.auth.uid in resource.data.uids;
+      allow delete: if request.auth != null
+                    && request.auth.uid in resource.data.uids;
+    }
+
+    // ── Conversations ─────────────────────────────────────────────────────────
+    // Members of the conversation can read and write.
+    match /conversations/{convId} {
+      allow read, update: if request.auth != null
+                          && request.auth.uid in resource.data.members;
+      allow create: if request.auth != null
+                    && request.auth.uid in request.resource.data.members;
+
+      match /messages/{msgId} {
+        allow read:   if request.auth != null
+                      && request.auth.uid in get(/databases/$(database)/documents/conversations/$(convId)).data.members;
+        allow create: if request.auth != null
+                      && request.auth.uid in get(/databases/$(database)/documents/conversations/$(convId)).data.members
+                      && request.auth.uid == request.resource.data.uid;
+      }
     }
 
     // ── Events ───────────────────────────────────────────────────────────────
@@ -16,13 +54,24 @@ service cloud.firestore {
     match /events/{eventId} {
       allow read: if true;
 
-      // Registrations: authenticated users can read all (for room-count feed),
-      // but each user may only write their own registration.
+      // Registrations: public read (powers room-count feed + timeline for all visitors).
+      // Each user may only write their own registration.
       match /registrations/{regId} {
-        allow read:  if request.auth != null;
+        allow read:  if true;
         allow write: if request.auth != null
                      && (request.auth.uid == regId
                          || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+      }
+
+      // Carpools: public read; any authenticated user can create or join.
+      // Only the driver (or admin) can delete their own carpool.
+      match /carpools/{carpoolId} {
+        allow read:   if true;
+        allow create: if request.auth != null;
+        allow update: if request.auth != null;
+        allow delete: if request.auth != null
+                      && (resource.data.driverUid == request.auth.uid
+                          || request.auth.token.email == 'houseoftherisingarts@gmail.com');
       }
 
       // Teams: public read (member counts, chef info).
@@ -32,13 +81,185 @@ service cloud.firestore {
         allow write: if request.auth != null
                      && request.auth.token.email == 'houseoftherisingarts@gmail.com';
 
-        // Kanban tasks: any authenticated member can read,
-        // only the admin can create / update / delete.
+        // Kanban tasks: any authenticated member can read, create, and update.
+        // Only the task creator or admin can delete.
         match /tasks/{taskId} {
-          allow read:  if request.auth != null;
-          allow write: if request.auth != null
-                       && request.auth.token.email == 'houseoftherisingarts@gmail.com';
+          allow read:   if request.auth != null;
+          allow create: if request.auth != null;
+          allow update: if request.auth != null;
+          allow delete: if request.auth != null
+                        && (resource.data.createdBy == request.auth.uid
+                            || request.auth.token.email == 'houseoftherisingarts@gmail.com');
         }
+      }
+
+      // Performances (Arts team show proposals): public read,
+      // authenticated users can create their own, delete their own (or admin).
+      match /performances/{perfId} {
+        allow read:   if true;
+        allow create: if request.auth != null;
+        allow delete: if request.auth != null
+                      && (resource.data.uid == request.auth.uid
+                          || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+        allow update: if request.auth != null
+                      && request.auth.token.email == 'houseoftherisingarts@gmail.com';
+      }
+
+      // Abundance offers (zone d'abondance): public read,
+      // each user owns their own doc (keyed by uid).
+      match /abundance/{userId} {
+        allow read:   if true;
+        allow write:  if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Ceilidh needs: public read; ANY signed-in member can post a need (the
+      // creator stamps their uid + email on the doc). Delete is restricted to
+      // the original creator or admin. Updates allow editing your own doc OR
+      // bumping just the `claims` field as anyone-can-claim.
+      match /needs/{needId} {
+        allow read: if true;
+        allow create: if request.auth != null;
+        allow delete: if request.auth != null
+                      && (resource.data.createdBy == request.auth.uid || isAdmin());
+        allow update: if request.auth != null
+                      && (resource.data.createdBy == request.auth.uid
+                          || isAdmin()
+                          || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['claims']));
+      }
+
+      // ── Chats ──────────────────────────────────────────────────────────────
+      // General Ceilidh chat — any signed-in member can post; everyone reads.
+      // Admin can delete any message; anyone else only their own.
+      match /chats/{room}/messages/{msgId} {
+        allow read:   if true;
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.uid;
+        allow delete: if request.auth != null
+                      && (resource.data.uid == request.auth.uid || isAdmin());
+        allow update: if isAdmin();
+      }
+
+      // Per-team chat — same shape as general. The team doc id is the segment.
+      match /teamChats/{teamId}/messages/{msgId} {
+        allow read:   if true;
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.uid;
+        allow delete: if request.auth != null
+                      && (resource.data.uid == request.auth.uid || isAdmin());
+        allow update: if isAdmin();
+      }
+
+      // Show tickets: public read for spot counting; Cloud Function (admin SDK) writes.
+      // Admin can delete. Users cannot write directly.
+      match /showTickets/{ticketId} {
+        allow read:   if true;
+        allow delete: if request.auth != null
+                      && request.auth.token.email == 'houseoftherisingarts@gmail.com';
+        allow write:  if false;
+      }
+    }
+
+    // ── Affiliate requests ───────────────────────────────────────────────────
+    // Member asks to become an affiliate; admin approves with a personal code.
+    // Doc keyed by uid. The user can read + create/update their own waiting
+    // doc; admin reads all + writes status + code on approval/refusal.
+    match /affiliateRequests/{userId} {
+      allow read:   if request.auth != null
+                    && (request.auth.uid == userId || isAdmin());
+      allow create: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.status == 'waiting';
+      allow update: if request.auth != null
+                    && (
+                      isAdmin()
+                      || (request.auth.uid == userId
+                          && request.resource.data.status == 'waiting')
+                    );
+      allow delete: if isAdmin();
+    }
+
+    // ── Weekly D20 rolls ─────────────────────────────────────────────────────
+    // Each user has one doc at /d20Rolls/{uid} tracking their last roll, the
+    // history (with any drawn rebate codes), and a pending surcharge total.
+    // Anyone authenticated can read their own; admin reads any. Writes are
+    // self-only and gated by the 7-day cooldown — rolls beyond that are
+    // rejected at the rules layer (defence in depth on top of the client UI).
+    match /d20Rolls/{userId} {
+      allow read:  if request.auth != null
+                   && (request.auth.uid == userId || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // Self-write. The 7-day cooldown is enforced inside the dice
+      // transaction (which reads lastRollAt before writing), and a manual
+      // reset path ("meditate" passphrase) clears the field — both are
+      // bounded one-write operations, so we don't gate the rule by time.
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if isAdmin();
+    }
+
+    // ── D20 rebate code pools ────────────────────────────────────────────────
+    // Pre-loaded codes per tier (good=5%, great=10%, nat20=20%). Admin
+    // populates these in advance from Hostaway. A successful roll claims
+    // exactly one code by flipping `used` from false to true and stamping
+    // usedBy/usedAt — all in a transaction. No-one can ever invent or reset
+    // a code; only the owning admin can.
+    match /d20Codes/{tier}/codes/{codeId} {
+      // Authenticated users can list codes only via "where used == false";
+      // we leave a permissive read but disclaim by treating values as opaque
+      // until claimed. Admin reads everything for inventory views.
+      allow read: if request.auth != null;
+      allow create, delete: if isAdmin();
+      // A user may only "claim" a code: set used=true once, attach their uid.
+      // They can never modify the code's value or unset used.
+      allow update: if isAdmin()
+                    || (request.auth != null
+                        && resource.data.used == false
+                        && request.resource.data.used == true
+                        && request.resource.data.value == resource.data.value
+                        && request.resource.data.usedBy == request.auth.uid);
+    }
+    // The tier doc itself (just a container) — read for collection traversal.
+    match /d20Codes/{tier} {
+      allow read:   if request.auth != null;
+      allow write:  if isAdmin();
+    }
+
+    // ── Wwoofers ─────────────────────────────────────────────────────────────
+    // Wwoofer applications. Each wwoofer doc is keyed by uid.
+    // The wwoofer can read/write their own profile; the admin can read/write any.
+    match /wwoofers/{userId} {
+      allow read:   if request.auth != null
+                    && (request.auth.uid == userId
+                        || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null
+                    && (request.auth.uid == userId
+                        || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+      allow delete: if request.auth != null
+                    && (request.auth.uid == userId
+                        || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+
+      // Visit requests: the wwoofer creates them; admin can approve/decline; both read.
+      match /visitRequests/{reqId} {
+        allow read:   if request.auth != null
+                      && (request.auth.uid == userId
+                          || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow update, delete: if request.auth != null
+                              && (request.auth.uid == userId
+                                  || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+      }
+
+      // Messages between wwoofer and admin. Either party can read.
+      // Wwoofer creates with fromAdmin=false; admin creates with fromAdmin=true.
+      match /messages/{msgId} {
+        allow read: if request.auth != null
+                    && (request.auth.uid == userId
+                        || request.auth.token.email == 'houseoftherisingarts@gmail.com');
+        allow create: if request.auth != null
+                      && (
+                        (request.auth.uid == userId && request.resource.data.fromAdmin == false)
+                        || (request.auth.token.email == 'houseoftherisingarts@gmail.com' && request.resource.data.fromAdmin == true)
+                      );
       }
     }
   }

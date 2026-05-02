@@ -74,6 +74,46 @@ export interface LocalGuideItem {
   link?: string;
   image: string;
   isFavorite?: boolean; // For "Coup de coeur"
+  isVip?: boolean;      // Full-width featured card at top of category
+  /** When set, clicking the card flips into an in-app blog post.
+      The card still links externally via the "Visiter le site" CTA inside.
+      Used for SEO/GEO — Article + LocalBusiness JSON-LD is injected on open. */
+  blogPost?: BlogPost;
+}
+
+export interface BlogPostSection {
+  title_fr: string;
+  title_en: string;
+  body_fr: string;
+  body_en: string;
+}
+
+export interface BlogPostFaq {
+  q_fr: string;
+  q_en: string;
+  a_fr: string;
+  a_en: string;
+}
+
+export interface BlogPostSchema {
+  /** schema.org @type — e.g. "Restaurant", "TouristAttraction", "Park", "LocalBusiness", "Event" */
+  type?: string;
+  address?: string;
+  phone?: string;
+  lat?: number;
+  lng?: number;
+  openingHours?: string;
+  priceRange?: string;
+}
+
+export interface BlogPost {
+  intro_fr: string;
+  intro_en: string;
+  sections: BlogPostSection[];
+  faqs?: BlogPostFaq[];
+  schema?: BlogPostSchema;
+  /** True until the owner has reviewed the auto-generated draft. UI shows a small badge. */
+  _draft?: boolean;
 }
 
 export interface LocalGuideCategory {
@@ -83,4 +123,53 @@ export interface LocalGuideCategory {
   description_fr?: string;
   description_en?: string;
   items: LocalGuideItem[];
+}
+
+export type WwooferStatus = 'pending' | 'approved' | 'declined';
+
+export interface WwooferProfile {
+  uid: string;
+  displayName: string;
+  email: string;
+  phone?: string;
+  photoURL?: string;
+  city?: string;
+  country?: string;
+  age?: number;
+  languages?: string[];
+  preferredTasks?: string[];
+  experience?: string;
+  motivations?: string;
+  needs?: string;
+  dietaryRestrictions?: string;
+  allergies?: string;
+  healthNotes?: string;
+  accommodationPreference?: string;
+  hasVehicle?: boolean;
+  smoker?: boolean;
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  status?: WwooferStatus;
+  createdAt?: any;
+  updatedAt?: any;
+}
+
+export interface WwooferVisitRequest {
+  id: string;
+  startDate: string; // ISO yyyy-mm-dd
+  endDate: string;   // ISO yyyy-mm-dd
+  numberOfDays: number;
+  notes?: string;
+  status: WwooferStatus;
+  createdAt?: any;
+  decidedAt?: any;
+  decidedByEmail?: string;
+}
+
+export interface WwooferMessage {
+  id: string;
+  text: string;
+  fromAdmin: boolean;
+  authorEmail?: string;
+  createdAt?: any;
 }

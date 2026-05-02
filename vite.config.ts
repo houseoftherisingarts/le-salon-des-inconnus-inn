@@ -8,7 +8,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    // Use VITE_BASE_PATH env var if available, otherwise default to root '/'
     base: env.VITE_BASE_PATH || '/',
   };
 });
