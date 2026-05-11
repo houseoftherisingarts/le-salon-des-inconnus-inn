@@ -1,0 +1,79 @@
+rules_version = '2';
+
+// Storage rules for Le Salon des Inconnus.
+//
+// Public bucket — anything readable here is on the open web. Writes are
+// strictly gated to the owning user (or admins for global assets).
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Admin shorthand: same email allow-list as firestore.rules. Keep these
+    // two helpers in sync.
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'houseoftherisingarts@gmail.com' ||
+        request.auth.token.email == 'alex@lesalondesinconnus.com'
+      );
+    }
+
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+
+    function under10MB() {
+      return request.resource.size < 10 * 1024 * 1024;
+    }
+
+    function isVideoOrImage() {
+      return request.resource.contentType.matches('(video|image)/.*');
+    }
+
+    function under200MB() {
+      return request.resource.size < 200 * 1024 * 1024;
+    }
+
+    // ── Artist studio uploads ───────────────────────────────────────────────
+    // Avatar + portfolio gallery for each artist. Public read so the artist's
+    // public profile (and CRM previews) can render. Owner-only write, capped
+    // at 10MB and image MIME types only.
+    match /artists/{userId}/{allPaths=**} {
+      allow read:  if true;
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && isImage()
+                   && under10MB();
+      allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+    }
+
+    // ── Inspirosphere · user video uploads ──────────────────────────────────
+    // Member-uploaded videos surfaced on their public profile and (if
+    // approved) in the Voices tab of the Creator Studio Inspirosphere. Public
+    // read so anyone can play them; owner-only write capped at 200MB. We
+    // accept image content types too because uploads include an optional
+    // poster frame (saved alongside the .mp4 under the same prefix).
+    match /members/{userId}/videos/{allPaths=**} {
+      allow read:   if true;
+      allow write:  if request.auth != null
+                    && request.auth.uid == userId
+                    && isVideoOrImage()
+                    && under200MB();
+      allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+    }
+
+    // ── Inspirosphere · admin-curated videos (Featured tab) ─────────────────
+    // Alex's hand-picked uploads. Public read; admin-only write, 200MB cap.
+    match /inspirosphere/curated/{allPaths=**} {
+      allow read:   if true;
+      allow write:  if isAdmin()
+                    && isVideoOrImage()
+                    && under200MB();
+      allow delete: if isAdmin();
+    }
+
+    // ── Default-deny for anything else ──────────────────────────────────────
+    match /{allPaths=**} {
+      allow read:  if false;
+      allow write: if isAdmin();
+    }
+  }
+}

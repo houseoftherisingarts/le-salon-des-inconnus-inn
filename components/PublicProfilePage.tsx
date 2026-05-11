@@ -1,10 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import React, { useState, useEffect, useRef } from 'react';
+import { db, storage } from '../firebase';
 import {
   doc, getDoc, setDoc, deleteDoc, serverTimestamp,
   collection, query, where, getDocs, addDoc,
+  onSnapshot, orderBy, updateDoc, increment,
 } from 'firebase/firestore';
+import { ref as storageRef, getDownloadURL } from 'firebase/storage';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './AuthModal';
 
@@ -58,6 +60,26 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   const [commonEvents, setCommonEvents] = useState<string[]>([]);
   // Target's Ceilidh registration — used to surface arrival day + time, team, lodging.
   const [targetReg, setTargetReg] = useState<any | null>(null);
+  // Target's chosen Wardrobe (creator-studio activeTheme). Drives a subtle
+  // accent bar at the top of the profile so visiting members can tell the
+  // artist's preferred aesthetic at a glance.
+  const [artistTheme, setArtistTheme] = useState<string | null>(null);
+  // Inspirosphere user videos uploaded by this member. Visible on the
+  // public profile (the artist's primary showcase) — view counts are NOT
+  // shown here; they're admin-only in AdminCRM.
+  interface UserVideoLite {
+    id: string;
+    title: string;
+    category: string;
+    storagePath: string;
+    featureStatus?: string;
+    createdAt?: any;
+  }
+  const [videos, setVideos] = useState<UserVideoLite[]>([]);
+  const [videoUrls, setVideoUrls] = useState<Record<string, string>>({});
+  // Set of videoIds we've already counted as "watched" this tab session, so
+  // re-pressing play (or scrubbing) doesn't inflate viewCount.
+  const viewedSetRef = useRef<Set<string>>(new Set());
 
   const isSelf = user?.uid === targetUid;
 
@@ -70,11 +92,86 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
         // Pull their Ceilidh registration too — public-read per Firestore rules.
         const regSnap = await getDoc(doc(db!, 'events', 'ceilidh-mai-2026', 'registrations', targetUid));
         if (regSnap.exists()) setTargetReg(regSnap.data());
+        // Read the artist's creator-studio profile for their wardrobe choice.
+        // Doesn't matter if it doesn't exist — the page just falls back to default styling.
+        try {
+          const artSnap = await getDoc(doc(db!, 'members', targetUid, 'artistProfile', 'profile'));
+          if (artSnap.exists()) {
+            const t = (artSnap.data() as any).activeTheme;
+            if (typeof t === 'string') setArtistTheme(t);
+          }
+        } catch (_) {}
       } catch (_) {}
       setLoading(false);
     };
     load();
   }, [targetUid]);
+
+  // Live videos list. Anything this member has uploaded shows up here —
+  // public profile is the canonical 'visit them to see their work' surface.
+  useEffect(() => {
+    if (!db || !targetUid) return;
+    const q = query(
+      collection(db, 'members', targetUid, 'videos'),
+      orderBy('createdAt', 'desc'),
+    );
+    const unsub = onSnapshot(q, snap => {
+      const rows = snap.docs.map(d => d.data() as UserVideoLite);
+      setVideos(rows);
+    }, () => { /* swallow — public read can fail for empty subtree */ });
+    return () => unsub();
+  }, [targetUid]);
+
+  // Resolve Storage download URLs for any videos we haven't yet fetched.
+  useEffect(() => {
+    if (!storage) return;
+    const missing = videos.filter(v => v.storagePath && !videoUrls[v.id]);
+    if (missing.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      const next: Record<string, string> = {};
+      for (const v of missing) {
+        try {
+          const url = await getDownloadURL(storageRef(storage!, v.storagePath));
+          next[v.id] = url;
+        } catch { /* file removed under us */ }
+      }
+      if (!cancelled && Object.keys(next).length) {
+        setVideoUrls(prev => ({ ...prev, ...next }));
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [videos, videoUrls]);
+
+  // Idempotent per-session view-count ping. Triggered on the first <video>
+  // onPlay for each id; later plays of the same video don't re-increment.
+  // The rule on members/{uid}/videos/{videoId} accepts a single-key diff
+  // that adds exactly 1 to viewCount, so this works without elevated auth.
+  const recordView = (videoId: string) => {
+    if (!db || !user) return; // unauthenticated viewers never increment
+    if (viewedSetRef.current.has(videoId)) return;
+    viewedSetRef.current.add(videoId);
+    updateDoc(doc(db, 'members', targetUid, 'videos', videoId), {
+      viewCount: increment(1),
+    }).catch(() => { /* non-fatal; we'll skip future tries this session */ });
+  };
+
+  // Map the creator-studio theme key to a representative gradient + display
+  // name. Keep this in sync with BASE_THEMES in ArtistHub.
+  const themeAccent = (key: string | null): { gradient: string; label: string } | null => {
+    if (!key) return null;
+    const map: Record<string, { gradient: string; labelEn: string; labelFr: string }> = {
+      RAINBOW:   { gradient: 'linear-gradient(135deg, #d946ef, #22d3ee, #facc15)', labelEn: 'Neon Arcade',    labelFr: 'Arcade Néon' },
+      RED:       { gradient: 'linear-gradient(135deg, #ef4444, #7f1d1d)',           labelEn: 'Riot Protocol',  labelFr: 'Protocole Émeute' },
+      CHROMATIC: { gradient: 'linear-gradient(135deg, #a855f7, #3b82f6, #facc15)',  labelEn: 'Prism Flow',     labelFr: 'Flux Prisme' },
+      BLUE_PUNK: { gradient: 'linear-gradient(135deg, #22d3ee, #ec4899)',           labelEn: 'System Failure', labelFr: 'Erreur Système' },
+      CLASSY:    { gradient: 'linear-gradient(135deg, #c8aa6e, #091428)',           labelEn: 'Gilded Age',     labelFr: 'Âge d’Or' },
+      COMIC:     { gradient: 'linear-gradient(135deg, #facc15, #ef4444)',           labelEn: 'Knockout',       labelFr: 'Knockout' },
+    };
+    const m = map[key];
+    if (!m) return null;
+    return { gradient: m.gradient, label: language === 'FR' ? m.labelFr : m.labelEn };
+  };
 
   // Load friendship status
   useEffect(() => {
@@ -114,6 +211,21 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
     load();
   }, [user, targetUid, isSelf]);
 
+  // Build a profiles map keyed by uid so the inbox/friends panel in the
+  // creator studio can render display names + avatars without an N+1 lookup
+  // over members docs. Stored on the friendship doc on every write.
+  const buildProfilesMap = () => {
+    const me = {
+      displayName: memberProfile?.displayName || user?.displayName || (user?.email ?? 'Member'),
+      photoURL: memberProfile?.photoURL || user?.photoURL || null,
+    };
+    const them = {
+      displayName: profile?.displayName || 'Member',
+      photoURL: profile?.photoURL || null,
+    };
+    return user ? { [user.uid]: me, [targetUid]: them } : { [targetUid]: them };
+  };
+
   const handleAddFriend = async () => {
     if (!user || !db) { onRequireAuth(); return; }
     setFriendLoading(true);
@@ -123,6 +235,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
         uids: [user.uid, targetUid].sort(),
         status: 'pending',
         requestedBy: user.uid,
+        profiles: buildProfilesMap(),
         createdAt: serverTimestamp(),
       });
       setFriendStatus('pending-sent');
@@ -138,7 +251,8 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
         uids: [user.uid, targetUid].sort(),
         status: 'accepted',
         requestedBy: targetUid,
-        createdAt: serverTimestamp(),
+        profiles: buildProfilesMap(),
+        acceptedAt: serverTimestamp(),
       }, { merge: true });
       setFriendStatus('friends');
     } catch (_) {}
@@ -201,11 +315,23 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   const initials = profile.displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   const membership = MEMBERSHIP_LABELS[profile.membershipType] ?? MEMBERSHIP_LABELS['voyageur'];
 
+  const accent = themeAccent(artistTheme);
+
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-lato overflow-y-auto">
+    <div className="min-h-screen bg-[#050505] text-white font-lato overflow-y-auto relative">
+
+      {/* Wardrobe accent — top gradient bar reflecting the artist's chosen
+          theme, plus a subtle glow behind the avatar. Renders only when the
+          artist has explicitly picked a theme in their creator-studio. */}
+      {accent && (
+        <>
+          <div aria-hidden className="absolute top-0 left-0 right-0 h-1.5 z-10" style={{ background: accent.gradient }} />
+          <div aria-hidden className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-64 rounded-full blur-[120px] opacity-30 pointer-events-none" style={{ background: accent.gradient }} />
+        </>
+      )}
 
       {/* Header */}
-      <div className="border-b border-white/5 px-6 py-4 flex items-center gap-4">
+      <div className="border-b border-white/5 px-6 py-4 flex items-center gap-4 relative z-20">
         <button
           onClick={() => onNavigate('INN')}
           className="text-neutral-600 hover:text-white transition-colors"
@@ -246,6 +372,15 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
               {language === 'FR' ? membership.fr : membership.en}
             </p>
             <h1 className="font-cinzel text-2xl text-white mt-1">{profile.displayName}</h1>
+            {accent && (
+              <span
+                className="inline-block mt-2 text-[9px] uppercase tracking-[0.4em] px-2 py-0.5 border border-white/15 text-neutral-300 rounded-full"
+                title={t('Wardrobe — chosen aesthetic', 'Garde-robe — esthétique choisie')}
+              >
+                <span className="inline-block w-2 h-2 rounded-full mr-2 align-middle" style={{ background: accent.gradient }} />
+                {accent.label}
+              </span>
+            )}
           </div>
 
           {/* Action buttons */}
@@ -375,6 +510,58 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
                   <p className="text-neutral-200 font-lato">{targetReg.departureDate}</p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Videos — uploaded works from the Creator Studio. Always visible on
+            the public profile; view counts are deliberately omitted (admin
+            sees them in the CRM). */}
+        {videos.length > 0 && (
+          <div className="border border-white/8 p-5">
+            <div className="flex items-baseline justify-between mb-3">
+              <p className="text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-500">
+                {t('Videos', 'Vidéos')}
+              </p>
+              <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-700">
+                {videos.length}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-4">
+              {videos.map(v => {
+                const url = videoUrls[v.id];
+                const featured = v.featureStatus === 'featured';
+                return (
+                  <div key={v.id} className="bg-black border border-white/10 rounded overflow-hidden">
+                    <div className="aspect-video bg-black">
+                      {url ? (
+                        <video
+                          src={url}
+                          controls
+                          preload="metadata"
+                          onPlay={() => recordView(v.id)}
+                          className="w-full h-full object-contain bg-black"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-neutral-700 text-[10px] font-cinzel uppercase tracking-widest">
+                          {t('Loading…', 'Chargement…')}
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-3">
+                      <p className="text-sm text-white font-cinzel truncate">{v.title}</p>
+                      <p className="text-[10px] uppercase tracking-widest text-neutral-500 mt-1">
+                        {v.category}
+                        {featured && (
+                          <span className="ml-2 inline-block px-1.5 py-0.5 border border-emerald-400/40 text-emerald-300 rounded">
+                            ★ {t('Featured', 'En vedette')}
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

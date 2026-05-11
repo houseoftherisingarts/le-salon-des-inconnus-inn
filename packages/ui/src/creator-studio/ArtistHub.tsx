@@ -16,6 +16,7 @@ import { ChatRoom } from './ChatRoom';
 import { Inspirosphere } from './Inspirosphere';
 import { JigsawPuzzle } from './JigsawPuzzle';
 import { PuzzleCelebration } from './PuzzleCelebration';
+import { MyVideosPanel } from './MyVideosPanel';
 import {
     PUZZLE_PIECES_TOTAL, PUZZLE_PIECES_PRE_REVEALED, PUZZLE_PIECES_TO_EARN,
     COINS_PER_PIECE, COINS_PER_COMPLETION_BONUS,
@@ -5064,6 +5065,19 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 })()}
                             </div>
                         </div>
+
+                        {/* My videos — upload + manage. Sits below the bio/info
+                            columns as its own full-width section so video cards
+                            have room to breathe. Members only. */}
+                        {accessLevel === 'MEMBER' && currentUser && (
+                            <div className="mt-8 px-4">
+                                <MyVideosPanel
+                                    uid={currentUser.uid}
+                                    language={language}
+                                    accentBorder={currentStyles.border}
+                                />
+                            </div>
+                        )}
 
                         {accessLevel === 'GUEST' && (
                              <div className="absolute inset-0 flex items-center justify-center z-10">
