@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { ArtistHub } from './ArtistHub';
 import { StudioContextViewer, type ViewerContext, type ViewerTab } from './StudioContextViewer';
 import { LoadingOrb } from './LoadingOrb';
+import { WelcomeWizard } from './WelcomeWizard';
 import { getApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
@@ -111,6 +112,12 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
         insphWasActive.current = active;
      }, [viewerCtx.inspirosphereActive, viewerCollapsed]);
 
+     // First-login wizard — shown when the user has never completed it.
+     // null = we haven't checked yet (treat as 'don't show'); false = doc
+     // exists with onboardingV1Completed=true; true = wizard should show.
+     // Checked alongside the theme load to save a Firestore round trip.
+     const [onboardingNeeded, setOnboardingNeeded] = useState<boolean>(false);
+
      // Persist theme + load on sign-in. Writes go to
      // members/{uid}/artistProfile/profile.activeTheme so both the user (on
      // reload) and visiting members (PublicProfilePage) read the same value.
@@ -121,10 +128,15 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  const db = getFirestore(getApp());
                  const snap = await getDoc(doc(db, 'members', currentUser.uid, 'artistProfile', 'profile'));
                  if (snap.exists()) {
-                     const t = (snap.data() as any).activeTheme as CreatorTheme | undefined;
+                     const data = snap.data() as any;
+                     const t = data.activeTheme as CreatorTheme | undefined;
                      if (t && ['RAINBOW', 'RED', 'BLUE_PUNK', 'CLASSY', 'CHROMATIC', 'COMIC'].includes(t)) {
                          setTheme(t);
                      }
+                     setOnboardingNeeded(data.onboardingV1Completed !== true);
+                 } else {
+                     // No artistProfile doc at all → fresh user, run wizard.
+                     setOnboardingNeeded(true);
                  }
              } catch { /* fall back to default */ }
          })();
@@ -381,6 +393,20 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
         // area. h-screen + overflow-y-auto turns this div into the studio's
         // own scroll context.
         <div data-studio-theme={theme} className={`h-screen w-full relative overflow-x-hidden overflow-y-auto transition-colors duration-700 ${themeStyles.bg} ${themeStyles.text}`}>
+
+             {/* First-login wizard. Sits above everything (z-9000) and
+                 prevents interaction with the studio chrome until done. The
+                 user can persist progress between sessions — refreshing
+                 keeps them at the same step. */}
+             {currentUser && onboardingNeeded && !showLoadingOrb && (
+                 <WelcomeWizard
+                     uid={currentUser.uid}
+                     initialEmail={currentUser.email}
+                     initialName={currentUser.displayName ?? null}
+                     language={language}
+                     onComplete={() => setOnboardingNeeded(false)}
+                 />
+             )}
 
              {/* Section-change orb. Plays once on first mount of the studio,
                  then unmounts itself. Reuse this same component (with a
