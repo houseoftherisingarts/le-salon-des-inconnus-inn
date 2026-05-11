@@ -89,7 +89,9 @@ interface WelcomeAnswers {
     phone: string;
     email: string;
     artTypes: string[];
-    links: { instagram: string; website: string; other: string };
+    /** Free-form URLs. Service is detected from each URL at render time so
+     *  the same store flows to the public profile's 'Social Links' row. */
+    links: string[];
     favourites: {
         music: FavouriteAnswer;
         book:  FavouriteAnswer;
@@ -105,7 +107,7 @@ const DEFAULT_ANSWERS: WelcomeAnswers = {
     phone: '',
     email: '',
     artTypes: [],
-    links: { instagram: '', website: '', other: '' },
+    links: [],
     favourites: {
         music: { value: '', public: true },
         book:  { value: '', public: true },
@@ -207,14 +209,25 @@ export const WelcomeWizard: React.FC<Props> = ({
                 const snap = await getDoc(doc(db, 'members', uid, 'artistProfile', 'profile'));
                 if (cancelled || !snap.exists()) return;
                 const d = snap.data() as any;
-                setAnswers(prev => ({
+                // Migrate legacy `{ instagram, website, other }` shape if
+                // present — collect non-empty values into the new flat
+                // array. New writes go to `links: string[]`.
+                setAnswers(prev => {
+                    let nextLinks: string[] = prev.links;
+                    if (Array.isArray(d.links)) {
+                        nextLinks = d.links.filter((s: any) => typeof s === 'string' && s.trim());
+                    } else if (d.welcomeLinks && typeof d.welcomeLinks === 'object') {
+                        nextLinks = [d.welcomeLinks.instagram, d.welcomeLinks.website, d.welcomeLinks.other]
+                            .filter((s: any) => typeof s === 'string' && s.trim());
+                    }
+                    return ({
                     ...prev,
                     realName: d.realName ?? prev.realName,
                     displayName: d.displayName ?? d.name ?? prev.displayName,
                     phone: d.phone ?? '',
                     email: d.email ?? prev.email,
                     artTypes: Array.isArray(d.artTypes) ? d.artTypes : prev.artTypes,
-                    links: { ...prev.links, ...(d.welcomeLinks || {}) },
+                    links: nextLinks,
                     favourites: {
                         music: { ...prev.favourites.music, ...(d.favourites?.music || {}) },
                         book:  { ...prev.favourites.book,  ...(d.favourites?.book  || {}) },
@@ -222,7 +235,8 @@ export const WelcomeWizard: React.FC<Props> = ({
                     },
                     theme: d.activeTheme ?? prev.theme,
                     firstWorkUrl: d.firstWorkUrl ?? prev.firstWorkUrl,
-                }));
+                    });
+                });
             } catch { /* fall back to defaults */ }
         })();
         return () => { cancelled = true; };
@@ -246,7 +260,10 @@ export const WelcomeWizard: React.FC<Props> = ({
                     phone: answers.phone,
                     email: answers.email,
                     artTypes: answers.artTypes,
-                    welcomeLinks: answers.links,
+                    // New flat string[] — `welcomeLinks` (legacy object)
+                    // is left alone for read-only backwards compat; we
+                    // never write to it again.
+                    links: answers.links.filter(s => s.trim()),
                     favourites: answers.favourites,
                     activeTheme: answers.theme,
                     firstWorkUrl: answers.firstWorkUrl ?? null,
@@ -393,11 +410,27 @@ export const WelcomeWizard: React.FC<Props> = ({
             </div>
 
             {/* Step container — keyed by stepIndex so React fully remounts on
-                advance, retriggering the slide-in animation. */}
+                advance, retriggering the bubble-reveal animation (same
+                rhythm + easing as the inn-hero WebGL bubble transition,
+                approximated with a CSS circular clip-path + halo glow so
+                text stays crisp through the wipe). */}
             <div
                 key={`${stepIndex}-${direction}`}
-                className={`relative z-10 w-full h-full flex items-center justify-center px-6 ${direction === 'FWD' ? 'welcome-slide-in-fwd' : 'welcome-slide-in-back'}`}
+                className={`relative z-10 w-full h-full flex items-center justify-center px-6 ${direction === 'FWD' ? 'welcome-bubble-fwd' : 'welcome-bubble-back'}`}
             >
+                {/* Halo bloom — pulses outward from the bubble's anchor at
+                    the start of the reveal. Gives the wipe its 'liquid
+                    glass' warmth without needing a shader. */}
+                <div
+                    aria-hidden
+                    className={`absolute inset-0 pointer-events-none ${direction === 'FWD' ? 'welcome-bubble-glow-fwd' : 'welcome-bubble-glow-back'}`}
+                    style={{
+                        background: direction === 'FWD'
+                            ? 'radial-gradient(circle at 60% 50%, rgba(255,228,150,0.30), rgba(217,70,239,0.16) 35%, rgba(34,211,238,0.10) 55%, rgba(0,0,0,0) 75%)'
+                            : 'radial-gradient(circle at 40% 50%, rgba(255,228,150,0.30), rgba(217,70,239,0.16) 35%, rgba(34,211,238,0.10) 55%, rgba(0,0,0,0) 75%)',
+                        filter: 'blur(40px)',
+                    }}
+                />
                 <div className="w-full max-w-2xl">
                     {currentStep === 'INTRO' && (
                         <StepIntro language={language} onBegin={advance} />
@@ -444,7 +477,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                         <StepLinks
                             language={language}
                             values={answers.links}
-                            onChange={v => setAnswers(a => ({ ...a, links: v }))}
+                            onChange={(v: string[]) => setAnswers(a => ({ ...a, links: v }))}
                         />
                     )}
                     {currentStep === 'FAVE_MUSIC' && (
@@ -515,21 +548,45 @@ export const WelcomeWizard: React.FC<Props> = ({
             </div>
 
             <style>{`
-                @keyframes welcomeSlideInFwd {
-                    0%   { opacity: 0; transform: translateX(80px) scale(0.985); filter: blur(3px); }
-                    60%  { opacity: 1; filter: blur(0); }
-                    100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+                /* Bubble reveal — same rhythm + cubic-bezier as the inn-hero
+                   WebGL transition (2.5s power2.inOut on uP). Old layer
+                   unmounts (React keys force re-render); new layer animates
+                   from a circular clip at the anchor outward to full
+                   coverage, with a brief chromatic warmth pulse for the
+                   liquid-glass feel without needing a fragment shader. */
+                @keyframes welcomeBubbleFwd {
+                    0%   { clip-path: circle(0% at 60% 50%); opacity: 0;   filter: blur(8px) saturate(1.35) hue-rotate(8deg); }
+                    20%  { opacity: 1; }
+                    70%  { filter: blur(0) saturate(1.05) hue-rotate(0deg); }
+                    100% { clip-path: circle(160% at 60% 50%); opacity: 1; filter: blur(0) saturate(1) hue-rotate(0deg); }
                 }
-                @keyframes welcomeSlideInBack {
-                    0%   { opacity: 0; transform: translateX(-60px) scale(0.985); filter: blur(3px); }
-                    60%  { opacity: 1; filter: blur(0); }
-                    100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+                @keyframes welcomeBubbleBack {
+                    0%   { clip-path: circle(0% at 40% 50%); opacity: 0;   filter: blur(8px) saturate(1.35) hue-rotate(-8deg); }
+                    20%  { opacity: 1; }
+                    70%  { filter: blur(0) saturate(1.05) hue-rotate(0deg); }
+                    100% { clip-path: circle(160% at 40% 50%); opacity: 1; filter: blur(0) saturate(1) hue-rotate(0deg); }
                 }
-                .welcome-slide-in-fwd  { animation: welcomeSlideInFwd 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-                .welcome-slide-in-back { animation: welcomeSlideInBack 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+                .welcome-bubble-fwd  { animation: welcomeBubbleFwd 1.8s cubic-bezier(0.65, 0, 0.35, 1) both; }
+                .welcome-bubble-back { animation: welcomeBubbleBack 1.55s cubic-bezier(0.65, 0, 0.35, 1) both; }
+
+                /* Halo bloom — pulses outward from the bubble's anchor as
+                   the wipe begins, then fades. Matches the inn shader's
+                   rim-glow timing. */
+                @keyframes welcomeBubbleGlow {
+                    0%   { opacity: 0;    transform: scale(0.3); }
+                    25%  { opacity: 0.85; }
+                    100% { opacity: 0;    transform: scale(1.55); }
+                }
+                .welcome-bubble-glow-fwd,
+                .welcome-bubble-glow-back {
+                    animation: welcomeBubbleGlow 1.8s cubic-bezier(0.65, 0, 0.35, 1) both;
+                    transform-origin: center;
+                    will-change: transform, opacity;
+                }
 
                 @media (prefers-reduced-motion: reduce) {
-                    .welcome-slide-in-fwd, .welcome-slide-in-back { animation-duration: 0.01s !important; }
+                    .welcome-bubble-fwd, .welcome-bubble-back { animation-duration: 0.01s !important; }
+                    .welcome-bubble-glow-fwd, .welcome-bubble-glow-back { animation: none !important; opacity: 0 !important; }
                 }
             `}</style>
         </div>
@@ -701,43 +758,195 @@ const StepChips: React.FC<StepChipsProps> = ({
 
 interface StepLinksProps {
     language: 'EN' | 'FR';
-    values: { instagram: string; website: string; other: string };
-    onChange: (v: { instagram: string; website: string; other: string }) => void;
+    values: string[];
+    onChange: (v: string[]) => void;
 }
 const StepLinks: React.FC<StepLinksProps> = ({ language, values, onChange }) => {
     const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+
+    // Ensure we always show at least 2 empty rows for a clean starting state.
+    const rows = values.length >= 2 ? values : [...values, ...Array(2 - values.length).fill('')];
+
+    const setAt = (idx: number, v: string) => {
+        const next = [...rows];
+        next[idx] = v;
+        onChange(next);
+    };
+    const removeAt = (idx: number) => {
+        const next = rows.filter((_, i) => i !== idx);
+        onChange(next);
+    };
+    const addRow = () => onChange([...rows, '']);
+
     return (
         <div className="text-center">
             <h2 className="font-prata text-[#f3e5ab] text-3xl md:text-4xl mb-3 leading-tight">
                 {t('Your professional links.', 'Tes liens professionnels.')}
             </h2>
             <p className="text-neutral-400 text-sm font-lato mb-8 max-w-lg mx-auto">
-                {t('All optional. Drop in whatever you have.', 'Tous optionnels. Mets ce que tu as.')}
+                {t(
+                    'All optional. They appear as social icons on your public profile.',
+                    'Tous optionnels. Ils apparaîtront en icônes sur ton profil public.',
+                )}
             </p>
             <div className="space-y-3 max-w-md mx-auto text-left">
-                <input
-                    type="url"
-                    placeholder="instagram.com/…"
-                    value={values.instagram}
-                    onChange={e => onChange({ ...values, instagram: e.target.value })}
-                    className="w-full bg-black/40 border border-white/15 px-4 py-3 text-white font-lato focus:outline-none focus:border-[#c5a059]/60"
-                />
-                <input
-                    type="url"
-                    placeholder={t('your website (optional)', 'ton site web (optionnel)')}
-                    value={values.website}
-                    onChange={e => onChange({ ...values, website: e.target.value })}
-                    className="w-full bg-black/40 border border-white/15 px-4 py-3 text-white font-lato focus:outline-none focus:border-[#c5a059]/60"
-                />
-                <input
-                    type="text"
-                    placeholder={t('any other link (bandcamp, soundcloud, etc.)', 'autre lien (bandcamp, soundcloud, etc.)')}
-                    value={values.other}
-                    onChange={e => onChange({ ...values, other: e.target.value })}
-                    className="w-full bg-black/40 border border-white/15 px-4 py-3 text-white font-lato focus:outline-none focus:border-[#c5a059]/60"
-                />
+                {rows.map((url, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                        <div className="shrink-0">
+                            <SocialIcon url={url} size={36} />
+                        </div>
+                        <input
+                            type="url"
+                            placeholder={t(
+                                i === 0 ? 'instagram.com/…' : i === 1 ? 'your website' : 'another link',
+                                i === 0 ? 'instagram.com/…' : i === 1 ? 'ton site web' : 'un autre lien',
+                            )}
+                            value={url}
+                            onChange={e => setAt(i, e.target.value)}
+                            className="flex-1 bg-black/40 border border-white/15 px-4 py-3 text-white font-lato focus:outline-none focus:border-[#c5a059]/60"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => removeAt(i)}
+                            disabled={rows.length <= 1}
+                            className="shrink-0 w-9 h-9 flex items-center justify-center border border-white/15 text-neutral-500 hover:text-rose-300 hover:border-rose-400/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors rounded"
+                            title={t('Remove this link', 'Retirer ce lien')}
+                            aria-label={t('Remove link', 'Retirer le lien')}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </button>
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={addRow}
+                    className="mt-2 w-full py-3 border border-dashed border-white/20 text-neutral-400 hover:text-white hover:border-[#c5a059]/60 font-cinzel text-[10px] uppercase tracking-[0.3em] rounded transition-colors"
+                >
+                    + {t('Add another link', 'Ajouter un autre lien')}
+                </button>
             </div>
         </div>
+    );
+};
+
+// ─── Social-icon detection (shared between wizard + public profile) ──────
+// Lifted into a module export so PublicProfilePage can render the same
+// chips in its 'Social Links' section. Detects the service from the URL's
+// hostname; unknown hosts fall back to the first letter of the domain.
+
+const SOCIAL_MAP: Record<string, { slug: string; name: string }> = {
+    'instagram.com':    { slug: 'instagram',    name: 'Instagram' },
+    'twitter.com':      { slug: 'x',            name: 'X' },
+    'x.com':            { slug: 'x',            name: 'X' },
+    'tiktok.com':       { slug: 'tiktok',       name: 'TikTok' },
+    'youtube.com':      { slug: 'youtube',      name: 'YouTube' },
+    'youtu.be':         { slug: 'youtube',      name: 'YouTube' },
+    'facebook.com':     { slug: 'facebook',     name: 'Facebook' },
+    'fb.watch':         { slug: 'facebook',     name: 'Facebook' },
+    'bandcamp.com':     { slug: 'bandcamp',     name: 'Bandcamp' },
+    'soundcloud.com':   { slug: 'soundcloud',   name: 'SoundCloud' },
+    'spotify.com':      { slug: 'spotify',      name: 'Spotify' },
+    'open.spotify.com': { slug: 'spotify',      name: 'Spotify' },
+    'linkedin.com':     { slug: 'linkedin',     name: 'LinkedIn' },
+    'vimeo.com':        { slug: 'vimeo',        name: 'Vimeo' },
+    'behance.net':      { slug: 'behance',      name: 'Behance' },
+    'dribbble.com':     { slug: 'dribbble',     name: 'Dribbble' },
+    'substack.com':     { slug: 'substack',     name: 'Substack' },
+    'github.com':       { slug: 'github',       name: 'GitHub' },
+    'patreon.com':      { slug: 'patreon',      name: 'Patreon' },
+    'twitch.tv':        { slug: 'twitch',       name: 'Twitch' },
+    'medium.com':       { slug: 'medium',       name: 'Medium' },
+    'pinterest.com':    { slug: 'pinterest',    name: 'Pinterest' },
+    'threads.net':      { slug: 'threads',      name: 'Threads' },
+    'mastodon.social':  { slug: 'mastodon',     name: 'Mastodon' },
+    'apple.com':        { slug: 'applemusic',   name: 'Apple Music' },
+    'music.apple.com':  { slug: 'applemusic',   name: 'Apple Music' },
+};
+
+export function detectSocialService(url: string): { slug: string; name: string } | null {
+    if (!url || !url.trim()) return null;
+    let candidate = url.trim();
+    // Tolerate bare hostnames like "instagram.com/handle" without a scheme.
+    if (!/^[a-z]+:\/\//i.test(candidate)) candidate = 'https://' + candidate;
+    try {
+        const h = new URL(candidate).hostname.toLowerCase().replace(/^www\./, '');
+        if (SOCIAL_MAP[h]) return SOCIAL_MAP[h];
+        for (const [key, val] of Object.entries(SOCIAL_MAP)) {
+            if (h === key || h.endsWith('.' + key)) return val;
+        }
+        return null;
+    } catch { return null; }
+}
+
+/** Get the safe first letter for a fallback chip. Returns '·' for blank/
+ *  unparseable inputs so the chip slot never collapses. */
+export function socialFallbackLetter(url: string): string {
+    if (!url || !url.trim()) return '·';
+    let candidate = url.trim();
+    if (!/^[a-z]+:\/\//i.test(candidate)) candidate = 'https://' + candidate;
+    try {
+        const h = new URL(candidate).hostname.toLowerCase().replace(/^www\./, '');
+        return h.charAt(0).toUpperCase() || '·';
+    } catch {
+        return url.trim().charAt(0).toUpperCase() || '·';
+    }
+}
+
+interface SocialIconProps {
+    url: string;
+    size?: number;
+    /** Hex without # — used to colorize the simpleicons CDN response.
+     *  Defaults to the salon gold. */
+    color?: string;
+}
+export const SocialIcon: React.FC<SocialIconProps> = ({ url, size = 24, color = 'c5a059' }) => {
+    const svc = detectSocialService(url);
+    if (svc) {
+        // simpleicons.org CDN — single-color PNG/SVG sized + tinted on the
+        // server side. Falls back to letter chip on a load error.
+        return (
+            <span
+                className="inline-flex items-center justify-center rounded-full border border-[#c5a059]/40"
+                style={{ width: size, height: size, background: 'rgba(197,160,89,0.08)' }}
+                title={svc.name}
+                aria-label={svc.name}
+            >
+                <img
+                    src={`https://cdn.simpleicons.org/${svc.slug}/${color}`}
+                    alt=""
+                    width={Math.round(size * 0.55)}
+                    height={Math.round(size * 0.55)}
+                    style={{ display: 'block' }}
+                    onError={(e) => {
+                        // If the CDN icon fails (offline, unknown slug),
+                        // swap to a letter fallback in place.
+                        const target = e.currentTarget;
+                        const parent = target.parentElement;
+                        if (!parent) return;
+                        const letter = socialFallbackLetter(url);
+                        parent.innerHTML = `<span style="color:#${color};font-family:Cinzel,serif;font-weight:700;font-size:${Math.round(size * 0.45)}px">${letter}</span>`;
+                    }}
+                />
+            </span>
+        );
+    }
+    // Unknown service — render a letter chip.
+    return (
+        <span
+            className="inline-flex items-center justify-center rounded-full border border-[#c5a059]/40 font-cinzel font-bold"
+            style={{
+                width: size, height: size,
+                background: 'rgba(197,160,89,0.08)',
+                color: `#${color}`,
+                fontSize: Math.round(size * 0.45),
+            }}
+            title={url || ''}
+            aria-label={url || ''}
+        >
+            {socialFallbackLetter(url)}
+        </span>
     );
 };
 

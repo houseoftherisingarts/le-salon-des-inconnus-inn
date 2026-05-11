@@ -40,6 +40,114 @@ function dmId(uid1: string, uid2: string): string {
   return 'dm_' + [uid1, uid2].sort().join('_');
 }
 
+// ─── Social link helpers ─────────────────────────────────────────────────
+// Same detection map as the Welcome wizard's StepLinks. Kept here as well
+// because root inn app cannot cleanly import from @inconnus/ui without
+// a workspace dep — duplicated intentionally, kept small.
+
+const SOCIAL_MAP: Record<string, { slug: string; name: string }> = {
+  'instagram.com':    { slug: 'instagram',  name: 'Instagram' },
+  'twitter.com':      { slug: 'x',          name: 'X' },
+  'x.com':            { slug: 'x',          name: 'X' },
+  'tiktok.com':       { slug: 'tiktok',     name: 'TikTok' },
+  'youtube.com':      { slug: 'youtube',    name: 'YouTube' },
+  'youtu.be':         { slug: 'youtube',    name: 'YouTube' },
+  'facebook.com':     { slug: 'facebook',   name: 'Facebook' },
+  'fb.watch':         { slug: 'facebook',   name: 'Facebook' },
+  'bandcamp.com':     { slug: 'bandcamp',   name: 'Bandcamp' },
+  'soundcloud.com':   { slug: 'soundcloud', name: 'SoundCloud' },
+  'spotify.com':      { slug: 'spotify',    name: 'Spotify' },
+  'open.spotify.com': { slug: 'spotify',    name: 'Spotify' },
+  'linkedin.com':     { slug: 'linkedin',   name: 'LinkedIn' },
+  'vimeo.com':        { slug: 'vimeo',      name: 'Vimeo' },
+  'behance.net':      { slug: 'behance',    name: 'Behance' },
+  'dribbble.com':     { slug: 'dribbble',   name: 'Dribbble' },
+  'substack.com':     { slug: 'substack',   name: 'Substack' },
+  'github.com':       { slug: 'github',     name: 'GitHub' },
+  'patreon.com':      { slug: 'patreon',    name: 'Patreon' },
+  'twitch.tv':        { slug: 'twitch',     name: 'Twitch' },
+  'medium.com':       { slug: 'medium',     name: 'Medium' },
+  'pinterest.com':    { slug: 'pinterest',  name: 'Pinterest' },
+  'threads.net':      { slug: 'threads',    name: 'Threads' },
+  'mastodon.social':  { slug: 'mastodon',   name: 'Mastodon' },
+  'music.apple.com':  { slug: 'applemusic', name: 'Apple Music' },
+};
+
+function detectSocialService(url: string): { slug: string; name: string } | null {
+  if (!url || !url.trim()) return null;
+  let candidate = url.trim();
+  if (!/^[a-z]+:\/\//i.test(candidate)) candidate = 'https://' + candidate;
+  try {
+    const h = new URL(candidate).hostname.toLowerCase().replace(/^www\./, '');
+    if (SOCIAL_MAP[h]) return SOCIAL_MAP[h];
+    for (const [key, val] of Object.entries(SOCIAL_MAP)) {
+      if (h === key || h.endsWith('.' + key)) return val;
+    }
+    return null;
+  } catch { return null; }
+}
+
+function socialFallbackLetter(url: string): string {
+  if (!url || !url.trim()) return '·';
+  let candidate = url.trim();
+  if (!/^[a-z]+:\/\//i.test(candidate)) candidate = 'https://' + candidate;
+  try {
+    const h = new URL(candidate).hostname.toLowerCase().replace(/^www\./, '');
+    return h.charAt(0).toUpperCase() || '·';
+  } catch {
+    return url.trim().charAt(0).toUpperCase() || '·';
+  }
+}
+
+function ensureHref(url: string): string {
+  const v = url.trim();
+  return /^[a-z]+:\/\//i.test(v) ? v : `https://${v}`;
+}
+
+const SocialIcon: React.FC<{ url: string; size?: number; color?: string }> = ({ url, size = 36, color = 'c5a059' }) => {
+  const svc = detectSocialService(url);
+  if (svc) {
+    return (
+      <span
+        className="inline-flex items-center justify-center rounded-full border border-[#c5a059]/40 group-hover:border-[#c5a059] transition-colors"
+        style={{ width: size, height: size, background: 'rgba(197,160,89,0.08)' }}
+        title={svc.name}
+        aria-label={svc.name}
+      >
+        <img
+          src={`https://cdn.simpleicons.org/${svc.slug}/${color}`}
+          alt=""
+          width={Math.round(size * 0.55)}
+          height={Math.round(size * 0.55)}
+          style={{ display: 'block' }}
+          onError={(e) => {
+            const t = e.currentTarget;
+            const parent = t.parentElement;
+            if (!parent) return;
+            const letter = socialFallbackLetter(url);
+            parent.innerHTML = `<span style="color:#${color};font-family:Cinzel,serif;font-weight:700;font-size:${Math.round(size * 0.45)}px">${letter}</span>`;
+          }}
+        />
+      </span>
+    );
+  }
+  return (
+    <span
+      className="inline-flex items-center justify-center rounded-full border border-[#c5a059]/40 font-cinzel font-bold group-hover:border-[#c5a059] transition-colors"
+      style={{
+        width: size, height: size,
+        background: 'rgba(197,160,89,0.08)',
+        color: `#${color}`,
+        fontSize: Math.round(size * 0.45),
+      }}
+      title={url}
+      aria-label={url}
+    >
+      {socialFallbackLetter(url)}
+    </span>
+  );
+};
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
@@ -64,6 +172,10 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   // accent bar at the top of the profile so visiting members can tell the
   // artist's preferred aesthetic at a glance.
   const [artistTheme, setArtistTheme] = useState<string | null>(null);
+  // Social links — collected during the Welcome wizard. Plain string[]:
+  // each entry is a URL; the service is detected at render time via
+  // detectSocialService below.
+  const [socialLinks, setSocialLinks] = useState<string[]>([]);
   // Inspirosphere user videos uploaded by this member. Visible on the
   // public profile (the artist's primary showcase) — view counts are NOT
   // shown here; they're admin-only in AdminCRM.
@@ -97,8 +209,18 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
         try {
           const artSnap = await getDoc(doc(db!, 'members', targetUid, 'artistProfile', 'profile'));
           if (artSnap.exists()) {
-            const t = (artSnap.data() as any).activeTheme;
+            const d = artSnap.data() as any;
+            const t = d.activeTheme;
             if (typeof t === 'string') setArtistTheme(t);
+            // Social links from the Welcome wizard. Legacy shape was an
+            // object { instagram, website, other } — fall back to that if
+            // present, otherwise read the new string[] directly.
+            if (Array.isArray(d.links)) {
+              setSocialLinks(d.links.filter((s: any) => typeof s === 'string' && s.trim()));
+            } else if (d.welcomeLinks && typeof d.welcomeLinks === 'object') {
+              setSocialLinks([d.welcomeLinks.instagram, d.welcomeLinks.website, d.welcomeLinks.other]
+                .filter((s: any) => typeof s === 'string' && s.trim()));
+            }
           }
         } catch (_) {}
       } catch (_) {}
@@ -451,6 +573,30 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             >
               {t('Sign in to connect →', 'Se connecter pour interagir →')}
             </button>
+          )}
+
+          {/* Social links — collected during the Welcome wizard. Real
+              icons via simpleicons.org CDN; unknown services fall back
+              to a circled letter chip. */}
+          {socialLinks.length > 0 && (
+            <div className="mt-4">
+              <p className="text-[9px] font-cinzel uppercase tracking-[0.35em] text-neutral-500 mb-2">
+                {t('Social Links', 'Liens sociaux')}
+              </p>
+              <div className="flex flex-wrap items-center gap-2 justify-center">
+                {socialLinks.map((url, i) => (
+                  <a
+                    key={i}
+                    href={ensureHref(url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    <SocialIcon url={url} size={38} />
+                  </a>
+                ))}
+              </div>
+            </div>
           )}
         </div>
 
