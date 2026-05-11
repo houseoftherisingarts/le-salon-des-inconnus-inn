@@ -43,6 +43,30 @@ const THEMES: { key: CreatorTheme; nameEn: string; nameFr: string; swatch: strin
     { key: 'COMIC',     nameEn: 'Knockout',       nameFr: 'Knockout',        swatch: 'linear-gradient(135deg, #facc15, #ef4444)' },
 ];
 
+// ─── Studio backdrop (mirrors CreatorStudioShell's per-theme overlay) ─────
+// One source of truth per theme: a base background color, an overlay class
+// (gradient / pattern), and per-theme animated blobs. The wizard renders
+// the same surface as the studio so it reads as the 'first room' of the
+// studio, not a separate vestibule. Theme reacts live to answers.theme so
+// the picker on Step 10 gives instant feedback.
+const STUDIO_BG: Record<CreatorTheme, string> = {
+    RAINBOW:   'bg-[#050505]',
+    RED:       'bg-black',
+    BLUE_PUNK: 'bg-[#050308]',
+    CLASSY:    'bg-[#010a13]',
+    CHROMATIC: 'bg-[#030005]',
+    COMIC:     'bg-[#121214]',
+};
+
+const STUDIO_OVERLAY: Record<CreatorTheme, string> = {
+    RAINBOW:   'bg-gradient-to-br from-fuchsia-900/10 to-cyan-900/10',
+    RED:       'bg-gradient-to-tr from-black via-transparent to-red-900/30 opacity-60',
+    BLUE_PUNK: "bg-[linear-gradient(45deg,#130026_25%,transparent_25%,transparent_75%,#130026_75%,#130026),linear-gradient(45deg,#130026_25%,transparent_25%,transparent_75%,#130026_75%,#130026)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] opacity-20",
+    CLASSY:    'bg-[radial-gradient(circle_at_center,_rgba(200,170,110,0.15),_transparent_80%)]',
+    CHROMATIC: 'bg-[radial-gradient(circle_at_center,_rgba(59,130,246,0.15),_transparent_70%)]',
+    COMIC:     'bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:20px_20px] opacity-10',
+};
+
 const ART_TYPES: { id: string; en: string; fr: string }[] = [
     { id: 'music',         en: 'Music',         fr: 'Musique' },
     { id: 'writing',       en: 'Writing',       fr: 'Écriture' },
@@ -307,38 +331,36 @@ export const WelcomeWizard: React.FC<Props> = ({
 
     return (
         <div
-            className="fixed inset-0 z-[9000] bg-[#02030a] text-white font-lato overflow-hidden"
+            data-studio-theme={answers.theme}
+            className={`fixed inset-0 z-[9000] ${STUDIO_BG[answers.theme]} text-white font-lato overflow-hidden transition-colors duration-700`}
             role="dialog"
             aria-modal="true"
         >
-            {/* Aurora backdrop — three soft conic gradients pulsing on
-                independent timelines. Caps the design budget of the wizard
-                so the content sits clean over a deep, ambient mood. */}
-            <div aria-hidden className="absolute inset-0 pointer-events-none">
-                <div className="absolute -inset-[20%] welcome-aurora-a" style={{
-                    background: 'conic-gradient(from 30deg at 30% 30%, rgba(34,211,238,0.20), rgba(217,70,239,0.18), rgba(252,211,77,0.12), rgba(0,0,0,0))',
-                    filter: 'blur(80px) saturate(1.3)',
-                }} />
-                <div className="absolute -inset-[20%] welcome-aurora-b" style={{
-                    background: 'conic-gradient(from 200deg at 70% 70%, rgba(168,85,247,0.18), rgba(59,130,246,0.16), rgba(244,114,182,0.12), rgba(0,0,0,0))',
-                    filter: 'blur(90px) saturate(1.3)',
-                }} />
-                {/* Light beams — diagonal SVG rays that slowly drift. */}
-                <svg className="absolute inset-0 w-full h-full opacity-40 mix-blend-screen" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-                    <defs>
-                        <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%"   stopColor="rgba(255,240,180,0)" />
-                            <stop offset="50%"  stopColor="rgba(255,240,180,0.85)" />
-                            <stop offset="100%" stopColor="rgba(255,240,180,0)" />
-                        </linearGradient>
-                    </defs>
-                    <g className="welcome-beam-a">
-                        <polygon points="-200,0 100,0 600,800 300,800" fill="url(#beam)" />
-                    </g>
-                    <g className="welcome-beam-b">
-                        <polygon points="900,0 1200,0 1500,800 1100,800" fill="url(#beam)" />
-                    </g>
-                </svg>
+            {/* Studio backdrop — mirrors the per-theme overlay rendered by
+                CreatorStudioShell so the wizard reads as the 'first room'
+                of the studio, not a separate aesthetic. The overlay reacts
+                live to answers.theme, so picking a theme on Step 10 gives
+                an instant preview of what the studio will look like. */}
+            <div
+                aria-hidden
+                className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${STUDIO_OVERLAY[answers.theme]}`}
+            >
+                {answers.theme === 'RAINBOW' && (
+                    <>
+                        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/30 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
+                        <div className="absolute bottom-[10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '7s' }} />
+                        <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
+                        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/20 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
+                    </>
+                )}
+                {answers.theme === 'CHROMATIC' && (
+                    <>
+                        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-blue-900/20 rounded-full blur-[120px]" />
+                        <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-purple-900/20 rounded-full blur-[120px]" />
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/noise.png')] opacity-[0.03]" />
+                    </>
+                )}
             </div>
 
             {/* Progress + skip + back chrome */}
@@ -409,10 +431,13 @@ export const WelcomeWizard: React.FC<Props> = ({
                     {currentStep === 'ART_TYPES' && (
                         <StepChips
                             label={t('What kind of art do you make?', 'Quel type d\'art fais-tu ?')}
-                            sub={t('Pick everything that fits. You can add more later.', 'Choisis tout ce qui correspond. Tu pourras en rajouter plus tard.')}
+                            sub={t('Pick everything that fits, or add your own. You can edit this later.', 'Choisis tout ce qui correspond, ou ajoute le tien. Tu pourras modifier plus tard.')}
                             options={ART_TYPES.map(a => ({ id: a.id, label: language === 'FR' ? a.fr : a.en }))}
                             values={answers.artTypes}
                             onChange={v => setAnswers(a => ({ ...a, artTypes: v }))}
+                            allowCustom
+                            customAddLabel={t('Add yours', 'Ajouter le tien')}
+                            customPlaceholder={t('Your discipline', 'Ta discipline')}
                         />
                     )}
                     {currentStep === 'LINKS' && (
@@ -503,36 +528,8 @@ export const WelcomeWizard: React.FC<Props> = ({
                 .welcome-slide-in-fwd  { animation: welcomeSlideInFwd 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
                 .welcome-slide-in-back { animation: welcomeSlideInBack 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
-                @keyframes welcomeAuroraA {
-                    0%   { transform: translate(0, 0) scale(1); }
-                    100% { transform: translate(20px, -30px) scale(1.06); }
-                }
-                @keyframes welcomeAuroraB {
-                    0%   { transform: translate(0, 0) scale(1.04); }
-                    100% { transform: translate(-30px, 20px) scale(1); }
-                }
-                .welcome-aurora-a { animation: welcomeAuroraA 16s ease-in-out infinite alternate; }
-                .welcome-aurora-b { animation: welcomeAuroraB 22s ease-in-out infinite alternate; }
-
-                @keyframes welcomeBeamA {
-                    0%   { transform: translateX(-180px) rotate(0deg); opacity: 0.0; }
-                    20%  { opacity: 0.7; }
-                    80%  { opacity: 0.4; }
-                    100% { transform: translateX(220px) rotate(0deg); opacity: 0.0; }
-                }
-                @keyframes welcomeBeamB {
-                    0%   { transform: translateX(180px) rotate(0deg); opacity: 0.0; }
-                    20%  { opacity: 0.5; }
-                    80%  { opacity: 0.2; }
-                    100% { transform: translateX(-260px) rotate(0deg); opacity: 0.0; }
-                }
-                .welcome-beam-a { animation: welcomeBeamA 12s ease-in-out infinite; }
-                .welcome-beam-b { animation: welcomeBeamB 16s ease-in-out infinite 2s; }
-
                 @media (prefers-reduced-motion: reduce) {
                     .welcome-slide-in-fwd, .welcome-slide-in-back { animation-duration: 0.01s !important; }
-                    .welcome-aurora-a, .welcome-aurora-b,
-                    .welcome-beam-a, .welcome-beam-b { animation: none !important; }
                 }
             `}</style>
         </div>
@@ -594,12 +591,43 @@ interface StepChipsProps {
     options: { id: string; label: string }[];
     values: string[];
     onChange: (v: string[]) => void;
+    /** When true, render an inline 'add custom' affordance. Custom entries
+     *  are stored as 'custom:<value>' so the chip vs. preset distinction
+     *  survives a round-trip without a separate field on the profile. */
+    allowCustom?: boolean;
+    customPlaceholder?: string;
+    customAddLabel?: string;
 }
-const StepChips: React.FC<StepChipsProps> = ({ label, sub, options, values, onChange }) => {
+const StepChips: React.FC<StepChipsProps> = ({
+    label, sub, options, values, onChange,
+    allowCustom = false, customPlaceholder, customAddLabel,
+}) => {
     const toggle = (id: string) => {
         if (values.includes(id)) onChange(values.filter(v => v !== id));
         else onChange([...values, id]);
     };
+
+    // Custom entries — anything in `values` that isn't one of the preset
+    // option ids. Rendered as removable gold chips alongside the presets.
+    const presetIds = new Set(options.map(o => o.id));
+    const customEntries = values.filter(v => !presetIds.has(v));
+    const removeCustom = (id: string) => onChange(values.filter(v => v !== id));
+
+    const [adding, setAdding] = useState(false);
+    const [draft, setDraft] = useState('');
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const commit = () => {
+        const v = draft.trim();
+        if (!v) { setAdding(false); setDraft(''); return; }
+        // Tag with `custom:` so the chip distinguishes itself from presets
+        // and we don't accidentally collide with a future preset id.
+        const id = `custom:${v}`;
+        if (!values.includes(id)) onChange([...values, id]);
+        setDraft('');
+        setAdding(false);
+    };
+
     return (
         <div className="text-center">
             <h2 className="font-prata text-[#f3e5ab] text-3xl md:text-4xl mb-3 leading-tight">{label}</h2>
@@ -618,6 +646,54 @@ const StepChips: React.FC<StepChipsProps> = ({ label, sub, options, values, onCh
                         </button>
                     );
                 })}
+
+                {/* User-added custom chips — clicking removes them. */}
+                {customEntries.map(id => {
+                    const label = id.startsWith('custom:') ? id.slice(7) : id;
+                    return (
+                        <button
+                            key={id}
+                            type="button"
+                            onClick={() => removeCustom(id)}
+                            className="px-5 py-2.5 text-xs font-cinzel uppercase tracking-[0.3em] rounded-full border border-[#c5a059] text-[#18181b] bg-[#c5a059] shadow-[0_4px_22px_rgba(197,160,89,0.4)] hover:bg-[#d4b06a] flex items-center gap-2"
+                            title="Click to remove"
+                        >
+                            <span>{label}</span>
+                            <span aria-hidden className="text-[10px] opacity-70">✕</span>
+                        </button>
+                    );
+                })}
+
+                {/* Add-custom affordance. Inline input that grows from a pill
+                    so the "+" cell stays in the chip rhythm. */}
+                {allowCustom && (
+                    adding ? (
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={draft}
+                            onChange={e => setDraft(e.target.value)}
+                            onBlur={commit}
+                            onKeyDown={e => {
+                                if (e.key === 'Enter') { e.preventDefault(); commit(); }
+                                else if (e.key === 'Escape') { setDraft(''); setAdding(false); }
+                            }}
+                            placeholder={customPlaceholder ?? 'Your discipline'}
+                            autoFocus
+                            maxLength={32}
+                            className="px-5 py-2.5 text-xs font-cinzel uppercase tracking-[0.3em] rounded-full border border-dashed border-[#c5a059]/60 bg-transparent text-white focus:outline-none focus:border-[#c5a059] placeholder-neutral-500 min-w-[180px]"
+                        />
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={() => { setAdding(true); setTimeout(() => inputRef.current?.focus(), 0); }}
+                            className="px-5 py-2.5 text-xs font-cinzel uppercase tracking-[0.3em] rounded-full border border-dashed border-white/25 text-neutral-400 hover:text-white hover:border-white/50 transition-all flex items-center gap-2"
+                        >
+                            <span aria-hidden>+</span>
+                            <span>{customAddLabel ?? 'Add yours'}</span>
+                        </button>
+                    )
+                )}
             </div>
         </div>
     );
