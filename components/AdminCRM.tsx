@@ -417,6 +417,9 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     featureCafe?: boolean;
     featureMecene?: boolean;
     featureCreatorStudio?: boolean;
+    /** Maestro tier — unlocks /{username} Super Profile page. Same flag
+     *  pattern as isArtist (admin-only write at members/{uid}/admin/flags). */
+    maestroEnabled?: boolean;
   };
   const [members, setMembers] = useState<MemberRow[]>([]);
   const [memberSearch, setMemberSearch] = useState('');
@@ -532,6 +535,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           featureCafe?: boolean;
           featureMecene?: boolean;
           featureCreatorStudio?: boolean;
+          maestroEnabled?: boolean;
         }> = {};
         snap.docs.forEach(d => {
           if (d.id !== 'flags') return;
@@ -543,6 +547,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
             featureCafe: data.featureCafe === true,
             featureMecene: data.featureMecene === true,
             featureCreatorStudio: data.featureCreatorStudio === true,
+            maestroEnabled: data.maestroEnabled === true,
           };
         });
         setMembers(prev => prev.map(m => ({
@@ -551,6 +556,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           featureCafe: flagMap[m.uid]?.featureCafe === true,
           featureMecene: flagMap[m.uid]?.featureMecene === true,
           featureCreatorStudio: flagMap[m.uid]?.featureCreatorStudio === true,
+          maestroEnabled: flagMap[m.uid]?.maestroEnabled === true,
         })));
       },
       () => {},
@@ -594,7 +600,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   // Same admin-only path. Independent of isArtist — admin can choose any
   // combination, e.g. "feature in Café only" or "approve as artist but don't
   // surface yet anywhere."
-  type FeatureSurface = 'featureCafe' | 'featureMecene' | 'featureCreatorStudio';
+  type FeatureSurface = 'featureCafe' | 'featureMecene' | 'featureCreatorStudio' | 'maestroEnabled';
   const toggleFeatureFlag = useCallback(async (uid: string, key: FeatureSurface, next: boolean) => {
     if (!db) return;
     try {
@@ -1200,7 +1206,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
             </div>
 
             <div className="border border-white/10 bg-[#0a0a0a] overflow-x-auto">
-              <div className="grid grid-cols-[2fr_2fr_1fr_auto_auto_auto_auto] gap-3 px-4 py-2 text-[9px] uppercase tracking-widest text-neutral-500 border-b border-white/5 font-cinzel min-w-[1000px]">
+              <div className="grid grid-cols-[2fr_2fr_1fr_auto_auto_auto_auto_auto] gap-3 px-4 py-2 text-[9px] uppercase tracking-widest text-neutral-500 border-b border-white/5 font-cinzel min-w-[1100px]">
                 <span>Membre</span>
                 <span>Email</span>
                 <span>Inscrit</span>
@@ -1208,6 +1214,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                 <span className="text-center" title="Featured in the Café">Café</span>
                 <span className="text-center" title="Featured in 'Nos Artistes' (Mécène)">Mécène</span>
                 <span className="text-center" title="Featured in Creator Studio">Studio</span>
+                <span className="text-center" title="Maestro tier — unlocks /{username} Super Profile page">Maestro</span>
               </div>
               {members
                 .filter(m => {
@@ -1217,7 +1224,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       || (m.email || '').toLowerCase().includes(q);
                 })
                 .map(m => (
-                  <div key={m.uid} className="grid grid-cols-[2fr_2fr_1fr_auto_auto_auto_auto] gap-3 px-4 py-3 items-center border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] text-xs min-w-[1000px]">
+                  <div key={m.uid} className="grid grid-cols-[2fr_2fr_1fr_auto_auto_auto_auto_auto] gap-3 px-4 py-3 items-center border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] text-xs min-w-[1100px]">
                     <div className="flex items-center gap-3 min-w-0">
                       {m.photoURL ? (
                         <img src={m.photoURL} alt="" className="w-8 h-8 rounded-full shrink-0" />
@@ -1260,6 +1267,13 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       onChange={e => toggleFeatureFlag(m.uid, 'featureCreatorStudio', e.target.checked)}
                       className="accent-fuchsia-400 w-4 h-4 justify-self-center"
                       title="Feature in the Creator Studio's Featured Artists row"
+                    />
+                    <input
+                      type="checkbox"
+                      checked={!!m.maestroEnabled}
+                      onChange={e => toggleFeatureFlag(m.uid, 'maestroEnabled', e.target.checked)}
+                      className="accent-amber-400 w-4 h-4 justify-self-center"
+                      title="Maestro tier — unlocks the Super Profile editor + /{username} page"
                     />
                   </div>
                 ))}

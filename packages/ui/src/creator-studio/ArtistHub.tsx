@@ -17,6 +17,7 @@ import { Inspirosphere } from './Inspirosphere';
 import { JigsawPuzzle } from './JigsawPuzzle';
 import { PuzzleCelebration } from './PuzzleCelebration';
 import { MyVideosPanel } from './MyVideosPanel';
+import { SuperProfileEditor } from '../super-profile/SuperProfileEditor';
 import {
     PUZZLE_PIECES_TOTAL, PUZZLE_PIECES_PRE_REVEALED, PUZZLE_PIECES_TO_EARN,
     COINS_PER_PIECE, COINS_PER_COMPLETION_BONUS,
@@ -5090,6 +5091,20 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <p className="text-neutral-400 text-sm mb-8 font-lato">{language === 'EN' ? "This dossier is classified. Register a profile to view subject details." : "Ce dossier est classifié. Enregistrez un profil pour voir les détails."}</p>
                                     <HexButton primary onClick={handleJoinClick} themeStyles={currentStyles}>{language === 'EN' ? "CREATE PROFILE" : "CRÉER UN PROFIL"}</HexButton>
                                 </div>
+                            </div>
+                        )}
+
+                        {/* Super Profile (Maestro tier) — gated. The editor
+                            self-subscribes to members/{uid}/admin/flags.maestroEnabled
+                            and renders nothing while loading, a locked card if
+                            not granted, or the full editor otherwise. */}
+                        {accessLevel === 'MEMBER' && currentUser && (
+                            <div className="mt-10 max-w-5xl mx-auto px-4">
+                                <SuperProfileEditor
+                                    uid={currentUser.uid}
+                                    fallbackDisplayName={regData.name || currentUser.displayName || null}
+                                    language={language}
+                                />
                             </div>
                         )}
                     </div>

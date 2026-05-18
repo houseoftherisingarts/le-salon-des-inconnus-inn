@@ -27,11 +27,16 @@ interface AdminShellProps<TId extends string> {
     onSignOut?: () => void;
     /** Page title fallback if the active nav item isn't found (rare). */
     title?: string;
+    /** Replaces the default "Ceilidh · Mai 2026" subtitle in the brand block. */
+    subtitle?: string;
+    /** When set, renders a "Changer d'espace" button so admins can switch between
+     *  Inn CRM and Artistic CRM without leaving the dashboard. */
+    onSwitchSpace?: () => void;
     children: React.ReactNode;
 }
 
 export function AdminShell<TId extends string>({
-    user, sectionId, onSectionChange, nav, onBackToSite, onSignOut, title, children,
+    user, sectionId, onSectionChange, nav, onBackToSite, onSignOut, title, subtitle, onSwitchSpace, children,
 }: AdminShellProps<TId>) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const current = nav.find((n) => n.id === sectionId);
@@ -57,7 +62,7 @@ export function AdminShell<TId extends string>({
                         Admin CRM
                     </p>
                     <p className="font-josefin text-neutral-500 text-[10px] uppercase tracking-[0.3em] mt-0.5">
-                        Ceilidh · Mai 2026
+                        {subtitle ?? 'Ceilidh · Mai 2026'}
                     </p>
                 </div>
 
@@ -124,6 +129,14 @@ export function AdminShell<TId extends string>({
                             <p className="truncate text-neutral-600 text-[10px]">{user.email}</p>
                         </div>
                     </div>
+                    {onSwitchSpace && (
+                        <button
+                            onClick={onSwitchSpace}
+                            className="w-full text-left text-[10px] uppercase tracking-[0.35em] font-cinzel text-neutral-500 hover:text-[#c5a059] transition-colors mb-3"
+                        >
+                            ⇄ Changer d'espace
+                        </button>
+                    )}
                     {onSignOut && (
                         <button
                             onClick={onSignOut}

@@ -60,6 +60,20 @@ service firebase.storage {
       allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
     }
 
+    // ── Super Profile (Maestro tier) · hero photo + portfolio works ────────
+    // The hero cutout and each portfolio work for the /{username} fullscreen
+    // page. Public read so anonymous visitors can load the page; owner-only
+    // write, image MIME types only, 25MB cap (the auto-bg-removal output can
+    // be slightly larger than a raw JPG).
+    match /members/{userId}/superProfile/{allPaths=**} {
+      allow read:   if true;
+      allow write:  if request.auth != null
+                    && request.auth.uid == userId
+                    && isImage()
+                    && request.resource.size < 25 * 1024 * 1024;
+      allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+    }
+
     // ── Inspirosphere · admin-curated videos (Featured tab) ─────────────────
     // Alex's hand-picked uploads. Public read; admin-only write, 200MB cap.
     match /inspirosphere/curated/{allPaths=**} {

@@ -11,6 +11,11 @@ node_modules
 dist
 dist-ssr
 
+# Turborepo
+.turbo
+apps/*/dist
+packages/*/dist
+
 # Environment variables — NEVER commit these
 .env
 .env.local

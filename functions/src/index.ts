@@ -1,15 +1,20 @@
 import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
-import { SquareClient, SquareEnvironment } from 'square';
+import * as functions from 'firebase-functions/v1';
 
 admin.initializeApp();
 
 // ─── Square client ────────────────────────────────────────────────────────────
-// Set credentials with:
-//   firebase functions:config:set square.access_token="YOUR_TOKEN" square.environment="production"
-// Then redeploy:  firebase deploy --only functions
-
-function getSquareClient() {
+// IMPORTANT: the `square` SDK is heavy and eager-imports thousands of API
+// definitions at module load (~9s on cold start). Importing it at the top
+// of this file caused `firebase deploy` to hit the 10s "User code failed
+// to load" timeout. Load it lazily inside the handler so module init stays
+// fast and the SDK is only paid for when a payment actually happens.
+//
+// Set credentials via either functions config or env vars on the deploy:
+//   firebase functions:config:set square.access_token="..." square.location_id="..." square.environment="production"
+// (Functions in 1st gen read process.env.* in addition to functions.config().)
+async function getSquareClient() {
+  const { SquareClient, SquareEnvironment } = await import('square');
   const accessToken = process.env.SQUARE_ACCESS_TOKEN ?? '';
   const env = (process.env.SQUARE_ENVIRONMENT ?? 'sandbox').toLowerCase();
   return new SquareClient({
@@ -19,7 +24,7 @@ function getSquareClient() {
 }
 
 // ─── createCeilidhPayment ─────────────────────────────────────────────────────
-// Callable function: accepts { nonce, amount (CAD cents), note }
+// Callable function: accepts { nonce, amountCents (CAD cents), note }
 // Returns { paymentId }
 
 export const createCeilidhPayment = functions.https.onCall(async (data, context) => {
@@ -33,7 +38,7 @@ export const createCeilidhPayment = functions.https.onCall(async (data, context)
     throw new functions.https.HttpsError('invalid-argument', 'Invalid payment data.');
   }
 
-  const client = getSquareClient();
+  const client = await getSquareClient();
 
   try {
     const response = await client.payments.create({
@@ -111,7 +116,7 @@ export const createShowTicketPayment = functions.https.onCall(async (data, conte
   }
 
   const amountCents = ticketType === 'weekend' ? 2000 : 1000;
-  const client = getSquareClient();
+  const client = await getSquareClient();
 
   try {
     const response = await client.payments.create({

@@ -69,13 +69,13 @@ export const UPCOMING_EVENTS = [
 export const PAGE_META = {
   INN: {
     EN: {
-      title: "Le Salon des Inconnus | Artistic Inn near Parc Omega & Montebello",
-      description: "Your 2026 basecamp for the Golden Triangle. 20 mins from Parc Omega wolves, 45 mins from Mont-Tremblant skiing. Historic 1898 Inn & Event Venue.",
+      title: "Le Salon des Inconnus | Artistic Inn in Outaouais (Namur, QC)",
+      description: "Victorian manor inn in Namur, Outaouais. Artist & entrepreneur residency with spa, hot tub, live music and wwoofing — 20 min from Parc Oméga.",
       keywords: "Parc Omega hotel, Chateau Montebello alternative, Lac à l'épaule Outaouais, Montagnes Noires Ripon"
     },
     FR: {
-      title: "Le Salon des Inconnus | Auberge Artistique & Golf (Petite Nation)",
-      description: "Votre camp de base 2026. À 20 min du Parc Oméga, 45 min de Mont-Tremblant. Auberge historique (1898) et salle de spectacle.",
+      title: "Le Salon des Inconnus | Auberge d'artistes en Outaouais (Namur)",
+      description: "Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing — à 20 min du Parc Oméga.",
       keywords: "Hôtel Parc Oméga, Hébergement Montebello, Lac à l'épaule Petite Nation, Hotel near Parc Omega, Bed and Breakfast Quebec, Auberge Ripon"
     }
   },
@@ -90,38 +90,38 @@ export const PAGE_META = {
   KITCHEN: {
     EN: { 
         title: "The Culinary Lab | Molecular Catering & Portuguese Bistronomy", 
-        description: "The ultimate catering experience in Quebec. A fusion of Portuguese bistronomy and Montreal molecular cuisine. Private chef for weddings and high-end events.", 
+        description: "Signature kitchen by chef Marc Alexis Pepin: Portuguese bistronomy and molecular cuisine. Catering for weddings and events across Outaouais.",
         keywords: "Molecular Catering, Private Chef Ottawa, Portuguese Bistronomy, Wedding Catering Quebec, Traiteur Outaouais" 
     },
     FR: { 
         title: "Le Laboratoire Culinaire | Traiteur Moléculaire & Bistronomie Portugaise", 
-        description: "L'expérience traiteur ultime au Québec. Fusion de bistronomie portugaise et cuisine moléculaire montréalaise. Chef privé pour mariages et événements haut de gamme.", 
+        description: "Cuisine signature du chef Marc Alexis Pepin : bistronomie portugaise et cuisine moléculaire. Traiteur pour mariages et événements en Outaouais.",
         keywords: "Traiteur Moléculaire, Chef Privé Montréal, Bistronomie Portugaise, Mariage Outaouais, Catering Ottawa, Private Chef Quebec" 
     }
   },
   MASSOTHERAPY: {
-    EN: { title: "Le Salon des Inconnus | Massage & Reiki", description: "Relaxation and holistic care in the heart of nature.", keywords: "Massage Petite Nation, Reiki Ripon" },
-    FR: { title: "Le Salon des Inconnus | Massothérapie & Reiki", description: "Détente et soins holistiques au cœur de la nature.", keywords: "Massothérapie Petite Nation, Reiki Ripon" }
+    EN: { title: "Massage & Reiki in Outaouais | Le Salon des Inconnus", description: "Massage therapy and reiki at Maison Favier with Andrée Dancause. Spa and hot tub on site, in Namur, Outaouais. Member rates available.", keywords: "Massage Petite Nation, Reiki Ripon" },
+    FR: { title: "Massothérapie & Reiki en Outaouais | Le Salon des Inconnus", description: "Massothérapie et reiki à la Maison Favier avec Andrée Dancause. Spa et jacuzzi sur place, à Namur en Outaouais. Tarifs membres disponibles.", keywords: "Massothérapie Petite Nation, Reiki Ripon" }
   },
   HOSTS: {
-    EN: { title: "Le Salon des Inconnus | Meet the Artists", description: "Discover the creators behind the Maison Favier project.", keywords: "Artistic Residency Quebec, Maison Favier History" },
-    FR: { title: "Le Salon des Inconnus | Rencontrer les Artistes", description: "Découvrez les créateurs derrière le projet Maison Favier.", keywords: "Résidence d'artiste Québec, Histoire Maison Favier" }
+    EN: { title: "Hosts & Team | Le Salon des Inconnus, Namur", description: "Meet the team behind Le Salon des Inconnus: Alex T. St-Laurent, chef Marc Alexis Pepin, massage therapist Andrée Dancause and resident artists.", keywords: "Artistic Residency Quebec, Maison Favier History" },
+    FR: { title: "Hôtes & Équipe | Le Salon des Inconnus, Namur", description: "Rencontrez l'équipe du Salon des Inconnus : Alex T. St-Laurent, le chef Marc Alexis Pepin, la massothérapeute Andrée Dancause et les artistes en résidence.", keywords: "Résidence d'artiste Québec, Histoire Maison Favier" }
   },
   GUIDE: {
-    EN: { title: "Le Salon des Inconnus | Local Guide Outaouais", description: "Best things to do in Montebello, Ripon, and Mont-Tremblant.", keywords: "Guide Outaouais, Things to do Montebello" },
-    FR: { title: "Le Salon des Inconnus | Guide Local Outaouais", description: "Quoi faire à Montebello, Ripon et Mont-Tremblant.", keywords: "Guide Outaouais, Quoi faire Montebello" }
+    EN: { title: "Local Guide to Petite-Nation & Outaouais | Le Salon des Inconnus", description: "What to do around the inn: Parc Oméga, Lac-Simon, Montagnes Noires, Mont-Tremblant, Petite-Nation festivals and local food and drink.", keywords: "Guide Outaouais, Things to do Montebello" },
+    FR: { title: "Guide local de la Petite-Nation et de l'Outaouais", description: "Quoi faire autour de l'auberge : Parc Oméga, Lac-Simon, Montagnes Noires, Mont-Tremblant, festivals et adresses gourmandes de la Petite-Nation.", keywords: "Guide Outaouais, Quoi faire Montebello" }
   },
   EVENTS: {
-    EN: { title: "Events | Le Salon des Inconnus", description: "Artistic and community events at Maison Favier.", keywords: "Events Outaouais, Cultural events Quebec" },
-    FR: { title: "Événements | Le Salon des Inconnus", description: "Événements artistiques et communautaires à la Maison Favier.", keywords: "Événements Outaouais, Événements culturels Québec" }
+    EN: { title: "Events at Maison Favier | Le Salon des Inconnus", description: "Live shows, residencies and gatherings at Le Salon des Inconnus, Namur. Next: Grand Ceilidh de Mai 2026 (May 21–25). Private bookings available.", keywords: "Events Outaouais, Cultural events Quebec" },
+    FR: { title: "Événements à la Maison Favier | Le Salon des Inconnus", description: "Spectacles, résidences et rassemblements au Salon des Inconnus, Namur. Prochain : Grand Ceilidh de Mai 2026 (21–25 mai). Réservations privées.", keywords: "Événements Outaouais, Événements culturels Québec" }
   },
   CEILIDH: {
-    EN: { title: "Grand Ceilidh de Mai 2026 | Le Salon des Inconnus", description: "Wwoofing, performances, banquet and community — May 21–25, 2026 in Namur, QC.", keywords: "Ceilidh Quebec, Festival communautaire 2026, Wwoofing event" },
-    FR: { title: "Grand Ceilidh de Mai 2026 | Le Salon des Inconnus", description: "Wwoofing, spectacles, banquet et communauté — 21–25 mai 2026 à Namur, QC.", keywords: "Ceilidh Québec, Festival communautaire 2026, Événement Wwoofing" }
+    EN: { title: "Grand Ceilidh de Mai 2026 — Festival in Namur | Le Salon des Inconnus", description: "Five-day community festival at Maison Favier, May 21–25, 2026. Live music, dance, banquet, shared work and wwoofing in Namur, Outaouais.", keywords: "Ceilidh Quebec, Festival communautaire 2026, Wwoofing event" },
+    FR: { title: "Grand Ceilidh de Mai 2026 — Festival à Namur | Le Salon des Inconnus", description: "Festival communautaire de cinq jours à la Maison Favier, du 21 au 25 mai 2026. Musique, danse, banquet, chantiers communs et wwoofing en Outaouais.", keywords: "Ceilidh Québec, Festival communautaire 2026, Événement Wwoofing" }
   },
   WWOOFING: {
-    EN: { title: "Wwoofing | Le Salon des Inconnus", description: "Live and work at Le Salon des Inconnus — apply as a wwoofer at Maison Favier.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },
-    FR: { title: "Wwoofing | Le Salon des Inconnus", description: "Vivez et travaillez au Salon des Inconnus — postuler comme wwoofer à la Maison Favier.", keywords: "Wwoofing Québec, Wwoofing Outaouais, Ferme bénévole Québec" }
+    EN: { title: "Wwoofing in Outaouais | Le Salon des Inconnus, Namur", description: "Wwoofing program at Maison Favier: 4 hours of work a day in exchange for room, board and shared community. Min. 7-day stays in Namur, Outaouais.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },
+    FR: { title: "Programme de Wwoofing en Outaouais | Le Salon des Inconnus", description: "Programme de wwoofing à la Maison Favier : 4 heures de travail par jour en échange du gîte, du couvert et de la vie communautaire. Séjour min. 7 jours.", keywords: "Wwoofing Québec, Wwoofing Outaouais, Ferme bénévole Québec" }
   },
   MY_PROFILE: {
     EN: { title: "My Profile | Le Salon des Inconnus", description: "Your member space at Le Salon des Inconnus.", keywords: "" },

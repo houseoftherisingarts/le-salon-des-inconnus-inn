@@ -3,17 +3,28 @@
   "private": true,
   "version": "0.8.0",
   "type": "module",
+  "packageManager": "npm@11.6.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && firebase deploy --only hosting"
+    "deploy": "npm run build && firebase deploy --only hosting",
+    "mono:dev": "turbo run dev --parallel",
+    "mono:build": "turbo run build",
+    "mono:lint": "turbo run lint",
+    "mono:deploy": "turbo run build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@imgly/background-removal": "^1.7.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "firebase": "^11.6.0",
+    "gsap": "^3.15.0",
     "lenis": "^1.3.23",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -29,6 +40,7 @@
     "playwright": "^1.59.1",
     "postcss": "^8.5.12",
     "tailwindcss": "^3.4.19",
+    "turbo": "^2.3.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

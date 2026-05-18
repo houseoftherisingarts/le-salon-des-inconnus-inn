@@ -5,6 +5,8 @@ import { ACCOMMODATIONS } from '../constants';
 import { OptimizedImage } from './OptimizedImage';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
 import { SITE_URL, CONTACT_INFO, SEMANTIC_NEIGHBORS, UPCOMING_EVENTS, PAGE_META } from '../config/seo.config';
+import { useRoomOrb } from './RoomOrbModal';
+import { RoomAmenitiesCompact } from './RoomAmenities';
 
 export type VibeMode = 'CLASSIC' | 'HOSTEL' | 'SHIRE';
 
@@ -831,14 +833,32 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   const displayedType = language === 'FR' && item.type_fr ? item.type_fr : item.type;
   const displayedDescription = language === 'FR' && item.description_fr ? item.description_fr : item.description;
 
+  const { openRoomOrb } = useRoomOrb();
+  // Click on a room card → open the orb-preview modal instead of jumping
+  // straight to Hostaway. The "Choose This Room" button inside the modal
+  // is what now follows item.bookingLink. Coming-soon rooms still open
+  // the modal so visitors can read the description; the modal swaps in
+  // a "Bientôt" disabled state for the booking action.
+  const openPreview = () => openRoomOrb(item);
+
   const nextImage = (e: React.MouseEvent) => { e.stopPropagation(); setCurrentImageIdx((prev) => (prev + 1) % item.images.length); };
   const prevImage = (e: React.MouseEvent) => { e.stopPropagation(); setCurrentImageIdx((prev) => (prev - 1 + item.images.length) % item.images.length); };
 
   if (vibe === 'HOSTEL') {
+      // Hero (L'Auberge Complète) keeps the wide half-moon — that anchors the section.
+      // Connected rooms use a full circle so they read as siblings of the orb-modal
+      // bubble, giving visual continuity from listing → modal → orb.
+      const shapeClass = isHero
+        ? 'rounded-t-full aspect-[16/9]'
+        : 'rounded-full aspect-square';
+      const shapeClipPath = isHero
+        ? 'inset(0% round 9999px 9999px 0px 0px)'
+        : 'inset(0% round 9999px)';
+      const ringRadius = isHero ? 'rounded-t-full' : 'rounded-full';
       return (
-        <VictorianCard vibe='HOSTEL' className={`h-full ${isHero ? 'scale-100' : 'scale-95'}`} onClick={() => window.open(item.bookingLink, '_blank')}>
-            <div className={`relative w-full overflow-hidden shadow-2xl rounded-t-full bg-black isolate transform-gpu ${isHero ? 'aspect-[16/9]' : 'aspect-video md:aspect-[3/4]'}`} style={{ clipPath: 'inset(0% round 9999px 9999px 0px 0px)' }}>
-              <div className="absolute inset-0 rounded-t-full pointer-events-none z-20" style={{ boxShadow: 'inset 0 0 0 3px #c5a059' }} />
+        <VictorianCard vibe='HOSTEL' className={`h-full ${isHero ? 'scale-100' : 'scale-95'}`} onClick={openPreview}>
+            <div className={`relative w-full overflow-hidden shadow-2xl ${shapeClass} bg-black isolate transform-gpu`} style={{ clipPath: shapeClipPath }}>
+              <div className={`absolute inset-0 ${ringRadius} pointer-events-none z-20`} style={{ boxShadow: 'inset 0 0 0 3px #c5a059' }} />
                  {isComingSoon && (
                     <div className="absolute inset-0 z-50 bg-black/60 flex items-center justify-center">
                         <span className="font-josefin font-bold text-xl uppercase tracking-widest text-[#f3e5ab] border border-[#f3e5ab] px-4 py-1 rounded-full bg-black/40 backdrop-blur-sm">{language === 'EN' ? "Coming Soon" : "Bientôt"}</span>
@@ -865,7 +885,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   }
   if (vibe === 'SHIRE') {
     return (
-        <VictorianCard vibe='SHIRE' className={`h-full flex flex-col`} onClick={() => window.open(item.bookingLink, '_blank')}>
+        <VictorianCard vibe='SHIRE' className={`h-full flex flex-col`} onClick={openPreview}>
             <div className={`relative w-full overflow-hidden mb-4 shadow-lg bg-[#20241e] isolate transform-gpu ${isHero ? 'aspect-[16/9] rounded-[50px]' : 'aspect-video md:aspect-[4/3] rounded-[30px]'}`} style={{ clipPath: isHero ? 'inset(0% round 50px)' : 'inset(0% round 30px)' }}>
                 <div className="absolute inset-0 pointer-events-none z-20" style={{ boxShadow: 'inset 0 0 0 4px #dcb055', borderRadius: isHero ? '50px' : '30px' }} />
                  {isComingSoon && (
@@ -896,7 +916,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
     );
   }
   return (
-    <VictorianCard vibe='CLASSIC' className={`h-full ${isHero ? 'shadow-2xl' : ''}`} borderColorClass={isHero ? 'border-[#d4af37]' : colors.border}>
+    <VictorianCard vibe='CLASSIC' className={`h-full ${isHero ? 'shadow-2xl' : ''}`} borderColorClass={isHero ? 'border-[#d4af37]' : colors.border} onClick={openPreview}>
       <div className="flex flex-col h-full group/card relative">
           {isComingSoon && (
               <div className="absolute inset-0 z-50 bg-black/80 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -920,12 +940,13 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
             <h3 className={`font-cinzel font-bold text-white mb-2 tracking-wide ${isHero ? 'text-4xl' : 'text-xl'}`}>{displayedTitle}</h3>
             <div className="w-12 h-px mb-4" style={{ backgroundColor: colors.accent }}></div>
             <p className={`font-lato text-neutral-400 mb-6 leading-relaxed ${isHero ? 'text-lg' : 'text-xs line-clamp-3'}`}>{displayedDescription}</p>
-            <div className="grid grid-cols-3 border-y border-white/5 py-3 mb-6 mt-auto">
-                <div className="text-center border-r border-white/5"><span className="block text-white font-cinzel text-lg">{item.guests}</span><span className="text-[8px] text-neutral-500 uppercase tracking-widest">{language === 'EN' ? "Guests" : "Invités"}</span></div>
+            <div className="grid grid-cols-3 border-y border-white/5 py-3 mb-3 mt-auto">
+                <div className="text-center border-r border-white/5"><span className="block text-white font-cinzel text-lg">{item.maxGuests ?? item.guests}</span><span className="text-[8px] text-neutral-500 uppercase tracking-widest">{language === 'EN' ? "Max Guests" : "Capacité"}</span></div>
                 <div className="text-center border-r border-white/5"><span className="block text-white font-cinzel text-lg">{item.beds}</span><span className="text-[8px] text-neutral-500 uppercase tracking-widest">{language === 'EN' ? "Beds" : "Lits"}</span></div>
-                <div className="text-center"><span className="block text-white font-cinzel text-lg">{item.baths}</span><span className="text-[8px] text-neutral-500 uppercase tracking-widest">{language === 'EN' ? "Baths" : "Bains"}</span></div>
+                <div className="text-center"><span className="block text-white font-cinzel text-lg">{item.baths}</span><span className="text-[8px] text-neutral-500 uppercase tracking-widest">{language === 'EN' ? "Baths" : "Salles de Bain"}</span></div>
             </div>
-            {isComingSoon ? <button className={`w-full py-3 text-white/50 font-cinzel font-bold uppercase tracking-[0.2em] text-center text-xs bg-white/5 cursor-not-allowed border border-white/10`}>{language === 'EN' ? "Coming Soon" : "Bientôt"}</button> : <a href={item.bookingLink} target="_blank" rel="noopener noreferrer" className={`w-full py-3 text-black font-cinzel font-bold uppercase tracking-[0.2em] text-center text-xs hover:bg-white transition-colors hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]`} style={{ backgroundColor: colors.accent }}>{ctaText}</a>}
+            <RoomAmenitiesCompact amenities={item.amenities} language={language} className="mb-4" />
+            {isComingSoon ? <button className={`w-full py-3 text-white/50 font-cinzel font-bold uppercase tracking-[0.2em] text-center text-xs bg-white/5 cursor-not-allowed border border-white/10`}>{language === 'EN' ? "Coming Soon" : "Bientôt"}</button> : <button onClick={(e) => { e.stopPropagation(); openPreview(); }} className={`w-full py-3 text-black font-cinzel font-bold uppercase tracking-[0.2em] text-center text-xs hover:bg-white transition-colors hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]`} style={{ backgroundColor: colors.accent }}>{ctaText}</button>}
           </div>
       </div>
     </VictorianCard>
@@ -1021,12 +1042,14 @@ export const PhotoGallerySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMo
 
 export const SpacesGrid: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
     const spaces = [{ title: "Ger (Yourte)", items: ["Chambre pour 5", "Foyer au Bois"] }, { title: "Chambres (5)", items: ["Musicienne", "Écrivaine", "Cinéaste", "Théâtre", "Tour"] }, { title: "Autobus", items: ["Chambre pour 5", "Foyer aux granules", "Piano inclus"] }, { title: "Salle à Manger", items: ["Tables bistro", "Table basse"] }, { title: "Salon Principal", items: ["Bibliothèque", "Sofas", "Espace doux", "Musique"] }, { title: "Cuisine", items: ["Libre Service", "Café Barista et Thé"] }, { title: "Spa / Jacuzzi", items: ["Espace détente", "Ouvert 24/7"] }, { title: "Nature", items: ["Ruisseau", "Lac", "Forêt", "Terrasse"] }, { title: "Espace Libre", items: ["3 Pits à Feux"] }, { title: "Balcons", items: ["Autour de la maison", "À l'étage"] }, { title: "Salle de Jeux", items: ["Projecteur", "Salle de meditation"] }, { title: "Jardins", items: ["Serre", "Mini Maison"] }];
-    const getLink = (title: string) => {
-        if (title.includes("Ger")) return ACCOMMODATIONS.find(a => a.id === 'yurt')?.bookingLink;
-        if (title.includes("Autobus")) return ACCOMMODATIONS.find(a => a.id === 'bus')?.bookingLink;
-        if (title.includes("Chambres")) return ACCOMMODATIONS.find(a => a.id === 'manor')?.bookingLink;
+    const getRoom = (title: string): Accommodation | undefined => {
+        if (title.includes("Ger")) return ACCOMMODATIONS.find(a => a.id === 'yurt');
+        if (title.includes("Autobus")) return ACCOMMODATIONS.find(a => a.id === 'bus');
+        if (title.includes("Chambres")) return ACCOMMODATIONS.find(a => a.id === 'manor');
         return undefined;
     };
+
+    const { openRoomOrb } = useRoomOrb();
 
     return (
         <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
@@ -1036,11 +1059,11 @@ export const SpacesGrid: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = (
             </RevealOnScroll>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {spaces.map((space, idx) => {
-                    const link = getLink(space.title);
+                    const room = getRoom(space.title);
                     return (
                         <RevealOnScroll key={idx} delay={idx * 50}>
-                            <div onClick={() => link && window.open(link, '_blank')} className={link ? 'cursor-pointer' : ''}>
-                                <VictorianCard vibe={vibe} className={`h-full hover:-translate-y-1 ${link ? 'hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]' : ''}`} borderColorClass={vibe === 'CLASSIC' ? 'border-purple-900/50' : undefined}>
+                            <div onClick={() => room && openRoomOrb(room)} className={room ? 'cursor-pointer' : ''}>
+                                <VictorianCard vibe={vibe} className={`h-full hover:-translate-y-1 ${room ? 'hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]' : ''}`} borderColorClass={vibe === 'CLASSIC' ? 'border-purple-900/50' : undefined}>
                                     {vibe === 'HOSTEL' ? (
                                         <div className="p-6 flex flex-col items-center justify-center text-center bg-[#1e1e24] w-full h-full border border-white/5 rounded-lg hover:border-[#c5a059] transition-colors group-hover:bg-[#25252b]">
                                             <div className="w-8 h-1 bg-[#c5a059] mb-4"></div>

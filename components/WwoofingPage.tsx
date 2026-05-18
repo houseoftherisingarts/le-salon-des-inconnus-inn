@@ -7,6 +7,7 @@ import {
   serverTimestamp, query, orderBy,
 } from 'firebase/firestore';
 import { AuthModal, type MemberProfile } from './AuthModal';
+import { SeoBlock } from './SeoBlock';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
 
 interface WwoofingPageProps {
@@ -433,6 +434,8 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             </div>
           )}
         </section>
+
+        <SeoBlock viewKey="WWOOFING" language={language} onNavigate={onNavigate} />
       </main>
 
       {showAuth && (

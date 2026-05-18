@@ -14,13 +14,19 @@ const GuidePage         = lazy(() => import('./components/GuidePage').then(m => 
 const KitchenPage       = lazy(() => import('./components/KitchenPage').then(m => ({ default: m.KitchenPage })));
 const EventsPage        = lazy(() => import('./components/EventsPage').then(m => ({ default: m.EventsPage })));
 const CeilidhPage       = lazy(() => import('./components/CeilidhPage').then(m => ({ default: m.CeilidhPage })));
-const CeilidhPageTest1  = lazy(() => import('./components/CeilidhPageTest1').then(m => ({ default: m.CeilidhPageTest1 })));
-const CeilidhPageTest2  = lazy(() => import('./components/CeilidhPageTest2').then(m => ({ default: m.CeilidhPageTest2 })));
 const WwoofingPage      = lazy(() => import('./components/WwoofingPage').then(m => ({ default: m.WwoofingPage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
 const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => ({ default: m.AdminCRM })));
+const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CreatorStudio })));
+// Maestro-tier /{username} portfolio page — dispatched when the URL path is a
+// slug that doesn't match any reserved route. Loaded lazily so we don't
+// pull three.js / @react-three onto every other page.
+const SuperProfilePage  = lazy(() => import('./components/SuperProfilePage').then(m => ({ default: m.SuperProfilePage })));
+// /highstest — premium cinematic intro to the Creator Studio. Test bed for
+// the "in your face $10k website" feel. Lazy-loaded; pulls three.js + Lenis.
+const HighsTestPage     = lazy(() => import('./components/HighsTestPage').then(m => ({ default: m.HighsTestPage })));
 
 // Suspense fallback shown briefly while a page chunk loads on navigation.
 const PageLoader: React.FC = () => (
@@ -33,8 +39,10 @@ const PageLoader: React.FC = () => (
 import { CookieBanner, type ConsentLevel } from './components/CookieBanner';
 import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { MemberPanel } from './components/MemberPanel';
+import { AuthModal } from './components/AuthModal';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
-import { PAGE_META } from './config/seo.config';
+import { PAGE_META, SITE_URL, CONTACT_INFO } from './config/seo.config';
+import { SEO_CONTENT, type SeoViewKey } from './config/seo.content';
 import { getOptimizedUrl } from './utils/imageOptimizer';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, getRedirectResult } from 'firebase/auth';
@@ -147,9 +155,13 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'CEILIDH_TEST1' | 'CEILIDH_TEST2' | 'WWOOFING'
-              | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN';
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING'
+              | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO'
+              | 'SUPER_PROFILE' | 'HIGHS_TEST';
 
+// Note: SUPER_PROFILE intentionally has no fixed path — its path is the
+// dynamic slug. We list it here for completeness but handleNavigation never
+// uses VIEW_PATHS['SUPER_PROFILE']; the slug is passed explicitly.
 const VIEW_PATHS: Record<ViewState, string> = {
   INN:            '/',
   INN_TEST2:      '/mainpagetest2',
@@ -160,21 +172,43 @@ const VIEW_PATHS: Record<ViewState, string> = {
   KITCHEN:        '/cuisine',
   EVENTS:         '/evenements',
   CEILIDH:        '/ceilidh',
-  CEILIDH_TEST1:  '/ceilidhtest1',
-  CEILIDH_TEST2:  '/ceilidhtest2',
   WWOOFING:       '/wwoofing',
   MY_PROFILE:     '/profil',
   PUBLIC_PROFILE: '/membre',
   MESSAGING:      '/messages',
   ADMIN:          '/admin',
+  CREATOR_STUDIO: '/creator',
+  SUPER_PROFILE:  '',
+  HIGHS_TEST:     '/highstest',
 };
 
 const PATH_VIEWS: Record<string, ViewState> = Object.fromEntries(
-  Object.entries(VIEW_PATHS).map(([v, p]) => [p, v as ViewState])
+  Object.entries(VIEW_PATHS)
+    .filter(([, p]) => p !== '')
+    .map(([v, p]) => [p, v as ViewState])
 );
 
-const pathToView = (pathname: string): ViewState =>
-  PATH_VIEWS[pathname] ?? PATH_VIEWS[pathname.replace(/\/$/, '')] ?? 'INN';
+// Slug-shaped paths: a single segment of 3-32 lowercase alphanum/hyphen chars.
+// Any path that matches AND isn't a reserved route falls through to the
+// Super Profile dispatcher. Numeric-only is excluded so we don't intercept
+// hypothetical numeric routes.
+const SLUG_PATTERN = /^\/([a-z0-9](?:[a-z0-9-]{1,30})[a-z0-9])$/;
+
+const extractSlug = (pathname: string): string | null => {
+  const m = SLUG_PATTERN.exec(pathname);
+  if (!m) return null;
+  const slug = m[1];
+  if (/^\d+$/.test(slug)) return null;
+  return slug;
+};
+
+const pathToView = (pathname: string): ViewState => {
+  const normalized = pathname.replace(/\/$/, '') || '/';
+  if (PATH_VIEWS[pathname]) return PATH_VIEWS[pathname];
+  if (PATH_VIEWS[normalized]) return PATH_VIEWS[normalized];
+  if (extractSlug(normalized)) return 'SUPER_PROFILE';
+  return 'INN';
+};
 
 const App: React.FC = () => {
   // App Loading State
@@ -194,9 +228,23 @@ const App: React.FC = () => {
   // Set when user returns from a Google redirect sign-in but has no Firestore profile yet
   const [redirectPendingUser, setRedirectPendingUser] = useState<User | null>(null);
 
+  // Curated-artist flag from members/{uid}/admin/flags. Drives Creator Studio
+  // publish gating ("Ask to be featured" → admin sets these → real surfacing
+  // across Café / Mécène / Studio Featured).
+  const [isCuratedArtist, setIsCuratedArtist] = useState(false);
+  // Triggered by the Creator Studio gate when an anonymous visitor clicks
+  // "Sign in with Google / Email". Mounts AuthModal next to the studio.
+  const [creatorAuthOpen, setCreatorAuthOpen] = useState(false);
+
   // Social space state
   const [publicProfileUid, setPublicProfileUid] = useState<string | null>(null);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+
+  // Super Profile slug — populated from the URL when on a /{username} path.
+  // The SuperProfilePage uses it to look up the artist's doc.
+  const [superProfileSlug, setSuperProfileSlug] = useState<string | null>(() =>
+    extractSlug(window.location.pathname.replace(/\/$/, '') || '/')
+  );
 
   // Privacy / Compliance State
   const [consentLevel, setConsentLevel] = useState<ConsentLevel | null>(null);
@@ -213,29 +261,56 @@ const App: React.FC = () => {
 
   // --- 1. NAVIGATION HELPER ---
   const handleNavigation = (destination: ViewState) => {
-    const path = VIEW_PATHS[destination] ?? '/';
+    // SUPER_PROFILE is reached by entering its slug URL directly — never
+    // navigated to from in-app, so we don't push a path for it.
+    if (destination === 'SUPER_PROFILE') {
+      setCurrentView(destination);
+      return;
+    }
+    const path = VIEW_PATHS[destination] || '/';
     if (window.location.pathname !== path) {
       history.pushState({ view: destination }, '', path);
     }
     setCurrentView(destination);
+    setSuperProfileSlug(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Handle browser back / forward
   useEffect(() => {
     const onPop = (e: PopStateEvent) => {
-      setCurrentView(e.state?.view ?? pathToView(window.location.pathname));
+      const nextView = e.state?.view ?? pathToView(window.location.pathname);
+      setCurrentView(nextView);
+      setSuperProfileSlug(extractSlug(window.location.pathname.replace(/\/$/, '') || '/'));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  // Update document title + meta description per view (single source: config/seo.config.ts)
+  // Global navigator — pages without rich onNavigate (KitchenPage, GuidePage,
+  // MassotherapyPage) can still trigger SPA navigation by dispatching
+  // `salon:navigate`. Used by <SeoBlock /> for in-body internal links.
+  useEffect(() => {
+    const onNav = (e: Event) => {
+      const detail = (e as CustomEvent<{ view?: string }>).detail;
+      const view = detail?.view as ViewState | undefined;
+      if (view && view in VIEW_PATHS) handleNavigation(view);
+    };
+    window.addEventListener('salon:navigate', onNav as EventListener);
+    return () => window.removeEventListener('salon:navigate', onNav as EventListener);
+  }, []);
+
+  // Update document title + meta description + canonical + per-route JSON-LD per view.
+  // Single source of truth: config/seo.config.ts (meta) + config/seo.content.ts (FAQ).
   useEffect(() => {
     const meta = PAGE_META[currentView]?.[language];
     if (!meta) return;
     document.title = meta.title;
+
+    const path = VIEW_PATHS[currentView] ?? '/';
+    const canonicalUrl = `${SITE_URL}${path}`;
+
     const setMeta = (selector: string, value: string) => {
       const el = document.querySelector(selector);
       if (el) el.setAttribute('content', value);
@@ -243,9 +318,77 @@ const App: React.FC = () => {
     setMeta('meta[name="description"]', meta.description);
     setMeta('meta[property="og:title"]', meta.title);
     setMeta('meta[property="og:description"]', meta.description);
-    setMeta('meta[property="og:url"]', `https://lesalondesinconnus.com${VIEW_PATHS[currentView]}`);
+    setMeta('meta[property="og:url"]', canonicalUrl);
     setMeta('meta[name="twitter:title"]', meta.title);
     setMeta('meta[name="twitter:description"]', meta.description);
+
+    // Canonical link — keep one <link rel=canonical> in <head>, sync per route.
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+
+    // Per-route JSON-LD (FAQPage when the page has FAQs; Event for /evenements
+    // and /ceilidh). We write into the empty <script id="route-jsonld"> placeholder
+    // declared in index.html.
+    const routeScript = document.getElementById('route-jsonld');
+    if (routeScript) {
+      const blocks: object[] = [];
+
+      // FAQPage — when the route is registered in SEO_CONTENT.
+      const seoKey = currentView as SeoViewKey;
+      const seoEntry = SEO_CONTENT[seoKey]?.[language];
+      if (seoEntry && seoEntry.faq.length > 0) {
+        blocks.push({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: seoEntry.faq.map((item) => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
+          })),
+        });
+      }
+
+      // Event — Grand Ceilidh de Mai 2026 on /evenements and /ceilidh.
+      if (currentView === 'EVENTS' || currentView === 'CEILIDH') {
+        blocks.push({
+          '@context': 'https://schema.org',
+          '@type': 'Event',
+          name: 'Grand Ceilidh de Mai 2026',
+          startDate: '2026-05-21',
+          endDate: '2026-05-25',
+          eventStatus: 'https://schema.org/EventScheduled',
+          eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+          description:
+            "Festival communautaire de cinq jours à la Maison Favier : musique, danse, banquet, chantiers communs et wwoofing à Namur, en Outaouais.",
+          location: {
+            '@type': 'Place',
+            name: 'Le Salon des Inconnus — Maison Favier',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: CONTACT_INFO.address,
+              addressLocality: CONTACT_INFO.locality,
+              addressRegion: CONTACT_INFO.region,
+              postalCode: CONTACT_INFO.postalCode,
+              addressCountry: CONTACT_INFO.country,
+            },
+          },
+          organizer: {
+            '@type': 'Organization',
+            name: 'Le Salon des Inconnus',
+            url: SITE_URL,
+          },
+          image: 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
+          url: `${SITE_URL}/ceilidh`,
+        });
+      }
+
+      routeScript.textContent = blocks.length === 0 ? '' : JSON.stringify(blocks.length === 1 ? blocks[0] : blocks);
+    }
   }, [currentView, language]);
 
   // Auth State Listener
@@ -262,6 +405,31 @@ const App: React.FC = () => {
     });
     return unsub;
   }, []);
+
+  // Subscribe to the current user's curated-artist flag. Lives in a separate
+  // admin-only-write subdoc (members/{uid}/admin/flags) so users can't grant
+  // it to themselves.
+  useEffect(() => {
+    if (!db || !currentUser) {
+      setIsCuratedArtist(false);
+      return;
+    }
+    const ref = doc(db, 'members', currentUser.uid, 'admin', 'flags');
+    let cancelled = false;
+    getDoc(ref).then((snap) => {
+      if (cancelled) return;
+      const data = snap.data() as { isArtist?: boolean } | undefined;
+      setIsCuratedArtist(data?.isArtist === true);
+    }).catch(() => {
+      if (!cancelled) setIsCuratedArtist(false);
+    });
+    return () => { cancelled = true; };
+  }, [currentUser?.uid]);
+
+  // Close the studio-triggered AuthModal automatically when sign-in completes.
+  useEffect(() => {
+    if (currentUser && creatorAuthOpen) setCreatorAuthOpen(false);
+  }, [currentUser, creatorAuthOpen]);
 
   // Handle users returning from a Google redirect sign-in
   useEffect(() => {
@@ -499,33 +667,11 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 7: CEILIDH — now backed by the redesigned chapter-cards page.
-            The original CeilidhPage.tsx file is still imported (its inner
-            components — KanbanBoard, NeedsSection, CovoiturageSection,
-            AbundanceSection, PresenceTimeline — are reused inside the new shell). */}
+        {/* VIEW 7: CEILIDH — chapter-card layout. Shared internals
+            (KanbanBoard, NeedsSection, CovoiturageSection, AbundanceSection,
+            PresenceTimeline) live in components/CeilidhShared.tsx. */}
         {currentView === 'CEILIDH' && (
-          <CeilidhPageTest2
-            onNavigate={(view) => handleNavigation(view as ViewState)}
-            language={language}
-            user={currentUser}
-            memberProfile={memberProfile}
-            onUserChange={handleUserChange}
-            onShowPrivacy={() => setShowPrivacyPolicy(true)}
-            onViewProfile={handleViewProfile}
-          />
-        )}
-
-        {/* VIEW 7-test1: Ceilidh redesign — Avenue A "Estate Map" — /ceilidhtest1 */}
-        {currentView === 'CEILIDH_TEST1' && (
-          <CeilidhPageTest1
-            onNavigate={(view) => handleNavigation(view as ViewState)}
-            language={language}
-          />
-        )}
-
-        {/* VIEW 7-test2: Ceilidh redesign — Avenue B "Chapter Cards" — /ceilidhtest2 */}
-        {currentView === 'CEILIDH_TEST2' && (
-          <CeilidhPageTest2
+          <CeilidhPage
             onNavigate={(view) => handleNavigation(view as ViewState)}
             language={language}
             user={currentUser}
@@ -593,10 +739,52 @@ const App: React.FC = () => {
             user={currentUser}
           />
         )}
+
+        {/* VIEW 12: CREATOR STUDIO — gated by sign-in (or "view as visitor"). */}
+        {currentView === 'CREATOR_STUDIO' && (
+          <CreatorStudio
+            language={language}
+            currentUser={currentUser ? {
+              uid: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            } : null}
+            isArtist={isCuratedArtist}
+            onRequestSignIn={() => setCreatorAuthOpen(true)}
+            onExit={() => handleNavigation('INN')}
+          />
+        )}
+
+        {/* VIEW 13: SUPER PROFILE (/{username}) — fullscreen, borderless,
+            Maestro-tier-only public portfolio. Resolves the URL slug to a
+            Firestore doc; renders one of three layouts (Photo / Visual Art
+            / Editorial) keyed off the artist's medium. */}
+        {currentView === 'SUPER_PROFILE' && superProfileSlug && (
+          <SuperProfilePage
+            slug={superProfileSlug}
+            onNavigateHome={() => handleNavigation('INN')}
+          />
+        )}
+
+        {/* VIEW 14: /highstest — premium cinematic intro to the Creator
+            Studio. Test bed for the "in your face" $10k-website feel,
+            using brand palette + 3D particle field + scroll-driven panels. */}
+        {currentView === 'HIGHS_TEST' && (
+          <HighsTestPage
+            onEnterStudio={() => handleNavigation('CREATOR_STUDIO')}
+            onBack={() => handleNavigation('INN')}
+          />
+        )}
       </Suspense>
 
-      {/* GLOBAL: Subtle admin footer link */}
-      {!isLoading && currentView !== 'ADMIN' && (
+      {/* GLOBAL: Subtle admin footer link — only shown to logged-in admins.
+          Mirrors the email allow-list used by AdminCRM and firestore.rules.
+          Non-admins (anonymous OR signed-in non-admins) don't see the link
+          at all, so /admin isn't discoverable from the UI. */}
+      {!isLoading && currentView !== 'ADMIN' && currentView !== 'HIGHS_TEST' && currentView !== 'SUPER_PROFILE' && currentUser?.email &&
+        ['houseoftherisingarts@gmail.com', 'alex@lesalondesinconnus.com']
+          .includes(currentUser.email.toLowerCase()) && (
         <button
           onClick={() => handleNavigation('ADMIN')}
           className="fixed bottom-3 left-4 z-[50] text-[9px] font-cinzel text-neutral-800 hover:text-neutral-500 uppercase tracking-widest transition-colors"
@@ -605,8 +793,11 @@ const App: React.FC = () => {
         </button>
       )}
 
-      {/* GLOBAL: Cookie / Privacy Consent Banner */}
-      {!isLoading && (
+      {/* GLOBAL: Cookie / Privacy Consent Banner — suppressed on fullscreen
+          immersive routes (HIGHS_TEST, SUPER_PROFILE) where the banner would
+          eat the CTA + crop the cinematic frame. The banner is still shown
+          on the rest of the site (where consent matters for analytics). */}
+      {!isLoading && currentView !== 'HIGHS_TEST' && currentView !== 'SUPER_PROFILE' && (
         <CookieBanner
           language={language}
           onShowPrivacy={() => setShowPrivacyPolicy(true)}
@@ -619,6 +810,19 @@ const App: React.FC = () => {
         <PrivacyPolicyModal
           language={language}
           onClose={() => setShowPrivacyPolicy(false)}
+        />
+      )}
+
+      {/* GLOBAL: AuthModal triggered by Creator Studio gate. Closes itself
+          via onAuthSuccess (which also fires onAuthStateChanged → currentUser
+          flip → studio leaves the gate state on its own). */}
+      {creatorAuthOpen && (
+        <AuthModal
+          language={language}
+          onClose={() => setCreatorAuthOpen(false)}
+          onAuthSuccess={(user, profile) => handleUserChange(user, profile)}
+          onShowPrivacy={() => setShowPrivacyPolicy(true)}
+          redirectPendingUser={redirectPendingUser}
         />
       )}
 

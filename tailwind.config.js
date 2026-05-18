@@ -9,6 +9,11 @@ export default {
     './utils/**/*.{ts,tsx}',
     './constants.ts',
     './types.ts',
+    // Workspace packages — without these, classes used inside @inconnus/ui
+    // (Creator Studio, ArtsPage, SdiCafe, etc.) are stripped from the build
+    // because Tailwind never sees them at scan time.
+    './packages/**/src/**/*.{ts,tsx}',
+    './apps/**/src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
@@ -36,6 +41,22 @@ export default {
         cormorant: ['"Cormorant Garamond"', 'serif'],
         sans: ['Lato', 'sans-serif'],
         display: ['Cinzel', 'serif'],
+        // System grotesk used for the Creator Studio's hero wordmarks. The
+        // production deploy (cdn.tailwindcss.com) renders heroes with the
+        // default `ui-sans-serif`/`system-ui` stack — heavier and wider than
+        // Lato Black. We mirror that stack here so the dev/prod studios look
+        // identical.
+        'studio-display': [
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+        ],
       },
       fontSize: {
         // Award-tier fluid display scale — for hero + section titles

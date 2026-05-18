@@ -12,20 +12,23 @@ import {
     type InspirosphereCategory,
     type InspirosphereVideo,
 } from './inspirosphereVideos';
+import { INSPIROSPHERE_CITATIONS } from './inspirosphereCitations';
 import type {
     InspirosphereCuratedVideo, InspirosphereFeaturedVideo,
 } from './inspirosphereVideoTypes';
 
-// ─── Unified orb video shape ──────────────────────────────────────────────
-// The orb consumes one type regardless of where the video came from. WEB
-// entries (the static seed catalog) flow through YouTube/Facebook embeds;
-// FIREBASE entries (admin-curated + approved UGC) play via HTML5 <video>
-// from Storage. The `ownerUid` is only attached to FIREBASE entries that
-// came from a member's profile (Voices tab) — that's what powers the
-// view-count ping back to members/{ownerUid}/videos/{id}.
+// ─── Unified orb item shape ───────────────────────────────────────────────
+// The orb consumes one type regardless of source. WEB entries (the static
+// seed catalog) flow through YouTube/Facebook embeds; FIREBASE entries
+// (admin-curated + approved UGC) play via HTML5 <video> from Storage;
+// CITATION entries are typeset text rendered inside the orb — no player.
+// The `ownerUid` is only attached to FIREBASE entries from a member's
+// profile (Voices tab) — that's what powers the view-count ping back to
+// members/{ownerUid}/videos/{id}.
 type OrbSource =
     | { kind: 'WEB';      url: string }
-    | { kind: 'FIREBASE'; storagePath: string; ownerUid?: string };
+    | { kind: 'FIREBASE'; storagePath: string; ownerUid?: string }
+    | { kind: 'CITATION'; text: string };
 
 interface OrbVideo {
     id: string;
@@ -35,17 +38,23 @@ interface OrbVideo {
     source: OrbSource;
 }
 
-type OrbTab = 'DISCOVERED' | 'FEATURED' | 'VOICES';
+type OrbTab = 'DISCOVERED' | 'FEATURED' | 'VOICES' | 'CITATIONS';
 
 const TAB_LABELS: Record<OrbTab, { en: string; fr: string }> = {
     DISCOVERED: { en: 'Discovered', fr: 'Découvert' },
     FEATURED:   { en: 'Featured',   fr: 'En vedette' },
     VOICES:     { en: 'Voices',     fr: 'Voix' },
+    CITATIONS:  { en: 'Citations',  fr: 'Citations' },
 };
 
 const STATIC_AS_ORB: OrbVideo[] = INSPIROSPHERE_VIDEOS.map(v => ({
     id: v.id, title: v.title, credit: v.credit, category: v.category,
     source: { kind: 'WEB', url: v.url },
+}));
+
+const CITATIONS_AS_ORB: OrbVideo[] = INSPIROSPHERE_CITATIONS.map(c => ({
+    id: c.id, title: c.text, category: c.category,
+    source: { kind: 'CITATION', text: c.text },
 }));
 
 /**
@@ -172,15 +181,23 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
         return () => { unsub1(); unsub2(); };
     }, []);
 
-    // Pool of videos respecting the active tab + category filter.
+    // Unfiltered base pool for the active tab. Kept separate so Conscious
+    // Mode's category chips can count from the tab's full catalog instead
+    // of the (already category-filtered) `pool` below.
+    const baseForTab = useMemo<OrbVideo[]>(() => {
+        switch (activeTab) {
+            case 'DISCOVERED': return STATIC_AS_ORB;
+            case 'FEATURED':   return featuredPool;
+            case 'VOICES':     return voicesPool;
+            case 'CITATIONS':  return CITATIONS_AS_ORB;
+        }
+    }, [activeTab, featuredPool, voicesPool]);
+
+    // Pool respecting the active tab + category filter.
     const pool = useMemo<OrbVideo[]>(() => {
-        const base =
-            activeTab === 'DISCOVERED' ? STATIC_AS_ORB :
-            activeTab === 'FEATURED'   ? featuredPool  :
-                                         voicesPool;
-        if (!activeCategory) return base;
-        return base.filter(v => v.category === activeCategory);
-    }, [activeTab, activeCategory, featuredPool, voicesPool]);
+        if (!activeCategory) return baseForTab;
+        return baseForTab.filter(v => v.category === activeCategory);
+    }, [baseForTab, activeCategory]);
 
     // Resolve Storage download URLs for any FIREBASE entries in the current
     // pool we haven't already fetched. Lazy + cached for the session.
@@ -241,7 +258,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     // pool via the effect above).
     const currentVideo = useMemo<OrbVideo | null>(() => {
         if (!currentVideoId) return null;
-        const all: OrbVideo[] = [...STATIC_AS_ORB, ...featuredPool, ...voicesPool];
+        const all: OrbVideo[] = [...STATIC_AS_ORB, ...featuredPool, ...voicesPool, ...CITATIONS_AS_ORB];
         return all.find(v => v.id === currentVideoId) ?? null;
     }, [currentVideoId, featuredPool, voicesPool]);
 
@@ -276,6 +293,11 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     const firebaseOwnerUid = currentVideo && currentVideo.source.kind === 'FIREBASE'
         ? currentVideo.source.ownerUid
         : undefined;
+    // Citation text — populated only when the active pick is a CITATION
+    // entry. Renders as typography in place of the video player.
+    const citationText = currentVideo && currentVideo.source.kind === 'CITATION'
+        ? currentVideo.source.text
+        : null;
 
     // ── YouTube IFrame Player API integration ──────────────────────────────
     // For YouTube videos we use the IFrame Player API so we can:
@@ -536,7 +558,28 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                         the orb diameter; the extra width is clipped by the orb
                         shell's overflow-hidden + rounded-full. The video fills
                         the circle instead of letterboxing. */}
-                    {ytId ? (
+                    {citationText ? (
+                        // CITATIONS tab — typeset wisdom inside the orb.
+                        // No player chrome; the text is the artwork.
+                        <div
+                            key={`citation-${currentVideoId}-${zapKey}`}
+                            className="absolute inset-0 flex items-center justify-center px-[10%] py-[12%] inspirosphere-citation-fade text-center"
+                        >
+                            <blockquote className="font-cinzel text-white tracking-wide leading-snug text-balance"
+                                style={{
+                                    fontSize: 'clamp(1.05rem, 2.4vw, 1.9rem)',
+                                    textShadow: '0 1px 12px rgba(0,0,0,0.55)',
+                                }}
+                            >
+                                <span aria-hidden className="block text-fuchsia-300/60 font-serif italic leading-none mb-2"
+                                    style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)' }}
+                                >
+                                    “
+                                </span>
+                                {citationText}
+                            </blockquote>
+                        </div>
+                    ) : ytId ? (
                         <div
                             className="absolute"
                             style={{
@@ -670,11 +713,15 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     since the orb itself no longer carries text chrome. */}
                 {currentVideo && (
                     <div className="px-4 md:px-8 pt-5 pb-2 text-center">
-                        <h3 className="text-base md:text-lg font-cinzel text-white tracking-wide">
-                            {currentVideo.title}
-                        </h3>
+                        {currentVideo.source.kind !== 'CITATION' && (
+                            <h3 className="text-base md:text-lg font-cinzel text-white tracking-wide">
+                                {currentVideo.title}
+                            </h3>
+                        )}
                         <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-500 mt-1 font-cinzel">
-                            {currentVideo.credit ?? '—'}
+                            {currentVideo.source.kind === 'CITATION'
+                                ? t('Anonymous', 'Anonyme')
+                                : (currentVideo.credit ?? '—')}
                             <span className="mx-2 text-neutral-700">·</span>
                             {language === 'FR'
                                 ? CATEGORY_LABELS[currentVideo.category].fr
@@ -752,11 +799,12 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     new source. */}
                 <div className="px-4 md:px-8 pt-4 pb-1 flex justify-center">
                     <div className="inline-flex items-center gap-1 p-1 border border-white/15 rounded-full bg-black/40 backdrop-blur-md">
-                        {(['DISCOVERED', 'FEATURED', 'VOICES'] as OrbTab[]).map(tab => {
+                        {(['DISCOVERED', 'FEATURED', 'VOICES', 'CITATIONS'] as OrbTab[]).map(tab => {
                             const active = activeTab === tab;
                             const count = tab === 'DISCOVERED' ? STATIC_AS_ORB.length
                                        : tab === 'FEATURED'   ? featuredPool.length
-                                       :                        voicesPool.length;
+                                       : tab === 'VOICES'     ? voicesPool.length
+                                       :                        CITATIONS_AS_ORB.length;
                             return (
                                 <button
                                     key={tab}
@@ -767,7 +815,9 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                                         ? t('Community videos approved for the orb', "Vidéos de la communauté retenues pour l'orbe")
                                         : tab === 'FEATURED'
                                           ? t('Salon picks — uploaded by the house', 'Choix du Salon — téléversés par la maison')
-                                          : t('Web finds — the original catalog', 'Trouvailles du web — le catalogue original')}
+                                          : tab === 'CITATIONS'
+                                            ? t('Anonymized citations — wisdom without a name', 'Citations anonymisées — la sagesse sans nom')
+                                            : t('Web finds — the original catalog', 'Trouvailles du web — le catalogue original')}
                                 >
                                     <span>{language === 'FR' ? TAB_LABELS[tab].fr : TAB_LABELS[tab].en}</span>
                                     <span className="text-[8px] opacity-60 font-mono tabular-nums">{count}</span>
@@ -833,7 +883,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                                 </button>
                                 {INSPIROSPHERE_CATEGORIES.map(c => {
                                     const active = activeCategory === c;
-                                    const count = INSPIROSPHERE_VIDEOS.filter(v => v.category === c).length;
+                                    const count = baseForTab.filter(v => v.category === c).length;
                                     if (count === 0) return null;
                                     return (
                                         <button
@@ -862,9 +912,12 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                                         // YouTube videos give us a free CDN
                                         // thumbnail; Facebook + Firebase do
                                         // not, so we render the gradient
-                                        // fallback for those tiles.
+                                        // fallback for those tiles. Citation
+                                        // tiles drop the thumbnail entirely
+                                        // and show the quote as the visual.
                                         const webId = v.source.kind === 'WEB' ? getYouTubeId(v.source.url) : null;
                                         const thumb = webId ? `https://img.youtube.com/vi/${webId}/hqdefault.jpg` : null;
+                                        const isCitation = v.source.kind === 'CITATION';
                                         const isCurrent = v.id === currentVideoId;
                                         return (
                                             <button
@@ -873,8 +926,15 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                                                 onClick={() => pickById(v.id)}
                                                 className={`group relative text-left rounded-lg overflow-hidden border transition-all ${isCurrent ? 'border-cyan-400/60 shadow-[0_0_20px_rgba(34,211,238,0.35)]' : 'border-white/10 hover:border-white/40 hover:shadow-[0_0_18px_rgba(255,255,255,0.12)]'}`}
                                             >
-                                                <div className="aspect-video bg-black overflow-hidden relative">
-                                                    {thumb ? (
+                                                <div className="aspect-video overflow-hidden relative bg-black">
+                                                    {isCitation ? (
+                                                        <div className="w-full h-full flex items-center justify-center p-3 bg-gradient-to-br from-fuchsia-900/40 via-violet-900/40 to-cyan-900/40">
+                                                            <p className="text-white/85 text-[11px] font-cinzel leading-snug line-clamp-4 text-center">
+                                                                <span aria-hidden className="text-fuchsia-300/70 font-serif italic mr-1">“</span>
+                                                                {v.title}
+                                                            </p>
+                                                        </div>
+                                                    ) : thumb ? (
                                                         <img src={thumb} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-fuchsia-700 via-violet-700 to-cyan-700">
@@ -888,9 +948,11 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                                                     )}
                                                 </div>
                                                 <div className="p-2.5">
-                                                    <p className="text-xs font-cinzel text-white line-clamp-2 leading-tight mb-1">{v.title}</p>
+                                                    {!isCitation && (
+                                                        <p className="text-xs font-cinzel text-white line-clamp-2 leading-tight mb-1">{v.title}</p>
+                                                    )}
                                                     <p className="text-[9px] uppercase tracking-widest text-neutral-500 truncate">
-                                                        {v.credit ?? '—'}
+                                                        {isCitation ? t('Anonymous', 'Anonyme') : (v.credit ?? '—')}
                                                         <span className="mx-1 text-neutral-700">·</span>
                                                         {language === 'FR'
                                                             ? CATEGORY_LABELS[v.category].fr
@@ -918,9 +980,15 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                 @keyframes insphBreathe { 0% { transform: scale(1); } 100% { transform: scale(1.015); } }
                 .inspirosphere-orb-glow { animation: insphGlow 4s ease-in-out infinite alternate; }
                 @keyframes insphGlow { 0% { opacity: 0.6; transform: scale(0.96); } 100% { opacity: 1; transform: scale(1.06); } }
+                .inspirosphere-citation-fade { animation: insphCitationFade 700ms ease-out both; }
+                @keyframes insphCitationFade {
+                    0%   { opacity: 0; transform: translateY(6px) scale(0.985); }
+                    100% { opacity: 1; transform: translateY(0)   scale(1); }
+                }
                 @media (prefers-reduced-motion: reduce) {
                     .inspirosphere-aurora-a, .inspirosphere-aurora-b, .inspirosphere-aurora-c,
-                    .inspirosphere-breathe, .inspirosphere-orb-glow { animation: none !important; }
+                    .inspirosphere-breathe, .inspirosphere-orb-glow,
+                    .inspirosphere-citation-fade { animation: none !important; }
                 }
 
                 /* Custom timeline scrubber — kept slim so it sits beside the

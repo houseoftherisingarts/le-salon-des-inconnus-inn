@@ -6,8 +6,8 @@ import { doc, updateDoc, collection, getDocs, query, where, limit, getDoc, onSna
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './AuthModal';
-import { TEAMS, LODGING, LODGING_GROUPS, ChatRoom } from './CeilidhPageTest2';
-import { EVENT_ID } from './CeilidhPage';
+import { TEAMS, LODGING, LODGING_GROUPS, ChatRoom } from './CeilidhPage';
+import { EVENT_ID } from './CeilidhShared';
 import { D20Roller, type D20Result } from './D20Roller';
 
 // ─── Types ────────────────────────────────────────────────────────────────────

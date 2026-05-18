@@ -4,6 +4,7 @@ import { LOCAL_GUIDE_DATA } from '../constants';
 import { LocalGuideCategory, LocalGuideItem } from '../types';
 import { BlogPostOverlay } from './BlogPostOverlay';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
+import { SeoBlock } from './SeoBlock';
 
 interface GuidePageProps {
   onNavigate: () => void;
@@ -428,6 +429,8 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
             </a>
           </div>
         </section>
+
+        <SeoBlock viewKey="GUIDE" language={language} />
 
       </main>
 

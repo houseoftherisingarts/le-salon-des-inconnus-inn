@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { OptimizedImage } from './OptimizedImage';
+import { SeoBlock } from './SeoBlock';
 
 interface MassotherapyPageProps {
   onNavigate: (view: 'INN') => void;
@@ -488,6 +489,8 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
                </section>
 
           </StickySection>
+
+          <SeoBlock viewKey="MASSOTHERAPY" language={language} />
 
       </main>
 

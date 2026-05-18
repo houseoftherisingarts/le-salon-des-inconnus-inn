@@ -1,5 +1,16 @@
 {
   "projects": {
     "default": "le-salon-des-inconnus"
+  },
+  "targets": {
+    "le-salon-des-inconnus": {
+      "hosting": {
+        "hub": ["inconnus-hub"],
+        "auberge": ["inconnus-auberge"],
+        "salon": ["inconnus-salon"],
+        "houseoftherisingarts": ["inconnus-houseoftherisingarts"],
+        "dome": ["inconnus-dome"]
+      }
+    }
   }
 }

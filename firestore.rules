@@ -45,6 +45,21 @@ service cloud.firestore {
         allow write: if request.auth != null && request.auth.uid == userId;
       }
 
+      // Super Profile (Maestro tier) — owner-editable config doc for the
+      // /{username} fullscreen portfolio page. Public read so anonymous
+      // visitors can load the page; writes only by owner, AND only when
+      // the admin has flipped maestroEnabled on the user's flags doc.
+      // Gating maestroEnabled at the rules layer (not just the UI) means a
+      // user who knows the schema still can't enable a Super Profile they
+      // haven't been granted.
+      match /superProfile/{docId} {
+        allow read: if true;
+        allow write: if request.auth != null
+                     && request.auth.uid == userId
+                     && exists(/databases/$(database)/documents/members/$(userId)/admin/flags)
+                     && get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.maestroEnabled == true;
+      }
+
       // Personal Kanban board — strictly private to the owner.
       match /kanban/{docId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
@@ -330,6 +345,27 @@ service cloud.firestore {
                         || request.resource.data.type == 'PROJECT');
       allow update: if isAdmin();
       allow delete: if isAdmin();
+    }
+
+    // ── Usernames (Super Profile slug claims) ────────────────────────────────
+    // Doc id is the lowercase slug; body is { uid, slug, claimedAt }. Public
+    // read so anonymous visitors can resolve /{username} → uid. Writes are
+    // strictly the owner — they can claim a free slot or release their own.
+    // Maestro gate enforced (claiming a slug also requires maestroEnabled),
+    // so users without the flag can't squat usernames in advance.
+    match /usernames/{slug} {
+      allow read:   if true;
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.uid
+                    && exists(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags)
+                    && get(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags).data.maestroEnabled == true;
+      // Update only by owner, and they can't reassign the slug to another uid.
+      allow update: if request.auth != null
+                    && resource.data.uid == request.auth.uid
+                    && request.resource.data.uid == request.auth.uid;
+      // Delete only by owner (slug release) or admin.
+      allow delete: if request.auth != null
+                    && (resource.data.uid == request.auth.uid || isAdmin());
     }
 
     // ── Roster claims ────────────────────────────────────────────────────────

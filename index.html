@@ -16,37 +16,47 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://storage.googleapis.com" />
     <link rel="dns-prefetch" href="https://wsrv.nl" />
-    <title>Le Salon des Inconnus | Auberge, Art & Golf | Outaouais</title>
-    
+    <title>Le Salon des Inconnus | Auberge d'artistes en Outaouais (Namur)</title>
+    <meta name="description" content="Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing — à 20 min du Parc Oméga." />
+
+    <!-- Canonical — kept in sync with the active route by App.tsx. -->
+    <link rel="canonical" href="https://www.lesalondesinconnus.com/" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://lesalondesinconnus.com" />
-    
-    <meta property="og:title" content="Le Salon des Inconnus | Auberge d'Artistes, Entrepreneurs et Voyageurs" />
-    
-    <meta property="og:description" content="L'escale idéale en Outaouais. Manoir victorien, spa, et nature. Voisin du Golf Héritage." />
-    
+    <meta property="og:url" content="https://www.lesalondesinconnus.com/" />
+    <meta property="og:site_name" content="Le Salon des Inconnus" />
+    <meta property="og:locale" content="fr_CA" />
+    <meta property="og:locale:alternate" content="en_CA" />
+
+    <meta property="og:title" content="Le Salon des Inconnus | Auberge d'artistes en Outaouais (Namur)" />
+    <meta property="og:description" content="Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing — à 20 min du Parc Oméga." />
+
     <meta property="og:image" content="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Le Salon des Inconnus | Auberge d'Artistes, Entrepreneurs et Voyageurs">
-    <meta name="twitter:description" content="Manoir victorien, spa et art à Namur.">
+    <meta name="twitter:title" content="Le Salon des Inconnus | Auberge d'artistes en Outaouais (Namur)">
+    <meta name="twitter:description" content="Manoir victorien, spa et résidence d'artistes à Namur, Outaouais.">
     <meta name="twitter:image" content="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg">
 
+    <!-- Primary identity: LodgingBusiness (covers inn / hostel / B&B / event venue use cases). -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Hostel",
+      "@type": "LodgingBusiness",
       "name": "Le Salon des Inconnus",
+      "alternateName": "Maison Favier",
       "image": "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg",
-      "@id": "https://lesalondesinconnus.com/#identity",
-      "url": "https://lesalondesinconnus.com",
-      "telephone": "+1 514-418-3450",
+      "@id": "https://www.lesalondesinconnus.com/#identity",
+      "url": "https://www.lesalondesinconnus.com",
+      "telephone": "+1-514-418-3450",
+      "email": "alex@lesalondesinconnus.com",
+      "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "826 Côte À Favier",
+        "streetAddress": "826 Côte à Favier",
         "addressLocality": "Namur",
         "addressRegion": "QC",
         "postalCode": "J0V 1N0",
@@ -54,11 +64,20 @@
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 45.8943, 
+        "latitude": 45.8943,
         "longitude": -74.9118
       },
-      "priceRange": "$$",
-      "description": "Auberge historique, manoir victorien et centre d'artistes situé près du Parc Oméga et du Lac Simon.",
+      "description": "Auberge et centre d'artistes installés dans la Maison Favier, un manoir victorien de 1898 à Namur, en Outaouais. Hébergement, spa, jacuzzi, programme de wwoofing, spectacles et événements communautaires.",
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "Spa", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Hot tub", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Live music venue", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Wwoofing program", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Artist residency", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Gardens", "value": true }
+      ],
+      "knowsLanguage": ["fr", "en"],
+      "founder": { "@type": "Person", "name": "Alex T. St-Laurent" },
       "sameAs": [
         "https://www.facebook.com/lesalondesinconnus",
         "https://www.instagram.com/lesalondesinconnus",
@@ -69,6 +88,9 @@
       ]
     }
     </script>
+
+    <!-- Per-route JSON-LD (FAQPage, Event, etc.) is injected at runtime by App.tsx. -->
+    <script type="application/ld+json" id="route-jsonld"></script>
 
   </head>
   <body class="bg-neutral-900 text-neutral-100 antialiased overflow-hidden">

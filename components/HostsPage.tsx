@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { OptimizedImage } from './OptimizedImage';
+import { SeoBlock } from './SeoBlock';
 
 interface HostsPageProps {
   onNavigate: (view: 'INN' | 'MASSOTHERAPY') => void;
@@ -248,11 +249,13 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
           ))}
 
           {/* 3. Hall of Fame (Final Layer) */}
-          <HallOfFameSection 
-              language={language} 
-              list={hallOfFame} 
-              index={hosts.length} 
+          <HallOfFameSection
+              language={language}
+              list={hallOfFame}
+              index={hosts.length}
           />
+
+          <SeoBlock viewKey="HOSTS" language={language} />
 
       </main>
 

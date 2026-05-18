@@ -270,7 +270,9 @@ export const KanbanBoard: React.FC<{
       When false, the kanban renders in read-only browse mode — no add,
       no claim, no edit, no delete. Members see the full editing surface. */
   isUserInTeam?: boolean;
-}> = ({ teamId, language, user, isUserInTeam = true }) => {
+  /** Tap a creator/claimer avatar → open their public profile. */
+  onViewProfile?: (uid: string) => void;
+}> = ({ teamId, language, user, isUserInTeam = true, onViewProfile }) => {
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
   const [tasks, setTasks] = useState<KanbanTask[]>([]);
   const [newTitle, setNewTitle] = useState('');
@@ -475,10 +477,13 @@ export const KanbanBoard: React.FC<{
               {task.title}
             </p>
           )}
-          {/* Creator avatar — photo if available, otherwise initial. Title attr
-              shows the creator's name so hovering reveals who put this here. */}
-          <span
-            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-cinzel uppercase"
+          {/* Creator avatar — photo if available, otherwise initial. Click
+              opens that member's public profile. */}
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); if (onViewProfile && task.createdBy) onViewProfile(task.createdBy); }}
+            disabled={!onViewProfile || !task.createdBy}
+            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-cinzel uppercase hover:scale-110 transition-transform disabled:cursor-default disabled:hover:scale-100"
             title={task.createdByName || task.createdByEmail || (isAdminCard ? 'Admin' : t('Member', 'Membre'))}
             style={{
               background: task.createdByPhoto ? `url(${task.createdByPhoto}) center/cover` : '#1f1810',
@@ -487,7 +492,7 @@ export const KanbanBoard: React.FC<{
             }}
           >
             {!task.createdByPhoto && (task.createdByName?.[0] || task.createdByEmail?.[0] || '?').toUpperCase()}
-          </span>
+          </button>
         </div>
 
         {task.assignedToName && (
@@ -523,16 +528,19 @@ export const KanbanBoard: React.FC<{
           {claimed.length > 0 && (
             <div className="flex -space-x-1.5">
               {claimed.slice(0, 5).map(c => (
-                <span
+                <button
                   key={c.uid}
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); if (onViewProfile && c.uid) onViewProfile(c.uid); }}
+                  disabled={!onViewProfile || !c.uid}
                   title={c.name}
-                  className="w-5 h-5 rounded-full border border-[#0a0a0a] flex items-center justify-center text-[9px] font-cinzel uppercase text-[#f3e5ab]"
+                  className="w-5 h-5 rounded-full border border-[#0a0a0a] flex items-center justify-center text-[9px] font-cinzel uppercase text-[#f3e5ab] hover:scale-110 transition-transform disabled:cursor-default disabled:hover:scale-100"
                   style={{
                     background: c.photo ? `url(${c.photo}) center/cover` : '#1f1810',
                   }}
                 >
                   {!c.photo && (c.name[0] || '?').toUpperCase()}
-                </span>
+                </button>
               ))}
               {claimed.length > 5 && (
                 <span className="w-5 h-5 rounded-full bg-[#1f1810] border border-[#0a0a0a] flex items-center justify-center text-[9px] text-neutral-400">
@@ -2442,11 +2450,22 @@ export const PresenceTimeline: React.FC<{
       {/* Gantt rows */}
       <div className="space-y-1.5">
         {registrations.map((reg, i) => {
-          const color = reg.teamId ? TEAM_COLORS[reg.teamId] || '#d4af37' : '#d4af37';
-          const arr = dayIdx(reg.arrivalDate || '2026-05-22');
-          const dep = dayIdx(reg.departureDate || '2026-05-25');
-          const leftPct = (arr / N) * 100;
-          const widthPct = ((dep - arr + 1) / N) * 100;
+          // Per-day presence is derived from the user's team-day picks
+          // (reg.teams[].days). If they have any team memberships, those
+          // days are the source of truth. If they don't (legacy regs), we
+          // fall back to the contiguous arrivalDate→departureDate span.
+          const teamDays = new Set<string>();
+          (reg.teams ?? []).forEach((m: any) => {
+            (m?.days ?? []).forEach((d: string) => teamDays.add(d));
+          });
+          const presentDays = new Set<string>();
+          if (teamDays.size > 0) {
+            teamDays.forEach((d) => presentDays.add(d));
+          } else {
+            const arr = dayIdx(reg.arrivalDate || '2026-05-22');
+            const dep = dayIdx(reg.departureDate || '2026-05-25');
+            for (let k = arr; k <= dep; k++) presentDays.add(EVENT_DAYS[k].id);
+          }
 
           return (
             <ScrollFade key={reg.uid || i} delay={i * 40}>
@@ -2460,43 +2479,30 @@ export const PresenceTimeline: React.FC<{
                   </span>
                 </div>
 
-                {/* Track */}
-                <div className="flex-1 relative h-6 rounded-sm overflow-hidden bg-white/[0.03]">
-                  {/* Day tick lines */}
-                  {EVENT_DAYS.map((_, j) => j > 0 && (
-                    <div key={j} className="absolute top-0 bottom-0 w-px bg-white/[0.06]"
-                      style={{ left: `${(j / N) * 100}%` }} />
+                {/* Track — one cell per event day, filled iff the user is
+                    present that day. This handles non-contiguous days
+                    (e.g. Fri + Sun, skipping Sat) and multi-team users
+                    correctly. */}
+                <div className="flex-1 relative h-6 rounded-sm overflow-hidden bg-white/[0.03] flex">
+                  {EVENT_DAYS.map((day, j) => (
+                    <div
+                      key={day.id}
+                      className={`flex-1 ${j > 0 ? 'border-l border-white/[0.06]' : ''}`}
+                    >
+                      {presentDays.has(day.id) && (
+                        <div
+                          className="h-4 my-1 mx-0.5 rounded-full transition-opacity duration-300 group-hover:opacity-90"
+                          style={{
+                            backgroundColor: '#c5a059',
+                            opacity: 0.55,
+                          }}
+                        />
+                      )}
+                    </div>
                   ))}
-                  {/* Stay bar */}
-                  <div
-                    className="absolute top-1 bottom-1 rounded-full transition-opacity duration-300 group-hover:opacity-90"
-                    style={{
-                      left: `${leftPct}%`,
-                      width: `${widthPct}%`,
-                      backgroundColor: color,
-                      opacity: 0.65,
-                      boxShadow: `0 0 8px ${color}40`,
-                    }}
-                  />
                 </div>
               </div>
             </ScrollFade>
-          );
-        })}
-      </div>
-
-      {/* Legend */}
-      <div className="mt-5 flex flex-wrap gap-3">
-        {Object.entries(TEAM_COLORS).map(([id, color]) => {
-          const team = TEAMS.find(t => t.id === id);
-          if (!team) return null;
-          const count = registrations.filter(r => r.teamId === id).length;
-          if (count === 0) return null;
-          return (
-            <div key={id} className="flex items-center gap-1.5 text-[10px] text-neutral-500 font-lato">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color, opacity: 0.7 }} />
-              {language === 'FR' ? team.name_fr : team.name} ({count})
-            </div>
           );
         })}
       </div>

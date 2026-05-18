@@ -1,4 +1,5 @@
 import React from 'react';
+import { RoomOrbProvider } from './RoomOrbModal';
 import {
   InnHero,
   ManorRoomsSection,
@@ -35,6 +36,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
 
   return (
+    <RoomOrbProvider language={language}>
     <div
       className="fixed inset-0 z-50 bg-[#050505] text-white overflow-y-auto custom-scrollbar selection:bg-[#d4af37] selection:text-black"
       data-inn-scroll
@@ -346,5 +348,6 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         }
       `}</style>
     </div>
+    </RoomOrbProvider>
   );
 };

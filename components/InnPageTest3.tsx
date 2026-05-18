@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import { LiquidGlassCycler } from './LiquidGlassCycler';
+import { SeoBlock } from './SeoBlock';
 import {
   TrustedPlatforms,
   ManorRoomsSection,
@@ -15,6 +16,7 @@ import {
   LazySection,
   INN_HERO_IMAGES,
 } from './InnPage';
+import { RoomOrbProvider } from './RoomOrbModal';
 
 const CEILIDH_DOORS_PHOTO = 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg';
 const WWOOFING_DOORS_PHOTO = 'https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg';
@@ -84,6 +86,20 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
   const [spacesOpen, setSpacesOpen] = useState(false);
+  // L'Espace expanded grid — column count tracks viewport width so the
+  // 12 cards stack 1 / 2 / 4 across small / medium / large screens.
+  // Without this, mobile saw 4 narrow columns of unreadable text.
+  const [espaceCols, setEspaceCols] = useState<1 | 2 | 4>(4);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const compute = () => {
+      const w = window.innerWidth;
+      setEspaceCols(w < 640 ? 1 : w < 1024 ? 2 : 4);
+    };
+    compute();
+    window.addEventListener('resize', compute);
+    return () => window.removeEventListener('resize', compute);
+  }, []);
   const [doorsExiting, setDoorsExiting] = useState<null | 'CEILIDH' | 'WWOOFING'>(null);
   const daysToCeilidhDoors = Math.max(0, Math.ceil((CEILIDH_DOORS_DATE.getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
 
@@ -160,6 +176,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
   }, []);
 
   return (
+    <RoomOrbProvider language={language}>
     <div
       ref={scrollRef}
       className="fixed inset-0 z-50 bg-[#050505] text-white overflow-y-auto custom-scrollbar selection:bg-[#d4af37] selection:text-black"
@@ -437,8 +454,13 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
                 maxWidth: '1200px',
                 // Mobile gets a taller stage so the (now bigger) cover card
                 // breathes; desktop keeps its cinematic aspect, just a touch
-                // taller now that the card dominates.
-                height: spacesOpen ? 'min(900px, 110vw)' : 'min(620px, 110vw)',
+                // taller now that the card dominates. When open, the height
+                // scales with column count so cards stay readable.
+                height: spacesOpen
+                  ? (espaceCols === 4 ? 'min(900px, 110vw)'
+                     : espaceCols === 2 ? '1700px'
+                     : '3200px')
+                  : 'min(620px, 110vw)',
                 transition: 'height 1.4s cubic-bezier(0.5, 0, 0.2, 1)',
               }}
             >
@@ -471,8 +493,9 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
                 onClick={() => { if (spacesOpen) setSpacesOpen(false); }}
               >
                 {SPACES_DATA.map((space, i) => {
-                  const col = i % 4;
-                  const row = Math.floor(i / 4);
+                  const col = i % espaceCols;
+                  const row = Math.floor(i / espaceCols);
+                  const numRows = Math.ceil(SPACES_DATA.length / espaceCols);
                   const depth = i; // 0..11; 0 sits at the back of the cover, others fan further behind.
                   const fanY = depth * -3.5;
                   const fanZ = depth * -38;
@@ -484,8 +507,16 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
                     ` rotateY(${fanY}deg)` +
                     ` rotateZ(${fanRot}deg)` +
                     ` translateZ(${fanZ}px)`;
-                  const gridX = col * 25 + 1.5;
-                  const gridY = row * 33 + 1.5;
+                  // Open-grid percentages: column width = 100/cols, leave a
+                  // small gutter. Card height = 100/rows minus a tighter gap
+                  // so 12 stacked cards on mobile still get usable vertical
+                  // space (~250px each at the 3200px stage height).
+                  const colSpan = 100 / espaceCols;
+                  const rowSpan = 100 / numRows;
+                  const widthPct  = colSpan - 3;
+                  const heightPct = rowSpan - 1.5;
+                  const gridX = col * colSpan + 1.5;
+                  const gridY = row * rowSpan + 0.75;
                   // All cards uniform when closed — the cover overlay sits on top.
                   // Slight opacity falloff keeps the deeper cards quieter.
                   const closedOpacity = Math.max(0.5, 1 - depth * 0.05);
@@ -495,8 +526,8 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
                       key={i}
                       className="deck-card absolute"
                       style={{
-                        width: spacesOpen ? '22%' : '52%',
-                        height: spacesOpen ? '30%' : '70%',
+                        width: spacesOpen ? `${widthPct}%` : '52%',
+                        height: spacesOpen ? `${heightPct}%` : '70%',
                         left: spacesOpen ? `${gridX}%` : '50%',
                         top: spacesOpen ? `${gridY}%` : '50%',
                         transform: spacesOpen
@@ -520,22 +551,22 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
                       }}
                     >
                       <div
-                        className="h-full flex flex-col p-4 md:p-6 lg:p-8 relative overflow-hidden"
+                        className="h-full flex flex-col p-5 md:p-6 lg:p-8 relative overflow-hidden"
                         style={{
                           opacity: spacesOpen ? 1 : 0,
                           transition: 'opacity 0.5s ease',
                           transitionDelay: spacesOpen ? `${i * 55 + 600}ms` : '0ms',
                         }}
                       >
-                        <span className="font-cinzel text-[#c5a059] uppercase tracking-[0.45em] mb-3 text-[9px]">
+                        <span className="font-cinzel text-[#c5a059] uppercase tracking-[0.45em] mb-3 text-[10px] md:text-[9px]">
                           {String(i + 1).padStart(2, '0')}
                         </span>
-                        <h3 className="font-prata uppercase text-[#f3e5ab] leading-tight mb-3 tracking-[-0.005em] text-base">
+                        <h3 className="font-prata uppercase text-[#f3e5ab] leading-tight mb-3 tracking-[-0.005em] text-xl md:text-base">
                           {language === 'EN' ? space.titleEn : space.titleFr}
                         </h3>
                         <ul
-                          className="space-y-1.5 text-neutral-300 font-josefin uppercase text-[10px]"
-                          style={{ letterSpacing: '0.18em' }}
+                          className="space-y-1.5 text-neutral-300 font-josefin uppercase text-xs md:text-[10px]"
+                          style={{ letterSpacing: '0.16em' }}
                         >
                           {(language === 'EN' ? space.itemsEn : space.itemsFr).map((item, j) => (
                             <li key={j} className="flex items-baseline gap-2">
@@ -908,6 +939,11 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
             </div>
           </div>
         </section>
+        {/* SEO body section — substantial French copy, internal links, external
+            citations, FAQ accordion. Also sources the FAQPage JSON-LD via
+            App.tsx route effect. */}
+        <SeoBlock viewKey="INN" language={language} onNavigate={onNavigate} />
+
         <div className="cv-auto">
           <MapFooterSection language={language} vibe={'HOSTEL'} />
         </div>
@@ -1043,5 +1079,6 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         }
       `}</style>
     </div>
+    </RoomOrbProvider>
   );
 };

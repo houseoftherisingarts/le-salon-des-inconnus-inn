@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Salon des Inconnus — Centre d'art contemporain · Outaouais</title>
+    <meta name="description" content="Centre d'art à Namur, QC. Galerie, ateliers d'artistes, fiscalité de l'art (DPA), patronage et plateformes pour acheteurs et créateurs." />
+
+    <link rel="canonical" href="https://lesalondesinconnus.com/" />
+    <!--
+      Hreflang note: salon `/` is the FR home (Inn / Guide / Équipe / Wwoofing / Ceilidh hub) and
+      has no English twin — houseoftherisingarts.com mirrors only the art-center section.
+      The reciprocal pair lives at salon `/arts` ↔ houseoftherisingarts `/`, and is injected
+      from src/App.tsx on the /arts route at runtime.
+    -->
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CulturalOrganization",
+      "@id": "https://lesalondesinconnus.com/#org",
+      "name": "Le Salon des Inconnus",
+      "alternateName": "House of the Rising Arts",
+      "url": "https://lesalondesinconnus.com/",
+      "inLanguage": "fr-CA",
+      "description": "Centre d'art contemporain à Namur, QC — galerie, résidences, fiscalité de l'art (DPA), patronage.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Namur",
+        "addressRegion": "QC",
+        "postalCode": "J0V 1N0",
+        "addressCountry": "CA"
+      },
+      "areaServed": ["Outaouais", "Petite Nation", "Lac Simon"],
+      "sameAs": ["https://houseoftherisingarts.com/"]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+    <style>
+      .font-cinzel { font-family: 'Cinzel', serif; }
+      .font-lato { font-family: 'Lato', sans-serif; }
+    </style>
+  </head>
+  <body class="bg-neutral-900 text-neutral-100 antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

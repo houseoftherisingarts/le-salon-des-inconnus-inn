@@ -17,6 +17,19 @@ export interface Book {
   imageStyle?: { [key: string]: string | number };
 }
 
+export type AmenityKey =
+  | 'parking'
+  | 'wifi'
+  | 'no-wifi'
+  | 'hot-tub'
+  | 'terrasse'
+  | 'projector'
+  | 'boardgames'
+  | 'fireplace'
+  | 'private-bath'
+  | 'electricity'
+  | 'off-grid';
+
 export interface Accommodation {
   id: string;
   title: string;
@@ -26,8 +39,11 @@ export interface Accommodation {
   description: string;
   description_fr?: string;
   guests: number | string;
+  /** Stretch capacity (e.g. "Max 3" when standard is 2). When omitted, guests is the cap. */
+  maxGuests?: number | string;
   beds: number | string;
-  baths: number;
+  baths: number | string;
+  amenities?: AmenityKey[];
   images: string[];
   bookingLink: string;
   price?: string;
@@ -172,4 +188,39 @@ export interface WwooferMessage {
   fromAdmin: boolean;
   authorEmail?: string;
   createdAt?: any;
+}
+
+// ─── Show offers ────────────────────────────────────────────────────────────
+// Submissions from artists who'd like to perform during the Ceilidh weekend.
+// Stored at events/{EVENT_ID}/showOffers/{offerId}.
+export type ShowOfferType   = 'donation' | 'paid';
+export type ShowOfferStatus = 'new' | 'contacted' | 'accepted' | 'refused';
+
+export interface ShowOffer {
+  id: string;
+  type: ShowOfferType;
+  status: ShowOfferStatus;
+  // Artist / contact
+  artistName: string;
+  contactName: string;
+  email: string;
+  phone?: string;
+  // Performance details
+  performersCount: number;
+  canUnplugged: boolean;
+  durationMinutes: number;
+  genre?: string;
+  description?: string;       // what they'd play
+  technicalNeeds?: string;    // free-form
+  preferredDays?: string[];   // ISO yyyy-mm-dd within event window
+  // Paid only
+  requestedFeeCAD?: number;
+  // Free-form
+  notes?: string;
+  // Submission metadata
+  submittedByUid?: string;
+  submittedByEmail?: string;
+  createdAt?: any;
+  decidedAt?: any;
+  adminNote?: string;
 }

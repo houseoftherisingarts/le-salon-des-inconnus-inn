@@ -195,6 +195,11 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
 
   const isSelf = user?.uid === targetUid;
 
+  // Artist Mind Palace (Super Profile) — surface a link to /{username} when
+  // the viewed member has one published. Loaded alongside the rest of the
+  // profile data; null when none exists.
+  const [mindPalaceUsername, setMindPalaceUsername] = useState<string | null>(null);
+
   useEffect(() => {
     if (!db) { setLoading(false); return; }
     const load = async () => {
@@ -204,6 +209,16 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
         // Pull their Ceilidh registration too — public-read per Firestore rules.
         const regSnap = await getDoc(doc(db!, 'events', 'ceilidh-mai-2026', 'registrations', targetUid));
         if (regSnap.exists()) setTargetReg(regSnap.data());
+        // Look up their Super Profile config — if enabled, we'll show a
+        // "Mind Palace" button. Public read per firestore.rules so this
+        // works for signed-out visitors too.
+        try {
+          const spSnap = await getDoc(doc(db!, 'members', targetUid, 'superProfile', 'config'));
+          if (spSnap.exists()) {
+            const sp = spSnap.data() as { enabled?: boolean; username?: string };
+            if (sp.enabled && sp.username) setMindPalaceUsername(sp.username);
+          }
+        } catch (_) {}
         // Read the artist's creator-studio profile for their wardrobe choice.
         // Doesn't matter if it doesn't exist — the page just falls back to default styling.
         try {
@@ -573,6 +588,28 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             >
               {t('Sign in to connect →', 'Se connecter pour interagir →')}
             </button>
+          )}
+
+          {/* Artist Mind Palace — when this member is Maestro-tier and
+              has published their /{username} super profile, surface a
+              single editorial button that opens it in a new tab. The
+              button is the only place we cross-link from the standard
+              profile to the standalone portfolio. */}
+          {mindPalaceUsername && (
+            <div className="mt-5 flex justify-center">
+              <a
+                href={`/${mindPalaceUsername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-3 px-5 py-3 border border-[#c5a059]/40 bg-gradient-to-r from-[#c5a059]/10 via-fuchsia-500/5 to-[#c5a059]/10 hover:from-[#c5a059]/20 hover:to-[#c5a059]/20 transition-all"
+              >
+                <span className="w-2 h-2 rounded-full bg-[#c5a059] shadow-[0_0_10px_#c5a059] animate-pulse" />
+                <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.4em]">
+                  {t('Artist Mind Palace', 'Mind Palace')}
+                </span>
+                <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.35em] opacity-70 group-hover:opacity-100 transition-opacity">↗</span>
+              </a>
+            </div>
           )}
 
           {/* Social links — collected during the Welcome wizard. Real
