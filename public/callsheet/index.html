@@ -99,13 +99,25 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
   .page-nav button {
-    flex: 1; background: transparent; color: #aaa; border: none; padding: 10px 12px;
-    cursor: pointer; font-size: 12px; font-family: inherit; border-bottom: 3px solid transparent;
+    flex: 1; color: #fff; border: none; padding: 12px 14px;
+    cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit;
+    border-bottom: 4px solid transparent;
+    transition: filter 0.15s, transform 0.15s;
+    letter-spacing: 0.3px;
   }
-  .page-nav button:hover { color: #fff; background: #222; }
-  .page-nav button.active { color: #fff; background: #2a2a2a; border-bottom-color: #2a7a2a; font-weight: 600; }
-  .page-nav button .step { color: #555; font-size: 10px; margin-right: 6px; }
-  .page-nav button.active .step { color: #2a7a2a; }
+  /* Distinct colors so the tabs read as clickable buttons. */
+  .page-nav button[data-page="callsheet"]  { background: #1b6a8f; border-bottom-color: #4dafd1; }
+  .page-nav button[data-page="shotlist"]   { background: #8a5a1f; border-bottom-color: #d39a4d; }
+  .page-nav button[data-page="storyboard"] { background: #5b3a7a; border-bottom-color: #9b6fc1; }
+  .page-nav button:hover { filter: brightness(1.18); transform: translateY(-1px); }
+  /* Inactive tabs read as "available — click me" via lower opacity. */
+  .page-nav button:not(.active) { opacity: 0.55; }
+  .page-nav button.active {
+    opacity: 1; filter: brightness(1.15);
+    box-shadow: inset 0 -4px 0 rgba(255,255,255,0.25);
+  }
+  .page-nav button .step { color: rgba(255,255,255,0.7); font-size: 11px; margin-right: 6px; font-weight: 500; }
+  .page-nav button.active .step { color: #fff; }
 
   .edit-toolbar {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
