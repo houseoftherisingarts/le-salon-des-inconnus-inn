@@ -84,6 +84,17 @@ service firebase.storage {
       allow delete: if isAdmin();
     }
 
+    // ── Production docs (call sheet vignettes, etc.) ───────────────────────
+    // Storyboard images uploaded via /callsheet. Public read so the page
+    // renders, public write so collaborators can drop images without auth.
+    // Same trust model as firestore.rules production-docs — URL obscurity
+    // is the only gate. Image MIME types only, 10MB cap per file.
+    match /production-docs/{allPaths=**} {
+      allow read:   if true;
+      allow write:  if isImage() && under10MB();
+      allow delete: if true;
+    }
+
     // ── Default-deny for anything else ──────────────────────────────────────
     match /{allPaths=**} {
       allow read:  if false;

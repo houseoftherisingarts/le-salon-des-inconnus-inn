@@ -623,6 +623,9 @@
   import {
     getFirestore, doc, onSnapshot, setDoc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  import {
+    getStorage, ref as storageRef, uploadBytes, getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
   // Firebase API key is public by design — security lives in firestore.rules.
   const firebaseConfig = {
@@ -636,6 +639,7 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const storage = getStorage(app);
   const DOC_REF = doc(db, 'production-docs', 'jour-1');
   // Per-tab id so we can suppress our own snapshot echoes.
   const CLIENT_ID = Math.random().toString(36).slice(2) + '-' + Date.now();
@@ -660,6 +664,9 @@
         el.innerHTML = data[name + '_html'];
       }
     });
+    // Defer until next tick so the function declaration is hoisted; the call
+    // also runs cheaply enough to do on every snapshot apply.
+    setTimeout(stripLegacyDataImages, 0);
   }
 
   // ---------- Capture defaults BEFORE Firestore overwrites the DOM ----------
@@ -749,21 +756,45 @@
   });
 
   // ---------- Debounced write to Firestore ----------
+  // Firestore docs are capped at 1 MiB. We measure the payload size before
+  // writing and surface a STICKY error if we're approaching the limit, so the
+  // user knows why saves are silently failing (the old base64 bug).
   let saveTimer;
+  function setStickyError(msg) {
+    let banner = document.getElementById('sticky-error');
+    if (!msg) { if (banner) banner.remove(); return; }
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'sticky-error';
+      banner.style.cssText = 'position:fixed;top:110px;left:50%;transform:translateX(-50%);background:#c33;color:#fff;padding:10px 18px;border-radius:6px;font-size:12px;font-weight:600;z-index:2000;box-shadow:0 4px 12px rgba(0,0,0,0.3);max-width:80%;text-align:center;';
+      document.body.appendChild(banner);
+    }
+    banner.textContent = msg;
+  }
+
   function queueSave() {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(async () => {
       try {
         const data = getAllPagesData();
+        // Estimate size — UTF-16 strings are 2 bytes/char but Firestore counts
+        // UTF-8 bytes; this approximation is good enough to catch the 1 MiB cap.
+        const approxBytes = (data.callsheet_html.length + data.shotlist_html.length + data.storyboard_html.length);
+        if (approxBytes > 900000) {
+          setStickyError('Document trop gros (' + Math.round(approxBytes/1000) + ' KB / 1000 KB). Sauvegardes bloquées — vérifie les images.');
+          return;
+        }
         suppressNextSnapshot = true;
         await setDoc(DOC_REF, {
           ...data,
           updatedAt: serverTimestamp(),
           lastClientId: CLIENT_ID
         }, { merge: true });
+        setStickyError(null);
         flashStatus('💾 Synchronisé');
       } catch (e) {
-        flashStatus('⚠️ Sync échec : ' + e.message, true);
+        console.error('Firestore save failed:', e);
+        setStickyError('⚠️ Sync échec : ' + (e.message || e.code || 'erreur inconnue'));
       }
     }, 800);
   }
@@ -946,25 +977,59 @@
 
   // ============================================================
   //  Storyboard image input — paste, click-to-upload, drag-and-drop
-  //  All paths funnel through setImageOnArea() so the storage logic
-  //  (data URL → innerHTML → queueSave) lives in one place.
+  //  Images go to Firebase Storage (NOT inline base64) so the
+  //  Firestore doc stays small. Firestore only stores the public URL.
   // ============================================================
 
-  function setImageOnArea(area, blob, sourceLabel) {
+  async function setImageOnArea(area, blob, sourceLabel) {
     if (!area || !blob) return;
     if (!blob.type || blob.type.indexOf('image') !== 0) {
       flashStatus('⚠️  Fichier ignoré (pas une image)', true);
       return;
     }
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      area.innerHTML = '<img src="' + evt.target.result + '" alt="vignette">';
+    const originalHTML = area.innerHTML;
+    area.innerHTML = '<div style="color:#888;font-size:9px;">⏳ Upload…</div>';
+
+    try {
+      // Stable-ish id per upload so retries don't pile up duplicates forever.
+      const ext = (blob.type.split('/')[1] || 'jpg').replace('jpeg', 'jpg');
+      const filename = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+      const path = 'production-docs/jour-1/vignettes/' + filename;
+      const sRef = storageRef(storage, path);
+      await uploadBytes(sRef, blob, { contentType: blob.type });
+      const url = await getDownloadURL(sRef);
+      area.innerHTML = '<img src="' + url + '" alt="vignette" data-storage-path="' + path + '">';
       area.classList.add('has-img');
       queueSave();
       flashStatus('✓ Image ' + (sourceLabel || 'ajoutée'));
-    };
-    reader.onerror = () => flashStatus('⚠️  Lecture image échec', true);
-    reader.readAsDataURL(blob);
+    } catch (e) {
+      area.innerHTML = originalHTML;
+      console.error('Image upload failed:', e);
+      flashStatus('⚠️  Upload échec : ' + (e.message || e.code || 'erreur'), true);
+    }
+  }
+
+  // ---------- Sanitize legacy data:image URLs on load ----------
+  // Older versions stored images as inline base64 in Firestore — that pushed
+  // the doc over the 1 MiB cap, which caused every subsequent save to fail
+  // silently. When we restore a page, replace any leftover data:image with
+  // an empty placeholder so the user can re-upload (and the doc shrinks).
+  function stripLegacyDataImages() {
+    let stripped = 0;
+    document.querySelectorAll('.img-area img').forEach((img) => {
+      if (img.src && img.src.startsWith('data:image/')) {
+        const area = img.closest('.img-area');
+        if (area) {
+          area.classList.remove('has-img');
+          area.innerHTML = '<div style="color:#a90;font-size:9px;text-align:center;">⚠️ Image legacy retirée<br>clic pour ré-uploader</div>';
+          stripped++;
+        }
+      }
+    });
+    if (stripped > 0) {
+      flashStatus('⚠️  ' + stripped + ' image(s) base64 retirée(s) — ré-uploade');
+      queueSave();
+    }
   }
 
   // ---------- Paste (Cmd/Ctrl+V) ----------
