@@ -7,7 +7,7 @@
   @page { size: Letter; margin: 0.5in; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10px; color: #111; background: #f5f5f5; }
-  body { padding: 110px 16px 80px 16px; }
+  body { padding: 16px 16px 120px 16px; }
 
   .page { max-width: 1100px; margin: 0 auto 24px auto; background: #fff; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
   .page.hidden { display: none; }
@@ -91,10 +91,10 @@
 
   /* ===== EDIT MODE UI ===== */
   .top-bar {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
     background: #1a1a1a; color: #fff;
     display: flex; flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
   }
   .page-nav { display: flex; gap: 0; background: #0d0d0d; padding: 0; }
   .page-nav button {
@@ -793,7 +793,7 @@
     if (!banner) {
       banner = document.createElement('div');
       banner.id = 'sticky-error';
-      banner.style.cssText = 'position:fixed;top:110px;left:50%;transform:translateX(-50%);background:#c33;color:#fff;padding:10px 18px;border-radius:6px;font-size:12px;font-weight:600;z-index:2000;box-shadow:0 4px 12px rgba(0,0,0,0.3);max-width:80%;text-align:center;';
+      banner.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#c33;color:#fff;padding:10px 18px;border-radius:6px;font-size:12px;font-weight:600;z-index:2000;box-shadow:0 4px 12px rgba(0,0,0,0.3);max-width:80%;text-align:center;';
       document.body.appendChild(banner);
     }
     banner.textContent = msg;
