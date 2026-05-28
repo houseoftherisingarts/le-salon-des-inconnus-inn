@@ -703,6 +703,7 @@
       sanitizeAIMentions();
       addDeleteButtonsToVignettes();
       migratePropsToTable();
+      migrateCallCircle();
     }, 0);
   }
 
@@ -1144,6 +1145,40 @@
   }
 
   // ============================================================
+  //  Migrate single CALL circle → two circles (Crew 9 AM / Figurants 3 PM)
+  //  with addresses. Surgical replacement of the .call-block contents
+  //  only — preserves all other call-sheet user edits.
+  // ============================================================
+
+  const TWO_CALLS_HTML = '<div class="call-circle">'
+    + '<div class="label">Crew + organisateurs</div>'
+    + '<div class="time">9:00 AM</div>'
+    + '<div class="addr">1 Ch. du Crique à la Roche<br>Montpellier QC</div>'
+    + '<div class="setup">Setup 8:30</div>'
+    + '</div>'
+    + '<div class="call-circle">'
+    + '<div class="label">Figurants</div>'
+    + '<div class="time">3:00 PM</div>'
+    + '<div class="addr">33 Ch. Baie de l\'Ours<br>Montpellier QC</div>'
+    + '<div class="setup">Wrap 20h</div>'
+    + '</div>';
+
+  function migrateCallCircle() {
+    const callsheetEl = document.getElementById('page-callsheet');
+    if (!callsheetEl) return;
+    const block = callsheetEl.querySelector('.call-block');
+    if (!block) return;
+    // Already migrated when there are 2+ .call-circle children.
+    const circles = block.querySelectorAll('.call-circle');
+    if (circles.length >= 2) return;
+    if (circles.length === 0) return; // structure unrecognised, leave it
+    // Replace the single circle with the dual-circle layout.
+    block.innerHTML = TWO_CALLS_HTML;
+    flashStatus('✓ CALL séparé en Crew (9h) + Figurants (15h)');
+    queueSave();
+  }
+
+  // ============================================================
   //  Migrate legacy props bullet-list → props table (with "Qui amène"
   //  column). Old Firestore docs have the bullet format; the static HTML
   //  ships with a real <table.props-table>. On load we detect the old
@@ -1312,6 +1347,7 @@
   // doc or offline boot). Both are idempotent.
   addDeleteButtonsToVignettes();
   migratePropsToTable();
+  migrateCallCircle();
 
   // ---------- Paste (Cmd/Ctrl+V) ----------
   document.addEventListener('paste', (e) => {
