@@ -54,11 +54,17 @@
   .locations .loc-label { font-weight: 600; }
   .locations .loc-time { color: #777; font-size: 9px; }
   .locations a { color: #333; text-decoration: underline; }
+  .locations .map-link { color: #1f5fa0; text-decoration: underline dotted; cursor: pointer; }
+  .locations .map-link:hover { color: #0d3d70; text-decoration: underline solid; background: #eaf2fa; }
+  .locations .map-link.strong { color: #1f5fa0; font-weight: 600; font-size: 10px; display: inline-block; margin-top: 2px; padding: 2px 4px; border: 1px solid #4d9adb; border-radius: 3px; text-decoration: none; background: #f0f6ff; }
+  .locations .map-link.strong:hover { background: #1f5fa0; color: #fff; }
   .call-block { display: flex; flex-direction: row; align-items: center; justify-content: space-around; gap: 6px; padding: 6px; }
   .call-circle { width: 118px; height: 118px; border: 2px solid #222; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4px; }
   .call-circle .label { font-size: 9px; letter-spacing: 0.5px; color: #555; font-weight: 600; text-transform: uppercase; line-height: 1.1; }
   .call-circle .time { font-family: "Georgia", "Times New Roman", serif; font-size: 22px; font-weight: 700; line-height: 1; margin: 3px 0; }
-  .call-circle .addr { font-size: 7.5px; color: #444; line-height: 1.15; margin-top: 2px; }
+  .call-circle .addr { font-size: 7.5px; color: #1f5fa0; line-height: 1.15; margin-top: 2px; text-decoration: none; display: block; text-align: center; padding: 1px 3px; border-radius: 3px; }
+  .call-circle a.addr { text-decoration: underline dotted; }
+  .call-circle a.addr:hover { background: #eaf2fa; color: #0d3d70; }
   .call-circle .setup { font-size: 8px; color: #888; margin-top: 2px; }
   .synopsis h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #333; margin-bottom: 4px; }
   .synopsis p { margin: 0 0 4px 0; line-height: 1.35; }
@@ -262,15 +268,23 @@
       <div class="loc">
         <div class="loc-label">1. Chez Katrine &amp; Vincent</div>
         <div class="loc-time">9h00 – 11h00</div>
-        <div>1 Chemin du Crique à la Roche, Montpellier QC J0V 1M0<br>
-          <a href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC">Itinéraire Google Maps</a>
+        <div>
+          <a class="map-link" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">
+            1 Chemin du Crique à la Roche, Montpellier QC J0V 1M0
+          </a>
+          <br>
+          <a class="map-link strong" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">📍 Itinéraire Google Maps →</a>
         </div>
       </div>
       <div class="loc">
         <div class="loc-label">2-3-4. Chez Jesse &amp; Tristan</div>
         <div class="loc-time">12h00 – 20h00 (wrap)</div>
-        <div>33 Chemin de la Baie de l'ours, Montpellier QC<br>
-          <a href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC">Itinéraire Google Maps</a>
+        <div>
+          <a class="map-link" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">
+            33 Chemin de la Baie de l'ours, Montpellier QC
+          </a>
+          <br>
+          <a class="map-link strong" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">📍 Itinéraire Google Maps →</a>
         </div>
       </div>
     </div>
@@ -278,13 +292,13 @@
       <div class="call-circle">
         <div class="label">Crew + organisateurs</div>
         <div class="time">9:00 AM</div>
-        <div class="addr">1 Ch. du Crique à la Roche<br>Montpellier QC</div>
+        <a class="addr" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">📍 1 Ch. du Crique à la Roche<br>Montpellier QC →</a>
         <div class="setup">Setup 8:30</div>
       </div>
       <div class="call-circle">
         <div class="label">Figurants</div>
         <div class="time">3:00 PM</div>
-        <div class="addr">33 Ch. Baie de l'Ours<br>Montpellier QC</div>
+        <a class="addr" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">📍 33 Ch. Baie de l'Ours<br>Montpellier QC →</a>
         <div class="setup">Wrap 20h</div>
       </div>
     </div>
@@ -734,6 +748,7 @@
       migratePropsToTable();
       migrateCallCircle();
       mergeSergeiIntoTristan();
+      upgradeLocationLinks();
       fetchWeatherForShoot();
     }, 0);
   }
@@ -1176,6 +1191,44 @@
   }
 
   // ============================================================
+  //  Upgrade existing "Lieux du jour" map links: force target="_blank",
+  //  add a visible 📍 button if missing, and tag them with the
+  //  .map-link / .map-link.strong classes so the new styles kick in.
+  // ============================================================
+  function upgradeLocationLinks() {
+    const callsheetEl = document.getElementById('page-callsheet');
+    if (!callsheetEl) return;
+    const locations = callsheetEl.querySelectorAll('.locations .loc');
+    let upgraded = false;
+    locations.forEach(loc => {
+      const links = loc.querySelectorAll('a[href*="maps.google.com"], a[href*="google.com/maps"]');
+      if (!links.length) return;
+      // Ensure first link opens in new tab and has the map-link class
+      links.forEach(a => {
+        if (!a.classList.contains('map-link')) { a.classList.add('map-link'); upgraded = true; }
+        if (a.target !== '_blank') { a.target = '_blank'; a.rel = 'noopener'; upgraded = true; }
+      });
+      // If there's no "strong" button-style link yet, add one cloned from the first
+      if (!loc.querySelector('a.map-link.strong')) {
+        const proto = links[0];
+        const btn = document.createElement('a');
+        btn.className = 'map-link strong';
+        btn.href = proto.href;
+        btn.target = '_blank';
+        btn.rel = 'noopener';
+        btn.textContent = '📍 Itinéraire Google Maps →';
+        proto.parentNode.appendChild(document.createElement('br'));
+        proto.parentNode.appendChild(btn);
+        upgraded = true;
+      }
+    });
+    if (upgraded) {
+      flashStatus('✓ Itinéraires rendus cliquables');
+      queueSave();
+    }
+  }
+
+  // ============================================================
   //  Merge "Sergei Stanoffsky" cast row into "Tristan" — same person.
   //  Removes the Sergei row, updates Tristan's name to include Stanoffsky
   //  and adds the FB-organiser detail to his special-instructions cell.
@@ -1332,13 +1385,13 @@
   const TWO_CALLS_HTML = '<div class="call-circle">'
     + '<div class="label">Crew + organisateurs</div>'
     + '<div class="time">9:00 AM</div>'
-    + '<div class="addr">1 Ch. du Crique à la Roche<br>Montpellier QC</div>'
+    + '<a class="addr" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">📍 1 Ch. du Crique à la Roche<br>Montpellier QC →</a>'
     + '<div class="setup">Setup 8:30</div>'
     + '</div>'
     + '<div class="call-circle">'
     + '<div class="label">Figurants</div>'
     + '<div class="time">3:00 PM</div>'
-    + '<div class="addr">33 Ch. Baie de l\'Ours<br>Montpellier QC</div>'
+    + '<a class="addr" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">📍 33 Ch. Baie de l\'Ours<br>Montpellier QC →</a>'
     + '<div class="setup">Wrap 20h</div>'
     + '</div>';
 
@@ -1347,13 +1400,13 @@
     if (!callsheetEl) return;
     const block = callsheetEl.querySelector('.call-block');
     if (!block) return;
-    // Already migrated when there are 2+ .call-circle children.
     const circles = block.querySelectorAll('.call-circle');
-    if (circles.length >= 2) return;
-    if (circles.length === 0) return; // structure unrecognised, leave it
-    // Replace the single circle with the dual-circle layout.
+    if (circles.length === 0) return; // structure unrecognised
+    const hasLinkedAddr = !!block.querySelector('a.addr');
+    // Migrate when single circle (old) OR when 2 circles but addresses aren't links yet.
+    if (circles.length >= 2 && hasLinkedAddr) return;
     block.innerHTML = TWO_CALLS_HTML;
-    flashStatus('✓ CALL séparé en Crew (9h) + Figurants (15h)');
+    flashStatus(circles.length < 2 ? '✓ CALL séparé en Crew (9h) + Figurants (15h)' : '✓ Adresses CALL rendues cliquables');
     queueSave();
   }
 
@@ -1528,6 +1581,7 @@
   migratePropsToTable();
   migrateCallCircle();
   mergeSergeiIntoTristan();
+  upgradeLocationLinks();
   fetchWeatherForShoot();
 
   // ---------- Paste (Cmd/Ctrl+V) ----------
