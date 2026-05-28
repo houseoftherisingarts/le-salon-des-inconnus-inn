@@ -65,7 +65,20 @@
 
   /* ===== STORYBOARD grid ===== */
   .storyboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .vignette { border: 1px solid #bbb; background: #fff; display: flex; flex-direction: column; min-height: 180px; }
+  .vignette { border: 1px solid #bbb; background: #fff; display: flex; flex-direction: column; min-height: 180px; position: relative; }
+  .vignette .delete-shot-btn {
+    position: absolute; top: 4px; right: 4px;
+    width: 22px; height: 22px;
+    background: rgba(204, 51, 51, 0.6); color: #fff;
+    border: none; border-radius: 50%;
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    line-height: 20px; padding: 0; text-align: center;
+    opacity: 0.5; z-index: 10;
+    transition: opacity 0.15s, background 0.15s;
+  }
+  .vignette:hover .delete-shot-btn { opacity: 1; background: #c33; }
+  .vignette .delete-shot-btn:hover { background: #900; }
+  @media print { .vignette .delete-shot-btn { display: none !important; } }
   .vignette .img-area { background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f0f0f0 8px, #f0f0f0 16px); min-height: 110px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 9px; text-align: center; padding: 4px; border-bottom: 1px solid #ddd; cursor: pointer; position: relative; }
   .vignette .img-area:hover { background: repeating-linear-gradient(45deg, #fff5e6, #fff5e6 8px, #ffe9c2 8px, #ffe9c2 16px); color: #c80; }
   .vignette .img-area.drag-over { background: #fff5cc; color: #c90; outline: 2px dashed #c90; outline-offset: -4px; }
@@ -666,7 +679,11 @@
     });
     // Defer until next tick so the function declarations are hoisted; the
     // calls also run cheaply enough to do on every snapshot apply.
-    setTimeout(() => { stripLegacyDataImages(); sanitizeAIMentions(); }, 0);
+    setTimeout(() => {
+      stripLegacyDataImages();
+      sanitizeAIMentions();
+      addDeleteButtonsToVignettes();
+    }, 0);
   }
 
   // ---------- Capture defaults BEFORE Firestore overwrites the DOM ----------
@@ -1069,6 +1086,111 @@
       queueSave();
     }
   }
+
+  // ============================================================
+  //  Delete-shot (X) button on each storyboard vignette
+  //  - removes vignette from storyboard grid
+  //  - removes matching row from shotlist (same shot id, e.g. "1.5")
+  //  - renumbers remaining shots within the same act
+  // ============================================================
+
+  function addDeleteButtonsToVignettes() {
+    document.querySelectorAll('#page-storyboard .vignette').forEach(vig => {
+      if (vig.querySelector('.delete-shot-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'delete-shot-btn';
+      btn.textContent = '×';
+      btn.title = 'Supprimer ce shot (storyboard + shot list)';
+      btn.setAttribute('contenteditable', 'false');
+      vig.appendChild(btn);
+    });
+  }
+
+  function parseShotId(text) {
+    if (!text) return null;
+    const m = text.trim().match(/^([0-9E])\.([0-9]+)/);
+    if (!m) return null;
+    return { act: m[1], num: parseInt(m[2], 10), full: m[1] + '.' + m[2] };
+  }
+
+  function getVignetteShotId(vig) {
+    const idEl = vig.querySelector('.vig-id');
+    return idEl ? parseShotId(idEl.textContent) : null;
+  }
+
+  function getRowShotId(row) {
+    const cell = row.querySelector('td:first-child strong');
+    return cell ? parseShotId(cell.textContent) : null;
+  }
+
+  function handleDeleteShot(vig) {
+    const id = getVignetteShotId(vig);
+    if (!id) { flashStatus('⚠️  Shot ID introuvable', true); return; }
+    if (!confirm('Supprimer le shot ' + id.full + ' ?\n\nÇa retire la vignette ET la ligne correspondante dans la shot list. Les shots suivants du même acte seront renumérotés.')) return;
+
+    // 1. Remove the vignette
+    vig.remove();
+
+    // 2. Remove matching shot list row(s) — usually one, but be defensive
+    document.querySelectorAll('#page-shotlist table.data tbody tr').forEach(row => {
+      const rid = getRowShotId(row);
+      if (rid && rid.act === id.act && rid.num === id.num) row.remove();
+    });
+
+    // 3. Collect everything to renumber in the same act, sort ascending by old num
+    const vigUpdates = [];
+    document.querySelectorAll('#page-storyboard .vignette').forEach(v => {
+      const vid = getVignetteShotId(v);
+      if (vid && vid.act === id.act && vid.num > id.num) {
+        vigUpdates.push({ el: v, oldNum: vid.num });
+      }
+    });
+    vigUpdates.sort((a, b) => a.oldNum - b.oldNum);
+
+    const rowUpdates = [];
+    document.querySelectorAll('#page-shotlist table.data tbody tr').forEach(r => {
+      const rid = getRowShotId(r);
+      if (rid && rid.act === id.act && rid.num > id.num) {
+        rowUpdates.push({ el: r, oldNum: rid.num });
+      }
+    });
+    rowUpdates.sort((a, b) => a.oldNum - b.oldNum);
+
+    // 4. Apply renumbering (oldNum → oldNum - 1)
+    vigUpdates.forEach(({ el, oldNum }) => {
+      const oldStr = id.act + '.' + oldNum;
+      const newStr = id.act + '.' + (oldNum - 1);
+      // Update .vig-id text (preserve any HTML formatting around it)
+      const vigId = el.querySelector('.vig-id');
+      if (vigId) vigId.innerHTML = vigId.innerHTML.replace(oldStr, newStr);
+      // Update placeholder text in empty .img-area only (don't touch images)
+      const imgArea = el.querySelector('.img-area');
+      if (imgArea && !imgArea.querySelector('img')) {
+        imgArea.innerHTML = imgArea.innerHTML.replace(oldStr, newStr);
+      }
+    });
+    rowUpdates.forEach(({ el, oldNum }) => {
+      const cell = el.querySelector('td:first-child strong');
+      if (cell) cell.textContent = id.act + '.' + (oldNum - 1);
+    });
+
+    queueSave();
+    flashStatus('✓ Shot ' + id.full + ' supprimé (' + (vigUpdates.length + rowUpdates.length) + ' renumérotés)');
+  }
+
+  // Event delegation — works across Firestore innerHTML replacements.
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.delete-shot-btn');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const vig = btn.closest('.vignette');
+    if (vig) handleDeleteShot(vig);
+  });
+
+  // Inject the X buttons on first script load too (covers the case where
+  // Firestore doesn't fire applyPagesData — empty doc or offline boot).
+  addDeleteButtonsToVignettes();
 
   // ---------- Paste (Cmd/Ctrl+V) ----------
   document.addEventListener('paste', (e) => {
