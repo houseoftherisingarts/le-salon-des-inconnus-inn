@@ -664,9 +664,9 @@
         el.innerHTML = data[name + '_html'];
       }
     });
-    // Defer until next tick so the function declaration is hoisted; the call
-    // also runs cheaply enough to do on every snapshot apply.
-    setTimeout(stripLegacyDataImages, 0);
+    // Defer until next tick so the function declarations are hoisted; the
+    // calls also run cheaply enough to do on every snapshot apply.
+    setTimeout(() => { stripLegacyDataImages(); sanitizeAIMentions(); }, 0);
   }
 
   // ---------- Capture defaults BEFORE Firestore overwrites the DOM ----------
@@ -1028,6 +1028,44 @@
     });
     if (stripped > 0) {
       flashStatus('⚠️  ' + stripped + ' image(s) base64 retirée(s) — ré-uploade');
+      queueSave();
+    }
+  }
+
+  // ---------- Sanitize legacy AI-mention text on load ----------
+  // The storyboard instructions box used to mention Google AI Studio,
+  // Midjourney, ChatGPT, DALL-E, Nano Banana, Gemini. Old Firestore content
+  // still has those mentions even though the static HTML was cleaned up.
+  // When detected, surgically replace just that box — preserving user edits
+  // elsewhere (vignette images, titles, descriptions).
+  const AI_KEYWORDS_RE = /Google AI Studio|Midjourney|DALL-E|ChatGPT|Nano Banana|\bGemini\b|prompts-nano-banana|générateur AI/i;
+  const CLEAN_INSTRUCTIONS_BOX = '<strong>Comment remplir les vignettes — 3 méthodes :</strong>'
+    + '<ol style="margin: 6px 0 0 18px; padding: 0; font-size: 10px; line-height: 1.6;">'
+    + '<li><strong>📁 Clic</strong> sur une zone hachurée → ouvre le sélecteur de fichier, choisis une image (photo, scan d\'un croquis, screenshot).</li>'
+    + '<li><strong>🖱️ Glisser-déposer</strong> une image depuis ton bureau / Finder directement sur la zone hachurée.</li>'
+    + '<li><strong>📋 Coller (Cmd+V)</strong> après avoir copié une image depuis n\'importe où (screenshot, web, photo).</li>'
+    + '</ol>'
+    + '<p style="margin: 6px 0 0 0; font-size: 10px; color: #666;">Dessine à la main et photographie, ou uploade n\'importe quelle image. Les vignettes sont sauvegardées automatiquement (visibles par toute l\'équipe). Tu peux aussi éditer le titre et la description sous chaque vignette directement. Pour remplacer une image existante, clique/colle/dépose à nouveau dans la même zone.</p>';
+
+  function sanitizeAIMentions() {
+    const storyEl = document.getElementById('page-storyboard');
+    if (!storyEl) return;
+    if (!AI_KEYWORDS_RE.test(storyEl.innerHTML)) return;
+    // The instructions box is the first .box with the yellow bg in the storyboard page.
+    const boxes = storyEl.querySelectorAll('.box');
+    let cleaned = false;
+    boxes.forEach((box) => {
+      if (AI_KEYWORDS_RE.test(box.innerHTML)) {
+        // Heuristic: the yellow instructions box mentions "Comment" or "vignettes" or "méthodes"
+        if (/vignette|méthode|coller|remplir/i.test(box.textContent)) {
+          box.innerHTML = CLEAN_INSTRUCTIONS_BOX;
+          box.setAttribute('style', 'margin-bottom: 10px; background: #fff8e1; border-color: #e0c060;');
+          cleaned = true;
+        }
+      }
+    });
+    if (cleaned) {
+      flashStatus('✓ Instructions nettoyées (mentions AI retirées)');
       queueSave();
     }
   }
