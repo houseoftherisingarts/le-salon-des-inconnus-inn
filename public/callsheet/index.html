@@ -269,22 +269,16 @@
         <div class="loc-label">1. Chez Katrine &amp; Vincent</div>
         <div class="loc-time">9h00 – 11h00</div>
         <div>
-          <a class="map-link" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">
-            1 Chemin du Crique à la Roche, Montpellier QC J0V 1M0
-          </a>
-          <br>
-          <a class="map-link strong" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">📍 Itinéraire Google Maps →</a>
+          <span class="loc-addr">1 Chemin du Crique à la Roche, Montpellier QC J0V 1M0</span><br>
+          <a class="map-link strong" href="https://www.google.com/maps/dir/?api=1&destination=1+Chemin+du+Crique+%C3%A0+la+Roche%2C+Montpellier%2C+QC" target="_blank" rel="noopener">📍 Itinéraire Google Maps →</a>
         </div>
       </div>
       <div class="loc">
         <div class="loc-label">2-3-4. Chez Jesse &amp; Tristan</div>
         <div class="loc-time">12h00 – 20h00 (wrap)</div>
         <div>
-          <a class="map-link" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">
-            33 Chemin de la Baie de l'ours, Montpellier QC
-          </a>
-          <br>
-          <a class="map-link strong" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">📍 Itinéraire Google Maps →</a>
+          <span class="loc-addr">33 Chemin de la Baie de l'ours, Montpellier QC</span><br>
+          <a class="map-link strong" href="https://www.google.com/maps/dir/?api=1&destination=33+Chemin+de+la+Baie+de+l%27Ours%2C+Montpellier%2C+QC" target="_blank" rel="noopener">📍 Itinéraire Google Maps →</a>
         </div>
       </div>
     </div>
@@ -292,13 +286,13 @@
       <div class="call-circle">
         <div class="label">Crew + organisateurs</div>
         <div class="time">9:00 AM</div>
-        <a class="addr" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">📍 1 Ch. du Crique à la Roche<br>Montpellier QC →</a>
+        <a class="addr" href="https://www.google.com/maps/dir/?api=1&destination=1+Chemin+du+Crique+%C3%A0+la+Roche%2C+Montpellier%2C+QC" target="_blank" rel="noopener">📍 1 Ch. du Crique à la Roche<br>Montpellier QC →</a>
         <div class="setup">Setup 8:30</div>
       </div>
       <div class="call-circle">
         <div class="label">Figurants</div>
         <div class="time">3:00 PM</div>
-        <a class="addr" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">📍 33 Ch. Baie de l'Ours<br>Montpellier QC →</a>
+        <a class="addr" href="https://www.google.com/maps/dir/?api=1&destination=33+Chemin+de+la+Baie+de+l%27Ours%2C+Montpellier%2C+QC" target="_blank" rel="noopener">📍 33 Ch. Baie de l'Ours<br>Montpellier QC →</a>
         <div class="setup">Wrap 20h</div>
       </div>
     </div>
@@ -1200,30 +1194,69 @@
     if (!callsheetEl) return;
     const locations = callsheetEl.querySelectorAll('.locations .loc');
     let upgraded = false;
+
+    function toDirectionsUrl(href) {
+      // Normalize ?q=... / search URLs to the dir/?api=1&destination=... form
+      // which actually launches Google Maps directions in a new tab.
+      try {
+        const m = href.match(/[?&]q=([^&]+)/);
+        if (m) return 'https://www.google.com/maps/dir/?api=1&destination=' + m[1];
+      } catch {}
+      return href;
+    }
+
     locations.forEach(loc => {
-      const links = loc.querySelectorAll('a[href*="maps.google.com"], a[href*="google.com/maps"]');
+      const wrap = loc.querySelector('div:last-of-type');
+      if (!wrap) return;
+      const links = wrap.querySelectorAll('a[href*="maps.google.com"], a[href*="google.com/maps"]');
       if (!links.length) return;
-      // Ensure first link opens in new tab and has the map-link class
+
+      // Pick a canonical href (prefer one already in dir/?api=1 form)
+      let canonical = '';
       links.forEach(a => {
-        if (!a.classList.contains('map-link')) { a.classList.add('map-link'); upgraded = true; }
-        if (a.target !== '_blank') { a.target = '_blank'; a.rel = 'noopener'; upgraded = true; }
+        if (!canonical || /maps\/dir/i.test(a.href)) canonical = toDirectionsUrl(a.href);
       });
-      // If there's no "strong" button-style link yet, add one cloned from the first
-      if (!loc.querySelector('a.map-link.strong')) {
-        const proto = links[0];
+
+      // Unwrap any <a> whose text content is the full address (not the button label)
+      links.forEach(a => {
+        const txt = a.textContent.trim();
+        const looksLikeButton = /itinéraire/i.test(txt) || /^📍/.test(txt);
+        if (!looksLikeButton) {
+          // Replace the link with a plain <span class="loc-addr">
+          const span = document.createElement('span');
+          span.className = 'loc-addr';
+          span.textContent = txt;
+          a.parentNode.replaceChild(span, a);
+          upgraded = true;
+        }
+      });
+
+      // Now ensure there is exactly ONE strong-button link with the canonical URL
+      let buttons = wrap.querySelectorAll('a.map-link.strong, a[href*="google.com/maps"]');
+      if (buttons.length === 0) {
         const btn = document.createElement('a');
         btn.className = 'map-link strong';
-        btn.href = proto.href;
+        btn.href = canonical;
         btn.target = '_blank';
         btn.rel = 'noopener';
         btn.textContent = '📍 Itinéraire Google Maps →';
-        proto.parentNode.appendChild(document.createElement('br'));
-        proto.parentNode.appendChild(btn);
+        wrap.appendChild(document.createElement('br'));
+        wrap.appendChild(btn);
         upgraded = true;
+      } else {
+        // Keep the first, drop the rest, normalize attrs.
+        const keep = buttons[0];
+        if (keep.href !== canonical) { keep.href = canonical; upgraded = true; }
+        if (keep.target !== '_blank') { keep.target = '_blank'; keep.rel = 'noopener'; upgraded = true; }
+        if (!keep.classList.contains('map-link')) { keep.classList.add('map-link'); upgraded = true; }
+        if (!keep.classList.contains('strong')) { keep.classList.add('strong'); upgraded = true; }
+        if (!/itinéraire/i.test(keep.textContent)) { keep.textContent = '📍 Itinéraire Google Maps →'; upgraded = true; }
+        for (let i = 1; i < buttons.length; i++) { buttons[i].remove(); upgraded = true; }
       }
     });
+
     if (upgraded) {
-      flashStatus('✓ Itinéraires rendus cliquables');
+      flashStatus('✓ Itinéraires : un seul bouton, ouvre dans un onglet');
       queueSave();
     }
   }
@@ -1385,13 +1418,13 @@
   const TWO_CALLS_HTML = '<div class="call-circle">'
     + '<div class="label">Crew + organisateurs</div>'
     + '<div class="time">9:00 AM</div>'
-    + '<a class="addr" href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC" target="_blank" rel="noopener">📍 1 Ch. du Crique à la Roche<br>Montpellier QC →</a>'
+    + '<a class="addr" href="https://www.google.com/maps/dir/?api=1&destination=1+Chemin+du+Crique+%C3%A0+la+Roche%2C+Montpellier%2C+QC" target="_blank" rel="noopener">📍 1 Ch. du Crique à la Roche<br>Montpellier QC →</a>'
     + '<div class="setup">Setup 8:30</div>'
     + '</div>'
     + '<div class="call-circle">'
     + '<div class="label">Figurants</div>'
     + '<div class="time">3:00 PM</div>'
-    + '<a class="addr" href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC" target="_blank" rel="noopener">📍 33 Ch. Baie de l\'Ours<br>Montpellier QC →</a>'
+    + '<a class="addr" href="https://www.google.com/maps/dir/?api=1&destination=33+Chemin+de+la+Baie+de+l%27Ours%2C+Montpellier%2C+QC" target="_blank" rel="noopener">📍 33 Ch. Baie de l\'Ours<br>Montpellier QC →</a>'
     + '<div class="setup">Wrap 20h</div>'
     + '</div>';
 
@@ -1403,10 +1436,15 @@
     const circles = block.querySelectorAll('.call-circle');
     if (circles.length === 0) return; // structure unrecognised
     const hasLinkedAddr = !!block.querySelector('a.addr');
-    // Migrate when single circle (old) OR when 2 circles but addresses aren't links yet.
-    if (circles.length >= 2 && hasLinkedAddr) return;
+    // Old query-style URLs that open Maps search instead of directions.
+    const hasOldUrl = /maps\.google\.com\/\?q=/i.test(block.innerHTML);
+    // Migrate when: single circle (old), or 2 circles but addresses not yet links, or links still use old URL format.
+    if (circles.length >= 2 && hasLinkedAddr && !hasOldUrl) return;
     block.innerHTML = TWO_CALLS_HTML;
-    flashStatus(circles.length < 2 ? '✓ CALL séparé en Crew (9h) + Figurants (15h)' : '✓ Adresses CALL rendues cliquables');
+    const reason = circles.length < 2 ? '✓ CALL séparé en Crew (9h) + Figurants (15h)'
+      : hasOldUrl ? '✓ URLs Google Maps mises à jour (directions)'
+      : '✓ Adresses CALL rendues cliquables';
+    flashStatus(reason);
     queueSave();
   }
 
