@@ -716,6 +716,7 @@
       addDeleteButtonsToVignettes();
       migratePropsToTable();
       migrateCallCircle();
+      fetchWeatherForShoot();
     }, 0);
   }
 
@@ -1157,6 +1158,111 @@
   }
 
   // ============================================================
+  //  Live weather — Open-Meteo (no API key, CORS OK, free).
+  //  Fetched on every page load with a 4-hour localStorage cache so
+  //  it effectively updates "every morning" when someone opens the
+  //  call sheet — and stops on its own after the last shoot date.
+  // ============================================================
+
+  const SHOOT_DATES = ['2026-05-30', '2026-05-31'];
+  const SHOOT_LAT = 45.85;
+  const SHOOT_LON = -75.16;
+  const SHOOT_TZ = 'America/Toronto';
+  const WEATHER_CACHE_KEY = 'fmm_weather_cache_v1';
+  const WEATHER_TTL_MS = 4 * 60 * 60 * 1000; // 4h
+
+  // WMO weather code → short French label
+  const WMO_FR = {
+    0: 'ciel dégagé', 1: 'principalement clair', 2: 'partiellement nuageux', 3: 'couvert',
+    45: 'brouillard', 48: 'brouillard givrant',
+    51: 'bruine légère', 53: 'bruine modérée', 55: 'bruine dense',
+    56: 'bruine verglaçante', 57: 'bruine verglaçante forte',
+    61: 'pluie légère', 63: 'pluie modérée', 65: 'pluie forte',
+    66: 'pluie verglaçante', 67: 'pluie verglaçante forte',
+    71: 'neige légère', 73: 'neige modérée', 75: 'neige forte', 77: 'grains de neige',
+    80: 'averses légères', 81: 'averses modérées', 82: 'averses violentes',
+    85: 'averses de neige légères', 86: 'averses de neige fortes',
+    95: 'orage', 96: 'orage avec grêle', 99: 'orage violent'
+  };
+
+  function formatWeather(json) {
+    if (!json || !json.daily || !json.daily.time) return [];
+    const d = json.daily;
+    return d.time.map((iso, i) => ({
+      date: iso,
+      summary: Math.round(d.temperature_2m_max[i]) + '°C / '
+        + Math.round(d.temperature_2m_min[i]) + '°C, '
+        + (d.precipitation_probability_max[i] ?? 0) + '% pluie · '
+        + (WMO_FR[d.weathercode[i]] || 'mixte')
+    }));
+  }
+
+  function applyWeatherToCallsheet(forecast) {
+    if (!forecast || !forecast.length) return;
+    const callsheetEl = document.getElementById('page-callsheet');
+    if (!callsheetEl) return;
+    // Find the row whose first cell is exactly "Météo"
+    const rows = callsheetEl.querySelectorAll('.header table tr');
+    let meteoCell = null;
+    rows.forEach(row => {
+      const first = row.querySelector('td:first-child');
+      if (first && /^M[ée]t[ée]o$/i.test(first.textContent.trim())) {
+        meteoCell = row.querySelector('td:nth-child(2)');
+      }
+    });
+    if (!meteoCell) return;
+    const lines = forecast.map(f => {
+      const wd = new Date(f.date + 'T12:00:00').toLocaleDateString('fr-CA', { weekday: 'short' });
+      return '<strong>' + wd + '</strong> ' + f.summary;
+    }).join('<br>');
+    const now = new Date().toLocaleString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+    const newHTML = lines + '<br><span style="font-size:8px;color:#888;">🌤 Mis à jour ' + now + '</span>';
+    // Avoid no-op rewrites (don't burn a Firestore save if nothing changed)
+    if (meteoCell.innerHTML.trim() === newHTML.trim()) return;
+    meteoCell.innerHTML = newHTML;
+    queueSave();
+    flashStatus('🌤 Météo mise à jour (Open-Meteo)');
+  }
+
+  async function fetchWeatherForShoot() {
+    // Stop polling after the last shoot day
+    const today = new Date().toISOString().slice(0, 10);
+    if (today > SHOOT_DATES[SHOOT_DATES.length - 1]) return;
+
+    // Cache check
+    try {
+      const raw = localStorage.getItem(WEATHER_CACHE_KEY);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        if (cached.ts && (Date.now() - cached.ts) < WEATHER_TTL_MS && Array.isArray(cached.data)) {
+          applyWeatherToCallsheet(cached.data);
+          return;
+        }
+      }
+    } catch {}
+
+    const url = 'https://api.open-meteo.com/v1/forecast'
+      + '?latitude=' + SHOOT_LAT
+      + '&longitude=' + SHOOT_LON
+      + '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode'
+      + '&timezone=' + encodeURIComponent(SHOOT_TZ)
+      + '&start_date=' + SHOOT_DATES[0]
+      + '&end_date=' + SHOOT_DATES[SHOOT_DATES.length - 1];
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      const forecast = formatWeather(json);
+      if (!forecast.length) throw new Error('payload vide');
+      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: forecast }));
+      applyWeatherToCallsheet(forecast);
+    } catch (e) {
+      console.warn('Open-Meteo fetch failed:', e);
+    }
+  }
+
+  // ============================================================
   //  Migrate single CALL circle → two circles (Crew 9 AM / Figurants 3 PM)
   //  with addresses. Surgical replacement of the .call-block contents
   //  only — preserves all other call-sheet user edits.
@@ -1360,6 +1466,7 @@
   addDeleteButtonsToVignettes();
   migratePropsToTable();
   migrateCallCircle();
+  fetchWeatherForShoot();
 
   // ---------- Paste (Cmd/Ctrl+V) ----------
   document.addEventListener('paste', (e) => {
