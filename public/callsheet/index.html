@@ -66,8 +66,12 @@
   /* ===== STORYBOARD grid ===== */
   .storyboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .vignette { border: 1px solid #bbb; background: #fff; display: flex; flex-direction: column; min-height: 180px; }
-  .vignette .img-area { background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f0f0f0 8px, #f0f0f0 16px); min-height: 110px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 9px; text-align: center; padding: 4px; border-bottom: 1px solid #ddd; }
-  .vignette .img-area img { max-width: 100%; max-height: 110px; object-fit: contain; }
+  .vignette .img-area { background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f0f0f0 8px, #f0f0f0 16px); min-height: 110px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 9px; text-align: center; padding: 4px; border-bottom: 1px solid #ddd; cursor: pointer; position: relative; }
+  .vignette .img-area:hover { background: repeating-linear-gradient(45deg, #fff5e6, #fff5e6 8px, #ffe9c2 8px, #ffe9c2 16px); color: #c80; }
+  .vignette .img-area.drag-over { background: #fff5cc; color: #c90; outline: 2px dashed #c90; outline-offset: -4px; }
+  .vignette .img-area img { max-width: 100%; max-height: 110px; object-fit: contain; cursor: pointer; }
+  .vignette .img-area.has-img { background: #fff; }
+  .vignette .img-area .upload-hint { font-size: 9px; line-height: 1.3; pointer-events: none; }
   .vignette .vig-meta { padding: 6px; font-size: 9px; }
   .vignette .vig-meta .vig-id { font-weight: 600; font-family: "Georgia", serif; font-size: 11px; }
   .vignette .vig-meta .vig-desc { color: #555; margin-top: 3px; line-height: 1.3; }
@@ -162,6 +166,9 @@
     <span class="status" id="status"></span>
   </div>
 </div>
+
+<!-- Hidden file input — reused by every .img-area upload click -->
+<input type="file" id="vignette-upload-input" accept="image/*" style="display:none;">
 
 <!-- ============================================================== -->
 <!-- ===================== 1. CALL SHEET ========================== -->
@@ -475,18 +482,17 @@
   <div class="title-block" style="margin-bottom: 12px;">
     <div class="knight" style="font-size: 24px;">♞</div>
     <div class="title" style="font-family: Georgia, serif; font-size: 20px;">Storyboard — Caravanes et Saltimbanques</div>
-    <div class="date" style="font-family: Georgia, serif; font-size: 13px; color: #444;">Vignettes Nano Banana · Tournage 30-31 mai 2026</div>
+    <div class="date" style="font-family: Georgia, serif; font-size: 13px; color: #444;">Tournage 30-31 mai 2026</div>
   </div>
 
   <div class="box" style="margin-bottom: 10px; background: #fff8e1; border-color: #e0c060;">
-    <strong>Comment remplir les vignettes (workflow manuel) :</strong>
+    <strong>Comment remplir les vignettes — 3 méthodes :</strong>
     <ol style="margin: 6px 0 0 18px; padding: 0; font-size: 10px; line-height: 1.6;">
-      <li>Pour chaque vignette, génère l'image dans <strong>l'outil de ton choix</strong> (Google AI Studio, Midjourney, ChatGPT, DALL-E) en utilisant le style guide ci-dessous + la description de la scène.</li>
-      <li>OU dessine à la main et photographie / scan.</li>
-      <li>Pour insérer une image dans une vignette : <strong>clique dans la zone hachurée, puis colle (Cmd+V)</strong>. L'image est sauvegardée automatiquement dans Firestore et visible par toute l'équipe.</li>
-      <li>Tu peux aussi éditer le titre et la description sous chaque vignette directement.</li>
+      <li><strong>📁 Clic</strong> sur une zone hachurée → ouvre le sélecteur de fichier, choisis une image (photo, scan d'un croquis, screenshot).</li>
+      <li><strong>🖱️ Glisser-déposer</strong> une image depuis ton bureau / Finder directement sur la zone hachurée.</li>
+      <li><strong>📋 Coller (Cmd+V)</strong> après avoir copié une image depuis n'importe où (screenshot, web, photo).</li>
     </ol>
-    <p style="margin: 8px 0 0 0; font-size: 10px; color: #555;"><strong>Style guide à coller dans l'outil de génération :</strong> <em>Black and white pencil sketch storyboard, loose hand-drawn lines, minimal hatching shading, 16:9 cinema frame with thin black border. Rural Quebec late spring forest clearing. Medieval saltimbanque festival — wooden wagons, hand-stitched clothing, lanterns, folk instruments. Wes Anderson symmetry meets The Dead South folk-dark. Keep characters and style consistent across all frames.</em></p>
+    <p style="margin: 6px 0 0 0; font-size: 10px; color: #666;">Dessine à la main et photographie, ou uploade n'importe quelle image. Les vignettes sont sauvegardées automatiquement (visibles par toute l'équipe). Tu peux aussi éditer le titre et la description sous chaque vignette directement. Pour remplacer une image existante, clique/colle/dépose à nouveau dans la même zone.</p>
   </div>
 
   <div class="box" style="margin-bottom: 10px; background: #f0f4ff; border-color: #6080c0;">
@@ -938,8 +944,30 @@
     }
   });
 
-  // ---------- Paste image into vignette (becomes inline data URL) ----------
-  // Event delegation so this keeps working after Firestore replaces innerHTML.
+  // ============================================================
+  //  Storyboard image input — paste, click-to-upload, drag-and-drop
+  //  All paths funnel through setImageOnArea() so the storage logic
+  //  (data URL → innerHTML → queueSave) lives in one place.
+  // ============================================================
+
+  function setImageOnArea(area, blob, sourceLabel) {
+    if (!area || !blob) return;
+    if (!blob.type || blob.type.indexOf('image') !== 0) {
+      flashStatus('⚠️  Fichier ignoré (pas une image)', true);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      area.innerHTML = '<img src="' + evt.target.result + '" alt="vignette">';
+      area.classList.add('has-img');
+      queueSave();
+      flashStatus('✓ Image ' + (sourceLabel || 'ajoutée'));
+    };
+    reader.onerror = () => flashStatus('⚠️  Lecture image échec', true);
+    reader.readAsDataURL(blob);
+  }
+
+  // ---------- Paste (Cmd/Ctrl+V) ----------
   document.addEventListener('paste', (e) => {
     const area = e.target.closest && e.target.closest('.img-area');
     if (!area) return;
@@ -947,15 +975,66 @@
     for (const item of items) {
       if (item.type.indexOf('image') === 0) {
         e.preventDefault();
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          area.innerHTML = '<img src="' + evt.target.result + '" alt="vignette">';
-          queueSave();
-          flashStatus('✓ Image collée');
-        };
-        reader.readAsDataURL(blob);
+        setImageOnArea(area, item.getAsFile(), 'collée');
         return;
+      }
+    }
+  });
+
+  // ---------- Click to upload ----------
+  let pendingUploadArea = null;
+  const fileInput = document.getElementById('vignette-upload-input');
+
+  document.addEventListener('click', (e) => {
+    const area = e.target.closest && e.target.closest('.img-area');
+    if (!area) return;
+    // Avoid interfering with the contenteditable cursor placement when the
+    // user actually meant to click in the .vig-meta below.
+    e.preventDefault();
+    pendingUploadArea = area;
+    // Reset value so re-selecting the same file still fires 'change'
+    fileInput.value = '';
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !pendingUploadArea) return;
+    setImageOnArea(pendingUploadArea, file, 'téléversée');
+    pendingUploadArea = null;
+  });
+
+  // ---------- Drag & drop ----------
+  // Use capture-phase delegation so we can intercept anywhere a .img-area is dragged onto.
+  document.addEventListener('dragover', (e) => {
+    const area = e.target.closest && e.target.closest('.img-area');
+    if (!area) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    area.classList.add('drag-over');
+  });
+
+  document.addEventListener('dragleave', (e) => {
+    const area = e.target.closest && e.target.closest('.img-area');
+    if (area) area.classList.remove('drag-over');
+  });
+
+  document.addEventListener('drop', (e) => {
+    const area = e.target.closest && e.target.closest('.img-area');
+    if (!area) return;
+    e.preventDefault();
+    area.classList.remove('drag-over');
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) {
+      setImageOnArea(area, file, 'déposée');
+    } else {
+      // Try image dragged from another tab (URL or data)
+      const url = e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('text/plain');
+      if (url && /^https?:\/\//.test(url)) {
+        area.innerHTML = '<img src="' + url + '" alt="vignette" crossorigin="anonymous">';
+        area.classList.add('has-img');
+        queueSave();
+        flashStatus('✓ Image liée (URL externe)');
       }
     }
   });
