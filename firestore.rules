@@ -559,5 +559,16 @@ service cloud.firestore {
                       );
       }
     }
+
+    // ── Production docs (Call sheets, shot lists, storyboards) ──────────────
+    // Public read/write for collaborative production documents. Document IDs
+    // are per-shoot (e.g. 'jour-1', 'jour-2'). The URL obscurity at
+    // /callsheet is the only access control — acceptable for transient,
+    // low-stakes production paperwork where the team needs zero-friction
+    // editing. Revisit (passphrase, app check, admin-only) if the surface
+    // widens or if vandalism becomes a real concern.
+    match /production-docs/{docId} {
+      allow read, write: if true;
+    }
   }
 }

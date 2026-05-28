@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<title>FMM Jour 1 — Call sheet · Shot list · Storyboard</title>
+<style>
+  @page { size: Letter; margin: 0.5in; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10px; color: #111; background: #f5f5f5; }
+  body { padding: 110px 16px 80px 16px; }
+
+  .page { max-width: 1100px; margin: 0 auto 24px auto; background: #fff; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .page.hidden { display: none; }
+
+  /* ===== Generic ===== */
+  .box { border: 1px solid #bbb; padding: 8px; background: #fff; }
+  .box h1, .box h2, .box h3 { margin: 0 0 4px 0; }
+  .box table { width: 100%; border-collapse: collapse; font-size: 10px; }
+  .box td { padding: 2px 4px; vertical-align: top; }
+  .box td:first-child { color: #555; width: 38%; }
+
+  table.data { width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 8px; }
+  table.data th { background: #ececec; padding: 5px 6px; text-align: left; border: 1px solid #bbb; font-weight: 600; }
+  table.data td { padding: 5px 6px; border: 1px solid #bbb; vertical-align: top; }
+  table.data tr:nth-child(even) td { background: #fafafa; }
+
+  .section-title { background: #222; color: #fff; padding: 4px 8px; font-weight: 600; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; margin-bottom: 4px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tbd { color: #c33; font-weight: 600; }
+  .ok { color: #2a7a2a; font-weight: 600; }
+  hr.dash { border: none; border-top: 1px dashed #ccc; margin: 6px 0; }
+
+  /* Props inline links — red, underlined, clickable across pages */
+  .prop { color: #c00; font-weight: 600; text-decoration: underline; text-decoration-style: dotted; cursor: pointer; }
+  .prop:hover { color: #800; text-decoration-style: solid; background: #fff0f0; }
+  /* Highlight a prop entry briefly when scrolled to */
+  .prop-target { display: inline-block; }
+  .prop-target.flash { background: #ffe066; transition: background 1.5s ease-out; }
+
+  /* ===== CALL SHEET layout ===== */
+  .header { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 8px; }
+  .prod-info p { margin: 0 0 2px 0; line-height: 1.3; }
+  .prod-info .name { font-weight: 600; font-size: 11px; }
+  .prod-info .small { color: #555; font-size: 9px; }
+  .title-block { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .title-block .knight { font-size: 24px; margin-bottom: 4px; line-height: 1; }
+  .title-block .title { font-family: "Georgia", "Times New Roman", serif; font-size: 18px; font-weight: 400; line-height: 1.2; }
+  .title-block .date { font-family: "Georgia", "Times New Roman", serif; font-size: 14px; color: #444; margin-top: 4px; }
+  .mid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 8px; margin-top: 8px; }
+  .locations { font-size: 10px; }
+  .locations h3 { font-size: 10px; margin-bottom: 6px; color: #333; text-transform: uppercase; letter-spacing: 0.5px; }
+  .locations .loc { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #ddd; }
+  .locations .loc:last-child { border-bottom: 0; }
+  .locations .loc-label { font-weight: 600; }
+  .locations .loc-time { color: #777; font-size: 9px; }
+  .locations a { color: #333; text-decoration: underline; }
+  .call-block { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .call-circle { width: 130px; height: 130px; border: 2px solid #222; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .call-circle .label { font-size: 11px; letter-spacing: 1px; color: #555; }
+  .call-circle .time { font-family: "Georgia", "Times New Roman", serif; font-size: 28px; font-weight: 700; line-height: 1; }
+  .call-circle .setup { font-size: 9px; color: #555; margin-top: 4px; }
+  .synopsis h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #333; margin-bottom: 4px; }
+  .synopsis p { margin: 0 0 4px 0; line-height: 1.35; }
+  footer.page-footer { text-align: center; color: #888; font-size: 9px; margin-top: 12px; border-top: 1px solid #ddd; padding-top: 6px; }
+
+  /* ===== STORYBOARD grid ===== */
+  .storyboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .vignette { border: 1px solid #bbb; background: #fff; display: flex; flex-direction: column; min-height: 180px; }
+  .vignette .img-area { background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f0f0f0 8px, #f0f0f0 16px); min-height: 110px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 9px; text-align: center; padding: 4px; border-bottom: 1px solid #ddd; }
+  .vignette .img-area img { max-width: 100%; max-height: 110px; object-fit: contain; }
+  .vignette .vig-meta { padding: 6px; font-size: 9px; }
+  .vignette .vig-meta .vig-id { font-weight: 600; font-family: "Georgia", serif; font-size: 11px; }
+  .vignette .vig-meta .vig-desc { color: #555; margin-top: 3px; line-height: 1.3; }
+
+  /* ===== EDIT MODE UI ===== */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: #1a1a1a; color: #fff;
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .page-nav { display: flex; gap: 0; background: #0d0d0d; padding: 0; }
+  .page-nav button {
+    flex: 1; background: transparent; color: #aaa; border: none; padding: 10px 12px;
+    cursor: pointer; font-size: 12px; font-family: inherit; border-bottom: 3px solid transparent;
+  }
+  .page-nav button:hover { color: #fff; background: #222; }
+  .page-nav button.active { color: #fff; background: #2a2a2a; border-bottom-color: #2a7a2a; font-weight: 600; }
+  .page-nav button .step { color: #555; font-size: 10px; margin-right: 6px; }
+  .page-nav button.active .step { color: #2a7a2a; }
+
+  .edit-toolbar {
+    background: #1a1a1a; padding: 6px 12px;
+    display: flex; gap: 6px; align-items: center; justify-content: center; flex-wrap: wrap;
+    font-size: 11px; border-top: 1px solid #333;
+  }
+  .edit-toolbar .label { color: #888; margin-right: 4px; font-size: 10px; }
+  .edit-toolbar button {
+    background: #333; color: #fff; border: 1px solid #555; padding: 5px 10px;
+    border-radius: 3px; cursor: pointer; font-size: 11px; font-family: inherit;
+  }
+  .edit-toolbar button:hover { background: #444; border-color: #777; }
+  .edit-toolbar button.primary { background: #2a7a2a; border-color: #3a9a3a; }
+  .edit-toolbar button.primary:hover { background: #3a9a3a; }
+  .edit-toolbar button.warn { background: #c33; border-color: #d44; }
+  .edit-toolbar button.warn:hover { background: #d44; }
+  .edit-toolbar .status { color: #8f8; font-size: 10px; margin-left: 8px; min-width: 140px; }
+
+  /* Step nav at bottom of each page */
+  .step-nav { display: flex; justify-content: space-between; margin: 16px 0 4px 0; }
+  .step-nav button {
+    background: #2a7a2a; color: #fff; border: none; padding: 8px 16px;
+    border-radius: 4px; cursor: pointer; font-size: 12px; font-family: inherit;
+  }
+  .step-nav button:hover { background: #3a9a3a; }
+  .step-nav button:disabled { background: #aaa; cursor: not-allowed; }
+  .step-nav button.prev { background: #555; }
+  .step-nav button.prev:hover { background: #666; }
+
+  /* Hover hint on editable areas */
+  [contenteditable="true"] { outline: none; }
+  .page [contenteditable="true"]:hover { background: #fffae6; }
+  .page [contenteditable="true"]:focus { background: #fff5cc; outline: 1px dashed #c90; outline-offset: 1px; }
+  table.data tr.row-focus td { background: #fff5cc !important; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { max-width: none; box-shadow: none; padding: 0; margin: 0; }
+    .page.hidden { display: none !important; }
+    .top-bar, .edit-toolbar, .page-nav, .step-nav { display: none !important; }
+    [contenteditable] { outline: none !important; background: transparent !important; }
+    [contenteditable]:hover { background: transparent !important; }
+    table.data tr.row-focus td { background: inherit !important; }
+    .box { break-inside: avoid; }
+    table.data tr { break-inside: avoid; }
+    .vignette { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== TOP BAR ===================== -->
+<div class="top-bar">
+  <div class="page-nav">
+    <button data-page="callsheet" class="active"><span class="step">1.</span>Call sheet</button>
+    <button data-page="shotlist"><span class="step">2.</span>Shot list</button>
+    <button data-page="storyboard"><span class="step">3.</span>Storyboard</button>
+  </div>
+  <div class="edit-toolbar">
+    <span class="label">Édition :</span>
+    <button id="btn-add-row">➕ Ajouter ligne</button>
+    <button id="btn-del-row" class="warn">➖ Supprimer ligne</button>
+    <button id="btn-up-row" title="Monter la ligne (curseur dans la ligne à déplacer)">↑ Monter</button>
+    <button id="btn-down-row" title="Descendre la ligne (curseur dans la ligne à déplacer)">↓ Descendre</button>
+    <span class="label" style="margin-left: 12px;">Storyboard :</span>
+    <button id="btn-add-vig">➕ Ajouter vignette</button>
+    <button id="btn-del-vig" class="warn">➖ Supprimer vignette</button>
+    <span class="label" style="margin-left: 12px;">Export :</span>
+    <button id="btn-save" class="primary">💾 Save HTML</button>
+    <button id="btn-print" class="primary">🖨️ Print page courante</button>
+    <button id="btn-reset">↺ Reset</button>
+    <span class="status" id="status"></span>
+  </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- ===================== 1. CALL SHEET ========================== -->
+<!-- ============================================================== -->
+<div class="page" id="page-callsheet" contenteditable="true">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="box prod-info">
+      <p class="name">Festival Médiéval de Montpellier</p>
+      <p class="small">33 Chemin de la Baie de l'ours, Montpellier QC</p>
+      <p class="small">festivalmedievaldemontpellier.org</p>
+      <p class="small">514 418 3450</p>
+      <table style="margin-top: 6px;">
+        <tr><td>Producer</td><td>Tristan CH</td><td>873 221 4919</td></tr>
+        <tr><td>Director</td><td>Alex T.S</td><td>514 418 3450</td></tr>
+        <tr><td>PM</td><td colspan="2">Chris + Alex (rôle partagé)</td></tr>
+      </table>
+    </div>
+    <div class="box title-block">
+      <div class="knight">♞</div>
+      <div class="title">Caravanes et Saltimbanques<br><span style="font-size: 13px; color:#555;">Vidéo promo FMM 2026 — Jour 1</span></div>
+      <div class="date">Samedi 30 mai 2026</div>
+    </div>
+    <div class="box">
+      <table>
+        <tr><td>Déjeuner</td><td>N.A — café sur place</td></tr>
+        <tr><td>Lunch</td><td>12:00 PM (transition vers lieu 2)</td></tr>
+        <tr><td>Souper</td><td>18:00-19:00 (party)</td></tr>
+        <tr><td>Sunrise</td><td>5:17 AM</td></tr>
+        <tr><td>Sunset</td><td>8:42 PM</td></tr>
+        <tr><td>Golden hour AM</td><td>5:17 – 6:17</td></tr>
+        <tr><td>Golden hour PM</td><td><strong>7:42 – 8:42</strong> (acte 3)</td></tr>
+        <tr><td>Météo</td><td>19°C, 30% averses, nuit claire</td></tr>
+        <tr><td>Hôpital</td><td>CSS Papineau<br>14 Rue St-André, St-André-Avellin</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Mid -->
+  <div class="mid">
+    <div class="box locations">
+      <h3>Lieux du jour</h3>
+      <div class="loc">
+        <div class="loc-label">1. Chez Katrine &amp; Vincent</div>
+        <div class="loc-time">9h00 – 11h00</div>
+        <div>1 Chemin du Crique à la Roche, Montpellier QC J0V 1M0<br>
+          <a href="https://maps.google.com/?q=1+Chemin+du+Crique+%C3%A0+la+Roche+Montpellier+QC">Itinéraire Google Maps</a>
+        </div>
+      </div>
+      <div class="loc">
+        <div class="loc-label">2-3-4. Chez Jesse &amp; Tristan</div>
+        <div class="loc-time">12h00 – 22h00</div>
+        <div>33 Chemin de la Baie de l'ours, Montpellier QC<br>
+          <a href="https://maps.google.com/?q=33+Chemin+de+la+Baie+de+l%27ours+Montpellier+QC">Itinéraire Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="box call-block">
+      <div class="call-circle">
+        <div class="label">CALL</div>
+        <div class="time">9:00 AM</div>
+        <div class="setup">Setup matériel : 8:30 AM</div>
+      </div>
+    </div>
+    <div class="box synopsis">
+      <h3>Synopsis</h3>
+      <p>Tournage en 3 parties sur 2 lieux. <strong>Matin</strong> = plans d'ambiance, drone, caravane, chevaux, boule de cristal, paysages chez Katrine &amp; Vincent (sans figurants). <strong>Après-midi + soir</strong> = party médiévale chez Jesse &amp; Tristan avec ~16 figurants (enfants inclus), bouffe et hydromel.</p>
+      <p>Structure <strong>120s</strong> : <em>30s intro</em> (tableau synchronisé Wes-Anderson + boule de cristal + course chevaux) → <em>30s jour</em> (fête, danse, jonglerie) → <em>30s nuit</em> (feu, sabre, backflip, apogée) → <em>30s archives</em> (images festival années passées, déjà tournées). Grading <strong>noir &amp; blanc → couleur</strong> au montage.</p>
+      <p>Livraison : vidéo web 120s (16:9) + photos en parallèle.</p>
+    </div>
+  </div>
+
+  <!-- Scènes -->
+  <div class="section-title">Scènes du jour</div>
+  <table class="data">
+    <thead>
+      <tr><th style="width:60px;">Partie</th><th style="width:90px;">Heure</th><th>Lieu</th><th>Personnages</th><th style="width:50px;">D/N</th><th>Shots &amp; notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>9h-11h</td><td>Chez Katrine &amp; Vincent<br>1 Ch. du Crique à la Roche</td><td>Alex + Chris seuls</td><td>Day</td><td>Plans d'ambiance, drone, caravane, paysages. Établissants storyboard.</td></tr>
+      <tr><td><strong>2</strong></td><td>12h-14h</td><td>33 Ch. Baie de l'ours<br>(Jesse &amp; Tristan)</td><td>Alex + Chris seuls</td><td>Day</td><td>Plans techniques / repérage / pré-setup party. AGA en parallèle si temps.</td></tr>
+      <tr><td><strong>3</strong></td><td>15h-19h</td><td>33 Ch. Baie de l'ours<br>(même lieu)</td><td>Tous (~12 figurants)</td><td>Day → Golden</td><td><strong>Acte 1</strong> tableau synchronisé (musicien Pitch, wagon, table, danseurs, regard collectif) + <strong>Acte 2 fête</strong>.</td></tr>
+      <tr><td><strong>4</strong></td><td>19h-22h</td><td>33 Ch. Baie de l'ours<br>(même lieu)</td><td>Tous (~12 figurants)</td><td>Golden → Night</td><td><strong>Acte 3 apogée</strong> : tison, bûche, sabre, backflip Laurent, feu, danse collective.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Cast (ON CAMERA seulement — Alex et Chris sont en Crew, pas en Cast) -->
+  <div class="section-title">Cast — devant la caméra</div>
+  <table class="data">
+    <thead>
+      <tr><th style="width:30px;">#</th><th>Nom</th><th>Rôle / personnage</th><th style="width:90px;">Call time</th><th>Special instructions</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Aslak</strong></td><td>Lead Acte 1 — Mead Guy (verse hydromel, pivot du reveal)</td><td>9:00 AM (lieu 1)</td><td><span class="tbd">Présence à confirmer.</span> Amener <a href="#prop-baril" class="prop">baril</a>, <a href="#prop-gobelets" class="prop">gobelet d'argent</a>. Costume médiéval (tunique terreuse, ceinture cuir).</td></tr>
+      <tr><td>2</td><td><strong>Tristan</strong></td><td>Cavalier (acte 1, course de chevaux) + figurant party</td><td>9:00 AM (lieu 1) puis 15:00 (lieu 2)</td><td>Fournit les chevaux pour plan 1.8</td></tr>
+      <tr><td>3</td><td><strong>Pitch</strong></td><td>Musicien solo (acte 1, plan 1.3 et + )</td><td>9:00 AM (lieu 1)</td><td>Amener instrument (lute / tambour)</td></tr>
+      <tr><td>4</td><td><strong>Mishka</strong></td><td>Jongleur (acte 1 cluster 1.9 + acte 2)</td><td>9:00 AM (lieu 1)</td><td>Amener accessoires jonglerie</td></tr>
+      <tr><td>5</td><td><strong>Jesse</strong></td><td>Danseur / poi foulard (acte 1 cluster 1.9 + actes 2-3)</td><td>dès matin (chez lui)</td><td>Hôte du lieu 2 — prépare party (bouffe, hydromel, espace)</td></tr>
+      <tr><td>6</td><td><strong>Laurent</strong></td><td>Acrobate (acte 1 cluster 1.9 + backflip acte 3)</td><td>9:00 AM (lieu 1) puis 17:00 (acte 3)</td><td>Échauffement obligatoire avant backflip. Sécurité.</td></tr>
+      <tr><td>7</td><td><strong>Mikael</strong></td><td>Figurant party (plan 1.7 bar mobile retiré du nouveau cut)</td><td>15:00 PM</td><td>Amener le bar mobile sur place pour décor</td></tr>
+      <tr><td>8</td><td><strong>Élise</strong></td><td>Figurante party + gang table/wagon (acte 1)</td><td>9:00 AM (lieu 1)</td><td>Costume médiéval personnel</td></tr>
+      <tr><td>9</td><td><strong>Benoît</strong></td><td>Figurant party + gang table/wagon (acte 1)</td><td>9:00 AM (lieu 1)</td><td>Costume médiéval personnel</td></tr>
+      <tr><td>10</td><td><strong>Évinali</strong> (enfant Alex)</td><td>Enfant du festival</td><td>15:00 PM</td><td>Présence enfant — esprit communautaire</td></tr>
+      <tr><td>11</td><td><strong>Aliel</strong> (enfant Alex)</td><td>Enfant du festival</td><td>15:00 PM</td><td>Présence enfant — esprit communautaire</td></tr>
+      <tr><td>12</td><td><strong>Léna Le Bozec</strong></td><td>Figurante party + gang wagon/table (acte 1)</td><td>9:00 AM (lieu 1)</td><td><span class="ok">Confirmée Going (FB)</span></td></tr>
+      <tr><td>13</td><td><strong>Vincent Gabriel Kirouac</strong></td><td>Hôte lieu 1 + figurant party</td><td>dès matin (chez lui)</td><td><span class="ok">Confirmé Going (FB)</span> — hôte chez Katrine &amp; Vincent le matin</td></tr>
+      <tr><td>14</td><td><strong>Océane Leclair</strong></td><td>Figurante party + gang (acte 1)</td><td>9:00 AM (lieu 1)</td><td><span class="ok">Confirmée Going (FB)</span></td></tr>
+      <tr><td>15</td><td><strong>Max Jack</strong></td><td>Figurant party + gang (acte 1)</td><td>9:00 AM (lieu 1)</td><td><span class="ok">Confirmé Going (FB)</span></td></tr>
+      <tr><td>16</td><td><strong>Katrine Connelly</strong></td><td>Hôtesse lieu 1 + figurante party</td><td>dès matin (chez elle)</td><td><span class="ok">Confirmée Going (FB)</span> — hôtesse chez Katrine &amp; Vincent</td></tr>
+      <tr><td>17</td><td><strong>Sergei Stanoffsky</strong></td><td>Figurant party (organisateur FB event)</td><td>15:00 PM</td><td>À confirmer présence sur le tournage</td></tr>
+      <tr><td>18+</td><td>Figurants additionnels à confirmer</td><td>"Gang du wagon" + "Gang de la table" + couples de danseurs (acte 1)</td><td>9:00 AM (lieu 1)</td><td>Costume médiéval personnel. Chorégraphie hochement de tête sur place.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Production Notes -->
+  <div class="section-title">Production Notes</div>
+  <div class="two-col">
+    <div class="box">
+      <strong>Costumes</strong><br>
+      Tous amènent leur costume médiéval personnel : chemise / robe longue brun ou neutre, look paysan/voyageur de base.
+      <hr class="dash">
+      <strong>Props &amp; accessoires de scène</strong><br>
+      • <span id="prop-baril" class="prop-target"><strong>Baril d'hydromel</strong></span> — pour Aslak / Mead Guy (plans 1.1, 1.2, 1.12). <span class="tbd">À trouver / confirmer qui fournit.</span><br>
+      • <span id="prop-gobelets" class="prop-target"><strong>50 gobelets argent style médiéval</strong></span> — Alex amène tout le stock<br>
+      • <span id="prop-table-banquet" class="prop-target"><strong>Table de banquet</strong></span> — Alex fournit. <span class="tbd">Besoin d'aide pour transport jusqu'au lieu 1.</span><br>
+      • <span id="prop-chaise" class="prop-target"><strong>Chaise en bois</strong></span> — pivot Acte 1 plan 1.3. Venue ou Alex.<br>
+      • <span id="prop-wagon" class="prop-target"><strong>Wagon médiéval</strong></span> — Acte 1 plans 1.3-1.4. <span class="tbd">À sourcer.</span><br>
+      • <span id="prop-caravane" class="prop-target"><strong>Caravane Mont-Tremblant</strong></span> — pour établissant E.1. Transport <span class="tbd">à confirmer</span><br>
+      • <span id="prop-chevaux" class="prop-target"><strong>Chevaux</strong></span> — Tristan (pour course de chevaux plan 1.8)<br>
+      • <span id="prop-bar-mobile" class="prop-target"><strong>Bar mobile</strong></span> — Mikael l'amène (décor / fond Acte 2)<br>
+      • <span id="prop-instruments" class="prop-target"><strong>Instruments musique</strong></span> — Pitch + musiciens (lute, tambour, fiddle)<br>
+      • <span id="prop-tissus" class="prop-target"><strong>Tissus colorés</strong></span> — Alex amène (drapés table, tentes, plan 1.11)<br>
+      • <span id="prop-cristal" class="prop-target"><strong>Boule de cristal</strong></span> — <span class="tbd">à trouver</span> (pour plan 1.11)<br>
+      • <span id="prop-poi-foulards" class="prop-target"><strong>Poi foulards</strong></span> — Jesse amène (plan 2.6 silk poi)<br>
+      • <span id="prop-tisons" class="prop-target"><strong>Tisons + bûche</strong></span> — pour jeux Acte 3 (plans 3.1, 3.2)<br>
+      • <span id="prop-sabres" class="prop-target"><strong>Sabres</strong></span> — pour combat choré Acte 3 (plan 3.3)<br>
+      • <span id="prop-feu" class="prop-target"><strong>Matériel feu</strong></span> — Acte 3 (foyer, poi flamme, fire breath)<br>
+      • <span id="prop-lanternes" class="prop-target"><strong>Lanternes + bancs</strong></span> — venue Jesse &amp; Tristan + Alex décorations (Acte 2-3)<br>
+      • <span id="prop-boustifaille" class="prop-target"><strong>Boustifaille</strong></span> — Alex amène (fruits, bouffe pour table banquet + party)<br>
+      • <span id="prop-decorations" class="prop-target"><strong>Décorations médiévales</strong></span> — Alex amène
+      <hr class="dash">
+      <strong>📣 Invitation à tous les figurants</strong><br>
+      Amener si possible : <strong>décorations, accessoires médiéval ou caravane, props personnels</strong>. Tout ce que vous avez chez vous qui colle au thème est bienvenu — plus on en a, plus le décor vit.
+      <hr class="dash">
+      <strong>🎥 Matériel cinéma (Alex + Chris)</strong><br>
+      • Black Magic (caméra principale)<br>
+      • 2<sup>e</sup> Black Magic<br>
+      • Lentilles<br>
+      • <strong>Ronin</strong> (gimbal) — <span class="tbd">à charger avant tournage</span><br>
+      • Shoulder Rig<br>
+      • Batteries (× toutes)<br>
+      • Drone (Alex pilote)<br>
+      • <strong>Tentes</strong> (setup matériel sur place)<br>
+      • Micros (perche + son direct)<br>
+      • Musique <strong>Svarica</strong> (klezmer Ste Nigun) — <span class="ok">droits OK</span> pour le montage final
+    </div>
+    <div class="box">
+      <strong>Bouffe + boisson</strong><br>
+      Hydromel + nourriture chez Jesse &amp; Tristan pour party partie 3-4. Préparation par les hôtes.
+      <hr class="dash">
+      <strong>Sécurité</strong><br>
+      • Backflip Laurent : 1-2 prises max, échauffement obligatoire<br>
+      • Combat de sabre : chorégraphie répétée avant prise, lames mouchetées si possible<br>
+      • Jeu avec feu : extincteur ou eau à portée, périmètre sécurité
+      <hr class="dash">
+      <strong>Plan B météo (30% averses)</strong><br>
+      • Pluie passagère : on attend 15-30 min sous abri<br>
+      • Pluie soutenue : décaler scènes drone à dim, tourner intérieur à la place<br>
+      • Nuit claire confirmée → acte 3 feu sécurisé
+    </div>
+  </div>
+
+  <!-- Crew Positions -->
+  <div class="section-title">Crew Positions — derrière la caméra</div>
+  <table class="data">
+    <thead>
+      <tr><th>Position</th><th>Nom</th><th>Téléphone</th><th>Email / fallback</th><th style="width:90px;">Call time</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Producer</td><td>Tristan CH</td><td>873 221 4919</td><td>via 514 418 3450 (Alex)</td><td>15:00 PM</td></tr>
+      <tr><td>PM (Production Manager)</td><td>Chris + Alex (rôle partagé)</td><td>514 418 3450</td><td>alex@lesalondesinconnus.com</td><td>9:00 AM</td></tr>
+      <tr><td>Director</td><td>Alex T.S</td><td>514 418 3450</td><td>alex@lesalondesinconnus.com</td><td>9:00 AM</td></tr>
+      <tr><td>Dir. of Photography</td><td>Alex T.S</td><td>514 418 3450</td><td></td><td>9:00 AM</td></tr>
+      <tr><td>Cam OP</td><td>Chris</td><td><span class="tbd">[TBD]</span></td><td><span class="tbd">[TBD]</span></td><td>9:00 AM</td></tr>
+      <tr><td>GRIP / Sound</td><td>Chris (double poste)</td><td><span class="tbd">[TBD]</span></td><td></td><td>9:00 AM</td></tr>
+      <tr><td>Drone Pilot</td><td>Alex T.S</td><td>514 418 3450</td><td></td><td>9:00 AM</td></tr>
+      <tr><td>Horse Handler / Cavalier</td><td>Tristan</td><td>873 221 4919</td><td>via 514 418 3450 (Alex)</td><td>15:00 PM</td></tr>
+    </tbody>
+  </table>
+
+  <footer class="page-footer">
+    Festival Médiéval de Montpellier · Call sheet jour 1 · 30 mai 2026
+  </footer>
+
+  <div class="step-nav">
+    <button class="prev" disabled>← Précédent</button>
+    <button data-goto="shotlist">Suivant : Shot list →</button>
+  </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- ===================== 2. SHOT LIST =========================== -->
+<!-- ============================================================== -->
+<div class="page hidden" id="page-shotlist" contenteditable="true">
+
+  <div class="title-block" style="margin-bottom: 12px;">
+    <div class="knight" style="font-size: 24px;">♞</div>
+    <div class="title" style="font-family: Georgia, serif; font-size: 20px;">Shot list — Caravanes et Saltimbanques</div>
+    <div class="date" style="font-family: Georgia, serif; font-size: 13px; color: #444;">Vidéo promo FMM 2026 · Tournage 30-31 mai 2026</div>
+  </div>
+
+  <!-- ACTE 1 -->
+  <div class="section-title">ACTE 1 — Le reveal (Aslak + tableau Wes Anderson + whip pans)</div>
+  <table class="data">
+    <thead>
+      <tr>
+        <th style="width:40px;">Shot</th>
+        <th>Description</th>
+        <th style="width:100px;">Type de plan</th>
+        <th>Cast dans le plan</th>
+        <th style="width:90px;">Lieu</th>
+        <th style="width:50px;">Durée</th>
+        <th>Notes / matériel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>1.1</strong></td><td>Gros plan mains qui versent l'hydromel doré d'un <a href="#prop-baril" class="prop">baril en bois</a> dans un <a href="#prop-gobelets" class="prop">gobelet d'argent</a></td><td>CU statique</td><td>Aslak (mains)</td><td>Katrine &amp; Vincent</td><td>~3-4s</td><td>Hero shot. Texture, lumière naturelle douce. Stream lent.</td></tr>
+      <tr><td><strong>1.2</strong></td><td>Caméra dolly-out lent, révèle Aslak debout derrière le <a href="#prop-baril" class="prop">baril</a>, au centre de la clairière</td><td>Plan moyen, dolly-out</td><td>Aslak</td><td>Katrine &amp; Vincent</td><td>~3s</td><td>Ronin pour dolly fluide.</td></tr>
+      <tr><td><strong>1.3</strong></td><td>Dolly continue : Pitch entre en gauche avec <a href="#prop-instruments" class="prop">instrument</a>, s'assoit sur la <a href="#prop-chaise" class="prop">chaise</a>. <a href="#prop-wagon" class="prop">Wagon</a> roule en droite</td><td>Plan large, dolly-out</td><td>Aslak + Pitch + gang wagon</td><td>Katrine &amp; Vincent</td><td>~4-5s</td><td>Symétrie autour d'Aslak. Idéalement enchaîné en 1 prise depuis 1.1.</td></tr>
+      <tr><td><strong>1.4</strong></td><td>Gang du <a href="#prop-wagon" class="prop">wagon</a> fixe caméra, hochement synchronisé A</td><td>Plan large statique</td><td>Gang wagon (4-6 pers)</td><td>Katrine &amp; Vincent</td><td>~3-4s</td><td>Wes Anderson. Chorégraphier hochement A. 2-3 répétitions.</td></tr>
+      <tr><td><strong>1.5</strong></td><td><a href="#prop-table-banquet" class="prop">Table de banquet</a> garnie matérialise mid-ground (<a href="#prop-boustifaille" class="prop">fruits + boustifaille</a>), gang fixe caméra, hochement synchronisé B</td><td>Plan large statique (même cadre)</td><td>Gang table (4-6 pers)</td><td>Katrine &amp; Vincent</td><td>~3-4s</td><td>Rythme hochement différent du wagon.</td></tr>
+      <tr><td><strong>1.6</strong></td><td>2 couples de danseurs apparaissent en arrière-plan, valsent lentement</td><td>Plan large statique (même cadre)</td><td>+ 2 couples danseurs</td><td>Katrine &amp; Vincent</td><td>~4-5s</td><td>Profondeur de champ. Premier plan figé.</td></tr>
+      <tr><td><strong>1.7</strong></td><td>Tous figent et regardent ensemble hors-cadre droite — anticipation</td><td>Plan large statique (même cadre)</td><td>Tous (acte 1)</td><td>Katrine &amp; Vincent</td><td>~2-3s</td><td>Charnière narrative. Pitch arrête de jouer.</td></tr>
+      <tr><td><strong>1.8</strong></td><td>Whip pan DROITE → cavaliers au galop traversent le cadre, poussière (<a href="#prop-chevaux" class="prop">chevaux</a>)</td><td>Whip pan + plan large latéral</td><td>Tristan + 1-2 cavaliers</td><td>Katrine &amp; Vincent</td><td>~4-5s</td><td>Chevaux Tristan. Whip handheld OU simulé au montage.</td></tr>
+      <tr><td><strong>1.9</strong></td><td>Whip pan GAUCHE → cluster performers : Mishka jongle, Jesse spin, Laurent stretch</td><td>Whip pan + plan moyen cluster</td><td>Mishka + Jesse + Laurent</td><td>Katrine &amp; Vincent</td><td>~4-5s</td><td>Énergie compressée. Trois actions parallèles.</td></tr>
+      <tr><td><strong>1.10</strong></td><td>Whip pan retour → Aslak lève le <a href="#prop-gobelets" class="prop">gobelet</a>, demi-sourire complice caméra, pause tenue</td><td>Plan moyen statique</td><td>Aslak</td><td>Katrine &amp; Vincent</td><td>~3-4s</td><td>Beat de silence. Ne pas couper trop vite.</td></tr>
+      <tr><td><strong>1.11</strong></td><td>Cut mystique : <a href="#prop-cristal" class="prop">boule de cristal</a> sur <a href="#prop-tissus" class="prop">tissu coloré</a> drapé, musiciens autour</td><td>Plan moyen + détail cristal</td><td>2-3 musiciens</td><td>Katrine &amp; Vincent</td><td>~2-3s</td><td>Insert rapide.</td></tr>
+      <tr><td><strong>1.12</strong></td><td>Retour Aslak — il baisse le <a href="#prop-gobelets" class="prop">gobelet</a>, déclencheur</td><td>Plan moyen statique</td><td>Aslak</td><td>Katrine &amp; Vincent</td><td>~2s</td><td>Trigger pour le rush.</td></tr>
+      <tr><td><strong>1.13</strong></td><td>Le rush : figures convergent vers la <a href="#prop-table-banquet" class="prop">table</a> de tous côtés du cadre, mains qui se tendent</td><td>Plan large kinetic</td><td>Tous (~12 pers)</td><td>Katrine &amp; Vincent</td><td>~3-4s</td><td>Explosion après le beat tenu.</td></tr>
+      <tr><td><strong>1.14</strong></td><td>Mains qui attrapent <a href="#prop-boustifaille" class="prop">fruits</a>, hydromel versé dans plusieurs <a href="#prop-gobelets" class="prop">gobelets</a> — transition Acte 2</td><td>Plan moyen + détails</td><td>Mains + Aslak</td><td>Katrine &amp; Vincent</td><td>~3-4s</td><td>Transition vers la fête.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTE 2 -->
+  <div class="section-title">ACTE 2 — La fête s'installe (ordre libre)</div>
+  <table class="data">
+    <thead>
+      <tr><th style="width:40px;">Shot</th><th>Description</th><th style="width:100px;">Type de plan</th><th>Cast dans le plan</th><th style="width:90px;">Lieu</th><th style="width:50px;">Durée</th><th>Notes / matériel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>2.1</strong></td><td>Viande qui grille sur le <a href="#prop-feu" class="prop">feu</a></td><td>Gros plan flammes + plan moyen</td><td>(mains de cuisine)</td><td>Jesse &amp; Tristan</td><td>~2-3s</td><td>Golden hour idéal.</td></tr>
+      <tr><td><strong>2.2</strong></td><td>Amis qui rient ensemble</td><td>Plan moyen</td><td>3-4 figurants</td><td>Jesse &amp; Tristan</td><td>~2-3s</td><td>Spontané, capter le réel.</td></tr>
+      <tr><td><strong>2.3</strong></td><td>Mishka jongle (cascade 3 balles)</td><td>Plan moyen + détail mains</td><td>Mishka</td><td>Jesse &amp; Tristan</td><td>~3s</td><td>Lumière douce.</td></tr>
+      <tr><td><strong>2.4</strong></td><td>Musiciens jouent ensemble (<a href="#prop-instruments" class="prop">instruments</a>)</td><td>Plan moyen + détails instruments</td><td>Pitch + 1-2 autres musiciens</td><td>Jesse &amp; Tristan</td><td>~3-4s</td><td>Son direct critique — micro perche.</td></tr>
+      <tr><td><strong>2.5</strong></td><td>Jesse danse, slow-mo</td><td>Plan large + plan moyen</td><td>Jesse</td><td>Jesse &amp; Tristan</td><td>~3-4s</td><td>60-120 fps.</td></tr>
+      <tr><td><strong>2.6</strong></td><td>Jesse <a href="#prop-poi-foulards" class="prop">poi foulard</a>, backlit</td><td>Plan large fond uni</td><td>Jesse</td><td>Jesse &amp; Tristan</td><td>~4-5s</td><td>Mieux de soir, lumière à contre-jour.</td></tr>
+      <tr><td><strong>2.7</strong></td><td>Tout le monde danse autour du <a href="#prop-feu" class="prop">feu</a></td><td>Plan large + plongée drone</td><td>Tous</td><td>Jesse &amp; Tristan</td><td>~4-5s</td><td>Drone si dispo.</td></tr>
+      <tr><td><strong>2.8</strong></td><td>Repas collectif autour de la <a href="#prop-table-banquet" class="prop">table de banquet</a>, plan symétrique</td><td>Plan large bout de table</td><td>Tous (~12)</td><td>Jesse &amp; Tristan</td><td>~4-5s</td><td>Rappel visuel acte 1.</td></tr>
+      <tr><td><strong>2.9</strong></td><td>Tout le monde met la <a href="#prop-table-banquet" class="prop">table</a></td><td>Plan large + timelapse possible</td><td>5-6 figurants</td><td>Jesse &amp; Tristan</td><td>~2-3s</td><td></td></tr>
+      <tr><td><strong>2.10</strong></td><td>Set-up de party (<a href="#prop-lanternes" class="prop">lanternes, bancs</a>)</td><td>Plan moyen + détails mains</td><td>3-4 figurants</td><td>Jesse &amp; Tristan</td><td>~2-3s</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTE 3 -->
+  <div class="section-title">ACTE 3 — L'apogée (de soir / golden hour)</div>
+  <table class="data">
+    <thead>
+      <tr><th style="width:40px;">Shot</th><th>Description</th><th style="width:100px;">Type de plan</th><th>Cast dans le plan</th><th style="width:90px;">Lieu</th><th style="width:50px;">Durée</th><th>Notes / matériel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>3.1</strong></td><td>Jeu du <a href="#prop-tisons" class="prop">tison</a> (passe le <a href="#prop-feu" class="prop">feu</a>)</td><td>Plan moyen + détails feu</td><td>2 figurants</td><td>Jesse &amp; Tristan</td><td>~3-4s</td><td>De soir.</td></tr>
+      <tr><td><strong>3.2</strong></td><td>Jeu de la <a href="#prop-tisons" class="prop">bûche</a></td><td>Plan large action</td><td>2-3 figurants</td><td>Jesse &amp; Tristan</td><td>~3s</td><td></td></tr>
+      <tr><td><strong>3.3</strong></td><td>Combat de <a href="#prop-sabres" class="prop">sabre</a> choré</td><td>Plan moyen + plongée drone</td><td>2 figurants</td><td>Jesse &amp; Tristan</td><td>~4-5s</td><td>Choré + sécurité.</td></tr>
+      <tr><td><strong>3.4</strong></td><td>Tout le monde danse autour du <a href="#prop-feu" class="prop">feu</a>, slow-mo</td><td>Plan large + slow-mo</td><td>Tous</td><td>Jesse &amp; Tristan</td><td>~4-5s</td><td></td></tr>
+      <tr><td><strong>3.5</strong></td><td>Tout le monde rit (montage portraits)</td><td>Gros plans visages successifs</td><td>Tous (4-5 cuts)</td><td>Jesse &amp; Tristan</td><td>~3-4s</td><td></td></tr>
+      <tr><td><strong>3.6</strong></td><td>Laurent backflip</td><td>Plan large + slow-mo</td><td>Laurent</td><td>Jesse &amp; Tristan</td><td>~2-3s</td><td>1-2 prises max. Sécurité.</td></tr>
+      <tr><td><strong>3.7</strong></td><td>Monde joue avec <a href="#prop-feu" class="prop">feu</a> (poi flamme, breath)</td><td>Plans larges + détails</td><td>2-3 figurants</td><td>Jesse &amp; Tristan</td><td>~4-5s</td><td>Permis feu OK. Extincteur à portée.</td></tr>
+      <tr><td><strong>3.8</strong></td><td>Acro humaine (pyramide / grimpe)</td><td>Plan large</td><td>4-6 figurants</td><td>Jesse &amp; Tristan</td><td>~3s</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ÉTABLISSANTS -->
+  <div class="section-title">Plans établissants (à intercaler au montage)</div>
+  <table class="data">
+    <thead>
+      <tr><th style="width:40px;">Shot</th><th>Description</th><th style="width:100px;">Type de plan</th><th>Cast dans le plan</th><th style="width:90px;">Lieu</th><th style="width:50px;">Durée</th><th>Notes / matériel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>E.0</strong></td><td>Musiciens en formation triangle s'avancent (vue drone plongeante)</td><td>Aérien / drone</td><td>3-5 musiciens</td><td>Katrine &amp; Vincent</td><td>~4-5s</td><td>Alex pilote drone. Intercut possible n'importe où dans Acte 1.</td></tr>
+      <tr><td><strong>E.1</strong></td><td><a href="#prop-caravane" class="prop">Caravane Mont-Tremblant</a> ensemble + détails (bois, roues, lanterne, intérieur)</td><td>Plan large + détails</td><td>—</td><td>Katrine &amp; Vincent</td><td>~5-6s</td><td>Caravane sur place le matin.</td></tr>
+      <tr><td><strong>E.2</strong></td><td>Coucher de soleil sur le site</td><td>Plan large silhouettes</td><td>—</td><td>Jesse &amp; Tristan</td><td>~3-4s</td><td>Fenêtre 7:42-8:42 PM.</td></tr>
+    </tbody>
+  </table>
+
+  <footer class="page-footer">
+    Shot list — Caravanes et Saltimbanques · 32 shots numérotés (Acte 1 : 14 · Acte 2 : 10 · Acte 3 : 8) + 3 établissants · ~90s nouveau footage + 30s archives = 120s
+  </footer>
+
+  <div class="step-nav">
+    <button class="prev" data-goto="callsheet">← Précédent : Call sheet</button>
+    <button data-goto="storyboard">Suivant : Storyboard →</button>
+  </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- ===================== 3. STORYBOARD ========================== -->
+<!-- ============================================================== -->
+<div class="page hidden" id="page-storyboard" contenteditable="true">
+
+  <div class="title-block" style="margin-bottom: 12px;">
+    <div class="knight" style="font-size: 24px;">♞</div>
+    <div class="title" style="font-family: Georgia, serif; font-size: 20px;">Storyboard — Caravanes et Saltimbanques</div>
+    <div class="date" style="font-family: Georgia, serif; font-size: 13px; color: #444;">Vignettes Nano Banana · Tournage 30-31 mai 2026</div>
+  </div>
+
+  <div class="box" style="margin-bottom: 10px; background: #fff8e1; border-color: #e0c060;">
+    <strong>Comment remplir les vignettes (workflow manuel) :</strong>
+    <ol style="margin: 6px 0 0 18px; padding: 0; font-size: 10px; line-height: 1.6;">
+      <li>Pour chaque vignette, génère l'image dans <strong>l'outil de ton choix</strong> (Google AI Studio, Midjourney, ChatGPT, DALL-E) en utilisant le style guide ci-dessous + la description de la scène.</li>
+      <li>OU dessine à la main et photographie / scan.</li>
+      <li>Pour insérer une image dans une vignette : <strong>clique dans la zone hachurée, puis colle (Cmd+V)</strong>. L'image est sauvegardée automatiquement dans Firestore et visible par toute l'équipe.</li>
+      <li>Tu peux aussi éditer le titre et la description sous chaque vignette directement.</li>
+    </ol>
+    <p style="margin: 8px 0 0 0; font-size: 10px; color: #555;"><strong>Style guide à coller dans l'outil de génération :</strong> <em>Black and white pencil sketch storyboard, loose hand-drawn lines, minimal hatching shading, 16:9 cinema frame with thin black border. Rural Quebec late spring forest clearing. Medieval saltimbanque festival — wooden wagons, hand-stitched clothing, lanterns, folk instruments. Wes Anderson symmetry meets The Dead South folk-dark. Keep characters and style consistent across all frames.</em></p>
+  </div>
+
+  <div class="box" style="margin-bottom: 10px; background: #f0f4ff; border-color: #6080c0;">
+    <strong>🎬 Références aesthétiques</strong> — l'ambiance visuelle à viser au tournage et au montage :
+    <ul style="margin: 6px 0 0 18px; padding: 0; font-size: 10px; line-height: 1.5;">
+      <li><a href="https://www.youtube.com/watch?v=YbBU06irWT8" target="_blank">Otava Yo — Про Ивана Groove</a> (folk russe, choré synchronisée, costumes traditionnels théâtraux, énergie comique-sérieuse)</li>
+      <li><strong>The Dead South — In Hell I'll Be in Good Company</strong> (folk dark, N&amp;B / désaturé, costumes vécus suspenders, choré rythmique stomp-clap, intensité brute)</li>
+      <li><strong>Mumford &amp; Sons — Gentlemen of the Road</strong> (festival itinérant, grands espaces, vibe communautaire, caravane qui voyage)</li>
+    </ul>
+    <p style="margin: 6px 0 0 0; font-size: 10px; color: #555;"><em>Common thread :</em> folk théâtral, choré synchronisée, palette désaturée qui s'ouvre vers la couleur, costumes vécus pas pristine, énergie collective brute. Le concept <strong>B&amp;W → couleur</strong> au montage suit cette progression (intro N&amp;B intense → jour qui s'illumine → nuit feu chaleureuse).</p>
+  </div>
+
+  <!-- ACTE 1 -->
+  <div class="section-title">ACTE 1 — Le reveal (Aslak + Wes Anderson + whip pans)</div>
+  <div class="storyboard-grid">
+    <div class="vignette">
+      <div class="img-area">Coller image (1.1)<br>Mead pour CU</div>
+      <div class="vig-meta"><div class="vig-id">1.1 — Mead pour CU</div><div class="vig-desc">Gros plan mains qui versent hydromel doré du baril en bois dans gobelet d'argent.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.2)<br>Dolly-out, reveal Aslak</div>
+      <div class="vig-meta"><div class="vig-id">1.2 — Reveal Aslak</div><div class="vig-desc">Dolly-out lent. Aslak debout derrière le baril, centre de clairière.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.3)<br>Pitch L + wagon R</div>
+      <div class="vig-meta"><div class="vig-id">1.3 — Pitch + wagon</div><div class="vig-desc">Dolly continue. Pitch entre gauche, s'assoit, joue. Wagon roule en droite.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.4)<br>Wagon hochement A</div>
+      <div class="vig-meta"><div class="vig-id">1.4 — Wagon nod A</div><div class="vig-desc">Gang du wagon fixe caméra, hochement synchronisé A.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.5)<br>Table hochement B</div>
+      <div class="vig-meta"><div class="vig-id">1.5 — Table nod B</div><div class="vig-desc">Table victuailles apparaît, gang fixe caméra, hochement B distinct.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.6)<br>Danseurs background</div>
+      <div class="vig-meta"><div class="vig-id">1.6 — Danseurs background</div><div class="vig-desc">2 couples valsent en arrière-plan. Premier plan figé.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.7)<br>Regard collectif</div>
+      <div class="vig-meta"><div class="vig-id">1.7 — Regard collectif</div><div class="vig-desc">Tous figent, regardent ensemble hors-cadre droite. Anticipation.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.8)<br>Whip pan → chevaux</div>
+      <div class="vig-meta"><div class="vig-id">1.8 — Whip pan droite, chevaux</div><div class="vig-desc">Whip pan droite. Cavaliers au galop traversent, poussière, vitesse.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.9)<br>Whip pan → performers</div>
+      <div class="vig-meta"><div class="vig-id">1.9 — Whip pan gauche, performers</div><div class="vig-desc">Whip pan gauche. Mishka jongle, Jesse spin, Laurent stretch.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.10)<br>Aslak pause</div>
+      <div class="vig-meta"><div class="vig-id">1.10 — Aslak pause</div><div class="vig-desc">Whip retour. Aslak lève gobelet, demi-sourire caméra, beat tenu.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.11)<br>Boule de cristal</div>
+      <div class="vig-meta"><div class="vig-id">1.11 — Boule de cristal</div><div class="vig-desc">Cut mystique rapide. Tissu drapé, cristal, musiciens autour.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.12)<br>Aslak baisse gobelet</div>
+      <div class="vig-meta"><div class="vig-id">1.12 — Aslak release</div><div class="vig-desc">Retour Aslak. Il baisse le gobelet. Déclencheur.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.13)<br>Le rush</div>
+      <div class="vig-meta"><div class="vig-id">1.13 — Le rush</div><div class="vig-desc">Figures convergent vers table de tous côtés du cadre. Mains se tendent.</div></div>
+    </div>
+    <div class="vignette">
+      <div class="img-area">Coller image (1.14)<br>First grabs</div>
+      <div class="vig-meta"><div class="vig-id">1.14 — First grabs</div><div class="vig-desc">Mains attrapent fruits, hydromel versé en série. Transition Acte 2.</div></div>
+    </div>
+  </div>
+
+  <!-- ACTE 2 -->
+  <div class="section-title">ACTE 2 — La fête</div>
+  <div class="storyboard-grid">
+    <div class="vignette"><div class="img-area">Coller image (2.1)</div><div class="vig-meta"><div class="vig-id">2.1 — Viande au feu</div><div class="vig-desc">Gros plan flammes + viande qui grille.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.2)</div><div class="vig-meta"><div class="vig-id">2.2 — Rires</div><div class="vig-desc">Amis qui rient ensemble.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.3)</div><div class="vig-meta"><div class="vig-id">2.3 — Mishka jongle</div><div class="vig-desc">Cascade 3 balles, mid-motion.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.4)</div><div class="vig-meta"><div class="vig-id">2.4 — Musiciens</div><div class="vig-desc">Musiciens jouent ensemble.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.5)</div><div class="vig-meta"><div class="vig-id">2.5 — Jesse danse</div><div class="vig-desc">Jesse mid-spin, slow-mo.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.6)</div><div class="vig-meta"><div class="vig-id">2.6 — Poi foulard</div><div class="vig-desc">Jesse, foulards en arcs, backlit.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.7)</div><div class="vig-meta"><div class="vig-id">2.7 — Tous dansent</div><div class="vig-desc">Cercle autour du feu, plongée.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.8)</div><div class="vig-meta"><div class="vig-id">2.8 — Repas collectif</div><div class="vig-desc">Plan large symétrique, longue table.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.9)</div><div class="vig-meta"><div class="vig-id">2.9 — Mise de table</div><div class="vig-desc">Mains qui dressent la table.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (2.10)</div><div class="vig-meta"><div class="vig-id">2.10 — Set-up party</div><div class="vig-desc">Lanternes, bancs, préparation.</div></div></div>
+  </div>
+
+  <!-- ACTE 3 -->
+  <div class="section-title">ACTE 3 — L'apogée</div>
+  <div class="storyboard-grid">
+    <div class="vignette"><div class="img-area">Coller image (3.1)</div><div class="vig-meta"><div class="vig-id">3.1 — Jeu du tison</div><div class="vig-desc">2 figurants passent le feu, nuit.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.2)</div><div class="vig-meta"><div class="vig-id">3.2 — Jeu bûche</div><div class="vig-desc">Action collective autour d'une bûche.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.3)</div><div class="vig-meta"><div class="vig-id">3.3 — Combat de sabre</div><div class="vig-desc">Sabres qui se croisent.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.4)</div><div class="vig-meta"><div class="vig-id">3.4 — Danse collective</div><div class="vig-desc">Plan large autour du foyer, nuit.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.5)</div><div class="vig-meta"><div class="vig-id">3.5 — Rires (portraits)</div><div class="vig-desc">Montage 4-5 gros plans visages.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.6)</div><div class="vig-meta"><div class="vig-id">3.6 — Backflip Laurent</div><div class="vig-desc">Laurent inversé en l'air, slow-mo.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.7)</div><div class="vig-meta"><div class="vig-id">3.7 — Feu (poi/breath)</div><div class="vig-desc">Long-exposure feel, light trails.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (3.8)</div><div class="vig-meta"><div class="vig-id">3.8 — Acro humaine</div><div class="vig-desc">Pyramide humaine ou grimpe.</div></div></div>
+  </div>
+
+  <!-- ÉTABLISSANTS -->
+  <div class="section-title">Plans établissants</div>
+  <div class="storyboard-grid">
+    <div class="vignette"><div class="img-area">Coller image (E.0)</div><div class="vig-meta"><div class="vig-id">E.0 — Drone triangle</div><div class="vig-desc">Vue plongeante drone. Musiciens en formation triangle. Intercut Acte 1.</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (E.1)</div><div class="vig-meta"><div class="vig-id">E.1 — Caravane Mont-Tremblant</div><div class="vig-desc">Plan d'ensemble + détails (bois, roues, lanterne).</div></div></div>
+    <div class="vignette"><div class="img-area">Coller image (E.2)</div><div class="vig-meta"><div class="vig-id">E.2 — Coucher soleil</div><div class="vig-desc">Silhouettes festival contre ciel orange.</div></div></div>
+  </div>
+
+  <footer class="page-footer">
+    Storyboard — Caravanes et Saltimbanques · 32 vignettes (Acte 1 : 14 · Acte 2 : 10 · Acte 3 : 8) + 3 établissants
+  </footer>
+
+  <div class="step-nav">
+    <button class="prev" data-goto="shotlist">← Précédent : Shot list</button>
+    <button data-goto="callsheet">↺ Retour : Call sheet</button>
+  </div>
+</div>
+
+<script type="module">
+  // ============================================================
+  //  FMM Call Sheet — Firestore-backed collaborative editor
+  //  Storage: Firestore /production-docs/jour-1
+  //  Access:  Public read/write (gated only by URL obscurity)
+  // ============================================================
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import {
+    getFirestore, doc, onSnapshot, setDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+  // Firebase API key is public by design — security lives in firestore.rules.
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgxe5z1axewDK6Z1C1E2kIhsSJs-cLZ08",
+    authDomain: "le-salon-des-inconnus.firebaseapp.com",
+    projectId: "le-salon-des-inconnus",
+    storageBucket: "le-salon-des-inconnus.firebasestorage.app",
+    messagingSenderId: "62106165238",
+    appId: "1:62106165238:web:5459d7a6ad454b12ac71d7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const DOC_REF = doc(db, 'production-docs', 'jour-1');
+  // Per-tab id so we can suppress our own snapshot echoes.
+  const CLIENT_ID = Math.random().toString(36).slice(2) + '-' + Date.now();
+
+  const sheets = ['callsheet', 'shotlist', 'storyboard'];
+  const status = document.getElementById('status');
+
+  // ---------- Helpers: read / write the page's HTML ----------
+  function getAllPagesData() {
+    const data = {};
+    sheets.forEach(name => {
+      const el = document.getElementById('page-' + name);
+      if (el) data[name + '_html'] = el.innerHTML;
+    });
+    return data;
+  }
+
+  function applyPagesData(data) {
+    sheets.forEach(name => {
+      const el = document.getElementById('page-' + name);
+      if (el && typeof data[name + '_html'] === 'string') {
+        el.innerHTML = data[name + '_html'];
+      }
+    });
+  }
+
+  // ---------- Capture defaults BEFORE Firestore overwrites the DOM ----------
+  // These come from the static HTML shipped with this file. Used for Reset
+  // and as the initial seed when the Firestore doc doesn't exist yet.
+  const DEFAULTS = getAllPagesData();
+
+  // ---------- Page navigation ----------
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    const target = document.getElementById('page-' + name);
+    if (target) target.classList.remove('hidden');
+    document.querySelectorAll('.page-nav button').forEach(b => {
+      b.classList.toggle('active', b.dataset.page === name);
+    });
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('.page-nav button').forEach(btn => {
+    btn.addEventListener('click', () => showPage(btn.dataset.page));
+  });
+  // Event delegation so [data-goto] buttons inside replaced HTML keep working.
+  document.addEventListener('click', (e) => {
+    const goto = e.target.closest('[data-goto]');
+    if (goto) showPage(goto.dataset.goto);
+  });
+
+  // ---------- Cross-page prop links: jump to dépouillement entry ----------
+  // Click on a .prop link → switch to call sheet page, scroll to target, flash highlight.
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a.prop');
+    if (!link) return;
+    e.preventDefault();
+    const href = link.getAttribute('href') || '';
+    const id = href.startsWith('#') ? href.slice(1) : href;
+    if (!id) return;
+    showPage('callsheet');
+    // Wait a frame for the page to become visible, then scroll + flash
+    requestAnimationFrame(() => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.remove('flash');
+      // force reflow then re-add to retrigger the transition
+      void target.offsetWidth;
+      target.style.background = '#ffe066';
+      setTimeout(() => { target.style.background = ''; }, 1800);
+    });
+  });
+
+  function flashStatus(msg, isError) {
+    if (!status) return;
+    status.textContent = msg;
+    status.style.color = isError ? '#f88' : '#8f8';
+    setTimeout(() => { status.textContent = ''; }, 2500);
+  }
+
+  // ---------- Firestore subscription (real-time sync) ----------
+  let isInitialLoad = true;
+  let suppressNextSnapshot = false;
+
+  onSnapshot(DOC_REF, async (snap) => {
+    if (suppressNextSnapshot) { suppressNextSnapshot = false; return; }
+    if (snap.exists()) {
+      const data = snap.data();
+      // Ignore our own writes coming back (echo)
+      if (data.lastClientId === CLIENT_ID && !isInitialLoad) return;
+      applyPagesData(data);
+      flashStatus(isInitialLoad ? '✓ Chargé depuis Firestore' : '↻ Mise à jour distante');
+      isInitialLoad = false;
+    } else if (isInitialLoad) {
+      // First visitor ever — seed the doc from the static defaults
+      try {
+        suppressNextSnapshot = true;
+        await setDoc(DOC_REF, {
+          ...DEFAULTS,
+          updatedAt: serverTimestamp(),
+          lastClientId: CLIENT_ID
+        });
+        flashStatus('✓ Document initialisé');
+      } catch (e) {
+        flashStatus('⚠️ Init échec : ' + e.message, true);
+      }
+      isInitialLoad = false;
+    }
+  }, (err) => {
+    flashStatus('⚠️ Firestore: ' + err.message, true);
+  });
+
+  // ---------- Debounced write to Firestore ----------
+  let saveTimer;
+  function queueSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async () => {
+      try {
+        const data = getAllPagesData();
+        suppressNextSnapshot = true;
+        await setDoc(DOC_REF, {
+          ...data,
+          updatedAt: serverTimestamp(),
+          lastClientId: CLIENT_ID
+        }, { merge: true });
+        flashStatus('💾 Synchronisé');
+      } catch (e) {
+        flashStatus('⚠️ Sync échec : ' + e.message, true);
+      }
+    }, 800);
+  }
+  document.querySelectorAll('.page').forEach(p => p.addEventListener('input', queueSave));
+
+  // ---------- Cursor tracking (for add/delete row + vignette buttons) ----------
+  function getCurrentRow() {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return null;
+    let node = sel.anchorNode;
+    if (node && node.nodeType === Node.TEXT_NODE) node = node.parentNode;
+    while (node && node.nodeName !== 'TR') node = node.parentNode;
+    return node;
+  }
+  function getCurrentTable() {
+    const row = getCurrentRow();
+    return row ? row.closest('table.data') : null;
+  }
+  function getCurrentVignette() {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return null;
+    let node = sel.anchorNode;
+    if (node && node.nodeType === Node.TEXT_NODE) node = node.parentNode;
+    while (node && (!node.classList || !node.classList.contains('vignette'))) {
+      node = node.parentNode;
+      if (!node || node === document.body) return null;
+    }
+    return node;
+  }
+  function getCurrentGrid() {
+    const v = getCurrentVignette();
+    return v ? v.closest('.storyboard-grid') : null;
+  }
+
+  document.addEventListener('selectionchange', () => {
+    document.querySelectorAll('table.data tr.row-focus').forEach(tr => tr.classList.remove('row-focus'));
+    const row = getCurrentRow();
+    if (row && row.closest('table.data')) row.classList.add('row-focus');
+  });
+
+  // ---------- Add / delete row ----------
+  document.getElementById('btn-add-row').addEventListener('click', () => {
+    const table = getCurrentTable();
+    if (!table) { alert('Clique d\'abord dans une cellule de la table où tu veux ajouter une ligne.'); return; }
+    const tbody = table.querySelector('tbody');
+    const last = tbody.lastElementChild;
+    const clone = last.cloneNode(true);
+    clone.querySelectorAll('td').forEach(td => { td.innerHTML = '&nbsp;'; });
+    tbody.appendChild(clone);
+    queueSave();
+    flashStatus('✓ Ligne ajoutée');
+    const firstCell = clone.querySelector('td');
+    if (firstCell) {
+      const range = document.createRange();
+      range.selectNodeContents(firstCell);
+      range.collapse(true);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  });
+
+  document.getElementById('btn-del-row').addEventListener('click', () => {
+    const row = getCurrentRow();
+    if (!row || !row.closest('table.data')) { alert('Clique d\'abord dans une cellule de la ligne à supprimer.'); return; }
+    const txt = row.textContent.trim().slice(0, 60);
+    if (confirm('Supprimer cette ligne ?\n\n"' + txt + '..."')) {
+      row.remove();
+      queueSave();
+      flashStatus('✓ Ligne supprimée');
+    }
+  });
+
+  // ---------- Move row up / down ----------
+  function moveRow(direction) {
+    const row = getCurrentRow();
+    if (!row || !row.closest('table.data')) {
+      alert('Clique d\'abord dans une cellule de la ligne à déplacer.');
+      return;
+    }
+    const sibling = direction === 'up' ? row.previousElementSibling : row.nextElementSibling;
+    if (!sibling) {
+      flashStatus(direction === 'up' ? '⚠️  Déjà en haut' : '⚠️  Déjà en bas', true);
+      return;
+    }
+    // Preserve cursor target cell index
+    const sel = window.getSelection();
+    let cellIndex = 0;
+    if (sel.anchorNode) {
+      let cell = sel.anchorNode;
+      if (cell.nodeType === Node.TEXT_NODE) cell = cell.parentNode;
+      while (cell && cell.nodeName !== 'TD') cell = cell.parentNode;
+      if (cell) cellIndex = Array.from(row.children).indexOf(cell);
+    }
+    if (direction === 'up') {
+      row.parentNode.insertBefore(row, sibling);
+    } else {
+      row.parentNode.insertBefore(sibling, row);
+    }
+    // Restore cursor in the same cell (now at new position)
+    const targetCell = row.children[cellIndex] || row.children[0];
+    if (targetCell) {
+      const range = document.createRange();
+      range.selectNodeContents(targetCell);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    queueSave();
+    flashStatus(direction === 'up' ? '↑ Ligne montée' : '↓ Ligne descendue');
+  }
+  document.getElementById('btn-up-row').addEventListener('click', () => moveRow('up'));
+  document.getElementById('btn-down-row').addEventListener('click', () => moveRow('down'));
+
+  // ---------- Add / delete vignette ----------
+  document.getElementById('btn-add-vig').addEventListener('click', () => {
+    const grid = getCurrentGrid();
+    if (!grid) { alert('Clique d\'abord dans une vignette du storyboard (section où tu veux ajouter).'); return; }
+    const last = grid.lastElementChild;
+    const clone = last.cloneNode(true);
+    clone.querySelector('.img-area').innerHTML = 'Coller image';
+    clone.querySelector('.vig-id').textContent = 'X.X — Nouveau plan';
+    clone.querySelector('.vig-desc').textContent = 'Description du plan…';
+    grid.appendChild(clone);
+    queueSave();
+    flashStatus('✓ Vignette ajoutée');
+  });
+
+  document.getElementById('btn-del-vig').addEventListener('click', () => {
+    const v = getCurrentVignette();
+    if (!v) { alert('Clique d\'abord dans la vignette à supprimer.'); return; }
+    const id = v.querySelector('.vig-id') ? v.querySelector('.vig-id').textContent : 'cette vignette';
+    if (confirm('Supprimer ' + id + ' ?')) {
+      v.remove();
+      queueSave();
+      flashStatus('✓ Vignette supprimée');
+    }
+  });
+
+  // ---------- Save HTML (local download, PDF backup) ----------
+  document.getElementById('btn-save').addEventListener('click', () => {
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'call-sheet-jour-1.html';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    flashStatus('✓ Téléchargé localement');
+  });
+
+  // ---------- Print ----------
+  document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+  // ---------- Reset (rewrite Firestore with the static defaults) ----------
+  document.getElementById('btn-reset').addEventListener('click', async () => {
+    if (!confirm('Re-initialiser le call sheet avec le contenu par défaut ?\n\n⚠️ Toutes les modifications de tout le monde seront perdues.')) return;
+    try {
+      suppressNextSnapshot = true;
+      await setDoc(DOC_REF, {
+        ...DEFAULTS,
+        updatedAt: serverTimestamp(),
+        lastClientId: CLIENT_ID
+      });
+      applyPagesData(DEFAULTS);
+      flashStatus('✓ Re-initialisé');
+    } catch (e) {
+      flashStatus('⚠️ Reset échec : ' + e.message, true);
+    }
+  });
+
+  // ---------- Cmd/Ctrl+S to download local copy ----------
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+      e.preventDefault();
+      document.getElementById('btn-save').click();
+    }
+  });
+
+  // ---------- Paste image into vignette (becomes inline data URL) ----------
+  // Event delegation so this keeps working after Firestore replaces innerHTML.
+  document.addEventListener('paste', (e) => {
+    const area = e.target.closest && e.target.closest('.img-area');
+    if (!area) return;
+    const items = (e.clipboardData || window.clipboardData).items;
+    for (const item of items) {
+      if (item.type.indexOf('image') === 0) {
+        e.preventDefault();
+        const blob = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          area.innerHTML = '<img src="' + evt.target.result + '" alt="vignette">';
+          queueSave();
+          flashStatus('✓ Image collée');
+        };
+        reader.readAsDataURL(blob);
+        return;
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
