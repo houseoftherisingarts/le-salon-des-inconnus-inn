@@ -1069,21 +1069,57 @@
     const storyEl = document.getElementById('page-storyboard');
     if (!storyEl) return;
     if (!AI_KEYWORDS_RE.test(storyEl.innerHTML)) return;
-    // The instructions box is the first .box with the yellow bg in the storyboard page.
-    const boxes = storyEl.querySelectorAll('.box');
     let cleaned = false;
-    boxes.forEach((box) => {
-      if (AI_KEYWORDS_RE.test(box.innerHTML)) {
-        // Heuristic: the yellow instructions box mentions "Comment" or "vignettes" or "méthodes"
-        if (/vignette|méthode|coller|remplir/i.test(box.textContent)) {
-          box.innerHTML = CLEAN_INSTRUCTIONS_BOX;
-          box.setAttribute('style', 'margin-bottom: 10px; background: #fff8e1; border-color: #e0c060;');
-          cleaned = true;
-        }
+
+    // (a) Clean the title-block date line — "Vignettes Nano Banana · Tournage..."
+    const dateEl = storyEl.querySelector('.title-block .date');
+    if (dateEl && AI_KEYWORDS_RE.test(dateEl.innerHTML)) {
+      // Strip any "Vignettes <brand> · " prefix while preserving the rest.
+      let txt = dateEl.innerHTML;
+      txt = txt.replace(/Vignettes\s+(Nano Banana|Midjourney|DALL-E|ChatGPT|Google AI Studio|Gemini)\s*·\s*/gi, '');
+      txt = txt.replace(/Vignettes générées via [^.<·]+(\.|·|$)/gi, '');
+      dateEl.innerHTML = txt;
+      cleaned = true;
+    }
+
+    // (b) Clean the footer line (if any)
+    const footerEl = storyEl.querySelector('.page-footer');
+    if (footerEl && AI_KEYWORDS_RE.test(footerEl.innerHTML)) {
+      footerEl.innerHTML = footerEl.innerHTML
+        .replace(/·\s*Vignettes générées via [^·.]+/gi, '')
+        .replace(/\(Gemini[^)]*\)/gi, '')
+        .replace(/\(Nano Banana[^)]*\)/gi, '');
+      cleaned = true;
+    }
+
+    // (c) Replace the entire yellow instructions box if it still mentions AI
+    storyEl.querySelectorAll('.box').forEach((box) => {
+      if (AI_KEYWORDS_RE.test(box.innerHTML)
+          && /vignette|méthode|coller|remplir/i.test(box.textContent)) {
+        box.innerHTML = CLEAN_INSTRUCTIONS_BOX;
+        box.setAttribute('style', 'margin-bottom: 10px; background: #fff8e1; border-color: #e0c060;');
+        cleaned = true;
       }
     });
+
+    // (d) Last-resort: if anything still mentions AI brands, surgically strip
+    // those tokens from the storyboard innerHTML.
+    if (AI_KEYWORDS_RE.test(storyEl.innerHTML)) {
+      storyEl.innerHTML = storyEl.innerHTML
+        .replace(/Vignettes\s+Nano Banana\s*·\s*/gi, '')
+        .replace(/\bNano Banana\b/gi, '')
+        .replace(/\bGoogle AI Studio\b/gi, '')
+        .replace(/\bMidjourney\b/gi, '')
+        .replace(/\bDALL-E\b/gi, '')
+        .replace(/\bChatGPT\b/gi, '')
+        .replace(/\bGemini\b/gi, '')
+        .replace(/prompts-nano-banana(\.md)?/gi, '')
+        .replace(/générateur AI/gi, 'outil');
+      cleaned = true;
+    }
+
     if (cleaned) {
-      flashStatus('✓ Instructions nettoyées (mentions AI retirées)');
+      flashStatus('✓ Mentions AI retirées du storyboard');
       queueSave();
     }
   }
