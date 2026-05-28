@@ -46,7 +46,7 @@
   .title-block .knight { font-size: 24px; margin-bottom: 4px; line-height: 1; }
   .title-block .title { font-family: "Georgia", "Times New Roman", serif; font-size: 18px; font-weight: 400; line-height: 1.2; }
   .title-block .date { font-family: "Georgia", "Times New Roman", serif; font-size: 14px; color: #444; margin-top: 4px; }
-  .mid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 8px; margin-top: 8px; }
+  .mid { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr; gap: 8px; margin-top: 8px; }
   .locations { font-size: 10px; }
   .locations h3 { font-size: 10px; margin-bottom: 6px; color: #333; text-transform: uppercase; letter-spacing: 0.5px; }
   .locations .loc { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #ddd; }
@@ -54,11 +54,12 @@
   .locations .loc-label { font-weight: 600; }
   .locations .loc-time { color: #777; font-size: 9px; }
   .locations a { color: #333; text-decoration: underline; }
-  .call-block { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .call-circle { width: 130px; height: 130px; border: 2px solid #222; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .call-circle .label { font-size: 11px; letter-spacing: 1px; color: #555; }
-  .call-circle .time { font-family: "Georgia", "Times New Roman", serif; font-size: 28px; font-weight: 700; line-height: 1; }
-  .call-circle .setup { font-size: 9px; color: #555; margin-top: 4px; }
+  .call-block { display: flex; flex-direction: row; align-items: center; justify-content: space-around; gap: 6px; padding: 6px; }
+  .call-circle { width: 118px; height: 118px; border: 2px solid #222; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4px; }
+  .call-circle .label { font-size: 9px; letter-spacing: 0.5px; color: #555; font-weight: 600; text-transform: uppercase; line-height: 1.1; }
+  .call-circle .time { font-family: "Georgia", "Times New Roman", serif; font-size: 22px; font-weight: 700; line-height: 1; margin: 3px 0; }
+  .call-circle .addr { font-size: 7.5px; color: #444; line-height: 1.15; margin-top: 2px; }
+  .call-circle .setup { font-size: 8px; color: #888; margin-top: 2px; }
   .synopsis h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #333; margin-bottom: 4px; }
   .synopsis p { margin: 0 0 4px 0; line-height: 1.35; }
   footer.page-footer { text-align: center; color: #888; font-size: 9px; margin-top: 12px; border-top: 1px solid #ddd; padding-top: 6px; }
@@ -245,9 +246,16 @@
     </div>
     <div class="box call-block">
       <div class="call-circle">
-        <div class="label">CALL</div>
+        <div class="label">Crew + organisateurs</div>
         <div class="time">9:00 AM</div>
-        <div class="setup">Setup matériel : 8:30 AM</div>
+        <div class="addr">1 Ch. du Crique à la Roche<br>Montpellier QC</div>
+        <div class="setup">Setup 8:30</div>
+      </div>
+      <div class="call-circle">
+        <div class="label">Figurants</div>
+        <div class="time">3:00 PM</div>
+        <div class="addr">33 Ch. Baie de l'Ours<br>Montpellier QC</div>
+        <div class="setup">Wrap 20h</div>
       </div>
     </div>
     <div class="box synopsis">
