@@ -7,7 +7,7 @@
   @page { size: Letter; margin: 0.5in; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10px; color: #111; background: #f5f5f5; }
-  body { padding: 16px 16px 120px 16px; }
+  body { padding: 60px 16px 80px 16px; }
 
   .page { max-width: 1100px; margin: 0 auto 24px auto; background: #fff; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
   .page.hidden { display: none; }
@@ -90,13 +90,13 @@
   .vignette .vig-meta .vig-desc { color: #555; margin-top: 3px; line-height: 1.3; }
 
   /* ===== EDIT MODE UI ===== */
-  .top-bar {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
-    background: #1a1a1a; color: #fff;
-    display: flex; flex-direction: column;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+  /* Wrapper is no longer fixed — we split the two bars to opposite edges. */
+  .top-bar { display: contents; }
+  .page-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; gap: 0; background: #0d0d0d; padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
-  .page-nav { display: flex; gap: 0; background: #0d0d0d; padding: 0; }
   .page-nav button {
     flex: 1; background: transparent; color: #aaa; border: none; padding: 10px 12px;
     cursor: pointer; font-size: 12px; font-family: inherit; border-bottom: 3px solid transparent;
@@ -107,9 +107,11 @@
   .page-nav button.active .step { color: #2a7a2a; }
 
   .edit-toolbar {
-    background: #1a1a1a; padding: 6px 12px;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+    background: #1a1a1a; padding: 6px 12px; color: #fff;
     display: flex; gap: 6px; align-items: center; justify-content: center; flex-wrap: wrap;
     font-size: 11px; border-top: 1px solid #333;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
   }
   .edit-toolbar .label { color: #888; margin-right: 4px; font-size: 10px; }
   .edit-toolbar button {
