@@ -16,7 +16,7 @@ interface ShotRow  { id: string; code: string; act: string; description: string;
 
 interface DayForecast { date: string; summary: string; }
 
-interface CallSheetDoc {
+export interface CallSheetDoc {
     id: string;
     title: string;
     dateStart: string;          // ISO yyyy-mm-dd
@@ -36,6 +36,8 @@ interface CallSheetDoc {
     notes: string;
     weather: DayForecast[];
     weatherUpdated: number | null;
+    /** When true, the sheet is readable without auth via /c/{uid}/{id}. */
+    shareEnabled?: boolean;
     isDefault?: boolean;
     createdAt?: any;
     updatedAt?: any;
@@ -154,13 +156,15 @@ function blankDoc(id: string, title: string, language: 'EN' | 'FR', tpl: Templat
         locationName: '', address: '', lat: null, lng: null, tz: 'auto',
         generalCall: '', skin: 'studio',
         scenes: [], cast: [], crew: [], props: [], shots: [], notes: '',
-        weather: [], weatherUpdated: null, isDefault,
+        weather: [], weatherUpdated: null, shareEnabled: false, isDefault,
         ...seedFromTemplate(tpl, language),
     };
 }
 
 // ─── Print / PDF export (always clean layout) ──────────────────────────────────
-function buildPrintHtml(cs: CallSheetDoc, language: 'EN' | 'FR'): string {
+// Exported so the public read-only share view can render the exact same clean
+// layout in an iframe.
+export function buildPrintHtml(cs: CallSheetDoc, language: 'EN' | 'FR'): string {
     const fr = language === 'FR';
     const esc = (s: string) => (s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
     const dates = cs.dateStart === cs.dateEnd ? cs.dateStart : `${cs.dateStart} → ${cs.dateEnd}`;
@@ -348,6 +352,31 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
                 : t('Located (weather only ~16 days ahead)', 'Localisé (météo dispo ~16j avant)'));
         } finally { setGeoBusy(false); }
     }, [active, language, patchActive, flash, t]);
+
+    // ─── Public sharing ───────────────────────────────────────────────────────────
+    const shareLink = useCallback(() => {
+        if (!active || !uid || active.id === 'local') return '';
+        return `${window.location.origin}/c/${uid}/${active.id}`;
+    }, [active, uid]);
+
+    const enableAndCopyShare = useCallback(async () => {
+        if (!active || !uid || active.id === 'local') {
+            flash(t('Sign in to share', 'Connecte-toi pour partager')); return;
+        }
+        if (!active.shareEnabled) patchActive({ shareEnabled: true });
+        try {
+            await navigator.clipboard.writeText(shareLink());
+            flash(t('Link copied — sharing on', 'Lien copié — partage activé'));
+        } catch {
+            flash(t('Sharing on — copy from address bar', 'Partage activé — copie le lien'));
+        }
+    }, [active, uid, patchActive, shareLink, flash, t]);
+
+    const disableShare = useCallback(() => {
+        if (!active) return;
+        patchActive({ shareEnabled: false });
+        flash(t('Sharing disabled', 'Partage désactivé'));
+    }, [active, patchActive, flash, t]);
 
     const exportPdf = useCallback(() => {
         if (!active) return;
@@ -617,6 +646,20 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
                                 <button onClick={() => patchActive({ skin: 'clean' })}
                                     className={`px-3 py-1.5 ${active.skin === 'clean' ? 'bg-white text-black' : 'text-neutral-400 hover:text-white'}`}>{t('Clean', 'Épuré')}</button>
                             </div>
+                            {/* Share — copies a public read-only link. Hidden for
+                                ephemeral (not-signed-in) sheets. */}
+                            {uid && active.id !== 'local' && (
+                                <button onClick={enableAndCopyShare}
+                                    className={`px-3 py-1.5 border text-[10px] uppercase tracking-widest ${active.shareEnabled ? 'border-emerald-400/50 text-emerald-300' : 'border-white/15 text-neutral-300 hover:text-white'}`}
+                                    title={active.shareEnabled ? shareLink() : t('Create a public link', 'Créer un lien public')}>
+                                    🔗 {active.shareEnabled ? t('Shared', 'Partagé') : t('Share', 'Partager')}
+                                </button>
+                            )}
+                            {uid && active.id !== 'local' && active.shareEnabled && (
+                                <button onClick={disableShare}
+                                    className="px-2 py-1.5 border border-white/15 text-neutral-500 hover:text-rose-400 text-[10px] uppercase tracking-widest"
+                                    title={t('Disable sharing', 'Désactiver le partage')}>✕</button>
+                            )}
                             <button onClick={exportPdf}
                                 className="px-3 py-1.5 border border-white/15 text-neutral-300 hover:text-white text-[10px] uppercase tracking-widest">🖨 PDF</button>
                         </div>

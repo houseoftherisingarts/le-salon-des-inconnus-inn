@@ -20,6 +20,9 @@ const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').th
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
 const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => ({ default: m.AdminCRM })));
 const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CreatorStudio })));
+// /c/{uid}/{slug} — public read-only call sheet, shared by a member with their
+// crew/figurants. No auth required (Firestore rule grants read when shared).
+const CallSheetPublicView = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CallSheetPublicView })));
 // Maestro-tier /{username} portfolio page — dispatched when the URL path is a
 // slug that doesn't match any reserved route. Loaded lazily so we don't
 // pull three.js / @react-three onto every other page.
@@ -157,7 +160,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 // View State Definitions
 type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO'
-              | 'SUPER_PROFILE' | 'HIGHS_TEST';
+              | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
 // Note: SUPER_PROFILE intentionally has no fixed path — its path is the
 // dynamic slug. We list it here for completeness but handleNavigation never
@@ -180,6 +183,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   CREATOR_STUDIO: '/creator',
   SUPER_PROFILE:  '',
   HIGHS_TEST:     '/highstest',
+  CALLSHEET_PUBLIC: '',  // dynamic: /c/{uid}/{slug}, never navigated to in-app
 };
 
 const PATH_VIEWS: Record<string, ViewState> = Object.fromEntries(
@@ -202,10 +206,19 @@ const extractSlug = (pathname: string): string | null => {
   return slug;
 };
 
+// Public call-sheet share path: /c/{uid}/{docId}. Two segments, so it never
+// collides with the single-segment Super Profile slug matcher above.
+const CALLSHEET_PATH = /^\/c\/([A-Za-z0-9_-]{6,})\/([A-Za-z0-9_-]{3,})$/;
+const extractCallsheet = (pathname: string): { uid: string; slug: string } | null => {
+  const m = CALLSHEET_PATH.exec(pathname.replace(/\/$/, '') || '/');
+  return m ? { uid: m[1], slug: m[2] } : null;
+};
+
 const pathToView = (pathname: string): ViewState => {
   const normalized = pathname.replace(/\/$/, '') || '/';
   if (PATH_VIEWS[pathname]) return PATH_VIEWS[pathname];
   if (PATH_VIEWS[normalized]) return PATH_VIEWS[normalized];
+  if (extractCallsheet(normalized)) return 'CALLSHEET_PUBLIC';
   if (extractSlug(normalized)) return 'SUPER_PROFILE';
   return 'INN';
 };
@@ -246,6 +259,11 @@ const App: React.FC = () => {
     extractSlug(window.location.pathname.replace(/\/$/, '') || '/')
   );
 
+  // Public call-sheet share params — populated from a /c/{uid}/{slug} URL.
+  const [callsheetParams, setCallsheetParams] = useState<{ uid: string; slug: string } | null>(() =>
+    extractCallsheet(window.location.pathname)
+  );
+
   // Privacy / Compliance State
   const [consentLevel, setConsentLevel] = useState<ConsentLevel | null>(null);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -282,6 +300,7 @@ const App: React.FC = () => {
       const nextView = e.state?.view ?? pathToView(window.location.pathname);
       setCurrentView(nextView);
       setSuperProfileSlug(extractSlug(window.location.pathname.replace(/\/$/, '') || '/'));
+      setCallsheetParams(extractCallsheet(window.location.pathname));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     window.addEventListener('popstate', onPop);
@@ -776,13 +795,23 @@ const App: React.FC = () => {
             onBack={() => handleNavigation('INN')}
           />
         )}
+
+        {/* VIEW 15: /c/{uid}/{slug} — public read-only call sheet shared by a
+            member with their crew/figurants. No login required. */}
+        {currentView === 'CALLSHEET_PUBLIC' && callsheetParams && (
+          <CallSheetPublicView
+            uid={callsheetParams.uid}
+            slug={callsheetParams.slug}
+            language={language}
+          />
+        )}
       </Suspense>
 
       {/* GLOBAL: Subtle admin footer link — only shown to logged-in admins.
           Mirrors the email allow-list used by AdminCRM and firestore.rules.
           Non-admins (anonymous OR signed-in non-admins) don't see the link
           at all, so /admin isn't discoverable from the UI. */}
-      {!isLoading && currentView !== 'ADMIN' && currentView !== 'HIGHS_TEST' && currentView !== 'SUPER_PROFILE' && currentUser?.email &&
+      {!isLoading && currentView !== 'ADMIN' && currentView !== 'HIGHS_TEST' && currentView !== 'SUPER_PROFILE' && currentView !== 'CALLSHEET_PUBLIC' && currentUser?.email &&
         ['houseoftherisingarts@gmail.com', 'alex@lesalondesinconnus.com']
           .includes(currentUser.email.toLowerCase()) && (
         <button
@@ -797,7 +826,7 @@ const App: React.FC = () => {
           immersive routes (HIGHS_TEST, SUPER_PROFILE) where the banner would
           eat the CTA + crop the cinematic frame. The banner is still shown
           on the rest of the site (where consent matters for analytics). */}
-      {!isLoading && currentView !== 'HIGHS_TEST' && currentView !== 'SUPER_PROFILE' && (
+      {!isLoading && currentView !== 'HIGHS_TEST' && currentView !== 'SUPER_PROFILE' && currentView !== 'CALLSHEET_PUBLIC' && (
         <CookieBanner
           language={language}
           onShowPrivacy={() => setShowPrivacyPolicy(true)}

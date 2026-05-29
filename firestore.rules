@@ -67,9 +67,13 @@ service cloud.firestore {
 
       // ── Call sheets ───────────────────────────────────────────────────
       // Per-user shoot call sheets created from the Creator Studio Call
-      // Sheets tool. Owner-only for now; public share links are a later phase.
+      // Sheets tool. The owner reads/writes their own. Anyone (no auth) may
+      // READ a sheet that the owner flagged shareEnabled === true — this powers
+      // the public read-only link /c/{uid}/{slug} for figurants/crew.
       match /callsheets/{docId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
+        allow read: if (request.auth != null && request.auth.uid == userId)
+                    || resource.data.shareEnabled == true;
+        allow write: if request.auth != null && request.auth.uid == userId;
       }
 
       // ── Inspirosphere user videos ─────────────────────────────────────
