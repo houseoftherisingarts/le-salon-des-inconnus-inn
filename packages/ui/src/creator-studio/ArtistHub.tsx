@@ -4,6 +4,7 @@ import { HubContract, HubArticle } from './types';
 import { HubPhase, CreatorStudioUser } from './CreatorStudioShell';
 import { ARTISTS_ROSTER } from './roster';
 import { KanbanTool } from './KanbanTool';
+import { CallSheetTool } from './CallSheetTool';
 import { GoogleGenAI, Modality } from "@google/genai";
 import {
     getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc,
@@ -618,7 +619,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                             <h3 className="font-cinzel text-xl text-white border-b border-white/10 pb-2">Royalty-Free Resources</h3>
                             <p className="text-sm mb-4">Safe assets to use in your commercial or personal projects without fear of strikes.</p>
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <h4 className="font-bold text-[#d4af37] text-sm uppercase tracking-widest mb-3">Images & Video</h4>
                                     <ul className="space-y-2">
@@ -633,6 +634,13 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                                         <li><a href="https://freemusicarchive.org" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Free Music Archive</a></li>
                                         <li><a href="https://youtube.com/audiolibrary" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ YouTube Audio Library</a></li>
                                         <li><a href="https://incompetech.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Incompetech</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-[#d4af37] text-sm uppercase tracking-widest mb-3">Learn & Practice</h4>
+                                    <ul className="space-y-2">
+                                        <li><a href="https://photoskop.com/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Photoskop</a></li>
+                                        <li><a href="https://www.hooktheory.com/hookpad" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Hookpad (Hooktheory)</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1269,7 +1277,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [randomQuote, setRandomQuote] = useState(CREATIVITY_QUOTES[0]);
     
     // Tools State
-    const [activeTool, setActiveTool] = useState<'LEGAL' | 'BIOFORGE' | 'COPYRIGHTER' | 'KANBAN' | 'GRANTS_CA' | 'INSPIROSPHERE' | null>(null);
+    const [activeTool, setActiveTool] = useState<'LEGAL' | 'BIOFORGE' | 'COPYRIGHTER' | 'KANBAN' | 'CALLSHEET' | 'GRANTS_CA' | 'INSPIROSPHERE' | null>(null);
 
     // Library State
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
@@ -3604,6 +3612,21 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 </div>
             );
         }
+        if (activeTool === 'CALLSHEET') {
+            // Per-user call-sheet builder. Each member creates/saves their own
+            // call sheets at members/{uid}/callsheets/{slug}. Free for all members.
+            return (
+                <CallSheetTool
+                    themeStyles={currentStyles}
+                    formStyles={formStyles}
+                    pageTitleClass={pageTitleClass}
+                    uid={currentUser?.uid ?? null}
+                    language={language}
+                    membershipTier={membershipTier}
+                    onClose={() => setActiveTool(null)}
+                />
+            );
+        }
         return null;
     };
 
@@ -3953,6 +3976,23 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 </div>
                                 <h3 className="font-cinzel text-white uppercase font-bold text-xl">{language === 'EN' ? "Creative Board" : "Tableau Créatif"}</h3>
                                 <p className="text-neutral-500 text-xs mt-3 px-4">Personal Scrum Board for managing artistic chaos.</p>
+                            </div>
+
+                            {/* Tool: Call Sheets — per-user shoot planner. Build call
+                                sheets, shot lists & crew calls, export to PDF, share
+                                with the team. Studio or clean skin per sheet. */}
+                            <div
+                                onClick={() => setActiveTool('CALLSHEET')}
+                                className={`bg-black/40 border ${currentStyles.border} p-8 hover:bg-white/5 transition-all group cursor-pointer aspect-square flex flex-col items-center justify-center text-center`}
+                            >
+                                <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 text-neutral-400 group-hover:text-white`}>
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                                        <rect x="4" y="3" width="16" height="18" rx="1.5" />
+                                        <path d="M8 3v18M8 7h-4M8 11h-4M8 15h-4M8 19h-4M12 8h5M12 12h5M12 16h3" />
+                                    </svg>
+                                </div>
+                                <h3 className="font-cinzel text-white uppercase font-bold text-xl">{language === 'EN' ? "Call Sheets" : "Feuilles de Service"}</h3>
+                                <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? "Plan shoots: cast, crew, shot list, weather. Export PDF." : "Planifie tes tournages : cast, équipe, shot list, météo. Export PDF."}</p>
                             </div>
 
                             {/* Tool 3: Bio-Forge */}
