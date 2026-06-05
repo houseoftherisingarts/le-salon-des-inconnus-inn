@@ -10,9 +10,31 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 import type { Accommodation } from '../types';
 import { ACCOMMODATIONS } from '../constants';
 import RoomAmenities, { getRoomAccent } from './RoomAmenities';
+
+// Pull the HostAway listing id out of the room's booking link
+// (https://salon.holidayfuture.com/listings/<id>). Returns null for rooms
+// without a numeric listing (e.g. "Coming Soon" rooms whose link is "#").
+function listingIdFromBookingLink(link?: string): number | null {
+  if (!link) return null;
+  const m = link.match(/\/listings\/(\d+)/);
+  return m ? Number(m[1]) : null;
+}
+
+type AvailabilityResult = {
+  allAvailable: boolean;
+  minStay: number;
+  requestedNights: number;
+  meetsMinStay: boolean;
+};
+type QuoteResult = {
+  total: number | null;
+  currency: string;
+  nights: number;
+};
 
 // Shimmer SFX — same synth recipe as the main hub orb (apps/hub/src/HubOrb.tsx).
 // Stacked sine partials in A major glide upward and bloom in over ~0.3s, with
@@ -203,6 +225,116 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     window.open(room.bookingLink, '_blank', 'noopener,noreferrer');
   }, [room.bookingLink]);
 
+  const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+
+  // ── HostAway live availability + price (Phase 1) ──────────────────────────
+  // Tomorrow is the earliest selectable check-in; default a 2-night window.
+  const listingId = useMemo(
+    () => listingIdFromBookingLink(room.bookingLink),
+    [room.bookingLink],
+  );
+  const tomorrow = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().slice(0, 10);
+  }, []);
+
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [guests, setGuests] = useState(room.guests ?? 2);
+  const [availability, setAvailability] = useState<AvailabilityResult | null>(null);
+  const [quote, setQuote] = useState<QuoteResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [lookupError, setLookupError] = useState<string | null>(null);
+
+  // Reset the picker whenever the room changes — prices/availability are
+  // per-listing and must not carry over.
+  useEffect(() => {
+    setCheckIn('');
+    setCheckOut('');
+    setGuests(room.guests ?? 2);
+    setAvailability(null);
+    setQuote(null);
+    setLookupError(null);
+    setLoading(false);
+  }, [room.id, room.guests]);
+
+  // When a complete, valid range is picked, ask the server for both the
+  // calendar verdict and the authoritative price. A token guards against a
+  // stale response landing after the user changed the dates.
+  useEffect(() => {
+    if (!listingId || !checkIn || !checkOut) {
+      setAvailability(null);
+      setQuote(null);
+      setLookupError(null);
+      return;
+    }
+    if (checkIn >= checkOut) {
+      setAvailability(null);
+      setQuote(null);
+      setLookupError(t('Check-out must be after check-in.', 'Le départ doit suivre l’arrivée.'));
+      return;
+    }
+
+    let active = true;
+    setLoading(true);
+    setLookupError(null);
+
+    // getFunctions()/httpsCallable() throw synchronously if Firebase isn't
+    // initialised; guard so a misconfigured client never crashes the modal.
+    let lookup: Promise<unknown[]>;
+    try {
+      const fns = getFunctions();
+      const availFn = httpsCallable(fns, 'getHostawayAvailability');
+      const quoteFn = httpsCallable(fns, 'getHostawayQuote');
+      lookup = Promise.all([
+        availFn({ listingId, startDate: checkIn, endDate: checkOut }),
+        quoteFn({ listingId, checkIn, checkOut, numberOfGuests: guests }),
+      ]);
+    } catch (err) {
+      setLoading(false);
+      setLookupError(
+        t('Could not load live pricing. Please try again.',
+          'Tarif en direct indisponible. Veuillez réessayer.'),
+      );
+      console.error('HostAway lookup init failed:', err);
+      return;
+    }
+
+    lookup
+      .then(([availRes, quoteRes]) => {
+        if (!active) return;
+        setAvailability((availRes as { data: AvailabilityResult }).data);
+        setQuote((quoteRes as { data: QuoteResult }).data);
+      })
+      .catch((err: unknown) => {
+        if (!active) return;
+        setAvailability(null);
+        setQuote(null);
+        setLookupError(
+          t('Could not load live pricing. Please try again.',
+            'Tarif en direct indisponible. Veuillez réessayer.'),
+        );
+        console.error('HostAway lookup failed:', err);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listingId, checkIn, checkOut, guests, language]);
+
+  const priceLabel =
+    quote && quote.total != null
+      ? new Intl.NumberFormat(language === 'FR' ? 'fr-CA' : 'en-CA', {
+          style: 'currency',
+          currency: quote.currency || 'CAD',
+        }).format(quote.total)
+      : null;
+
   // Esc to close, ←/→ to cycle rooms.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -226,7 +358,6 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
   const title = language === 'FR' && room.title_fr ? room.title_fr : room.title;
   const type = language === 'FR' && room.type_fr ? room.type_fr : room.type;
   const desc = language === 'FR' && room.description_fr ? room.description_fr : room.description;
-  const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
   const layerStyle = (img: string): CSSProperties => ({
     // Quote the URL so parens / spaces in filenames (e.g. "mini (1).jpg")
@@ -337,6 +468,92 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             size="md"
           />
 
+          {/* HostAway live availability + price (Phase 1). Booking still hands
+              off to the HostAway page via the Choose button below. */}
+          {room.status !== 'COMING_SOON' && listingId && (
+            <div className="flex flex-col gap-3 border-t border-[#c5a059]/20 pt-5 text-left">
+              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">
+                {t('Check Dates and Price', 'Vérifier Dates et Tarif')}
+              </span>
+
+              <div className="flex flex-wrap gap-3">
+                <label className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
+                  {t('Check-in', 'Arrivée')}
+                  <input
+                    type="date"
+                    min={tomorrow}
+                    value={checkIn}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                    className="bg-black/40 border border-white/20 rounded-sm px-3 py-2 text-sm text-neutral-100 font-lato focus:border-[#c5a059] focus:outline-none [color-scheme:dark]"
+                  />
+                </label>
+                <label className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
+                  {t('Check-out', 'Départ')}
+                  <input
+                    type="date"
+                    min={checkIn || tomorrow}
+                    value={checkOut}
+                    onChange={(e) => setCheckOut(e.target.value)}
+                    className="bg-black/40 border border-white/20 rounded-sm px-3 py-2 text-sm text-neutral-100 font-lato focus:border-[#c5a059] focus:outline-none [color-scheme:dark]"
+                  />
+                </label>
+                <label className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
+                  {t('Guests', 'Personnes')}
+                  <input
+                    type="number"
+                    min={1}
+                    max={room.maxGuests ?? 10}
+                    value={guests}
+                    onChange={(e) => setGuests(Math.max(1, Number(e.target.value) || 1))}
+                    className="bg-black/40 border border-white/20 rounded-sm px-3 py-2 text-sm text-neutral-100 font-lato w-20 focus:border-[#c5a059] focus:outline-none [color-scheme:dark]"
+                  />
+                </label>
+              </div>
+
+              {/* Live result line */}
+              <div className="min-h-[2.5rem] text-sm font-lato" aria-live="polite">
+                {loading && (
+                  <span className="text-neutral-400">
+                    {t('Checking live availability…', 'Vérification en direct…')}
+                  </span>
+                )}
+                {!loading && lookupError && (
+                  <span className="text-[#e0a0a0]">{lookupError}</span>
+                )}
+                {!loading && !lookupError && availability && (
+                  <div className="flex flex-col gap-1">
+                    {availability.allAvailable && availability.meetsMinStay ? (
+                      <span className="text-[#9fd4a3] font-cinzel uppercase text-xs tracking-[0.2em]">
+                        {t('Available for these dates', 'Disponible pour ces dates')}
+                      </span>
+                    ) : !availability.allAvailable ? (
+                      <span className="text-[#e0c08a] font-cinzel uppercase text-xs tracking-[0.2em]">
+                        {t('Not available for these dates', 'Non disponible pour ces dates')}
+                      </span>
+                    ) : (
+                      <span className="text-[#e0c08a] font-cinzel uppercase text-xs tracking-[0.2em]">
+                        {t(
+                          `Minimum stay is ${availability.minStay} nights`,
+                          `Séjour minimum de ${availability.minStay} nuits`,
+                        )}
+                      </span>
+                    )}
+                    {priceLabel && quote && (
+                      <span className="text-[#f3e5ab] font-cinzel text-lg tracking-[0.1em]">
+                        {priceLabel}{' '}
+                        <span className="text-neutral-400 text-[10px] uppercase tracking-[0.2em]">
+                          {t(
+                            `total · ${quote.nights} nights · taxes included`,
+                            `total · ${quote.nights} nuits · taxes incluses`,
+                          )}
+                        </span>
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Buttons */}
           <div className="flex flex-wrap gap-4 mt-2 justify-center md:justify-start">
