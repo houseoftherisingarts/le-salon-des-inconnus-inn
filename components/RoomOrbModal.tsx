@@ -14,6 +14,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import type { Accommodation } from '../types';
 import { ACCOMMODATIONS } from '../constants';
 import RoomAmenities, { getRoomAccent } from './RoomAmenities';
+import { CheckoutModal } from './CheckoutModal';
 
 // Pull the HostAway listing id out of the room's booking link
 // (https://salon.holidayfuture.com/listings/<id>). Returns null for rooms
@@ -220,14 +221,12 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     setIndex((index + 1) % rooms.length);
   }, [index, rooms.length, setIndex]);
 
-  // Keep the guest on lesalondesinconnus.com: open HostAway's booking + payment
-  // inside an on-site overlay instead of a new tab. (Full native checkout is the
-  // next phase; this already removes the off-site redirect.)
-  const [bookingUrl, setBookingUrl] = useState<string | null>(null);
-  const choose = useCallback(() => {
-    if (!room.bookingLink || room.bookingLink === '#') return;
-    setBookingUrl(room.bookingLink);
-  }, [room.bookingLink]);
+  // Phase 2 — fully native on-site checkout. "Choose This Room" opens our own
+  // CheckoutModal (guest details + Square card + price summary) and the booking
+  // is created via the createRoomReservation callable. HostAway is purely a
+  // backend API now; the guest never sees its UI. This replaces the Phase 1
+  // redirect and the interim iframe-overlay.
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
@@ -245,7 +244,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState(room.guests ?? 2);
+  const [guests, setGuests] = useState<number>(Number(room.guests) || 2);
   const [availability, setAvailability] = useState<AvailabilityResult | null>(null);
   const [quote, setQuote] = useState<QuoteResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -256,7 +255,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
   useEffect(() => {
     setCheckIn('');
     setCheckOut('');
-    setGuests(room.guests ?? 2);
+    setGuests(Number(room.guests) || 2);
     setAvailability(null);
     setQuote(null);
     setLookupError(null);
@@ -339,6 +338,24 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
         }).format(quote.total)
       : null;
 
+  // The native checkout can only open once the server has confirmed the dates
+  // are available, the min-stay is met, and a real price is in hand.
+  const canBook = Boolean(
+    listingId &&
+      checkIn &&
+      checkOut &&
+      !loading &&
+      !lookupError &&
+      availability?.allAvailable &&
+      availability?.meetsMinStay &&
+      quote &&
+      quote.total != null,
+  );
+  const choose = useCallback(() => {
+    if (!canBook) return;
+    setCheckoutOpen(true);
+  }, [canBook]);
+
   // Esc to close, ←/→ to cycle rooms.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -380,31 +397,20 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
       onClick={onClose}
       className="room-orb-root fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 py-8 overflow-y-auto"
     >
-      {bookingUrl &&
+      {checkoutOpen && listingId && quote && quote.total != null &&
         createPortal(
-          <div
-            className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-5 py-3 bg-[#0c0c0c] border-b border-[#c5a059]/30 shrink-0">
-              <span className="font-cinzel text-xs uppercase tracking-[0.3em] text-[#f3e5ab] truncate pr-3">
-                {t('Booking', 'Réservation')} · {room.title}
-              </span>
-              <button
-                onClick={() => setBookingUrl(null)}
-                aria-label={t('Close', 'Fermer')}
-                className="font-cinzel text-[#c5a059] hover:text-[#f3e5ab] text-3xl leading-none px-2 shrink-0"
-              >
-                ×
-              </button>
-            </div>
-            <iframe
-              src={bookingUrl}
-              title={t('Booking', 'Réservation')}
-              className="flex-1 w-full border-0 bg-white"
-              allow="payment *; clipboard-write"
-            />
-          </div>,
+          <CheckoutModal
+            language={language}
+            roomTitle={title}
+            listingId={listingId}
+            checkIn={checkIn}
+            checkOut={checkOut}
+            guests={guests}
+            nights={quote.nights}
+            total={quote.total}
+            currency={quote.currency || 'CAD'}
+            onClose={() => setCheckoutOpen(false)}
+          />,
           document.body,
         )}
       {/* Per-room animated gradient — sits behind everything, ~50% transparency,
@@ -499,8 +505,8 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             size="md"
           />
 
-          {/* HostAway live availability + price (Phase 1). Booking still hands
-              off to the HostAway page via the Choose button below. */}
+          {/* HostAway live availability + price. The Choose button below opens
+              the native on-site checkout (Phase 2) once dates are confirmed. */}
           {room.status !== 'COMING_SOON' && listingId && (
             <div className="flex flex-col gap-3 border-t border-[#c5a059]/20 pt-5 text-left">
               <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">
@@ -604,14 +610,19 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             ) : (
               <button
                 onClick={choose}
-                disabled={!room.bookingLink || room.bookingLink === '#'}
+                disabled={!canBook}
+                title={
+                  !canBook
+                    ? t('Pick available dates to continue', 'Choisissez des dates disponibles pour continuer')
+                    : undefined
+                }
                 className="px-7 py-4 font-cinzel font-bold text-xs uppercase tracking-[0.3em] border bg-[#c5a059] text-[#18181b] border-[#c5a059] hover:bg-[#d4b06a] hover:scale-[1.02] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{
                   boxShadow:
                     '0 6px 24px rgba(197,160,89,0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
                 }}
               >
-                {t('Choose This Room', 'Choisir Cette Chambre')}
+                {t('Choose This Room', 'Réserver')}
               </button>
             )}
           </div>

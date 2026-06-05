@@ -235,6 +235,47 @@ type HostawayCalendarDay = {
   availableUnitsToSell?: number | null;
 };
 
+type AvailabilityVerdict = {
+  days: { date: string; available: boolean; minimumStay: number; price: number | null }[];
+  allAvailable: boolean;
+  minStay: number;
+  requestedNights: number;
+  meetsMinStay: boolean;
+};
+
+// Shared availability check used by both getHostawayAvailability (read-only,
+// Phase 1) and createRoomReservation (Phase 2, re-validated server-side). The
+// occupied nights are [startDate, endDate); the checkout day is excluded from
+// the verdict (a 3-night stay only needs its 3 occupied nights free).
+async function fetchAvailability(
+  id: number,
+  startDate: string,
+  endDate: string,
+): Promise<AvailabilityVerdict> {
+  const token = await getHostawayToken();
+  const url = `${HOSTAWAY_BASE}/listings/${id}/calendar?startDate=${startDate}&endDate=${endDate}`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  const json = (await res.json()) as { status?: string; result?: HostawayCalendarDay[] };
+  if (!res.ok || json.status !== 'success' || !Array.isArray(json.result)) {
+    console.error('HostAway calendar error:', res.status, JSON.stringify(json).slice(0, 500));
+    throw new HttpsError('internal', 'Could not read HostAway availability.');
+  }
+
+  const nights = json.result.filter((d) => d.date >= startDate && d.date < endDate);
+  const days = nights.map((d) => ({
+    date: d.date,
+    available: d.isAvailable === 1 && d.status === 'available',
+    minimumStay: d.minimumStay ?? 1,
+    price: d.price ?? null,
+  }));
+  const allAvailable = days.length > 0 && days.every((d) => d.available);
+  const minStay = days.reduce((m, d) => Math.max(m, d.minimumStay), 1);
+  const requestedNights = days.length;
+  const meetsMinStay = requestedNights >= minStay;
+
+  return { days, allAvailable, minStay, requestedNights, meetsMinStay };
+}
+
 // getHostawayAvailability(listingId, startDate, endDate)
 //   → { days: [{ date, available, minimumStay, price }], allAvailable, minStay }
 // Reads GET /listings/{id}/calendar. `endDate` is the checkout day; the
@@ -257,29 +298,7 @@ export const getHostawayAvailability = onCall(
       throw new HttpsError('invalid-argument', 'Check-out must be after check-in.');
     }
 
-    const token = await getHostawayToken();
-    const url = `${HOSTAWAY_BASE}/listings/${id}/calendar?startDate=${startDate}&endDate=${endDate}`;
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    const json = (await res.json()) as { status?: string; result?: HostawayCalendarDay[] };
-    if (!res.ok || json.status !== 'success' || !Array.isArray(json.result)) {
-      console.error('HostAway calendar error:', res.status, JSON.stringify(json).slice(0, 500));
-      throw new HttpsError('internal', 'Could not read HostAway availability.');
-    }
-
-    // The occupied nights are [startDate, endDate). Exclude the checkout day.
-    const nights = json.result.filter((d) => d.date >= startDate && d.date < endDate);
-    const days = nights.map((d) => ({
-      date: d.date,
-      available: d.isAvailable === 1 && d.status === 'available',
-      minimumStay: d.minimumStay ?? 1,
-      price: d.price ?? null,
-    }));
-    const allAvailable = days.length > 0 && days.every((d) => d.available);
-    const minStay = days.reduce((m, d) => Math.max(m, d.minimumStay), 1);
-    const requestedNights = days.length;
-    const meetsMinStay = requestedNights >= minStay;
-
-    return { days, allAvailable, minStay, requestedNights, meetsMinStay };
+    return fetchAvailability(id, startDate, endDate);
   },
 );
 
@@ -291,10 +310,59 @@ type HostawayQuoteComponent = {
   isIncludedInTotalPrice: number;
 };
 
+type QuoteVerdict = {
+  total: number | null;
+  currency: string;
+  components: { type: string; name: string; title: string; total: number }[];
+  nights: number;
+};
+
+// Shared price quote used by both getHostawayQuote (Phase 1) and
+// createRoomReservation (Phase 2, re-computed server-side). POSTs
+// /listings/{id}/calendar/priceDetails. The total is taken verbatim from
+// HostAway (authoritative); the client never computes or is trusted for price.
+async function fetchQuote(
+  id: number,
+  checkIn: string,
+  checkOut: string,
+  guests: number,
+): Promise<QuoteVerdict> {
+  const token = await getHostawayToken();
+  const res = await fetch(`${HOSTAWAY_BASE}/listings/${id}/calendar/priceDetails`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Cache-control': 'no-cache',
+    },
+    body: JSON.stringify({
+      startingDate: checkIn,
+      endingDate: checkOut,
+      numberOfGuests: guests,
+    }),
+  });
+  const json = (await res.json()) as {
+    status?: string;
+    result?: { totalPrice?: number; components?: HostawayQuoteComponent[] };
+  };
+  if (!res.ok || json.status !== 'success' || !json.result) {
+    console.error('HostAway quote error:', res.status, JSON.stringify(json).slice(0, 500));
+    throw new HttpsError('internal', 'Could not get a HostAway price quote.');
+  }
+
+  const result = json.result;
+  const components = (result.components ?? [])
+    .filter((c) => c.isIncludedInTotalPrice === 1)
+    .map((c) => ({ type: c.type, name: c.name, title: c.title, total: c.total }));
+
+  const msPerNight = 86_400_000;
+  const nights = Math.round((Date.parse(checkOut) - Date.parse(checkIn)) / msPerNight);
+
+  return { total: result.totalPrice ?? null, currency: 'CAD', components, nights };
+}
+
 // getHostawayQuote(listingId, checkIn, checkOut, numberOfGuests)
 //   → { total, currency, components, nights }
-// POSTs /listings/{id}/calendar/priceDetails. The total is taken verbatim from
-// HostAway (authoritative); the client never computes or is trusted for price.
 export const getHostawayQuote = onCall(
   { secrets: [HOSTAWAY_API_KEY, HOSTAWAY_ACCOUNT_ID], cors: true },
   async (request) => {
@@ -317,44 +385,307 @@ export const getHostawayQuote = onCall(
       throw new HttpsError('invalid-argument', 'Invalid guest count.');
     }
 
-    const token = await getHostawayToken();
-    const res = await fetch(`${HOSTAWAY_BASE}/listings/${id}/calendar/priceDetails`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Cache-control': 'no-cache',
-      },
-      body: JSON.stringify({
-        startingDate: checkIn,
-        endingDate: checkOut,
-        numberOfGuests: guests,
-      }),
-    });
-    const json = (await res.json()) as {
-      status?: string;
-      result?: { totalPrice?: number; components?: HostawayQuoteComponent[] };
+    return fetchQuote(id, checkIn, checkOut, guests);
+  },
+);
+
+// ─── createRoomReservation (Phase 2 — native on-site checkout) ────────────────
+// Single callable that owns the whole native booking flow so the guest never
+// leaves lesalondesinconnus.com and never sees HostAway's UI:
+//   1. Re-validate availability for the dates server-side (never trust client).
+//   2. Re-compute the authoritative quote server-side (never trust client price).
+//   3. Charge the card via Square for the quoted total in CAD (idempotency key).
+//   4. Create the reservation in HostAway (POST /v1/reservations).
+//   5. Atomicity: if the charge succeeds but the HostAway create fails, refund
+//      the Square charge automatically (or flag for manual refund) and error.
+//
+// LIVE_BOOKING_ENABLED gates steps 3+4 so the function can be deployed dark and
+// flipped on only after a supervised test. Default OFF. When OFF, steps 1+2 run
+// (they're the same safe read endpoints Phase 1 already uses) and the function
+// returns { dryRun: true, quote, hostawayBody } so the exact request shapes can
+// be inspected without moving any money or creating any reservation.
+//
+// HostAway reservation field names below are verified against the live HostAway
+// Public API reference (api.hostaway.com/documentation, "Reservation object" /
+// "Create a reservation"): listingMapId, channelId (2000 = "direct"),
+// arrivalDate, departureDate, guestName/guestFirstName/guestLastName,
+// guestEmail, phone, numberOfGuests, totalPrice, currency, status ("new"),
+// isPaid (1). forceOverbooking is a query param (we send 0).
+
+// Flip to 'true' in the deployed env (or here, supervised) to arm real charges
+// + real reservation creation. Read from env so it can be toggled without code.
+const LIVE_BOOKING_ENABLED = (process.env.LIVE_BOOKING_ENABLED ?? 'false').toLowerCase() === 'true';
+
+// HostAway channel id for direct / website bookings (verified from the channel
+// table in the API docs: 2000 = "direct").
+const HOSTAWAY_DIRECT_CHANNEL_ID = 2000;
+
+function splitName(full: string): { first: string; last: string } {
+  const parts = full.trim().split(/\s+/);
+  if (parts.length === 1) return { first: parts[0], last: '' };
+  return { first: parts[0], last: parts.slice(1).join(' ') };
+}
+
+async function createHostawayReservation(
+  token: string,
+  body: Record<string, unknown>,
+): Promise<{ id: number | string; raw: unknown }> {
+  // forceOverbooking=0 — never silently double-book; if HostAway says the dates
+  // are taken (race with another channel), let it fail so we refund.
+  const res = await fetch(`${HOSTAWAY_BASE}/reservations?forceOverbooking=0`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Cache-control': 'no-cache',
+    },
+    body: JSON.stringify(body),
+  });
+  const json = (await res.json()) as {
+    status?: string;
+    result?: { id?: number | string };
+    message?: string;
+  };
+  if (!res.ok || json.status !== 'success' || !json.result?.id) {
+    console.error('HostAway reservation create error:', res.status, JSON.stringify(json).slice(0, 800));
+    throw new Error(json.message || `HostAway create failed (HTTP ${res.status})`);
+  }
+  return { id: json.result.id, raw: json.result };
+}
+
+export const createRoomReservation = onCall(
+  {
+    secrets: [HOSTAWAY_API_KEY, HOSTAWAY_ACCOUNT_ID],
+    cors: true,
+    // The Square SDK is heavy; give the cold start room and the network calls
+    // (HostAway availability + quote + create, Square charge) headroom.
+    timeoutSeconds: 60,
+    memory: '512MiB',
+  },
+  async (request) => {
+    const {
+      listingId,
+      checkIn,
+      checkOut,
+      numberOfGuests,
+      guestName,
+      guestEmail,
+      guestPhone,
+      nonce,
+    } = (request.data ?? {}) as {
+      listingId?: number;
+      checkIn?: string;
+      checkOut?: string;
+      numberOfGuests?: number;
+      guestName?: string;
+      guestEmail?: string;
+      guestPhone?: string;
+      nonce?: string;
     };
-    if (!res.ok || json.status !== 'success' || !json.result) {
-      console.error('HostAway quote error:', res.status, JSON.stringify(json).slice(0, 500));
-      throw new HttpsError('internal', 'Could not get a HostAway price quote.');
+
+    // ── Validate inputs ───────────────────────────────────────────────────────
+    const id = validateListing(listingId);
+    if (!isValidDate(checkIn) || !isValidDate(checkOut)) {
+      throw new HttpsError('invalid-argument', 'Dates must be YYYY-MM-DD.');
+    }
+    if (checkIn >= checkOut) {
+      throw new HttpsError('invalid-argument', 'Check-out must be after check-in.');
+    }
+    const guests = Number(numberOfGuests);
+    if (!Number.isInteger(guests) || guests < 1 || guests > 50) {
+      throw new HttpsError('invalid-argument', 'Invalid guest count.');
+    }
+    const name = (guestName ?? '').trim();
+    const email = (guestEmail ?? '').trim();
+    const phone = (guestPhone ?? '').trim();
+    if (name.length < 2) {
+      throw new HttpsError('invalid-argument', 'Guest name is required.');
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      throw new HttpsError('invalid-argument', 'A valid email is required.');
     }
 
-    const result = json.result;
-    const components = (result.components ?? [])
-      .filter((c) => c.isIncludedInTotalPrice === 1)
-      .map((c) => ({ type: c.type, name: c.name, title: c.title, total: c.total }));
+    // ── 1. Re-validate availability server-side ───────────────────────────────
+    const availability = await fetchAvailability(id, checkIn, checkOut);
+    if (!availability.allAvailable) {
+      throw new HttpsError('failed-precondition', 'These dates are no longer available.');
+    }
+    if (!availability.meetsMinStay) {
+      throw new HttpsError(
+        'failed-precondition',
+        `Minimum stay is ${availability.minStay} nights for these dates.`,
+      );
+    }
 
-    const msPerNight = 86_400_000;
-    const nights = Math.round(
-      (Date.parse(checkOut) - Date.parse(checkIn)) / msPerNight,
-    );
+    // ── 2. Re-compute the authoritative quote server-side ─────────────────────
+    const quote = await fetchQuote(id, checkIn, checkOut, guests);
+    if (quote.total == null || !(quote.total > 0)) {
+      throw new HttpsError('internal', 'Could not compute an authoritative price.');
+    }
+    const totalCad = quote.total;
+    // Square charges in the smallest unit (CAD cents).
+    const amountCents = Math.round(totalCad * 100);
+
+    const { first, last } = splitName(name);
+
+    // The exact HostAway create-reservation body. Built here (not on the client)
+    // so the listing, dates, guest count, price, and paid status are all
+    // server-authoritative.
+    const hostawayBody: Record<string, unknown> = {
+      listingMapId: id,
+      channelId: HOSTAWAY_DIRECT_CHANNEL_ID, // 2000 = direct / website
+      channelName: 'direct',
+      arrivalDate: checkIn,
+      departureDate: checkOut,
+      numberOfGuests: guests,
+      guestName: name,
+      guestFirstName: first,
+      guestLastName: last,
+      guestEmail: email,
+      phone,
+      totalPrice: totalCad,
+      currency: 'CAD',
+      status: 'new', // confirmed reservation
+      isPaid: 1, // paid up-front via Square
+      isManuallyChecked: 1,
+    };
+
+    // ── Dark mode: validate the shapes, move no money, create nothing ─────────
+    if (!LIVE_BOOKING_ENABLED) {
+      console.log('createRoomReservation DRY RUN — LIVE_BOOKING_ENABLED is off.', {
+        amountCents,
+        hostawayBody,
+      });
+      return {
+        dryRun: true,
+        liveBookingEnabled: false,
+        quote: { total: totalCad, currency: 'CAD', nights: quote.nights, components: quote.components },
+        amountCents,
+        hostawayBody,
+        message:
+          'Validated availability + quote and built the charge and reservation request bodies. ' +
+          'No card was charged and no reservation was created (LIVE_BOOKING_ENABLED is off).',
+      };
+    }
+
+    // ── 3. Charge the card via Square (live) ──────────────────────────────────
+    if (!nonce) {
+      throw new HttpsError('invalid-argument', 'Missing card token.');
+    }
+    if (amountCents < 100) {
+      throw new HttpsError('failed-precondition', 'Computed amount is below the minimum charge.');
+    }
+
+    const square = await getSquareClient();
+    const idempotencyKey = `room-${id}-${checkIn}-${checkOut}-${Date.now()}`;
+
+    let paymentId: string | undefined;
+    try {
+      const payRes = await square.payments.create({
+        sourceId: nonce,
+        idempotencyKey,
+        amountMoney: { amount: BigInt(amountCents), currency: 'CAD' },
+        note: `Room booking — ${name} — ${checkIn} to ${checkOut} (listing ${id})`,
+        locationId: process.env.SQUARE_LOCATION_ID,
+      });
+      paymentId = payRes.payment?.id;
+      if (!paymentId) throw new Error('No payment id in Square response.');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('Square room charge failed:', msg);
+      throw new HttpsError('internal', `Payment failed: ${msg}`);
+    }
+
+    // ── 4. Create the reservation in HostAway ─────────────────────────────────
+    //    + 5. Atomicity: refund the charge if the create fails.
+    let reservation: { id: number | string; raw: unknown };
+    try {
+      const token = await getHostawayToken();
+      reservation = await createHostawayReservation(token, {
+        ...hostawayBody,
+        // Cross-reference the Square charge on the reservation for reconciliation.
+        guestNote: `Square paymentId: ${paymentId}`,
+      });
+    } catch (createErr: unknown) {
+      const createMsg = createErr instanceof Error ? createErr.message : String(createErr);
+      console.error('Reservation create failed after charge — refunding.', createMsg);
+
+      // Automatic refund of the Square charge.
+      let refunded = false;
+      try {
+        await square.refunds.refundPayment({
+          idempotencyKey: `refund-${idempotencyKey}`,
+          paymentId,
+          amountMoney: { amount: BigInt(amountCents), currency: 'CAD' },
+          reason: 'Reservation could not be created in HostAway.',
+        });
+        refunded = true;
+      } catch (refundErr: unknown) {
+        const refundMsg = refundErr instanceof Error ? refundErr.message : String(refundErr);
+        // The charge is stranded — record it loudly for manual refund.
+        console.error('AUTO-REFUND FAILED — MANUAL REFUND REQUIRED.', {
+          paymentId,
+          amountCents,
+          refundMsg,
+        });
+        try {
+          await admin.firestore().collection('roomBookingRefundFailures').add({
+            paymentId,
+            amountCents,
+            listingId: id,
+            checkIn,
+            checkOut,
+            guestName: name,
+            guestEmail: email,
+            reason: createMsg,
+            refundError: refundMsg,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          });
+        } catch {
+          /* best-effort flag; the console.error above is the source of truth */
+        }
+      }
+
+      throw new HttpsError(
+        'internal',
+        refunded
+          ? 'We could not confirm your reservation, so your payment was refunded. Please try again.'
+          : 'We could not confirm your reservation and the automatic refund did not go through. ' +
+              'Our team has been alerted and will refund you manually.',
+      );
+    }
+
+    // ── Confirmation ──────────────────────────────────────────────────────────
+    // Best-effort record for our own books; never block the confirmation on it.
+    try {
+      await admin.firestore().collection('roomBookings').add({
+        hostawayReservationId: reservation.id,
+        squarePaymentId: paymentId,
+        listingId: id,
+        checkIn,
+        checkOut,
+        numberOfGuests: guests,
+        guestName: name,
+        guestEmail: email,
+        guestPhone: phone,
+        totalCad,
+        currency: 'CAD',
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    } catch (logErr) {
+      console.error('roomBookings log write failed (non-fatal):', logErr);
+    }
 
     return {
-      total: result.totalPrice ?? null,
+      success: true,
+      reservationId: reservation.id,
+      paymentId,
+      checkIn,
+      checkOut,
+      nights: quote.nights,
+      total: totalCad,
       currency: 'CAD',
-      components,
-      nights,
+      guestName: name,
     };
   },
 );
