@@ -585,6 +585,16 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             )}
           </div>
 
+          {/* Cancellation policy — visible right before the booking hand-off */}
+          <a
+            href="/politique-annulation.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-neutral-400 hover:text-[#c5a059] underline underline-offset-4 decoration-[#c5a059]/40 transition-colors mt-3"
+          >
+            {t('Cancellation policy', "Politique d'annulation")}
+          </a>
+
           {/* Room counter */}
           <span className="font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-500 mt-2">
             {String(index + 1).padStart(2, '0')} / {String(rooms.length).padStart(2, '0')}

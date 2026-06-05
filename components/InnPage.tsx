@@ -1413,6 +1413,9 @@ export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onN
           <a href="mailto:Alex@lesalondesinconnus.com" className={`text-xs opacity-50 hover:opacity-80 transition-opacity font-lato ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-400'}`}>
             Alex@lesalondesinconnus.com
           </a>
+          <a href="/politique-annulation.html" target="_blank" rel="noopener noreferrer" className={`text-xs opacity-50 hover:opacity-80 transition-opacity font-lato underline underline-offset-4 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-400'}`}>
+            {language === 'EN' ? 'Cancellation policy' : "Politique d'annulation"}
+          </a>
         </div>
 
         {/* Map + copyright moved to bottom of InnPage as a full-width footer section */}
