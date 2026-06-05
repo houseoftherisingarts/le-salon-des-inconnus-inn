@@ -581,5 +581,14 @@ service cloud.firestore {
     match /production-docs/{docId} {
       allow read, write: if true;
     }
+
+    // ── Partnership dossiers (editable proposal docs: Mario, Mike) ───────────
+    // Same low-stakes posture as production-docs above: the local editor files
+    // sync their text here so edits follow Alex across his devices. Non-sensitive
+    // proposal copy, obscure doc ids, no auth so it works from a local file://
+    // editor. Revisit (anonymous-auth gate) if abuse ever appears.
+    match /dossiers/{docId} {
+      allow read, write: if true;
+    }
   }
 }
