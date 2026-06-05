@@ -3,71 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0a0807">
+<meta name="theme-color" content="#0c0c0c">
 <title>Politique d'annulation · Le Salon des Inconnus</title>
 <meta name="robots" content="index,follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0807; --panel:#15110b; --gold:#c5a059; --gold-bright:#d4af37;
-    --cream:#e7dabb; --cream-dim:#a99974; --line:#352a1c;
-  }
+  :root{ --bg:#0c0c0c; --gold:#d4af37; --txt:#a3a3a3; --txt-strong:#d4d4d4; --muted:#6b6b6b; }
   *{ box-sizing:border-box; margin:0; padding:0; }
-  body{ background:radial-gradient(120% 80% at 50% 0%, #15110b 0%, var(--bg) 60%);
-    min-height:100vh; color:var(--cream); font-family:"Cormorant Garamond",Georgia,serif;
-    line-height:1.6; padding:40px 18px 72px; }
-  .wrap{ max-width:740px; margin:0 auto; background:var(--panel);
-    border:1px solid var(--line); border-top:3px solid var(--gold);
-    border-radius:14px; padding:34px 40px 40px; box-shadow:0 20px 60px rgba(0,0,0,.55); }
+  body{ background:var(--bg); color:var(--txt); font-family:'Lato',-apple-system,sans-serif;
+    min-height:100vh; line-height:1.75; }
 
-  .langtoggle{ display:flex; justify-content:center; gap:8px; margin-bottom:26px; }
-  .langtoggle button{ font-family:"Josefin Sans",sans-serif; font-size:11px; letter-spacing:.18em;
-    text-transform:uppercase; color:var(--cream-dim); background:transparent;
-    border:1px solid var(--line); border-radius:999px; padding:7px 18px; cursor:pointer; transition:all .15s; }
-  .langtoggle button:hover{ border-color:var(--gold); color:var(--cream); }
-  .langtoggle button.active{ background:var(--gold); color:#0a0807; border-color:var(--gold); font-weight:500; }
+  /* brand corner brackets (site motif) */
+  .corner{ position:fixed; width:26px; height:26px; border-color:rgba(212,175,55,.45); z-index:5; pointer-events:none; }
+  .corner.tl{ top:18px; left:18px; border-top:2px solid; border-left:2px solid; }
+  .corner.tr{ top:18px; right:18px; border-top:2px solid; border-right:2px solid; }
+  .corner.bl{ bottom:18px; left:18px; border-bottom:2px solid; border-left:2px solid; }
+  .corner.br{ bottom:18px; right:18px; border-bottom:2px solid; border-right:2px solid; }
+
+  .head{ text-align:center; padding:72px 24px 24px; }
+  .eyebrow{ font-family:'Cinzel',serif; color:var(--gold); font-size:11px; letter-spacing:.5em;
+    text-transform:uppercase; }
+  h1{ font-family:'Cinzel',serif; color:#fff; font-size:clamp(26px,4vw,36px); font-weight:600;
+    margin-top:16px; letter-spacing:.02em; }
+  .toggle{ display:inline-flex; background:#1a1a1a; border:1px solid rgba(255,255,255,.1);
+    border-radius:6px; overflow:hidden; margin-top:26px; }
+  .toggle button{ font-family:'Cinzel',serif; font-size:11px; letter-spacing:.12em; padding:8px 18px;
+    background:transparent; color:#737373; border:none; cursor:pointer; transition:.15s; }
+  .toggle button:hover{ color:#fff; }
+  .toggle button.active{ background:var(--gold); color:#000; }
+
+  .doc{ width:100%; max-width:1140px; margin:0 auto; padding:14px clamp(22px,7vw,96px) 80px; }
   .langblock[hidden]{ display:none; }
+  h2{ font-family:'Cinzel',serif; color:var(--gold); font-size:14px; text-transform:uppercase;
+    letter-spacing:.2em; margin:42px 0 14px; }
+  p{ font-size:16px; margin-bottom:15px; }
+  strong{ color:var(--txt-strong); font-weight:700; }
+  .key{ border-left:2px solid var(--gold); background:rgba(212,175,55,.05); padding:18px 24px;
+    margin:20px 0; color:#bdbdbd; font-size:16px; }
+  ul{ list-style:none; margin:10px 0 16px; }
+  li{ position:relative; padding-left:22px; margin-bottom:9px; font-size:16px; }
+  li::before{ content:"·"; position:absolute; left:4px; color:var(--gold); font-size:22px; line-height:1; top:-2px; }
 
-  .brand{ font-family:"Cinzel",serif; font-size:12px; letter-spacing:.34em; text-transform:uppercase;
-    color:var(--gold); text-align:center; }
-  h1{ font-family:"Cinzel",serif; font-weight:600; color:var(--gold-bright); text-align:center;
-    font-size:27px; margin:12px 0 0; letter-spacing:.02em; }
-  .rule{ width:90px; height:2px; background:var(--gold); margin:20px auto 26px; opacity:.85; }
-  h2{ font-family:"Cinzel",serif; font-weight:500; color:var(--gold-bright); font-size:15.5px;
-    letter-spacing:.05em; margin:28px 0 8px; padding-bottom:7px; border-bottom:1px solid var(--line); }
-  p{ font-size:17px; margin-bottom:12px; color:var(--cream); }
-  strong{ color:#fff; font-weight:600; }
-  .key{ background:rgba(197,160,89,.07); border:1px solid var(--line); border-left:3px solid var(--gold);
-    border-radius:10px; padding:15px 19px; margin:15px 0; font-size:16px; }
-  ul{ margin:8px 0 14px 2px; list-style:none; }
-  li{ font-size:17px; padding-left:20px; position:relative; margin-bottom:8px; }
-  li::before{ content:"❧"; position:absolute; left:0; color:var(--gold); }
-
-  .articledate{ margin-top:34px; padding-top:18px; border-top:1px solid var(--line);
-    text-align:center; font-family:"Josefin Sans",sans-serif; font-size:11px; letter-spacing:.2em;
-    text-transform:uppercase; color:var(--cream-dim); }
-  footer{ text-align:center; margin-top:14px; font-size:14.5px; color:var(--cream-dim);
-    font-family:"Cormorant Garamond",serif; }
-  footer a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(197,160,89,.4); }
-  footer a:hover{ color:var(--gold-bright); }
+  .foot{ display:flex; justify-content:space-between; align-items:baseline; gap:18px; flex-wrap:wrap;
+    margin-top:54px; padding-top:18px; border-top:1px solid rgba(255,255,255,.08);
+    font-size:13px; color:var(--muted); }
+  .foot a{ color:var(--gold); text-decoration:none; }
+  .foot .date{ font-style:italic; margin-left:auto; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
 
-  <div class="langtoggle">
+<header class="head">
+  <div class="eyebrow">Le Salon des Inconnus</div>
+  <h1 id="title">Politique d'annulation</h1>
+  <div class="toggle">
     <button id="btn-fr" class="active" onclick="setLang('fr')">Français</button>
     <button id="btn-en" onclick="setLang('en')">English</button>
   </div>
+</header>
+
+<div class="doc">
 
   <!-- ===================== FRANÇAIS ===================== -->
   <div id="fr" class="langblock">
-    <div class="brand">Le Salon des Inconnus</div>
-    <h1>Politique d'annulation</h1>
-    <div class="rule"></div>
-
     <p>Au Salon des Inconnus, on aime que les choses soient claires dès le départ. Voici donc, en toute transparence, comment on gère les annulations au Domaine. Prends le temps de la lire avant de réserver : en confirmant ton séjour ou ton événement avec nous, tu acceptes les conditions ci-dessous.</p>
 
     <h2>Préséance sur les services tiers</h2>
@@ -85,16 +86,14 @@
     <p>Les réservations de groupe (événements, locations d'envergure, privatisation du Domaine) bloquent des dates et un espace qu'on réserve exclusivement pour vous, souvent longtemps à l'avance. Pour cette raison, ces réservations sont <strong>non remboursables</strong>. Un paiement complet à l'avance peut être exigé pour les réservations de groupe ou de grande valeur, et celles-ci demeurent non remboursables selon les conditions ci-dessus.</p>
     <p><strong>Geste de bonne volonté :</strong> si vous devez annuler, le Salon des Inconnus peut, à sa seule discrétion, remettre vos dates et votre espace en circulation. Si ces dates sont reréservées par une autre partie, nous pourrons alors vous rembourser jusqu'à <strong>70 %</strong> du montant de votre transaction. Il s'agit d'une courtoisie et non d'une garantie : ça dépend entièrement de la reréservation effective de vos dates.</p>
 
-    <div class="articledate">Publié le 23 septembre 2021</div>
-    <footer>Le Salon des Inconnus · <a href="https://www.lesalondesinconnus.com">lesalondesinconnus.com</a><br>Une question avant de réserver ? Écris-nous à <a href="mailto:alex@lesalondesinconnus.com">alex@lesalondesinconnus.com</a></footer>
+    <div class="foot">
+      <span>Le Salon des Inconnus · <a href="https://www.lesalondesinconnus.com">lesalondesinconnus.com</a></span>
+      <span class="date">23 septembre 2021</span>
+    </div>
   </div>
 
   <!-- ===================== ENGLISH ===================== -->
   <div id="en" class="langblock" hidden>
-    <div class="brand">Le Salon des Inconnus</div>
-    <h1>Cancellation Policy</h1>
-    <div class="rule"></div>
-
     <p>At Le Salon des Inconnus, we like things clear from the very start. So here, in full transparency, is how we handle cancellations at the Domaine. Please take a moment to read it before booking: by confirming your stay or your event with us, you agree to the terms below.</p>
 
     <h2>Precedence over third-party services</h2>
@@ -112,8 +111,10 @@
     <p>Group bookings (events, large-scale rentals, full buyouts of the Domaine) hold dates and space that we reserve exclusively for you, often well in advance. For that reason, these bookings are <strong>non-refundable</strong>. Full prepayment may be required for group or high-value bookings, and these remain non-refundable under the terms above.</p>
     <p><strong>Goodwill gesture:</strong> if you must cancel, Le Salon des Inconnus may, at its sole discretion, put your dates and space back into circulation. If those dates are re-booked by another party, we may then refund you up to <strong>70%</strong> of your transaction amount. This is a courtesy, not a guarantee: it depends entirely on your dates actually being re-booked.</p>
 
-    <div class="articledate">Published on September 23, 2021</div>
-    <footer>Le Salon des Inconnus · <a href="https://www.lesalondesinconnus.com">lesalondesinconnus.com</a><br>A question before booking? Write to us at <a href="mailto:alex@lesalondesinconnus.com">alex@lesalondesinconnus.com</a></footer>
+    <div class="foot">
+      <span>Le Salon des Inconnus · <a href="https://www.lesalondesinconnus.com">lesalondesinconnus.com</a></span>
+      <span class="date">September 23, 2021</span>
+    </div>
   </div>
 
 </div>
@@ -123,6 +124,7 @@
     var fr = l !== 'en';
     document.getElementById('fr').hidden = !fr;
     document.getElementById('en').hidden = fr;
+    document.getElementById('title').textContent = fr ? "Politique d'annulation" : 'Cancellation Policy';
     document.getElementById('btn-fr').classList.toggle('active', fr);
     document.getElementById('btn-en').classList.toggle('active', !fr);
     document.documentElement.lang = fr ? 'fr' : 'en';
