@@ -35,6 +35,10 @@ type QuoteResult = {
   currency: string;
   nights: number;
 };
+type SuggestionsResult = {
+  alternateRooms: { listingId: number; available: true }[];
+  closestDates: { checkIn: string; checkOut: string } | null;
+};
 
 // Shimmer SFX — same synth recipe as the main hub orb (apps/hub/src/HubOrb.tsx).
 // Stacked sine partials in A major glide upward and bloom in over ~0.3s, with
@@ -245,22 +249,42 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     return d.toISOString().slice(0, 10);
   }, []);
 
+  // Map a HostAway listing id back to the room's index in this modal's cycle, so
+  // a suggested alternate room can be opened in place (keeping the chosen dates).
+  const indexByListingId = useMemo(() => {
+    const m = new Map<number, number>();
+    rooms.forEach((r, i) => {
+      const id = listingIdFromBookingLink(r.bookingLink);
+      if (id != null) m.set(id, i);
+    });
+    return m;
+  }, [rooms]);
+
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [guests, setGuests] = useState(room.guests ?? 2);
   const [availability, setAvailability] = useState<AvailabilityResult | null>(null);
   const [quote, setQuote] = useState<QuoteResult | null>(null);
+  const [suggestions, setSuggestions] = useState<SuggestionsResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [lookupError, setLookupError] = useState<string | null>(null);
+
+  // When the visitor jumps to a suggested alternate room, the same dates should
+  // carry over so the new room re-checks them. This ref survives the room-change
+  // reset below; the reset honours it instead of clearing the dates.
+  const carryDatesRef = useRef<{ checkIn: string; checkOut: string } | null>(null);
 
   // Reset the picker whenever the room changes — prices/availability are
   // per-listing and must not carry over.
   useEffect(() => {
-    setCheckIn('');
-    setCheckOut('');
+    const carry = carryDatesRef.current;
+    carryDatesRef.current = null;
+    setCheckIn(carry?.checkIn ?? '');
+    setCheckOut(carry?.checkOut ?? '');
     setGuests(room.guests ?? 2);
     setAvailability(null);
     setQuote(null);
+    setSuggestions(null);
     setLookupError(null);
     setLoading(false);
   }, [room.id, room.guests]);
@@ -272,12 +296,14 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     if (!listingId || !checkIn || !checkOut) {
       setAvailability(null);
       setQuote(null);
+      setSuggestions(null);
       setLookupError(null);
       return;
     }
     if (checkIn >= checkOut) {
       setAvailability(null);
       setQuote(null);
+      setSuggestions(null);
       setLookupError(t('Check-out must be after check-in.', 'Le départ doit suivre l’arrivée.'));
       return;
     }
@@ -285,6 +311,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     let active = true;
     setLoading(true);
     setLookupError(null);
+    setSuggestions(null);
 
     // getFunctions()/httpsCallable() throw synchronously if Firebase isn't
     // initialised; guard so a misconfigured client never crashes the modal.
@@ -310,8 +337,28 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     lookup
       .then(([availRes, quoteRes]) => {
         if (!active) return;
-        setAvailability((availRes as { data: AvailabilityResult }).data);
+        const avail = (availRes as { data: AvailabilityResult }).data;
+        setAvailability(avail);
         setQuote((quoteRes as { data: QuoteResult }).data);
+
+        // When the room is not bookable for these dates, fetch two ways forward:
+        // another room free for the same dates, and the nearest dates for THIS
+        // room. Degrade silently — a failure just leaves the plain message.
+        const unavailable = !avail.allAvailable || !avail.meetsMinStay;
+        if (unavailable) {
+          try {
+            const suggestFn = httpsCallable(getFunctions(), 'getRoomSuggestions');
+            suggestFn({ listingId, checkIn, checkOut, numberOfGuests: guests })
+              .then((res) => {
+                if (active) setSuggestions((res as { data: SuggestionsResult }).data);
+              })
+              .catch((err: unknown) => {
+                console.error('getRoomSuggestions failed:', err);
+              });
+          } catch (err) {
+            console.error('getRoomSuggestions init failed:', err);
+          }
+        }
       })
       .catch((err: unknown) => {
         if (!active) return;
@@ -340,6 +387,37 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           currency: quote.currency || 'CAD',
         }).format(quote.total)
       : null;
+
+  // Format a YYYY-MM-DD date for display. Parse as UTC so the label matches the
+  // stored day regardless of the visitor's timezone.
+  const formatDate = (iso: string) =>
+    new Intl.DateTimeFormat(language === 'FR' ? 'fr-CA' : 'en-CA', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(new Date(`${iso}T00:00:00Z`));
+
+  // Resolve a returned listing id to its local room for the alternate-room label.
+  const roomForListingId = (id: number) =>
+    rooms.find((r) => listingIdFromBookingLink(r.bookingLink) === id) ?? null;
+  const roomTitle = (r: Accommodation) =>
+    language === 'FR' && r.title_fr ? r.title_fr : r.title;
+
+  // Suggestion actions. Switch to a suggested room keeping the chosen dates so
+  // its picker re-checks them; or apply the suggested nearest window to THIS
+  // room's picker (which retriggers the availability + price lookup).
+  const switchToRoom = (targetListingId: number) => {
+    const targetIdx = indexByListingId.get(targetListingId);
+    if (targetIdx == null) return;
+    if (checkIn && checkOut) carryDatesRef.current = { checkIn, checkOut };
+    setIndex(targetIdx);
+  };
+
+  const applyDates = (nextIn: string, nextOut: string) => {
+    setCheckIn(nextIn);
+    setCheckOut(nextOut);
+  };
 
   // Esc to close, ←/→ to cycle rooms.
   useEffect(() => {
@@ -585,6 +663,68 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
                   </div>
                 )}
               </div>
+
+              {/* When this room is not free for the chosen dates, offer two ways
+                  forward: another room open for the SAME dates, and the nearest
+                  dates for THIS room. Both come from getRoomSuggestions. */}
+              {!loading && !lookupError && availability &&
+                (!availability.allAvailable || !availability.meetsMinStay) &&
+                suggestions &&
+                (suggestions.alternateRooms.length > 0 || suggestions.closestDates) && (
+                  <div className="flex flex-col gap-4 border-t border-[#c5a059]/15 pt-4 mt-1">
+                    {suggestions.alternateRooms.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.35em]">
+                          {t(
+                            'Another room is free for these dates',
+                            'Une autre chambre est libre pour ces dates',
+                          )}
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {suggestions.alternateRooms.slice(0, 2).map((alt) => {
+                            const altRoom = roomForListingId(alt.listingId);
+                            if (!altRoom) return null;
+                            return (
+                              <button
+                                key={alt.listingId}
+                                onClick={() => switchToRoom(alt.listingId)}
+                                className="px-4 py-2 font-cinzel text-[10px] uppercase tracking-[0.2em] border border-[#c5a059]/50 text-[#f3e5ab] hover:border-[#c5a059] hover:bg-[#c5a059]/10 transition-colors"
+                              >
+                                {roomTitle(altRoom)}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {suggestions.closestDates && (
+                      <div className="flex flex-col gap-2">
+                        <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.35em]">
+                          {t('Closest available dates', 'Dates disponibles les plus proches')}
+                        </span>
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="text-[#f3e5ab] font-lato text-sm">
+                            {formatDate(suggestions.closestDates.checkIn)}
+                            {' → '}
+                            {formatDate(suggestions.closestDates.checkOut)}
+                          </span>
+                          <button
+                            onClick={() =>
+                              applyDates(
+                                suggestions.closestDates!.checkIn,
+                                suggestions.closestDates!.checkOut,
+                              )
+                            }
+                            className="px-4 py-2 font-cinzel text-[10px] uppercase tracking-[0.2em] border border-[#c5a059]/50 text-[#f3e5ab] hover:border-[#c5a059] hover:bg-[#c5a059]/10 transition-colors"
+                          >
+                            {t('See these dates', 'Voir ces dates')}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
             </div>
           )}
 

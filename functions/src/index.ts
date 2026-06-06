@@ -235,6 +235,53 @@ type HostawayCalendarDay = {
   availableUnitsToSell?: number | null;
 };
 
+// Fetch a listing's raw calendar for [startDate, endDate] inclusive. Shared by
+// the availability/suggestion endpoints so the calendar logic lives in one place.
+async function fetchCalendar(
+  token: string,
+  listingId: number,
+  startDate: string,
+  endDate: string,
+): Promise<HostawayCalendarDay[]> {
+  const url = `${HOSTAWAY_BASE}/listings/${listingId}/calendar?startDate=${startDate}&endDate=${endDate}`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  const json = (await res.json()) as { status?: string; result?: HostawayCalendarDay[] };
+  if (!res.ok || json.status !== 'success' || !Array.isArray(json.result)) {
+    console.error('HostAway calendar error:', res.status, JSON.stringify(json).slice(0, 500));
+    throw new HttpsError('internal', 'Could not read HostAway availability.');
+  }
+  return json.result;
+}
+
+// Add `days` calendar-days to a YYYY-MM-DD string (UTC, no DST drift).
+function addDays(date: string, days: number): string {
+  const d = new Date(`${date}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+function nightsBetween(checkIn: string, checkOut: string): number {
+  return Math.round((Date.parse(checkOut) - Date.parse(checkIn)) / 86_400_000);
+}
+
+// Given the occupied nights [checkIn, checkOut) drawn from a calendar map, decide
+// whether the stay is fully available AND satisfies the listing's minimum stay.
+function windowIsBookable(
+  byDate: Map<string, HostawayCalendarDay>,
+  checkIn: string,
+  checkOut: string,
+): boolean {
+  const requestedNights = nightsBetween(checkIn, checkOut);
+  if (requestedNights <= 0) return false;
+  let minStay = 1;
+  for (let cursor = checkIn; cursor < checkOut; cursor = addDays(cursor, 1)) {
+    const day = byDate.get(cursor);
+    if (!day || day.isAvailable !== 1 || day.status !== 'available') return false;
+    minStay = Math.max(minStay, day.minimumStay ?? 1);
+  }
+  return requestedNights >= minStay;
+}
+
 // getHostawayAvailability(listingId, startDate, endDate)
 //   → { days: [{ date, available, minimumStay, price }], allAvailable, minStay }
 // Reads GET /listings/{id}/calendar. `endDate` is the checkout day; the
@@ -258,16 +305,10 @@ export const getHostawayAvailability = onCall(
     }
 
     const token = await getHostawayToken();
-    const url = `${HOSTAWAY_BASE}/listings/${id}/calendar?startDate=${startDate}&endDate=${endDate}`;
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    const json = (await res.json()) as { status?: string; result?: HostawayCalendarDay[] };
-    if (!res.ok || json.status !== 'success' || !Array.isArray(json.result)) {
-      console.error('HostAway calendar error:', res.status, JSON.stringify(json).slice(0, 500));
-      throw new HttpsError('internal', 'Could not read HostAway availability.');
-    }
+    const result = await fetchCalendar(token, id, startDate, endDate);
 
     // The occupied nights are [startDate, endDate). Exclude the checkout day.
-    const nights = json.result.filter((d) => d.date >= startDate && d.date < endDate);
+    const nights = result.filter((d) => d.date >= startDate && d.date < endDate);
     const days = nights.map((d) => ({
       date: d.date,
       available: d.isAvailable === 1 && d.status === 'available',
@@ -356,5 +397,98 @@ export const getHostawayQuote = onCall(
       components,
       nights,
     };
+  },
+);
+
+// getRoomSuggestions(listingId, checkIn, checkOut, numberOfGuests)
+//   → { alternateRooms: [{ listingId, available: true }], closestDates: { checkIn, checkOut } | null }
+// Used when the chosen room is NOT free for the chosen dates. Offers two ways
+// forward, both computed server-side from the live calendar:
+//   1. alternateRooms — the OTHER allow-listed listings that are fully open and
+//      meet their minimum stay for the SAME checkIn..checkOut.
+//   2. closestDates   — for the GIVEN listing, the nearest window of the same
+//      nights count within roughly +/- 45 days of checkIn (soonest on/after the
+//      requested date preferred, else the closest earlier window).
+// guests is validated for parity with the other endpoints but availability does
+// not depend on it; price is intentionally not fetched here to keep latency low.
+const SUGGESTION_WINDOW_DAYS = 45;
+
+export const getRoomSuggestions = onCall(
+  { secrets: [HOSTAWAY_API_KEY, HOSTAWAY_ACCOUNT_ID], cors: true },
+  async (request) => {
+    const { listingId, checkIn, checkOut, numberOfGuests } = (request.data ?? {}) as {
+      listingId?: number;
+      checkIn?: string;
+      checkOut?: string;
+      numberOfGuests?: number;
+    };
+
+    const id = validateListing(listingId);
+    if (!isValidDate(checkIn) || !isValidDate(checkOut)) {
+      throw new HttpsError('invalid-argument', 'Dates must be YYYY-MM-DD.');
+    }
+    if (checkIn >= checkOut) {
+      throw new HttpsError('invalid-argument', 'Check-out must be after check-in.');
+    }
+    const guests = Number(numberOfGuests);
+    if (!Number.isInteger(guests) || guests < 1 || guests > 50) {
+      throw new HttpsError('invalid-argument', 'Invalid guest count.');
+    }
+
+    const nights = nightsBetween(checkIn, checkOut);
+    const token = await getHostawayToken();
+
+    // 1. Other rooms free for the SAME dates. Check all 6 in parallel; if any one
+    //    calendar read fails, drop just that room rather than failing the request.
+    const others = [...ALLOWED_LISTINGS].filter((other) => other !== id);
+    const alternateResults = await Promise.all(
+      others.map(async (other) => {
+        try {
+          const cal = await fetchCalendar(token, other, checkIn, checkOut);
+          const byDate = new Map(cal.map((d) => [d.date, d]));
+          return windowIsBookable(byDate, checkIn, checkOut)
+            ? { listingId: other, available: true as const }
+            : null;
+        } catch (err) {
+          console.error('Suggestion calendar read failed for', other, err);
+          return null;
+        }
+      }),
+    );
+    const alternateRooms = alternateResults.filter(
+      (r): r is { listingId: number; available: true } => r !== null,
+    );
+
+    // 2. Closest available window of the same length for the GIVEN room. Pull one
+    //    calendar spanning the search window, then slide an N-night window.
+    let closestDates: { checkIn: string; checkOut: string } | null = null;
+    try {
+      const searchStart = addDays(checkIn, -SUGGESTION_WINDOW_DAYS);
+      // +nights so a window starting on the last in-window day still has its
+      // checkout night present in the fetched calendar.
+      const searchEnd = addDays(checkIn, SUGGESTION_WINDOW_DAYS + nights);
+      const cal = await fetchCalendar(token, id, searchStart, searchEnd);
+      const byDate = new Map(cal.map((d) => [d.date, d]));
+
+      // Candidate check-ins ordered by distance from the requested date, ties
+      // broken in favour of the later (on/after) date.
+      const candidates: string[] = [];
+      for (let offset = 0; offset <= SUGGESTION_WINDOW_DAYS; offset++) {
+        candidates.push(addDays(checkIn, offset));
+        if (offset > 0) candidates.push(addDays(checkIn, -offset));
+      }
+      for (const candIn of candidates) {
+        const candOut = addDays(candIn, nights);
+        if (windowIsBookable(byDate, candIn, candOut)) {
+          closestDates = { checkIn: candIn, checkOut: candOut };
+          break;
+        }
+      }
+    } catch (err) {
+      console.error('Closest-dates search failed:', err);
+      closestDates = null;
+    }
+
+    return { alternateRooms, closestDates };
   },
 );
