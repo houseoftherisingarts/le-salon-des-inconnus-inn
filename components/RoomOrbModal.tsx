@@ -121,14 +121,12 @@ export function useRoomOrb(): RoomOrbCtx {
 type ProviderProps = { children: ReactNode; language: 'EN' | 'FR' };
 
 export function RoomOrbProvider({ children, language }: ProviderProps) {
-  // Rooms cycled by "Next Room". Skip only the whole-estate listing — it's a
-  // different shopping experience. Coming-soon rooms are kept in the cycle so
-  // visitors can read about them; the Choose button is replaced with a
-  // "Bientôt" disabled state inside the modal.
-  const rooms = useMemo(
-    () => ACCOMMODATIONS.filter((a) => a.id !== 'manor'),
-    [],
-  );
+  // All accommodations INCLUDING the whole-estate "manor", so clicking the manor
+  // card opens its own listing (was falling back to index 0 = The Writer). The
+  // manor is kept OUT of the "Next Room" browse cycle (see nextRoom) because it
+  // is a different shopping experience. Coming-soon rooms stay in the cycle so
+  // visitors can read about them; their Choose button shows a "Bientôt" state.
+  const rooms = useMemo(() => ACCOMMODATIONS, []);
 
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
@@ -217,8 +215,12 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
   }, [imgIdx, room.id]);
 
   const nextRoom = useCallback(() => {
-    setIndex((index + 1) % rooms.length);
-  }, [index, rooms.length, setIndex]);
+    // Skip the whole-estate "manor" in the browse cycle (it is reachable only by
+    // clicking its own card).
+    let n = (index + 1) % rooms.length;
+    while (rooms[n] && rooms[n].id === 'manor') n = (n + 1) % rooms.length;
+    setIndex(n);
+  }, [index, rooms, setIndex]);
 
   // Keep the guest on lesalondesinconnus.com: open HostAway's booking + payment
   // inside an on-site overlay instead of a new tab. (Full native checkout is the
