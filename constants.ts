@@ -14,6 +14,7 @@ const PLACEHOLDER_ROOM = "https://images.unsplash.com/photo-1590490360182-f33efe
 const PLACEHOLDER_MANOR = "https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg";
 const PLACEHOLDER_YURT = "https://storage.googleapis.com/salondesinconnus/inn/yourte.png";
 const PLACEHOLDER_BUS = "https://storage.googleapis.com/salondesinconnus/inn/us%20copy.jpg";
+const PLACEHOLDER_TINY = "https://storage.googleapis.com/salondesinconnus/inn/For%20site%20temp%20mini%20(1).jpg";
 
 const COMMON_AMENITIES: Accommodation['amenities'] = ['parking', 'wifi', 'hot-tub', 'terrasse', 'projector', 'boardgames'];
 
@@ -118,6 +119,23 @@ export const ACCOMMODATIONS: Accommodation[] = [
     id: 'tiny',
     title: "The Meditator",
     title_fr: "La Méditante",
+    type: "Off-grid Eco-Stay",
+    type_fr: "Éco-Gîte Hors-Réseau",
+    description: "Tucked away in the forest (a 2-minute walk from the inn), the Meditator offers a true intimate disconnect by the brookside: no wifi, no LTE. We provide a battery for your lights and laptops. Like the rooms, you have access to the inn and its amenities.",
+    description_fr: "En retrait dans la foret (2 minutes de l'auberge), la méditante offre une vraie déconnexion intime en bord de ruisseau : pas de wifi, pas de LTE. Nous fournissons une batterie pour vos lumières et ordinateurs. Comme avec les chambres, vous avez accès à l'auberge et ses commodités.",
+    guests: 4,
+    maxGuests: 6,
+    beds: 1,
+    baths: "0.5 + 3",
+    amenities: ['parking', 'no-wifi', 'off-grid', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
+    images: [PLACEHOLDER_TINY, PLACEHOLDER_MANOR],
+    bookingLink: "#",
+    status: 'COMING_SOON'
+  },
+  {
+    id: 'mini-maison',
+    title: "The Tiny House",
+    title_fr: "La Mini-Maison",
     type: "Handmade Tiny House",
     type_fr: "Mini-Maison Artisanale",
     description: "A handmade tiny house steps from the inn: cedar shingles, a blue tin roof, and an all-wood interior bathed in light. A sculpted staircase wraps around a real birch trunk up to a cozy mezzanine bed, while a reading nook nestles in the bay window and an antique cast-iron stove stands as a decorative centerpiece. A cocoon for two, with access to the inn and its amenities. Available July 1st.",
