@@ -13,7 +13,6 @@ export const MUSIC_GENRES = {
 const PLACEHOLDER_ROOM = "https://images.unsplash.com/photo-1590490360182-f33efe29a79d?q=80&w=1000&auto=format&fit=crop";
 const PLACEHOLDER_MANOR = "https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg";
 const PLACEHOLDER_YURT = "https://storage.googleapis.com/salondesinconnus/inn/yourte.png";
-const PLACEHOLDER_TINY = "https://storage.googleapis.com/salondesinconnus/inn/For%20site%20temp%20mini%20(1).jpg";
 const PLACEHOLDER_BUS = "https://storage.googleapis.com/salondesinconnus/inn/us%20copy.jpg";
 
 const COMMON_AMENITIES: Accommodation['amenities'] = ['parking', 'wifi', 'hot-tub', 'terrasse', 'projector', 'boardgames'];
@@ -119,16 +118,22 @@ export const ACCOMMODATIONS: Accommodation[] = [
     id: 'tiny',
     title: "The Meditator",
     title_fr: "La Méditante",
-    type: "Off-grid Eco-Stay",
-    type_fr: "Éco-Gîte Hors-Réseau",
-    description: "Tucked away in the forest (a 2-minute walk from the inn), the Meditator offers a true intimate disconnect by the brookside: no wifi, no LTE. We provide a battery for your lights and laptops. Like the rooms, you have access to the inn and its amenities.",
-    description_fr: "En retrait dans la foret (2 minutes de l'auberge), la méditante offre une vraie déconnexion intime en bord de ruisseau : pas de wifi, pas de LTE. Nous fournissons une batterie pour vos lumières et ordinateurs. Comme avec les chambres, vous avez accès à l'auberge et ses commodités.",
-    guests: 4,
-    maxGuests: 6,
+    type: "Handmade Tiny House",
+    type_fr: "Mini-Maison Artisanale",
+    description: "A handmade tiny house steps from the inn: cedar shingles, a blue tin roof, and an all-wood interior bathed in light. A sculpted staircase wraps around a real birch trunk up to a cozy mezzanine bed, while a reading nook nestles in the bay window and an antique cast-iron stove stands as a decorative centerpiece. A cocoon for two, with access to the inn and its amenities. Available July 1st.",
+    description_fr: "Une mini-maison faite à la main à deux pas de l'auberge : bardeaux de cèdre, toit de tôle bleu et un intérieur tout en bois baigné de lumière. Un escalier sculpté s'enroule autour d'un véritable tronc de bouleau jusqu'à une mezzanine douillette, une banquette de lecture se niche dans la baie vitrée et un poêle de fonte ancien veille comme pièce décorative. Un cocon pour deux, avec accès à l'auberge et ses commodités. Disponible dès le 1er juillet.",
+    guests: 2,
+    maxGuests: 2,
     beds: 1,
     baths: "0.5 + 3",
-    amenities: ['parking', 'no-wifi', 'off-grid', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
-    images: [PLACEHOLDER_TINY, PLACEHOLDER_MANOR],
+    amenities: ['parking', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
+    images: [
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-1.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-2.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-3.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-5.jpeg"
+    ],
     bookingLink: "#",
     status: 'COMING_SOON'
   },
