@@ -152,7 +152,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
       "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg",
       "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-5.jpeg"
     ],
-    bookingLink: "#",
+    bookingLink: "https://salon.holidayfuture.com/listings/559483",
     status: 'COMING_SOON'
   },
   {
