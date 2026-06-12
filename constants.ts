@@ -134,8 +134,8 @@ export const ACCOMMODATIONS: Accommodation[] = [
   },
   {
     id: 'mini-maison',
-    title: "The Tiny House",
-    title_fr: "La Mini-Maison",
+    title: "The Sculptress",
+    title_fr: "La Sculptrice",
     type: "Handmade Tiny House",
     type_fr: "Mini-Maison Artisanale",
     description: "A handmade tiny house steps from the inn: cedar shingles, a blue tin roof, and an all-wood interior bathed in light. A sculpted staircase wraps around a real birch trunk up to a cozy mezzanine bed, while a reading nook nestles in the bay window and an antique cast-iron stove stands as a decorative centerpiece. A cocoon for two, with access to the inn and its amenities. Available July 1st.",
