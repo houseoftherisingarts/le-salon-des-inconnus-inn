@@ -146,11 +146,11 @@ export const ACCOMMODATIONS: Accommodation[] = [
     baths: "0.5 + 3",
     amenities: ['parking', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
     images: [
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-1.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-2.jpeg",
       "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-3.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-5.jpeg"
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-2.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-1.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-exterieur.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg"
     ],
     bookingLink: "https://salon.holidayfuture.com/listings/559483",
     status: 'COMING_SOON'

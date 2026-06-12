@@ -322,6 +322,20 @@ export const INN_HERO_IMAGES = [
   "https://storage.googleapis.com/salondesinconnus/inn/yourte.png",
 ];
 
+// Per-image horizontal focal point in CSS object-position terms (0 = show the
+// LEFT of the photo … 0.5 = centred … 1 = show the RIGHT), paired with
+// INN_HERO_IMAGES above. These are just defaults: the live values are editable
+// by dragging in the focal admin (/?herofocal) and stored in Firestore.
+export const INN_HERO_FOCUS = [
+  0.50, // drone — aerial, centred
+  0.68, // maison — house sits right of centre
+  0.58, // ecrivaine — bed centre-right
+  0.66, // musicienne — bed on the right
+  0.34, // cineast — bed on the left
+  0.58, // amphi — bed centre-right
+  0.50, // yourte — centred
+];
+
 // WebGL shaders — liquid glass bubble transition (ported from Collectif Sexe+)
 const HW_VERT = `varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
 const HW_FRAG = `
@@ -1464,6 +1478,8 @@ export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
     const connectedRooms = ACCOMMODATIONS.filter(a => connectedIds.includes(a.id));
     const sortOrder = { 'room3': 0, 'room4': 1, 'room2': 2, 'room1': 3, 'yurt': 4 };
     connectedRooms.sort((a, b) => sortOrder[a.id as keyof typeof sortOrder] - sortOrder[b.id as keyof typeof sortOrder]);
+    const { openRoomOrb } = useRoomOrb();
+    const branchColor = vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20';
     if (!manor) return null;
     return (
         <div className="w-full max-w-[1920px] mx-auto pb-12 relative px-6 md:px-12 pt-12">
@@ -1486,22 +1502,66 @@ export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
                         {language === 'EN' ? 'Includes' : 'Inclut'}
                     </span>
                 </div>
+                {/* Second pill: the rooms below can also be booked one at a time. */}
+                <div className={`mt-2 px-5 py-1 rounded-full z-20 border
+                    ${vibe === 'HOSTEL' ? 'bg-[#1e1e24]/70 border-[#c5a059]/45 text-[#f3e5ab]/80' :
+                      vibe === 'SHIRE' ? 'bg-[#2f2010]/70 border-[#dcb055]/45 text-[#faeecd]/80' :
+                      'bg-[#0a0a0a]/70 border-white/15 text-neutral-400'}`}>
+                    <span className={`text-[8px] uppercase tracking-[0.18em]
+                        ${vibe === 'HOSTEL' ? 'font-josefin' :
+                          vibe === 'SHIRE' ? 'font-medieval' :
+                          'font-cinzel'}`}>
+                        {language === 'EN' ? '(or book by the room)' : '(ou réservez à la chambre)'}
+                    </span>
+                </div>
                 <div className={`h-8 w-px ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
-                <div className={`w-[90%] md:w-[82%] h-px relative
-                    ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}>
-                    <div className={`absolute top-0 left-0 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
-                    <div className={`absolute top-0 left-1/4 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
-                    <div className={`absolute top-0 left-1/2 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
-                    <div className={`absolute top-0 left-3/4 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
-                    <div className={`absolute top-0 right-0 w-px h-8 ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
+                {/* Branch fan — DESKTOP: 5 drop-lines over the 5-across card row. */}
+                <div className={`hidden md:block w-[82%] h-px relative ${branchColor}`}>
+                    <div className={`absolute top-0 left-0 w-px h-8 ${branchColor}`}></div>
+                    <div className={`absolute top-0 left-1/4 w-px h-8 ${branchColor}`}></div>
+                    <div className={`absolute top-0 left-1/2 w-px h-8 ${branchColor}`}></div>
+                    <div className={`absolute top-0 left-3/4 w-px h-8 ${branchColor}`}></div>
+                    <div className={`absolute top-0 right-0 w-px h-8 ${branchColor}`}></div>
+                </div>
+                {/* Branch fan — MOBILE: a drop-line centered over each of the 5 small
+                    bubbles below (grid-cols-5 cell centers ≈ 10/30/50/70/90%). */}
+                <div className="md:hidden w-full relative h-8">
+                    <div className={`absolute top-0 h-px ${branchColor}`} style={{ left: '10%', right: '10%' }}></div>
+                    {[10, 30, 50, 70, 90].map((p) => (
+                        <div key={p} className={`absolute top-0 w-px h-8 ${branchColor}`} style={{ left: `${p}%` }}></div>
+                    ))}
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-20 mt-8 w-full">
+            {/* DESKTOP: the connected rooms as full cards in a 5-across row. */}
+            <div className="hidden md:grid md:grid-cols-5 gap-6 relative z-20 mt-8 w-full">
                 {connectedRooms.map((room, idx) => (
                     <RevealOnScroll key={room.id} delay={idx * 100} className="h-auto md:h-[450px]">
                         <ListingCard item={room} language={language} vibe={vibe} />
                     </RevealOnScroll>
                 ))}
+            </div>
+            {/* MOBILE: 5 small bubbles in one row, each aligned under its branch
+                line (no side-scroll). Tapping a bubble opens the room preview. */}
+            <div className="md:hidden grid grid-cols-5 gap-1.5 w-full relative z-20">
+                {connectedRooms.map((room) => {
+                    const label = (language === 'FR' && room.title_fr) ? room.title_fr : room.title;
+                    return (
+                        <button
+                            key={room.id}
+                            type="button"
+                            onClick={() => openRoomOrb(room)}
+                            aria-label={label}
+                            className="flex flex-col items-center gap-1.5 group"
+                        >
+                            <span className={`block w-full aspect-square rounded-full overflow-hidden border ${vibe === 'HOSTEL' ? 'border-[#c5a059]/70' : vibe === 'SHIRE' ? 'border-[#dcb055]/70' : 'border-white/30'} shadow-[0_6px_18px_rgba(0,0,0,0.5)] transition-transform group-active:scale-95`}>
+                                <img src={room.images[0]} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                            </span>
+                            <span className="text-[7.5px] leading-tight uppercase tracking-wide text-[#f3e5ab] font-josefin text-center w-full truncate">
+                                {label}
+                            </span>
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );
@@ -1509,8 +1569,10 @@ export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
 
 // ─── Independent Stays Section (extracted) ─────────────────────────────────────
 export const IndependentStaysSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ language, vibe }) => {
-    const independentIds = ['tiny', 'bus'];
-    const independentRooms = ACCOMMODATIONS.filter(a => independentIds.includes(a.id));
+    const independentIds = ['tiny', 'bus', 'mini-maison'];
+    const independentRooms = [...ACCOMMODATIONS.filter(a => independentIds.includes(a.id))]
+        .sort((a, b) => independentIds.indexOf(a.id) - independentIds.indexOf(b.id));
+    const { openRoomOrb } = useRoomOrb();
     return (
         <div className="w-full max-w-[1920px] mx-auto pb-12 px-6 md:px-12 pt-24">
             <RevealOnScroll className="text-center mb-16">
@@ -1527,12 +1589,47 @@ export const IndependentStaysSection: React.FC<{ language: 'EN' | 'FR'; vibe: Vi
                     {language === 'EN' ? 'Off-grid / Secluded' : 'Hors-Réseau / Isolé'}
                 </p>
             </RevealOnScroll>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
-                {independentRooms.map((room, idx) => (
-                    <RevealOnScroll key={room.id} delay={idx * 150} className="h-auto md:h-[500px]">
-                        <ListingCard item={room} language={language} vibe={vibe} />
-                    </RevealOnScroll>
-                ))}
+            <div className="grid grid-cols-3 gap-4 md:gap-12 max-w-4xl mx-auto">
+                {independentRooms.map((room, idx) => {
+                    const label = (language === 'FR' && room.title_fr) ? room.title_fr : room.title;
+                    const subtitle = (language === 'FR' && room.type_fr) ? room.type_fr : room.type;
+                    return (
+                        <RevealOnScroll key={room.id} delay={idx * 150}>
+                            <button
+                                type="button"
+                                onClick={() => openRoomOrb(room)}
+                                aria-label={label}
+                                className="flex flex-col items-center gap-3 group w-full"
+                            >
+                                <span className={`relative block w-full aspect-square rounded-full overflow-hidden border-2
+                                    ${vibe === 'HOSTEL' ? 'border-[#c5a059]/70' : vibe === 'SHIRE' ? 'border-[#dcb055]/70' : 'border-white/30'}
+                                    shadow-[0_10px_30px_rgba(0,0,0,0.55)] transition-transform duration-300 group-hover:scale-[1.03] group-active:scale-95`}>
+                                    <img src={room.images[0]} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                                    {room.status === 'COMING_SOON' && (
+                                        <span className={`absolute bottom-[12%] left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full border text-[8px] md:text-[10px] uppercase tracking-[0.18em]
+                                            ${vibe === 'HOSTEL' ? 'bg-[#1e1e24]/85 border-[#c5a059] text-[#f3e5ab] font-josefin' :
+                                              vibe === 'SHIRE' ? 'bg-[#2f2010]/85 border-[#dcb055] text-[#faeecd] font-medieval' :
+                                              'bg-[#0a0a0a]/85 border-white/30 text-neutral-300 font-cinzel'}`}>
+                                            {language === 'EN' ? 'Coming soon' : 'Bientôt'}
+                                        </span>
+                                    )}
+                                </span>
+                                <span className="flex flex-col items-center gap-0.5">
+                                    <span className={`text-xs md:text-base uppercase tracking-[0.15em] text-white
+                                        ${vibe === 'HOSTEL' ? 'font-prata' : vibe === 'SHIRE' ? 'font-medieval' : 'font-cinzel'}`}>
+                                        {label}
+                                    </span>
+                                    <span className={`text-[8px] md:text-[10px] uppercase tracking-widest
+                                        ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]/70 font-josefin' :
+                                          vibe === 'SHIRE' ? 'text-[#faeecd]/70 font-medieval' :
+                                          'text-neutral-500 font-lato'}`}>
+                                        {subtitle}
+                                    </span>
+                                </span>
+                            </button>
+                        </RevealOnScroll>
+                    );
+                })}
             </div>
         </div>
     );
@@ -1553,7 +1650,7 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
   const connectedRooms = ACCOMMODATIONS.filter(a => connectedIds.includes(a.id));
   const sortOrder = { 'room3': 0, 'room4': 1, 'room2': 2, 'room1': 3, 'yurt': 4 };
   connectedRooms.sort((a, b) => sortOrder[a.id as keyof typeof sortOrder] - sortOrder[b.id as keyof typeof sortOrder]);
-  const independentIds = ['tiny', 'bus'];
+  const independentIds = ['tiny', 'mini-maison', 'bus'];
   const independentRooms = ACCOMMODATIONS.filter(a => independentIds.includes(a.id));
 
   const structuredData = getStructuredData(language);
