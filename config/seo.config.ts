@@ -70,12 +70,12 @@ export const PAGE_META = {
   INN: {
     EN: {
       title: "Le Salon des Inconnus | Artistic Inn in Outaouais (Namur, QC)",
-      description: "Victorian manor inn in Namur, Outaouais. Artist & entrepreneur residency with spa, hot tub, live music and wwoofing — 20 min from Parc Oméga.",
+      description: "Victorian manor inn in Namur, Outaouais. Artist & entrepreneur residency with spa, hot tub, live music and wwoofing — 25 min from Parc Oméga.",
       keywords: "Parc Omega hotel, Chateau Montebello alternative, Lac à l'épaule Outaouais, Montagnes Noires Ripon"
     },
     FR: {
       title: "Le Salon des Inconnus | Auberge d'artistes en Outaouais (Namur)",
-      description: "Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing — à 20 min du Parc Oméga.",
+      description: "Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing — à 25 min du Parc Oméga.",
       keywords: "Hôtel Parc Oméga, Hébergement Montebello, Lac à l'épaule Petite Nation, Hotel near Parc Omega, Bed and Breakfast Quebec, Auberge Ripon"
     }
   },

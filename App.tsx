@@ -8,6 +8,7 @@ import { LoadingScreen } from './components/LoadingScreen';
 const InnPage           = lazy(() => import('./components/InnPage').then(m => ({ default: m.InnPage })));
 const InnPageTest2      = lazy(() => import('./components/InnPageTest2').then(m => ({ default: m.InnPageTest2 })));
 const InnPageTest3      = lazy(() => import('./components/InnPageTest3').then(m => ({ default: m.InnPageTest3 })));
+const InnPageReserveCine = lazy(() => import('./components/InnPageReserveCine').then(m => ({ default: m.InnPageReserveCine })));
 const MassotherapyPage  = lazy(() => import('./components/MassotherapyPage').then(m => ({ default: m.MassotherapyPage })));
 const HostsPage         = lazy(() => import('./components/HostsPage').then(m => ({ default: m.HostsPage })));
 const GuidePage         = lazy(() => import('./components/GuidePage').then(m => ({ default: m.GuidePage })));
@@ -158,7 +159,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING'
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
@@ -169,6 +170,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   INN:            '/',
   INN_TEST2:      '/mainpagetest2',
   INN_TEST3:      '/mainpagetest3',
+  INN_RESERVE_CINE: '/reserve-cine',
   MASSOTHERAPY:   '/massage',
   HOSTS:          '/about',
   GUIDE:          '/guide',
@@ -593,7 +595,7 @@ const App: React.FC = () => {
       )}
 
       {/* 2. Global site header — INN + editorial test3 (test page parity) */}
-      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3') && (
+      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3' || currentView === 'INN_RESERVE_CINE') && (
         <SiteHeader
           language={language}
           currentView={currentView}
@@ -617,14 +619,17 @@ const App: React.FC = () => {
       {/* All page views — wrapped in a single Suspense boundary so navigation
           shows a brief loader while the next page chunk downloads. */}
       <Suspense fallback={<PageLoader />}>
-        {/* VIEW 1: THE INN (DEFAULT) — now backed by the redesigned editorial
-            page (was at /mainpagetest3). The original InnPage.tsx still ships
-            because some inner components (TrustedPlatforms, ManorRoomsSection,
-            DetailsSection, etc.) are imported by the redesign. */}
+        {/* VIEW 1: THE INN (DEFAULT) — the cinematic editorial page: the
+            "Les Origines / Bienvenue" section is fused with a scroll-scrubbed
+            living-room shot. Uses the REVERSED cut that ends on the full
+            living-room frame (the chosen look). InnPageTest3 still ships as the
+            /mainpagetest3 variant and provides shared inner components. */}
         {currentView === 'INN' && (
-          <InnPageTest3
+          <InnPageReserveCine
             language={language}
             onNavigate={(view) => handleNavigation(view as ViewState)}
+            videoSrc="/hero/reserve-hero-scrub-rev.mp4"
+            posterSrc="/hero/reserve-hero-poster-rev.jpg"
           />
         )}
 
@@ -641,6 +646,18 @@ const App: React.FC = () => {
           <InnPageTest3
             language={language}
             onNavigate={(view) => handleNavigation(view as ViewState)}
+          />
+        )}
+
+        {/* VIEW 1e: Inn — CINEMATIC experiment (/reserve-cine). Same page as INN,
+            but the cinematic clip is the REVERSED cut that ends on the full
+            living-room shot, so it can be compared against the live forward cut. */}
+        {currentView === 'INN_RESERVE_CINE' && (
+          <InnPageReserveCine
+            language={language}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            videoSrc="/hero/reserve-hero-scrub-rev.mp4"
+            posterSrc="/hero/reserve-hero-poster-rev.jpg"
           />
         )}
 

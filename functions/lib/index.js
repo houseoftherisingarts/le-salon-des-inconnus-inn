@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayAvailability = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
@@ -169,7 +169,7 @@ const HOSTAWAY_BASE = 'https://api.hostaway.com/v1';
 // The 7 confirmed live listing ids. Requests for anything else are rejected so
 // this endpoint can't be turned into an open proxy against the HostAway account.
 const ALLOWED_LISTINGS = new Set([
-    345789, 345790, 345792, 345787, 345786, 345791, 345788,
+    345789, 345790, 345792, 345787, 345786, 345791, 345788, 559483,
 ]);
 // Token cache shared across warm invocations of a single instance. HostAway
 // access tokens are long-lived (≈ 24 months); we refresh well before expiry.
@@ -278,6 +278,29 @@ exports.getHostawayAvailability = (0, https_1.onCall)({ secrets: [HOSTAWAY_API_K
     const requestedNights = days.length;
     const meetsMinStay = requestedNights >= minStay;
     return { days, allAvailable, minStay, requestedNights, meetsMinStay };
+});
+// getHostawayCalendar(listingId, startDate, endDate)
+//   → { days: [{ date, available, minimumStay, price }] }
+// Per-day availability for the booking calendar UI: every day in [startDate,
+// endDate] inclusive, so unavailable days can be shown crossed out. Read-only.
+exports.getHostawayCalendar = (0, https_1.onCall)({ secrets: [HOSTAWAY_API_KEY, HOSTAWAY_ACCOUNT_ID], cors: true }, async (request) => {
+    const { listingId, startDate, endDate } = (request.data ?? {});
+    const id = validateListing(listingId);
+    if (!isValidDate(startDate) || !isValidDate(endDate)) {
+        throw new https_1.HttpsError('invalid-argument', 'Dates must be YYYY-MM-DD.');
+    }
+    if (startDate >= endDate) {
+        throw new https_1.HttpsError('invalid-argument', 'endDate must be after startDate.');
+    }
+    const token = await getHostawayToken();
+    const result = await fetchCalendar(token, id, startDate, endDate);
+    const days = result.map((d) => ({
+        date: d.date,
+        available: d.isAvailable === 1 && d.status === 'available',
+        minimumStay: d.minimumStay ?? 1,
+        price: d.price ?? null,
+    }));
+    return { days };
 });
 // getHostawayQuote(listingId, checkIn, checkOut, numberOfGuests)
 //   → { total, currency, components, nights }

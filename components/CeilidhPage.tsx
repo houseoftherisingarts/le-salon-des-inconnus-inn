@@ -1494,6 +1494,46 @@ const ProgrammeChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language })
         ))}
       </div>
 
+      {/* ── Spectacles ─────────────────────────────────────────────────── */}
+      <div className="space-y-6">
+        <div className="text-center">
+          <SectionEyebrow>{t('Evening shows', 'Spectacles du soir')}</SectionEyebrow>
+          <h3
+            className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em]"
+            style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2rem)' }}
+          >
+            {t('Three nights, three artists', 'Trois soirs, trois artistes')}
+          </h3>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { img: '/samedi-marie-laurence.png',   dateFr: 'Sam 23 Mai', dateEn: 'Sat May 23', time: '21 h',    nameFr: 'Marie Laurence Nault', nameEn: 'Marie Laurence Nault', subFr: '« Mosaïque »',    subEn: '« Mosaïque »' },
+            { img: '/vendredi-eric-pichette.png',  dateFr: 'Ven 22 Mai', dateEn: 'Fri May 22', time: '20 h',    nameFr: 'Éric Pichette',        nameEn: 'Éric Pichette',        subFr: "de L'Harfang",    subEn: "de L'Harfang" },
+            { img: '/dimanche-tania-martin.png',   dateFr: 'Dim 24 Mai', dateEn: 'Sun May 24', time: '20 h 30', nameFr: 'Tania Martin',         nameEn: 'Tania Martin',         subFr: 'taniamartin.com', subEn: 'taniamartin.com' },
+          ].map((show) => (
+            <div key={show.img} className="overflow-hidden" style={{ borderRadius: '10px' }}>
+              <img
+                src={show.img}
+                alt={show.nameFr}
+                className="w-full block"
+                style={{ aspectRatio: '1080/1350', objectFit: 'cover' }}
+              />
+              <div className="px-4 py-3" style={{ background: 'rgba(20,16,12,0.95)' }}>
+                <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">
+                  {language === 'EN' ? show.dateEn : show.dateFr} · {show.time}
+                </p>
+                <p className="font-prata text-[#f3e5ab] mt-1" style={{ fontSize: '1rem' }}>
+                  {language === 'EN' ? show.nameEn : show.nameFr}
+                </p>
+                <p className="font-josefin text-neutral-400 text-xs mt-0.5">
+                  {language === 'EN' ? show.subEn : show.subFr}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Detailed schedule — hour by hour. WIP, will tighten. */}
       <div className="space-y-8">
         <div className="text-center">
@@ -3015,14 +3055,6 @@ const PracticalChapterBody: React.FC<{
         />
       </div>
 
-      {/* Show-only ticket — Saturday-night-style guests. Live spot counter from
-          events/{EVENT_ID}/showTickets; clicking opens the Square modal. */}
-      <ShowTicketSlot
-        language={language}
-        user={user}
-        memberProfile={memberProfile}
-        onRequireAuth={onRequireAuth}
-      />
     </div>
   );
 };

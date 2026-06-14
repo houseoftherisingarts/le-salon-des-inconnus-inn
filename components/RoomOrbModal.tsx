@@ -14,6 +14,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import type { Accommodation } from '../types';
 import { ACCOMMODATIONS } from '../constants';
 import RoomAmenities, { getRoomAccent } from './RoomAmenities';
+import { AvailabilityCalendar } from './AvailabilityCalendar';
 
 // Pull the HostAway listing id out of the room's booking link
 // (https://salon.holidayfuture.com/listings/<id>). Returns null for rooms
@@ -458,7 +459,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
       aria-modal="true"
       aria-label={title}
       onClick={onClose}
-      className="room-orb-root fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 py-8 overflow-y-auto"
+      className="room-orb-root fixed inset-0 z-[120] flex items-start md:items-center justify-center bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 pt-16 pb-12 md:py-8 overflow-y-auto"
     >
       {bookingUrl &&
         createPortal(
@@ -531,18 +532,19 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           onClose();
         }}
         aria-label={t('Close', 'Fermer')}
-        className="fixed top-5 right-5 md:top-8 md:right-10 w-11 h-11 rounded-full border border-white/25 bg-black/60 backdrop-blur-md text-neutral-200 hover:text-white hover:border-[#c5a059] hover:bg-black/80 transition-colors flex items-center justify-center text-2xl leading-none z-[110]"
+        className="fixed top-5 right-5 md:top-8 md:right-10 w-11 h-11 rounded-full border border-white/25 bg-black/60 backdrop-blur-md text-neutral-200 hover:text-white hover:border-[#c5a059] hover:bg-black/80 transition-colors flex items-center justify-center text-2xl leading-none z-[130]"
       >
         ×
       </button>
 
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-[1400px] mx-auto grid md:grid-cols-[1fr_1.1fr] gap-10 md:gap-16 items-center"
+        className="relative w-full max-w-[1400px] mx-auto grid md:grid-cols-[1fr_1.1fr] gap-6 md:gap-16 items-center"
       >
-        {/* LEFT — description + actions */}
-        <div className="flex flex-col gap-6 md:gap-8 max-w-xl mx-auto md:mx-0 text-center md:text-left">
-          <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em]">
+        {/* LEFT — description + actions. On mobile it sits BELOW the orb (order-2)
+            and is trimmed to amenities → price → buttons. */}
+        <div className="order-2 md:order-1 flex flex-col gap-5 md:gap-8 max-w-xl mx-auto md:mx-0 text-center md:text-left">
+          <span className="hidden md:block font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em]">
             {type}
           </span>
           <h2
@@ -552,9 +554,17 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           >
             {title}
           </h2>
+          {/* Mobile: a quick "Next Room" right under the title, above the amenities. */}
+          <button
+            type="button"
+            onClick={nextRoom}
+            className="md:hidden self-center px-7 py-3 font-cinzel font-bold text-[11px] uppercase tracking-[0.3em] border border-white/20 text-neutral-200 active:border-[#c5a059] active:text-[#f3e5ab] transition-colors"
+          >
+            {t('Next Room', 'Chambre Suivante')}
+          </button>
           <p
             key={`desc-${room.id}`}
-            className="room-orb-desc font-lato text-neutral-300 text-sm md:text-base leading-relaxed"
+            className="hidden md:block room-orb-desc font-lato text-neutral-300 text-sm md:text-base leading-relaxed"
           >
             {desc}
           </p>
@@ -587,27 +597,25 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
                 {t('Check Dates and Price', 'Vérifier Dates et Tarif')}
               </span>
 
-              <div className="flex flex-wrap gap-3">
-                <label className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
-                  {t('Check-in', 'Arrivée')}
-                  <input
-                    type="date"
-                    min={tomorrow}
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    className="bg-black/40 border border-white/20 rounded-sm px-3 py-2 text-sm text-neutral-100 font-lato focus:border-[#c5a059] focus:outline-none [color-scheme:dark]"
-                  />
-                </label>
-                <label className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
-                  {t('Check-out', 'Départ')}
-                  <input
-                    type="date"
-                    min={checkIn || tomorrow}
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                    className="bg-black/40 border border-white/20 rounded-sm px-3 py-2 text-sm text-neutral-100 font-lato focus:border-[#c5a059] focus:outline-none [color-scheme:dark]"
-                  />
-                </label>
+              <AvailabilityCalendar
+                listingId={listingId}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                onChange={(ci, co) => { setCheckIn(ci); setCheckOut(co); }}
+                language={language}
+              />
+
+              <div className="flex flex-wrap items-end justify-between gap-4 pt-1">
+                <div className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
+                  <span>{t('Your dates', 'Vos dates')}</span>
+                  <span className="text-sm font-lato text-[#f3e5ab] normal-case tracking-normal">
+                    {checkIn && checkOut
+                      ? `${formatDate(checkIn)} → ${formatDate(checkOut)}`
+                      : checkIn
+                        ? `${formatDate(checkIn)} → …`
+                        : t('Pick a check-in date', 'Choisissez une arrivée')}
+                  </span>
+                </div>
                 <label className="flex flex-col gap-1 text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-400">
                   {t('Guests', 'Personnes')}
                   <input
@@ -732,7 +740,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           <div className="flex flex-wrap gap-4 mt-2 justify-center md:justify-start">
             <button
               onClick={nextRoom}
-              className="px-7 py-4 font-cinzel font-bold text-xs uppercase tracking-[0.3em] border border-white/20 text-neutral-200 hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+              className="hidden md:inline-block px-7 py-4 font-cinzel font-bold text-xs uppercase tracking-[0.3em] border border-white/20 text-neutral-200 hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
             >
               {t('Next Room', 'Chambre Suivante')}
             </button>
@@ -774,9 +782,10 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           </span>
         </div>
 
-        {/* RIGHT — orb with cycling images */}
-        <div className="relative flex items-center justify-center">
-          <div className="relative w-full max-w-[560px] aspect-square">
+        {/* RIGHT — orb with cycling images. On mobile it leads (order-1); the
+            bottom padding gives the image dots room so they don't touch the title. */}
+        <div className="order-1 md:order-2 relative flex items-center justify-center pb-10 md:pb-0">
+          <div className="relative w-full max-w-[320px] sm:max-w-[420px] md:max-w-[560px] aspect-square">
             {/* Outer glow ring */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none"

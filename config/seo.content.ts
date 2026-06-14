@@ -59,7 +59,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       sectionTitle: "Une auberge, un manoir, un centre d'artistes",
       paragraphs: [
         "Le Salon des Inconnus est une auberge installée dans la Maison Favier, un manoir victorien bâti en 1898, à Namur, dans la région de la Petite-Nation en Outaouais (Québec). L'établissement combine cinq chambres au manoir, une yourte, un autobus aménagé avec piano, des espaces communs (salon, bibliothèque, cuisine en libre-service, salle de méditation, salle de jeux avec projecteur), un spa et un jacuzzi ouverts en tout temps, ainsi que des jardins, une serre et trois pits à feu.",
-        "Le lieu accueille à la fois les voyageurs de passage et une communauté plus durable d'artistes, de musiciens et d'entrepreneurs en résidence. On y propose de la massothérapie, une cuisine signature, des spectacles vivants, un programme de wwoofing et plusieurs événements communautaires comme le Grand Ceilidh de Mai. Namur se situe à environ vingt minutes du Parc Oméga à Montebello et à quarante-cinq minutes du domaine skiable de Mont-Tremblant — un point d'ancrage pratique pour explorer la Petite-Nation.",
+        "Le lieu accueille à la fois les voyageurs de passage et une communauté plus durable d'artistes, de musiciens et d'entrepreneurs en résidence. On y propose de la massothérapie, une cuisine signature, des spectacles vivants, un programme de wwoofing et plusieurs événements communautaires comme le Grand Ceilidh de Mai. Namur se situe à environ vingt-cinq minutes du Parc Oméga à Montebello et à trente-cinq minutes du domaine skiable de Mont-Tremblant — un point d'ancrage pratique pour explorer la Petite-Nation.",
         "L'auberge est référencée par Tourisme Outaouais et figure sur Booking.com, Hotels.com et Vrbo. Pour réserver une chambre, le domaine entier ou un séjour artistique, on peut écrire à alex@lesalondesinconnus.com ou téléphoner au 514 418 3450.",
       ],
       internalLinks: [
@@ -81,7 +81,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
         },
         {
           q: "Où êtes-vous situés en Outaouais ?",
-          a: "Au 826 Côte à Favier, à Namur (Québec), dans la région de la Petite-Nation, à environ vingt minutes du Parc Oméga (Montebello) et quarante-cinq minutes de Mont-Tremblant.",
+          a: "Au 826 Côte à Favier, à Namur (Québec), dans la région de la Petite-Nation, à environ vingt-cinq minutes du Parc Oméga (Montebello) et trente-cinq minutes de Mont-Tremblant.",
         },
         {
           q: "Acceptez-vous les artistes en résidence ?",
@@ -103,7 +103,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       sectionTitle: "An inn, a manor, an artist hub",
       paragraphs: [
         "Le Salon des Inconnus is an inn set inside Maison Favier, a Victorian manor built in 1898, in Namur, in the Petite-Nation region of Outaouais, Québec. The estate combines five manor rooms, a yurt, a converted bus with a piano, common spaces (parlour, library, self-serve kitchen, meditation room, game room with projector), a 24/7 spa and hot tub, plus gardens, a greenhouse and three fire pits.",
-        "It serves both travellers passing through and a longer-staying community of artists, musicians and entrepreneurs in residence. On site we offer massage therapy, a signature kitchen, live music, a wwoofing program and community events such as the Grand Ceilidh de Mai. Namur sits about twenty minutes from Parc Oméga in Montebello and forty-five minutes from Mont-Tremblant — a practical basecamp for the Petite-Nation.",
+        "It serves both travellers passing through and a longer-staying community of artists, musicians and entrepreneurs in residence. On site we offer massage therapy, a signature kitchen, live music, a wwoofing program and community events such as the Grand Ceilidh de Mai. Namur sits about twenty-five minutes from Parc Oméga in Montebello and thirty-five minutes from Mont-Tremblant — a practical basecamp for the Petite-Nation.",
         "The inn is listed by Tourisme Outaouais and appears on Booking.com, Hotels.com and Vrbo. To book a room, the whole estate or an artistic stay, write to alex@lesalondesinconnus.com or call 514 418 3450.",
       ],
       internalLinks: [
@@ -125,7 +125,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
         },
         {
           q: "Where are you located in Outaouais?",
-          a: "At 826 Côte à Favier, Namur, Québec, in the Petite-Nation, about twenty minutes from Parc Oméga (Montebello) and forty-five minutes from Mont-Tremblant.",
+          a: "At 826 Côte à Favier, Namur, Québec, in the Petite-Nation, about twenty-five minutes from Parc Oméga (Montebello) and thirty-five minutes from Mont-Tremblant.",
         },
         {
           q: "Do you host artists in residence?",
@@ -628,7 +628,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       sectionTitle: "Things to do around Maison Favier",
       paragraphs: [
         "Le Salon des Inconnus sits in Namur, right in the Petite-Nation, halfway between Montebello and Mont-Tremblant. The area is known for its built heritage, lakes and regional parks, and for a rich seasonal cultural calendar.",
-        "About twenty minutes away, Parc Oméga offers a drive-through view of North American wildlife. The Centre touristique du Lac-Simon (Sépaq) has a beach, hiking and canoeing, while the Parc des Montagnes Noires de Ripon and the Chutes de Plaisance provide trails for all levels. The Manoir-Papineau National Historic Site and Fairmont Le Château Montebello round out the heritage circuit.",
+        "About twenty-five minutes away, Parc Oméga offers a drive-through view of North American wildlife. The Centre touristique du Lac-Simon (Sépaq) has a beach, hiking and canoeing, while the Parc des Montagnes Noires de Ripon and the Chutes de Plaisance provide trails for all levels. The Manoir-Papineau National Historic Site and Fairmont Le Château Montebello round out the heritage circuit.",
         "For food and drink: Café des Orties (Ripon), Koko Café (Namur), Brasseurs de Montebello, ChocoMotive and Fromagerie Montebello. The region also hosts many festivals — Ripon Trad Festival, Festival Médiéval de Montpellier, Festival Western St-André-Avellin and NCC Fall Rhapsody among them.",
       ],
       internalLinks: [

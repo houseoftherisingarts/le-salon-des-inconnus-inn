@@ -4,7 +4,7 @@ import type { User } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import {
   doc, getDoc, setDoc, updateDoc, deleteDoc, deleteField,
-  collection, getDocs, addDoc, onSnapshot,
+  collection, getDocs, addDoc, onSnapshot, writeBatch,
   serverTimestamp, query, orderBy,
 } from 'firebase/firestore';
 import { AuthModal, type MemberProfile, type MembershipType } from './AuthModal';
@@ -403,6 +403,20 @@ export const KanbanBoard: React.FC<{
     await updateDoc(doc(db, 'events', EVENT_ID, 'teams', teamId, 'tasks', taskId), { subtasks: updated });
   };
 
+  const reorderTask = async (taskId: string, direction: 'up' | 'down', colTasks: KanbanTask[]) => {
+    if (!db) return;
+    const idx = colTasks.findIndex(t => t.id === taskId);
+    if (idx === -1) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= colTasks.length) return;
+    const taskA = colTasks[idx];
+    const taskB = colTasks[swapIdx];
+    const batch = writeBatch(db);
+    batch.update(doc(db, 'events', EVENT_ID, 'teams', teamId, 'tasks', taskA.id), { order: taskB.order ?? swapIdx });
+    batch.update(doc(db, 'events', EVENT_ID, 'teams', teamId, 'tasks', taskB.id), { order: taskA.order ?? idx });
+    await batch.commit();
+  };
+
   const columns: { status: TaskStatus; label: string; label_fr: string; color: string }[] = [
     { status: 'todo',       label: 'To Do',       label_fr: 'À Faire',  color: 'border-neutral-600' },
     { status: 'inprogress', label: 'In Progress',  label_fr: 'En Cours', color: 'border-yellow-600'  },
@@ -422,7 +436,7 @@ export const KanbanBoard: React.FC<{
   // updates state in the parent (e.g. typing in a subtask input) would create
   // a new component identity → React unmounts/remounts the card → inputs
   // inside lose focus. As a render function it just produces JSX inline.
-  const renderTaskCard = (task: KanbanTask, col: typeof columns[0]) => {
+  const renderTaskCard = (task: KanbanTask, col: typeof columns[0], colTasks: KanbanTask[], idx: number) => {
     const isAdminCard = isAdminEmail(task.createdByEmail);
     const subtasks = task.subtasks ?? [];
     const doneCount = subtasks.filter(s => s.done).length;
@@ -639,6 +653,23 @@ export const KanbanBoard: React.FC<{
 
         {/* Move + delete controls */}
         <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          {/* Up/down priority reorder — only for members */}
+          {canInteract && (
+            <>
+              <button
+                onClick={() => reorderTask(task.id, 'up', colTasks)}
+                disabled={idx === 0}
+                className="text-xs text-neutral-500 hover:text-white px-2 py-0.5 border border-white/10 hover:border-white/30 transition-colors disabled:opacity-20 disabled:cursor-default"
+                title={t('Move up', 'Monter')}
+              >↑</button>
+              <button
+                onClick={() => reorderTask(task.id, 'down', colTasks)}
+                disabled={idx === colTasks.length - 1}
+                className="text-xs text-neutral-500 hover:text-white px-2 py-0.5 border border-white/10 hover:border-white/30 transition-colors disabled:opacity-20 disabled:cursor-default"
+                title={t('Move down', 'Descendre')}
+              >↓</button>
+            </>
+          )}
           {col.status !== 'todo' && (
             <button onClick={() => moveTask(task.id, col.status === 'done' ? 'inprogress' : 'todo')}
               className="text-xs text-neutral-500 hover:text-white px-2 py-0.5 border border-white/10 hover:border-white/30 transition-colors">←</button>
@@ -792,8 +823,8 @@ export const KanbanBoard: React.FC<{
                       <span className="text-[10px] text-neutral-700 bg-white/5 px-1.5 py-0.5 rounded-full">{colTasks.length}</span>
                     </div>
                     <div className="space-y-2">
-                      {colTasks.map(task => (
-                        <React.Fragment key={task.id}>{renderTaskCard(task, col)}</React.Fragment>
+                      {colTasks.map((task, idx) => (
+                        <React.Fragment key={task.id}>{renderTaskCard(task, col, colTasks, idx)}</React.Fragment>
                       ))}
                       {colTasks.length === 0 && (
                         <div className="text-neutral-700 text-xs font-lato italic py-2 text-center">

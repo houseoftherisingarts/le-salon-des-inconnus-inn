@@ -21,6 +21,14 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags).data.isArtist == true;
     }
 
+    // ── Site config ───────────────────────────────────────────────────────────
+    // Cosmetic site-wide settings (e.g. hero photo framing / focal points). Public
+    // read so the live site applies them; only admins can change them.
+    match /config/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // ── Members ──────────────────────────────────────────────────────────────
     // Any authenticated user can read any member profile (for public profile pages).
     // Each user can only write their own profile.

@@ -9,7 +9,7 @@ import { MUSIC_GENRES } from '../constants';
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type ViewState =
-  | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE'
+  | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
   | 'MESSAGING' | 'ADMIN';
 

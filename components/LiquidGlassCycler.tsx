@@ -8,19 +8,24 @@ const HW_VERT = `varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatr
 
 const HW_FRAG = `
   uniform sampler2D uT1, uT2;
-  uniform float uP;
+  uniform float uP, uF1, uF2;
   uniform vec2 uR, uS1, uS2;
   varying vec2 vUv;
 
-  vec2 cv(vec2 uv, vec2 ts) {
+  // Cover-fit UVs with a per-image horizontal focal point (fx: 0=left, .5=centre,
+  // 1=right); vertical stays centred. Keeps each photo's subject in frame when a
+  // narrow (portrait) viewport crops the sides.
+  vec2 cv(vec2 uv, vec2 ts, float fx) {
     vec2 s = uR / ts;
     float sc = max(s.x, s.y);
-    return (uv * uR - (uR - ts * sc) * 0.5) / (ts * sc);
+    vec2 scaled = ts * sc;
+    vec2 off = (uR - scaled) * vec2(fx, 0.5); // CSS object-position: 0=left, .5=centre, 1=right
+    return (uv * uR - off) / scaled;
   }
 
   void main() {
     float time = uP * 5.0;
-    vec2 u1 = cv(vUv, uS1); vec2 u2 = cv(vUv, uS2);
+    vec2 u1 = cv(vUv, uS1, uF1); vec2 u2 = cv(vUv, uS2, uF2);
     float maxR = length(uR) * 0.85; float br = uP * maxR;
     vec2 p = vUv * uR; vec2 c = uR * 0.5;
     float d = length(p - c); float nd = d / max(br, 0.001);
@@ -49,12 +54,14 @@ const HW_FRAG = `
 
 interface LiquidGlassCyclerProps {
   images: string[];
+  focus?: number[]; // per-image horizontal focal point 0..1 (default 0.5 = centred)
   intervalMs?: number;
   className?: string;
 }
 
 export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
   images,
+  focus,
   intervalMs = 5000,
   className = '',
 }) => {
@@ -64,6 +71,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
 
   useEffect(() => {
     let dead = false;
+    const fx = (i: number) => focus?.[i] ?? 0.5; // horizontal focal point per image
     let renderer: any, scene: any, camera: any, mat: any;
     let txs: any[] = [], blobUrls: string[] = [];
     let cur = 0, transitioning = false;
@@ -117,7 +125,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       bg.style.display = 'block';
       imgs.forEach((src, i) => {
         const sl = document.createElement('div');
-        sl.style.cssText = `position:absolute;inset:0;background:url(${src}) center/cover no-repeat;opacity:${i === 0 ? 1 : 0};transition:opacity 1.8s ease;`;
+        sl.style.cssText = `position:absolute;inset:0;background:url(${src}) ${(fx(i) * 100).toFixed(1)}% center/cover no-repeat;opacity:${i === 0 ? 1 : 0};transition:opacity 1.8s ease;`;
         bg.appendChild(sl);
       });
       const slides = bg.querySelectorAll<HTMLElement>('div');
@@ -139,10 +147,12 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       const f = txs[cur], t = txs[next];
       mat.uniforms.uT1.value = f; mat.uniforms.uT2.value = t;
       mat.uniforms.uS1.value = f.userData.size; mat.uniforms.uS2.value = t.userData.size;
+      mat.uniforms.uF1.value = fx(cur); mat.uniforms.uF2.value = fx(next);
       gsap.fromTo(mat.uniforms.uP, { value: 0 }, {
         value: 1, duration: 2.5, ease: 'power2.inOut',
         onComplete() {
           mat.uniforms.uT1.value = t; mat.uniforms.uS1.value = t.userData.size;
+          mat.uniforms.uF1.value = fx(next);
           mat.uniforms.uP.value = 0; cur = next; transitioning = false;
         },
       });
@@ -178,6 +188,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       mat = new THREE.ShaderMaterial({
         uniforms: {
           uT1: { value: null }, uT2: { value: null }, uP: { value: 0 },
+          uF1: { value: 0.5 }, uF2: { value: 0.5 },
           uR: { value: new THREE.Vector2(W, H) },
           uS1: { value: new THREE.Vector2(1, 1) }, uS2: { value: new THREE.Vector2(1, 1) },
         },
@@ -210,6 +221,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
         glStarted = true;
         mat.uniforms.uT1.value = txs[0]; mat.uniforms.uT2.value = txs[1];
         mat.uniforms.uS1.value = txs[0].userData.size; mat.uniforms.uS2.value = txs[1].userData.size;
+        mat.uniforms.uF1.value = fx(0); mat.uniforms.uF2.value = fx(1);
         startAuto();
       };
 
@@ -246,7 +258,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       txs.forEach(t => t?.dispose?.());
       if (renderer) renderer.dispose();
     };
-  }, [images.join('|'), intervalMs]);
+  }, [images.join('|'), (focus ?? []).join(','), intervalMs]);
 
   return (
     <div className={`absolute inset-0 ${className}`} style={{ background: '#0a0808' }}>

@@ -177,7 +177,7 @@ const HOSTAWAY_BASE = 'https://api.hostaway.com/v1';
 // The 7 confirmed live listing ids. Requests for anything else are rejected so
 // this endpoint can't be turned into an open proxy against the HostAway account.
 const ALLOWED_LISTINGS = new Set([
-  345789, 345790, 345792, 345787, 345786, 345791, 345788,
+  345789, 345790, 345792, 345787, 345786, 345791, 345788, 559483,
 ]);
 
 // Token cache shared across warm invocations of a single instance. HostAway
@@ -321,6 +321,39 @@ export const getHostawayAvailability = onCall(
     const meetsMinStay = requestedNights >= minStay;
 
     return { days, allAvailable, minStay, requestedNights, meetsMinStay };
+  },
+);
+
+// getHostawayCalendar(listingId, startDate, endDate)
+//   → { days: [{ date, available, minimumStay, price }] }
+// Per-day availability for the booking calendar UI: every day in [startDate,
+// endDate] inclusive, so unavailable days can be shown crossed out. Read-only.
+export const getHostawayCalendar = onCall(
+  { secrets: [HOSTAWAY_API_KEY, HOSTAWAY_ACCOUNT_ID], cors: true },
+  async (request) => {
+    const { listingId, startDate, endDate } = (request.data ?? {}) as {
+      listingId?: number;
+      startDate?: string;
+      endDate?: string;
+    };
+
+    const id = validateListing(listingId);
+    if (!isValidDate(startDate) || !isValidDate(endDate)) {
+      throw new HttpsError('invalid-argument', 'Dates must be YYYY-MM-DD.');
+    }
+    if (startDate >= endDate) {
+      throw new HttpsError('invalid-argument', 'endDate must be after startDate.');
+    }
+
+    const token = await getHostawayToken();
+    const result = await fetchCalendar(token, id, startDate, endDate);
+    const days = result.map((d) => ({
+      date: d.date,
+      available: d.isAvailable === 1 && d.status === 'available',
+      minimumStay: d.minimumStay ?? 1,
+      price: d.price ?? null,
+    }));
+    return { days };
   },
 );
 
