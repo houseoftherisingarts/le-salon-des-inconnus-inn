@@ -6,14 +6,15 @@ import type { MemberProfile } from './AuthModal';
 import type { CommunityApplication, CommunityApplicationStatus } from '../types';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// "Faire partie de la communauté" — the paid resident-member announcement.
+// "Faire partie de la communauté" — paid resident-member announcement.
 //
-// Design language, grounded in the real site:
-//  · The home page (InnPage) is cinematic full-bleed photography with cream
-//    Cinzel display + gold eyebrows. The header here mirrors that exactly.
-//  · This is a LETTER, so the body uses the Salon's documented letter baseline:
-//    cream parchment (#F4ECD8), double gold border (#B08A3E), Cinzel headings,
-//    warm-brown ink (#2A1F0E). A real missive set into the dark page.
+// A deliberate 180° from the dark wwoofing page: a LUMINOUS, daytime editorial
+// spread. Grounded in the real home-page branding (measured, not guessed):
+//   · display font = Prata (cream/espresso, tight negative tracking)
+//   · the gold is the muted antique #c5a059 — NOT the bright #d4af37 yellow
+//   · cream / ivory / white carry the brand
+// Light ivory ground, espresso ink, oversized Prata, bright sunlit photography.
+// Flows with the home through type + gold DNA; inverts night → day.
 //
 // Deep-linkable via /wwoofing#communaute (and #postuler).
 // ─────────────────────────────────────────────────────────────────────────────
@@ -26,25 +27,22 @@ interface Props {
   autoOpen?: boolean;
 }
 
-// Letter baseline tokens (from the Salon document template).
-const P = {
-  paper:    '#F4ECD8',
-  border:   '#B08A3E',
-  accent:   '#C9A565',
-  rule:     '#D5BA82',
-  ink:      '#2A1F0E',
-  inkSoft:  '#4A3416',
-  head:     '#6B4E1F',
-  soft:     '#8A6B33',
-};
-// Cinematic header (over photography) — the home's cream/gold-on-image palette.
-const HEADER = {
-  cream:    '#f3e5ab',
-  gold:     '#dcb055',
+const T = {
+  paper:   '#f3ecd9',  // warm ivory ground (the day)
+  panel:   '#ece2c9',  // deeper ivory panel
+  ink:     '#26201a',  // espresso — display + headings
+  body:    '#473d31',  // body text
+  soft:    '#7c6f58',  // muted captions
+  gold:    '#c5a059',  // THE gold (muted antique) — the home's primary gold
+  goldDeep:'#a8863f',  // deeper gold for small text legibility on ivory
+  line:    'rgba(168,134,63,0.32)',
 };
 
-const HEADER_IMG = 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg';
-const BUS_IMG    = 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/bus%20pov%20arriere%202.jpg';
+const IMG = {
+  garden: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jardins%20auberge.jpg',
+  nature: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/charlotnature.jpg',
+  bus:    'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/bus%20pov%20arriere%202.jpg',
+};
 
 const LETTER: { fr: string; en: string }[] = [
   {
@@ -93,11 +91,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   const [loaded, setLoaded] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-    if (autoOpen && user && memberProfile) setShowForm(true);
-  }, [autoOpen, user, memberProfile]);
+  useEffect(() => { if (autoOpen && user && memberProfile) setShowForm(true); }, [autoOpen, user, memberProfile]);
 
-  // Deep link: /wwoofing#communaute (or #postuler) lands on this section.
   useEffect(() => {
     const h = (window.location.hash || '').toLowerCase();
     if (h === '#communaute' || h === '#postuler') {
@@ -124,231 +119,203 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   const handleCta = useCallback(() => {
     if (!user || !memberProfile) { onRequestAuth(); return; }
     setShowForm(true);
-    setTimeout(() => {
-      document.getElementById('community-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+    setTimeout(() => document.getElementById('community-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }, [user, memberProfile, onRequestAuth]);
 
+  const body = LETTER;
+
   return (
-    <section id="communaute" className="comm relative scroll-mt-16 bg-[#0b0a08]">
+    <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── Cinematic header — full-bleed photo, cream Cinzel (home language) ── */}
-      <header className="relative w-full overflow-hidden" style={{ height: 'clamp(440px, 64vh, 720px)' }}>
-        <img
-          src={HEADER_IMG}
-          alt={t('The manor and grounds at golden hour.', "Le manoir et son terrain à l'heure dorée.")}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: '50% 42%' }}
-        />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,7,5,0.45) 0%, rgba(8,7,5,0.15) 35%, rgba(8,7,5,0.55) 78%, #0b0a08 100%)' }} />
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="h-px w-10" style={{ background: HEADER.gold }} />
-            <span className="font-cinzel uppercase" style={{ color: HEADER.gold, fontSize: '11px', letterSpacing: '0.42em' }}>
-              {t('A place opens', 'Une place se libère')}
-            </span>
-            <span className="h-px w-10" style={{ background: HEADER.gold }} />
-          </div>
-          <h2
-            className="font-cinzel uppercase"
-            style={{ color: HEADER.cream, fontSize: 'clamp(2.1rem, 5.4vw, 4.6rem)', lineHeight: 1.02, letterSpacing: '0.02em', textShadow: '0 2px 30px rgba(0,0,0,0.5)' }}
-          >
-            {t('Join the community', 'Faire partie de la communauté')}
-          </h2>
-          <p
-            className="font-cormorant italic mt-5"
-            style={{ color: HEADER.cream, fontSize: 'clamp(1.1rem, 2vw, 1.7rem)', textShadow: '0 1px 16px rgba(0,0,0,0.55)' }}
-          >
-            {t(
-              'Come live in a lasting place, with people of heart and travellers passing through.',
-              'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
-            )}
-          </p>
-        </div>
-      </header>
-
-      {/* ── The letter — cream parchment, double gold border (letter baseline) ── */}
-      <div className="px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-16 md:pb-24">
-        <article
-          className="mx-auto"
-          style={{ maxWidth: '54rem', background: P.paper, border: `5px double ${P.border}`, boxShadow: '0 30px 80px -40px rgba(0,0,0,0.8)' }}
-        >
-          <div style={{ border: `0.5px solid ${P.border}`, margin: '10px', padding: 'clamp(1.75rem, 5vw, 4rem)' }}>
-
-            {/* Wordmark */}
-            <div className="text-center mb-2">
-              <span className="font-cinzel" style={{ color: P.soft, fontSize: '12px', letterSpacing: '0.22em' }}>
-                LE SALON DES INCONNUS
+      {/* ── HERO — luminous, asymmetric, oversized Prata ─────────────────── */}
+      <div className="relative px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-12 md:pb-16">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-end">
+          <div className="comm-rise">
+            <div className="flex items-center gap-4 mb-7">
+              <span className="h-px w-12" style={{ background: T.gold }} />
+              <span className="font-cinzel uppercase" style={{ color: T.goldDeep, fontSize: '12px', letterSpacing: '0.4em' }}>
+                {t('A place opens', 'Une place se libère')}
               </span>
             </div>
-            <div className="mx-auto mb-9 h-px w-24" style={{ background: P.accent }} />
-
-            {/* Lead — the announcement, set a touch larger */}
-            <p className="font-lato" style={{ color: P.ink, fontSize: 'clamp(1.05rem, 1.4vw, 1.2rem)', lineHeight: 1.85, fontWeight: 400 }}>
-              {t(LETTER[0].en, LETTER[0].fr)}
-            </p>
-
-            <div className="space-y-5 mt-5">
-              {LETTER.slice(1, 5).map((b, i) => (
-                <p key={i} className="font-lato" style={{ color: P.ink, fontSize: '16.5px', lineHeight: 1.85 }}>
-                  {t(b.en, b.fr)}
-                </p>
-              ))}
-            </div>
-
-            {/* The bus — one decisive inset photo */}
-            <figure className="my-10">
-              <div className="relative overflow-hidden" style={{ border: `0.5px solid ${P.accent}` }}>
-                <img
-                  src={BUS_IMG}
-                  alt={t('The converted bus on the grounds, your home on site.', "Le bus aménagé sur le terrain, ton chez-toi sur place.")}
-                  loading="lazy"
-                  className="w-full object-cover"
-                  style={{ aspectRatio: '16 / 9' }}
-                />
-              </div>
-              <figcaption className="mt-2 font-cinzel uppercase text-center" style={{ color: P.soft, fontSize: '10px', letterSpacing: '0.22em' }}>
-                {t('Your home — the converted bus', 'Ton chez-toi · le bus aménagé')}
-              </figcaption>
-            </figure>
-
-            {/* Terms — small ledger, not cards */}
-            <SectionRule label={t('The terms', 'Les conditions')} />
-            <dl className="grid grid-cols-2 md:grid-cols-4 gap-y-6 mb-2">
-              {[
-                { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
-                { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
-                { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
-                { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
-              ].map((it, i) => (
-                <div key={i} className="px-1">
-                  <dt className="font-cinzel" style={{ color: P.head, fontSize: 'clamp(1.15rem, 1.8vw, 1.55rem)', lineHeight: 1.1 }}>{it.v}</dt>
-                  <dd className="font-lato mt-1.5" style={{ color: P.inkSoft, fontSize: '11.5px', letterSpacing: '0.04em' }}>{it.l}</dd>
-                </div>
-              ))}
-            </dl>
-
-            {/* Remaining body */}
-            <div className="space-y-5 mt-10">
-              {LETTER.slice(5).map((b, i) => (
-                <p key={i} className="font-lato" style={{ color: P.ink, fontSize: '16.5px', lineHeight: 1.85 }}>
-                  {t(b.en, b.fr)}
-                </p>
-              ))}
-            </div>
-
-            {/* Pullquote — modest, soft gold, hairline above */}
-            <div className="mt-12 text-center">
-              <span className="block mx-auto mb-5 h-px w-14" style={{ background: P.accent }} />
-              <p className="font-cormorant italic mx-auto" style={{ color: P.soft, fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', lineHeight: 1.4, maxWidth: '34ch' }}>
-                {t(PULLQUOTE.en, PULLQUOTE.fr)}
-              </p>
-            </div>
-
-            {/* ── CTA / form / applied ── */}
-            <div className="mt-12">
-              {!loaded && user ? (
-                <p className="font-lato text-sm text-center" style={{ color: P.soft }}>{t('Loading…', 'Chargement…')}</p>
-              ) : hasApplied ? (
-                <AppliedSummary application={application!} t={t} />
-              ) : showForm && user && memberProfile ? (
-                <div id="community-apply">
-                  <CommunityApplyForm language={language} user={user} memberProfile={memberProfile} onCancel={() => setShowForm(false)} />
-                </div>
-              ) : (
-                <div className="text-center">
-                  <button onClick={handleCta} className="comm-cta font-cinzel uppercase">
-                    {t('Apply for the place', 'Postuler pour la place')}
-                  </button>
-                </div>
+            <h2
+              className="font-prata"
+              style={{ color: T.ink, fontSize: 'clamp(2.9rem, 7.5vw, 6.6rem)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
+            >
+              {t('Join the community', 'Faire partie de la communauté')}
+            </h2>
+            <p className="font-cormorant italic mt-6" style={{ color: T.goldDeep, fontSize: 'clamp(1.25rem, 2.2vw, 1.9rem)', lineHeight: 1.3, maxWidth: '24ch' }}>
+              {t(
+                'Come live in a lasting place, with people of heart and travellers passing through.',
+                'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
               )}
-            </div>
-
+            </p>
           </div>
-        </article>
+
+          {/* Bright daytime photo, breaking the grid upward */}
+          <figure className="comm-rise relative lg:-mt-16">
+            <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 4', boxShadow: '0 40px 90px -50px rgba(38,32,26,0.55)' }}>
+              <img src={IMG.garden} alt={t('The gardens in full summer light.', "Les jardins en pleine lumière d'été.")} className="w-full h-full object-cover" />
+              <span className="absolute inset-0" style={{ boxShadow: `inset 0 0 0 1px ${T.line}` }} />
+            </div>
+            <figcaption className="mt-3 font-cinzel uppercase text-right" style={{ color: T.soft, fontSize: '10px', letterSpacing: '0.24em' }}>
+              {t('The gardens', 'Les jardins')}
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      {/* ── LEAD — the announcement, large, with a Prata drop-cap ────────── */}
+      <div className="px-6 md:px-12 lg:px-20 pt-6 pb-2">
+        <div className="mx-auto max-w-3xl">
+          <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
+            {t(body[0].en, body[0].fr)}
+          </p>
+        </div>
+      </div>
+
+      {/* ── BODY 1 ───────────────────────────────────────────────────────── */}
+      <div className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <Para>{t(body[1].en, body[1].fr)}</Para>
+          <Para>{t(body[2].en, body[2].fr)}</Para>
+        </div>
+      </div>
+
+      {/* ── TERMS — oversized Prata numbers, gold hairlines ──────────────── */}
+      <div className="px-6 md:px-12 lg:px-20 py-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex items-center gap-5 mb-8">
+            <span className="font-cinzel uppercase" style={{ color: T.goldDeep, fontSize: '12px', letterSpacing: '0.34em' }}>{t('The terms', 'Les conditions')}</span>
+            <span className="h-px flex-1" style={{ background: T.line }} />
+          </div>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ borderTop: `1px solid ${T.line}` }}>
+            {[
+              { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
+              { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
+              { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
+              { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
+            ].map((it, i) => (
+              <div key={i} className="py-7 lg:py-9 lg:pr-8" style={{ borderBottom: `1px solid ${T.line}` }}>
+                <dt className="font-prata" style={{ color: T.ink, fontSize: 'clamp(2rem, 3.4vw, 3.1rem)', lineHeight: 1, letterSpacing: '-0.01em' }}>{it.v}</dt>
+                <dd className="font-lato mt-3" style={{ color: T.soft, fontSize: '12.5px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{it.l}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      {/* ── BODY 2 (work + pay) ──────────────────────────────────────────── */}
+      <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <Para>{t(body[3].en, body[3].fr)}</Para>
+          <Para>{t(body[4].en, body[4].fr)}</Para>
+        </div>
+      </div>
+
+      {/* ── FULL-BLEED bright band ───────────────────────────────────────── */}
+      <figure className="relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
+        <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="w-full h-full object-cover" />
+        <figcaption className="absolute bottom-4 right-6 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '10px', letterSpacing: '0.26em', textShadow: '0 1px 10px rgba(0,0,0,0.6)' }}>
+          {t('The living place', 'Le lieu vivant')}
+        </figcaption>
+      </figure>
+
+      {/* ── BODY 3 (community psychology + human side) ───────────────────── */}
+      <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <Para>{t(body[5].en, body[5].fr)}</Para>
+          <Para>{t(body[6].en, body[6].fr)}</Para>
+        </div>
+      </div>
+
+      {/* ── PULLQUOTE — modest, Cormorant, gold ──────────────────────────── */}
+      <div className="px-6 py-6 text-center">
+        <span className="block mx-auto mb-6 h-px w-16" style={{ background: T.gold }} />
+        <p className="font-cormorant italic mx-auto" style={{ color: T.goldDeep, fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', lineHeight: 1.35, maxWidth: '30ch' }}>
+          {t(PULLQUOTE.en, PULLQUOTE.fr)}
+        </p>
+      </div>
+
+      {/* ── CTA / form / applied ─────────────────────────────────────────── */}
+      <div className="px-6 md:px-12 lg:px-20 pb-24 pt-10">
+        <div className="mx-auto max-w-3xl">
+          {!loaded && user ? (
+            <p className="font-lato text-sm text-center" style={{ color: T.soft }}>{t('Loading…', 'Chargement…')}</p>
+          ) : hasApplied ? (
+            <AppliedSummary application={application!} t={t} />
+          ) : showForm && user && memberProfile ? (
+            <div id="community-apply"><CommunityApplyForm language={language} user={user} memberProfile={memberProfile} onCancel={() => setShowForm(false)} /></div>
+          ) : (
+            <div className="text-center">
+              <button onClick={handleCta} className="comm-cta font-cinzel uppercase">
+                {t('Apply for the place', 'Postuler pour la place')}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <style>{`
-        .comm .font-cormorant, .comm-italic { font-family: 'Cormorant Garamond', serif; }
-        .comm-cta {
-          color: ${P.paper};
-          background: ${P.border};
-          padding: 0.95rem 2.5rem;
-          border-radius: 2px;
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.28em;
-          transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .35s ease, box-shadow .35s ease;
-          box-shadow: 0 10px 26px -14px rgba(176,138,62,0.7);
+        .comm .font-prata { font-family: 'Prata', serif; }
+        .comm .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .comm-lead::first-letter {
+          font-family: 'Prata', serif; float: left; color: ${T.goldDeep};
+          font-size: 3.4em; line-height: 0.78; padding: 0.04em 0.12em 0 0;
         }
-        .comm-cta:hover { background: ${P.head}; transform: translateY(-2px); box-shadow: 0 16px 36px -16px rgba(107,78,31,0.75); }
+        .comm-rise { opacity: 0; transform: translateY(18px); animation: commRise 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+        .comm-rise:nth-child(2) { animation-delay: 0.12s; }
+        @keyframes commRise { to { opacity: 1; transform: none; } }
+        .comm-cta {
+          color: ${T.paper}; background: ${T.goldDeep};
+          padding: 1.05rem 3rem; border-radius: 2px;
+          font-size: 12px; font-weight: 700; letter-spacing: 0.3em;
+          transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .35s ease, box-shadow .35s ease;
+          box-shadow: 0 14px 34px -18px rgba(168,134,63,0.85);
+        }
+        .comm-cta:hover { background: ${T.ink}; transform: translateY(-2px); box-shadow: 0 20px 44px -20px rgba(38,32,26,0.6); }
         .comm-cta:active { transform: translateY(0); }
-        .comm-cta:disabled { opacity: 0.4; cursor: not-allowed; }
+        .comm-cta:disabled { opacity: 0.45; cursor: not-allowed; }
       `}</style>
     </section>
   );
 };
 
-const SectionRule: React.FC<{ label: string }> = ({ label }) => (
-  <div className="flex items-center gap-4 my-9">
-    <span className="h-px flex-1" style={{ background: P.rule }} />
-    <span className="font-cinzel uppercase" style={{ color: P.head, fontSize: '11px', letterSpacing: '0.28em' }}>{label}</span>
-    <span className="h-px flex-1" style={{ background: P.rule }} />
-  </div>
+const Para: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <p className="font-lato" style={{ color: T.body, fontSize: '17px', lineHeight: 1.85 }}>{children}</p>
 );
 
 // ─── Applied confirmation ────────────────────────────────────────────────────
 
-const AppliedSummary: React.FC<{
-  application: CommunityApplication;
-  t: (en: string, fr: string) => string;
-}> = ({ application, t }) => {
+const AppliedSummary: React.FC<{ application: CommunityApplication; t: (en: string, fr: string) => string }> = ({ application, t }) => {
   const status: CommunityApplicationStatus = application.status ?? 'pending';
-  const badge: Record<CommunityApplicationStatus, { fr: string; en: string; bg: string; fg: string }> = {
-    pending:  { fr: 'Reçue',     en: 'Received', bg: 'rgba(176,138,62,0.14)', fg: P.head },
-    approved: { fr: 'Approuvée', en: 'Approved', bg: 'rgba(58,125,68,0.16)',  fg: '#2f6b39' },
-    declined: { fr: 'Fermée',    en: 'Closed',   bg: 'rgba(140,80,40,0.14)',  fg: '#8a4a28' },
+  const label: Record<CommunityApplicationStatus, { fr: string; en: string }> = {
+    pending: { fr: 'Reçue', en: 'Received' }, approved: { fr: 'Approuvée', en: 'Approved' }, declined: { fr: 'Fermée', en: 'Closed' },
   };
-  const b = badge[status];
   return (
-    <div className="mx-auto max-w-2xl text-center" style={{ borderTop: `0.5px solid ${P.rule}`, paddingTop: '1.75rem' }}>
+    <div className="mx-auto max-w-2xl text-center" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
       <div className="flex items-center justify-center gap-4 flex-wrap mb-4">
-        {application.photoURL && (
-          <img src={application.photoURL} alt="" className="w-12 h-12 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${P.accent}` }} />
-        )}
+        {application.photoURL && <img src={application.photoURL} alt="" className="w-12 h-12 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${T.gold}` }} />}
         <div className="text-left">
-          <span className="font-cinzel uppercase block mb-1" style={{ color: P.soft, fontSize: '10px', letterSpacing: '0.3em' }}>
-            {t('Your application', 'Ta candidature')}
-          </span>
-          <h3 className="font-cinzel" style={{ color: P.head, fontSize: '1.4rem' }}>{application.displayName}</h3>
+          <span className="font-cinzel uppercase block mb-1" style={{ color: T.goldDeep, fontSize: '10px', letterSpacing: '0.3em' }}>{t('Your application', 'Ta candidature')}</span>
+          <h3 className="font-prata" style={{ color: T.ink, fontSize: '1.5rem' }}>{application.displayName}</h3>
         </div>
-        <span className="ml-auto font-cinzel uppercase" style={{ background: b.bg, color: b.fg, fontSize: '10px', letterSpacing: '0.18em', padding: '4px 12px', borderRadius: '999px' }}>
-          {t(b.en, b.fr)}
+        <span className="ml-auto font-cinzel uppercase" style={{ background: 'rgba(168,134,63,0.16)', color: T.goldDeep, fontSize: '10px', letterSpacing: '0.18em', padding: '4px 12px', borderRadius: '999px' }}>
+          {t(label[status].en, label[status].fr)}
         </span>
       </div>
-      <p className="font-lato text-sm leading-relaxed mx-auto" style={{ color: P.inkSoft, maxWidth: '46ch' }}>
-        {t(
-          "Thank you. We read every application by hand. We'll reach out by email or phone when we've had time to sit with it.",
-          "Merci. On lit chaque candidature à la main. On te reviendra par courriel ou par téléphone une fois qu'on aura pris le temps de s'y asseoir.",
-        )}
+      <p className="font-lato text-sm leading-relaxed mx-auto" style={{ color: T.body, maxWidth: '46ch' }}>
+        {t("Thank you. We read every application by hand. We'll reach out by email or phone when we've had time to sit with it.",
+           "Merci. On lit chaque candidature à la main. On te reviendra par courriel ou par téléphone une fois qu'on aura pris le temps de s'y asseoir.")}
       </p>
-      {application.introduction && (
-        <p className="font-cormorant italic text-lg mt-5 leading-relaxed mx-auto" style={{ color: P.soft, maxWidth: '50ch' }}>"{application.introduction}"</p>
-      )}
+      {application.introduction && <p className="font-cormorant italic text-lg mt-5 leading-relaxed mx-auto" style={{ color: T.goldDeep, maxWidth: '50ch' }}>"{application.introduction}"</p>}
     </div>
   );
 };
 
-// ─── Apply form (on the parchment) ───────────────────────────────────────────
+// ─── Apply form (on ivory) ───────────────────────────────────────────────────
 
-const CommunityApplyForm: React.FC<{
-  language: 'EN' | 'FR';
-  user: User;
-  memberProfile: MemberProfile;
-  onCancel: () => void;
-}> = ({ language, user, memberProfile, onCancel }) => {
+const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberProfile: MemberProfile; onCancel: () => void }> = ({ language, user, memberProfile, onCancel }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
-
   const [phone, setPhone] = useState(memberProfile.phone ?? '');
   const [city, setCity] = useState('');
   const [introduction, setIntroduction] = useState('');
@@ -358,149 +325,95 @@ const CommunityApplyForm: React.FC<{
   const [workspaceNeeds, setWorkspaceNeeds] = useState('');
   const [availability, setAvailability] = useState('');
   const [needs, setNeeds] = useState('');
-
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const formValid = phone.trim() && introduction.trim() && communityMotivation.trim();
 
   const submit = async () => {
     setError(null);
     if (!db) return;
-    if (!formValid) {
-      setError(t('Please fill the required fields.', 'Veuillez remplir les champs requis.'));
-      return;
-    }
+    if (!formValid) { setError(t('Please fill the required fields.', 'Veuillez remplir les champs requis.')); return; }
     setSaving(true);
     try {
       const application: CommunityApplication = {
-        uid: user.uid,
-        displayName: memberProfile.displayName,
-        email: memberProfile.email,
-        photoURL: memberProfile.photoURL,
-        phone: phone.trim(),
-        city: city.trim() || undefined,
-        introduction: introduction.trim(),
-        communityMotivation: communityMotivation.trim(),
-        cleaningAttitude: cleaningAttitude.trim() || undefined,
-        personalProjects: personalProjects.trim() || undefined,
-        workspaceNeeds: workspaceNeeds.trim() || undefined,
-        availability: availability.trim() || undefined,
-        needs: needs.trim() || undefined,
-        status: 'pending',
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
+        uid: user.uid, displayName: memberProfile.displayName, email: memberProfile.email, photoURL: memberProfile.photoURL,
+        phone: phone.trim(), city: city.trim() || undefined, introduction: introduction.trim(), communityMotivation: communityMotivation.trim(),
+        cleaningAttitude: cleaningAttitude.trim() || undefined, personalProjects: personalProjects.trim() || undefined,
+        workspaceNeeds: workspaceNeeds.trim() || undefined, availability: availability.trim() || undefined, needs: needs.trim() || undefined,
+        status: 'pending', createdAt: serverTimestamp(), updatedAt: serverTimestamp(),
       };
       const clean: Record<string, unknown> = {};
       Object.entries(application).forEach(([k, v]) => { if (v !== undefined) clean[k] = v; });
       await setDoc(doc(db, 'communityApplications', user.uid), clean);
-    } catch (e: any) {
-      setError(e?.message ?? 'Error');
-    } finally {
-      setSaving(false);
-    }
+    } catch (e: any) { setError(e?.message ?? 'Error'); } finally { setSaving(false); }
   };
 
   return (
-    <div className="mx-auto max-w-2xl" style={{ borderTop: `0.5px solid ${P.rule}`, paddingTop: '2rem' }}>
+    <div className="mx-auto max-w-2xl" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
       <div className="flex items-center gap-4 mb-8">
         {memberProfile.photoURL ? (
-          <img src={memberProfile.photoURL} alt="" className="w-14 h-14 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${P.accent}` }} />
+          <img src={memberProfile.photoURL} alt="" className="w-14 h-14 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${T.gold}` }} />
         ) : (
-          <div className="w-14 h-14 rounded-full flex items-center justify-center font-cinzel text-lg" style={{ background: 'rgba(176,138,62,0.14)', boxShadow: `0 0 0 1px ${P.accent}`, color: P.head }}>
-            {memberProfile.displayName?.charAt(0) ?? '?'}
-          </div>
+          <div className="w-14 h-14 rounded-full flex items-center justify-center font-prata text-lg" style={{ background: 'rgba(168,134,63,0.14)', boxShadow: `0 0 0 1px ${T.gold}`, color: T.goldDeep }}>{memberProfile.displayName?.charAt(0) ?? '?'}</div>
         )}
         <div>
-          <div className="font-cinzel text-lg" style={{ color: P.head }}>{memberProfile.displayName}</div>
-          <div className="text-[11px] font-lato" style={{ color: P.soft }}>
-            {memberProfile.email}
-            <span style={{ color: P.rule }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span>
-          </div>
+          <div className="font-prata text-lg" style={{ color: T.ink }}>{memberProfile.displayName}</div>
+          <div className="text-[11px] font-lato" style={{ color: T.soft }}>{memberProfile.email}<span style={{ color: T.gold }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span></div>
         </div>
       </div>
 
       <Field label={t('Introduce yourself *', 'Présente-toi *')} hint={t('Who you are, where you are in life right now.', "Qui tu es, où tu en es dans ta vie en ce moment.")}>
         <Area value={introduction} onChange={setIntroduction} rows={4} placeholder={t('A few words in your own voice', 'Quelques mots dans ta voix')} />
       </Field>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
         <Field label={t('Phone *', 'Téléphone *')}><Line value={phone} onChange={setPhone} /></Field>
         <Field label={t('Where you come from', "D'où tu viens")}><Line value={city} onChange={setCity} /></Field>
       </div>
-
       <Field label={t('Why community life — why here? *', 'Pourquoi la vie communautaire — pourquoi ici ? *')} hint={t('This is what matters most to us.', "C'est ce qui compte le plus pour nous.")}>
         <Area value={communityMotivation} onChange={setCommunityMotivation} rows={4} />
       </Field>
-
       <Field label={t('Your relationship to housekeeping work', 'Ton rapport au travail de ménage')} hint={t('Honestly — it is the core of the role.', "Honnêtement — c'est le cœur du poste.")}>
         <Area value={cleaningAttitude} onChange={setCleaningAttitude} rows={3} />
       </Field>
-
       <Field label={t('Your own projects', 'Tes propres projets')} hint={t('What you would work on with the free time.', "Ce sur quoi tu travaillerais avec le temps libre.")}>
         <Area value={personalProjects} onChange={setPersonalProjects} rows={3} />
       </Field>
-
       <Field label={t('Do you need a space to work? (e.g. the massotherapy room)', "As-tu besoin d'un espace pour travailler ? (ex. la salle de masso)")}>
         <Area value={workspaceNeeds} onChange={setWorkspaceNeeds} rows={2} />
       </Field>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
         <Field label={t('When could you start?', 'Quand pourrais-tu commencer ?')}><Line value={availability} onChange={setAvailability} /></Field>
         <Field label={t('Anything you need from us', 'Ce dont tu as besoin de nous')}><Line value={needs} onChange={setNeeds} /></Field>
       </div>
 
-      <div className="mt-8 pt-6" style={{ borderTop: `0.5px solid ${P.rule}` }}>
+      <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${T.line}` }}>
         {error && <p className="text-sm mb-4" style={{ color: '#a23b2a' }}>{error}</p>}
         <div className="flex flex-wrap gap-4 items-center justify-end">
-          <button onClick={onCancel} className="px-5 py-3 text-xs uppercase font-cinzel" style={{ color: P.soft, letterSpacing: '0.3em' }}>
-            {t('Cancel', 'Annuler')}
-          </button>
-          <button onClick={submit} disabled={!formValid || saving} className="comm-cta font-cinzel uppercase">
-            {saving ? '…' : t('Send my application', 'Envoyer ma candidature')}
-          </button>
+          <button onClick={onCancel} className="px-5 py-3 text-xs uppercase font-cinzel" style={{ color: T.soft, letterSpacing: '0.3em' }}>{t('Cancel', 'Annuler')}</button>
+          <button onClick={submit} disabled={!formValid || saving} className="comm-cta font-cinzel uppercase">{saving ? '…' : t('Send my application', 'Envoyer ma candidature')}</button>
         </div>
       </div>
     </div>
   );
 };
 
-// ─── Form atoms (parchment) ──────────────────────────────────────────────────
-
 const Field: React.FC<{ label: string; hint?: string; children: React.ReactNode }> = ({ label, hint, children }) => (
   <label className="block mb-6">
-    <span className="block uppercase font-cinzel mb-2" style={{ color: P.head, fontSize: '10px', letterSpacing: '0.22em' }}>{label}</span>
+    <span className="block uppercase font-cinzel mb-2" style={{ color: T.goldDeep, fontSize: '10px', letterSpacing: '0.22em' }}>{label}</span>
     {children}
-    {hint && <span className="block font-cormorant italic mt-1.5" style={{ color: P.soft, fontSize: '13px' }}>{hint}</span>}
+    {hint && <span className="block font-cormorant italic mt-1.5" style={{ color: T.soft, fontSize: '13px' }}>{hint}</span>}
   </label>
 );
 
 const baseInput = (extra: React.CSSProperties = {}): React.CSSProperties => ({
-  width: '100%',
-  background: 'transparent',
-  border: 0,
-  borderBottom: `1px solid ${P.accent}`,
-  padding: '8px 0',
-  fontSize: '16px',
-  color: P.ink,
-  outline: 'none',
-  ...extra,
+  width: '100%', background: 'transparent', border: 0, borderBottom: `1px solid ${T.gold}`,
+  padding: '8px 0', fontSize: '16px', color: T.ink, outline: 'none', ...extra,
 });
-
 const Line: React.FC<{ value: string; onChange: (v: string) => void }> = ({ value, onChange }) => (
-  <input
-    type="text" value={value} onChange={(e) => onChange(e.target.value)}
-    className="font-lato" style={baseInput()}
-    onFocus={(e) => (e.currentTarget.style.borderBottomColor = P.border)}
-    onBlur={(e) => (e.currentTarget.style.borderBottomColor = P.accent)}
-  />
+  <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className="font-lato" style={baseInput()}
+    onFocus={(e) => (e.currentTarget.style.borderBottomColor = T.ink)} onBlur={(e) => (e.currentTarget.style.borderBottomColor = T.gold)} />
 );
-
 const Area: React.FC<{ value: string; onChange: (v: string) => void; rows?: number; placeholder?: string }> = ({ value, onChange, rows = 3, placeholder }) => (
-  <textarea
-    value={value} onChange={(e) => onChange(e.target.value)} rows={rows} placeholder={placeholder}
-    className="font-lato" style={baseInput({ resize: 'none' })}
-    onFocus={(e) => (e.currentTarget.style.borderBottomColor = P.border)}
-    onBlur={(e) => (e.currentTarget.style.borderBottomColor = P.accent)}
-  />
+  <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows} placeholder={placeholder} className="font-lato" style={baseInput({ resize: 'none' })}
+    onFocus={(e) => (e.currentTarget.style.borderBottomColor = T.ink)} onBlur={(e) => (e.currentTarget.style.borderBottomColor = T.gold)} />
 );
