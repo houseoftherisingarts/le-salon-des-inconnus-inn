@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
@@ -156,38 +156,61 @@ exports.createShowTicketPayment = functions.https.onCall(async (data, context) =
         throw new functions.https.HttpsError('internal', `Payment failed: ${msg}`);
     }
 });
-// ─── Community membership application → email Alex ────────────────────────────
-// When someone applies for the paid resident-member place (the André spot),
-// email alex@lesalondesinconnus.com so he sees it without checking the CRM.
-// Sent through Zoho SMTP. Set the two secrets, then deploy this function:
-//   firebase functions:secrets:set ZOHO_USER   (e.g. alex@lesalondesinconnus.com)
+// ─── Email notifications → Alex ───────────────────────────────────────────────
+// Every inbound request or signup on the site emails alex@lesalondesinconnus.com
+// so nothing has to be discovered by checking the CRM. Sent through Zoho SMTP
+// (smtp.zohocloud.ca:465), the same account used everywhere else. Two secrets:
+//   firebase functions:secrets:set ZOHO_USER   (alex@lesalondesinconnus.com)
 //   firebase functions:secrets:set ZOHO_PASS   (Zoho app password)
-//   firebase deploy --only functions:onCommunityApplication
-// The CRM works without this; the email is just a convenience notification.
-exports.onCommunityApplication = functions
-    .runWith({ secrets: ['ZOHO_USER', 'ZOHO_PASS'] })
-    .firestore.document('communityApplications/{uid}')
-    .onCreate(async (snap) => {
-    const a = snap.data() ?? {};
+// then: firebase deploy --only functions   (deploys all the triggers below)
+const NOTIFY_TO = 'alex@lesalondesinconnus.com';
+const RUNTIME_WITH_SMTP = { secrets: ['ZOHO_USER', 'ZOHO_PASS'] };
+// Build a one-off Zoho transporter from the runtime secrets. Returns null (and
+// logs) if the secrets aren't present, so a misconfig never crashes a write.
+function smtpTransport() {
     const user = process.env.ZOHO_USER;
     const pass = process.env.ZOHO_PASS;
     if (!user || !pass) {
-        console.error('ZOHO_USER / ZOHO_PASS not set — cannot send notification email.');
-        return;
+        console.error('ZOHO_USER / ZOHO_PASS not set — skipping notification email.');
+        return null;
     }
-    const transporter = nodemailer_1.default.createTransport({
+    return nodemailer_1.default.createTransport({
         host: 'smtp.zohocloud.ca',
         port: 465,
         secure: true,
         auth: { user, pass },
     });
-    const row = (label, value) => value ? `${label}: ${String(value)}\n` : '';
+}
+// Send a plain-text notification to Alex. Never throws — a failed email must not
+// fail the Firestore write that triggered it.
+async function notifyAlex(subject, body) {
+    const transporter = smtpTransport();
+    if (!transporter)
+        return;
+    const from = `"Le Salon des Inconnus" <${process.env.ZOHO_USER}>`;
+    try {
+        await transporter.sendMail({ from, to: NOTIFY_TO, subject, text: body });
+    }
+    catch (err) {
+        console.error('Notification email failed:', subject, err);
+    }
+}
+// Small helper: "Label: value\n" only when value is non-empty.
+function line(label, value) {
+    return value !== undefined && value !== null && value !== '' ? `${label}: ${String(value)}\n` : '';
+}
+// 1. Community membership application — the paid resident place (André's spot).
+exports.onCommunityApplication = functions
+    .runWith(RUNTIME_WITH_SMTP)
+    .firestore.document('communityApplications/{uid}')
+    .onCreate(async (snap) => {
+    const a = snap.data() ?? {};
     const body = `Nouvelle candidature pour la place de membre de la communauté (la place d'André).\n\n` +
-        row('Nom', a.displayName) +
-        row('Courriel', a.email) +
-        row('Téléphone', a.phone) +
-        row("Vient de", a.city) +
-        row('Disponibilité', a.availability) +
+        line('Nom', a.displayName) +
+        line('Courriel', a.email) +
+        line('Téléphone', a.phone) +
+        line('Vient de', a.city) +
+        line('Disponibilité', a.availability) +
         `\n--- Présentation ---\n${a.introduction ?? ''}\n` +
         `\n--- Pourquoi la communauté / pourquoi ici ---\n${a.communityMotivation ?? ''}\n` +
         (a.cleaningAttitude ? `\n--- Rapport au ménage ---\n${a.cleaningAttitude}\n` : '') +
@@ -195,17 +218,87 @@ exports.onCommunityApplication = functions
         (a.workspaceNeeds ? `\n--- Espace de travail souhaité ---\n${a.workspaceNeeds}\n` : '') +
         (a.needs ? `\n--- Besoins ---\n${a.needs}\n` : '') +
         `\nÀ traiter dans le CRM admin (onglet Communauté).`;
+    await notifyAlex(`Nouvelle candidature communauté — ${a.displayName ?? 'Inconnu'}`, body);
+});
+// 2. Wwoofer application (the volunteer room-and-board flow).
+exports.onWwooferApplication = functions
+    .runWith(RUNTIME_WITH_SMTP)
+    .firestore.document('wwoofers/{uid}')
+    .onCreate(async (snap) => {
+    const w = snap.data() ?? {};
+    const body = `Nouvelle candidature wwoofer.\n\n` +
+        line('Nom', w.displayName) +
+        line('Courriel', w.email) +
+        line('Téléphone', w.phone) +
+        line('Ville', [w.city, w.country].filter(Boolean).join(', ')) +
+        line('Âge', w.age) +
+        line('Langues', Array.isArray(w.languages) ? w.languages.join(', ') : w.languages) +
+        line('Tâches préférées', Array.isArray(w.preferredTasks) ? w.preferredTasks.join(', ') : w.preferredTasks) +
+        line('Hébergement', w.accommodationPreference) +
+        (w.experience ? `\n--- Expérience ---\n${w.experience}\n` : '') +
+        (w.motivations ? `\n--- Motivations ---\n${w.motivations}\n` : '') +
+        (w.needs ? `\n--- Besoins ---\n${w.needs}\n` : '') +
+        `\nÀ traiter dans le CRM admin (onglet Wwoofing).`;
+    await notifyAlex(`Nouvelle candidature wwoofer — ${w.displayName ?? 'Inconnu'}`, body);
+});
+// 3. Wwoofer date request (a new visit window from an existing wwoofer).
+exports.onWwooferVisitRequest = functions
+    .runWith(RUNTIME_WITH_SMTP)
+    .firestore.document('wwoofers/{uid}/visitRequests/{reqId}')
+    .onCreate(async (snap, context) => {
+    const r = snap.data() ?? {};
+    let who = context.params.uid;
     try {
-        await transporter.sendMail({
-            from: `"Le Salon des Inconnus" <${user}>`,
-            to: 'alex@lesalondesinconnus.com',
-            subject: `Nouvelle candidature communauté — ${a.displayName ?? 'Inconnu'}`,
-            text: body,
-        });
+        const parent = await admin.firestore().doc(`wwoofers/${context.params.uid}`).get();
+        const p = parent.data();
+        if (p?.displayName)
+            who = `${p.displayName}${p.email ? ` (${p.email})` : ''}`;
     }
-    catch (err) {
-        console.error('Could not send community-application email:', err);
-    }
+    catch { /* fall back to uid */ }
+    const body = `Nouvelle demande de dates wwoofer.\n\n` +
+        line('Wwoofer', who) +
+        line('Du', r.startDate) +
+        line('Au', r.endDate) +
+        line('Durée', r.numberOfDays ? `${r.numberOfDays} jours` : undefined) +
+        (r.notes ? `\nNotes: ${r.notes}\n` : '') +
+        `\nÀ traiter dans le CRM admin (onglet Wwoofing).`;
+    await notifyAlex(`Demande de dates wwoofer — ${r.startDate ?? ''} → ${r.endDate ?? ''}`, body);
+});
+// 4. Show offer — an artist offering to perform (events/{id}/showOffers).
+exports.onShowOffer = functions
+    .runWith(RUNTIME_WITH_SMTP)
+    .firestore.document('events/{eventId}/showOffers/{offerId}')
+    .onCreate(async (snap, context) => {
+    const o = snap.data() ?? {};
+    const body = `Nouvelle offre de spectacle (événement ${context.params.eventId}).\n\n` +
+        line('Artiste', o.artistName) +
+        line('Contact', o.contactName) +
+        line('Courriel', o.email) +
+        line('Téléphone', o.phone) +
+        line('Type', o.type) +
+        line('Cachet demandé (CAD)', o.requestedFeeCAD) +
+        line('Nb interprètes', o.performersCount) +
+        line('Durée (min)', o.durationMinutes) +
+        line('Genre', o.genre) +
+        (o.description ? `\n--- Description ---\n${o.description}\n` : '') +
+        (o.technicalNeeds ? `\n--- Besoins techniques ---\n${o.technicalNeeds}\n` : '') +
+        (o.notes ? `\nNotes: ${o.notes}\n` : '') +
+        `\nÀ traiter dans le CRM admin (onglet Spectacles).`;
+    await notifyAlex(`Nouvelle offre de spectacle — ${o.artistName ?? 'Inconnu'}`, body);
+});
+// 5. New member signup — an adhésion to the Salon.
+exports.onNewMember = functions
+    .runWith(RUNTIME_WITH_SMTP)
+    .firestore.document('members/{uid}')
+    .onCreate(async (snap) => {
+    const m = snap.data() ?? {};
+    const body = `Nouvelle adhésion sur le site.\n\n` +
+        line('Nom', m.displayName) +
+        line('Courriel', m.email) +
+        line('Téléphone', m.phone) +
+        line('Type', m.membershipType) +
+        `\nVisible dans le CRM admin (onglet Membres).`;
+    await notifyAlex(`Nouvelle adhésion — ${m.displayName ?? m.email ?? 'Inconnu'}`, body);
 });
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
 // Read-only: real availability + an authoritative live price quote. These are
