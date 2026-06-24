@@ -190,6 +190,31 @@ export interface WwooferMessage {
   createdAt?: any;
 }
 
+// ─── Community membership applications ────────────────────────────────────────
+// Distinct from wwoofing (volunteer, room + board). This is the paid resident
+// member position: live on site in the bus, ~1000$/mo part-time, housekeeping
+// as the core task. Stored at communityApplications/{uid} — one per signer.
+export type CommunityApplicationStatus = 'pending' | 'approved' | 'declined';
+
+export interface CommunityApplication {
+  uid: string;
+  displayName: string;
+  email: string;
+  photoURL?: string;           // taken from the Google profile, never uploaded
+  phone?: string;
+  city?: string;
+  introduction: string;        // who they are, where they are in life
+  communityMotivation: string; // why community life / why here — the real filter
+  cleaningAttitude?: string;   // honest relationship to housekeeping work
+  personalProjects?: string;   // what they'd work on with the free time
+  workspaceNeeds?: string;     // e.g. the massotherapy room — open to discussion
+  availability?: string;       // when they could start
+  needs?: string;              // what they need from us
+  status?: CommunityApplicationStatus;
+  createdAt?: any;
+  updatedAt?: any;
+}
+
 // ─── Show offers ────────────────────────────────────────────────────────────
 // Submissions from artists who'd like to perform during the Ceilidh weekend.
 // Stored at events/{EVENT_ID}/showOffers/{offerId}.

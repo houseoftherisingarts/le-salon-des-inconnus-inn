@@ -579,6 +579,19 @@ service cloud.firestore {
       }
     }
 
+    // ── Community membership applications ───────────────────────────────────
+    // The paid resident-member position (live on site, part-time housekeeping).
+    // Each application is keyed by uid. The applicant can read/write their own;
+    // admins (both addresses) can read all and update the status / remove.
+    match /communityApplications/{userId} {
+      allow read:   if request.auth != null
+                    && (request.auth.uid == userId || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null
+                    && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
     // ── Production docs (Call sheets, shot lists, storyboards) ──────────────
     // Public read/write for collaborative production documents. Document IDs
     // are per-shoot (e.g. 'jour-1', 'jour-2'). The URL obscurity at

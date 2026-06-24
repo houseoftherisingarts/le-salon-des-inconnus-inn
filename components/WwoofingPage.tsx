@@ -7,6 +7,7 @@ import {
   serverTimestamp, query, orderBy,
 } from 'firebase/firestore';
 import { AuthModal, type MemberProfile } from './AuthModal';
+import { CommunityMembershipSection } from './CommunityMembershipSection';
 import { SeoBlock } from './SeoBlock';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
 
@@ -168,6 +169,9 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
 
   const [showAuth, setShowAuth] = useState(false);
   const [pendingApply, setPendingApply] = useState(false);
+  // True when the community-membership CTA triggered sign-in, so its form opens
+  // by itself once the user returns authenticated.
+  const [communityAuthPending, setCommunityAuthPending] = useState(false);
 
   const [wwooferProfile, setWwooferProfile] = useState<WwooferProfile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
@@ -392,6 +396,15 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             </div>
           </div>
         </section>
+
+        {/* ── COMMUNITY MEMBERSHIP — paid resident place (André's spot) ───── */}
+        <CommunityMembershipSection
+          language={language}
+          user={user}
+          memberProfile={memberProfile}
+          autoOpen={communityAuthPending}
+          onRequestAuth={() => { setCommunityAuthPending(true); setShowAuth(true); }}
+        />
 
         {/* ── BODY: form OR client space ─────────────────────────────────── */}
         <section className="px-6 md:px-12 lg:px-20 py-20">

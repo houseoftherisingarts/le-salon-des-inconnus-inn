@@ -8,6 +8,7 @@ import {
 import { signOut } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
+import type { CommunityApplication, CommunityApplicationStatus } from '../types';
 import { AdminShell, type AdminNavItem } from './AdminShell';
 import { NewsletterSection } from './admin/NewsletterSection';
 import { MessagesSection } from './admin/MessagesSection';
@@ -375,6 +376,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     | 'tickets'
     | 'emails'
     | 'wwoofing'
+    | 'community'
     | 'affiliates'
     | 'd20codes'
     | 'newsletter'
@@ -386,6 +388,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   const [registrations, setRegistrations] = useState<CRMRegistration[]>([]);
   const [showTickets, setShowTickets] = useState<ShowTicket[]>([]);
   const [wwoofers, setWwoofers] = useState<WwooferProfile[]>([]);
+  const [communityApps, setCommunityApps] = useState<CommunityApplication[]>([]);
   const [affiliates, setAffiliates] = useState<Array<{
     uid: string;
     displayName?: string;
@@ -483,6 +486,11 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       snap => setAffiliates(snap.docs.map(d => ({ uid: d.id, ...(d.data() as any) }))),
       () => {},
     );
+    const unsubCommunity = onSnapshot(
+      query(collection(db, 'communityApplications')),
+      snap => setCommunityApps(snap.docs.map(d => ({ ...(d.data() as CommunityApplication), uid: d.id }))),
+      () => {},
+    );
     // Subscribe to each tier's code subcollection. Sorting: unused first
     // (oldest createdAt), used last — so the "next to draw" sits on top.
     const tierUnsubs = D20_TIERS.map((tier) =>
@@ -575,7 +583,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       () => {},
     );
     return () => {
-      unsub1(); unsub2(); unsub3(); unsub4(); unsub5(); unsub6(); unsub7(); unsub8(); unsub9();
+      unsub1(); unsub2(); unsub3(); unsub4(); unsubCommunity(); unsub5(); unsub6(); unsub7(); unsub8(); unsub9();
       tierUnsubs.forEach(fn => fn());
     };
   }, [authed]);
@@ -792,6 +800,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     tickets: showTickets.length,
     emails: allEmails.length,
     wwoofing: wwoofers.length,
+    community: communityApps.length,
     affiliates: affiliates.filter(a => a.status === 'waiting').length,
     d20codes: D20_TIERS.reduce((n, t) => n + d20Codes[t.id].filter(c => !c.used).length, 0),
     showoffers: showOffers.filter(o => o.status === 'new').length,
@@ -807,6 +816,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     { id: 'tickets',    label: 'Billets',          badge: `${counts.tickets}/20`, iconPath: 'M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z' },
     { id: 'emails',     label: 'Emails',           badge: counts.emails,     iconPath: 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75' },
     { id: 'wwoofing',   label: 'Wwoofing',         badge: counts.wwoofing,   iconPath: 'M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25' },
+    { id: 'community',  label: 'Communauté',       badge: counts.community,  iconPath: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z' },
     { id: 'showoffers', label: 'Spectacles',       badge: counts.showoffers, iconPath: 'M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z' },
     { id: 'affiliates', label: 'Affiliés',         badge: counts.affiliates, iconPath: 'M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244', dividerBefore: true },
     { id: 'd20codes',   label: 'Codes D20',        badge: counts.d20codes,   iconPath: 'M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z' },
@@ -987,6 +997,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
               <DashboardTile label="Billets"       value={`${counts.tickets}/20`} accent="text-[#c5a059]" onClick={() => setTab('tickets')} />
               <DashboardTile label="Emails"        value={counts.emails}     accent="text-neutral-300" onClick={() => setTab('emails')} />
               <DashboardTile label="Wwoofing"      value={counts.wwoofing}   accent="text-emerald-300" onClick={() => setTab('wwoofing')} />
+              <DashboardTile label="Communauté"    value={counts.community}  accent="text-amber-300"   onClick={() => setTab('community')} />
               <DashboardTile label="Demandes affiliés (en attente)" value={counts.affiliates} accent="text-rose-300" onClick={() => setTab('affiliates')} />
               <DashboardTile label="Codes D20 disponibles" value={counts.d20codes} accent="text-[#f3e5ab]" onClick={() => setTab('d20codes')} />
               <DashboardTile label="Spectacles · nouveaux" value={counts.showoffers} accent="text-fuchsia-300" onClick={() => setTab('showoffers')} />
@@ -1177,6 +1188,27 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                 {wwoofers.map(w => (
                   <WwooferAdminRow key={w.uid} profile={w} />
                 ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'community' && (
+          <div>
+            <p className="text-neutral-600 text-xs font-lato mb-4">
+              Candidatures « Faire partie de la communauté » — la place rémunérée de membre résident (André).
+              Approuver / refuser, et lire le mot de présentation, le contact et les réponses.
+            </p>
+            {communityApps.length === 0 ? (
+              <p className="py-12 text-center text-neutral-700 italic">Aucune candidature communauté.</p>
+            ) : (
+              <div className="space-y-3">
+                {communityApps
+                  .slice()
+                  .sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0))
+                  .map(c => (
+                    <CommunityAdminRow key={c.uid} application={c} />
+                  ))}
               </div>
             )}
           </div>
@@ -1910,6 +1942,94 @@ const WwooferAdminRow: React.FC<{ profile: WwooferProfile }> = ({ profile }) => 
               </button>
             </div>
           </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Community membership application row ──────────────────────────────────────
+// Mirrors WwooferAdminRow: collapsible card, status toggle, full answers.
+
+const COMMUNITY_BADGE: Record<CommunityApplicationStatus, string> = {
+  pending:  'border-yellow-400/50 text-yellow-300 bg-yellow-400/10',
+  approved: 'border-green-400/50 text-green-300 bg-green-400/10',
+  declined: 'border-red-400/50 text-red-300 bg-red-400/10',
+};
+
+const CommunityAdminRow: React.FC<{ application: CommunityApplication }> = ({ application }) => {
+  const [open, setOpen] = useState(false);
+  const status: CommunityApplicationStatus = application.status ?? 'pending';
+
+  const setStatus = async (next: CommunityApplicationStatus) => {
+    if (!db) return;
+    await updateDoc(doc(db, 'communityApplications', application.uid), {
+      status: next,
+      updatedAt: serverTimestamp(),
+    });
+  };
+
+  const field = (label: string, value?: string) =>
+    value ? (
+      <div className="md:col-span-2">
+        <span className="text-neutral-600">{label} :</span> {value}
+      </div>
+    ) : null;
+
+  return (
+    <div className="border border-white/10 bg-[#0a0a0a] rounded-lg">
+      <div className="px-4 py-3 flex items-center justify-between flex-wrap gap-3">
+        <button onClick={() => setOpen(!open)} className="flex items-center gap-3 text-left flex-1 min-w-0">
+          <span className="text-neutral-500 text-xs">{open ? '▾' : '▸'}</span>
+          {application.photoURL ? (
+            <img src={application.photoURL} alt="" className="w-9 h-9 rounded-full object-cover border border-[#d4af37]/40 shrink-0" />
+          ) : (
+            <div className="w-9 h-9 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/40 flex items-center justify-center text-[#f3e5ab] text-xs shrink-0">
+              {application.displayName?.charAt(0) ?? '?'}
+            </div>
+          )}
+          <div className="min-w-0">
+            <div className="font-cinzel text-white text-sm truncate">{application.displayName}</div>
+            <div className="text-[11px] text-neutral-500 truncate">
+              {application.email}{application.phone ? ` · ${application.phone}` : ''}
+            </div>
+          </div>
+        </button>
+        <div className="flex items-center gap-2">
+          <span className={`px-2 py-0.5 rounded-full border text-[10px] font-cinzel uppercase tracking-widest ${COMMUNITY_BADGE[status]}`}>
+            {status}
+          </span>
+          <button
+            onClick={() => setStatus('approved')}
+            className={`px-2.5 py-1 text-[10px] font-cinzel uppercase tracking-widest border rounded-full transition-colors ${
+              status === 'approved' ? 'bg-green-500/20 text-green-300 border-green-500/50' : 'border-white/10 text-neutral-500 hover:text-green-300'
+            }`}
+          >
+            ✓ Approuver
+          </button>
+          <button
+            onClick={() => setStatus('declined')}
+            className={`px-2.5 py-1 text-[10px] font-cinzel uppercase tracking-widest border rounded-full transition-colors ${
+              status === 'declined' ? 'bg-red-500/20 text-red-300 border-red-500/50' : 'border-white/10 text-neutral-500 hover:text-red-300'
+            }`}
+          >
+            ✕ Refuser
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div className="border-t border-white/5 p-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-neutral-400">
+          {application.city && <div><span className="text-neutral-600">Vient de :</span> {application.city}</div>}
+          {application.availability && <div><span className="text-neutral-600">Disponibilité :</span> {application.availability}</div>}
+          {application.introduction && (
+            <div className="md:col-span-2 italic text-neutral-300">"{application.introduction}"</div>
+          )}
+          {field('Pourquoi la communauté', application.communityMotivation)}
+          {field('Rapport au ménage', application.cleaningAttitude)}
+          {field('Projets personnels', application.personalProjects)}
+          {field('Espace de travail souhaité', application.workspaceNeeds)}
+          {field('Besoins', application.needs)}
         </div>
       )}
     </div>

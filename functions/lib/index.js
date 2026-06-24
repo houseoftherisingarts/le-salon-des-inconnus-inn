@@ -22,12 +22,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
 const params_1 = require("firebase-functions/params");
+const nodemailer_1 = __importDefault(require("nodemailer"));
 admin.initializeApp();
 // ─── Square client ────────────────────────────────────────────────────────────
 // IMPORTANT: the `square` SDK is heavy and eager-imports thousands of API
@@ -150,6 +154,57 @@ exports.createShowTicketPayment = functions.https.onCall(async (data, context) =
         const msg = err instanceof Error ? err.message : String(err);
         console.error('Show ticket payment error:', msg);
         throw new functions.https.HttpsError('internal', `Payment failed: ${msg}`);
+    }
+});
+// ─── Community membership application → email Alex ────────────────────────────
+// When someone applies for the paid resident-member place (the André spot),
+// email alex@lesalondesinconnus.com so he sees it without checking the CRM.
+// Sent through Zoho SMTP. Set the two secrets, then deploy this function:
+//   firebase functions:secrets:set ZOHO_USER   (e.g. alex@lesalondesinconnus.com)
+//   firebase functions:secrets:set ZOHO_PASS   (Zoho app password)
+//   firebase deploy --only functions:onCommunityApplication
+// The CRM works without this; the email is just a convenience notification.
+exports.onCommunityApplication = functions
+    .runWith({ secrets: ['ZOHO_USER', 'ZOHO_PASS'] })
+    .firestore.document('communityApplications/{uid}')
+    .onCreate(async (snap) => {
+    const a = snap.data() ?? {};
+    const user = process.env.ZOHO_USER;
+    const pass = process.env.ZOHO_PASS;
+    if (!user || !pass) {
+        console.error('ZOHO_USER / ZOHO_PASS not set — cannot send notification email.');
+        return;
+    }
+    const transporter = nodemailer_1.default.createTransport({
+        host: 'smtp.zohocloud.ca',
+        port: 465,
+        secure: true,
+        auth: { user, pass },
+    });
+    const row = (label, value) => value ? `${label}: ${String(value)}\n` : '';
+    const body = `Nouvelle candidature pour la place de membre de la communauté (la place d'André).\n\n` +
+        row('Nom', a.displayName) +
+        row('Courriel', a.email) +
+        row('Téléphone', a.phone) +
+        row("Vient de", a.city) +
+        row('Disponibilité', a.availability) +
+        `\n--- Présentation ---\n${a.introduction ?? ''}\n` +
+        `\n--- Pourquoi la communauté / pourquoi ici ---\n${a.communityMotivation ?? ''}\n` +
+        (a.cleaningAttitude ? `\n--- Rapport au ménage ---\n${a.cleaningAttitude}\n` : '') +
+        (a.personalProjects ? `\n--- Projets personnels ---\n${a.personalProjects}\n` : '') +
+        (a.workspaceNeeds ? `\n--- Espace de travail souhaité ---\n${a.workspaceNeeds}\n` : '') +
+        (a.needs ? `\n--- Besoins ---\n${a.needs}\n` : '') +
+        `\nÀ traiter dans le CRM admin (onglet Communauté).`;
+    try {
+        await transporter.sendMail({
+            from: `"Le Salon des Inconnus" <${user}>`,
+            to: 'alex@lesalondesinconnus.com',
+            subject: `Nouvelle candidature communauté — ${a.displayName ?? 'Inconnu'}`,
+            text: body,
+        });
+    }
+    catch (err) {
+        console.error('Could not send community-application email:', err);
     }
 });
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
