@@ -7,12 +7,14 @@ import type { CommunityApplication, CommunityApplicationStatus } from '../types'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // "Faire partie de la communauté" — the paid resident-member announcement.
-// Lives inside the Wwoofing page but is its own offer: live on site in the bus,
-// 1000$/month part-time, housekeeping as the core task. A place opens because
-// André Dancause is leaving to be closer to his family.
 //
-// Editorial redesign: warm layered ground (not flat gold-on-black), real
-// imagery of the place, a hairline terms ledger, champagne headings, brass CTA.
+// Design language, grounded in the real site:
+//  · The home page (InnPage) is cinematic full-bleed photography with cream
+//    Cinzel display + gold eyebrows. The header here mirrors that exactly.
+//  · This is a LETTER, so the body uses the Salon's documented letter baseline:
+//    cream parchment (#F4ECD8), double gold border (#B08A3E), Cinzel headings,
+//    warm-brown ink (#2A1F0E). A real missive set into the dark page.
+//
 // Deep-linkable via /wwoofing#communaute (and #postuler).
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -24,29 +26,26 @@ interface Props {
   autoOpen?: boolean;
 }
 
-// Warm, layered palette. Tinted toward the brand's gold hue — no pure black,
-// no flat bright yellow carrying the whole surface.
-const C = {
-  ink:     'oklch(0.86 0.022 82)',  // body — warm parchment
-  inkSoft: 'oklch(0.66 0.018 80)',  // muted labels / captions
-  lead:    'oklch(0.91 0.030 86)',  // lead paragraph
-  head:    'oklch(0.93 0.046 90)',  // champagne headings
-  gold:    '#d4af37',               // bright accent — thin rules, small marks
-  brass:   'oklch(0.78 0.105 80)',  // deeper brass — CTA fill, term values
-  hair:    'oklch(0.80 0.06 84 / 0.22)', // hairline rules / dividers
+// Letter baseline tokens (from the Salon document template).
+const P = {
+  paper:    '#F4ECD8',
+  border:   '#B08A3E',
+  accent:   '#C9A565',
+  rule:     '#D5BA82',
+  ink:      '#2A1F0E',
+  inkSoft:  '#4A3416',
+  head:     '#6B4E1F',
+  soft:     '#8A6B33',
 };
-const SECTION_BG =
-  'radial-gradient(115% 75% at 12% -5%, oklch(0.26 0.035 72 / 0.55), transparent 55%),' +
-  'radial-gradient(90% 60% at 100% 110%, oklch(0.23 0.03 60 / 0.45), transparent 60%),' +
-  'oklch(0.165 0.014 62)';
-
-const IMG = {
-  bus:   'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/bus%20pov%20arriere%202.jpg',
-  manor: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png',
-  table: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/salle%20a%20manger.jpg',
+// Cinematic header (over photography) — the home's cream/gold-on-image palette.
+const HEADER = {
+  cream:    '#f3e5ab',
+  gold:     '#dcb055',
 };
 
-// The letter, block by block — EN/FR side by side.
+const HEADER_IMG = 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg';
+const BUS_IMG    = 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/bus%20pov%20arriere%202.jpg';
+
 const LETTER: { fr: string; en: string }[] = [
   {
     fr: "André Dancause, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. On le laisse partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
@@ -130,252 +129,217 @@ export const CommunityMembershipSection: React.FC<Props> = ({
     }, 50);
   }, [user, memberProfile, onRequestAuth]);
 
-  const lead = LETTER[0];
-  const body = LETTER.slice(1);
-
   return (
-    <section id="communaute" className="community-mb relative scroll-mt-20" style={{ background: SECTION_BG }}>
-      {/* top hairline that frames the whole movement */}
-      <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${C.hair}, transparent)` }} />
+    <section id="communaute" className="comm relative scroll-mt-16 bg-[#0b0a08]">
 
-      <div className="mx-auto max-w-6xl px-6 md:px-10 lg:px-14 py-24 md:py-32">
-
-        {/* ── Editorial diptych: announcement + the bus ─────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-start">
-          <div>
-            <div className="flex items-center gap-4 mb-7">
-              <span className="font-cinzel text-[11px] tracking-[0.45em] uppercase" style={{ color: C.gold }}>
-                {t('A place opens', 'Une place se libère')}
-              </span>
-              <span className="h-px flex-1" style={{ background: C.hair }} />
-            </div>
-
-            <h2
-              className="font-cinzel tracking-wide leading-[0.98] mb-5"
-              style={{ color: C.head, fontSize: 'clamp(2.6rem, 5.2vw, 4.4rem)' }}
-            >
-              {t('Join the community', 'Faire partie de la communauté')}
-            </h2>
-            <p className="comm-italic italic mb-9" style={{ color: C.brass, fontSize: 'clamp(1.15rem, 2vw, 1.6rem)' }}>
-              {t(
-                'Come live in a lasting place, with people of heart and travellers passing through.',
-                'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
-              )}
-            </p>
-
-            {/* Lead paragraph — larger, the announcement itself */}
-            <p
-              className="font-lato"
-              style={{ color: C.lead, fontSize: 'clamp(1.05rem, 1.5vw, 1.3rem)', lineHeight: 1.7, maxWidth: '34ch' }}
-            >
-              {t(lead.en, lead.fr)}
-            </p>
+      {/* ── Cinematic header — full-bleed photo, cream Cinzel (home language) ── */}
+      <header className="relative w-full overflow-hidden" style={{ height: 'clamp(440px, 64vh, 720px)' }}>
+        <img
+          src={HEADER_IMG}
+          alt={t('The manor and grounds at golden hour.', "Le manoir et son terrain à l'heure dorée.")}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: '50% 42%' }}
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,7,5,0.45) 0%, rgba(8,7,5,0.15) 35%, rgba(8,7,5,0.55) 78%, #0b0a08 100%)' }} />
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
+          <div className="flex items-center gap-4 mb-6">
+            <span className="h-px w-10" style={{ background: HEADER.gold }} />
+            <span className="font-cinzel uppercase" style={{ color: HEADER.gold, fontSize: '11px', letterSpacing: '0.42em' }}>
+              {t('A place opens', 'Une place se libère')}
+            </span>
+            <span className="h-px w-10" style={{ background: HEADER.gold }} />
           </div>
-
-          {/* The bus — the offer made literal */}
-          <figure className="relative lg:mt-2">
-            <div className="relative overflow-hidden aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5]">
-              <img
-                src={IMG.bus}
-                alt={t('The converted bus on the inn grounds, your home on site.', "Le bus aménagé sur le terrain de l'auberge, ton chez-toi sur place.")}
-                loading="lazy"
-                className="w-full h-full object-cover"
-                style={{ objectPosition: '50% 50%' }}
-              />
-              <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 0 1px ' + C.hair, background: 'linear-gradient(180deg, transparent 55%, oklch(0.16 0.014 62 / 0.55))' }} />
-            </div>
-            <figcaption className="mt-3 font-lato text-[11px] tracking-[0.18em] uppercase" style={{ color: C.inkSoft }}>
-              {t('Your home — the converted bus', 'Ton chez-toi · le bus aménagé')}
-            </figcaption>
-          </figure>
+          <h2
+            className="font-cinzel uppercase"
+            style={{ color: HEADER.cream, fontSize: 'clamp(2.1rem, 5.4vw, 4.6rem)', lineHeight: 1.02, letterSpacing: '0.02em', textShadow: '0 2px 30px rgba(0,0,0,0.5)' }}
+          >
+            {t('Join the community', 'Faire partie de la communauté')}
+          </h2>
+          <p
+            className="font-cormorant italic mt-5"
+            style={{ color: HEADER.cream, fontSize: 'clamp(1.1rem, 2vw, 1.7rem)', textShadow: '0 1px 16px rgba(0,0,0,0.55)' }}
+          >
+            {t(
+              'Come live in a lasting place, with people of heart and travellers passing through.',
+              'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
+            )}
+          </p>
         </div>
+      </header>
 
-        {/* ── Body movement 1 — what the place is ───────────────────────── */}
-        <div className="mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-[0.42fr_0.58fr] gap-10 lg:gap-16 items-start">
-          <div className="lg:sticky lg:top-24">
-            <figure>
-              <div className="relative overflow-hidden aspect-[16/10]">
+      {/* ── The letter — cream parchment, double gold border (letter baseline) ── */}
+      <div className="px-4 sm:px-6 md:px-8 pt-12 md:pt-16 pb-16 md:pb-24">
+        <article
+          className="mx-auto"
+          style={{ maxWidth: '54rem', background: P.paper, border: `5px double ${P.border}`, boxShadow: '0 30px 80px -40px rgba(0,0,0,0.8)' }}
+        >
+          <div style={{ border: `0.5px solid ${P.border}`, margin: '10px', padding: 'clamp(1.75rem, 5vw, 4rem)' }}>
+
+            {/* Wordmark */}
+            <div className="text-center mb-2">
+              <span className="font-cinzel" style={{ color: P.soft, fontSize: '12px', letterSpacing: '0.22em' }}>
+                LE SALON DES INCONNUS
+              </span>
+            </div>
+            <div className="mx-auto mb-9 h-px w-24" style={{ background: P.accent }} />
+
+            {/* Lead — the announcement, set a touch larger */}
+            <p className="font-lato" style={{ color: P.ink, fontSize: 'clamp(1.05rem, 1.4vw, 1.2rem)', lineHeight: 1.85, fontWeight: 400 }}>
+              {t(LETTER[0].en, LETTER[0].fr)}
+            </p>
+
+            <div className="space-y-5 mt-5">
+              {LETTER.slice(1, 5).map((b, i) => (
+                <p key={i} className="font-lato" style={{ color: P.ink, fontSize: '16.5px', lineHeight: 1.85 }}>
+                  {t(b.en, b.fr)}
+                </p>
+              ))}
+            </div>
+
+            {/* The bus — one decisive inset photo */}
+            <figure className="my-10">
+              <div className="relative overflow-hidden" style={{ border: `0.5px solid ${P.accent}` }}>
                 <img
-                  src={IMG.manor}
-                  alt={t('The manor and grounds at golden hour.', "Le manoir et le terrain à l'heure dorée.")}
+                  src={BUS_IMG}
+                  alt={t('The converted bus on the grounds, your home on site.', "Le bus aménagé sur le terrain, ton chez-toi sur place.")}
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="w-full object-cover"
+                  style={{ aspectRatio: '16 / 9' }}
                 />
-                <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 0 1px ' + C.hair }} />
               </div>
-              <figcaption className="mt-3 font-lato text-[11px] tracking-[0.18em] uppercase" style={{ color: C.inkSoft }}>
-                {t('The place that anchors it all', 'Le lieu qui ancre tout')}
+              <figcaption className="mt-2 font-cinzel uppercase text-center" style={{ color: P.soft, fontSize: '10px', letterSpacing: '0.22em' }}>
+                {t('Your home — the converted bus', 'Ton chez-toi · le bus aménagé')}
               </figcaption>
             </figure>
-          </div>
-          <div className="space-y-6" style={{ maxWidth: '60ch' }}>
-            <Para text={t(body[0].en, body[0].fr)} />
-            <Para text={t(body[1].en, body[1].fr)} />
-            <Para text={t(body[2].en, body[2].fr)} />
-          </div>
-        </div>
 
-        {/* ── Terms ledger — replaces the card grid ─────────────────────── */}
-        <div className="mt-20 md:mt-24">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="font-cinzel text-[11px] tracking-[0.4em] uppercase" style={{ color: C.inkSoft }}>
-              {t('The terms', 'Les conditions')}
-            </span>
-            <span className="h-px flex-1" style={{ background: C.hair }} />
-          </div>
-          <dl
-            className="grid grid-cols-2 md:grid-cols-4"
-            style={{ borderTop: `1px solid ${C.hair}`, borderBottom: `1px solid ${C.hair}` }}
-          >
-            {[
-              { v: '1000 $', l: t('per month, part-time', 'par mois · temps partiel') },
-              { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
-              { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
-              { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
-            ].map((it, i) => (
-              <div
-                key={i}
-                className="px-5 py-7 md:py-8"
-                style={{
-                  borderLeft: i % 2 === 1 ? `1px solid ${C.hair}` : undefined,
-                  // restore the divider on md where it becomes a 4-col row
-                }}
-              >
-                <dt className="font-cinzel leading-none mb-2" style={{ color: C.head, fontSize: 'clamp(1.25rem, 2vw, 1.7rem)' }}>
-                  {it.v}
-                </dt>
-                <dd className="font-lato text-[12px] tracking-wide" style={{ color: C.inkSoft }}>{it.l}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+            {/* Terms — small ledger, not cards */}
+            <SectionRule label={t('The terms', 'Les conditions')} />
+            <dl className="grid grid-cols-2 md:grid-cols-4 gap-y-6 mb-2">
+              {[
+                { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
+                { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
+                { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
+                { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
+              ].map((it, i) => (
+                <div key={i} className="px-1">
+                  <dt className="font-cinzel" style={{ color: P.head, fontSize: 'clamp(1.15rem, 1.8vw, 1.55rem)', lineHeight: 1.1 }}>{it.v}</dt>
+                  <dd className="font-lato mt-1.5" style={{ color: P.inkSoft, fontSize: '11.5px', letterSpacing: '0.04em' }}>{it.l}</dd>
+                </div>
+              ))}
+            </dl>
 
-        {/* ── Body movement 2 — work, pay, the kind of person ───────────── */}
-        <div className="mt-20 md:mt-24 space-y-6" style={{ maxWidth: '64ch' }}>
-          <Para text={t(body[3].en, body[3].fr)} />
-          <Para text={t(body[4].en, body[4].fr)} />
-        </div>
-
-        {/* ── Human side, with the shared table ─────────────────────────── */}
-        <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-[0.58fr_0.42fr] gap-10 lg:gap-16 items-center">
-          <div className="space-y-6" style={{ maxWidth: '60ch' }}>
-            <Para text={t(body[5].en, body[5].fr)} />
-          </div>
-          <figure>
-            <div className="relative overflow-hidden aspect-[5/4]">
-              <img
-                src={IMG.table}
-                alt={t('The long table where meals are shared.', "La grande table où les repas se partagent.")}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 0 1px ' + C.hair }} />
+            {/* Remaining body */}
+            <div className="space-y-5 mt-10">
+              {LETTER.slice(5).map((b, i) => (
+                <p key={i} className="font-lato" style={{ color: P.ink, fontSize: '16.5px', lineHeight: 1.85 }}>
+                  {t(b.en, b.fr)}
+                </p>
+              ))}
             </div>
-            <figcaption className="mt-3 font-lato text-[11px] tracking-[0.18em] uppercase" style={{ color: C.inkSoft }}>
-              {t('The long table', 'La grande table')}
-            </figcaption>
-          </figure>
-        </div>
 
-        {/* ── Pullquote — centered, hairline-flanked (no side stripe) ────── */}
-        <figure className="mt-24 md:mt-32 text-center mx-auto" style={{ maxWidth: '26ch' }}>
-          <span className="block mx-auto mb-8 h-px w-16" style={{ background: C.gold }} />
-          <blockquote className="comm-italic italic leading-[1.25]" style={{ color: C.head, fontSize: 'clamp(1.6rem, 3.4vw, 2.6rem)' }}>
-            {t(PULLQUOTE.en, PULLQUOTE.fr)}
-          </blockquote>
-          <span className="block mx-auto mt-8 h-px w-16" style={{ background: C.gold }} />
-        </figure>
+            {/* Pullquote — modest, soft gold, hairline above */}
+            <div className="mt-12 text-center">
+              <span className="block mx-auto mb-5 h-px w-14" style={{ background: P.accent }} />
+              <p className="font-cormorant italic mx-auto" style={{ color: P.soft, fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', lineHeight: 1.4, maxWidth: '34ch' }}>
+                {t(PULLQUOTE.en, PULLQUOTE.fr)}
+              </p>
+            </div>
 
-        {/* ── CTA / form / applied ──────────────────────────────────────── */}
-        <div className="mt-24 md:mt-28">
-          {!loaded && user ? (
-            <p className="font-lato text-sm" style={{ color: C.inkSoft }}>{t('Loading…', 'Chargement…')}</p>
-          ) : hasApplied ? (
-            <AppliedSummary application={application!} t={t} />
-          ) : showForm && user && memberProfile ? (
-            <div id="community-apply">
-              <CommunityApplyForm language={language} user={user} memberProfile={memberProfile} onCancel={() => setShowForm(false)} />
+            {/* ── CTA / form / applied ── */}
+            <div className="mt-12">
+              {!loaded && user ? (
+                <p className="font-lato text-sm text-center" style={{ color: P.soft }}>{t('Loading…', 'Chargement…')}</p>
+              ) : hasApplied ? (
+                <AppliedSummary application={application!} t={t} />
+              ) : showForm && user && memberProfile ? (
+                <div id="community-apply">
+                  <CommunityApplyForm language={language} user={user} memberProfile={memberProfile} onCancel={() => setShowForm(false)} />
+                </div>
+              ) : (
+                <div className="text-center">
+                  <button onClick={handleCta} className="comm-cta font-cinzel uppercase">
+                    {t('Apply for the place', 'Postuler pour la place')}
+                  </button>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="flex flex-col items-center text-center">
-              <button onClick={handleCta} className="comm-cta group relative font-cinzel font-bold uppercase tracking-[0.28em] text-[12px]">
-                {t('Apply for the place', 'Postuler pour la place')}
-              </button>
-            </div>
-          )}
-        </div>
+
+          </div>
+        </article>
       </div>
 
-      {/* bottom hairline */}
-      <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${C.hair}, transparent)` }} />
-
       <style>{`
-        .comm-italic { font-family: 'Cormorant Garamond', serif; }
-        .community-mb dl > div:nth-child(odd) { border-left: 0; }
-        @media (min-width: 768px) {
-          .community-mb dl > div { border-left: 1px solid ${C.hair} !important; }
-          .community-mb dl > div:first-child { border-left: 0 !important; }
-        }
+        .comm .font-cormorant, .comm-italic { font-family: 'Cormorant Garamond', serif; }
         .comm-cta {
-          color: #1a1407;
-          background: ${C.brass};
-          padding: 1.05rem 2.6rem;
-          transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .4s ease, box-shadow .4s ease;
-          box-shadow: 0 1px 0 0 rgba(255,255,255,0.18) inset, 0 14px 40px -18px rgba(212,175,55,0.5);
+          color: ${P.paper};
+          background: ${P.border};
+          padding: 0.95rem 2.5rem;
+          border-radius: 2px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.28em;
+          transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .35s ease, box-shadow .35s ease;
+          box-shadow: 0 10px 26px -14px rgba(176,138,62,0.7);
         }
-        .comm-cta:hover { background: #e7cf7e; transform: translateY(-2px); box-shadow: 0 1px 0 0 rgba(255,255,255,0.25) inset, 0 22px 60px -22px rgba(212,175,55,0.65); }
+        .comm-cta:hover { background: ${P.head}; transform: translateY(-2px); box-shadow: 0 16px 36px -16px rgba(107,78,31,0.75); }
         .comm-cta:active { transform: translateY(0); }
+        .comm-cta:disabled { opacity: 0.4; cursor: not-allowed; }
       `}</style>
     </section>
   );
 };
 
-const Para: React.FC<{ text: string }> = ({ text }) => (
-  <p className="font-lato" style={{ color: 'oklch(0.86 0.022 82)', fontSize: '16px', lineHeight: 1.85 }}>{text}</p>
+const SectionRule: React.FC<{ label: string }> = ({ label }) => (
+  <div className="flex items-center gap-4 my-9">
+    <span className="h-px flex-1" style={{ background: P.rule }} />
+    <span className="font-cinzel uppercase" style={{ color: P.head, fontSize: '11px', letterSpacing: '0.28em' }}>{label}</span>
+    <span className="h-px flex-1" style={{ background: P.rule }} />
+  </div>
 );
 
-// ─── Applied confirmation (no side stripe) ───────────────────────────────────
+// ─── Applied confirmation ────────────────────────────────────────────────────
 
 const AppliedSummary: React.FC<{
   application: CommunityApplication;
   t: (en: string, fr: string) => string;
 }> = ({ application, t }) => {
   const status: CommunityApplicationStatus = application.status ?? 'pending';
-  const badge: Record<CommunityApplicationStatus, string> = {
-    pending:  'border-yellow-400/40 text-yellow-200/90',
-    approved: 'border-green-400/40 text-green-200/90',
-    declined: 'border-red-400/40 text-red-200/90',
+  const badge: Record<CommunityApplicationStatus, { fr: string; en: string; bg: string; fg: string }> = {
+    pending:  { fr: 'Reçue',     en: 'Received', bg: 'rgba(176,138,62,0.14)', fg: P.head },
+    approved: { fr: 'Approuvée', en: 'Approved', bg: 'rgba(58,125,68,0.16)',  fg: '#2f6b39' },
+    declined: { fr: 'Fermée',    en: 'Closed',   bg: 'rgba(140,80,40,0.14)',  fg: '#8a4a28' },
   };
+  const b = badge[status];
   return (
-    <div className="mx-auto max-w-2xl" style={{ borderTop: '1px solid oklch(0.80 0.06 84 / 0.22)', paddingTop: '2rem' }}>
-      <div className="flex items-center gap-4 flex-wrap mb-4">
+    <div className="mx-auto max-w-2xl text-center" style={{ borderTop: `0.5px solid ${P.rule}`, paddingTop: '1.75rem' }}>
+      <div className="flex items-center justify-center gap-4 flex-wrap mb-4">
         {application.photoURL && (
-          <img src={application.photoURL} alt="" className="w-12 h-12 rounded-full object-cover" style={{ boxShadow: '0 0 0 1px #d4af37aa' }} />
+          <img src={application.photoURL} alt="" className="w-12 h-12 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${P.accent}` }} />
         )}
-        <div>
-          <span className="font-cinzel text-[10px] uppercase tracking-[0.4em] block mb-1" style={{ color: '#d4af37' }}>
+        <div className="text-left">
+          <span className="font-cinzel uppercase block mb-1" style={{ color: P.soft, fontSize: '10px', letterSpacing: '0.3em' }}>
             {t('Your application', 'Ta candidature')}
           </span>
-          <h3 className="font-cinzel text-2xl" style={{ color: 'oklch(0.93 0.046 90)' }}>{application.displayName}</h3>
+          <h3 className="font-cinzel" style={{ color: P.head, fontSize: '1.4rem' }}>{application.displayName}</h3>
         </div>
-        <span className={`ml-auto px-3 py-1 rounded-full border text-[11px] font-bold uppercase tracking-widest font-cinzel ${badge[status]}`}>
-          {status === 'pending' ? t('Received', 'Reçue') : status === 'approved' ? t('Approved', 'Approuvée') : t('Closed', 'Fermée')}
+        <span className="ml-auto font-cinzel uppercase" style={{ background: b.bg, color: b.fg, fontSize: '10px', letterSpacing: '0.18em', padding: '4px 12px', borderRadius: '999px' }}>
+          {t(b.en, b.fr)}
         </span>
       </div>
-      <p className="font-lato text-sm leading-relaxed" style={{ color: 'oklch(0.80 0.02 80)' }}>
+      <p className="font-lato text-sm leading-relaxed mx-auto" style={{ color: P.inkSoft, maxWidth: '46ch' }}>
         {t(
           "Thank you. We read every application by hand. We'll reach out by email or phone when we've had time to sit with it.",
           "Merci. On lit chaque candidature à la main. On te reviendra par courriel ou par téléphone une fois qu'on aura pris le temps de s'y asseoir.",
         )}
       </p>
       {application.introduction && (
-        <p className="comm-italic italic text-lg mt-6 leading-relaxed" style={{ color: 'oklch(0.86 0.022 82)' }}>"{application.introduction}"</p>
+        <p className="font-cormorant italic text-lg mt-5 leading-relaxed mx-auto" style={{ color: P.soft, maxWidth: '50ch' }}>"{application.introduction}"</p>
       )}
     </div>
   );
 };
 
-// ─── Apply form (warm panel, no heavy glass) ─────────────────────────────────
+// ─── Apply form (on the parchment) ───────────────────────────────────────────
 
 const CommunityApplyForm: React.FC<{
   language: 'EN' | 'FR';
@@ -438,70 +402,61 @@ const CommunityApplyForm: React.FC<{
   };
 
   return (
-    <div
-      className="relative mx-auto max-w-3xl p-7 md:p-11"
-      style={{ background: 'oklch(0.205 0.016 62)', boxShadow: 'inset 0 0 0 1px oklch(0.80 0.06 84 / 0.18)' }}
-    >
-      <div className="pointer-events-none absolute inset-x-10 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, #d4af37aa, transparent)' }} />
-
-      <div className="flex items-center gap-4 mb-9">
+    <div className="mx-auto max-w-2xl" style={{ borderTop: `0.5px solid ${P.rule}`, paddingTop: '2rem' }}>
+      <div className="flex items-center gap-4 mb-8">
         {memberProfile.photoURL ? (
-          <img src={memberProfile.photoURL} alt="" className="w-14 h-14 rounded-full object-cover" style={{ boxShadow: '0 0 0 1px #d4af37aa' }} />
+          <img src={memberProfile.photoURL} alt="" className="w-14 h-14 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${P.accent}` }} />
         ) : (
-          <div className="w-14 h-14 rounded-full flex items-center justify-center font-cinzel text-lg" style={{ background: '#d4af3722', boxShadow: '0 0 0 1px #d4af37aa', color: '#f3e5ab' }}>
+          <div className="w-14 h-14 rounded-full flex items-center justify-center font-cinzel text-lg" style={{ background: 'rgba(176,138,62,0.14)', boxShadow: `0 0 0 1px ${P.accent}`, color: P.head }}>
             {memberProfile.displayName?.charAt(0) ?? '?'}
           </div>
         )}
         <div>
-          <div className="font-cinzel text-lg" style={{ color: '#f3e5ab' }}>{memberProfile.displayName}</div>
-          <div className="text-[11px] font-lato" style={{ color: 'oklch(0.66 0.018 80)' }}>
+          <div className="font-cinzel text-lg" style={{ color: P.head }}>{memberProfile.displayName}</div>
+          <div className="text-[11px] font-lato" style={{ color: P.soft }}>
             {memberProfile.email}
-            <span style={{ color: 'oklch(0.52 0.015 80)' }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span>
+            <span style={{ color: P.rule }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span>
           </div>
         </div>
       </div>
 
-      <FormField label={t('Introduce yourself *', 'Présente-toi *')} hint={t('Who you are, where you are in life right now.', "Qui tu es, où tu en es dans ta vie en ce moment.")}>
-        <Textarea value={introduction} onChange={setIntroduction} rows={4} placeholder={t('A few words in your own voice', 'Quelques mots dans ta voix')} />
-      </FormField>
+      <Field label={t('Introduce yourself *', 'Présente-toi *')} hint={t('Who you are, where you are in life right now.', "Qui tu es, où tu en es dans ta vie en ce moment.")}>
+        <Area value={introduction} onChange={setIntroduction} rows={4} placeholder={t('A few words in your own voice', 'Quelques mots dans ta voix')} />
+      </Field>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-        <FormField label={t('Phone *', 'Téléphone *')}><Input value={phone} onChange={setPhone} /></FormField>
-        <FormField label={t('Where you come from', "D'où tu viens")}><Input value={city} onChange={setCity} /></FormField>
+        <Field label={t('Phone *', 'Téléphone *')}><Line value={phone} onChange={setPhone} /></Field>
+        <Field label={t('Where you come from', "D'où tu viens")}><Line value={city} onChange={setCity} /></Field>
       </div>
 
-      <FormField label={t('Why community life — why here? *', 'Pourquoi la vie communautaire — pourquoi ici ? *')} hint={t('This is what matters most to us.', "C'est ce qui compte le plus pour nous.")}>
-        <Textarea value={communityMotivation} onChange={setCommunityMotivation} rows={4} />
-      </FormField>
+      <Field label={t('Why community life — why here? *', 'Pourquoi la vie communautaire — pourquoi ici ? *')} hint={t('This is what matters most to us.', "C'est ce qui compte le plus pour nous.")}>
+        <Area value={communityMotivation} onChange={setCommunityMotivation} rows={4} />
+      </Field>
 
-      <FormField label={t('Your relationship to housekeeping work', 'Ton rapport au travail de ménage')} hint={t('Honestly — it is the core of the role.', "Honnêtement — c'est le cœur du poste.")}>
-        <Textarea value={cleaningAttitude} onChange={setCleaningAttitude} rows={3} />
-      </FormField>
+      <Field label={t('Your relationship to housekeeping work', 'Ton rapport au travail de ménage')} hint={t('Honestly — it is the core of the role.', "Honnêtement — c'est le cœur du poste.")}>
+        <Area value={cleaningAttitude} onChange={setCleaningAttitude} rows={3} />
+      </Field>
 
-      <FormField label={t('Your own projects', 'Tes propres projets')} hint={t('What you would work on with the free time.', "Ce sur quoi tu travaillerais avec le temps libre.")}>
-        <Textarea value={personalProjects} onChange={setPersonalProjects} rows={3} />
-      </FormField>
+      <Field label={t('Your own projects', 'Tes propres projets')} hint={t('What you would work on with the free time.', "Ce sur quoi tu travaillerais avec le temps libre.")}>
+        <Area value={personalProjects} onChange={setPersonalProjects} rows={3} />
+      </Field>
 
-      <FormField label={t('Do you need a space to work? (e.g. the massotherapy room)', "As-tu besoin d'un espace pour travailler ? (ex. la salle de masso)")}>
-        <Textarea value={workspaceNeeds} onChange={setWorkspaceNeeds} rows={2} />
-      </FormField>
+      <Field label={t('Do you need a space to work? (e.g. the massotherapy room)', "As-tu besoin d'un espace pour travailler ? (ex. la salle de masso)")}>
+        <Area value={workspaceNeeds} onChange={setWorkspaceNeeds} rows={2} />
+      </Field>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-        <FormField label={t('When could you start?', 'Quand pourrais-tu commencer ?')}><Input value={availability} onChange={setAvailability} /></FormField>
-        <FormField label={t('Anything you need from us', 'Ce dont tu as besoin de nous')}><Input value={needs} onChange={setNeeds} /></FormField>
+        <Field label={t('When could you start?', 'Quand pourrais-tu commencer ?')}><Line value={availability} onChange={setAvailability} /></Field>
+        <Field label={t('Anything you need from us', 'Ce dont tu as besoin de nous')}><Line value={needs} onChange={setNeeds} /></Field>
       </div>
 
-      <div className="mt-8 pt-8" style={{ borderTop: '1px solid oklch(0.80 0.06 84 / 0.2)' }}>
-        {error && <p className="text-sm text-red-400 mb-5">{error}</p>}
+      <div className="mt-8 pt-6" style={{ borderTop: `0.5px solid ${P.rule}` }}>
+        {error && <p className="text-sm mb-4" style={{ color: '#a23b2a' }}>{error}</p>}
         <div className="flex flex-wrap gap-4 items-center justify-end">
-          <button onClick={onCancel} className="px-5 py-3 text-xs uppercase tracking-[0.3em] font-cinzel transition-colors" style={{ color: 'oklch(0.62 0.015 80)' }}>
+          <button onClick={onCancel} className="px-5 py-3 text-xs uppercase font-cinzel" style={{ color: P.soft, letterSpacing: '0.3em' }}>
             {t('Cancel', 'Annuler')}
           </button>
-          <button
-            onClick={submit}
-            disabled={!formValid || saving}
-            className="comm-cta font-cinzel font-bold uppercase tracking-[0.3em] text-xs disabled:opacity-40 disabled:cursor-not-allowed"
-          >
+          <button onClick={submit} disabled={!formValid || saving} className="comm-cta font-cinzel uppercase">
             {saving ? '…' : t('Send my application', 'Envoyer ma candidature')}
           </button>
         </div>
@@ -510,37 +465,42 @@ const CommunityApplyForm: React.FC<{
   );
 };
 
-// ─── Form atoms ──────────────────────────────────────────────────────────────
+// ─── Form atoms (parchment) ──────────────────────────────────────────────────
 
-const FormField: React.FC<{ label: string; hint?: string; children: React.ReactNode }> = ({ label, hint, children }) => (
+const Field: React.FC<{ label: string; hint?: string; children: React.ReactNode }> = ({ label, hint, children }) => (
   <label className="block mb-6">
-    <span className="block text-[10px] uppercase tracking-[0.3em] font-cinzel mb-2" style={{ color: 'oklch(0.62 0.015 80)' }}>{label}</span>
+    <span className="block uppercase font-cinzel mb-2" style={{ color: P.head, fontSize: '10px', letterSpacing: '0.22em' }}>{label}</span>
     {children}
-    {hint && <span className="block text-[11px] font-lato italic mt-1.5" style={{ color: 'oklch(0.5 0.015 80)' }}>{hint}</span>}
+    {hint && <span className="block font-cormorant italic mt-1.5" style={{ color: P.soft, fontSize: '13px' }}>{hint}</span>}
   </label>
 );
 
-const Input: React.FC<{ value: string; onChange: (v: string) => void }> = ({ value, onChange }) => (
+const baseInput = (extra: React.CSSProperties = {}): React.CSSProperties => ({
+  width: '100%',
+  background: 'transparent',
+  border: 0,
+  borderBottom: `1px solid ${P.accent}`,
+  padding: '8px 0',
+  fontSize: '16px',
+  color: P.ink,
+  outline: 'none',
+  ...extra,
+});
+
+const Line: React.FC<{ value: string; onChange: (v: string) => void }> = ({ value, onChange }) => (
   <input
-    type="text"
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    className="w-full bg-transparent border-0 border-b px-0 py-2 text-base text-white font-lato focus:outline-none transition-colors"
-    style={{ borderColor: 'oklch(0.80 0.06 84 / 0.22)' }}
-    onFocus={(e) => (e.currentTarget.style.borderColor = '#d4af37')}
-    onBlur={(e) => (e.currentTarget.style.borderColor = 'oklch(0.80 0.06 84 / 0.22)')}
+    type="text" value={value} onChange={(e) => onChange(e.target.value)}
+    className="font-lato" style={baseInput()}
+    onFocus={(e) => (e.currentTarget.style.borderBottomColor = P.border)}
+    onBlur={(e) => (e.currentTarget.style.borderBottomColor = P.accent)}
   />
 );
 
-const Textarea: React.FC<{ value: string; onChange: (v: string) => void; rows?: number; placeholder?: string }> = ({ value, onChange, rows = 3, placeholder }) => (
+const Area: React.FC<{ value: string; onChange: (v: string) => void; rows?: number; placeholder?: string }> = ({ value, onChange, rows = 3, placeholder }) => (
   <textarea
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    rows={rows}
-    placeholder={placeholder}
-    className="w-full bg-transparent border-0 border-b px-0 py-2 text-base text-white font-lato focus:outline-none transition-colors resize-none placeholder:italic"
-    style={{ borderColor: 'oklch(0.80 0.06 84 / 0.22)' }}
-    onFocus={(e) => (e.currentTarget.style.borderColor = '#d4af37')}
-    onBlur={(e) => (e.currentTarget.style.borderColor = 'oklch(0.80 0.06 84 / 0.22)')}
+    value={value} onChange={(e) => onChange(e.target.value)} rows={rows} placeholder={placeholder}
+    className="font-lato" style={baseInput({ resize: 'none' })}
+    onFocus={(e) => (e.currentTarget.style.borderBottomColor = P.border)}
+    onBlur={(e) => (e.currentTarget.style.borderBottomColor = P.accent)}
   />
 );
