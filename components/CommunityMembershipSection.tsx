@@ -51,14 +51,18 @@ const LETTER: { fr: string; en: string }[] = [
     en: "For that work, we offer 1000$ a month, part-time, with the hours figured out together. On top of the pay: housing in the bus, and food potentially provided (if you take part in the cooking, you eat with us). Because it's part-time, you keep plenty of room for your own projects. And if you need a place to work, we have a massotherapy room: that can be part of the conversation.",
   },
   {
-    fr: "Mis ensemble, le salaire, la valeur du loyer, la nourriture et le temps libre, c'est une entente généreuse. Mais on ne la fait pas miroiter pour rien : on la pense juste, parce que tenir l'auberge, c'est un vrai métier. Ce qu'on cherche avant tout, c'est une psychologie de communauté. On bâtit ce lieu entre amis, avec des gens qui ont le goût de prendre soin d'un endroit. On n'est pas un ashram tout-inclus ni une chaîne d'hôtels : on est quelque part entre les deux, les deux pieds sur terre.",
-    en: "Put together, the pay, the value of the lodging, the food, and the free time make for a generous arrangement. But we don't dangle it for nothing: we keep it fair, because running the inn is a real craft. What we're looking for above all is a community frame of mind. We build this place among friends, with people who genuinely want to care for a spot. We're not an all-inclusive ashram nor a hotel chain: we sit somewhere in between, both feet on the ground.",
+    fr: "On offre un salaire au-dessus du wwoofing communautaire, en plus des avantages, parce que soutenir ce projet, c'est un vrai métier. On veut que chaque personne qui vient greffer un peu de son âme à ce projet de rayonnement se sente appréciée à sa juste valeur. En même temps, on ne cherche pas un employé externe et désintéressé : le communautaire est au centre de la raison d'être de cet espace. C'est pour ça que l'approche hybride nous semble la plus juste : une sécurité de base et un salaire de base, tout en gardant à la personne la liberté de maintenir sa propre activité économique (idéal pour les nomades numériques).",
+    en: "We offer a wage above community wwoofing, plus the perks, because supporting this project is a real craft. We want everyone who comes to graft a bit of their soul onto this living place to feel valued at their true worth. At the same time, we're not after a detached outside employee: the community is the very reason this space exists. That's why a hybrid approach feels truest to us: a base of security and a base wage, while leaving the person free to keep their own economic activity going (ideal for digital nomads).",
+  },
+  {
+    fr: "Ce qu'on cherche avant tout, c'est une psychologie de communauté. On bâtit ce lieu entre amis, avec des gens qui ont le goût de prendre soin d'un endroit. On n'est pas un ashram tout-inclus ni une chaîne d'hôtels : on est quelque part entre les deux, les deux pieds sur terre.",
+    en: "What we're looking for above all is a community frame of mind. We build this place among friends, with people who genuinely want to care for a spot. We're not an all-inclusive ashram nor a hotel chain: we sit somewhere in between, both feet on the ground.",
   },
 ];
 
 const PULLQUOTE = {
-  fr: 'La famille soutient la communauté. La communauté soutient la famille.',
-  en: 'The family supports the community. The community supports the family.',
+  fr: 'La famille soutient la communauté. La communauté soutient la famille. Le lieu ancre les deux.',
+  en: 'The family supports the community. The community supports the family. The place anchors them both.',
 };
 
 // ─── Page ────────────────────────────────────────────────────────────────────
@@ -114,7 +118,10 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           {t('Join the community', 'Faire partie de la communauté')}
         </h2>
         <p className="font-cormorant italic text-xl md:text-2xl text-[#d4af37] mb-12">
-          {t('A paid place to live, work, and belong.', 'Une place rémunérée pour vivre, travailler et appartenir.')}
+          {t(
+            'Come live in a place with heart, among kindred people and travellers passing through.',
+            'Venir vivre dans un lieu de cœur, entouré de gens de cœur et de voyageurs de passage.',
+          )}
         </p>
 
         {/* The letter */}
@@ -169,12 +176,6 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           </div>
         ) : (
           <div className="max-w-3xl">
-            <p className="font-lato text-sm text-neutral-400 leading-relaxed mb-6">
-              {t(
-                'To apply, sign in with Google. We keep your profile photo, your contact, and a short note of introduction. Nothing to upload.',
-                "Pour postuler, connecte-toi avec Google. On garde ta photo de profil, ton contact et un mot de présentation. Rien à téléverser.",
-              )}
-            </p>
             <button
               onClick={handleCta}
               className="px-8 py-4 bg-[#d4af37] text-black font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#f3e5ab] transition-all hover:scale-[1.02] active:scale-95"
