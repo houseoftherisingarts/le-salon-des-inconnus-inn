@@ -132,41 +132,38 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   return (
     <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── HERO, luminous, asymmetric, oversized Prata ─────────────────── */}
-      <div className="relative px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-12 md:pb-16">
-        <div className="mx-auto max-w-5xl">
-          <div className="comm-rise">
-            <div className="flex items-center gap-4 mb-7">
+      {/* ── HERO — cinematic full-bleed, title over the photo (home language) ── */}
+      <header className="comm-fig relative w-full overflow-hidden" style={{ height: 'clamp(580px, 90vh, 1000px)' }}>
+        <img
+          src={IMG.garden}
+          alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
+          className="img-zoom absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: '50% 32%' }}
+        />
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 3%, rgba(5,5,5,0.5) 28%, rgba(5,5,5,0.1) 52%, rgba(5,5,5,0.45) 100%)' }} />
+        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-14 md:pb-20">
+          <div className="max-w-4xl comm-rise">
+            <div className="flex items-center gap-4 mb-6">
               <span className="h-px w-12" style={{ background: T.gold }} />
-              <span className="font-cinzel uppercase" style={{ color: T.goldDeep, fontSize: '12px', letterSpacing: '0.4em' }}>
+              <span className="font-cinzel uppercase" style={{ color: T.gold, fontSize: '12px', letterSpacing: '0.42em' }}>
                 {t('A place opens', 'Une place se libère')}
               </span>
             </div>
-            <h2
-              className="font-prata"
-              style={{ color: T.ink, fontSize: 'clamp(2.9rem, 7.5vw, 6.6rem)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
-            >
+            <h2 className="font-prata" style={{ color: T.ink, fontSize: 'clamp(2.8rem, 7vw, 6.4rem)', lineHeight: 0.95, letterSpacing: '-0.02em', textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
               {t('Join the community', 'Faire partie de la communauté')}
             </h2>
-            <p className="font-cormorant italic mt-6" style={{ color: T.goldDeep, fontSize: 'clamp(1.25rem, 2.2vw, 1.9rem)', lineHeight: 1.3, maxWidth: '24ch' }}>
+            <p className="font-cormorant italic mt-5" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', lineHeight: 1.3, maxWidth: '36ch', textShadow: '0 1px 16px rgba(0,0,0,0.65)' }}>
               {t(
                 'Come live in a lasting place, with people of heart and travellers passing through.',
                 'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
               )}
             </p>
           </div>
-
         </div>
-      </div>
+      </header>
 
-      {/* ── LEAD, the announcement, large, with a Prata drop-cap ────────── */}
-      {/* Full-width community photo, never cropped in width */}
-      <figure className="comm-fig relative w-full overflow-hidden">
-        <img src={IMG.garden} alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')} className="img-zoom w-full block" />
-        <span className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.85), transparent)' }} />
-      </figure>
-
-      <div className="px-6 md:px-12 lg:px-20 pt-6 pb-2">
+      {/* ── LEAD — the announcement ─────────────────────────────────────── */}
+      <div className="px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-2">
         <div className="max-w-4xl">
           <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
             {t(body[0].en, body[0].fr)}
