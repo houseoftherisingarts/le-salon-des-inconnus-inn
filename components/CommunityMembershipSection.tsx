@@ -122,6 +122,18 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
   useEffect(() => { if (autoOpen && user && memberProfile) setShowForm(true); }, [autoOpen, user, memberProfile]);
 
+  // Arriving from the Espace Membre ("Postuler" button): open the form directly.
+  // sessionStorage flag survives the route change (the URL hash does not, since
+  // navigation pushState's the bare path).
+  useEffect(() => {
+    if (typeof sessionStorage === 'undefined') return;
+    if (sessionStorage.getItem('openCommunityForm') === '1' && user && memberProfile) {
+      sessionStorage.removeItem('openCommunityForm');
+      setShowForm(true);
+      setTimeout(() => document.getElementById('community-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
+    }
+  }, [user, memberProfile]);
+
   useEffect(() => {
     const h = (window.location.hash || '').toLowerCase();
     if (h === '#communaute' || h === '#postuler') {
