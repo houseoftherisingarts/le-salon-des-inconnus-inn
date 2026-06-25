@@ -194,7 +194,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         <span className="comm-grain absolute inset-0 pointer-events-none" />
         {/* Recette B4 — le hero se développe depuis le noir à l'entrée */}
         <span className="comm-develop absolute inset-0 pointer-events-none" />
-        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24" data-parallax="-0.10" data-parallax-fade="0.0016">
+        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24" data-parallax="-0.10" data-parallax-fade="0.001">
           <div className="comm-hero-in max-w-4xl">
             {/* eyebrow stacked above the title — every line shares the same left edge */}
             <div className="mb-7">
