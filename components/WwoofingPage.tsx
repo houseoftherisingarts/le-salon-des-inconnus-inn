@@ -251,10 +251,10 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             {/* Photo column */}
             <div className="group relative overflow-hidden min-h-[45vh] lg:min-h-[80vh] bg-[#15110b]">
               <img
-                src="https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg"
-                alt="Aliel by the campfire — Maison Favier"
+                src="/wwoof/wwoofer-bw.jpg"
+                alt="Un wwoofer au travail au jardin — Maison Favier"
                 className="w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
-                style={{ objectPosition: '50% 35%' }}
+                style={{ objectPosition: '50% 45%' }}
               />
               {/* Subtle gradient on photo edge for visual blend with panel */}
               <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-r from-transparent to-[#191510] hidden lg:block" />
