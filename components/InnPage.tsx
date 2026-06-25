@@ -1355,10 +1355,10 @@ export const WwoofingSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; 
         <div className="relative overflow-hidden" style={{ height: '100vh' }}>
             <div className="absolute inset-0">
                 <img
-                    src="/wwoof/cabin-1.jpg"
-                    alt="Le chalet en bois des wwoofers — Maison Favier"
+                    src="https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg"
+                    alt="Wwoofing à la Maison Favier"
                     className="w-full h-full object-cover object-center"
-                    style={{ objectPosition: '50% 50%' }}
+                    style={{ objectPosition: '50% 40%' }}
                 />
                 <div className={`absolute inset-0 transition-colors duration-1000 ${
                     vibe === 'HOSTEL' ? 'bg-gradient-to-t from-[#18181b] via-[#18181b]/70 to-black/55'
@@ -1404,20 +1404,6 @@ export const WwoofingSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; 
                     >
                         {language === 'FR' ? 'Voir le Ceilidh' : 'See the Ceilidh'}
                     </button>
-                </div>
-
-                {/* Showcase — a glimpse of the wwoofers' cabin in the woods */}
-                <div className="mt-10 flex gap-3 md:gap-4">
-                    {['/wwoof/cabin-2.jpg', '/wwoof/cabin-3.jpg', '/wwoof/cabin-4.jpg', '/wwoof/cabin-5.jpg'].map((src, i) => (
-                        <div key={i} className="group relative overflow-hidden w-20 h-16 md:w-32 md:h-24 lg:w-40 lg:h-28 border border-[#c5a059]/30">
-                            <img
-                                src={src}
-                                alt={language === 'FR' ? 'Le chalet des wwoofers' : "The wwoofers' cabin"}
-                                loading="lazy"
-                                className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
-                            />
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
