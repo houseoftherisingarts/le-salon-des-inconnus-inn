@@ -1093,143 +1093,50 @@ export const InnPageReserveCine: React.FC<Props> = ({
           <HostsSection language={language} vibe={'HOSTEL'} onNavigate={onNavigate} />
         </div>
         {/* ── DIAGONAL DOORS — Grand Ceilidh × Wwoofing fused ────────────── */}
-        <section className="cv-auto relative h-screen min-h-[720px] overflow-hidden bg-black select-none">
-          {/* Bottom-left triangle — Grand Ceilidh */}
-          <button
-            type="button"
-            onClick={() => openDoor('CEILIDH')}
-            aria-label={t('Enter the Grand Ceilidh', 'Entrer dans le Grand Ceilidh')}
-            className="doors-half group absolute inset-0 text-left cursor-pointer overflow-hidden"
-            style={{
-              clipPath: 'polygon(0 0, 100% 100%, 0 100%)',
-              transform: doorsExiting ? 'translate(-100%, 100%)' : 'translate(0, 0)',
-              transition: 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-              willChange: 'transform',
-            }}
-          >
-            <img
-              src={CEILIDH_DOORS_PHOTO}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700 doors-img"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 transition-colors duration-500 group-hover:bg-black/10"
-              style={{
-                background:
-                  'linear-gradient(to top right, rgba(5,5,5,0.6) 0%, rgba(5,5,5,0.2) 60%, transparent 100%)',
-              }}
-            />
-            {/* Text block sized to fit inside the triangle's clipped area —
-                tightened constraints so nothing crosses the diagonal hypotenuse
-                or runs past the viewport edge on any width. */}
-            <div className="absolute bottom-10 md:bottom-16 left-5 md:left-12 z-10 max-w-[min(75%,16rem)] transition-transform duration-700 group-hover:-translate-y-2">
-              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.55em] block mb-3">
-                {t('May 21–25, 2026', '21–25 mai 2026')}
-              </span>
-              <h2
-                className="font-prata uppercase text-[#f3e5ab] leading-[1.05] tracking-[-0.01em] mb-3"
-                style={{
-                  fontSize: 'clamp(1.4rem, 3.6vw, 2.8rem)',
-                  textShadow: '0 6px 40px rgba(0,0,0,0.7)',
-                  paddingTop: '0.05em',
-                }}
-              >
-                {t('Grand Ceilidh', 'Grand Ceilidh')}<br />{t('of May', 'de Mai')}
-              </h2>
-              {daysToCeilidhDoors > 0 && (
-                <div className="flex items-baseline gap-3 mb-4">
-                  <span
-                    className="font-prata text-[#c5a059] leading-none"
-                    style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', textShadow: '0 4px 20px rgba(0,0,0,0.7)' }}
-                  >
-                    {daysToCeilidhDoors}
-                  </span>
-                  <span className="font-cinzel text-neutral-300 text-[10px] uppercase tracking-[0.4em]">
-                    {t(daysToCeilidhDoors === 1 ? 'day' : 'days', daysToCeilidhDoors === 1 ? 'jour' : 'jours')}
-                  </span>
-                </div>
-              )}
-              <span className="inline-flex items-center gap-3 font-josefin text-[#f3e5ab] text-xs uppercase tracking-[0.35em] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                {t('Enter', 'Entrer')}
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </span>
+        {/* ── Participer — three doors into the project ─────────────────── */}
+        <section className="cv-auto relative bg-[#050505] py-20 md:py-28 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-4 mb-10 md:mb-14">
+              <span className="h-px w-12 bg-[#c5a059]" />
+              <span className="font-cinzel uppercase text-[#c5a059]" style={{ fontSize: '12px', letterSpacing: '0.4em' }}>{t('Take part', 'Participer')}</span>
             </div>
-          </button>
-
-          {/* Top-right triangle — Wwoofing */}
-          <button
-            type="button"
-            onClick={() => openDoor('WWOOFING')}
-            aria-label={t('Enter Wwoofing', 'Entrer dans le Wwoofing')}
-            className="doors-half group absolute inset-0 text-right cursor-pointer overflow-hidden"
-            style={{
-              clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
-              transform: doorsExiting ? 'translate(100%, -100%)' : 'translate(0, 0)',
-              transition: 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-              willChange: 'transform',
-            }}
-          >
-            <img
-              src={WWOOFING_DOORS_PHOTO}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700 doors-img"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 transition-colors duration-500 group-hover:bg-black/10"
-              style={{
-                background:
-                  'linear-gradient(to bottom left, rgba(5,5,5,0.65) 0%, rgba(5,5,5,0.2) 60%, transparent 100%)',
-              }}
-            />
-            <div className="absolute top-10 md:top-16 right-5 md:right-12 z-10 max-w-[min(75%,16rem)] text-right transition-transform duration-700 group-hover:translate-y-2">
-              <span className="font-cinzel text-[#3a7d44] text-[10px] uppercase tracking-[0.55em] block mb-3" style={{ filter: 'brightness(1.5)' }}>
-                {t('Live & Work', 'Vivre & Travailler')}
-              </span>
-              <h2
-                className="font-prata uppercase text-[#f3e5ab] leading-[1.05] tracking-[-0.01em] mb-3"
-                style={{
-                  fontSize: 'clamp(1.4rem, 3.6vw, 2.8rem)',
-                  textShadow: '0 6px 40px rgba(0,0,0,0.7)',
-                  paddingTop: '0.05em',  // headroom so cap-height isn't clipped by parent overflow
-                }}
-              >
-                Wwoofing
-              </h2>
-              <p
-                className="font-josefin text-neutral-200 text-xs md:text-sm uppercase max-w-[14rem] ml-auto leading-relaxed mb-4"
-                style={{ letterSpacing: '0.18em', textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}
-              >
-                {t('Gardens · Art · Kitchen · Stay', 'Jardins · Art · Cuisine · Hébergement')}
-              </p>
-              <span className="inline-flex items-center justify-end gap-3 font-josefin text-[#f3e5ab] text-xs uppercase tracking-[0.35em] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <span className="group-hover:-translate-x-1 transition-transform">←</span>
-                {t('Enter', 'Entrer')}
-              </span>
-            </div>
-          </button>
-
-          {/* Centered diagonal line + badge — fades during exit */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-            style={{ opacity: doorsExiting ? 0 : 1 }}
-            aria-hidden
-          >
-            <svg className="w-full h-full" preserveAspectRatio="none">
-              <line x1="0" y1="0" x2="100%" y2="100%" stroke="rgba(245,229,171,0.25)" strokeWidth="1" />
-            </svg>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 px-5 py-2 rounded-full bg-black/70 backdrop-blur-md border border-[#c5a059]/30">
-              <span className="font-cinzel text-[#f3e5ab] text-[9px] md:text-[10px] uppercase tracking-[0.4em]">
-                {t('Choose your door', 'Choisissez votre porte')}
-              </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+              {[
+                { eyebrow: t('Live & Work', 'Vivre & Travailler'), title: 'Wwoofing', tag: t('Gardens · Kitchen · Volunteer', 'Jardins · Cuisine · Bénévolat'), img: '/wwoof/bw-6.jpg', go: 'WWOOFING', bw: true },
+                { eyebrow: t('A place opens', 'Une place se libère'), title: t('The Community', 'La Communauté'), tag: t('Live here · Paid place', 'Vivre ici · Place rémunérée'), img: '/wwoof/bw-10.jpg', go: 'COMMUNITY', bw: true },
+                { eyebrow: t('Support', 'Soutenir'), title: t('Make a gift', 'Faire un don'), tag: t('Help the mission', 'Aider la mission'), img: CEILIDH_DOORS_PHOTO, go: 'DONATION', bw: true },
+              ].map((d, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => onNavigate(d.go)}
+                  className="group relative overflow-hidden rounded-[15px] text-left"
+                  style={{ aspectRatio: '3 / 4' }}
+                  aria-label={d.title}
+                >
+                  <img
+                    src={d.img}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
+                    style={d.bw ? { filter: 'grayscale(1) contrast(1.04)' } : undefined}
+                  />
+                  <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.35) 46%, rgba(5,5,5,0.05) 78%)' }} />
+                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+                    <span className="font-cinzel uppercase block mb-2 text-[#c5a059]" style={{ fontSize: '10px', letterSpacing: '0.4em' }}>{d.eyebrow}</span>
+                    <h3 className="font-prata text-[#f3e5ab] leading-tight" style={{ fontSize: 'clamp(1.6rem, 2.4vw, 2.3rem)', letterSpacing: '-0.01em' }}>{d.title}</h3>
+                    <p className="font-josefin uppercase text-neutral-300 mt-2" style={{ fontSize: '11px', letterSpacing: '0.18em' }}>{d.tag}</p>
+                    <span className="inline-flex items-center gap-2 font-cinzel uppercase text-[#f3e5ab] mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ fontSize: '10px', letterSpacing: '0.3em' }}>
+                      {t('Enter', 'Entrer')} <span className="transition-transform group-hover:translate-x-1">→</span>
+                    </span>
+                  </div>
+                  <span className="absolute inset-0 pointer-events-none rounded-[15px]" style={{ boxShadow: 'inset 0 0 0 1px rgba(197,160,89,0.25)' }} />
+                </button>
+              ))}
             </div>
           </div>
         </section>
+
         {/* SEO body section — substantial French copy, internal links, external
             citations, FAQ accordion. Also sources the FAQPage JSON-LD via
             App.tsx route effect. */}

@@ -107,7 +107,8 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
         {content.h1}
       </h1>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
+        <div className="lg:sticky lg:top-24 self-start">
         {/* Kicker + section title (visible H2) */}
         <div className="flex items-center gap-4 mb-6">
           <div className="h-px w-10 bg-[#c5a059]" aria-hidden />
@@ -118,6 +119,8 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
         <h2 className="font-prata text-[#f3e5ab] text-3xl md:text-5xl leading-[1.05] tracking-[-0.01em] mb-10">
           {content.sectionTitle}
         </h2>
+        </div>
+        <div className="min-w-0">
 
         {/* Body paragraphs — the substance for AEO */}
         <div className="space-y-6 font-lato text-neutral-300 text-[15px] md:text-base leading-[1.85]">
@@ -139,7 +142,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
                   <span>
                     {renderLink(link, i)}
                     {link.hint && (
-                      <span className="text-neutral-500 italic"> — {link.hint}</span>
+                      <span className="text-neutral-500 italic"> · {link.hint}</span>
                     )}
                   </span>
                 </li>
@@ -203,6 +206,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
             </ul>
           </div>
         )}
+        </div>
       </div>
     </section>
   );

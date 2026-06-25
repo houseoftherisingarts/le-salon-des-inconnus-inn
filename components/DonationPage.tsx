@@ -59,12 +59,28 @@ export const DonationPage: React.FC<Props> = ({
                 {t('Help keep the door open.', 'Aide à garder la porte ouverte.')}
               </p>
             </div>
-            <figure className="relative overflow-hidden" style={{ aspectRatio: '4 / 3', boxShadow: '0 50px 120px -60px rgba(0,0,0,0.9)' }}>
+            <figure className="relative overflow-hidden rounded-[15px]" style={{ aspectRatio: '4 / 3', boxShadow: '0 50px 120px -60px rgba(0,0,0,0.9)' }}>
               <img src={HERO_IMG} alt={t('The manor and grounds at golden hour.', "Le manoir et son terrain à l'heure dorée.")} className="w-full h-full object-cover" />
               <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, transparent 55%, rgba(5,5,5,0.6))' }} />
+              <span className="absolute inset-0 pointer-events-none rounded-[15px]" style={{ boxShadow: 'inset 0 0 0 1px rgba(197,160,89,0.22)' }} />
             </figure>
           </div>
         </section>
+
+        {/* Photo band — the community a gift keeps alive */}
+        <figure className="relative w-full overflow-hidden" style={{ height: 'clamp(260px, 40vh, 480px)' }}>
+          <img
+            src="/wwoof/bw-2.jpg"
+            alt={t('The community at work on the land.', "La communauté au travail sur le terrain.")}
+            loading="lazy"
+            className="w-full h-full object-cover"
+            style={{ filter: 'grayscale(1) contrast(1.04)' }}
+          />
+          <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(5,5,5,0.45) 0%, transparent 28%, transparent 58%, rgba(5,5,5,0.92) 100%)' }} />
+          <figcaption className="absolute bottom-5 left-6 md:left-12 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '11px', letterSpacing: '0.3em', textShadow: '0 1px 10px rgba(0,0,0,0.75)' }}>
+            {t('The community your gift keeps alive', 'La communauté que ton don fait vivre')}
+          </figcaption>
+        </figure>
 
         {/* Body + the Square panel, left-anchored */}
         <section className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
@@ -83,7 +99,21 @@ export const DonationPage: React.FC<Props> = ({
             </p>
           </div>
 
-          <div className="max-w-xl mt-10">
+          {/* Where the gift goes — short editorial ledger */}
+          <dl className="max-w-4xl mt-12 grid grid-cols-1 sm:grid-cols-3 gap-px" style={{ background: 'rgba(197,160,89,0.18)', border: '1px solid rgba(197,160,89,0.18)', borderRadius: '15px', overflow: 'hidden' }}>
+            {[
+              { k: t('The house', 'La maison'), v: t('Upkeep of the manor and the grounds.', "L'entretien du manoir et du terrain.") },
+              { k: t('The project', 'Le projet'), v: t('Food, tools, and the everyday of the place.', "La nourriture, les outils, le quotidien du lieu.") },
+              { k: t('The open door', 'La porte ouverte'), v: t('Welcoming artists, travellers and members.', "Accueillir artistes, voyageurs et membres.") },
+            ].map((it, i) => (
+              <div key={i} className="bg-[#050505] p-6">
+                <dt className="font-cinzel uppercase text-[#c5a059]" style={{ fontSize: '11px', letterSpacing: '0.28em' }}>{it.k}</dt>
+                <dd className="font-lato mt-2.5" style={{ color: '#9c8f76', fontSize: '13px', lineHeight: 1.6 }}>{it.v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="max-w-xl mt-12">
             <ContributionPanel
               language={language}
               user={user}
