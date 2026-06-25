@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import type { User } from 'firebase/auth';
 import { db } from '../firebase';
 import { doc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
@@ -85,6 +85,30 @@ const PULLQUOTE = {
   en: 'The family supports the community. The community supports the family. The place anchors them both.',
 };
 
+// ─── Reveal-on-scroll (same IntersectionObserver pattern as the home page) ────
+const Reveal: React.FC<{ children: React.ReactNode; className?: string; delay?: number }> = ({ children, className = '', delay = 0 }) => {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (visible) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); io.disconnect(); } },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    );
+    if (ref.current) io.observe(ref.current);
+    return () => io.disconnect();
+  }, [visible]);
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-[1100ms] ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
 // ─── Section ─────────────────────────────────────────────────────────────────
 
 export const CommunityMembershipSection: React.FC<Props> = ({
@@ -132,27 +156,31 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   return (
     <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── HERO — cinematic full-bleed, title over the photo (home language) ── */}
-      <header className="comm-fig relative w-full overflow-hidden" style={{ height: 'clamp(580px, 90vh, 1000px)' }}>
-        <img
-          src={IMG.garden}
-          alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
-          className="img-zoom absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: '50% 32%' }}
-        />
-        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 3%, rgba(5,5,5,0.5) 28%, rgba(5,5,5,0.1) 52%, rgba(5,5,5,0.45) 100%)' }} />
-        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-14 md:pb-20">
-          <div className="max-w-4xl comm-rise">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="h-px w-12" style={{ background: T.gold }} />
-              <span className="font-cinzel uppercase" style={{ color: T.gold, fontSize: '12px', letterSpacing: '0.42em' }}>
+      {/* ── HERO — cinematic full-bleed, Ken-Burns photo, title over it (home language) ── */}
+      <header className="relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={IMG.garden}
+            alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
+            className="comm-ken absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: '50% 32%' }}
+          />
+        </div>
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 2%, rgba(5,5,5,0.55) 26%, rgba(5,5,5,0.12) 52%, rgba(5,5,5,0.5) 100%)' }} />
+        <span className="comm-grain absolute inset-0 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24">
+          <div className="comm-hero-in max-w-4xl">
+            {/* eyebrow stacked above the title — every line shares the same left edge */}
+            <div className="mb-7">
+              <span className="block h-px w-14 mb-4" style={{ background: T.gold }} />
+              <span className="block font-cinzel uppercase" style={{ color: T.gold, fontSize: '12px', letterSpacing: '0.42em' }}>
                 {t('A place opens', 'Une place se libère')}
               </span>
             </div>
             <h2 className="font-prata" style={{ color: T.ink, fontSize: 'clamp(2.8rem, 7vw, 6.4rem)', lineHeight: 0.95, letterSpacing: '-0.02em', textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
               {t('Join the community', 'Faire partie de la communauté')}
             </h2>
-            <p className="font-cormorant italic mt-5" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', lineHeight: 1.3, maxWidth: '36ch', textShadow: '0 1px 16px rgba(0,0,0,0.65)' }}>
+            <p className="font-cormorant italic mt-6" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', lineHeight: 1.3, maxWidth: '36ch', textShadow: '0 1px 16px rgba(0,0,0,0.65)' }}>
               {t(
                 'Come live in a lasting place, with people of heart and travellers passing through.',
                 'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
@@ -160,59 +188,62 @@ export const CommunityMembershipSection: React.FC<Props> = ({
             </p>
           </div>
         </div>
+        <span className="comm-scroll-cue absolute bottom-6 right-6 md:right-12 font-cinzel uppercase" style={{ color: T.gold, fontSize: '10px', letterSpacing: '0.34em' }}>
+          {t('Scroll', 'Défiler')}
+        </span>
       </header>
 
       {/* ── LEAD — the announcement ─────────────────────────────────────── */}
-      <div className="px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-2">
+      <Reveal className="px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-2">
         <div className="max-w-4xl">
           <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
             {t(body[0].en, body[0].fr)}
           </p>
         </div>
-      </div>
+      </Reveal>
 
       {/* ── BODY 1 ───────────────────────────────────────────────────────── */}
-      <div className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
+      <Reveal className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
         <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[1].en, body[1].fr)}</Para>
           <Para>{t(body[2].en, body[2].fr)}</Para>
         </div>
-      </div>
+      </Reveal>
 
       {/* ── TERMS, oversized Prata numbers, gold hairlines ──────────────── */}
-      <div className="px-6 md:px-12 lg:px-20 py-6">
+      <Reveal className="px-6 md:px-12 lg:px-20 py-6">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-5 mb-8">
             <span className="font-cinzel uppercase" style={{ color: T.goldDeep, fontSize: '12px', letterSpacing: '0.34em' }}>{t('The terms', 'Les conditions')}</span>
             <span className="h-px flex-1" style={{ background: T.line }} />
           </div>
-          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ borderTop: `1px solid ${T.line}` }}>
+          <dl className="comm-terms grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ borderTop: `1px solid ${T.line}` }}>
             {[
               { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
               { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
               { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
               { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
             ].map((it, i) => (
-              <div key={i} className="py-7 lg:py-9 lg:pr-8" style={{ borderBottom: `1px solid ${T.line}` }}>
+              <div key={i} className="py-7 lg:py-9 lg:pr-8" style={{ borderBottom: `1px solid ${T.line}`, transitionDelay: `${i * 90}ms` }}>
                 <dt className="font-prata" style={{ color: T.ink, fontSize: 'clamp(2rem, 3.4vw, 3.1rem)', lineHeight: 1, letterSpacing: '-0.01em' }}>{it.v}</dt>
                 <dd className="font-lato mt-3" style={{ color: T.soft, fontSize: '12.5px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{it.l}</dd>
               </div>
             ))}
           </dl>
         </div>
-      </div>
+      </Reveal>
 
       {/* ── BODY 2 (work + pay) ──────────────────────────────────────────── */}
-      <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
+      <Reveal className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
         <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[3].en, body[3].fr)}</Para>
           <Para>{t(body[4].en, body[4].fr)}</Para>
         </div>
-      </div>
+      </Reveal>
 
-      {/* ── FULL-BLEED bright band ───────────────────────────────────────── */}
-      <figure className="comm-fig relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
-        <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="img-zoom w-full h-full object-cover" />
+      {/* ── FULL-BLEED band, Ken-Burns ───────────────────────────────────── */}
+      <figure className="comm-band relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
+        <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="comm-ken-slow w-full h-full object-cover" />
         <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(5,5,5,0.5) 0%, transparent 30%, transparent 65%, rgba(5,5,5,0.85) 100%)' }} />
         <figcaption className="absolute bottom-4 right-6 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '10px', letterSpacing: '0.26em', textShadow: '0 1px 10px rgba(0,0,0,0.6)' }}>
           {t('The living place', 'Le lieu vivant')}
@@ -220,20 +251,20 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       </figure>
 
       {/* ── BODY 3 (community psychology + human side) ───────────────────── */}
-      <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
+      <Reveal className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
         <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[5].en, body[5].fr)}</Para>
           <Para>{t(body[6].en, body[6].fr)}</Para>
         </div>
-      </div>
+      </Reveal>
 
       {/* ── PULLQUOTE, modest, Cormorant, gold ──────────────────────────── */}
-      <div className="px-6 md:px-12 lg:px-20 py-12">
+      <Reveal className="px-6 md:px-12 lg:px-20 py-12">
         <span className="block mb-6 h-px w-16" style={{ background: T.gold }} />
         <p className="font-cormorant italic" style={{ color: T.goldDeep, fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)', lineHeight: 1.3, maxWidth: '40ch' }}>
           {t(PULLQUOTE.en, PULLQUOTE.fr)}
         </p>
-      </div>
+      </Reveal>
 
       {/* ── CTA / form / applied ─────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 pb-24 pt-10">
@@ -261,15 +292,26 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           font-family: 'Prata', serif; float: left; color: ${T.goldDeep};
           font-size: 3.4em; line-height: 0.78; padding: 0.04em 0.12em 0 0;
         }
-        .comm-rise { opacity: 0; transform: translateY(18px); animation: commRise 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
-        .comm-rise:nth-child(2) { animation-delay: 0.12s; }
+        /* Hero — continuous Ken Burns on the photo (home language: hero3-kenburns) */
+        .comm-ken { animation: commKen 26s ease-in-out infinite alternate; will-change: transform; transform-origin: 50% 40%; }
+        @keyframes commKen { from { transform: scale(1.04); } to { transform: scale(1.13); } }
+        .comm-ken-slow { animation: commKen 32s ease-in-out infinite alternate; will-change: transform; }
+        /* Hero copy — staggered cinematic entrance, all lines share one left edge */
+        .comm-hero-in > * { opacity: 0; transform: translateY(22px); animation: commRise 1.1s cubic-bezier(0.22,1,0.36,1) forwards; }
+        .comm-hero-in > *:nth-child(1) { animation-delay: 0.20s; }
+        .comm-hero-in > *:nth-child(2) { animation-delay: 0.38s; }
+        .comm-hero-in > *:nth-child(3) { animation-delay: 0.56s; }
         @keyframes commRise { to { opacity: 1; transform: none; } }
-        /* Home-page showcase effect, slow gold-cinematic image zoom on hover */
-        .comm-fig .img-zoom { transition: transform 1.1s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
-        .comm-fig:hover .img-zoom { transform: scale(1.05); }
+        /* Fine film grain for depth (premium texture, very subtle) */
+        .comm-grain { opacity: 0.05; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+        /* Scroll cue — slow vertical breathing */
+        .comm-scroll-cue { animation: commCue 2.6s ease-in-out infinite; }
+        @keyframes commCue { 0%,100% { opacity: 0.5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(4px); } }
+        /* Terms cells inherit the parent Reveal's transition for a staggered cascade */
+        .comm-terms > div { transition: opacity 1.1s ease-out, transform 1.1s cubic-bezier(0.22,1,0.36,1); }
         .comm-cta {
           color: ${T.paper}; background: ${T.goldDeep};
-          padding: 1.05rem 3rem; border-radius: 2px;
+          padding: 1.05rem 3rem; border-radius: 15px;
           font-size: 12px; font-weight: 700; letter-spacing: 0.3em;
           transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .35s ease, box-shadow .35s ease;
           box-shadow: 0 14px 34px -18px rgba(168,134,63,0.85);
@@ -277,6 +319,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-cta:hover { transform: translateY(-2px); box-shadow: 0 20px 48px -18px rgba(197,160,89,0.7), inset 0 0 0 1px rgba(243,229,171,0.45); }
         .comm-cta:active { transform: translateY(0); }
         .comm-cta:disabled { opacity: 0.45; cursor: not-allowed; }
+        @media (prefers-reduced-motion: reduce) {
+          .comm-ken, .comm-ken-slow, .comm-scroll-cue, .comm-hero-in > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+        }
       `}</style>
     </section>
   );
