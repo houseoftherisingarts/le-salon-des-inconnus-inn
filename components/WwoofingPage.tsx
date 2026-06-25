@@ -230,17 +230,17 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
   const hasApplied = !!wwooferProfile;
 
   return (
-    <div ref={pageRef} className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#050505] text-neutral-200 animate-fadeIn">
+    <div ref={pageRef} className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#15110b] text-neutral-200 animate-fadeIn">
       {/* Header */}
-      <header className="fixed top-0 w-full z-[100] border-b border-[#d4af37]/15 bg-[#050505]/80 backdrop-blur-md">
+      <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#15110b]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <button
             onClick={() => onNavigate('INN')}
-            className="text-[#d4af37] hover:text-[#f3e5ab] transition-colors text-sm font-cinzel uppercase tracking-widest"
+            className="text-[#c5a059] hover:text-[#f3e5ab] transition-colors text-sm font-cinzel uppercase tracking-widest"
           >
             ← {t('Back to the Inn', "Retour à l'Auberge")}
           </button>
-          <span className="font-cinzel text-sm text-[#d4af37] tracking-[0.4em] hidden md:block">WWOOFING</span>
+          <span className="font-cinzel text-sm text-[#c5a059] tracking-[0.4em] hidden md:block">WWOOFING</span>
         </div>
       </header>
 
@@ -249,28 +249,28 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
         <section className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-[80vh]">
             {/* Photo column */}
-            <div className="relative overflow-hidden min-h-[45vh] lg:min-h-[80vh] bg-black">
+            <div className="group relative overflow-hidden min-h-[45vh] lg:min-h-[80vh] bg-[#15110b]">
               <img
                 src="https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg"
                 alt="Aliel by the campfire — Maison Favier"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
                 style={{ objectPosition: '50% 35%' }}
               />
               {/* Subtle gradient on photo edge for visual blend with panel */}
-              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-r from-transparent to-[#0a0a0a] hidden lg:block" />
+              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-r from-transparent to-[#191510] hidden lg:block" />
             </div>
 
             {/* Panel column */}
-            <div className="relative bg-[#0a0a0a] border-t lg:border-t-0 lg:border-l border-[#d4af37]/30 px-8 md:px-12 lg:px-16 py-16 lg:py-24 flex flex-col justify-center">
+            <div className="relative bg-[#191510] border-t lg:border-t-0 lg:border-l border-[#c5a059]/30 px-8 md:px-12 lg:px-16 py-16 lg:py-24 flex flex-col justify-center">
               {/* Decorative gold rule */}
               <div className="flex items-center gap-4 mb-8">
-                <div className="h-px w-12 bg-[#d4af37]"></div>
-                <span className="text-[10px] uppercase tracking-[0.5em] text-[#d4af37] font-cinzel">
+                <div className="h-px w-12 bg-[#c5a059]"></div>
+                <span className="text-[10px] uppercase tracking-[0.5em] text-[#c5a059] font-cinzel">
                   {t('Live & Work', 'Vivre & Travailler')}
                 </span>
               </div>
 
-              <h1 className="font-cinzel text-5xl md:text-6xl lg:text-7xl text-[#f3e5ab] mb-8 tracking-wide leading-[0.95]">
+              <h1 className="font-prata text-6xl md:text-7xl lg:text-8xl text-[#f3e5ab] mb-8 leading-[0.92]" style={{ letterSpacing: '-0.02em' }}>
                 Wwoofing
               </h1>
 
@@ -281,7 +281,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={handleApplyClick}
-                  className="px-7 py-3.5 bg-[#d4af37] text-black font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#f3e5ab] transition-all hover:scale-[1.02] active:scale-95"
+                  className="px-7 py-3.5 bg-[#c5a059] text-black font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#f3e5ab] transition-all hover:scale-[1.02] active:scale-95"
                 >
                   {hasApplied
                     ? t('Open my space', 'Ouvrir mon espace')
@@ -289,7 +289,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                 </button>
                 <button
                   onClick={() => onNavigate('CEILIDH')}
-                  className="px-7 py-3.5 bg-transparent border-2 border-[#d4af37] text-[#d4af37] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#d4af37] hover:text-black transition-all"
+                  className="px-7 py-3.5 bg-transparent border-2 border-[#c5a059] text-[#c5a059] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#c5a059] hover:text-black transition-all"
                 >
                   {t('See the Ceilidh', 'Voir le Ceilidh')}
                 </button>
@@ -299,11 +299,11 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
         </section>
 
         {/* ── CONTEXT — what is wwoofing, what is the Ceilidh ────────────── */}
-        <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#d4af37]/10">
+        <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#c5a059]/10">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-4 mb-16">
-              <div className="h-px w-12 bg-[#d4af37]"></div>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-[#d4af37] font-cinzel">
+              <div className="h-px w-12 bg-[#c5a059]"></div>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-[#c5a059] font-cinzel">
                 {t('Context', 'Contexte')}
               </span>
             </div>
@@ -311,11 +311,11 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
               {/* Wwoofing column — sits at the top */}
               <div>
-                <span className="font-cinzel text-xs text-[#d4af37] tracking-[0.4em]">01</span>
-                <h2 className="font-cinzel text-3xl md:text-4xl text-[#f3e5ab] mt-3 mb-6 tracking-wide">
+                <span className="font-cinzel text-xs text-[#c5a059] tracking-[0.4em]">01</span>
+                <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight mt-3 mb-6">
                   {t('What is wwoofing?', 'Qu\'est-ce que le wwoofing ?')}
                 </h2>
-                <div className="h-px w-16 bg-[#d4af37] mb-6"></div>
+                <div className="h-px w-16 bg-[#c5a059] mb-6"></div>
                 <p className="font-lato text-[15px] md:text-base text-neutral-300 leading-[1.8]">
                   {t(WWOOFING_DEFINITION.en, WWOOFING_DEFINITION.fr)}
                 </p>
@@ -326,17 +326,17 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
 
               {/* Ceilidh column — offset down for asymmetry */}
               <div className="lg:mt-24">
-                <span className="font-cinzel text-xs text-[#d4af37] tracking-[0.4em]">02</span>
-                <h2 className="font-cinzel text-3xl md:text-4xl text-[#f3e5ab] mt-3 mb-6 tracking-wide">
+                <span className="font-cinzel text-xs text-[#c5a059] tracking-[0.4em]">02</span>
+                <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight mt-3 mb-6">
                   {t('And the Ceilidh?', 'Et le Ceilidh ?')}
                 </h2>
-                <div className="h-px w-16 bg-[#d4af37] mb-6"></div>
+                <div className="h-px w-16 bg-[#c5a059] mb-6"></div>
                 <p className="font-lato text-[15px] md:text-base text-neutral-300 leading-[1.8]">
                   {t(CEILIDH_DEFINITION.en, CEILIDH_DEFINITION.fr)}
                 </p>
                 <button
                   onClick={() => onNavigate('CEILIDH')}
-                  className="mt-8 inline-flex items-center gap-2 text-xs font-cinzel uppercase tracking-[0.3em] text-[#d4af37] hover:text-[#f3e5ab] transition-colors group"
+                  className="mt-8 inline-flex items-center gap-2 text-xs font-cinzel uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors group"
                 >
                   {t('Discover the Ceilidh', 'Découvrir le Ceilidh')}
                   <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -347,11 +347,11 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
         </section>
 
         {/* ── RHYTHM OF THE HOUSE — needs statement + daily schedule ─────── */}
-        <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#d4af37]/10">
+        <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#c5a059]/10">
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center gap-4 mb-12">
-              <div className="h-px w-12 bg-[#d4af37]"></div>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-[#d4af37] font-cinzel">
+              <div className="h-px w-12 bg-[#c5a059]"></div>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-[#c5a059] font-cinzel">
                 {t('The rhythm of the house', 'Le rythme de la maison')}
               </span>
             </div>
@@ -359,14 +359,14 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 lg:gap-20 items-start">
               {/* Left — needs statement */}
               <div className="lg:sticky lg:top-24">
-                <h2 className="font-cinzel text-3xl md:text-4xl text-[#f3e5ab] mb-6 tracking-wide leading-tight">
+                <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight mb-6 leading-tight">
                   {t('A day with us', 'Une journée chez nous')}
                 </h2>
                 <p className="font-lato text-[15px] md:text-base text-neutral-300 leading-[1.8] mb-8">
                   {t(NEEDS_STATEMENT.en, NEEDS_STATEMENT.fr)}
                 </p>
-                <div className="border-l-2 border-[#d4af37] pl-5">
-                  <p className="font-cormorant italic text-xl text-[#d4af37] leading-snug">
+                <div className="border-l-2 border-[#c5a059] pl-5">
+                  <p className="font-cormorant italic text-xl text-[#c5a059] leading-snug">
                     {t(
                       "What we ask: 4 focused hours a day. The rest, we share.",
                       "Ce qu'on demande : 4 heures de travail concentré par jour. Le reste, on le partage."
@@ -383,7 +383,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                       key={idx}
                       className="grid grid-cols-[140px_1fr] items-baseline gap-4 py-3.5 border-b border-white/[0.07] last:border-b-0"
                     >
-                      <span className="font-cinzel text-[#d4af37] text-[13px] tracking-[0.15em] tabular-nums">
+                      <span className="font-cinzel text-[#c5a059] text-[13px] tracking-[0.15em] tabular-nums">
                         {row.time}
                       </span>
                       <span className="font-lato text-[15px] text-neutral-200">
@@ -619,24 +619,24 @@ const ApplyForm: React.FC<{
         {/* ── Sticky rail (left) ──────────────────────────────────────── */}
         <aside className="hidden lg:block">
           <div className="sticky top-24">
-            <div className="relative aspect-[4/5] overflow-hidden border border-[#d4af37]/20 isolate transform-gpu">
+            <div className="relative aspect-[4/5] overflow-hidden border border-[#c5a059]/20 isolate transform-gpu">
               <img
                 key={railImageKey}
                 src={railImage}
                 alt=""
                 className="rail-fade-in w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#15110b]/70 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
-                <span className="font-cinzel text-[11px] tracking-[0.4em] text-[#d4af37]">{active.number}</span>
-                <div className="h-px flex-1 bg-[#d4af37]/40"></div>
+                <span className="font-cinzel text-[11px] tracking-[0.4em] text-[#c5a059]">{active.number}</span>
+                <div className="h-px flex-1 bg-[#c5a059]/40"></div>
                 <span className="font-cinzel text-[11px] tracking-[0.3em] uppercase text-[#f3e5ab]">
                   {language === 'FR' ? active.titleFr : active.titleEn}
                 </span>
               </div>
             </div>
             <div className="mt-8 pl-1">
-              <div className="h-px w-12 bg-[#d4af37] mb-5"></div>
+              <div className="h-px w-12 bg-[#c5a059] mb-5"></div>
               <p
                 key={active.id + '-q'}
                 className="rail-fade-in font-cormorant italic text-2xl lg:text-[26px] text-[#f3e5ab] leading-snug max-w-sm"
@@ -655,13 +655,13 @@ const ApplyForm: React.FC<{
                      shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)]"
         >
           {/* Subtle inner gold glow at the top edge */}
-          <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent" />
 
           <div className="mb-16">
-            <span className="block text-[10px] uppercase tracking-[0.5em] text-[#d4af37] font-cinzel mb-4">
+            <span className="block text-[10px] uppercase tracking-[0.5em] text-[#c5a059] font-cinzel mb-4">
               {t('Application', 'Candidature')}
             </span>
-            <h2 className="font-cinzel text-3xl md:text-4xl text-[#f3e5ab] tracking-wide leading-tight">
+            <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight leading-tight">
               {t('Tell us your story.', 'Racontez-nous votre histoire.')}
             </h2>
           </div>
@@ -693,7 +693,7 @@ const ApplyForm: React.FC<{
             sectionId="tasks"
             number="02"
             title={t('Tasks & experience', 'Tâches & expérience')}
-            tint="from-[#d4af37]/[0.05] via-transparent to-transparent"
+            tint="from-[#c5a059]/[0.05] via-transparent to-transparent"
             mobileImage={APPLY_SECTIONS[1].image}
             mobileQuote={t(APPLY_SECTIONS[1].quoteEn, APPLY_SECTIONS[1].quoteFr)}
           >
@@ -711,8 +711,8 @@ const ApplyForm: React.FC<{
                       onClick={() => togglePreferred(opt.id)}
                       className={`text-xs px-4 py-2 rounded-full border transition-all font-lato ${
                         active
-                          ? 'bg-[#d4af37] text-black border-[#d4af37] shadow-[0_0_12px_rgba(212,175,55,0.4)]'
-                          : 'bg-transparent text-neutral-300 border-white/15 hover:border-[#d4af37]/60 hover:text-[#f3e5ab]'
+                          ? 'bg-[#c5a059] text-black border-[#c5a059] shadow-[0_0_12px_rgba(212,175,55,0.4)]'
+                          : 'bg-transparent text-neutral-300 border-white/15 hover:border-[#c5a059]/60 hover:text-[#f3e5ab]'
                       }`}
                     >
                       {t(opt.en, opt.fr)}
@@ -763,7 +763,7 @@ const ApplyForm: React.FC<{
             sectionId="logistics"
             number="04"
             title={t('Logistics', 'Logistique')}
-            tint="from-[#dcb055]/[0.045] via-transparent to-transparent"
+            tint="from-[#c5a059]/[0.045] via-transparent to-transparent"
             mobileImage={APPLY_SECTIONS[3].image}
             mobileQuote={t(APPLY_SECTIONS[3].quoteEn, APPLY_SECTIONS[3].quoteFr)}
           >
@@ -775,20 +775,20 @@ const ApplyForm: React.FC<{
                 <select
                   value={accommodation}
                   onChange={(e) => setAccommodation(e.target.value)}
-                  className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#d4af37] focus:outline-none transition-colors"
+                  className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors"
                 >
                   {ACCOMMODATION_OPTIONS.map(opt => (
-                    <option key={opt.id} value={opt.id} className="bg-[#0a0a0a]">{t(opt.en, opt.fr)}</option>
+                    <option key={opt.id} value={opt.id} className="bg-[#191510]">{t(opt.en, opt.fr)}</option>
                   ))}
                 </select>
               </label>
               <div className="flex flex-col gap-3 justify-end pb-1">
                 <label className="flex items-center gap-3 text-sm font-lato text-neutral-300 cursor-pointer">
-                  <input type="checkbox" checked={hasVehicle} onChange={(e) => setHasVehicle(e.target.checked)} className="accent-[#d4af37]" />
+                  <input type="checkbox" checked={hasVehicle} onChange={(e) => setHasVehicle(e.target.checked)} className="accent-[#c5a059]" />
                   {t('I have a vehicle', 'J\'ai un véhicule')}
                 </label>
                 <label className="flex items-center gap-3 text-sm font-lato text-neutral-300 cursor-pointer">
-                  <input type="checkbox" checked={smoker} onChange={(e) => setSmoker(e.target.checked)} className="accent-[#d4af37]" />
+                  <input type="checkbox" checked={smoker} onChange={(e) => setSmoker(e.target.checked)} className="accent-[#c5a059]" />
                   {t('I smoke', 'Je fume')}
                 </label>
               </div>
@@ -812,7 +812,7 @@ const ApplyForm: React.FC<{
               <FieldDate label={t('Departure *', 'Départ *')} value={end}   min={start || todayISO()} onChange={setEnd} />
             </div>
             <div className="flex items-center gap-3 mb-6">
-              <span className={`font-cinzel text-3xl ${numberOfDays >= MIN_DAYS ? 'text-[#d4af37]' : 'text-neutral-600'}`}>
+              <span className={`font-cinzel text-3xl ${numberOfDays >= MIN_DAYS ? 'text-[#c5a059]' : 'text-neutral-600'}`}>
                 {numberOfDays || '—'}
               </span>
               <div>
@@ -860,7 +860,7 @@ const ApplyForm: React.FC<{
           </FormSection>
 
           {/* Submit */}
-          <div className="mt-10 pt-10 border-t border-[#d4af37]/20">
+          <div className="mt-10 pt-10 border-t border-[#c5a059]/20">
             {error && <p className="text-sm text-red-400 mb-6">{error}</p>}
             <div className="flex flex-wrap gap-4 items-center justify-end">
               <button
@@ -872,7 +872,7 @@ const ApplyForm: React.FC<{
               <button
                 onClick={submit}
                 disabled={!formValid || saving}
-                className="px-8 py-4 bg-[#d4af37] text-black text-xs font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-[1.02]"
+                className="px-8 py-4 bg-[#c5a059] text-black text-xs font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-[1.02]"
               >
                 {saving ? '…' : t('Send my application', 'Envoyer ma candidature')}
               </button>
@@ -893,7 +893,7 @@ const FormSection: React.FC<{
   sectionId: string;
   number: string;
   title: string;
-  /** Tailwind gradient stops, e.g. "from-[#d4af37]/[0.05] via-transparent to-transparent".
+  /** Tailwind gradient stops, e.g. "from-[#c5a059]/[0.05] via-transparent to-transparent".
    *  Applied as a soft top-left wash so each section feels like its own panel. */
   tint?: string;
   mobileImage?: string;
@@ -914,9 +914,9 @@ const FormSection: React.FC<{
     {/* Mobile-only image+quote (since the rail is hidden on mobile) */}
     {mobileImage && (
       <div className="lg:hidden mb-8">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-[#d4af37]/20 isolate transform-gpu">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-[#c5a059]/20 isolate transform-gpu">
           <img src={mobileImage} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#15110b]/80 via-transparent to-transparent" />
         </div>
         {mobileQuote && (
           <p className="mt-4 font-cormorant italic text-lg text-[#f3e5ab] leading-snug">
@@ -926,8 +926,8 @@ const FormSection: React.FC<{
       </div>
     )}
     <div className="flex items-baseline gap-4 mb-8">
-      <span className="font-cinzel text-xs text-[#d4af37] tracking-[0.4em]">{number}</span>
-      <div className="h-px flex-1 bg-[#d4af37]/30"></div>
+      <span className="font-cinzel text-xs text-[#c5a059] tracking-[0.4em]">{number}</span>
+      <div className="h-px flex-1 bg-[#c5a059]/30"></div>
       <h3 className="font-cinzel text-sm text-[#f3e5ab] uppercase tracking-[0.3em]">{title}</h3>
     </div>
     <div>{children}</div>
@@ -949,7 +949,7 @@ const Field: React.FC<{ label: string; value: string; onChange: (v: string) => v
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#d4af37] focus:outline-none transition-colors"
+      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors"
     />
   </label>
 );
@@ -961,7 +961,7 @@ const FieldNumber: React.FC<{ label: string; value: number | ''; onChange: (v: n
       type="number"
       value={value}
       onChange={(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))}
-      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#d4af37] focus:outline-none transition-colors"
+      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors"
     />
   </label>
 );
@@ -974,7 +974,7 @@ const FieldDate: React.FC<{ label: string; value: string; min?: string; onChange
       value={value}
       min={min}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#d4af37] focus:outline-none transition-colors [color-scheme:dark]"
+      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors [color-scheme:dark]"
     />
   </label>
 );
@@ -993,7 +993,7 @@ const FieldTextarea: React.FC<{
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
-      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#d4af37] focus:outline-none transition-colors resize-none placeholder:text-neutral-700 placeholder:italic"
+      className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors resize-none placeholder:text-neutral-700 placeholder:italic"
     />
   </label>
 );
@@ -1013,10 +1013,10 @@ const ProfileSummary: React.FC<{
   };
   const status = profile.status ?? 'pending';
   return (
-    <div className="border-l-2 border-[#d4af37] pl-6 md:pl-8">
+    <div className="border-l-2 border-[#c5a059] pl-6 md:pl-8">
       <div className="flex items-start justify-between flex-wrap gap-4 mb-4">
         <div>
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#d4af37] font-cinzel block mb-2">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-[#c5a059] font-cinzel block mb-2">
             {t('Your space', 'Votre espace')}
           </span>
           <h2 className="font-cinzel text-3xl text-[#f3e5ab] mb-1">{profile.displayName}</h2>
@@ -1035,7 +1035,7 @@ const ProfileSummary: React.FC<{
             {profile.preferredTasks.map(taskId => {
               const opt = TASK_OPTIONS.find(o => o.id === taskId);
               return opt ? (
-                <span key={taskId} className="text-xs px-3 py-1 border border-[#d4af37]/30 rounded-full text-neutral-300">
+                <span key={taskId} className="text-xs px-3 py-1 border border-[#c5a059]/30 rounded-full text-neutral-300">
                   {t(opt.en, opt.fr)}
                 </span>
               ) : null;
@@ -1069,14 +1069,14 @@ const VisitRequestsBlock: React.FC<{
   return (
     <div>
       <div className="flex items-baseline gap-4 mb-6">
-        <div className="h-px flex-1 bg-[#d4af37]/30 max-w-12"></div>
+        <div className="h-px flex-1 bg-[#c5a059]/30 max-w-12"></div>
         <h3 className="font-cinzel text-sm text-[#f3e5ab] uppercase tracking-[0.3em]">
           {t('Visit requests', 'Demandes de visite')}
         </h3>
-        <div className="h-px flex-1 bg-[#d4af37]/30"></div>
+        <div className="h-px flex-1 bg-[#c5a059]/30"></div>
         <button
           onClick={onAddRequest}
-          className="px-4 py-2 bg-[#d4af37] text-black text-[10px] font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] transition-colors whitespace-nowrap"
+          className="px-4 py-2 bg-[#c5a059] text-black text-[10px] font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] transition-colors whitespace-nowrap"
         >
           + {t('Request dates', 'Demander des dates')}
         </button>
@@ -1099,7 +1099,7 @@ const VisitRequestsBlock: React.FC<{
               declined: 'border-red-400/40 text-red-300',
             };
             return (
-              <div key={req.id} className="border-l border-[#d4af37]/30 hover:border-[#d4af37] transition-colors pl-5 py-3 flex items-center justify-between flex-wrap gap-3">
+              <div key={req.id} className="border-l border-[#c5a059]/30 hover:border-[#c5a059] transition-colors pl-5 py-3 flex items-center justify-between flex-wrap gap-3">
                 <div>
                   <div className="font-cinzel text-base text-white">
                     {req.startDate} → {req.endDate}
@@ -1167,7 +1167,7 @@ const RequestDatesForm: React.FC<{
   };
 
   return (
-    <div className="border border-[#d4af37]/30 p-6 mb-6">
+    <div className="border border-[#c5a059]/30 p-6 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-4">
         <FieldDate label={t('Arrival', 'Arrivée')}  value={start} min={todayISO()}          onChange={setStart} />
         <FieldDate label={t('Departure', 'Départ')} value={end}   min={start || todayISO()} onChange={setEnd} />
@@ -1194,7 +1194,7 @@ const RequestDatesForm: React.FC<{
         <button
           onClick={submit}
           disabled={!valid || saving}
-          className="px-5 py-2.5 bg-[#d4af37] text-black text-[10px] font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="px-5 py-2.5 bg-[#c5a059] text-black text-[10px] font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {saving ? '…' : t('Submit', 'Soumettre')}
         </button>
@@ -1238,11 +1238,11 @@ const MessagesBlock: React.FC<{
   return (
     <div>
       <div className="flex items-baseline gap-4 mb-6">
-        <div className="h-px flex-1 bg-[#d4af37]/30 max-w-12"></div>
+        <div className="h-px flex-1 bg-[#c5a059]/30 max-w-12"></div>
         <h3 className="font-cinzel text-sm text-[#f3e5ab] uppercase tracking-[0.3em]">
           {t('Messages with the hosts', 'Messages avec les hôtes')}
         </h3>
-        <div className="h-px flex-1 bg-[#d4af37]/30"></div>
+        <div className="h-px flex-1 bg-[#c5a059]/30"></div>
       </div>
       <div ref={scrollRef} className="border border-white/10 p-5 max-h-80 overflow-y-auto space-y-3 mb-4">
         {messages.length === 0 ? (
@@ -1255,7 +1255,7 @@ const MessagesBlock: React.FC<{
               key={m.id}
               className={`max-w-[80%] px-4 py-2.5 text-sm font-lato leading-relaxed ${
                 m.fromAdmin
-                  ? 'bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#f3e5ab] mr-auto'
+                  ? 'bg-[#c5a059]/15 border border-[#c5a059]/30 text-[#f3e5ab] mr-auto'
                   : 'bg-white/5 border border-white/10 text-neutral-200 ml-auto'
               }`}
             >
@@ -1271,12 +1271,12 @@ const MessagesBlock: React.FC<{
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') send(); }}
           placeholder={t('Write a message…', 'Écrire un message…')}
-          className="flex-1 bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#d4af37] focus:outline-none transition-colors"
+          className="flex-1 bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors"
         />
         <button
           onClick={send}
           disabled={!text.trim() || sending}
-          className="px-5 py-2.5 bg-[#d4af37] text-black text-[10px] font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] disabled:opacity-40 transition-colors"
+          className="px-5 py-2.5 bg-[#c5a059] text-black text-[10px] font-cinzel font-bold uppercase tracking-[0.3em] hover:bg-[#f3e5ab] disabled:opacity-40 transition-colors"
         >
           {t('Send', 'Envoyer')}
         </button>
