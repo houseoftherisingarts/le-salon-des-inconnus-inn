@@ -16,6 +16,17 @@ const PLACEHOLDER_YURT = "https://storage.googleapis.com/salondesinconnus/inn/yo
 const PLACEHOLDER_BUS = "https://storage.googleapis.com/salondesinconnus/inn/us%20copy.jpg";
 const PLACEHOLDER_TINY = "https://storage.googleapis.com/salondesinconnus/inn/For%20site%20temp%20mini%20(1).jpg";
 
+// Shared spaces of the manor/auberge, common to every stay — appended to each unit's own gallery
+const COMMON_PHOTOS = [
+  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/IMG_0864.jpg",         // salon / living room
+  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/cuisine%20grande.jpg", // kitchen
+  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/biblio.png",           // library
+  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jeux%20auberge.jpg",   // games library
+  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jardins%20auberge.jpg",// gardens
+  "https://storage.googleapis.com/salondesinconnus/inn/maison.jpg",                         // manor exterior
+  "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg"           // aerial of the estate
+];
+
 const COMMON_AMENITIES: Accommodation['amenities'] = ['parking', 'wifi', 'hot-tub', 'terrasse', 'projector', 'boardgames'];
 
 export const ACCOMMODATIONS: Accommodation[] = [
@@ -128,14 +139,21 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: "0.5 + 3",
     amenities: ['parking', 'no-wifi', 'off-grid', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
-    images: [PLACEHOLDER_TINY, PLACEHOLDER_MANOR],
+    images: [
+      "https://storage.googleapis.com/salondesinconnus/inn/meditante-1.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/meditante-2.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/meditante-3.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/meditante-4.jpeg",
+      "https://storage.googleapis.com/salondesinconnus/inn/meditante-5.jpeg",
+      ...COMMON_PHOTOS
+    ],
     bookingLink: "#",
     status: 'COMING_SOON'
   },
   {
     id: 'mini-maison',
-    title: "The Sculptress",
-    title_fr: "La Sculptrice",
+    title: "The Shepherdess",
+    title_fr: "La Bergère",
     type: "Handmade Tiny House",
     type_fr: "Mini-Maison Artisanale",
     description: "A handmade tiny house steps from the inn: cedar shingles, a blue tin roof, and an all-wood interior bathed in light. A sculpted staircase wraps around a real birch trunk up to a cozy mezzanine bed, while a reading nook nestles in the bay window and an antique cast-iron stove stands as a decorative centerpiece. A cocoon for two, with access to the inn and its amenities. Available July 1st.",
@@ -146,11 +164,12 @@ export const ACCOMMODATIONS: Accommodation[] = [
     baths: "0.5 + 3",
     amenities: ['parking', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
     images: [
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-exterieur.jpeg",
       "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-3.jpeg",
       "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-2.jpeg",
       "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-1.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-exterieur.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg"
+      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg",
+      ...COMMON_PHOTOS
     ],
     bookingLink: "https://salon.holidayfuture.com/listings/559483"
   },

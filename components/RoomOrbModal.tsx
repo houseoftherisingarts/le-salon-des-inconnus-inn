@@ -227,6 +227,21 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     setIndex(n);
   }, [index, rooms, setIndex]);
 
+  const prevRoom = useCallback(() => {
+    let n = (index - 1 + rooms.length) % rooms.length;
+    while (rooms[n] && rooms[n].id === 'manor') n = (n - 1 + rooms.length) % rooms.length;
+    setIndex(n);
+  }, [index, rooms, setIndex]);
+
+  // Step through the current room's photos by hand (in addition to the auto-cycle
+  // and the dots), so guests can browse the gallery inside the bubble.
+  const showPrevImg = useCallback(() => {
+    setImgIdx((i) => (i - 1 + room.images.length) % room.images.length);
+  }, [room.images.length]);
+  const showNextImg = useCallback(() => {
+    setImgIdx((i) => (i + 1) % room.images.length);
+  }, [room.images.length]);
+
   // Keep the guest on lesalondesinconnus.com: open HostAway's booking + payment
   // inside an on-site overlay instead of a new tab. (Full native checkout is the
   // next phase; this already removes the off-site redirect.)
@@ -425,11 +440,11 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       else if (e.key === 'ArrowRight') nextRoom();
-      else if (e.key === 'ArrowLeft') setIndex((index - 1 + rooms.length) % rooms.length);
+      else if (e.key === 'ArrowLeft') prevRoom();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose, nextRoom, setIndex, index, rooms.length]);
+  }, [onClose, nextRoom, prevRoom]);
 
   // Lock body scroll while open.
   useEffect(() => {
@@ -459,7 +474,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
       aria-modal="true"
       aria-label={title}
       onClick={onClose}
-      className="room-orb-root fixed inset-0 z-[120] flex items-start md:items-center justify-center bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 pt-16 pb-12 md:py-8 overflow-y-auto"
+      className="room-orb-root fixed inset-0 z-[120] flex bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 pt-16 pb-12 md:py-8 overflow-y-auto"
     >
       {bookingUrl &&
         createPortal(
@@ -539,7 +554,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-[1400px] mx-auto grid md:grid-cols-[1fr_1.1fr] gap-6 md:gap-16 items-center"
+        className="relative w-full max-w-[1400px] m-auto grid md:grid-cols-[1fr_1.1fr] gap-6 md:gap-16 items-center"
       >
         {/* LEFT — description + actions. On mobile it sits BELOW the orb (order-2)
             and is trimmed to amenities → price → buttons. */}
@@ -554,14 +569,23 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           >
             {title}
           </h2>
-          {/* Mobile: a quick "Next Room" right under the title, above the amenities. */}
-          <button
-            type="button"
-            onClick={nextRoom}
-            className="md:hidden self-center px-7 py-3 font-cinzel font-bold text-[11px] uppercase tracking-[0.3em] border border-white/20 text-neutral-200 active:border-[#c5a059] active:text-[#f3e5ab] transition-colors"
-          >
-            {t('Next Room', 'Chambre Suivante')}
-          </button>
+          {/* Mobile: quick room nav right under the title, above the amenities. */}
+          <div className="md:hidden flex justify-center gap-3">
+            <button
+              type="button"
+              onClick={prevRoom}
+              className="px-5 py-3 font-cinzel font-bold text-[11px] uppercase tracking-[0.3em] border border-white/20 text-neutral-200 active:border-[#c5a059] active:text-[#f3e5ab] transition-colors"
+            >
+              {t('Previous Room', 'Chambre Précédente')}
+            </button>
+            <button
+              type="button"
+              onClick={nextRoom}
+              className="px-5 py-3 font-cinzel font-bold text-[11px] uppercase tracking-[0.3em] border border-white/20 text-neutral-200 active:border-[#c5a059] active:text-[#f3e5ab] transition-colors"
+            >
+              {t('Next Room', 'Chambre Suivante')}
+            </button>
+          </div>
           <p
             key={`desc-${room.id}`}
             className="hidden md:block room-orb-desc font-lato text-neutral-300 text-sm md:text-base leading-relaxed"
@@ -739,6 +763,12 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           {/* Buttons */}
           <div className="flex flex-wrap gap-4 mt-2 justify-center md:justify-start">
             <button
+              onClick={prevRoom}
+              className="hidden md:inline-block px-7 py-4 font-cinzel font-bold text-xs uppercase tracking-[0.3em] border border-white/20 text-neutral-200 hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+            >
+              {t('Previous Room', 'Chambre Précédente')}
+            </button>
+            <button
               onClick={nextRoom}
               className="hidden md:inline-block px-7 py-4 font-cinzel font-bold text-xs uppercase tracking-[0.3em] border border-white/20 text-neutral-200 hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
             >
@@ -869,6 +899,29 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
                 </span>
               </div>
             </div>
+
+            {/* Photo browse arrows — let guests step through the gallery by hand,
+                in addition to the auto-cycle and the dots below. */}
+            {room.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={showPrevImg}
+                  aria-label={t('Previous photo', 'Photo précédente')}
+                  className="absolute left-1 sm:-left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-white/25 bg-black/55 backdrop-blur-md text-neutral-100 hover:text-[#f3e5ab] hover:border-[#c5a059] transition-colors flex items-center justify-center text-2xl leading-none"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextImg}
+                  aria-label={t('Next photo', 'Photo suivante')}
+                  className="absolute right-1 sm:-right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-white/25 bg-black/55 backdrop-blur-md text-neutral-100 hover:text-[#f3e5ab] hover:border-[#c5a059] transition-colors flex items-center justify-center text-2xl leading-none"
+                >
+                  ›
+                </button>
+              </>
+            )}
 
             {/* Image dots */}
             {room.images.length > 1 && (
