@@ -268,7 +268,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       </Reveal>
 
       {/* ── FULL-BLEED band, Ken-Burns ───────────────────────────────────── */}
-      <figure className="comm-band relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
+      <figure className="comm-band relative w-full overflow-hidden" style={{ height: 'clamp(560px, 84vh, 1040px)' }}>
         <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="comm-ken-slow w-full h-full object-cover" />
         {/* Recette C2 — transition seamless : la bande se fond dans le #050505 en haut et en bas */}
         <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0) 22%, rgba(5,5,5,0) 72%, #050505 100%)' }} />
