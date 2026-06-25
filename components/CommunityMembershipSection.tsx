@@ -134,7 +134,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── HERO, luminous, asymmetric, oversized Prata ─────────────────── */}
       <div className="relative px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-12 md:pb-16">
-        <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-end">
+        <div className="mx-auto max-w-5xl">
           <div className="comm-rise">
             <div className="flex items-center gap-4 mb-7">
               <span className="h-px w-12" style={{ background: T.gold }} />
@@ -156,21 +156,16 @@ export const CommunityMembershipSection: React.FC<Props> = ({
             </p>
           </div>
 
-          {/* Bright daytime photo, breaking the grid upward */}
-          <figure className="comm-rise comm-fig relative lg:-mt-16">
-            <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 4', boxShadow: '0 50px 120px -60px rgba(0,0,0,0.9)' }}>
-              <img src={IMG.garden} alt={t('Around the fire, in the woods.', "Autour du feu, dans les bois.")} className="img-zoom w-full h-full object-cover" />
-              <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(5,5,5,0.55))' }} />
-              <span className="absolute inset-0 pointer-events-none" style={{ boxShadow: `inset 0 0 0 1px ${T.line}` }} />
-            </div>
-            <figcaption className="mt-3 font-cinzel uppercase text-right" style={{ color: T.soft, fontSize: '10px', letterSpacing: '0.24em' }}>
-              {t('Around the fire', 'Autour du feu')}
-            </figcaption>
-          </figure>
         </div>
       </div>
 
       {/* ── LEAD, the announcement, large, with a Prata drop-cap ────────── */}
+      {/* Full-width community photo, never cropped in width */}
+      <figure className="comm-fig relative w-full overflow-hidden">
+        <img src={IMG.garden} alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')} className="img-zoom w-full block" />
+        <span className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.85), transparent)' }} />
+      </figure>
+
       <div className="px-6 md:px-12 lg:px-20 pt-6 pb-2">
         <div className="max-w-4xl">
           <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
