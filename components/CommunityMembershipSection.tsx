@@ -132,6 +132,30 @@ export const CommunityMembershipSection: React.FC<Props> = ({
     }
   }, []);
 
+  // Recette B1 — parallax cinématique. Le hero (photo + texte) bouge à vitesse
+  // différente du scroll. Marche dans le conteneur scroll imbriqué de la page.
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const section = document.getElementById('communaute');
+    const scroller = (section?.closest('.overflow-y-auto') as HTMLElement | null);
+    const target: HTMLElement | Window = scroller ?? window;
+    let raf = 0;
+    const apply = () => {
+      raf = 0;
+      const st = scroller ? scroller.scrollTop : window.scrollY;
+      section?.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+        const f = parseFloat(el.dataset.parallax || '0');
+        el.style.transform = `translate3d(0, ${(st * f).toFixed(1)}px, 0)`;
+        const fade = parseFloat(el.dataset.parallaxFade || '0');
+        if (fade) el.style.opacity = String(Math.max(0, 1 - st * fade));
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+    target.addEventListener('scroll', onScroll, { passive: true });
+    apply();
+    return () => { target.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+
   useEffect(() => {
     if (!user || !db) { setApplication(null); setLoaded(true); return; }
     setLoaded(false);
@@ -158,7 +182,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── HERO — cinematic full-bleed, Ken-Burns photo, title over it (home language) ── */}
       <header className="relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute left-0 right-0 overflow-hidden" data-parallax="0.10" style={{ top: '-10%', height: '120%', willChange: 'transform' }}>
           <img
             src={IMG.garden}
             alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
@@ -168,7 +192,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
         <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 2%, rgba(5,5,5,0.55) 26%, rgba(5,5,5,0.12) 52%, rgba(5,5,5,0.5) 100%)' }} />
         <span className="comm-grain absolute inset-0 pointer-events-none" />
-        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24">
+        {/* Recette B4 — le hero se développe depuis le noir à l'entrée */}
+        <span className="comm-develop absolute inset-0 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24" data-parallax="-0.10" data-parallax-fade="0.0016">
           <div className="comm-hero-in max-w-4xl">
             {/* eyebrow stacked above the title — every line shares the same left edge */}
             <div className="mb-7">
@@ -244,7 +270,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       {/* ── FULL-BLEED band, Ken-Burns ───────────────────────────────────── */}
       <figure className="comm-band relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
         <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="comm-ken-slow w-full h-full object-cover" />
-        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(5,5,5,0.5) 0%, transparent 30%, transparent 65%, rgba(5,5,5,0.85) 100%)' }} />
+        {/* Recette C2 — transition seamless : la bande se fond dans le #050505 en haut et en bas */}
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0) 22%, rgba(5,5,5,0) 72%, #050505 100%)' }} />
         <figcaption className="absolute bottom-4 right-6 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '10px', letterSpacing: '0.26em', textShadow: '0 1px 10px rgba(0,0,0,0.6)' }}>
           {t('The living place', 'Le lieu vivant')}
         </figcaption>
@@ -261,7 +288,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       {/* ── PULLQUOTE, modest, Cormorant, gold ──────────────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-12">
         <span className="block mb-6 h-px w-16" style={{ background: T.gold }} />
-        <p className="font-cormorant italic" style={{ color: T.goldDeep, fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)', lineHeight: 1.3, maxWidth: '40ch' }}>
+        <p data-parallax="-0.045" className="font-cormorant italic" style={{ color: T.goldDeep, fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)', lineHeight: 1.3, maxWidth: '40ch', willChange: 'transform' }}>
           {t(PULLQUOTE.en, PULLQUOTE.fr)}
         </p>
       </Reveal>
@@ -307,6 +334,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         /* Scroll cue — slow vertical breathing */
         .comm-scroll-cue { animation: commCue 2.6s ease-in-out infinite; }
         @keyframes commCue { 0%,100% { opacity: 0.5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(4px); } }
+        /* Recette B4 — le hero se développe depuis le noir à l'entrée */
+        .comm-develop { background: #050505; animation: commDevelop 1.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+        @keyframes commDevelop { from { opacity: 1; } to { opacity: 0; } }
         /* Terms cells inherit the parent Reveal's transition for a staggered cascade */
         .comm-terms > div { transition: opacity 1.1s ease-out, transform 1.1s cubic-bezier(0.22,1,0.36,1); }
         .comm-cta {
@@ -321,6 +351,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-cta:disabled { opacity: 0.45; cursor: not-allowed; }
         @media (prefers-reduced-motion: reduce) {
           .comm-ken, .comm-ken-slow, .comm-scroll-cue, .comm-hero-in > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .comm-develop { animation: none !important; opacity: 0 !important; }
         }
       `}</style>
     </section>
