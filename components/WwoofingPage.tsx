@@ -8,6 +8,7 @@ import {
 } from 'firebase/firestore';
 import { AuthModal, type MemberProfile } from './AuthModal';
 import { CommunityMembershipSection } from './CommunityMembershipSection';
+import { WwoofingGallery } from './WwoofingGallery';
 import { SeoBlock } from './SeoBlock';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
 
@@ -447,6 +448,8 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             </div>
           )}
         </section>
+
+        <WwoofingGallery language={language} />
 
         <SeoBlock viewKey="WWOOFING" language={language} onNavigate={onNavigate} />
       </main>
