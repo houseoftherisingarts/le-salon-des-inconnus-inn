@@ -173,6 +173,9 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
   // True when the community-membership CTA triggered sign-in, so its form opens
   // by itself once the user returns authenticated.
   const [communityAuthPending, setCommunityAuthPending] = useState(false);
+  // The volunteer wwoofer form is hidden until the visitor explicitly asks for
+  // it (keeps the paid community offer and the volunteer flow visually separate).
+  const [showWwooferForm, setShowWwooferForm] = useState(false);
 
   const [wwooferProfile, setWwooferProfile] = useState<WwooferProfile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
@@ -219,14 +222,24 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
       setShowAuth(true);
       return;
     }
-    document.getElementById('wwoofing-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setShowWwooferForm(true);
+    setTimeout(() => document.getElementById('wwoofing-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }, [user, memberProfile]);
 
   const handleAuthSuccess = useCallback((newUser: User, newProfile: MemberProfile) => {
     onUserChange(newUser, newProfile);
     setShowAuth(false);
-    setPendingApply(false);
   }, [onUserChange]);
+
+  // If sign-in was triggered by the "apply as wwoofer" button, reveal the form
+  // once authenticated (explicit intent carried across the auth round-trip).
+  useEffect(() => {
+    if (pendingApply && user && memberProfile) {
+      setShowWwooferForm(true);
+      setPendingApply(false);
+      setTimeout(() => document.getElementById('wwoofing-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    }
+  }, [pendingApply, user, memberProfile]);
 
   const hasApplied = !!wwooferProfile;
 
@@ -410,30 +423,45 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
 
         {/* ── BODY: form OR client space ─────────────────────────────────── */}
         <section className="px-6 md:px-12 lg:px-20 py-20">
-          {!user || !memberProfile ? (
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-neutral-400 font-lato leading-relaxed">
-                {t(
-                  'Sign in (button at the top of the page) and the application form will appear right here.',
-                  "Connectez-vous (bouton en haut de la page) et le formulaire de candidature apparaîtra juste ici."
-                )}
-              </p>
-            </div>
-          ) : !profileLoaded ? (
+          {!profileLoaded && user ? (
             <div className="text-center text-neutral-500 font-lato py-16">
               {t('Loading…', 'Chargement…')}
             </div>
           ) : !hasApplied ? (
-            <div id="wwoofing-apply">
-              <ApplyForm
-                language={language}
-                user={user}
-                memberProfile={memberProfile}
-                pageRef={pageRef}
-                onCancel={() => onNavigate('INN')}
-                onSubmitted={() => { /* profile snapshot will flip hasApplied */ }}
-              />
-            </div>
+            showWwooferForm && user && memberProfile ? (
+              <div id="wwoofing-apply">
+                <ApplyForm
+                  language={language}
+                  user={user}
+                  memberProfile={memberProfile}
+                  pageRef={pageRef}
+                  onCancel={() => setShowWwooferForm(false)}
+                  onSubmitted={() => { /* profile snapshot will flip hasApplied */ }}
+                />
+              </div>
+            ) : (
+              <div className="max-w-2xl mx-auto text-center">
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <span className="h-px w-10 bg-[#c5a059]" aria-hidden></span>
+                  <span className="font-cinzel text-[11px] uppercase tracking-[0.4em] text-[#c5a059]">
+                    {t('Volunteer wwoofing', 'Wwoofing bénévole')}
+                  </span>
+                  <span className="h-px w-10 bg-[#c5a059]" aria-hidden></span>
+                </div>
+                <p className="font-lato text-neutral-300 leading-relaxed mb-8 max-w-xl mx-auto">
+                  {t(
+                    'This is the volunteer path: a stay in exchange for room, board and shared time. Different from the paid community place above. Apply when you are ready.',
+                    "Ceci, c'est la voie bénévole : un séjour en échange du gîte, du couvert et du temps partagé. Distinct de la place communautaire rémunérée ci-dessus. Postule quand tu es prêt·e."
+                  )}
+                </p>
+                <button
+                  onClick={handleApplyClick}
+                  className="px-8 py-4 bg-[#c5a059] text-[#1a1107] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#d2b06a] transition-all hover:scale-[1.02] active:scale-95"
+                >
+                  {t('Fill my wwoofer application', 'Remplir ma candidature wwoofer')}
+                </button>
+              </div>
+            )
           ) : (
             <div className="max-w-4xl mx-auto space-y-16">
               <ProfileSummary profile={wwooferProfile!} t={t} />
