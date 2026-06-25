@@ -27,15 +27,18 @@ interface Props {
   autoOpen?: boolean;
 }
 
+// Dark aesthetic of the home — warm near-black (NOT pure #000), cream Prata,
+// muted antique gold #c5a059 (NOT the #d4af37 yellow). Token VALUES are
+// repurposed so the liked layout stays identical; only the palette flips.
 const T = {
-  paper:   '#f3ecd9',  // warm ivory ground (the day)
-  panel:   '#ece2c9',  // deeper ivory panel
-  ink:     '#26201a',  // espresso — display + headings
-  body:    '#473d31',  // body text
-  soft:    '#7c6f58',  // muted captions
+  paper:   '#15110b',  // warm dark ground (not pure black) + dark text on gold CTA
+  panel:   '#1c1710',  // slightly lifted panel
+  ink:     '#f3e5ab',  // cream — Prata display, headings, emphasis (home title color)
+  body:    '#dacfb6',  // warm light body text
+  soft:    '#9c8f76',  // muted captions
   gold:    '#c5a059',  // THE gold (muted antique) — the home's primary gold
-  goldDeep:'#a8863f',  // deeper gold for small text legibility on ivory
-  line:    'rgba(168,134,63,0.32)',
+  goldDeep:'#c5a059',  // same muted gold for eyebrows/labels/CTA on dark
+  line:    'rgba(197,160,89,0.28)',
 };
 
 const IMG = {
@@ -152,10 +155,11 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           </div>
 
           {/* Bright daytime photo, breaking the grid upward */}
-          <figure className="comm-rise relative lg:-mt-16">
-            <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 4', boxShadow: '0 40px 90px -50px rgba(38,32,26,0.55)' }}>
-              <img src={IMG.garden} alt={t('The gardens in full summer light.', "Les jardins en pleine lumière d'été.")} className="w-full h-full object-cover" />
-              <span className="absolute inset-0" style={{ boxShadow: `inset 0 0 0 1px ${T.line}` }} />
+          <figure className="comm-rise comm-fig relative lg:-mt-16">
+            <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 4', boxShadow: '0 50px 120px -60px rgba(0,0,0,0.9)' }}>
+              <img src={IMG.garden} alt={t('The gardens in full summer light.', "Les jardins en pleine lumière d'été.")} className="img-zoom w-full h-full object-cover" />
+              <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(21,17,11,0.55))' }} />
+              <span className="absolute inset-0 pointer-events-none" style={{ boxShadow: `inset 0 0 0 1px ${T.line}` }} />
             </div>
             <figcaption className="mt-3 font-cinzel uppercase text-right" style={{ color: T.soft, fontSize: '10px', letterSpacing: '0.24em' }}>
               {t('The gardens', 'Les jardins')}
@@ -213,8 +217,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       </div>
 
       {/* ── FULL-BLEED bright band ───────────────────────────────────────── */}
-      <figure className="relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
-        <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="w-full h-full object-cover" />
+      <figure className="comm-fig relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
+        <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="img-zoom w-full h-full object-cover" />
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(21,17,11,0.5) 0%, transparent 30%, transparent 65%, rgba(21,17,11,0.85) 100%)' }} />
         <figcaption className="absolute bottom-4 right-6 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '10px', letterSpacing: '0.26em', textShadow: '0 1px 10px rgba(0,0,0,0.6)' }}>
           {t('The living place', 'Le lieu vivant')}
         </figcaption>
@@ -265,6 +270,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-rise { opacity: 0; transform: translateY(18px); animation: commRise 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
         .comm-rise:nth-child(2) { animation-delay: 0.12s; }
         @keyframes commRise { to { opacity: 1; transform: none; } }
+        /* Home-page showcase effect — slow gold-cinematic image zoom on hover */
+        .comm-fig .img-zoom { transition: transform 1.1s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
+        .comm-fig:hover .img-zoom { transform: scale(1.05); }
         .comm-cta {
           color: ${T.paper}; background: ${T.goldDeep};
           padding: 1.05rem 3rem; border-radius: 2px;
@@ -272,7 +280,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .35s ease, box-shadow .35s ease;
           box-shadow: 0 14px 34px -18px rgba(168,134,63,0.85);
         }
-        .comm-cta:hover { background: ${T.ink}; transform: translateY(-2px); box-shadow: 0 20px 44px -20px rgba(38,32,26,0.6); }
+        .comm-cta:hover { transform: translateY(-2px); box-shadow: 0 20px 48px -18px rgba(197,160,89,0.7), inset 0 0 0 1px rgba(243,229,171,0.45); }
         .comm-cta:active { transform: translateY(0); }
         .comm-cta:disabled { opacity: 0.45; cursor: not-allowed; }
       `}</style>
