@@ -9,6 +9,10 @@ interface ContributionPanelProps {
   language: 'EN' | 'FR';
   user: User | null;
   onRequireAuth: () => void;
+  title?: string;
+  blurb?: string;
+  successMsg?: string;
+  paymentNote?: string;
 }
 
 declare global {
@@ -28,6 +32,10 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
   language,
   user,
   onRequireAuth,
+  title,
+  blurb,
+  successMsg,
+  paymentNote,
 }) => {
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
 
@@ -73,7 +81,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
         const card = await payments.card({
           style: {
             '.input-container': { borderColor: '#333', borderRadius: '0px' },
-            '.input-container.is-focus': { borderColor: '#d4af37' },
+            '.input-container.is-focus': { borderColor: '#c5a059' },
             '.input-container.is-error': { borderColor: '#ef4444' },
             input: { color: '#e5e5e5', fontSize: '14px' },
             'input::placeholder': { color: '#555' },
@@ -108,7 +116,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
         return;
       }
       const fn = httpsCallable(getFunctions(), 'createCeilidhPayment');
-      await fn({ nonce: result.token, amountCents: finalAmount * 100, note });
+      await fn({ nonce: result.token, amountCents: finalAmount * 100, note: note.trim() || paymentNote });
       setStatus('success');
     } catch (e: any) {
       setErrorMsg(e.message ?? t('Payment error.', 'Erreur de paiement.'));
@@ -121,13 +129,13 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
   // ── Success screen ─────────────────────────────────────────────────────────
   if (status === 'success') {
     return (
-      <div className="border border-[#d4af37]/30 bg-[#0a0a0a] p-10 text-center">
+      <div className="border border-[#c5a059]/30 bg-[#0a0a0a] p-10 text-center">
         <div className="text-5xl mb-6">🎉</div>
-        <h3 className="font-cinzel text-2xl text-[#d4af37] mb-3">
+        <h3 className="font-cinzel text-2xl text-[#c5a059] mb-3">
           {t('Thank you!', 'Merci\u00a0!')}
         </h3>
         <p className="font-lato text-neutral-400 text-sm max-w-sm mx-auto">
-          {t(
+          {successMsg ?? t(
             `Your contribution of $${finalAmount} helps make this event possible. See you at the Ceilidh!`,
             `Votre contribution de ${finalAmount}\u00a0$ aide à rendre cet événement possible. À bientôt au Ceilidh\u00a0!`,
           )}
@@ -149,14 +157,14 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
         <div className="inline-flex flex-col items-center gap-4">
           <div className="text-3xl">💛</div>
           <p className="font-lato text-neutral-500 text-sm max-w-md mx-auto leading-relaxed">
-            {t(
+            {blurb ?? t(
               'Can\'t make it as a Woofer? You can still support the event with a monetary contribution.',
               'Vous ne pouvez pas venir en tant que Woofer\u00a0? Vous pouvez quand même soutenir l\'événement par une contribution monétaire.',
             )}
           </p>
           <button
             onClick={() => { if (!user) { onRequireAuth(); return; } setOpen(true); }}
-            className="group mt-2 px-10 py-4 border border-[#d4af37]/60 text-[#d4af37] font-cinzel text-sm uppercase tracking-[0.2em] hover:bg-[#d4af37] hover:text-black transition-all duration-300"
+            className="group mt-2 px-10 py-4 border border-[#c5a059]/60 text-[#c5a059] font-cinzel text-sm uppercase tracking-[0.2em] hover:bg-[#c5a059] hover:text-black transition-all duration-300"
           >
             <span className="group-hover:hidden">{t('Contribute', 'Contribuer')}</span>
             <span className="hidden group-hover:inline">{t('I\'ll support the cause', 'Je soutiens la cause')}</span>
@@ -168,14 +176,14 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
 
   // ── Open payment form ──────────────────────────────────────────────────────
   return (
-    <div className="border border-[#d4af37]/30 bg-[#0a0a0a] overflow-hidden">
+    <div className="border border-[#c5a059]/30 bg-[#0a0a0a] overflow-hidden">
       <div className="border-b border-white/5 p-6 flex items-center justify-between">
         <div>
-          <p className="text-[#d4af37] text-xs font-cinzel uppercase tracking-[0.4em]">
+          <p className="text-[#c5a059] text-xs font-cinzel uppercase tracking-[0.4em]">
             {t('Contribution', 'Contribution')}
           </p>
           <h3 className="font-cinzel text-xl text-white mt-0.5">
-            {t('Support the Ceilidh', 'Soutenir le Ceilidh')}
+            {title ?? t('Support the Ceilidh', 'Soutenir le Ceilidh')}
           </h3>
         </div>
         <button onClick={() => setOpen(false)} className="text-neutral-600 hover:text-white text-xl transition-colors">×</button>
@@ -194,7 +202,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
                 onClick={() => { setAmount(a); setUseCustom(false); }}
                 className={`px-4 py-2 font-cinzel text-sm border transition-all ${
                   !useCustom && amount === a
-                    ? 'border-[#d4af37] bg-[#d4af37]/10 text-[#d4af37]'
+                    ? 'border-[#c5a059] bg-[#c5a059]/10 text-[#c5a059]'
                     : 'border-white/10 text-neutral-400 hover:border-white/30'
                 }`}
               >
@@ -205,7 +213,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
               onClick={() => setUseCustom(true)}
               className={`px-4 py-2 font-cinzel text-sm border transition-all ${
                 useCustom
-                  ? 'border-[#d4af37] bg-[#d4af37]/10 text-[#d4af37]'
+                  ? 'border-[#c5a059] bg-[#c5a059]/10 text-[#c5a059]'
                   : 'border-white/10 text-neutral-400 hover:border-white/30'
               }`}
             >
@@ -221,7 +229,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
                 value={customAmount}
                 onChange={e => setCustomAmount(e.target.value)}
                 placeholder="5 minimum"
-                className="flex-1 bg-[#141414] border border-white/10 text-white px-4 py-2 font-lato text-sm focus:outline-none focus:border-[#d4af37]/60 placeholder:text-neutral-700"
+                className="flex-1 bg-[#141414] border border-white/10 text-white px-4 py-2 font-lato text-sm focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-700"
               />
             </div>
           )}
@@ -238,7 +246,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
             onChange={e => setNote(e.target.value)}
             placeholder={t('A kind word...', 'Un mot gentil...')}
             maxLength={100}
-            className="w-full bg-[#141414] border border-white/10 text-white px-4 py-2 font-lato text-sm focus:outline-none focus:border-[#d4af37]/60 placeholder:text-neutral-700"
+            className="w-full bg-[#141414] border border-white/10 text-white px-4 py-2 font-lato text-sm focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-700"
           />
         </div>
 
@@ -250,7 +258,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
           <div ref={cardContainerRef} id="sq-card-container" className="min-h-[120px]">
             {!squareLoaded && (
               <div className="flex items-center justify-center min-h-[80px]">
-                <div className="w-4 h-4 border-2 border-[#d4af37]/30 border-t-[#d4af37] rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#c5a059]/30 border-t-[#c5a059] rounded-full animate-spin" />
               </div>
             )}
           </div>
@@ -265,7 +273,7 @@ export const ContributionPanel: React.FC<ContributionPanelProps> = ({
         <button
           onClick={handlePay}
           disabled={loading || !cardWidget}
-          className="w-full py-4 bg-[#d4af37] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-40 transition-all"
+          className="w-full py-4 bg-[#c5a059] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-40 transition-all"
         >
           {loading
             ? t('Processing...', 'Traitement en cours...')
