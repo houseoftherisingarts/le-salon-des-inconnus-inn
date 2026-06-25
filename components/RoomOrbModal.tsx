@@ -123,6 +123,19 @@ export function useRoomOrb(): RoomOrbCtx {
   return useContext(Ctx) ?? { openRoomOrb: () => {} };
 }
 
+// Deep-link slugs so an open room survives a page refresh / can be shared.
+// Path scheme: /chambre/{slug}. pathToView() in App.tsx already falls back to
+// the INN view for these paths, so the inn page mounts this provider, which then
+// opens the matching room from the URL.
+const ROOM_SLUGS: Record<string, string> = {
+  room1: 'ecrivaine', room2: 'musicienne', room3: 'cineaste', room4: 'amphitheatre',
+  manor: 'auberge', yurt: 'yourte', tiny: 'meditante', 'mini-maison': 'bergere', bus: 'bus',
+};
+const SLUG_TO_ID: Record<string, string> = Object.fromEntries(
+  Object.entries(ROOM_SLUGS).map(([id, slug]) => [slug, id]),
+);
+const ROOM_PATH_RE = /^\/chambre\/([a-z0-9-]+)\/?$/;
+
 type ProviderProps = { children: ReactNode; language: 'EN' | 'FR' };
 
 export function RoomOrbProvider({ children, language }: ProviderProps) {
@@ -133,19 +146,63 @@ export function RoomOrbProvider({ children, language }: ProviderProps) {
   // visitors can read about them; their Choose button shows a "Bientôt" state.
   const rooms = useMemo(() => ACCOMMODATIONS, []);
 
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  // Resolve the open room from the current URL (/chambre/{slug}). Returns null
+  // when the path isn't a room path or the slug is unknown.
+  const idxFromPath = useCallback((): number | null => {
+    const m = ROOM_PATH_RE.exec(window.location.pathname);
+    if (!m) return null;
+    const id = SLUG_TO_ID[m[1]];
+    if (!id) return null;
+    const i = rooms.findIndex((r) => r.id === id);
+    return i >= 0 ? i : null;
+  }, [rooms]);
+
+  // Initialise from the URL so a refresh on /chambre/{slug} re-opens the room.
+  const [openIdx, setOpenIdx] = useState<number | null>(() => idxFromPath());
+
+  // Keep the URL in sync with the open room (push so Back closes it / steps rooms).
+  const syncUrl = useCallback((idx: number | null) => {
+    const onRoomPath = ROOM_PATH_RE.test(window.location.pathname);
+    if (idx == null) {
+      if (onRoomPath) window.history.pushState({}, '', '/');
+      return;
+    }
+    const path = `/chambre/${ROOM_SLUGS[rooms[idx].id] ?? rooms[idx].id}`;
+    if (window.location.pathname !== path) {
+      // Stepping room→room replaces; first open from a non-room path pushes,
+      // so a single Back returns to where the visitor was.
+      if (onRoomPath) window.history.replaceState({}, '', path);
+      else window.history.pushState({}, '', path);
+    }
+  }, [rooms]);
 
   const openRoomOrb = useCallback(
     (acc: Accommodation) => {
       const i = rooms.findIndex((r) => r.id === acc.id);
-      // If the click came from the manor card, fall back to the first room
-      // so the visitor still sees something useful.
-      setOpenIdx(i >= 0 ? i : 0);
+      const idx = i >= 0 ? i : 0;
+      setOpenIdx(idx);
+      syncUrl(idx);
     },
-    [rooms],
+    [rooms, syncUrl],
   );
 
-  const close = useCallback(() => setOpenIdx(null), []);
+  // Used by the modal for Next/Previous room + suggestion jumps; keep URL synced.
+  const setIndexSynced = useCallback((n: number) => {
+    setOpenIdx(n);
+    syncUrl(n);
+  }, [syncUrl]);
+
+  const close = useCallback(() => {
+    setOpenIdx(null);
+    syncUrl(null);
+  }, [syncUrl]);
+
+  // Browser Back/Forward: re-derive the open room from the URL.
+  useEffect(() => {
+    const onPop = () => setOpenIdx(idxFromPath());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, [idxFromPath]);
 
   return (
     <Ctx.Provider value={{ openRoomOrb }}>
@@ -155,7 +212,7 @@ export function RoomOrbProvider({ children, language }: ProviderProps) {
           <RoomOrbModal
             rooms={rooms}
             index={openIdx}
-            setIndex={setOpenIdx}
+            setIndex={setIndexSynced}
             onClose={close}
             language={language}
           />,
