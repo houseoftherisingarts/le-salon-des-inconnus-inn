@@ -16,6 +16,7 @@ const KitchenPage       = lazy(() => import('./components/KitchenPage').then(m =
 const EventsPage        = lazy(() => import('./components/EventsPage').then(m => ({ default: m.EventsPage })));
 const CeilidhPage       = lazy(() => import('./components/CeilidhPage').then(m => ({ default: m.CeilidhPage })));
 const WwoofingPage      = lazy(() => import('./components/WwoofingPage').then(m => ({ default: m.WwoofingPage })));
+const CommunityPage     = lazy(() => import('./components/CommunityPage').then(m => ({ default: m.CommunityPage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
@@ -159,7 +160,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING'
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'COMMUNITY'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
@@ -178,6 +179,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   EVENTS:         '/evenements',
   CEILIDH:        '/ceilidh',
   WWOOFING:       '/wwoofing',
+  COMMUNITY:      '/communaute',
   MY_PROFILE:     '/profil',
   PUBLIC_PROFILE: '/membre',
   MESSAGING:      '/messages',
@@ -721,6 +723,18 @@ const App: React.FC = () => {
         {/* VIEW 7b: WWOOFING */}
         {currentView === 'WWOOFING' && (
           <WwoofingPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+            user={currentUser}
+            memberProfile={memberProfile}
+            onUserChange={handleUserChange}
+            onShowPrivacy={() => setShowPrivacyPolicy(true)}
+          />
+        )}
+
+        {/* VIEW 7c: COMMUNITY (paid resident-member place) */}
+        {currentView === 'COMMUNITY' && (
+          <CommunityPage
             onNavigate={(view) => handleNavigation(view as ViewState)}
             language={language}
             user={currentUser}

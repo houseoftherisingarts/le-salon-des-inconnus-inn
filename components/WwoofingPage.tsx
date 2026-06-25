@@ -7,7 +7,6 @@ import {
   serverTimestamp, query, orderBy,
 } from 'firebase/firestore';
 import { AuthModal, type MemberProfile } from './AuthModal';
-import { CommunityMembershipSection } from './CommunityMembershipSection';
 import { WwoofingGallery } from './WwoofingGallery';
 import { SeoBlock } from './SeoBlock';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
@@ -170,9 +169,6 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
 
   const [showAuth, setShowAuth] = useState(false);
   const [pendingApply, setPendingApply] = useState(false);
-  // True when the community-membership CTA triggered sign-in, so its form opens
-  // by itself once the user returns authenticated.
-  const [communityAuthPending, setCommunityAuthPending] = useState(false);
   // The volunteer wwoofer form is hidden until the visitor explicitly asks for
   // it (keeps the paid community offer and the volunteer flow visually separate).
   const [showWwooferForm, setShowWwooferForm] = useState(false);
@@ -412,15 +408,6 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
           </div>
         </section>
 
-        {/* ── COMMUNITY MEMBERSHIP, paid resident place (André's spot) ───── */}
-        <CommunityMembershipSection
-          language={language}
-          user={user}
-          memberProfile={memberProfile}
-          autoOpen={communityAuthPending}
-          onRequestAuth={() => { setCommunityAuthPending(true); setShowAuth(true); }}
-        />
-
         {/* ── BODY: form OR client space ─────────────────────────────────── */}
         <section className="px-6 md:px-12 lg:px-20 py-20">
           {!profileLoaded && user ? (
@@ -440,26 +427,30 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                 />
               </div>
             ) : (
-              <div className="max-w-2xl mx-auto text-center">
-                <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-4 mb-6">
                   <span className="h-px w-10 bg-[#c5a059]" aria-hidden></span>
                   <span className="font-cinzel text-[11px] uppercase tracking-[0.4em] text-[#c5a059]">
                     {t('Volunteer wwoofing', 'Wwoofing bénévole')}
                   </span>
-                  <span className="h-px w-10 bg-[#c5a059]" aria-hidden></span>
                 </div>
-                <p className="font-lato text-neutral-300 leading-relaxed mb-8 max-w-xl mx-auto">
+                <p className="font-lato text-neutral-300 leading-relaxed mb-4 max-w-xl">
                   {t(
-                    'This is the volunteer path: a stay in exchange for room, board and shared time. Different from the paid community place above. Apply when you are ready.',
-                    "Ceci, c'est la voie bénévole : un séjour en échange du gîte, du couvert et du temps partagé. Distinct de la place communautaire rémunérée ci-dessus. Postule quand tu es prêt·e."
+                    'This is the volunteer path: a stay in exchange for room, board and shared time. Apply when you are ready.',
+                    "Ceci, c'est la voie bénévole : un séjour en échange du gîte, du couvert et du temps partagé. Postule quand tu es prêt·e."
                   )}
                 </p>
-                <button
-                  onClick={handleApplyClick}
-                  className="px-8 py-4 bg-[#c5a059] text-[#1a1107] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#d2b06a] transition-all hover:scale-[1.02] active:scale-95"
-                >
-                  {t('Fill my wwoofer application', 'Remplir ma candidature wwoofer')}
+                <button onClick={() => onNavigate('COMMUNITY')} className="font-cinzel text-[11px] uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors mb-8 inline-block">
+                  {t('Looking for the paid resident place? →', 'Tu cherches la place rémunérée ? →')}
                 </button>
+                <div>
+                  <button
+                    onClick={handleApplyClick}
+                    className="px-8 py-4 bg-[#c5a059] text-[#1a1107] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#d2b06a] transition-all hover:scale-[1.02] active:scale-95"
+                  >
+                    {t('Fill my wwoofer application', 'Remplir ma candidature wwoofer')}
+                  </button>
+                </div>
               </div>
             )
           ) : (
@@ -479,6 +470,18 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
         </section>
 
         <WwoofingGallery language={language} />
+
+        {/* ── Ceilidh reference (annual, not on the home anymore) ─────────── */}
+        <section className="px-6 md:px-12 lg:px-20 py-20 border-t border-[#c5a059]/10 bg-[#050505]">
+          <div className="max-w-5xl grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
+            <div>
+              <span className="font-cinzel text-[11px] uppercase tracking-[0.4em] text-[#c5a059]">{t('Once a year', 'Une fois par an')}</span>
+              <h3 className="font-prata text-3xl md:text-4xl text-[#f3e5ab] mt-3 mb-3 tracking-tight">{t('Want to give a big push?', 'Envie de donner un gros coup ?')}</h3>
+              <p className="font-lato text-neutral-300 leading-relaxed max-w-xl">{t('Every early May we hold a ceilidh: five days of shows, banquets and shared work, the culmination of the season.', "Au début de chaque mois de mai, on tient un ceilidh : cinq jours de spectacles, de banquets et de chantiers communs, l'aboutissement de la saison.")}</p>
+            </div>
+            <button onClick={() => onNavigate('CEILIDH')} className="px-8 py-4 border-2 border-[#c5a059] text-[#c5a059] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#c5a059] hover:text-[#1a1107] transition-all whitespace-nowrap">{t('Discover the Ceilidh', 'Découvrir le Ceilidh')}</button>
+          </div>
+        </section>
 
         <SeoBlock viewKey="WWOOFING" language={language} onNavigate={onNavigate} />
       </main>

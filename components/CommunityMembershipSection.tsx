@@ -44,7 +44,7 @@ const T = {
 // Black-and-white wwoofing photoshoot (from the Salon's own folder).
 // Diversity on purpose, NOT Alex. Other members / wwoofers of the community.
 const IMG = {
-  garden: '/wwoof/bw-10.jpg',  // a member, arms open, welcoming (3/4)
+  garden: '/wwoof/bw-3.jpg',   // around the fire, in the woods (3/4)
   nature: '/wwoof/bw-2.jpg',   // the crew handling lumber (band)
   bus:    '/wwoof/bw-4.jpg',
 };
@@ -159,12 +159,12 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           {/* Bright daytime photo, breaking the grid upward */}
           <figure className="comm-rise comm-fig relative lg:-mt-16">
             <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 4', boxShadow: '0 50px 120px -60px rgba(0,0,0,0.9)' }}>
-              <img src={IMG.garden} alt={t('The gardens in full summer light.', "Les jardins en pleine lumière d'été.")} className="img-zoom w-full h-full object-cover" />
+              <img src={IMG.garden} alt={t('Around the fire, in the woods.', "Autour du feu, dans les bois.")} className="img-zoom w-full h-full object-cover" />
               <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(5,5,5,0.55))' }} />
               <span className="absolute inset-0 pointer-events-none" style={{ boxShadow: `inset 0 0 0 1px ${T.line}` }} />
             </div>
             <figcaption className="mt-3 font-cinzel uppercase text-right" style={{ color: T.soft, fontSize: '10px', letterSpacing: '0.24em' }}>
-              {t('The gardens', 'Les jardins')}
+              {t('Around the fire', 'Autour du feu')}
             </figcaption>
           </figure>
         </div>
@@ -172,7 +172,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── LEAD, the announcement, large, with a Prata drop-cap ────────── */}
       <div className="px-6 md:px-12 lg:px-20 pt-6 pb-2">
-        <div className="mx-auto max-w-3xl">
+        <div className="max-w-3xl">
           <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
             {t(body[0].en, body[0].fr)}
           </p>
@@ -181,7 +181,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── BODY 1 ───────────────────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
-        <div className="mx-auto max-w-3xl space-y-6">
+        <div className="max-w-3xl space-y-6">
           <Para>{t(body[1].en, body[1].fr)}</Para>
           <Para>{t(body[2].en, body[2].fr)}</Para>
         </div>
@@ -212,7 +212,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── BODY 2 (work + pay) ──────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
-        <div className="mx-auto max-w-3xl space-y-6">
+        <div className="max-w-3xl space-y-6">
           <Para>{t(body[3].en, body[3].fr)}</Para>
           <Para>{t(body[4].en, body[4].fr)}</Para>
         </div>
@@ -229,31 +229,31 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── BODY 3 (community psychology + human side) ───────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
-        <div className="mx-auto max-w-3xl space-y-6">
+        <div className="max-w-3xl space-y-6">
           <Para>{t(body[5].en, body[5].fr)}</Para>
           <Para>{t(body[6].en, body[6].fr)}</Para>
         </div>
       </div>
 
       {/* ── PULLQUOTE, modest, Cormorant, gold ──────────────────────────── */}
-      <div className="px-6 py-6 text-center">
-        <span className="block mx-auto mb-6 h-px w-16" style={{ background: T.gold }} />
-        <p className="font-cormorant italic mx-auto" style={{ color: T.goldDeep, fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', lineHeight: 1.35, maxWidth: '30ch' }}>
+      <div className="px-6 md:px-12 lg:px-20 py-12">
+        <span className="block mb-6 h-px w-16" style={{ background: T.gold }} />
+        <p className="font-cormorant italic" style={{ color: T.goldDeep, fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)', lineHeight: 1.3, maxWidth: '40ch' }}>
           {t(PULLQUOTE.en, PULLQUOTE.fr)}
         </p>
       </div>
 
       {/* ── CTA / form / applied ─────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 pb-24 pt-10">
-        <div className="mx-auto max-w-3xl">
+        <div className="max-w-3xl">
           {!loaded && user ? (
-            <p className="font-lato text-sm text-center" style={{ color: T.soft }}>{t('Loading…', 'Chargement…')}</p>
+            <p className="font-lato text-sm" style={{ color: T.soft }}>{t('Loading…', 'Chargement…')}</p>
           ) : hasApplied ? (
             <AppliedSummary application={application!} t={t} />
           ) : showForm && user && memberProfile ? (
             <div id="community-apply"><CommunityApplyForm language={language} user={user} memberProfile={memberProfile} onCancel={() => setShowForm(false)} /></div>
           ) : (
-            <div className="text-center">
+            <div>
               <button onClick={handleCta} className="comm-cta font-cinzel uppercase">
                 {t('Apply for the place', 'Postuler pour la place')}
               </button>
@@ -302,8 +302,8 @@ const AppliedSummary: React.FC<{ application: CommunityApplication; t: (en: stri
     pending: { fr: 'Reçue', en: 'Received' }, approved: { fr: 'Approuvée', en: 'Approved' }, declined: { fr: 'Fermée', en: 'Closed' },
   };
   return (
-    <div className="mx-auto max-w-2xl text-center" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
-      <div className="flex items-center justify-center gap-4 flex-wrap mb-4">
+    <div className="max-w-2xl" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
+      <div className="flex items-center justify-start gap-4 flex-wrap mb-4">
         {application.photoURL && <img src={application.photoURL} alt="" className="w-12 h-12 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${T.gold}` }} />}
         <div className="text-left">
           <span className="font-cinzel uppercase block mb-1" style={{ color: T.goldDeep, fontSize: '10px', letterSpacing: '0.3em' }}>{t('Your application', 'Ta candidature')}</span>
@@ -359,7 +359,7 @@ const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberPr
   };
 
   return (
-    <div className="mx-auto max-w-2xl" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
+    <div className="max-w-2xl" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
       <div className="flex items-center gap-4 mb-8">
         {memberProfile.photoURL ? (
           <img src={memberProfile.photoURL} alt="" className="w-14 h-14 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${T.gold}` }} />
