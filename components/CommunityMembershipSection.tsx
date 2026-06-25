@@ -182,15 +182,15 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── HERO — cinematic full-bleed, Ken-Burns photo, title over it (home language) ── */}
       <header className="relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
-        <div className="absolute left-0 right-0 overflow-hidden" data-parallax="0.10" style={{ top: '-10%', height: '120%', willChange: 'transform' }}>
+        <div className="absolute left-0 right-0 overflow-hidden" data-parallax="0.06" style={{ top: '-6%', height: '112%', willChange: 'transform' }}>
           <img
             src={IMG.garden}
             alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
             className="comm-ken absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: '50% 32%' }}
+            style={{ objectPosition: '50% 42%' }}
           />
         </div>
-        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 2%, rgba(5,5,5,0.55) 26%, rgba(5,5,5,0.12) 52%, rgba(5,5,5,0.5) 100%)' }} />
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 0%, rgba(5,5,5,0.52) 20%, rgba(5,5,5,0) 48%, rgba(5,5,5,0.28) 100%)' }} />
         <span className="comm-grain absolute inset-0 pointer-events-none" />
         {/* Recette B4 — le hero se développe depuis le noir à l'entrée */}
         <span className="comm-develop absolute inset-0 pointer-events-none" />
@@ -320,8 +320,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           font-size: 3.4em; line-height: 0.78; padding: 0.04em 0.12em 0 0;
         }
         /* Hero — continuous Ken Burns on the photo (home language: hero3-kenburns) */
-        .comm-ken { animation: commKen 26s ease-in-out infinite alternate; will-change: transform; transform-origin: 50% 40%; }
-        @keyframes commKen { from { transform: scale(1.04); } to { transform: scale(1.13); } }
+        .comm-ken { animation: commKen 30s ease-in-out infinite alternate; will-change: transform; transform-origin: 50% 45%; }
+        @keyframes commKen { from { transform: scale(1.0); } to { transform: scale(1.05); } }
         .comm-ken-slow { animation: commKen 32s ease-in-out infinite alternate; will-change: transform; }
         /* Hero copy — staggered cinematic entrance, all lines share one left edge */
         .comm-hero-in > * { opacity: 0; transform: translateY(22px); animation: commRise 1.1s cubic-bezier(0.22,1,0.36,1) forwards; }
