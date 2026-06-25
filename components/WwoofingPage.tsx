@@ -41,7 +41,7 @@ const ACCOMMODATION_OPTIONS = [
   { id: 'private', en: 'Private room (if available)', fr: 'Chambre privée (selon disponibilité)' },
   { id: 'yurt',    en: 'Yurt',                      fr: 'Yourte' },
   { id: 'tent',    en: 'Tent / camping',            fr: 'Tente / camping' },
-  { id: 'flexible',en: 'Flexible — whatever works', fr: 'Flexible — à votre convenance' },
+  { id: 'flexible',en: 'Flexible, whatever works', fr: 'Flexible, à votre convenance' },
 ];
 
 // When the user is on the "Logistics" section and changes the dropdown,
@@ -56,29 +56,29 @@ const ACCOMMODATION_IMAGES: Record<string, string> = {
 
 const MIN_DAYS = 7;
 
-// TODO: PLACEHOLDER COPY — please review/edit.
+// TODO: PLACEHOLDER COPY, please review/edit.
 const HERO_COPY = {
-  fr: "Vous voulez vivre la maison de l'intérieur — pas la visiter, l'habiter une ou deux semaines. C'est exactement ce qu'on cherche aussi : des mains, des idées, des soirées autour du feu.",
-  en: "You want to live the house from the inside — not visit it, inhabit it for a week or two. That's exactly what we're looking for: hands, ideas, nights around the fire.",
+  fr: "Vous voulez vivre la maison de l'intérieur, pas la visiter, l'habiter une ou deux semaines. C'est exactement ce qu'on cherche aussi : des mains, des idées, des soirées autour du feu.",
+  en: "You want to live the house from the inside, not visit it, inhabit it for a week or two. That's exactly what we're looking for: hands, ideas, nights around the fire.",
 };
 
 // Definitions. The Wwoofing block stays; the Ceilidh block contextualises the
 // secondary CTA ("Voir le Ceilidh") so visitors understand what they'd see.
 const WWOOFING_DEFINITION = {
-  fr: "WWOOF — World Wide Opportunities on Organic Farms — est un réseau mondial qui met en lien des hôtes et des bénévoles. Le principe est simple : environ quatre à cinq heures de travail par jour aux jardins, à la cuisine ou autour du lieu, en échange du gîte, du couvert, et du temps qu'on passe ensemble. Ici, ce n'est pas une ferme classique : c'est un manoir vivant, des potagers, des arts, des saisons.",
-  en: "WWOOF — World Wide Opportunities on Organic Farms — is a worldwide network connecting hosts with volunteers. The arrangement is simple: roughly four to five hours of work a day in the gardens, the kitchen or around the property, in exchange for room, board, and the time spent together. We're not a classic farm — we're a living manor: kitchen gardens, arts, seasons.",
+  fr: "WWOOF (World Wide Opportunities on Organic Farms) est un réseau mondial qui met en lien des hôtes et des bénévoles. Le principe est simple : environ quatre à cinq heures de travail par jour aux jardins, à la cuisine ou autour du lieu, en échange du gîte, du couvert, et du temps qu'on passe ensemble. Ici, ce n'est pas une ferme classique : c'est un manoir vivant, des potagers, des arts, des saisons.",
+  en: "WWOOF (World Wide Opportunities on Organic Farms) is a worldwide network connecting hosts with volunteers. The arrangement is simple: roughly four to five hours of work a day in the gardens, the kitchen or around the property, in exchange for room, board, and the time spent together. We're not a classic farm, we're a living manor: kitchen gardens, arts, seasons.",
 };
 
 const CEILIDH_DEFINITION = {
-  fr: "Un ceilidh (prononcé « keilī ») est un rassemblement d'origine écossaise et irlandaise : musique, danse, récits autour du feu. Notre Grand Ceilidh de Mai 2026 a lieu du 21 au 25 mai : cinq jours de spectacles, de banquets et de chantiers communs à la Maison Favier. Plusieurs wwoofers y prennent part — c'est l'aboutissement de la saison.",
-  en: "A ceilidh (pronounced \"kay-lee\") is a Scottish/Irish gathering: music, dance, storytelling around the fire. Our Grand Ceilidh de Mai 2026 runs May 21–25 — five days of shows, banquets and shared work at Maison Favier. Many wwoofers take part — it's the season's culmination.",
+  fr: "Un ceilidh (prononcé « keilī ») est un rassemblement d'origine écossaise et irlandaise : musique, danse, récits autour du feu. Notre Grand Ceilidh de Mai 2026 a lieu du 21 au 25 mai : cinq jours de spectacles, de banquets et de chantiers communs à la Maison Favier. Plusieurs wwoofers y prennent part, c'est l'aboutissement de la saison.",
+  en: "A ceilidh (pronounced \"kay-lee\") is a Scottish/Irish gathering: music, dance, storytelling around the fire. Our Grand Ceilidh de Mai 2026 runs May 21–25, five days of shows, banquets and shared work at Maison Favier. Many wwoofers take part, it's the season's culmination.",
 };
 
-// Expectations + daily rhythm — kindly stated, with reciprocity (we ask the
+// Expectations + daily rhythm, kindly stated, with reciprocity (we ask the
 // applicant their needs in the form, see section 06).
 const NEEDS_STATEMENT = {
-  fr: "En devenant wwoofer chez nous, vous rejoignez la communauté pour un temps. On vous demande au minimum quatre heures de travail concentré par jour — au jardin, à la cuisine, ou autour des espaces communs. Les repas, on les prend ensemble, à la grande table. La méditation est offerte deux fois par jour, sans obligation : vous y allez si ça vous fait du bien. Le reste du temps vous appartient — pour lire, créer, vous reposer, ou aller marcher dans les bois.",
-  en: "By wwoofing with us, you join the community for a stretch of time. We ask for a minimum of four focused hours of work each day — in the garden, the kitchen, or around the shared spaces. Meals are taken together at the long table. Meditation is offered twice a day, never required — join if it does you good. The rest of the time is yours — to read, create, rest, or walk in the woods.",
+  fr: "En devenant wwoofer chez nous, vous rejoignez la communauté pour un temps. On vous demande au minimum quatre heures de travail concentré par jour, au jardin, à la cuisine, ou autour des espaces communs. Les repas, on les prend ensemble, à la grande table. La méditation est offerte deux fois par jour, sans obligation : vous y allez si ça vous fait du bien. Le reste du temps vous appartient, pour lire, créer, vous reposer, ou aller marcher dans les bois.",
+  en: "By wwoofing with us, you join the community for a stretch of time. We ask for a minimum of four focused hours of work each day, in the garden, the kitchen, or around the shared spaces. Meals are taken together at the long table. Meditation is offered twice a day, never required, join if it does you good. The rest of the time is yours, to read, create, rest, or walk in the woods.",
 };
 
 const SCHEDULE: { time: string; fr: string; en: string }[] = [
@@ -122,8 +122,8 @@ const APPLY_SECTIONS: {
     id: 'health', number: '03',
     titleFr: 'Diète & Santé', titleEn: 'Diet & Health',
     image: 'https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg',
-    quoteFr: "On cuisine pour vous comme pour nous — avec attention.",
-    quoteEn: "We cook for you the way we cook for ourselves — with care.",
+    quoteFr: "On cuisine pour vous comme pour nous, avec attention.",
+    quoteEn: "We cook for you the way we cook for ourselves, with care.",
   },
   {
     id: 'logistics', number: '04',
@@ -246,14 +246,14 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
       </header>
 
       <main className="pt-16">
-        {/* ── HERO — split diptych: photo left, panel right ───────────────── */}
+        {/* ── HERO, split diptych: photo left, panel right ───────────────── */}
         <section className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-[80vh]">
             {/* Photo column */}
             <div className="group relative overflow-hidden min-h-[45vh] lg:min-h-[80vh] bg-[#050505]">
               <img
                 src="/wwoof/bw-7.jpg"
-                alt="Une wwoofeuse au travail — Maison Favier"
+                alt="Une wwoofeuse au travail, Maison Favier"
                 className="w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
                 style={{ objectPosition: '50% 45%' }}
               />
@@ -299,7 +299,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
           </div>
         </section>
 
-        {/* ── CONTEXT — what is wwoofing, what is the Ceilidh ────────────── */}
+        {/* ── CONTEXT, what is wwoofing, what is the Ceilidh ────────────── */}
         <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#c5a059]/10">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-4 mb-16">
@@ -310,7 +310,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-              {/* Wwoofing column — sits at the top */}
+              {/* Wwoofing column, sits at the top */}
               <div>
                 <span className="font-cinzel text-xs text-[#c5a059] tracking-[0.4em]">01</span>
                 <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight mt-3 mb-6">
@@ -321,11 +321,11 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                   {t(WWOOFING_DEFINITION.en, WWOOFING_DEFINITION.fr)}
                 </p>
                 <p className="font-cormorant italic text-xl text-[#f3e5ab] mt-6">
-                  {t('Live and work — share a season.', 'Vivre et travailler — partager une saison.')}
+                  {t('Live and work, share a season.', 'Vivre et travailler, partager une saison.')}
                 </p>
               </div>
 
-              {/* Ceilidh column — offset down for asymmetry */}
+              {/* Ceilidh column, offset down for asymmetry */}
               <div className="lg:mt-24">
                 <span className="font-cinzel text-xs text-[#c5a059] tracking-[0.4em]">02</span>
                 <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight mt-3 mb-6">
@@ -347,7 +347,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
           </div>
         </section>
 
-        {/* ── RHYTHM OF THE HOUSE — needs statement + daily schedule ─────── */}
+        {/* ── RHYTHM OF THE HOUSE, needs statement + daily schedule ─────── */}
         <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#c5a059]/10">
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center gap-4 mb-12">
@@ -358,7 +358,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 lg:gap-20 items-start">
-              {/* Left — needs statement */}
+              {/* Left, needs statement */}
               <div className="lg:sticky lg:top-24">
                 <h2 className="font-prata text-4xl md:text-5xl text-[#f3e5ab] tracking-tight mb-6 leading-tight">
                   {t('A day with us', 'Une journée chez nous')}
@@ -366,7 +366,8 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                 <p className="font-lato text-[15px] md:text-base text-neutral-300 leading-[1.8] mb-8">
                   {t(NEEDS_STATEMENT.en, NEEDS_STATEMENT.fr)}
                 </p>
-                <div className="border-l-2 border-[#c5a059] pl-5">
+                <div>
+                  <span className="block h-px w-12 bg-[#c5a059] mb-4" aria-hidden></span>
                   <p className="font-cormorant italic text-xl text-[#c5a059] leading-snug">
                     {t(
                       "What we ask: 4 focused hours a day. The rest, we share.",
@@ -376,7 +377,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                 </div>
               </div>
 
-              {/* Right — timetable */}
+              {/* Right, timetable */}
               <div>
                 <ul>
                   {SCHEDULE.map((row, idx) => (
@@ -398,7 +399,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
           </div>
         </section>
 
-        {/* ── COMMUNITY MEMBERSHIP — paid resident place (André's spot) ───── */}
+        {/* ── COMMUNITY MEMBERSHIP, paid resident place (André's spot) ───── */}
         <CommunityMembershipSection
           language={language}
           user={user}
@@ -481,7 +482,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
 };
 
 // ────────────────────────────────────────────────────────────────────────────
-// Apply form — diptych layout with sticky rail
+// Apply form, diptych layout with sticky rail
 // ────────────────────────────────────────────────────────────────────────────
 
 const ApplyForm: React.FC<{
@@ -650,12 +651,11 @@ const ApplyForm: React.FC<{
           </div>
         </aside>
 
-        {/* ── Form (right) — glassmorphism card ──────────────────────── */}
+        {/* ── Form (right), matte panel (no glassmorphism) ──────────── */}
         <div
           className="relative rounded-[28px] p-8 md:p-12 lg:p-14
-                     bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.01]
-                     backdrop-blur-2xl border border-white/10
-                     shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                     bg-[#0a0a0a] border border-[#c5a059]/15
+                     shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)]"
         >
           {/* Subtle inner gold glow at the top edge */}
           <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent" />
@@ -669,7 +669,7 @@ const ApplyForm: React.FC<{
             </h2>
           </div>
 
-          {/* Section 01 — Contact */}
+          {/* Section 01, Contact */}
           <FormSection
             sectionRef={el => { sectionRefs.current.contact = el; }}
             sectionId="contact"
@@ -690,7 +690,7 @@ const ApplyForm: React.FC<{
             </div>
           </FormSection>
 
-          {/* Section 02 — Tasks & experience */}
+          {/* Section 02, Tasks & experience */}
           <FormSection
             sectionRef={el => { sectionRefs.current.tasks = el; }}
             sectionId="tasks"
@@ -739,7 +739,7 @@ const ApplyForm: React.FC<{
             />
           </FormSection>
 
-          {/* Section 03 — Diet & health */}
+          {/* Section 03, Diet & health */}
           <FormSection
             sectionRef={el => { sectionRefs.current.health = el; }}
             sectionId="health"
@@ -760,7 +760,7 @@ const ApplyForm: React.FC<{
             />
           </FormSection>
 
-          {/* Section 04 — Logistics */}
+          {/* Section 04, Logistics */}
           <FormSection
             sectionRef={el => { sectionRefs.current.logistics = el; }}
             sectionId="logistics"
@@ -800,7 +800,7 @@ const ApplyForm: React.FC<{
             </div>
           </FormSection>
 
-          {/* Section 05 — Dates */}
+          {/* Section 05, Dates */}
           <FormSection
             sectionRef={el => { sectionRefs.current.dates = el; }}
             sectionId="dates"
@@ -816,7 +816,7 @@ const ApplyForm: React.FC<{
             </div>
             <div className="flex items-center gap-3 mb-6">
               <span className={`font-cinzel text-3xl ${numberOfDays >= MIN_DAYS ? 'text-[#c5a059]' : 'text-neutral-600'}`}>
-                {numberOfDays || '—'}
+                {numberOfDays || ', '}
               </span>
               <div>
                 <div className="text-[10px] uppercase tracking-[0.3em] text-neutral-500 font-cinzel">
@@ -834,7 +834,7 @@ const ApplyForm: React.FC<{
             />
           </FormSection>
 
-          {/* Section 06 — Your needs */}
+          {/* Section 06, Your needs */}
           <FormSection
             sectionRef={el => { sectionRefs.current.needs = el; }}
             sectionId="needs"
@@ -846,8 +846,8 @@ const ApplyForm: React.FC<{
           >
             <p className="font-lato text-sm text-neutral-400 leading-relaxed mb-6 max-w-xl">
               {t(
-                'We just told you what we ask. Now tell us what you need from us — quiet hours for a personal project, a meal that fits your body, time alone, a skill you want to learn. We listen.',
-                "Nous venons de vous communiquer nos besoins. Dites-nous maintenant ce dont vous avez besoin de nous — des heures calmes pour un projet personnel, un repas qui convient à votre corps, du temps seul·e, une compétence à apprendre. On écoute."
+                'We just told you what we ask. Now tell us what you need from us, quiet hours for a personal project, a meal that fits your body, time alone, a skill you want to learn. We listen.',
+                "Nous venons de vous communiquer nos besoins. Dites-nous maintenant ce dont vous avez besoin de nous, des heures calmes pour un projet personnel, un repas qui convient à votre corps, du temps seul·e, une compétence à apprendre. On écoute."
               )}
             </p>
             <FieldTextarea
@@ -855,8 +855,8 @@ const ApplyForm: React.FC<{
               value={needs}
               onChange={setNeeds}
               placeholder={t(
-                'A few words — anything that would make your stay easier or more meaningful.',
-                "Quelques mots — tout ce qui rendrait votre séjour plus simple ou plus signifiant."
+                'A few words, anything that would make your stay easier or more meaningful.',
+                "Quelques mots, tout ce qui rendrait votre séjour plus simple ou plus signifiant."
               )}
               rows={4}
             />
@@ -888,7 +888,7 @@ const ApplyForm: React.FC<{
 };
 
 // ────────────────────────────────────────────────────────────────────────────
-// Form section wrapper — number + thin gold rule + title; mobile inline rail
+// Form section wrapper, number + thin gold rule + title; mobile inline rail
 // ────────────────────────────────────────────────────────────────────────────
 
 const FormSection: React.FC<{
@@ -908,7 +908,7 @@ const FormSection: React.FC<{
     data-section={sectionId}
     className="relative mb-12 scroll-mt-24 rounded-2xl px-4 py-8 md:px-6 md:py-10 -mx-4 md:-mx-6"
   >
-    {/* Section tint — very subtle gradient wash from top-left */}
+    {/* Section tint, very subtle gradient wash from top-left */}
     {tint && (
       <div
         className={`pointer-events-none absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br ${tint}`}
@@ -942,7 +942,7 @@ const FieldFullWidth: React.FC<{ children: React.ReactNode }> = ({ children }) =
 );
 
 // ────────────────────────────────────────────────────────────────────────────
-// Form atoms — editorial, underlined, no boxes
+// Form atoms, editorial, underlined, no boxes
 // ────────────────────────────────────────────────────────────────────────────
 
 const Field: React.FC<{ label: string; value: string; onChange: (v: string) => void }> = ({ label, value, onChange }) => (
@@ -1002,7 +1002,7 @@ const FieldTextarea: React.FC<{
 );
 
 // ────────────────────────────────────────────────────────────────────────────
-// Wwoofer client space (after applied) — kept structurally similar
+// Wwoofer client space (after applied), kept structurally similar
 // ────────────────────────────────────────────────────────────────────────────
 
 const ProfileSummary: React.FC<{
@@ -1016,7 +1016,7 @@ const ProfileSummary: React.FC<{
   };
   const status = profile.status ?? 'pending';
   return (
-    <div className="border-l-2 border-[#c5a059] pl-6 md:pl-8">
+    <div className="border-t border-[#c5a059]/40 pt-6">
       <div className="flex items-start justify-between flex-wrap gap-4 mb-4">
         <div>
           <span className="text-[10px] uppercase tracking-[0.4em] text-[#c5a059] font-cinzel block mb-2">
@@ -1178,7 +1178,7 @@ const RequestDatesForm: React.FC<{
       <div className="text-xs text-neutral-500 font-lato mb-4">
         {numberOfDays > 0
           ? `${numberOfDays} ${t('days', 'jours')} · ${t('minimum 7 days', 'minimum 7 jours')}`
-          : t('Pick a date range — minimum 7 days', 'Choisissez une plage — minimum 7 jours')}
+          : t('Pick a date range, minimum 7 days', 'Choisissez une plage, minimum 7 jours')}
       </div>
       <FieldTextarea
         label={t('Notes (optional)', 'Notes (facultatif)')}

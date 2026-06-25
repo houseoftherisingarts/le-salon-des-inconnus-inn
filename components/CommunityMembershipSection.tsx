@@ -6,12 +6,12 @@ import type { MemberProfile } from './AuthModal';
 import type { CommunityApplication, CommunityApplicationStatus } from '../types';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// "Faire partie de la communauté" — paid resident-member announcement.
+// "Faire partie de la communauté", paid resident-member announcement.
 //
 // A deliberate 180° from the dark wwoofing page: a LUMINOUS, daytime editorial
 // spread. Grounded in the real home-page branding (measured, not guessed):
 //   · display font = Prata (cream/espresso, tight negative tracking)
-//   · the gold is the muted antique #c5a059 — NOT the bright #d4af37 yellow
+//   · the gold is the muted antique #c5a059, NOT the bright #d4af37 yellow
 //   · cream / ivory / white carry the brand
 // Light ivory ground, espresso ink, oversized Prata, bright sunlit photography.
 // Flows with the home through type + gold DNA; inverts night → day.
@@ -27,24 +27,24 @@ interface Props {
   autoOpen?: boolean;
 }
 
-// Dark aesthetic of the home — warm near-black (NOT pure #000), cream Prata,
+// Dark aesthetic of the home, warm near-black (NOT pure #000), cream Prata,
 // muted antique gold #c5a059 (NOT the #d4af37 yellow). Token VALUES are
 // repurposed so the liked layout stays identical; only the palette flips.
 const T = {
   paper:   '#050505',  // warm dark ground (not pure black) + dark text on gold CTA
   panel:   '#0a0a0a',  // slightly lifted panel
-  ink:     '#f3e5ab',  // cream — Prata display, headings, emphasis (home title color)
+  ink:     '#f3e5ab',  // cream, Prata display, headings, emphasis (home title color)
   body:    '#dacfb6',  // warm light body text
   soft:    '#9c8f76',  // muted captions
-  gold:    '#c5a059',  // THE gold (muted antique) — the home's primary gold
+  gold:    '#c5a059',  // THE gold (muted antique), the home's primary gold
   goldDeep:'#c5a059',  // same muted gold for eyebrows/labels/CTA on dark
   line:    'rgba(197,160,89,0.28)',
 };
 
 // Black-and-white wwoofing photoshoot (from the Salon's own folder).
-// Diversity on purpose — NOT Alex. Other members / wwoofers of the community.
+// Diversity on purpose, NOT Alex. Other members / wwoofers of the community.
 const IMG = {
-  garden: '/wwoof/bw-10.jpg',  // a member, arms open — welcoming (3/4)
+  garden: '/wwoof/bw-10.jpg',  // a member, arms open, welcoming (3/4)
   nature: '/wwoof/bw-2.jpg',   // the crew handling lumber (band)
   bus:    '/wwoof/bw-4.jpg',
 };
@@ -132,7 +132,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   return (
     <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── HERO — luminous, asymmetric, oversized Prata ─────────────────── */}
+      {/* ── HERO, luminous, asymmetric, oversized Prata ─────────────────── */}
       <div className="relative px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-12 md:pb-16">
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-end">
           <div className="comm-rise">
@@ -170,7 +170,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* ── LEAD — the announcement, large, with a Prata drop-cap ────────── */}
+      {/* ── LEAD, the announcement, large, with a Prata drop-cap ────────── */}
       <div className="px-6 md:px-12 lg:px-20 pt-6 pb-2">
         <div className="mx-auto max-w-3xl">
           <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
@@ -187,7 +187,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* ── TERMS — oversized Prata numbers, gold hairlines ──────────────── */}
+      {/* ── TERMS, oversized Prata numbers, gold hairlines ──────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-6">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-5 mb-8">
@@ -235,7 +235,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* ── PULLQUOTE — modest, Cormorant, gold ──────────────────────────── */}
+      {/* ── PULLQUOTE, modest, Cormorant, gold ──────────────────────────── */}
       <div className="px-6 py-6 text-center">
         <span className="block mx-auto mb-6 h-px w-16" style={{ background: T.gold }} />
         <p className="font-cormorant italic mx-auto" style={{ color: T.goldDeep, fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', lineHeight: 1.35, maxWidth: '30ch' }}>
@@ -272,7 +272,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-rise { opacity: 0; transform: translateY(18px); animation: commRise 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
         .comm-rise:nth-child(2) { animation-delay: 0.12s; }
         @keyframes commRise { to { opacity: 1; transform: none; } }
-        /* Home-page showcase effect — slow gold-cinematic image zoom on hover */
+        /* Home-page showcase effect, slow gold-cinematic image zoom on hover */
         .comm-fig .img-zoom { transition: transform 1.1s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
         .comm-fig:hover .img-zoom { transform: scale(1.05); }
         .comm-cta {
@@ -379,10 +379,10 @@ const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberPr
         <Field label={t('Phone *', 'Téléphone *')}><Line value={phone} onChange={setPhone} /></Field>
         <Field label={t('Where you come from', "D'où tu viens")}><Line value={city} onChange={setCity} /></Field>
       </div>
-      <Field label={t('Why community life — why here? *', 'Pourquoi la vie communautaire — pourquoi ici ? *')} hint={t('This is what matters most to us.', "C'est ce qui compte le plus pour nous.")}>
+      <Field label={t('Why community life, why here? *', 'Pourquoi la vie communautaire, pourquoi ici ? *')} hint={t('This is what matters most to us.', "C'est ce qui compte le plus pour nous.")}>
         <Area value={communityMotivation} onChange={setCommunityMotivation} rows={4} />
       </Field>
-      <Field label={t('Your relationship to housekeeping work', 'Ton rapport au travail de ménage')} hint={t('Honestly — it is the core of the role.', "Honnêtement — c'est le cœur du poste.")}>
+      <Field label={t('Your relationship to housekeeping work', 'Ton rapport au travail de ménage')} hint={t('Honestly, it is the core of the role.', "Honnêtement, c'est le cœur du poste.")}>
         <Area value={cleaningAttitude} onChange={setCleaningAttitude} rows={3} />
       </Field>
       <Field label={t('Your own projects', 'Tes propres projets')} hint={t('What you would work on with the free time.', "Ce sur quoi tu travaillerais avec le temps libre.")}>
