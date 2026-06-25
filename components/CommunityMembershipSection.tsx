@@ -42,9 +42,10 @@ const T = {
 };
 
 // Black-and-white wwoofing photoshoot (from the Salon's own folder).
+// Diversity on purpose — NOT Alex. Other members / wwoofers of the community.
 const IMG = {
-  garden: '/wwoof/bw-5.jpg',   // member portrait (3/4)
-  nature: '/wwoof/bw-3.jpg',   // by the fire in the woods (band)
+  garden: '/wwoof/bw-10.jpg',  // a member, arms open — welcoming (3/4)
+  nature: '/wwoof/bw-2.jpg',   // the crew handling lumber (band)
   bus:    '/wwoof/bw-4.jpg',
 };
 

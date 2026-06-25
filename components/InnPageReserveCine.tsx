@@ -23,7 +23,7 @@ import {
 import { RoomOrbProvider } from './RoomOrbModal';
 
 const CEILIDH_DOORS_PHOTO = 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg';
-const WWOOFING_DOORS_PHOTO = '/wwoof/bw-1.jpg';
+const WWOOFING_DOORS_PHOTO = '/wwoof/bw-6.jpg';
 const CEILIDH_DOORS_DATE = new Date('2026-05-21T12:00:00');
 
 // ─────────────────────────────────────────────────────────────────────────────
