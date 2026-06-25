@@ -45,12 +45,6 @@ export const WwoofingGallery: React.FC<{ language: 'EN' | 'FR' }> = ({ language 
                 decoding="async"
                 className="w-full block transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
               />
-              <figcaption
-                className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pb-3 pt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-cormorant italic"
-                style={{ color: '#f3e5ab', fontSize: '15px', background: 'linear-gradient(to top, rgba(5,5,5,0.8), transparent)' }}
-              >
-                {t(p.en, p.fr)}
-              </figcaption>
             </figure>
           ))}
         </div>

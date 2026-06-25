@@ -1103,7 +1103,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
               {[
                 { eyebrow: t('Live & Work', 'Vivre & Travailler'), title: 'Wwoofing', tag: t('Gardens · Kitchen · Volunteer', 'Jardins · Cuisine · Bénévolat'), img: '/wwoof/bw-6.jpg', go: 'WWOOFING', bw: true },
-                { eyebrow: t('A place opens', 'Une place se libère'), title: t('The Community', 'La Communauté'), tag: t('Live here · Paid place', 'Vivre ici · Place rémunérée'), img: '/wwoof/bw-10.jpg', go: 'COMMUNITY', bw: true },
+                { eyebrow: t('A place opens', 'Une place se libère'), title: t('The Community', 'La Communauté'), tag: t('Live here · Paid place', 'Vivre ici · Place rémunérée'), img: '/wwoof/fire-bw.jpg', go: 'COMMUNITY', bw: true },
                 { eyebrow: t('Support', 'Soutenir'), title: t('Make a gift', 'Faire un don'), tag: t('Help the mission', 'Aider la mission'), img: CEILIDH_DOORS_PHOTO, go: 'DONATION', bw: true },
               ].map((d, i) => (
                 <button

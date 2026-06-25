@@ -44,7 +44,7 @@ const T = {
 // Black-and-white wwoofing photoshoot (from the Salon's own folder).
 // Diversity on purpose, NOT Alex. Other members / wwoofers of the community.
 const IMG = {
-  garden: '/wwoof/bw-3.jpg',   // around the fire, in the woods (3/4)
+  garden: '/wwoof/fire-bw.jpg',   // around the fire, in the woods (3/4)
   nature: '/wwoof/bw-2.jpg',   // the crew handling lumber (band)
   bus:    '/wwoof/bw-4.jpg',
 };
@@ -172,7 +172,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── LEAD, the announcement, large, with a Prata drop-cap ────────── */}
       <div className="px-6 md:px-12 lg:px-20 pt-6 pb-2">
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
             {t(body[0].en, body[0].fr)}
           </p>
@@ -181,7 +181,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── BODY 1 ───────────────────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
-        <div className="max-w-3xl space-y-6">
+        <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[1].en, body[1].fr)}</Para>
           <Para>{t(body[2].en, body[2].fr)}</Para>
         </div>
@@ -212,7 +212,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── BODY 2 (work + pay) ──────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
-        <div className="max-w-3xl space-y-6">
+        <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[3].en, body[3].fr)}</Para>
           <Para>{t(body[4].en, body[4].fr)}</Para>
         </div>
@@ -229,7 +229,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── BODY 3 (community psychology + human side) ───────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
-        <div className="max-w-3xl space-y-6">
+        <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[5].en, body[5].fr)}</Para>
           <Para>{t(body[6].en, body[6].fr)}</Para>
         </div>
