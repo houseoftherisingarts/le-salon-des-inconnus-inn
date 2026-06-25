@@ -230,9 +230,9 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
   const hasApplied = !!wwooferProfile;
 
   return (
-    <div ref={pageRef} className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#15110b] text-neutral-200 animate-fadeIn">
+    <div ref={pageRef} className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#050505] text-neutral-200 animate-fadeIn">
       {/* Header */}
-      <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#15110b]/80 backdrop-blur-md">
+      <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#050505]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <button
             onClick={() => onNavigate('INN')}
@@ -249,19 +249,19 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
         <section className="relative">
           <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-[80vh]">
             {/* Photo column */}
-            <div className="group relative overflow-hidden min-h-[45vh] lg:min-h-[80vh] bg-[#15110b]">
+            <div className="group relative overflow-hidden min-h-[45vh] lg:min-h-[80vh] bg-[#050505]">
               <img
-                src="/wwoof/wwoofer-bw.jpg"
-                alt="Un wwoofer au travail au jardin — Maison Favier"
+                src="/wwoof/bw-8.jpg"
+                alt="Un membre de la communauté — Maison Favier"
                 className="w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
-                style={{ objectPosition: '50% 45%' }}
+                style={{ objectPosition: '50% 38%' }}
               />
               {/* Subtle gradient on photo edge for visual blend with panel */}
-              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-r from-transparent to-[#191510] hidden lg:block" />
+              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-r from-transparent to-[#0a0a0a] hidden lg:block" />
             </div>
 
             {/* Panel column */}
-            <div className="relative bg-[#191510] border-t lg:border-t-0 lg:border-l border-[#c5a059]/30 px-8 md:px-12 lg:px-16 py-16 lg:py-24 flex flex-col justify-center">
+            <div className="relative bg-[#0a0a0a] border-t lg:border-t-0 lg:border-l border-[#c5a059]/30 px-8 md:px-12 lg:px-16 py-16 lg:py-24 flex flex-col justify-center">
               {/* Decorative gold rule */}
               <div className="flex items-center gap-4 mb-8">
                 <div className="h-px w-12 bg-[#c5a059]"></div>
@@ -626,7 +626,7 @@ const ApplyForm: React.FC<{
                 alt=""
                 className="rail-fade-in w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#15110b]/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
                 <span className="font-cinzel text-[11px] tracking-[0.4em] text-[#c5a059]">{active.number}</span>
                 <div className="h-px flex-1 bg-[#c5a059]/40"></div>
@@ -778,7 +778,7 @@ const ApplyForm: React.FC<{
                   className="w-full bg-transparent border-0 border-b border-white/15 px-0 py-2 text-base text-white font-lato focus:border-[#c5a059] focus:outline-none transition-colors"
                 >
                   {ACCOMMODATION_OPTIONS.map(opt => (
-                    <option key={opt.id} value={opt.id} className="bg-[#191510]">{t(opt.en, opt.fr)}</option>
+                    <option key={opt.id} value={opt.id} className="bg-[#0a0a0a]">{t(opt.en, opt.fr)}</option>
                   ))}
                 </select>
               </label>
@@ -916,7 +916,7 @@ const FormSection: React.FC<{
       <div className="lg:hidden mb-8">
         <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-[#c5a059]/20 isolate transform-gpu">
           <img src={mobileImage} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#15110b]/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent" />
         </div>
         {mobileQuote && (
           <p className="mt-4 font-cormorant italic text-lg text-[#f3e5ab] leading-snug">

@@ -31,8 +31,8 @@ interface Props {
 // muted antique gold #c5a059 (NOT the #d4af37 yellow). Token VALUES are
 // repurposed so the liked layout stays identical; only the palette flips.
 const T = {
-  paper:   '#15110b',  // warm dark ground (not pure black) + dark text on gold CTA
-  panel:   '#1c1710',  // slightly lifted panel
+  paper:   '#050505',  // warm dark ground (not pure black) + dark text on gold CTA
+  panel:   '#0a0a0a',  // slightly lifted panel
   ink:     '#f3e5ab',  // cream — Prata display, headings, emphasis (home title color)
   body:    '#dacfb6',  // warm light body text
   soft:    '#9c8f76',  // muted captions
@@ -41,10 +41,11 @@ const T = {
   line:    'rgba(197,160,89,0.28)',
 };
 
+// Black-and-white wwoofing photoshoot (from the Salon's own folder).
 const IMG = {
-  garden: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jardins%20auberge.jpg',
-  nature: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/charlotnature.jpg',
-  bus:    'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/bus%20pov%20arriere%202.jpg',
+  garden: '/wwoof/bw-5.jpg',   // member portrait (3/4)
+  nature: '/wwoof/bw-3.jpg',   // by the fire in the woods (band)
+  bus:    '/wwoof/bw-4.jpg',
 };
 
 const LETTER: { fr: string; en: string }[] = [
@@ -158,7 +159,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           <figure className="comm-rise comm-fig relative lg:-mt-16">
             <div className="relative overflow-hidden" style={{ aspectRatio: '3 / 4', boxShadow: '0 50px 120px -60px rgba(0,0,0,0.9)' }}>
               <img src={IMG.garden} alt={t('The gardens in full summer light.', "Les jardins en pleine lumière d'été.")} className="img-zoom w-full h-full object-cover" />
-              <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(21,17,11,0.55))' }} />
+              <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(5,5,5,0.55))' }} />
               <span className="absolute inset-0 pointer-events-none" style={{ boxShadow: `inset 0 0 0 1px ${T.line}` }} />
             </div>
             <figcaption className="mt-3 font-cinzel uppercase text-right" style={{ color: T.soft, fontSize: '10px', letterSpacing: '0.24em' }}>
@@ -219,7 +220,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       {/* ── FULL-BLEED bright band ───────────────────────────────────────── */}
       <figure className="comm-fig relative w-full overflow-hidden" style={{ height: 'clamp(280px, 42vh, 520px)' }}>
         <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="img-zoom w-full h-full object-cover" />
-        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(21,17,11,0.5) 0%, transparent 30%, transparent 65%, rgba(21,17,11,0.85) 100%)' }} />
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(5,5,5,0.5) 0%, transparent 30%, transparent 65%, rgba(5,5,5,0.85) 100%)' }} />
         <figcaption className="absolute bottom-4 right-6 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '10px', letterSpacing: '0.26em', textShadow: '0 1px 10px rgba(0,0,0,0.6)' }}>
           {t('The living place', 'Le lieu vivant')}
         </figcaption>
