@@ -147,8 +147,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
       "https://storage.googleapis.com/salondesinconnus/inn/meditante-5.jpeg",
       ...COMMON_PHOTOS
     ],
-    bookingLink: "#",
-    status: 'COMING_SOON'
+    bookingLink: "https://salon.holidayfuture.com/listings/563826"
   },
   {
     id: 'mini-maison',
