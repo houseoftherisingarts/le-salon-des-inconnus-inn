@@ -6,17 +6,20 @@ import type { MemberProfile } from './AuthModal';
 import type { CommunityApplication, CommunityApplicationStatus } from '../types';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// "Faire partie de la communauté", paid resident-member announcement.
+// "Faire partie de la communauté" — paid resident-member announcement.
 //
-// A deliberate 180° from the dark wwoofing page: a LUMINOUS, daytime editorial
-// spread. Grounded in the real home-page branding (measured, not guessed):
-//   · display font = Prata (cream/espresso, tight negative tracking)
-//   · the gold is the muted antique #c5a059, NOT the bright #d4af37 yellow
-//   · cream / ivory / white carry the brand
-// Light ivory ground, espresso ink, oversized Prata, bright sunlit photography.
-// Flows with the home through type + gold DNA; inverts night → day.
+// REBRAND (2026-06): this section speaks to a distinct audience (people who
+// might come live in the grassroots community), so it deliberately leaves the
+// Salon's antique-gold/Prata language and adopts our Terre Sauvage world:
+// dark-ember-organic, "video-game-menu" (The Last of Us) chrome.
+//   · display = Fraunces (organic serif) · body/labels = Inter
+//   · accent = ember #d2762e (active/labels) + sun #e0962e (primary/CTA)
+//   · forest/sage organic secondaries on a warm near-black #0c0b08
+//   · TLOU chrome: uppercase wide tracking, bracket corners, ember selection,
+//     warm-duotone photos, ember firelight glow, cinematic vignette + grain.
+// Texts and photos are kept; only the treatment changes.
 //
-// Deep-linkable via /wwoofing#communaute (and #postuler).
+// Deep-linkable via #communaute (and #postuler).
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Props {
@@ -27,25 +30,22 @@ interface Props {
   autoOpen?: boolean;
 }
 
-// Dark aesthetic of the home, warm near-black (NOT pure #000), cream Prata,
-// muted antique gold #c5a059 (NOT the #d4af37 yellow). Token VALUES are
-// repurposed so the liked layout stays identical; only the palette flips.
+// Terre-Sauvage-derived tokens, resolved for THIS section (dark-ember-organic).
 const T = {
-  paper:   '#050505',  // warm dark ground (not pure black) + dark text on gold CTA
-  panel:   '#0a0a0a',  // slightly lifted panel
-  ink:     '#f3e5ab',  // cream, Prata display, headings, emphasis (home title color)
-  body:    '#dacfb6',  // warm light body text
-  soft:    '#9c8f76',  // muted captions
-  gold:    '#c5a059',  // THE gold (muted antique), the home's primary gold
-  goldDeep:'#c5a059',  // same muted gold for eyebrows/labels/CTA on dark
-  line:    'rgba(197,160,89,0.28)',
+  paper:   '#0c0b08',  // warm near-black ground (around the fire)
+  panel:   'rgba(0,0,0,0.38)', // glass panel
+  ink:     '#f3ecda',  // parchment cream — Fraunces display / headings on dark
+  body:    '#d9d7c8',  // warm light body text
+  soft:    '#9a9683',  // muted warm-sage captions
+  gold:    '#d2762e',  // EMBER — eyebrows, labels, hairlines, active states
+  goldDeep:'#e0962e',  // SUN — primary numbers, pullquote, CTA, drop-cap
+  line:    'rgba(210,118,46,0.30)',  // ember hairline
 };
 
-// Black-and-white wwoofing photoshoot (from the Salon's own folder).
-// Diversity on purpose, NOT Alex. Other members / wwoofers of the community.
+// Black-and-white community photoshoot (Salon's own folder), warm-duotoned in CSS.
 const IMG = {
-  garden: '/wwoof/fire-bw.jpg',   // around the fire, in the woods (3/4)
-  nature: '/wwoof/bw-2.jpg',   // the crew handling lumber (band)
+  garden: '/wwoof/fire-bw.jpg',   // around the fire, the manor behind (hero)
+  nature: '/wwoof/bw-2.jpg',   // the crew at work (full-bleed band)
   bus:    '/wwoof/bw-4.jpg',
 };
 
@@ -85,7 +85,7 @@ const PULLQUOTE = {
   en: 'The family supports the community. The community supports the family. The place anchors them both.',
 };
 
-// ─── Reveal-on-scroll (same IntersectionObserver pattern as the home page) ────
+// ─── Reveal-on-scroll (IntersectionObserver, cinematic ease) ──────────────────
 const Reveal: React.FC<{ children: React.ReactNode; className?: string; delay?: number }> = ({ children, className = '', delay = 0 }) => {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -101,13 +101,21 @@ const Reveal: React.FC<{ children: React.ReactNode; className?: string; delay?: 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-[1100ms] ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
+      className={`comm-reveal ${visible ? 'is-in' : ''} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
   );
 };
+
+// Game-menu eyebrow: ember diamond + uppercase tracked label.
+const Eyebrow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span className="comm-eyebrow font-inter">
+    <span className="comm-diamond" aria-hidden>◆</span>
+    {children}
+  </span>
+);
 
 // ─── Section ─────────────────────────────────────────────────────────────────
 
@@ -123,8 +131,6 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   useEffect(() => { if (autoOpen && user && memberProfile) setShowForm(true); }, [autoOpen, user, memberProfile]);
 
   // Arriving from the Espace Membre ("Postuler" button): open the form directly.
-  // sessionStorage flag survives the route change (the URL hash does not, since
-  // navigation pushState's the bare path).
   useEffect(() => {
     if (typeof sessionStorage === 'undefined') return;
     if (sessionStorage.getItem('openCommunityForm') === '1' && user && memberProfile) {
@@ -144,8 +150,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
     }
   }, []);
 
-  // Recette B1 — parallax cinématique. Le hero (photo + texte) bouge à vitesse
-  // différente du scroll. Marche dans le conteneur scroll imbriqué de la page.
+  // Cinematic parallax — hero photo + text move at different speeds. Works in
+  // the page's nested scroll container.
   useEffect(() => {
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     const section = document.getElementById('communaute');
@@ -189,36 +195,41 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
   const body = LETTER;
 
+  const TERMS = [
+    { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
+    { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
+    { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
+    { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
+  ];
+
   return (
     <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── HERO — cinematic full-bleed, Ken-Burns photo, title over it (home language) ── */}
+      {/* ── HERO — warm-duotone fire photo, ember firelight, game-menu title ── */}
       <header className="relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
         <div className="absolute left-0 right-0 overflow-hidden" data-parallax="0.06" style={{ top: '-6%', height: '112%', willChange: 'transform' }}>
           <img
             src={IMG.garden}
             alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
-            className="comm-ken absolute inset-0 w-full h-full object-cover"
+            className="comm-ken comm-photo absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: '50% 42%' }}
           />
         </div>
-        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #050505 0%, rgba(5,5,5,0.52) 20%, rgba(5,5,5,0) 48%, rgba(5,5,5,0.28) 100%)' }} />
+        {/* warm dark gradient for legibility */}
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #0c0b08 0%, rgba(12,11,8,0.55) 22%, rgba(12,11,8,0.04) 50%, rgba(12,11,8,0.34) 100%)' }} />
+        {/* ember firelight glow rising from the fire (bottom-center-left) */}
+        <span className="absolute inset-0 pointer-events-none comm-firelight" />
+        <span className="comm-vignette absolute inset-0 pointer-events-none" />
         <span className="comm-grain absolute inset-0 pointer-events-none" />
-        {/* Recette B4 — le hero se développe depuis le noir à l'entrée */}
+        {/* the hero develops from black on entrance */}
         <span className="comm-develop absolute inset-0 pointer-events-none" />
         <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24" data-parallax="-0.10" data-parallax-fade="0.001">
           <div className="comm-hero-in max-w-4xl">
-            {/* eyebrow stacked above the title — every line shares the same left edge */}
-            <div className="mb-7">
-              <span className="block h-px w-14 mb-4" style={{ background: T.gold }} />
-              <span className="block font-cinzel uppercase" style={{ color: T.gold, fontSize: '12px', letterSpacing: '0.42em' }}>
-                {t('A place opens', 'Une place se libère')}
-              </span>
-            </div>
-            <h2 className="font-prata" style={{ color: T.ink, fontSize: 'clamp(2.8rem, 7vw, 6.4rem)', lineHeight: 0.95, letterSpacing: '-0.02em', textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
+            <div className="mb-7"><Eyebrow>{t('A place opens', 'Une place se libère')}</Eyebrow></div>
+            <h2 className="font-fraunces comm-title" style={{ color: T.ink, fontSize: 'clamp(2.9rem, 7.4vw, 6.6rem)', lineHeight: 0.92, letterSpacing: '-0.02em' }}>
               {t('Join the community', 'Faire partie de la communauté')}
             </h2>
-            <p className="font-cormorant italic mt-6" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', lineHeight: 1.3, maxWidth: '36ch', textShadow: '0 1px 16px rgba(0,0,0,0.65)' }}>
+            <p className="font-fraunces-it mt-6" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', lineHeight: 1.32, maxWidth: '38ch', textShadow: '0 1px 18px rgba(0,0,0,0.7)' }}>
               {t(
                 'Come live in a lasting place, with people of heart and travellers passing through.',
                 'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
@@ -226,7 +237,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
             </p>
           </div>
         </div>
-        <span className="comm-scroll-cue absolute bottom-6 right-6 md:right-12 font-cinzel uppercase" style={{ color: T.gold, fontSize: '10px', letterSpacing: '0.34em' }}>
+        <span className="comm-scroll-cue absolute bottom-6 right-6 md:right-12 font-inter uppercase" style={{ color: T.gold, fontSize: '10px', letterSpacing: '0.34em' }}>
           {t('Scroll', 'Défiler')}
         </span>
       </header>
@@ -234,7 +245,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       {/* ── LEAD — the announcement ─────────────────────────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-2">
         <div className="max-w-4xl">
-          <p className="comm-lead font-lato" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.6 }}>
+          <p className="comm-lead font-inter" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.62 }}>
             {t(body[0].en, body[0].fr)}
           </p>
         </div>
@@ -248,23 +259,19 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* ── TERMS, oversized Prata numbers, gold hairlines ──────────────── */}
-      <Reveal className="px-6 md:px-12 lg:px-20 py-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-center gap-5 mb-8">
-            <span className="font-cinzel uppercase" style={{ color: T.goldDeep, fontSize: '12px', letterSpacing: '0.34em' }}>{t('The terms', 'Les conditions')}</span>
+      {/* ── TERMS — game-menu stat panel (bracketed glass, indexed stats) ── */}
+      <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
+        <div className="mx-auto max-w-6xl comm-statpanel">
+          <div className="flex items-center gap-5 mb-2">
+            <Eyebrow>{t('The terms', 'Les conditions')}</Eyebrow>
             <span className="h-px flex-1" style={{ background: T.line }} />
           </div>
-          <dl className="comm-terms grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ borderTop: `1px solid ${T.line}` }}>
-            {[
-              { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
-              { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
-              { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
-              { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
-            ].map((it, i) => (
-              <div key={i} className="py-7 lg:py-9 lg:pr-8" style={{ borderBottom: `1px solid ${T.line}`, transitionDelay: `${i * 90}ms` }}>
-                <dt className="font-prata" style={{ color: T.ink, fontSize: 'clamp(2rem, 3.4vw, 3.1rem)', lineHeight: 1, letterSpacing: '-0.01em' }}>{it.v}</dt>
-                <dd className="font-lato mt-3" style={{ color: T.soft, fontSize: '12.5px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{it.l}</dd>
+          <dl className="comm-terms grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {TERMS.map((it, i) => (
+              <div key={i} className="comm-stat" style={{ transitionDelay: `${i * 90}ms` }}>
+                <span className="comm-stat-idx font-inter">{`0${i + 1}`}</span>
+                <dt className="font-fraunces comm-stat-v">{it.v}</dt>
+                <dd className="font-inter comm-stat-l">{it.l}</dd>
               </div>
             ))}
           </dl>
@@ -279,12 +286,12 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* ── FULL-BLEED band, Ken-Burns ───────────────────────────────────── */}
+      {/* ── FULL-BLEED warm-duotone band ─────────────────────────────────── */}
       <figure className="comm-band relative w-full overflow-hidden" style={{ height: 'clamp(560px, 84vh, 1040px)' }}>
-        <img src={IMG.nature} alt={t('The land around the inn, in daylight.', "Le terrain autour de l'auberge, en plein jour.")} className="comm-ken-slow w-full h-full object-cover" />
-        {/* Recette C2 — transition seamless : la bande se fond dans le #050505 en haut et en bas */}
-        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0) 22%, rgba(5,5,5,0) 72%, #050505 100%)' }} />
-        <figcaption className="absolute bottom-4 right-6 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '10px', letterSpacing: '0.26em', textShadow: '0 1px 10px rgba(0,0,0,0.6)' }}>
+        <img src={IMG.nature} alt={t('The community at work on the land.', "La communauté au travail sur le terrain.")} className="comm-ken-slow comm-photo w-full h-full object-cover" />
+        <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #0c0b08 0%, rgba(12,11,8,0) 22%, rgba(12,11,8,0) 72%, #0c0b08 100%)' }} />
+        <span className="comm-vignette absolute inset-0 pointer-events-none" />
+        <figcaption className="absolute bottom-5 right-6 font-inter uppercase" style={{ color: T.ink, fontSize: '10px', letterSpacing: '0.3em', textShadow: '0 1px 12px rgba(0,0,0,0.7)' }}>
           {t('The living place', 'Le lieu vivant')}
         </figcaption>
       </figure>
@@ -297,27 +304,29 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* ── PULLQUOTE, modest, Cormorant, gold ──────────────────────────── */}
+      {/* ── PULLQUOTE — Fraunces italic, ember tick ──────────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-12">
-        <span className="block mb-6 h-px w-16" style={{ background: T.gold }} />
-        <p data-parallax="-0.045" className="font-cormorant italic" style={{ color: T.goldDeep, fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)', lineHeight: 1.3, maxWidth: '40ch', willChange: 'transform' }}>
-          {t(PULLQUOTE.en, PULLQUOTE.fr)}
-        </p>
+        <div className="comm-quote max-w-3xl">
+          <p data-parallax="-0.045" className="font-fraunces-it" style={{ color: T.ink, fontSize: 'clamp(1.55rem, 2.7vw, 2.3rem)', lineHeight: 1.32, willChange: 'transform' }}>
+            {t(PULLQUOTE.en, PULLQUOTE.fr)}
+          </p>
+        </div>
       </Reveal>
 
       {/* ── CTA / form / applied ─────────────────────────────────────────── */}
       <div className="px-6 md:px-12 lg:px-20 pb-24 pt-10">
         <div className="max-w-3xl">
           {!loaded && user ? (
-            <p className="font-lato text-sm" style={{ color: T.soft }}>{t('Loading…', 'Chargement…')}</p>
+            <p className="font-inter text-sm" style={{ color: T.soft }}>{t('Loading…', 'Chargement…')}</p>
           ) : hasApplied ? (
             <AppliedSummary application={application!} t={t} />
           ) : showForm && user && memberProfile ? (
             <div id="community-apply"><CommunityApplyForm language={language} user={user} memberProfile={memberProfile} onCancel={() => setShowForm(false)} /></div>
           ) : (
             <div>
-              <button onClick={handleCta} className="comm-cta font-cinzel uppercase">
+              <button onClick={handleCta} className="comm-cta font-inter uppercase">
                 {t('Apply for the place', 'Postuler pour la place')}
+                <span className="comm-cta-arrow" aria-hidden>→</span>
               </button>
             </div>
           )}
@@ -325,44 +334,78 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       </div>
 
       <style>{`
-        .comm .font-prata { font-family: 'Prata', serif; }
-        .comm .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-        .comm-lead::first-letter {
-          font-family: 'Prata', serif; float: left; color: ${T.goldDeep};
-          font-size: 3.4em; line-height: 0.78; padding: 0.04em 0.12em 0 0;
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Inter:wght@300;400;500;600;700&display=swap');
+        .comm .font-fraunces { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; font-weight: 600; }
+        .comm .font-fraunces-it { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 500; }
+        .comm .font-inter { font-family: 'Inter', system-ui, sans-serif; }
+        .comm ::selection { background: ${T.gold}; color: #1a1408; }
+        .comm a:focus-visible, .comm button:focus-visible, .comm input:focus-visible, .comm textarea:focus-visible {
+          outline: 2px solid ${T.gold}; outline-offset: 3px; border-radius: 3px;
         }
-        /* Hero — continuous Ken Burns on the photo (home language: hero3-kenburns) */
+        /* Warm duotone on the B&W photos (grayscale -> ember-warm) */
+        .comm-photo { filter: sepia(0.46) saturate(1.5) brightness(0.92) contrast(1.05) hue-rotate(-8deg); }
+        /* Game-menu eyebrow */
+        .comm-eyebrow { display: inline-flex; align-items: center; gap: 0.7em; color: ${T.gold};
+          font-size: 12px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; }
+        .comm-diamond { font-size: 8px; color: ${T.goldDeep}; text-shadow: 0 0 10px rgba(224,150,46,0.6); }
+        .comm-title { text-shadow: 0 4px 44px rgba(0,0,0,0.6), 0 0 60px rgba(210,118,46,0.10); }
+        .comm-lead::first-letter {
+          font-family: 'Fraunces', serif; font-weight: 600; float: left; color: ${T.goldDeep};
+          font-size: 3.5em; line-height: 0.74; padding: 0.04em 0.12em 0 0;
+          text-shadow: 0 0 26px rgba(224,150,46,0.35);
+        }
+        /* Hero firelight + cinematic vignette */
+        .comm-firelight { background: radial-gradient(60% 42% at 40% 96%, rgba(224,150,46,0.30), rgba(210,118,46,0.10) 45%, transparent 72%); mix-blend-mode: screen; }
+        .comm-vignette { background: radial-gradient(120% 90% at 50% 42%, transparent 58%, rgba(0,0,0,0.55) 100%); }
+        /* Reveal-on-scroll */
+        .comm-reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
+        .comm-reveal.is-in { opacity: 1; transform: none; }
+        /* Continuous Ken Burns */
         .comm-ken { animation: commKen 30s ease-in-out infinite alternate; will-change: transform; transform-origin: 50% 45%; }
         @keyframes commKen { from { transform: scale(1.0); } to { transform: scale(1.05); } }
-        .comm-ken-slow { animation: commKen 32s ease-in-out infinite alternate; will-change: transform; }
-        /* Hero copy — staggered cinematic entrance, all lines share one left edge */
-        .comm-hero-in > * { opacity: 0; transform: translateY(22px); animation: commRise 1.1s cubic-bezier(0.22,1,0.36,1) forwards; }
+        .comm-ken-slow { animation: commKen 34s ease-in-out infinite alternate; will-change: transform; }
+        /* Hero copy — staggered cinematic entrance */
+        .comm-hero-in > * { opacity: 0; transform: translateY(22px); animation: commRise 1.1s cubic-bezier(0.16,1,0.3,1) forwards; }
         .comm-hero-in > *:nth-child(1) { animation-delay: 0.20s; }
-        .comm-hero-in > *:nth-child(2) { animation-delay: 0.38s; }
-        .comm-hero-in > *:nth-child(3) { animation-delay: 0.56s; }
+        .comm-hero-in > *:nth-child(2) { animation-delay: 0.40s; }
+        .comm-hero-in > *:nth-child(3) { animation-delay: 0.58s; }
         @keyframes commRise { to { opacity: 1; transform: none; } }
-        /* Fine film grain for depth (premium texture, very subtle) */
-        .comm-grain { opacity: 0.05; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-        /* Scroll cue — slow vertical breathing */
+        .comm-grain { opacity: 0.06; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
         .comm-scroll-cue { animation: commCue 2.6s ease-in-out infinite; }
         @keyframes commCue { 0%,100% { opacity: 0.5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(4px); } }
-        /* Recette B4 — le hero se développe depuis le noir à l'entrée */
-        .comm-develop { background: #050505; animation: commDevelop 1.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+        .comm-develop { background: #0c0b08; animation: commDevelop 1.4s cubic-bezier(0.16,1,0.3,1) forwards; }
         @keyframes commDevelop { from { opacity: 1; } to { opacity: 0; } }
-        /* Terms cells inherit the parent Reveal's transition for a staggered cascade */
-        .comm-terms > div { transition: opacity 1.1s ease-out, transform 1.1s cubic-bezier(0.22,1,0.36,1); }
+        /* TERMS — game-menu stat panel with bracket corners */
+        .comm-statpanel { position: relative; border: 1px solid rgba(210,118,46,0.20); background: ${T.panel};
+          backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 14px;
+          padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.6rem) clamp(0.6rem, 1.5vw, 1rem); }
+        .comm-statpanel::before, .comm-statpanel::after { content: ''; position: absolute; width: 20px; height: 20px; border: 0 solid ${T.goldDeep}; }
+        .comm-statpanel::before { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; border-top-left-radius: 14px; }
+        .comm-statpanel::after { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: 14px; }
+        .comm-terms { margin-top: 1.4rem; }
+        .comm-stat { position: relative; padding: 0.4rem 1.4rem 1.5rem 0; transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
+        .comm-stat-idx { display: block; color: ${T.gold}; opacity: 0.7; font-size: 10px; font-weight: 600; letter-spacing: 0.3em; margin-bottom: 0.8rem; }
+        .comm-stat-v { color: ${T.goldDeep}; font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1; letter-spacing: -0.01em; text-shadow: 0 0 30px rgba(224,150,46,0.18); }
+        .comm-stat-l { color: ${T.soft}; margin-top: 0.7rem; font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+        @media (min-width: 1024px) { .comm-stat + .comm-stat::before { content: ''; position: absolute; left: -0.7rem; top: 0.2rem; bottom: 1.4rem; width: 1px; background: rgba(210,118,46,0.18); } }
+        /* Pullquote tick */
+        .comm-quote { border-left: 2px solid ${T.gold}; padding-left: clamp(1.2rem, 3vw, 2rem); }
+        /* CTA — sun pill with ember glow (TLOU primary) */
         .comm-cta {
-          color: ${T.paper}; background: ${T.goldDeep};
-          padding: 1.05rem 3rem; border-radius: 15px;
-          font-size: 12px; font-weight: 700; letter-spacing: 0.3em;
-          transition: transform .4s cubic-bezier(0.22,1,0.36,1), background .35s ease, box-shadow .35s ease;
-          box-shadow: 0 14px 34px -18px rgba(168,134,63,0.85);
+          display: inline-flex; align-items: center; gap: 0.9em;
+          color: #1a1408; background: ${T.goldDeep};
+          padding: 1.05rem 2.6rem; border-radius: 999px;
+          font-size: 12px; font-weight: 700; letter-spacing: 0.26em;
+          transition: transform .4s cubic-bezier(0.16,1,0.3,1), background .35s ease, box-shadow .35s ease;
+          box-shadow: 0 14px 40px -14px rgba(224,150,46,0.75), 0 0 0 1px rgba(224,150,46,0.25);
         }
-        .comm-cta:hover { transform: translateY(-2px); box-shadow: 0 20px 48px -18px rgba(197,160,89,0.7), inset 0 0 0 1px rgba(243,229,171,0.45); }
+        .comm-cta:hover { transform: translateY(-2px); background: ${'#f3b964'}; box-shadow: 0 20px 56px -16px rgba(243,185,100,0.8), inset 0 0 0 1px rgba(26,20,8,0.2); }
+        .comm-cta-arrow { transition: transform .35s cubic-bezier(0.16,1,0.3,1); }
+        .comm-cta:hover .comm-cta-arrow { transform: translateX(4px); }
         .comm-cta:active { transform: translateY(0); }
         .comm-cta:disabled { opacity: 0.45; cursor: not-allowed; }
         @media (prefers-reduced-motion: reduce) {
-          .comm-ken, .comm-ken-slow, .comm-scroll-cue, .comm-hero-in > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .comm-ken, .comm-ken-slow, .comm-scroll-cue, .comm-hero-in > *, .comm-reveal { animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; }
           .comm-develop { animation: none !important; opacity: 0 !important; }
         }
       `}</style>
@@ -371,7 +414,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 };
 
 const Para: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="font-lato" style={{ color: T.body, fontSize: '17px', lineHeight: 1.85 }}>{children}</p>
+  <p className="font-inter" style={{ color: T.body, fontSize: '17px', lineHeight: 1.85, fontWeight: 300 }}>{children}</p>
 );
 
 // ─── Applied confirmation ────────────────────────────────────────────────────
@@ -382,27 +425,27 @@ const AppliedSummary: React.FC<{ application: CommunityApplication; t: (en: stri
     pending: { fr: 'Reçue', en: 'Received' }, approved: { fr: 'Approuvée', en: 'Approved' }, declined: { fr: 'Fermée', en: 'Closed' },
   };
   return (
-    <div className="max-w-2xl" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
+    <div className="max-w-2xl comm-statpanel" style={{ padding: '1.6rem 1.8rem' }}>
       <div className="flex items-center justify-start gap-4 flex-wrap mb-4">
         {application.photoURL && <img src={application.photoURL} alt="" className="w-12 h-12 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${T.gold}` }} />}
         <div className="text-left">
-          <span className="font-cinzel uppercase block mb-1" style={{ color: T.goldDeep, fontSize: '10px', letterSpacing: '0.3em' }}>{t('Your application', 'Ta candidature')}</span>
-          <h3 className="font-prata" style={{ color: T.ink, fontSize: '1.5rem' }}>{application.displayName}</h3>
+          <span className="font-inter uppercase block mb-1" style={{ color: T.gold, fontSize: '10px', letterSpacing: '0.3em' }}>{t('Your application', 'Ta candidature')}</span>
+          <h3 className="font-fraunces" style={{ color: T.ink, fontSize: '1.5rem' }}>{application.displayName}</h3>
         </div>
-        <span className="ml-auto font-cinzel uppercase" style={{ background: 'rgba(168,134,63,0.16)', color: T.goldDeep, fontSize: '10px', letterSpacing: '0.18em', padding: '4px 12px', borderRadius: '999px' }}>
+        <span className="ml-auto font-inter uppercase" style={{ background: 'rgba(210,118,46,0.16)', color: T.goldDeep, fontSize: '10px', letterSpacing: '0.18em', padding: '4px 12px', borderRadius: '999px' }}>
           {t(label[status].en, label[status].fr)}
         </span>
       </div>
-      <p className="font-lato text-sm leading-relaxed mx-auto" style={{ color: T.body, maxWidth: '46ch' }}>
+      <p className="font-inter text-sm leading-relaxed" style={{ color: T.body, maxWidth: '46ch', fontWeight: 300 }}>
         {t("Thank you. We read every application by hand. We'll reach out by email or phone when we've had time to sit with it.",
            "Merci. On lit chaque candidature à la main. On te reviendra par courriel ou par téléphone une fois qu'on aura pris le temps de s'y asseoir.")}
       </p>
-      {application.introduction && <p className="font-cormorant italic text-lg mt-5 leading-relaxed mx-auto" style={{ color: T.goldDeep, maxWidth: '50ch' }}>"{application.introduction}"</p>}
+      {application.introduction && <p className="font-fraunces-it text-lg mt-5 leading-relaxed" style={{ color: T.goldDeep, maxWidth: '50ch' }}>"{application.introduction}"</p>}
     </div>
   );
 };
 
-// ─── Apply form (on ivory) ───────────────────────────────────────────────────
+// ─── Apply form ───────────────────────────────────────────────────────────────
 
 const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberProfile: MemberProfile; onCancel: () => void }> = ({ language, user, memberProfile, onCancel }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
@@ -439,16 +482,16 @@ const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberPr
   };
 
   return (
-    <div className="max-w-2xl" style={{ borderTop: `1px solid ${T.line}`, paddingTop: '2rem' }}>
+    <div className="max-w-2xl comm-statpanel" style={{ padding: 'clamp(1.5rem,3vw,2.2rem)' }}>
       <div className="flex items-center gap-4 mb-8">
         {memberProfile.photoURL ? (
           <img src={memberProfile.photoURL} alt="" className="w-14 h-14 rounded-full object-cover" style={{ boxShadow: `0 0 0 1px ${T.gold}` }} />
         ) : (
-          <div className="w-14 h-14 rounded-full flex items-center justify-center font-prata text-lg" style={{ background: 'rgba(168,134,63,0.14)', boxShadow: `0 0 0 1px ${T.gold}`, color: T.goldDeep }}>{memberProfile.displayName?.charAt(0) ?? '?'}</div>
+          <div className="w-14 h-14 rounded-full flex items-center justify-center font-fraunces text-lg" style={{ background: 'rgba(210,118,46,0.14)', boxShadow: `0 0 0 1px ${T.gold}`, color: T.goldDeep }}>{memberProfile.displayName?.charAt(0) ?? '?'}</div>
         )}
         <div>
-          <div className="font-prata text-lg" style={{ color: T.ink }}>{memberProfile.displayName}</div>
-          <div className="text-[11px] font-lato" style={{ color: T.soft }}>{memberProfile.email}<span style={{ color: T.gold }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span></div>
+          <div className="font-fraunces text-lg" style={{ color: T.ink }}>{memberProfile.displayName}</div>
+          <div className="text-[11px] font-inter" style={{ color: T.soft }}>{memberProfile.email}<span style={{ color: T.gold }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span></div>
         </div>
       </div>
 
@@ -477,10 +520,10 @@ const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberPr
       </div>
 
       <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${T.line}` }}>
-        {error && <p className="text-sm mb-4" style={{ color: '#a23b2a' }}>{error}</p>}
+        {error && <p className="text-sm mb-4" style={{ color: '#e07a3a' }}>{error}</p>}
         <div className="flex flex-wrap gap-4 items-center justify-end">
-          <button onClick={onCancel} className="px-5 py-3 text-xs uppercase font-cinzel" style={{ color: T.soft, letterSpacing: '0.3em' }}>{t('Cancel', 'Annuler')}</button>
-          <button onClick={submit} disabled={!formValid || saving} className="comm-cta font-cinzel uppercase">{saving ? '…' : t('Send my application', 'Envoyer ma candidature')}</button>
+          <button onClick={onCancel} className="px-5 py-3 text-xs uppercase font-inter" style={{ color: T.soft, letterSpacing: '0.3em' }}>{t('Cancel', 'Annuler')}</button>
+          <button onClick={submit} disabled={!formValid || saving} className="comm-cta font-inter uppercase">{saving ? '…' : t('Send my application', 'Envoyer ma candidature')}</button>
         </div>
       </div>
     </div>
@@ -489,21 +532,21 @@ const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberPr
 
 const Field: React.FC<{ label: string; hint?: string; children: React.ReactNode }> = ({ label, hint, children }) => (
   <label className="block mb-6">
-    <span className="block uppercase font-cinzel mb-2" style={{ color: T.goldDeep, fontSize: '10px', letterSpacing: '0.22em' }}>{label}</span>
+    <span className="block uppercase font-inter mb-2" style={{ color: T.gold, fontSize: '10px', letterSpacing: '0.22em', fontWeight: 600 }}>{label}</span>
     {children}
-    {hint && <span className="block font-cormorant italic mt-1.5" style={{ color: T.soft, fontSize: '13px' }}>{hint}</span>}
+    {hint && <span className="block font-fraunces-it mt-1.5" style={{ color: T.soft, fontSize: '13px' }}>{hint}</span>}
   </label>
 );
 
 const baseInput = (extra: React.CSSProperties = {}): React.CSSProperties => ({
-  width: '100%', background: 'transparent', border: 0, borderBottom: `1px solid ${T.gold}`,
-  padding: '8px 0', fontSize: '16px', color: T.ink, outline: 'none', ...extra,
+  width: '100%', background: 'rgba(0,0,0,0.25)', border: `1px solid ${T.line}`, borderRadius: '8px',
+  padding: '10px 12px', fontSize: '16px', color: T.ink, outline: 'none', ...extra,
 });
 const Line: React.FC<{ value: string; onChange: (v: string) => void }> = ({ value, onChange }) => (
-  <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className="font-lato" style={baseInput()}
-    onFocus={(e) => (e.currentTarget.style.borderBottomColor = T.ink)} onBlur={(e) => (e.currentTarget.style.borderBottomColor = T.gold)} />
+  <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className="font-inter" style={baseInput()}
+    onFocus={(e) => (e.currentTarget.style.borderColor = T.gold)} onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(210,118,46,0.30)')} />
 );
 const Area: React.FC<{ value: string; onChange: (v: string) => void; rows?: number; placeholder?: string }> = ({ value, onChange, rows = 3, placeholder }) => (
-  <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows} placeholder={placeholder} className="font-lato" style={baseInput({ resize: 'none' })}
-    onFocus={(e) => (e.currentTarget.style.borderBottomColor = T.ink)} onBlur={(e) => (e.currentTarget.style.borderBottomColor = T.gold)} />
+  <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows} placeholder={placeholder} className="font-inter" style={baseInput({ resize: 'none' })}
+    onFocus={(e) => (e.currentTarget.style.borderColor = T.gold)} onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(210,118,46,0.30)')} />
 );
