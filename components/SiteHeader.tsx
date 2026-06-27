@@ -9,7 +9,7 @@ import { MUSIC_GENRES } from '../constants';
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type ViewState =
-  | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE'
+  | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
   | 'MESSAGING' | 'ADMIN';
 
@@ -48,6 +48,7 @@ const EXPLORER: NavItem[] = [
   { view: 'KITCHEN',      label_fr: 'Cuisine',          label_en: 'Kitchen',         desc_fr: 'Chef privé & bistronomie',       desc_en: 'Private chef & bistronomy',    icon: '🍽️' },
   { view: 'MASSOTHERAPY', label_fr: 'Massothérapie',    label_en: 'Massotherapy',    desc_fr: 'Soins holistiques & reiki',      desc_en: 'Holistic care & reiki',        icon: '✦' },
   { view: 'GUIDE',        label_fr: 'Guide Local',      label_en: 'Local Guide',     desc_fr: 'Quoi faire en Petite-Nation',    desc_en: 'Things to do in Petite-Nation', icon: '🗺️' },
+  { view: 'PETITE_MONNAIE', label_fr: 'Petite Monnaie', label_en: 'Petite Monnaie',  desc_fr: 'La monnaie locale de la vallée',  desc_en: "The valley's local currency",  icon: '🪙' },
   { view: 'HOSTS',        label_fr: 'Les Hôtes',        label_en: 'Our Hosts',       desc_fr: 'L\'équipe derrière le projet',   desc_en: 'The team behind the project',  icon: '✧' },
   { view: 'EVENTS',       label_fr: 'Événements',       label_en: 'Events',          desc_fr: 'Spectacles & résidences',        desc_en: 'Shows & residencies',          icon: '🌙' },
 ];
@@ -406,6 +407,25 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
           {/* Right cluster */}
           <div className="flex items-center gap-2">
+            {/* Petite Monnaie — bureau de change badge → /petite-monnaie */}
+            <button
+              onClick={() => handleNavigate('PETITE_MONNAIE')}
+              title="Bureau de change Petite Monnaie"
+              aria-label="Bureau de change Petite Monnaie"
+              className="flex items-center gap-2 pl-1 pr-1 lg:pr-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-[#C9A85A]/40 hover:border-[#C9A85A] hover:bg-black/60 transition-colors"
+            >
+              <img
+                src="https://pmonnaie.ca/wp-content/uploads/2024/04/cropped-PM_profil-e1712766855885-270x270.png"
+                alt="Petite Monnaie"
+                className="w-7 h-7 rounded-full object-cover ring-1 ring-[#C9A85A]/60"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+              <span className="hidden lg:flex flex-col leading-none text-left">
+                <span className="text-[7px] font-cinzel uppercase tracking-[0.2em] text-[#C9A85A]/70">{language === 'FR' ? 'Bureau de change' : 'Exchange point'}</span>
+                <span className="text-[10px] font-cinzel font-bold uppercase tracking-[0.14em] text-[#f3e5ab] mt-0.5">Petite Monnaie</span>
+              </span>
+            </button>
+
             {/* Réserver — desktop only */}
             <button
               onClick={() => handleNavigate('INN')}

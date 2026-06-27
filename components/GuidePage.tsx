@@ -335,6 +335,33 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         </div>
       </div>
 
+      {/* La Petite Monnaie — local currency feature → /petite-monnaie */}
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent('salon:navigate', { detail: { view: 'PETITE_MONNAIE' } }))}
+        className="group block w-full text-left"
+      >
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center gap-4 md:gap-6 border-y border-[#C9A85A]/25 bg-gradient-to-r from-[#143f28]/45 via-[#0e0e0e] to-[#0e0e0e] hover:from-[#143f28]/65 transition-colors">
+          <img
+            src="https://pmonnaie.ca/wp-content/uploads/2024/04/cropped-PM_profil-e1712766855885-270x270.png"
+            alt="Petite Monnaie"
+            className="w-12 h-12 md:w-14 md:h-14 rounded-full ring-1 ring-[#C9A85A]/60 object-cover flex-shrink-0"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+          />
+          <div className="flex-1 min-w-0">
+            <span className="font-josefin text-[#C9A85A] text-[10px] uppercase tracking-[0.3em]">{language === 'EN' ? 'The local currency' : 'La monnaie locale'}</span>
+            <h3 className="font-prata text-[#f3e5ab] text-lg md:text-2xl leading-tight">La Petite Monnaie de la Petite-Nation</h3>
+            <p className="font-lato text-neutral-400 text-xs md:text-sm mt-1">
+              {language === 'EN'
+                ? 'Exchange point here at the inn (free barista coffee), plus a scroll-through route of the valley’s shops.'
+                : "Bureau de change ici au Salon (café barista offert), et un parcours des commerces de la vallée."}
+            </p>
+          </div>
+          <span className="font-josefin text-[#C9A85A] text-[11px] uppercase tracking-widest group-hover:text-[#f3e5ab] transition-colors whitespace-nowrap flex-shrink-0">
+            {language === 'EN' ? 'Discover' : 'Découvrir'} →
+          </span>
+        </div>
+      </button>
+
       {/* Sticky category nav — sticky relative to the scrollable container */}
       <div className="sticky top-14 z-40 bg-[#0e0e0e]/95 backdrop-blur-md border-b border-white/5">
         <div
