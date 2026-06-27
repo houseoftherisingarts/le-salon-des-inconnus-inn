@@ -50,6 +50,12 @@ button:where(:not([data-inn-scroll] *)) { border-radius: 15px; }
   from { opacity: 0; transform: translateY(34px) scale(0.985); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+/* scroll cue chevron under the focal pastille — a gentle bob */
+@keyframes pmScrollCue {
+  0%, 100% { transform: translateY(0);   opacity: 0.55; }
+  50%      { transform: translateY(7px); opacity: 1; }
+}
+.pm-scroll-cue { display: inline-flex; animation: pmScrollCue 1.6s ease-in-out infinite; }
 .pm-reveal { opacity: 0; }
 .pm-reveal.pm-in { animation: pmReveal 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 /* slow green drift (money) behind the Petite Monnaie page — transform only, so the
@@ -61,5 +67,5 @@ button:where(:not([data-inn-scroll] *)) { border-radius: 15px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pm-reveal { opacity: 1 !important; animation: none !important; }
-  .pm-ember, .pm-fog { animation: none !important; }
+  .pm-ember, .pm-fog, .pm-scroll-cue { animation: none !important; }
 }

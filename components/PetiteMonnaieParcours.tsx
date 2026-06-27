@@ -126,9 +126,13 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
 
       const dirX = b.coords.x - a.coords.x;
       const dirY = b.coords.y - a.coords.y;
+      // Bank only once the journey is moving — at rest (the hold on Le Salon) the
+      // world stays perfectly upright so the first pastille reads straight & centred,
+      // not tilted. The banking eases in as you start descending the valley.
+      const bank = smooth(0, 0.12, p);
       if (worldRef.current) {
         worldRef.current.style.transform =
-          `rotateX(${(dirY * 5).toFixed(2)}deg) rotateY(${(dirX * 11).toFixed(2)}deg) rotateZ(${(-dirX * 9).toFixed(2)}deg)`;
+          `rotateX(${(dirY * 5 * bank).toFixed(2)}deg) rotateY(${(dirX * 11 * bank).toFixed(2)}deg) rotateZ(${(-dirX * 9 * bank).toFixed(2)}deg)`;
       }
 
       for (let i = 0; i < N; i++) {
@@ -238,7 +242,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
               style={{ width: 1300, height: 1300, marginLeft: -650, marginTop: -650, transformStyle: 'preserve-3d' }}>
               <RealMap />
             </div>
-            <div className="absolute left-1/2 top-[46%]" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="absolute left-1/2 top-[43%]" style={{ transformStyle: 'preserve-3d' }}>
               {PM_STOPS.map((s, i) => (
                 <Pastille key={s.id} stop={s} index={i} total={N}
                   setPastille={(el) => (pastilleRefs.current[i] = el)}
@@ -312,10 +316,17 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
           ))}
         </div>
 
-        {/* scroll hint */}
-        <div ref={hintRef} className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-[10px] font-cinzel uppercase tracking-[0.4em] pointer-events-none" style={{ color: `${BRASS}bf` }}>
-          {language === 'EN' ? 'Follow the river as you scroll' : 'Suivez la rivière au fil du scroll'}
-          <span className="w-px h-7" style={{ background: `linear-gradient(180deg, ${BRASS}b3, transparent)` }} />
+        {/* scroll cue — sits just under the focal pastille, bobbing, so it's clear
+            you can scroll. Fades out as soon as the journey starts (driven in tick). */}
+        <div ref={hintRef} className="absolute left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2.5 pointer-events-none" style={{ top: '64%' }}>
+          <span className="text-[10px] font-cinzel uppercase tracking-[0.4em]" style={{ color: `${BRASS}cc` }}>
+            {language === 'EN' ? 'Scroll to begin the route' : 'Défilez pour commencer'}
+          </span>
+          <span className="pm-scroll-cue" style={{ color: BRASS }} aria-hidden>
+            <svg width="22" height="13" viewBox="0 0 22 13" fill="none">
+              <path d="M2 2l9 9 9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </div>
       </div>
     </section>
