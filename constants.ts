@@ -341,6 +341,17 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         description_en: "Eat real, drink local, and meet people.",
         items: [
             {
+                id: 'petite-monnaie',
+                tag: "La monnaie locale",
+                title: "La Petite Monnaie",
+                location: "Petite-Nation",
+                description: "La monnaie locale et communautaire de la MRC de Papineau : une petite-monnaie vaut un dollar, et chaque billet dépensé reste chez les artisans, les fermes et les cafés de la vallée. Plus de 150 commerces l'acceptent, et Le Salon des Inconnus en est l'un des onze bureaux de change.",
+                link: "https://pmonnaie.ca/",
+                image: "https://pmonnaie.ca/wp-content/uploads/2024/04/Cooperative-Place-du-Marche.jpg",
+                isFavorite: true,
+                isVip: true
+            },
+            {
                 id: 'orties',
                 tag: "Le cœur de la région",
                 title: "Le Café des Orties",
