@@ -52,8 +52,8 @@ button:where(:not([data-inn-scroll] *)) { border-radius: 15px; }
 }
 .pm-reveal { opacity: 0; }
 .pm-reveal.pm-in { animation: pmReveal 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
-/* moving green gradient (money) behind the Petite Monnaie page */
-@keyframes pmGreenShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+/* slow green drift (money) behind the Petite Monnaie page — transform only, so the
+   GPU composites it cheaply (no per-frame background-position repaint) */
 @keyframes pmGreenDrift {
   0%   { transform: translate3d(-7%, -5%, 0) scale(1.15); }
   50%  { transform: translate3d(7%, 6%, 0) scale(1.32); }

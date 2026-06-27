@@ -52,8 +52,10 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
 
   const N = PM_STOPS.length;
 
+  // Kept light on purpose (12, not 30) — particle counts on an always-on CSS
+  // animation are a steady GPU cost even when the user isn't scrolling.
   const embers = useMemo(
-    () => Array.from({ length: 30 }, (_, i) => ({
+    () => Array.from({ length: 12 }, (_, i) => ({
       left: (i * 37) % 100, bottom: (i * 53) % 40, size: 1.5 + (i % 3),
       delay: ((i * 0.73) % 9).toFixed(2), dur: 8 + (i % 6),
       dx: (((i * 53) % 30) - 15), op: (0.35 + (i % 4) * 0.16).toFixed(2),
@@ -77,10 +79,34 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
     // opening lingers longer on the inn instead of immediately descending the Petite-Nation.
     const HOLD = 0.20;
 
+    // Performance: only run the heavy per-frame work while the parcours is on
+    // screen, and skip it entirely once the camera has settled. The old loop
+    // rewrote the transform/opacity/filter of every pastille on every single
+    // frame even at rest, which (with the blur filters) pegged the GPU and made
+    // the page feel impossible to even start scrolling.
     let raf = 0;
+    let visible = true;
+    let lastRendered = -1;
+    const EPS = 0.0004;
+
+    const io = new IntersectionObserver(
+      ([e]) => { visible = e.isIntersecting; if (visible) lastRendered = -1; },
+      { threshold: 0 }
+    );
+    io.observe(section);
+
     const tick = () => {
       renderRef.current = reduce ? progressRef.current : lerp(renderRef.current, progressRef.current, 0.11);
+
+      // Idle / off-screen short-circuit — nothing moved, so don't touch the DOM.
+      const moved = Math.abs(renderRef.current - lastRendered) > EPS;
+      if (!visible || !moved) { raf = requestAnimationFrame(tick); return; }
+      lastRendered = renderRef.current;
+
       const p = renderRef.current < HOLD ? 0 : (renderRef.current - HOLD) / (1 - HOLD);
+      // Reveal gate: at rest only Le Salon (the active focal stop) is shown big;
+      // the other pastilles fade in as soon as you start scrolling and approach.
+      const reveal = smooth(0.015, 0.16, renderRef.current);
 
       const isMobile = window.innerWidth < 768;
       const spreadX = isMobile ? 640 : 1180;
@@ -88,7 +114,6 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
       const depth = isMobile ? 470 : 640;
       const exitXMax = isMobile ? 720 : 1220;
       const exitZMax = isMobile ? 520 : 780;
-      const blurMax = isMobile ? 7 : 13;
 
       const camZ = p * (N - 1);
       const ci = Math.min(Math.floor(camZ), N - 1);
@@ -121,7 +146,6 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         let pz = -d * depth;
         let rot = 0;
         let op: number;
-        let blur = 0;
 
         if (d < 0) {
           // Behind the lens — leave in the OPPOSITE direction it arrived from:
@@ -131,7 +155,6 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
           py += easeIn(e) * (isMobile ? 150 : 240);
           pz += easeIn(e) * exitZMax;
           rot = -side * e * 14;
-          blur = e * e * blurMax;
           op = 1 - smooth(0.08, 0.85, -d);
         } else {
           // Ahead — rises into view from the TOP and a little off to its side, then
@@ -140,21 +163,23 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
           px += side * easeOut(en) * (isMobile ? 130 : 220);
           py += -easeOut(en) * (isMobile ? 150 : 240);
           op = 1 - smooth(2.7, 4.6, d);
-          blur = d > 2.9 ? Math.min(5, (d - 2.9) * 2) : 0;
         }
 
         const isActive = i === active;
+        // gate non-focal pastilles by the scroll reveal so nothing but Le Salon is
+        // visible at rest. (No CSS blur filter — it was the main GPU cost; depth now
+        // reads through scale + opacity + the perspective z alone.)
+        const shownOp = isActive ? op : op * reveal;
         const focalPop = isActive ? 1 + (1 - smooth(0, 0.5, Math.abs(d))) * 0.05 : 1;
         el.style.transform =
           `translate3d(-50%, -50%, 0) translate3d(${px.toFixed(1)}px, ${py.toFixed(1)}px, ${pz.toFixed(1)}px) rotateZ(${rot.toFixed(2)}deg) scale(${focalPop.toFixed(3)})`;
-        el.style.opacity = op.toFixed(3);
+        el.style.opacity = shownOp.toFixed(3);
         el.style.zIndex = String(1000 - Math.round(d * 10));
-        el.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
         // only the focal pastille is clickable
         el.style.pointerEvents = isActive && Math.abs(d) < 0.4 ? 'auto' : 'none';
 
         const halo = haloRefs.current[i];
-        if (halo) halo.style.opacity = (0.22 + (1 - smooth(0, 0.7, Math.abs(d))) * 0.78).toFixed(3);
+        if (halo) halo.style.opacity = ((0.22 + (1 - smooth(0, 0.7, Math.abs(d))) * 0.78) * (isActive ? 1 : reveal)).toFixed(3);
 
         const panel = panelRefs.current[i];
         if (panel) {
@@ -187,16 +212,18 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
 
     const ro = new ResizeObserver(() => ScrollTrigger.refresh());
     ro.observe(section);
-    return () => { trigger.kill(); ro.disconnect(); cancelAnimationFrame(raf); };
+    return () => { trigger.kill(); ro.disconnect(); io.disconnect(); cancelAnimationFrame(raf); };
   }, [N, scrollerRef]);
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: `${Math.max(N * 60, 640)}vh` }}>
       <div className="sticky top-0 h-screen w-full overflow-hidden" style={{ background: '#0a0a08' }}>
         {/* warm near-black base with a toned-down green drifting across it */}
+        {/* static base gradient (animating background-position here was a costly
+            full-viewport repaint every frame). The slow life comes from the single
+            transform-driven radial below, which the GPU composites cheaply. */}
         <div className="absolute inset-0 z-0" style={{
           background: 'linear-gradient(135deg, #080907 0%, #0b120d 28%, #132f20 50%, #0b120d 72%, #080907 100%)',
-          backgroundSize: '230% 230%', animation: 'pmGreenShift 34s ease-in-out infinite',
         }} />
         <div className="absolute inset-0 z-0 will-change-transform" style={{
           background: 'radial-gradient(56% 46% at 50% 40%, rgba(44,76,54,0.36), transparent 74%)',
@@ -361,7 +388,6 @@ const RealMap: React.FC = () => {
   return (
     <svg viewBox="0 0 1000 1000" className="w-full h-full" style={{ opacity: 0.62 }}>
       <defs>
-        <filter id="pm-soft"><feGaussianBlur stdDeviation="6" /></filter>
         <radialGradient id="pm-lake" cx="50%" cy="45%" r="60%">
           <stop offset="0%" stopColor="#1f4a3a" stopOpacity="0.9" />
           <stop offset="100%" stopColor="#0c241a" stopOpacity="0.7" />
@@ -369,7 +395,7 @@ const RealMap: React.FC = () => {
       </defs>
 
       {/* Ottawa river — the wide southern boundary */}
-      <path d={toPath(PN_OTTAWA)} fill="none" stroke="#2f6b52" strokeOpacity={0.5} strokeWidth={26} strokeLinecap="round" filter="url(#pm-soft)" />
+      <path d={toPath(PN_OTTAWA)} fill="none" stroke="#2f6b52" strokeOpacity={0.5} strokeWidth={26} strokeLinecap="round" />
       <path d={toPath(PN_OTTAWA)} fill="none" stroke={BRASS} strokeOpacity={0.45} strokeWidth={3} strokeLinecap="round" />
 
       {/* lakes Simon + Papineau */}
@@ -395,7 +421,7 @@ const RealMap: React.FC = () => {
       ))}
 
       {/* Rivière de la Petite Nation — glowing gold ink */}
-      <path d={toPath(PN_RIVER)} fill="none" stroke="#f0c870" strokeOpacity={0.3} strokeWidth={11} strokeLinecap="round" filter="url(#pm-soft)" />
+      <path d={toPath(PN_RIVER)} fill="none" stroke="#f0c870" strokeOpacity={0.3} strokeWidth={11} strokeLinecap="round" />
       <path d={toPath(PN_RIVER)} fill="none" stroke={BRASS} strokeWidth={3.5} strokeLinecap="round" />
       <path d={toPath(PN_RIVER)} fill="none" stroke="#fff6d8" strokeOpacity={0.3} strokeWidth={1} strokeDasharray="2 12" strokeLinecap="round" />
 
