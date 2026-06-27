@@ -358,7 +358,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 location: "Ripon",
                 description: "Café communautaire installé dans un ancien presbytère de Ripon — mets biologiques de producteurs locaux, vins naturels, cidres artisanaux. Les murs font office de galerie tournante : c'est le vrai cœur de la vie artistique et intellectuelle de la Petite-Nation. Un lieu unique, vivant, sans équivalent.",
                 link: "https://www.facebook.com/cafedesorties/",
-                image: PLACEHOLDER_ROOM,
+                image: "https://www.petitenationoutaouais.com/wp-content/uploads/2022/09/4-e1665581827187.jpg",
                 isFavorite: true,
                 isVip: true
             },

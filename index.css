@@ -56,6 +56,19 @@ button:where(:not([data-inn-scroll] *)) { border-radius: 15px; }
   50%      { transform: translateY(7px); opacity: 1; }
 }
 .pm-scroll-cue { display: inline-flex; animation: pmScrollCue 1.6s ease-in-out infinite; }
+/* light ray that sweeps across the Petite Monnaie coin every 10s, edge to edge.
+   transform + opacity only (no filter), so it composites cheaply. */
+@keyframes pmCoinSheen {
+  0%   { transform: translateX(-130%) skewX(-14deg); opacity: 0; }
+  2%   { opacity: 1; }
+  12%  { transform: translateX(250%) skewX(-14deg); opacity: 0.95; }
+  15%  { opacity: 0; }
+  100% { transform: translateX(250%) skewX(-14deg); opacity: 0; }
+}
+.pm-coin-sheen { animation: pmCoinSheen 10s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-coin-sheen { animation: none !important; opacity: 0 !important; }
+}
 .pm-reveal { opacity: 0; }
 .pm-reveal.pm-in { animation: pmReveal 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 /* slow green drift (money) behind the Petite Monnaie page — transform only, so the

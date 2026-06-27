@@ -72,6 +72,12 @@ export const PetiteMonnaieCoin: React.FC<{ size?: number }> = ({ size = 340 }) =
               onError={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0'; }} />
             <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 120% at 32% 26%, rgba(255,250,230,0.28) 0%, transparent 42%)' }} />
           </div>
+          {/* periodic light ray sweeping edge to edge every 10s (in addition to the
+              cursor-tracked highlight below). Soft-edged via the gradient, no blur. */}
+          <div className="pm-coin-sheen absolute top-0 bottom-0 left-0 w-[55%] pointer-events-none"
+            style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,250,228,0.55) 50%, transparent 100%)', mixBlendMode: 'screen' }}
+            aria-hidden />
+
           {/* cursor-tracked specular highlight */}
           <motion.div className="absolute inset-0 rounded-full pointer-events-none"
             style={{ background: glare, mixBlendMode: 'screen' }} />
