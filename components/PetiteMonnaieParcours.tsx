@@ -28,8 +28,6 @@ const smooth = (e0: number, e1: number, x: number) => {
 const easeIn = (t: number) => t * t;
 const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 
-const sideOf = (s: PMStop) => (s.coords.x >= 0.45 ? 1 : -1);
-
 // FMM brass + greens
 const BRASS = '#C9A85A';
 const BRASS_DEEP = '#B08D3A';
@@ -76,8 +74,8 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
     });
 
     // Hold on the first stop (Le Salon) before the journey starts moving, so the
-    // opening lingers on the inn instead of immediately descending the Petite-Nation.
-    const HOLD = 0.12;
+    // opening lingers longer on the inn instead of immediately descending the Petite-Nation.
+    const HOLD = 0.20;
 
     let raf = 0;
     const tick = () => {
@@ -113,7 +111,10 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         if (!el) continue;
         const s = PM_STOPS[i];
         const d = i - camZ;
-        const side = sideOf(s);
+        // Alternate the lateral side by index so incoming pastilles fan in from
+        // BOTH left and right (was all bunched to one side), instead of keying off
+        // the map coords (which sit mostly west).
+        const side = i % 2 === 0 ? -1 : 1;
 
         let px = (s.coords.x - camX) * spreadX;
         let py = (s.coords.y - camY) * spreadY;
@@ -123,16 +124,21 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         let blur = 0;
 
         if (d < 0) {
+          // Behind the lens — leave in the OPPOSITE direction it arrived from:
+          // it descended from the top, so it now swoops DOWN and to the opposite side.
           const e = clamp01(-d / 0.95);
-          px += side * easeIn(e) * exitXMax;
-          py += -easeIn(e) * (isMobile ? 70 : 120);
+          px += -side * easeIn(e) * exitXMax;
+          py += easeIn(e) * (isMobile ? 150 : 240);
           pz += easeIn(e) * exitZMax;
-          rot = side * e * 14;
+          rot = -side * e * 14;
           blur = e * e * blurMax;
           op = 1 - smooth(0.08, 0.85, -d);
         } else {
+          // Ahead — rises into view from the TOP and a little off to its side, then
+          // settles to the focal centre as the camera reaches it.
           const en = clamp01(d / 3.2);
-          px += side * easeOut(en) * (isMobile ? 150 : 260);
+          px += side * easeOut(en) * (isMobile ? 130 : 220);
+          py += -easeOut(en) * (isMobile ? 150 : 240);
           op = 1 - smooth(2.7, 4.6, d);
           blur = d > 2.9 ? Math.min(5, (d - 2.9) * 2) : 0;
         }
@@ -306,7 +312,7 @@ const Pastille: React.FC<{
           style={{ top: -size * 0.2, width: size * 1.55, height: size * 1.55, background: `radial-gradient(circle, ${ring}48 0%, ${ring}18 38%, transparent 66%)`, filter: 'blur(6px)' }} />
         <a href={mapsLink(stop)} target="_blank" rel="noopener noreferrer" title={stop.name}
           className="relative block rounded-full overflow-hidden bg-[#0a120c] group"
-          style={{ width: size, height: size, boxShadow: `0 0 0 1px ${BRASS_DEEP}55, 0 26px 70px rgba(0,0,0,0.6), inset 0 0 0 2px ${BRASS}, inset 0 0 0 6px rgba(8,14,10,0.6), inset 0 0 0 8px ${BRASS_DEEP}` }}>
+          style={{ width: size, height: size, boxShadow: `0 0 0 3px ${ring}, 0 0 0 7px ${BRASS_DEEP}, 0 0 24px 3px ${ring}66, 0 26px 70px rgba(0,0,0,0.6), inset 0 0 0 3px ${ring}, inset 0 0 0 8px rgba(8,14,10,0.5), inset 0 0 0 11px ${BRASS_DEEP}` }}>
           {/* branded fallback under the photo — a broken/odd image degrades to this,
               never to white. Logo stops sit on near-black so the inverted wordmark's
               own backdrop melts into the orb instead of reading as a rectangle. */}
@@ -328,7 +334,7 @@ const Pastille: React.FC<{
             draggable={false}
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0'; }} />
           <div className="absolute inset-0 pointer-events-none rounded-full"
-            style={{ background: 'radial-gradient(120% 120% at 32% 24%, rgba(255,248,224,0.22) 0%, transparent 38%), linear-gradient(180deg, transparent 52%, rgba(6,12,8,0.6) 100%)' }} />
+            style={{ background: `radial-gradient(circle at 50% 50%, transparent 68%, ${ring}26 86%, ${ring}4d 100%), radial-gradient(120% 120% at 32% 24%, rgba(255,248,224,0.24) 0%, transparent 38%), linear-gradient(180deg, transparent 52%, rgba(6,12,8,0.6) 100%)` }} />
           <span className="absolute top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-black/55 backdrop-blur-sm text-[10px] font-cinzel tracking-[0.3em] text-[#f3e5ab]" style={{ border: `1px solid ${BRASS}55` }}>
             {String(index).padStart(2, '0')} · {String(total - 1).padStart(2, '0')}
           </span>

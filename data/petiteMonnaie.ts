@@ -111,7 +111,7 @@ export const PM_STOPS: PMStop[] = [
     blurb:
       "Le voyage commence ici, à l'auberge de Namur. Procurez-vous vos premières " +
       "petites-monnaies sur place, prenez la carte de la région, et suivez la rivière.",
-    image: 'https://storage.googleapis.com/salondesinconnus/inn/maison.jpg',
+    image: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png',
     isStart: true,
     isBureauDeChange: true,
     perk: 'Un café barista, offert, avec votre enveloppe de petites-monnaies',
