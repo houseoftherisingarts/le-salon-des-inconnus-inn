@@ -161,11 +161,14 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
           rot = -side * e * 14;
           op = 1 - smooth(0.08, 0.85, -d);
         } else {
-          // Ahead — rises into view from the TOP and a little off to its side, then
-          // settles to the focal centre as the camera reaches it.
+          // Ahead — fans into view from the alternating screen corner (top-left /
+          // top-right) and settles onto its real map position only as the camera
+          // reaches the focal centre. Keeps the entrance balanced: the stop right
+          // after Le Salon (an odd index) sweeps in from the top-right.
           const en = clamp01(d / 3.2);
-          px += side * easeOut(en) * (isMobile ? 130 : 220);
-          py += -easeOut(en) * (isMobile ? 150 : 240);
+          const e2 = easeOut(en);
+          px = lerp(px, side * (isMobile ? 320 : 560), e2);
+          py = lerp(py, isMobile ? -240 : -380, e2);
           op = 1 - smooth(2.7, 4.6, d);
         }
 
@@ -277,23 +280,26 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         <div className="absolute inset-0 pointer-events-none z-[10]"
           style={{ background: 'linear-gradient(to top right, rgba(5,9,6,0.94) 0%, rgba(5,9,6,0.58) 24%, transparent 50%)' }} />
 
-        {/* active-stop info panel — fixed bottom-left, never clipped */}
-        <div className="absolute left-6 md:left-14 bottom-12 md:bottom-16 z-20 w-[min(460px,84vw)]">
+        {/* active-stop info panel — fixed bottom-left, never clipped. Kept compact
+            and sitting low so the "00" row stays below the scroll cue. */}
+        <div className="absolute left-4 sm:left-6 md:left-14 bottom-6 md:bottom-9 z-20 w-[min(408px,calc(100vw-2rem))]">
           {PM_STOPS.map((s, i) => (
             <div key={s.id} ref={(el) => { panelRefs.current[i] = el; }}
               className="absolute bottom-0 left-0 right-0 will-change-transform" style={{ opacity: 0 }}>
-              <div className="flex items-center gap-3">
-                <span className="font-cinzel text-sm tracking-[0.2em]" style={{ color: BRASS }}>{String(i).padStart(2, '0')}</span>
+              <div className="flex items-center gap-2.5">
+                <span className="font-cinzel text-[12px] tracking-[0.2em]" style={{ color: BRASS }}>{String(i).padStart(2, '0')}</span>
                 <span className="h-px flex-1" style={{ background: `linear-gradient(90deg, ${BRASS}99, transparent)` }} />
                 <span className="font-lato text-[10px] uppercase tracking-[0.34em]" style={{ color: BRASS }}>{s.village}</span>
               </div>
-              <h3 className="mt-3 font-cinzel text-[28px] md:text-4xl leading-[1.05] text-[#f3e5ab]">{s.name}</h3>
-              <p className="mt-1.5 font-lato text-[11px] uppercase tracking-[0.2em] text-white/45">{s.category}</p>
-              <p className="mt-3 font-lato text-[13px] md:text-sm leading-relaxed text-white/72">{s.blurb}</p>
+              <h3 className="mt-2.5 font-cinzel text-[22px] sm:text-[23px] md:text-[31px] leading-[1.05] text-[#f3e5ab] break-words">{s.name}</h3>
+              <p className="mt-1.5 font-lato text-[10px] uppercase tracking-[0.2em] text-white/45">{s.category}</p>
+              {/* blurb + perk drop out on very short viewports (landscape phones) so
+                  the panel never overflows the top edge */}
+              <p className="mt-2.5 font-lato text-[12px] md:text-[13px] leading-relaxed text-white/72 [@media(max-height:600px)]:hidden">{s.blurb}</p>
               {s.perk && (
-                <div className="mt-3.5 inline-flex items-center gap-2.5 pl-3 pr-4 py-2 rounded-full text-[#f3e5ab]"
+                <div className="mt-3.5 flex items-center gap-2.5 max-w-full pl-3 pr-4 py-2 rounded-full text-[#f3e5ab] [@media(max-height:520px)]:hidden"
                   style={{ background: `${BRASS}1f`, border: `1px solid ${BRASS}73` }}>
-                  <span className="text-base leading-none">☕</span>
+                  <span className="text-base leading-none shrink-0">☕</span>
                   <span className="font-lato text-[12px] leading-snug">{s.perk}</span>
                 </div>
               )}
