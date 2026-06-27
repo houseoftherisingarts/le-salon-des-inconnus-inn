@@ -205,8 +205,34 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   return (
     <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── HERO — warm-duotone fire photo, ember firelight, game-menu title ── */}
-      <header className="relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
+      {/* ── MOBILE HERO — full-width group photo (whole community visible), title below ── */}
+      <header className="md:hidden relative w-full">
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
+          <img
+            src={IMG.garden}
+            alt={t('Three members around the fire, the manor behind.', 'Trois membres autour du feu, le manoir derrière.')}
+            className="comm-photo w-full h-full object-cover"
+          />
+          <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, #0c0b08 0%, rgba(12,11,8,0.12) 34%, rgba(12,11,8,0) 62%)' }} />
+          <span className="comm-vignette absolute inset-0 pointer-events-none" />
+          <span className="comm-grain absolute inset-0 pointer-events-none" />
+        </div>
+        <div className="comm-hero-in px-6 pt-6 pb-1">
+          <div className="mb-5"><Eyebrow>{t('A place opens', 'Une place se libère')}</Eyebrow></div>
+          <h2 className="font-fraunces comm-title" style={{ color: T.ink, fontSize: 'clamp(2.5rem, 11vw, 3.6rem)', lineHeight: 0.94, letterSpacing: '-0.02em' }}>
+            {t('Join the community', 'Faire partie de la communauté')}
+          </h2>
+          <p className="font-fraunces-it mt-4" style={{ color: T.ink, fontSize: 'clamp(1.1rem, 4.6vw, 1.4rem)', lineHeight: 1.34, maxWidth: '34ch' }}>
+            {t(
+              'Come live in a lasting place, with people of heart and travellers passing through.',
+              'Venir vivre dans un lieu pérenne, avec des gens de cœur et des voyageurs de passage.',
+            )}
+          </p>
+        </div>
+      </header>
+
+      {/* ── HERO (desktop) — warm-duotone fire photo, ember firelight, game-menu title ── */}
+      <header className="hidden md:block relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
         <div className="absolute left-0 right-0 overflow-hidden" data-parallax="0.06" style={{ top: '-6%', height: '112%', willChange: 'transform' }}>
           <img
             src={IMG.garden}

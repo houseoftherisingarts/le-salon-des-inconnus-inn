@@ -70,12 +70,12 @@ export const PAGE_META = {
   INN: {
     EN: {
       title: "Le Salon des Inconnus | Artistic Inn in Outaouais (Namur, QC)",
-      description: "Victorian manor inn in Namur, Outaouais. Artist & entrepreneur residency with spa, hot tub, live music and wwoofing — 25 min from Parc Oméga.",
+      description: "Victorian manor inn in Namur, Outaouais. Artist & entrepreneur residency with spa, hot tub, live music and wwoofing, 25 min from Parc Oméga.",
       keywords: "Parc Omega hotel, Chateau Montebello alternative, Lac à l'épaule Outaouais, Montagnes Noires Ripon"
     },
     FR: {
       title: "Le Salon des Inconnus | Auberge d'artistes en Outaouais (Namur)",
-      description: "Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing — à 25 min du Parc Oméga.",
+      description: "Manoir victorien à Namur, Outaouais. Auberge pour artistes et entrepreneurs avec spa, jacuzzi, spectacles et wwoofing, à 25 min du Parc Oméga.",
       keywords: "Hôtel Parc Oméga, Hébergement Montebello, Lac à l'épaule Petite Nation, Hotel near Parc Omega, Bed and Breakfast Quebec, Auberge Ripon"
     }
   },
@@ -84,8 +84,8 @@ export const PAGE_META = {
     FR: { title: "Test Éditorial 2 | Le Salon des Inconnus", description: "Test de hero éditorial (motif Bespoke).", keywords: "" },
   },
   INN_TEST3: {
-    EN: { title: "Inn Editorial Test 3 | Le Salon des Inconnus", description: "Bold rebuild — cinematic hero with motion.", keywords: "" },
-    FR: { title: "Test Éditorial 3 | Le Salon des Inconnus", description: "Refonte audacieuse — hero cinématique avec animations.", keywords: "" },
+    EN: { title: "Inn Editorial Test 3 | Le Salon des Inconnus", description: "Bold rebuild: cinematic hero with motion.", keywords: "" },
+    FR: { title: "Test Éditorial 3 | Le Salon des Inconnus", description: "Refonte audacieuse : hero cinématique avec animations.", keywords: "" },
   },
   KITCHEN: {
     EN: { 
@@ -120,8 +120,8 @@ export const PAGE_META = {
     FR: { title: "Événements à la Maison Favier | Le Salon des Inconnus", description: "Spectacles, résidences et rassemblements au Salon des Inconnus, Namur. Prochain : Grand Ceilidh de Mai 2026 (21–25 mai). Réservations privées.", keywords: "Événements Outaouais, Événements culturels Québec" }
   },
   CEILIDH: {
-    EN: { title: "Grand Ceilidh de Mai 2026 — Festival in Namur | Le Salon des Inconnus", description: "Five-day community festival at Maison Favier, May 21–25, 2026. Live music, dance, banquet, shared work and wwoofing in Namur, Outaouais.", keywords: "Ceilidh Quebec, Festival communautaire 2026, Wwoofing event" },
-    FR: { title: "Grand Ceilidh de Mai 2026 — Festival à Namur | Le Salon des Inconnus", description: "Festival communautaire de cinq jours à la Maison Favier, du 21 au 25 mai 2026. Musique, danse, banquet, chantiers communs et wwoofing en Outaouais.", keywords: "Ceilidh Québec, Festival communautaire 2026, Événement Wwoofing" }
+    EN: { title: "Grand Ceilidh de Mai 2026 · Festival in Namur | Le Salon des Inconnus", description: "Five-day community festival at Maison Favier, May 21–25, 2026. Live music, dance, banquet, shared work and wwoofing in Namur, Outaouais.", keywords: "Ceilidh Quebec, Festival communautaire 2026, Wwoofing event" },
+    FR: { title: "Grand Ceilidh de Mai 2026 · Festival à Namur | Le Salon des Inconnus", description: "Festival communautaire de cinq jours à la Maison Favier, du 21 au 25 mai 2026. Musique, danse, banquet, chantiers communs et wwoofing en Outaouais.", keywords: "Ceilidh Québec, Festival communautaire 2026, Événement Wwoofing" }
   },
   WWOOFING: {
     EN: { title: "Wwoofing in Outaouais | Le Salon des Inconnus, Namur", description: "Wwoofing program at Maison Favier: 4 hours of work a day in exchange for room, board and shared community. Min. 7-day stays in Namur, Outaouais.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },

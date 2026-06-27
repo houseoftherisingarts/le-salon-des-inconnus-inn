@@ -34,8 +34,8 @@ const SALON_EVENTS: EventEntry[] = [
     id: 'ceilidh-mai-2026',
     name: 'Grand Ceilidh de Mai',
     name_fr: 'Grand Ceilidh de Mai',
-    subtitle: 'Community Woofing Weekend — Shows, Banquet & Collective Work',
-    subtitle_fr: 'Weekend de Woofing Communautaire — Spectacles, Banquet & Travail Collectif',
+    subtitle: 'Community Woofing Weekend : shows, banquet & collective work',
+    subtitle_fr: 'Weekend de Woofing Communautaire : spectacles, banquet et travail collectif',
     startDate: '2026-05-21',
     endDate: '2026-05-25',
     isNext: true,
@@ -174,7 +174,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onNavigate, language }) 
               </span>
             </div>
           </div>
-          <h1 className="font-cinzel text-5xl md:text-7xl text-white tracking-widest mb-6" style={{ textShadow: '0 0 40px rgba(212,175,55,0.2)' }}>
+          <h1 className="font-cinzel text-4xl sm:text-5xl md:text-7xl text-white tracking-wide sm:tracking-widest mb-6" style={{ textShadow: '0 0 40px rgba(212,175,55,0.2)' }}>
             {t('EVENTS', 'ÉVÉNEMENTS')}
           </h1>
           <p className="font-lato text-neutral-400 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -217,7 +217,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onNavigate, language }) 
           <div className="inline-flex items-center gap-3 px-8 py-4 border border-white/10 bg-white/2">
             <span className="text-2xl">🪕</span>
             <p className="font-lato text-neutral-500 text-sm">
-              {t('More events to come — stay tuned.', 'D\'autres événements à venir — restez à l\'écoute.')}
+              {t('More events to come, stay tuned.', 'D\'autres événements à venir, restez à l\'écoute.')}
             </p>
           </div>
         </div>

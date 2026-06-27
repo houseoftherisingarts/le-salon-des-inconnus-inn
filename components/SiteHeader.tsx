@@ -10,7 +10,7 @@ import { MUSIC_GENRES } from '../constants';
 
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
-  | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
+  | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'COMMUNITY' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
   | 'MESSAGING' | 'ADMIN';
 
 interface SiteHeaderProps {
@@ -38,19 +38,20 @@ interface SiteHeaderProps {
 
 type NavItem = { view: ViewState; label_fr: string; label_en: string; desc_fr: string; desc_en: string; icon: string };
 
-const SEJOUR: NavItem[] = [
-  { view: 'INN',      label_fr: 'L\'Auberge',    label_en: 'The Inn',       desc_fr: 'Chambres, yourte et bus',          desc_en: 'Rooms, yurt and converted bus',    icon: '🏛️' },
-  { view: 'WWOOFING', label_fr: 'Wwoofing',      label_en: 'Wwoofing',      desc_fr: 'Vivez et travaillez sur le domaine', desc_en: 'Live and work on the estate',     icon: '🌿' },
-  { view: 'CEILIDH',  label_fr: 'Ceilidh de Mai',label_en: 'May Ceilidh',   desc_fr: 'Festival communautaire 2026',       desc_en: 'Community festival 2026',          icon: '🎶' },
+const ETRE: NavItem[] = [
+  { view: 'INN',       label_fr: 'L\'Auberge',  label_en: 'The Inn',    desc_fr: 'Chambres, yourte et bus',         desc_en: 'Rooms, yurt and converted bus',  icon: '🏛️' },
+  { view: 'COMMUNITY', label_fr: 'Communauté',  label_en: 'Community',  desc_fr: 'Rejoindre le collectif du domaine', desc_en: 'Join the estate\'s collective',  icon: '🔥' },
+  { view: 'HOSTS',     label_fr: 'Les Hôtes',   label_en: 'Our Hosts',  desc_fr: 'L\'équipe derrière le projet',    desc_en: 'The team behind the project',    icon: '✧' },
 ];
 
-const EXPLORER: NavItem[] = [
+const FAIRE: NavItem[] = [
   { view: 'KITCHEN',      label_fr: 'Cuisine',          label_en: 'Kitchen',         desc_fr: 'Chef privé & bistronomie',       desc_en: 'Private chef & bistronomy',    icon: '🍽️' },
   { view: 'MASSOTHERAPY', label_fr: 'Massothérapie',    label_en: 'Massotherapy',    desc_fr: 'Soins holistiques & reiki',      desc_en: 'Holistic care & reiki',        icon: '✦' },
   { view: 'GUIDE',        label_fr: 'Guide Local',      label_en: 'Local Guide',     desc_fr: 'Quoi faire en Petite-Nation',    desc_en: 'Things to do in Petite-Nation', icon: '🗺️' },
   { view: 'PETITE_MONNAIE', label_fr: 'Petite Monnaie', label_en: 'Petite Monnaie',  desc_fr: 'La monnaie locale de la vallée',  desc_en: "The valley's local currency",  icon: '🪙' },
-  { view: 'HOSTS',        label_fr: 'Les Hôtes',        label_en: 'Our Hosts',       desc_fr: 'L\'équipe derrière le projet',   desc_en: 'The team behind the project',  icon: '✧' },
   { view: 'EVENTS',       label_fr: 'Événements',       label_en: 'Events',          desc_fr: 'Spectacles & résidences',        desc_en: 'Shows & residencies',          icon: '🌙' },
+  { view: 'CEILIDH',      label_fr: 'Ceilidh de Mai',   label_en: 'May Ceilidh',     desc_fr: 'Festival communautaire 2026',    desc_en: 'Community festival 2026',      icon: '🎶' },
+  { view: 'WWOOFING',     label_fr: 'Wwoofing',         label_en: 'Wwoofing',        desc_fr: 'Vivez et travaillez sur le domaine', desc_en: 'Live and work on the estate', icon: '🌿' },
 ];
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
@@ -179,13 +180,13 @@ const MobileMenu: React.FC<{
         className="flex-1 overflow-y-auto p-5 flex flex-col gap-6"
         style={{ animation: 'mobileMenuIn 0.22s ease-out both' }}
       >
-        {/* SÉJOUR */}
+        {/* ÊTRE */}
         <div>
           <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
-            {language === 'FR' ? 'Séjour' : 'Stay'}
+            {language === 'FR' ? 'Être' : 'Be'}
           </p>
           <div className="flex flex-col gap-1">
-            {SEJOUR.map(item => (
+            {ETRE.map(item => (
               <button
                 key={item.view}
                 onClick={() => go(item.view)}
@@ -206,13 +207,13 @@ const MobileMenu: React.FC<{
           </div>
         </div>
 
-        {/* EXPLORER */}
+        {/* FAIRE */}
         <div>
           <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
-            {language === 'FR' ? 'Explorer' : 'Explore'}
+            {language === 'FR' ? 'Faire' : 'Do'}
           </p>
           <div className="flex flex-col gap-1">
-            {EXPLORER.map(item => (
+            {FAIRE.map(item => (
               <button
                 key={item.view}
                 onClick={() => go(item.view)}
@@ -383,26 +384,19 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-0.5">
             <Dropdown
-              label={language === 'FR' ? 'Séjour' : 'Stay'}
-              items={SEJOUR}
+              label={language === 'FR' ? 'Être' : 'Be'}
+              items={ETRE}
               language={language}
               currentView={currentView}
               onNavigate={handleNavigate}
             />
             <Dropdown
-              label={language === 'FR' ? 'Explorer' : 'Explore'}
-              items={EXPLORER}
+              label={language === 'FR' ? 'Faire' : 'Do'}
+              items={FAIRE}
               language={language}
               currentView={currentView}
               onNavigate={handleNavigate}
             />
-            <button
-              onClick={() => handleNavigate('CEILIDH')}
-              className={`px-3 py-2 rounded-md text-[11px] font-cinzel font-bold uppercase tracking-[0.18em] transition-all duration-200
-                ${currentView === 'CEILIDH' ? 'text-[#d4af37]' : 'text-white/70 hover:text-white'}`}
-            >
-              Ceilidh
-            </button>
           </div>
 
           {/* Right cluster */}
