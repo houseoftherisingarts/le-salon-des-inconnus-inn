@@ -115,7 +115,7 @@ const CHAPTERS: Chapter[] = [
     titleFr: 'Hébergement',
     taglineEn: '11 spaces · 50 sleeping spots',
     taglineFr: '11 espaces · 50 couchages',
-    image: '/media/inn/yourte.png',
+    image: '/media/inn/yourte.jpg',
     status: 'done',
   },
   {

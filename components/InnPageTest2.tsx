@@ -30,7 +30,7 @@ interface InnPageTest2Props {
 
 const SECTION2_PHOTO = '/media/Financement%20Artistique/centered%20copy.jpg';
 const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
-const MASSAGE_PHOTO = '/media/massage/massage%20andre.png';
+const MASSAGE_PHOTO = '/media/massage/massage%20andre.jpg';
 
 export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate }) => {
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);

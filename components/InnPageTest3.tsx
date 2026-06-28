@@ -48,7 +48,7 @@ interface Props {
 
 const SEC2_PHOTO = '/media/Financement%20Artistique/centered%20copy.jpg';
 const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
-const MASSAGE_PHOTO = '/media/massage/massage%20andre.png';
+const MASSAGE_PHOTO = '/media/massage/massage%20andre.jpg';
 const ESPACE_COVER_PHOTO = '/media/Auberge%20photos/jardins%20auberge.jpg';
 
 // 12 spaces shown in the L'Espace 3D deck.

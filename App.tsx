@@ -48,7 +48,7 @@ import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { MemberPanel } from './components/MemberPanel';
 import { AuthModal } from './components/AuthModal';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
-import { PAGE_META, SITE_URL, CONTACT_INFO } from './config/seo.config';
+import { PAGE_META, SITE_URL, CONTACT_INFO, OG_IMAGES, DEFAULT_OG_IMAGE } from './config/seo.config';
 import { SEO_CONTENT, type SeoViewKey } from './config/seo.content';
 import { getOptimizedUrl } from './utils/imageOptimizer';
 import { auth, db } from './firebase';
@@ -87,11 +87,11 @@ const DEFERRED_ASSETS = [
     // Kitchen Portal
     getOptimizedUrl("/media/Cuisine/Plating%20alexis%20ai%20(1).jpg", 800),
     // Massage Portal
-    getOptimizedUrl("/media/massage/massage%20andre.png", 800),
+    getOptimizedUrl("/media/massage/massage%20andre.jpg", 800),
     // Local Guide Parallax
     getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1920),
     // Gallery Highlight
-    getOptimizedUrl("/media/Auberge%20photos/Maison%20main.png", 1920),
+    getOptimizedUrl("/media/Auberge%20photos/Maison%20main.jpg", 1920),
     // Listing Thumbnails (First image of each accommodation, Card size)
     ...ACCOMMODATIONS.map(acc => getOptimizedUrl(acc.images[0], 800))
 ];
@@ -348,6 +348,11 @@ const App: React.FC = () => {
     setMeta('meta[property="og:url"]', canonicalUrl);
     setMeta('meta[name="twitter:title"]', meta.title);
     setMeta('meta[name="twitter:description"]', meta.description);
+
+    // Share image — absolute URL, per route (crawlers + AI need absolute).
+    const ogImage = (OG_IMAGES as Record<string, string>)[currentView] ?? DEFAULT_OG_IMAGE;
+    setMeta('meta[property="og:image"]', ogImage);
+    setMeta('meta[name="twitter:image"]', ogImage);
 
     // Canonical link — keep one <link rel=canonical> in <head>, sync per route.
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');

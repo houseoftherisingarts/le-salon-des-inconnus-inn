@@ -12,7 +12,7 @@ export const MUSIC_GENRES = {
 // Placeholder images for the Inn section
 const PLACEHOLDER_ROOM = "https://images.unsplash.com/photo-1590490360182-f33efe29a79d?q=80&w=1000&auto=format&fit=crop";
 const PLACEHOLDER_MANOR = "/media/Financement%20Artistique/centered%20copy.jpg";
-const PLACEHOLDER_YURT = "/media/inn/yourte.png";
+const PLACEHOLDER_YURT = "/media/inn/yourte.jpg";
 const PLACEHOLDER_BUS = "/media/inn/us%20copy.jpg";
 const PLACEHOLDER_TINY = "/media/inn/For%20site%20temp%20mini%20(1).jpg";
 
@@ -20,7 +20,7 @@ const PLACEHOLDER_TINY = "/media/inn/For%20site%20temp%20mini%20(1).jpg";
 const COMMON_PHOTOS = [
   "/media/Auberge%20photos/IMG_0864.jpg",         // salon / living room
   "/media/Auberge%20photos/cuisine%20grande.jpg", // kitchen
-  "/media/Auberge%20photos/biblio.png",           // library
+  "/media/Auberge%20photos/biblio.jpg",           // library
   "/media/Auberge%20photos/jeux%20auberge.jpg",   // games library
   "/media/Auberge%20photos/jardins%20auberge.jpg",// gardens
   "/media/inn/maison.jpg",                         // manor exterior

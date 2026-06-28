@@ -200,7 +200,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
           {/* 2. Hero Section (Base Layer) */}
           <div className="relative z-0 h-[80vh] w-full" style={{ position: 'sticky', top: 0 }}>
                 <OptimizedImage
-                    src="/media/inn/andree%20banner.png" 
+                    src="/media/inn/andree%20banner.jpg" 
                     alt="Massotherapy Banner" 
                     className="w-full h-full"
                     imageClassName="w-full h-full object-cover brightness-75"

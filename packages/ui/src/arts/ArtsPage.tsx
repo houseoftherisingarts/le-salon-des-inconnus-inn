@@ -302,7 +302,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
          <MenuCard
            title={language === 'EN' ? "See Our Artists" : "Nos Artistes"}
            subtitle={language === 'EN' ? "The Roster" : "Le Registre"}
-           bg="/media/Artistes/leslie%20main.png"
+           bg="/media/Artistes/leslie%20main.jpg"
            onClick={() => setBuyerView('CATALOG')}
          />
          <MenuCard

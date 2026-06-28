@@ -14,11 +14,11 @@ import { LiquidGlassCycler } from './LiquidGlassCycler';
 
 // Photos that cycle through the Ceilidh hero's liquid-glass carousel.
 const CEILIDH_HERO_IMAGES = [
-  '/media/Auberge%20photos/Maison%20main.png',
+  '/media/Auberge%20photos/Maison%20main.jpg',
   '/media/Artistes/aliel%20campfire.jpg',
   '/media/inn/amphiteatre%20banana.jpg',
   '/media/inn/golden%20drone%20copy.jpg',
-  '/media/inn/yourte.png',
+  '/media/inn/yourte.jpg',
 ];
 
 interface ShowTicket {
@@ -2770,7 +2770,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
           { id: 'event',       fr: "L'Événement",  en: "The Event",   image: '/media/inn/golden%20drone%20copy.jpg' },
           { id: 'programme',   fr: 'Programme',    en: 'Programme',   image: '/media/inn/amphiteatre%20banana.jpg' },
           { id: 'equipes',     fr: 'Équipes',      en: 'Teams',       image: '/media/Artistes/aliel%20campfire.jpg' },
-          { id: 'hebergement', fr: 'Hébergement',  en: 'Lodging',     image: '/media/inn/yourte.png' },
+          { id: 'hebergement', fr: 'Hébergement',  en: 'Lodging',     image: '/media/inn/yourte.jpg' },
           { id: 'pratique',    fr: 'Pratique',     en: 'Practical',   image: '/media/Auberge%20photos/nature%20coco%20upscale.jpg' },
         ] as const).map(panel => {
           const isActive = activePanel === panel.id;
@@ -3138,7 +3138,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                         <ScrollFade delay={150}>
                           <div className="relative overflow-hidden min-h-[520px] flex flex-col justify-center p-10 md:p-14 lg:p-20">
                             <div className="absolute inset-0">
-                              <img src="/media/Auberge%20photos/Maison%20main.png" alt="" className="w-full h-full object-cover opacity-25" />
+                              <img src="/media/Auberge%20photos/Maison%20main.jpg" alt="" className="w-full h-full object-cover opacity-25" />
                               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-[#050505]/40" />
                               <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#d4af37]/5" />
                             </div>
@@ -3341,7 +3341,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                             musicienne: '/media/inn/musicienne%20banana%202.jpg',
                             theatre: '/media/inn/amphiteatre%20banana.jpg',
                             cinema: '/media/inn/cineast%20banana%202.jpg',
-                            yurt: '/media/inn/yourte.png',
+                            yurt: '/media/inn/yourte.jpg',
                             tiny: '/media/inn/For%20site%20temp%20mini%20(1).jpg',
                           };
                           const photo = roomPhotos[room.id];

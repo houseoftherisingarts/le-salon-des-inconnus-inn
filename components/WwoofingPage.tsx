@@ -48,9 +48,9 @@ const ACCOMMODATION_OPTIONS = [
 const ACCOMMODATION_IMAGES: Record<string, string> = {
   shared:   '/media/Financement%20Artistique/centered%20copy.jpg',
   private:  '/media/inn/ecrivaine%20banana.jpg',
-  yurt:     '/media/inn/yourte.png',
+  yurt:     '/media/inn/yourte.jpg',
   tent:     '/media/Auberge%20photos/nature%20coco%20upscale.jpg',
-  flexible: '/media/inn/yourte.png',
+  flexible: '/media/inn/yourte.jpg',
 };
 
 const MIN_DAYS = 7;
@@ -141,7 +141,7 @@ const APPLY_SECTIONS: {
   {
     id: 'needs', number: '06',
     titleFr: 'Vos Besoins', titleEn: 'Your Needs',
-    image: '/media/Auberge%20photos/biblio.png',
+    image: '/media/Auberge%20photos/biblio.jpg',
     quoteFr: "Pour bien donner, il faut savoir recevoir.",
     quoteEn: "To give well, one must know how to receive.",
   },

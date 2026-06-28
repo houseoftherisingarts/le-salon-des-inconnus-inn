@@ -246,9 +246,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
         <div className="comm-hero-in px-6 pt-6 pb-1">
           <div className="mb-5"><Eyebrow>{t('A place opens', 'Une place se libère')}</Eyebrow></div>
-          <h2 className="font-fraunces comm-title" style={{ color: T.ink, fontSize: 'clamp(2.5rem, 11vw, 3.6rem)', lineHeight: 0.94, letterSpacing: '-0.02em' }}>
+          <h1 className="font-fraunces comm-title" style={{ color: T.ink, fontSize: 'clamp(2.5rem, 11vw, 3.6rem)', lineHeight: 0.94, letterSpacing: '-0.02em' }}>
             {t('Join the community', 'Faire partie de la communauté')}
-          </h2>
+          </h1>
           <p className="font-fraunces-it mt-4" style={{ color: T.ink, fontSize: 'clamp(1.1rem, 4.6vw, 1.4rem)', lineHeight: 1.34, maxWidth: '34ch' }}>
             {t(
               'Come live in a lasting place, with people of heart and travellers passing through.',
@@ -279,9 +279,9 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-16 md:pb-24" data-parallax="-0.10" data-parallax-fade="0.001">
           <div className="comm-hero-in max-w-4xl">
             <div className="mb-7"><Eyebrow>{t('A place opens', 'Une place se libère')}</Eyebrow></div>
-            <h2 className="font-fraunces comm-title" style={{ color: T.ink, fontSize: 'clamp(2.9rem, 7.4vw, 6.6rem)', lineHeight: 0.92, letterSpacing: '-0.02em' }}>
+            <h1 className="font-fraunces comm-title" style={{ color: T.ink, fontSize: 'clamp(2.9rem, 7.4vw, 6.6rem)', lineHeight: 0.92, letterSpacing: '-0.02em' }}>
               {t('Join the community', 'Faire partie de la communauté')}
-            </h2>
+            </h1>
             <p className="font-fraunces-it mt-6" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', lineHeight: 1.32, maxWidth: '38ch', textShadow: '0 1px 18px rgba(0,0,0,0.7)' }}>
               {t(
                 'Come live in a lasting place, with people of heart and travellers passing through.',

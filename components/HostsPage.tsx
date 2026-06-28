@@ -170,7 +170,7 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
     {
       name: "Evinali T. St-Laurent",
       role: language === 'EN' ? "The Storyteller" : "Le Conteur",
-      image: "/media/Artistes/evi%20wide.png",
+      image: "/media/Artistes/evi%20wide.jpg",
       flavor: language === 'EN' ? "Weaving tales and connections with the threads of time, creating the narrative fabric of the house." : "Tissant des récits et des liens avec les fils du temps, créant le tissu narratif de la maison.",
       objectPosition: "top"
     },

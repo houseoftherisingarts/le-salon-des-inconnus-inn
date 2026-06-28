@@ -61,7 +61,7 @@ interface Props {
 const CINE_FRAME_COUNT = 48;
 
 const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
-const MASSAGE_PHOTO = '/media/massage/massage%20andre.png';
+const MASSAGE_PHOTO = '/media/massage/massage%20andre.jpg';
 const ESPACE_COVER_PHOTO = '/media/Auberge%20photos/jardins%20auberge.jpg';
 
 // 12 spaces shown in the L'Espace 3D deck.

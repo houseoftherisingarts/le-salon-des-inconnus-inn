@@ -127,6 +127,14 @@ export const PAGE_META = {
     EN: { title: "Wwoofing in Outaouais | Le Salon des Inconnus, Namur", description: "Wwoofing program at Maison Favier: 4 hours of work a day in exchange for room, board and shared community. Min. 7-day stays in Namur, Outaouais.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },
     FR: { title: "Programme de Wwoofing en Outaouais | Le Salon des Inconnus", description: "Programme de wwoofing à la Maison Favier : 4 heures de travail par jour en échange du gîte, du couvert et de la vie communautaire. Séjour min. 7 jours.", keywords: "Wwoofing Québec, Wwoofing Outaouais, Ferme bénévole Québec" }
   },
+  COMMUNITY: {
+    EN: { title: "Join the Community | Le Salon des Inconnus, Namur", description: "Live and work at Le Salon des Inconnus in Namur: a paid resident-member place, housed in the converted bus, at the heart of an artists' inn in Outaouais.", keywords: "intentional community Quebec, live in community Outaouais, resident member, artist community Quebec" },
+    FR: { title: "Faire partie de la communauté | Le Salon des Inconnus", description: "Vivre et travailler au Salon des Inconnus, à Namur : une place de membre résident rémunérée, logé dans le bus aménagé, au cœur d'une auberge d'artistes en Outaouais.", keywords: "communauté intentionnelle Québec, vivre en communauté Outaouais, membre résident, communauté d'artistes" }
+  },
+  DONATION: {
+    EN: { title: "Support Le Salon des Inconnus | Donate", description: "Support the artists' inn Le Salon des Inconnus in Namur, Outaouais. Every gift helps keep the place, the residencies and the events alive.", keywords: "support artists Quebec, donate" },
+    FR: { title: "Soutenir Le Salon des Inconnus | Faire un don", description: "Soutenez l'auberge d'artistes Le Salon des Inconnus à Namur, en Outaouais. Chaque don aide à faire vivre le lieu, les résidences et les événements.", keywords: "soutenir artistes Québec, faire un don" }
+  },
   MY_PROFILE: {
     EN: { title: "My Profile | Le Salon des Inconnus", description: "Your member space at Le Salon des Inconnus.", keywords: "" },
     FR: { title: "Mon Profil | Le Salon des Inconnus", description: "Votre espace membre au Salon des Inconnus.", keywords: "" }
@@ -146,3 +154,16 @@ export const PAGE_META = {
 } as const;
 
 export type ViewKey = keyof typeof PAGE_META;
+
+// Social/AI share image per route — ABSOLUTE URLs (crawlers require absolute).
+// Routes not listed fall back to DEFAULT_OG_IMAGE.
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`;
+export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
+  INN:            `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
+  PETITE_MONNAIE: `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  COMMUNITY:      `${SITE_URL}/media/inn/us%20copy.jpg`,
+  KITCHEN:        `${SITE_URL}/media/Auberge%20photos/cuisine%20grande.jpg`,
+  MASSOTHERAPY:   `${SITE_URL}/media/massage/massage%20andre.jpg`,
+  WWOOFING:       `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  HOSTS:          `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+};
