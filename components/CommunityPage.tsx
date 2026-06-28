@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import type { User } from 'firebase/auth';
 import { AuthModal, type MemberProfile } from './AuthModal';
 import { CommunityMembershipSection } from './CommunityMembershipSection';
+import { SeoBlock } from './SeoBlock';
 
 // Dedicated page for the paid resident-member offer ("Faire partie de la
 // communauté"), at /communaute. Separate from the volunteer wwoofing page.
@@ -48,6 +49,8 @@ export const CommunityPage: React.FC<Props> = ({
           autoOpen={authPending}
           onRequestAuth={() => { setAuthPending(true); setShowAuth(true); }}
         />
+
+        <SeoBlock viewKey="COMMUNITY" language={language} />
 
         <footer className="px-6 md:px-12 lg:px-20 py-16 border-t border-[#c5a059]/10 bg-[#050505]">
           <div className="max-w-6xl flex flex-wrap items-center gap-8">

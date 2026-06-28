@@ -47,10 +47,116 @@ type PerLanguage<T> = { FR: T; EN: T };
 /** Pages that get a full SeoBlock. Other pages can inherit from INN. */
 export type SeoViewKey = Extract<
   ViewKey,
-  'INN' | 'WWOOFING' | 'EVENTS' | 'CEILIDH' | 'MASSOTHERAPY' | 'KITCHEN' | 'HOSTS' | 'GUIDE'
+  'INN' | 'WWOOFING' | 'EVENTS' | 'CEILIDH' | 'MASSOTHERAPY' | 'KITCHEN' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'COMMUNITY'
 >;
 
 export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
+  // ───────────────────────────────────────────────────────────────────────────
+  PETITE_MONNAIE: {
+    FR: {
+      h1: "La Petite Monnaie — la monnaie locale de la Petite-Nation (Outaouais, Québec)",
+      kicker: "Économie locale",
+      sectionTitle: "La monnaie locale de la Petite-Nation",
+      paragraphs: [
+        "La Petite Monnaie est la monnaie locale et communautaire de la Petite-Nation, dans la MRC de Papineau, en Outaouais. Une petite-monnaie vaut un dollar canadien, et chaque billet dépensé reste dans la région, chez les artisans, les fermes, les cafés et les galeries de la vallée. Elle est portée par la Coopérative de solidarité Place du Marché, à Ripon, et plus de 150 commerces l'acceptent.",
+        "On s'en procure de quatre façons : sur l'application mobile Petite-monnaie, aux onze bureaux de change répartis dans la vallée, en ligne avec Zeffy, ou par la poste. À chaque recharge, une bonification de 5 % s'ajoute au solde : payez 100 $, repartez avec 105 petites-monnaies. Le Salon des Inconnus, à Namur, est l'un des onze bureaux de change : on y échange ses premiers billets et on repart avec la carte de la région.",
+      ],
+      internalLinks: [
+        { to: 'GUIDE', label: 'le guide local de la Petite-Nation' },
+        { to: 'INN', label: "l'auberge du Salon des Inconnus à Namur" },
+        { to: 'KITCHEN', label: 'la cuisine et le café barista de l\'auberge' },
+      ],
+      externalLinks: [
+        { to: 'https://pmonnaie.ca', label: 'Petite-monnaie (site officiel)' },
+        { to: 'https://tourismeoutaouais.com', label: 'Tourisme Outaouais' },
+      ],
+      faq: [
+        { q: "C'est quoi la Petite Monnaie ?", a: "La monnaie locale et communautaire de la Petite-Nation (MRC de Papineau, Outaouais). Une petite-monnaie vaut un dollar canadien et s'accepte uniquement dans les commerces participants de la région." },
+        { q: "Combien vaut une petite-monnaie ?", a: "Une petite-monnaie égale un dollar canadien. À chaque recharge, une bonification de 5 % s'ajoute : 100 $ donnent 105 petites-monnaies." },
+        { q: "Où s'en procurer ?", a: "Sur l'application mobile Petite-monnaie, aux onze bureaux de change de la vallée, en ligne avec Zeffy, ou par la poste. Le Salon des Inconnus à Namur est l'un des bureaux de change." },
+        { q: "Quels commerces l'acceptent ?", a: "Plus de 150 commerces de la MRC de Papineau, dont des fermes, boulangeries, cafés-galeries, chocolateries et le Festival Médiéval de Montpellier. La liste complète vit sur pmonnaie.ca et dans l'application." },
+        { q: "Peut-on en obtenir au Salon des Inconnus ?", a: "Oui. Le Salon des Inconnus, à Namur, est l'un des onze bureaux de change. On y achète ses premières petites-monnaies et on repart avec la carte de la région." },
+      ],
+    },
+    EN: {
+      h1: "La Petite Monnaie — the local currency of the Petite-Nation (Outaouais, Québec)",
+      kicker: "Local economy",
+      sectionTitle: "The local currency of the Petite-Nation",
+      paragraphs: [
+        "La Petite Monnaie is the local, community currency of the Petite-Nation, in the MRC de Papineau, Outaouais. One petite-monnaie is worth one Canadian dollar, and every note you spend stays in the region, with the artisans, farms, cafés and galleries of the valley. It is run by the Coopérative de solidarité Place du Marché in Ripon, and more than 150 businesses accept it.",
+        "There are four ways to get it: the Petite-monnaie mobile app, the eleven exchange points across the valley, online through Zeffy, or by mail. Every top-up adds a 5% bonus: pay 100 $, leave with 105 petites-monnaies. Le Salon des Inconnus, in Namur, is one of the eleven exchange points, where you can pick up your first notes and grab the regional map.",
+      ],
+      internalLinks: [
+        { to: 'GUIDE', label: 'the local guide to the Petite-Nation' },
+        { to: 'INN', label: 'Le Salon des Inconnus inn in Namur' },
+        { to: 'KITCHEN', label: 'the kitchen and barista coffee at the inn' },
+      ],
+      externalLinks: [
+        { to: 'https://pmonnaie.ca', label: 'Petite-monnaie (official site)' },
+        { to: 'https://tourismeoutaouais.com', label: 'Tourisme Outaouais' },
+      ],
+      faq: [
+        { q: "What is La Petite Monnaie?", a: "The local, community currency of the Petite-Nation (MRC de Papineau, Outaouais). One petite-monnaie is worth one Canadian dollar and is accepted only at participating businesses in the region." },
+        { q: "How much is one petite-monnaie worth?", a: "One petite-monnaie equals one Canadian dollar. Every top-up adds a 5% bonus: 100 $ gives you 105 petites-monnaies." },
+        { q: "Where can I get it?", a: "On the Petite-monnaie mobile app, at the eleven exchange points in the valley, online through Zeffy, or by mail. Le Salon des Inconnus in Namur is one of the exchange points." },
+        { q: "Which businesses accept it?", a: "More than 150 businesses across the MRC de Papineau, including farms, bakeries, café-galleries, chocolate makers and the Medieval Festival of Montpellier. The full list lives on pmonnaie.ca and in the app." },
+        { q: "Can I get it at Le Salon des Inconnus?", a: "Yes. Le Salon des Inconnus, in Namur, is one of the eleven exchange points. You can buy your first petites-monnaies there and leave with the regional map." },
+      ],
+    },
+  },
+  // ───────────────────────────────────────────────────────────────────────────
+  COMMUNITY: {
+    FR: {
+      h1: "Faire partie de la communauté du Salon des Inconnus — place de membre résident (Namur, Outaouais)",
+      kicker: "Vivre sur place",
+      sectionTitle: "Une place de membre résident s'ouvre",
+      paragraphs: [
+        "Le Salon des Inconnus est une petite communauté grandissante, enracinée dans une auberge familiale à Namur, en Outaouais. Il y a des membres permanents qui vivent sur place et des membres de passage qui laissent leur trace. En ce moment, une place se libère : vivre dans le bus aménagé, avec accès complet à l'auberge et au terrain.",
+        "C'est un vrai métier. La tâche principale est le ménage des chambres et des espaces communs, au cœur de l'expérience des invités, avec quelques moments où l'on tient le fort et des tâches partagées de la vie commune. L'approche est hybride : une sécurité de base et un salaire de base au-dessus du wwoofing communautaire, en plus du logement et des avantages, tout en gardant à la personne la liberté de maintenir sa propre activité économique, ce qui convient bien aux nomades numériques.",
+      ],
+      internalLinks: [
+        { to: 'WWOOFING', label: 'le wwoofing bénévole', hint: 'séjours plus courts en échange de quatre heures de travail par jour' },
+        { to: 'INN', label: "l'auberge et les espaces communs" },
+        { to: 'KITCHEN', label: 'la cuisine de la maisonnée' },
+      ],
+      externalLinks: [
+        { to: 'https://wwoof.ca', label: 'WWOOF Canada' },
+        { to: 'https://tourismeoutaouais.com', label: 'Tourisme Outaouais' },
+      ],
+      faq: [
+        { q: "C'est quoi la place de membre résident ?", a: "Une place pour vivre sur place au Salon des Inconnus, à Namur, et prendre soin du lieu au quotidien. La place qui se libère en ce moment, c'est habiter le bus aménagé, avec accès complet à l'auberge et au terrain." },
+        { q: "Est-ce que c'est rémunéré ?", a: "Oui, c'est un vrai métier. L'approche est hybride : un salaire de base au-dessus du wwoofing communautaire, en plus du logement et des avantages, tout en te laissant libre de garder ta propre activité économique. C'est idéal pour les nomades numériques." },
+        { q: "Où est-ce qu'on est logé ?", a: "Dans le bus aménagé, équipé et chauffé, avec accès complet à l'auberge, à la cuisine et au terrain. Tu es chez toi dans ton bus, tout en faisant partie de la vie de la maison." },
+        { q: "Quelles sont les tâches ?", a: "Surtout le ménage des chambres et des espaces communs, au cœur de l'expérience des invités. S'ajoutent des moments où tu tiens le fort quand on est partis, et des tâches partagées entre membres parce qu'on vit ensemble." },
+        { q: "Quelle est la différence avec le wwoofing ?", a: "Le wwoofing est bénévole et plutôt court, en échange du gîte et du couvert. La place de membre résident est un engagement plus durable et rémunéré, au centre de la raison d'être du lieu." },
+      ],
+    },
+    EN: {
+      h1: "Join the community at Le Salon des Inconnus — resident-member place (Namur, Outaouais)",
+      kicker: "Living on site",
+      sectionTitle: "A resident-member place is opening",
+      paragraphs: [
+        "Le Salon des Inconnus is a small, growing community rooted in a family inn in Namur, Outaouais. There are permanent members who live on site and members who pass through and leave their mark. Right now, a place is opening up: living in the converted bus, with full access to the inn and the land.",
+        "This is real work. The main task is housekeeping the rooms and common spaces, at the heart of the guests' experience, with moments of holding the fort and shared tasks of daily life together. The approach is hybrid: a base of security and a base wage above community wwoofing, plus housing and perks, while leaving the person free to keep their own economic activity going, which suits digital nomads well.",
+      ],
+      internalLinks: [
+        { to: 'WWOOFING', label: 'volunteer wwoofing', hint: 'shorter stays in exchange for four hours of work a day' },
+        { to: 'INN', label: 'the inn and common spaces' },
+        { to: 'KITCHEN', label: 'the household kitchen' },
+      ],
+      externalLinks: [
+        { to: 'https://wwoof.ca', label: 'WWOOF Canada' },
+        { to: 'https://tourismeoutaouais.com', label: 'Tourisme Outaouais' },
+      ],
+      faq: [
+        { q: "What is the resident-member place?", a: "A place to live on site at Le Salon des Inconnus, in Namur, and care for the space day to day. The spot opening up now is living in the converted bus, with full access to the inn and the land." },
+        { q: "Is it paid?", a: "Yes, it is real work. The approach is hybrid: a base wage above community wwoofing, plus housing and perks, while leaving you free to keep your own economic activity going. It suits digital nomads well." },
+        { q: "Where do you live?", a: "In the converted bus, equipped and heated, with full access to the inn, the kitchen and the land. You are home in your own bus, while being part of the life of the house." },
+        { q: "What are the tasks?", a: "Mainly housekeeping the rooms and common spaces, at the heart of the guests' experience. On top of that, holding the fort while the hosts are away, and tasks shared among members because we live together." },
+        { q: "How is it different from wwoofing?", a: "Wwoofing is volunteer and fairly short, in exchange for room and board. The resident-member place is a longer, paid commitment, at the very centre of why the place exists." },
+      ],
+    },
+  },
   // ───────────────────────────────────────────────────────────────────────────
   INN: {
     FR: {

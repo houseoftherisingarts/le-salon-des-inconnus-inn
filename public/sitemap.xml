@@ -58,6 +58,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://lesalondesinconnus.com/guide/petite-monnaie</loc>
+    <lastmod>2026-06-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lesalondesinconnus.com/about</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>

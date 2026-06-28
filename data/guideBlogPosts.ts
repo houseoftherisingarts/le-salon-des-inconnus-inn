@@ -14,7 +14,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     // confirm (the 11 bureaux de change + the artistic/community anchors).
     // Facts from pmonnaie.ca and our own data/petiteMonnaie.ts.
     'petite-monnaie': {
-        _draft: true,
+        _draft: false,
         intro_fr: "La Petite Monnaie est la monnaie locale et communautaire de la Petite-Nation, dans la MRC de Papineau. Une petite-monnaie vaut un dollar canadien, tout simplement, et chaque billet dépensé reste dans la région : chez les artisans, les fermes, les cafés et les galeries qui font vivre la vallée. Plus de 150 commerces l'acceptent. Voici comment elle fonctionne, où s'en procurer, et la liste des commerces qui la prennent, du lac Simon jusqu'aux rives de l'Outaouais.",
         intro_en: "La Petite Monnaie is the local, community currency of the Petite-Nation, in the MRC de Papineau. One petite-monnaie is worth one Canadian dollar, plainly, and every note you spend stays in the region: with the artisans, farms, cafés and galleries that keep the valley alive. More than 150 businesses accept it. Here is how it works, where to get it, and the full list of merchants who take it, from Lac Simon down to the banks of the Ottawa River.",
         sections: [

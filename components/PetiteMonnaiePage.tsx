@@ -8,6 +8,7 @@ import React, { useEffect, useRef } from 'react';
 import { PM_INTRO, PM_PROCURE, PM_BUREAUX } from '../data/petiteMonnaie';
 import { PetiteMonnaieParcours } from './PetiteMonnaieParcours';
 import { PetiteMonnaieCoin } from './PetiteMonnaieCoin';
+import { SeoBlock } from './SeoBlock';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
 
 const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
@@ -263,6 +264,8 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
           </div>
         </div>
       </section>
+
+      <SeoBlock viewKey="PETITE_MONNAIE" language={language} />
     </div>
   );
 };

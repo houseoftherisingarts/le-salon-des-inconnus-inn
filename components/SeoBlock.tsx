@@ -13,6 +13,8 @@ const VIEW_PATHS: Record<SeoViewKey, string> = {
   KITCHEN: '/cuisine',
   HOSTS: '/about',
   GUIDE: '/guide',
+  PETITE_MONNAIE: '/petite-monnaie',
+  COMMUNITY: '/communaute',
 };
 
 // SEO viewKey set as a runtime guard. Anything not in this list is treated as
