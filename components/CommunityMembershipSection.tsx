@@ -99,6 +99,14 @@ const LETTER: { fr: string; en: string }[] = [
     fr: "Côté humain, quelques essentiels comptent pour nous : une communication saine et honnête (savoir nommer les choses, écouter, désamorcer une tension), une certaine légèreté de l'être, l'amour des enfants (il y en a, et ils courent partout), et le goût de cuisiner. D'ailleurs, si la cuisine te tente, sache qu'en cuisinant pour la maisonnée tu es aussi nourri·e gratuitement.",
     en: "On the human side, a few things really matter to us: healthy, honest communication (naming things, listening, easing a tension), a certain lightness of being, a love of children (there are some, and they run everywhere), and a taste for cooking. And if cooking calls to you, know that by cooking for the household you're also fed for free.",
   },
+  {
+    fr: "Concrètement, on cherche une personne qui se sent bien dans un environnement propre et qui a le souci du détail : tasser les meubles avant de passer la balayeuse, remarquer la petite chose qui traîne, ce genre d'attention. Quelqu'un de solide en communication, capable de réguler ses émotions, et qui aime créer des systèmes pour rendre sa contribution plus fluide.",
+    en: "In practice, we're looking for someone who feels good in a clean space and has an eye for detail: nudging the furniture aside before vacuuming, noticing the small thing out of place, that kind of care. Someone solid in communication, able to regulate their emotions, and who enjoys building systems to make their contribution flow.",
+  },
+  {
+    fr: "Et tu peux attendre exactement la même chose de notre part : le même soin dans la communication, la même empathie, le même engagement à se parler pour vrai.",
+    en: "And you can expect exactly the same from us: the same care in communication, the same empathy, the same commitment to talking things through honestly.",
+  },
 ];
 
 const PULLQUOTE = {
@@ -395,6 +403,17 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-8 items-start">
           <Para>{t(body[5].en, body[5].fr)}</Para>
           <Para>{t(body[6].en, body[6].fr)}</Para>
+        </div>
+      </Reveal>
+
+      {/* ── BODY 4 (the profile we're after + reciprocity) ───────────────── */}
+      <Reveal className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
+        <div className="max-w-3xl">
+          <div className="mb-6"><Eyebrow>{t('The profile we look for', "Le profil qu'on cherche")}</Eyebrow></div>
+          <Para>{t(body[7].en, body[7].fr)}</Para>
+          <p className="font-fraunces-it mt-7" style={{ color: T.gold, fontSize: 'clamp(1.15rem, 1.6vw, 1.4rem)', lineHeight: 1.45 }}>
+            {t(body[8].en, body[8].fr)}
+          </p>
         </div>
       </Reveal>
 
