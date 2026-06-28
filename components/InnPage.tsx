@@ -418,7 +418,11 @@ export const InnHero: React.FC<{
 
     const fetchBlobUrl = async (src: string): Promise<string | null> => {
       try {
-        const r = await fetch(`https://images.weserv.nl/?url=${encodeURIComponent(src)}`, { mode: 'cors' });
+        // External (absolute) URLs go through the wsrv.nl proxy for CORS + resize.
+        // Local same-origin images are already optimised and CORS-clean, so fetch
+        // them directly. The proxy 404s on relative URLs.
+        const url = /^https?:\/\//.test(src) ? `https://images.weserv.nl/?url=${encodeURIComponent(src)}` : src;
+        const r = await fetch(url, { mode: 'cors' });
         if (!r.ok) return null;
         return URL.createObjectURL(await r.blob());
       } catch { return null; }
