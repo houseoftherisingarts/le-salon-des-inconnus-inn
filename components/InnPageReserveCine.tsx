@@ -366,9 +366,26 @@ export const InnPageReserveCine: React.FC<Props> = ({
     const onResize = () => { if (canvas) fitCine(); lastP = -1; if (!rafTick) rafTick = requestAnimationFrame(update); };
 
     const start = () => { update(); root.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onResize); };
+    // Safari/iOS only paint a decoded frame after the element has actually played
+    // once. A scrubbed video that is only ever seeked (currentTime) stays on a
+    // black/poster frame there. Prime the decoder with a muted play→pause, then a
+    // tiny seek, so the very first scrubbed frame renders. Harmless on Chrome.
+    const primeVideo = () => {
+      if (!vid) return;
+      const kick = () => {
+        try {
+          const pr = vid.play();
+          if (pr && typeof pr.then === 'function') {
+            pr.then(() => { vid.pause(); vid.currentTime = 0.05; }).catch(() => { vid.currentTime = 0.05; });
+          } else { vid.pause(); vid.currentTime = 0.05; }
+        } catch { /* seeking still works below */ }
+        start();
+      };
+      if (vid.readyState >= 1) kick();
+      else vid.addEventListener('loadedmetadata', kick, { once: true });
+    };
     if (isMobile) start();                          // canvas: frames may still be loading; redraw as they arrive
-    else if (vid && vid.readyState >= 1) start();   // video: wait for metadata so duration is known
-    else if (vid) vid.addEventListener('loadedmetadata', start, { once: true });
+    else primeVideo();                              // video: prime the decoder, then scrub
 
     return () => {
       root.removeEventListener('scroll', onScroll);

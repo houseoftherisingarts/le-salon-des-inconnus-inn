@@ -328,7 +328,7 @@ export const INN_HERO_IMAGES = [
 // by dragging in the focal admin (/?herofocal) and stored in Firestore.
 export const INN_HERO_FOCUS = [
   0.50, // drone — aerial, centred
-  0.68, // maison — house sits right of centre
+  0.32, // maison — house sits left of centre; bias the crop left to centre it
   0.58, // ecrivaine — bed centre-right
   0.66, // musicienne — bed on the right
   0.34, // cineast — bed on the left
