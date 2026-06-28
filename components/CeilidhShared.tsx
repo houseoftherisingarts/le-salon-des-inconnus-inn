@@ -14,11 +14,11 @@ import { LiquidGlassCycler } from './LiquidGlassCycler';
 
 // Photos that cycle through the Ceilidh hero's liquid-glass carousel.
 const CEILIDH_HERO_IMAGES = [
-  'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png',
-  'https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg',
-  'https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg',
-  'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
-  'https://storage.googleapis.com/salondesinconnus/inn/yourte.png',
+  '/media/Auberge%20photos/Maison%20main.png',
+  '/media/Artistes/aliel%20campfire.jpg',
+  '/media/inn/amphiteatre%20banana.jpg',
+  '/media/inn/golden%20drone%20copy.jpg',
+  '/media/inn/yourte.png',
 ];
 
 interface ShowTicket {
@@ -2767,11 +2767,11 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
       {/* ── Image Accordion ────────────────────────────────────────────── */}
       <div className="absolute left-0 right-0 bottom-0 flex flex-row" style={{ top: '57px' }}>
         {([
-          { id: 'event',       fr: "L'Événement",  en: "The Event",   image: 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg' },
-          { id: 'programme',   fr: 'Programme',    en: 'Programme',   image: 'https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg' },
-          { id: 'equipes',     fr: 'Équipes',      en: 'Teams',       image: 'https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg' },
-          { id: 'hebergement', fr: 'Hébergement',  en: 'Lodging',     image: 'https://storage.googleapis.com/salondesinconnus/inn/yourte.png' },
-          { id: 'pratique',    fr: 'Pratique',     en: 'Practical',   image: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg' },
+          { id: 'event',       fr: "L'Événement",  en: "The Event",   image: '/media/inn/golden%20drone%20copy.jpg' },
+          { id: 'programme',   fr: 'Programme',    en: 'Programme',   image: '/media/inn/amphiteatre%20banana.jpg' },
+          { id: 'equipes',     fr: 'Équipes',      en: 'Teams',       image: '/media/Artistes/aliel%20campfire.jpg' },
+          { id: 'hebergement', fr: 'Hébergement',  en: 'Lodging',     image: '/media/inn/yourte.png' },
+          { id: 'pratique',    fr: 'Pratique',     en: 'Practical',   image: '/media/Auberge%20photos/nature%20coco%20upscale.jpg' },
         ] as const).map(panel => {
           const isActive = activePanel === panel.id;
           return (
@@ -3054,7 +3054,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                         <ScrollFade>
                           <div className="relative overflow-hidden min-h-[520px] flex flex-col justify-center p-10 md:p-14 lg:p-20">
                             <div className="absolute inset-0">
-                              <video src="https://storage.googleapis.com/salondesinconnus/inn/Temp%20video%20site.mov" autoPlay muted loop playsInline className="w-full h-full object-cover opacity-30" />
+                              <video src="/media/inn/Temp%20video%20site.mov" autoPlay muted loop playsInline className="w-full h-full object-cover opacity-30" />
                               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-[#050505]/50" />
                               <div className="absolute inset-y-0 right-0 w-px bg-white/5 hidden md:block" />
                             </div>
@@ -3138,7 +3138,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                         <ScrollFade delay={150}>
                           <div className="relative overflow-hidden min-h-[520px] flex flex-col justify-center p-10 md:p-14 lg:p-20">
                             <div className="absolute inset-0">
-                              <img src="https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png" alt="" className="w-full h-full object-cover opacity-25" />
+                              <img src="/media/Auberge%20photos/Maison%20main.png" alt="" className="w-full h-full object-cover opacity-25" />
                               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-[#050505]/40" />
                               <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#d4af37]/5" />
                             </div>
@@ -3216,7 +3216,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                       {/* Right: photo */}
                       <div className="relative min-h-[420px] overflow-hidden">
                         <img
-                          src="https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg"
+                          src="/media/Artistes/aliel%20campfire.jpg"
                           alt="Campfire at Maison Favier"
                           className="absolute inset-0 w-full h-full object-cover"
                         />
@@ -3337,12 +3337,12 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                           const occupants = allRegistrations.filter(r => r.roomId === room.id);
                           const isMyRoom = userRegistration?.roomId === room.id;
                           const roomPhotos: Record<string, string> = {
-                            ecrivaine: 'https://storage.googleapis.com/salondesinconnus/inn/ecrivaine%20banana.jpg',
-                            musicienne: 'https://storage.googleapis.com/salondesinconnus/inn/musicienne%20banana%202.jpg',
-                            theatre: 'https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg',
-                            cinema: 'https://storage.googleapis.com/salondesinconnus/inn/cineast%20banana%202.jpg',
-                            yurt: 'https://storage.googleapis.com/salondesinconnus/inn/yourte.png',
-                            tiny: 'https://storage.googleapis.com/salondesinconnus/inn/For%20site%20temp%20mini%20(1).jpg',
+                            ecrivaine: '/media/inn/ecrivaine%20banana.jpg',
+                            musicienne: '/media/inn/musicienne%20banana%202.jpg',
+                            theatre: '/media/inn/amphiteatre%20banana.jpg',
+                            cinema: '/media/inn/cineast%20banana%202.jpg',
+                            yurt: '/media/inn/yourte.png',
+                            tiny: '/media/inn/For%20site%20temp%20mini%20(1).jpg',
                           };
                           const photo = roomPhotos[room.id];
                           return (
@@ -3544,7 +3544,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                     <section className="relative py-24 text-center overflow-hidden">
                       <div className="absolute inset-0">
                         <img
-                          src="https://storage.googleapis.com/salondesinconnus/inn/us%20copy.jpg"
+                          src="/media/inn/us%20copy.jpg"
                           alt=""
                           className="w-full h-full object-cover opacity-15"
                         />

@@ -64,7 +64,7 @@ const TARGET_VOLUME = 0.63;
 // These block the loading screen. Minimized to ensuring immediate visual quality.
 const INITIAL_ASSETS = [
   // Hero Image (InnPage) - Width 1920
-  getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg", 1920),
+  getOptimizedUrl("/media/inn/golden%20drone%20copy.jpg", 1920),
   
   // Textures (InnPage) - Width 1000
   getOptimizedUrl("https://raw.githubusercontent.com/SochavaAG/example-assets/master/fog1.png", 1000),
@@ -73,7 +73,7 @@ const INITIAL_ASSETS = [
   getOptimizedUrl("https://www.transparenttextures.com/patterns/paisley.png", 1000),
   
   // History Image (Visible on first scroll/swipe) - Width 800 (Card variant)
-  getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg", 800),
+  getOptimizedUrl("/media/Financement%20Artistique/centered%20copy.jpg", 800),
 
   // Logo - Kept raw to match the hardcoded <img> in LoadingScreen (avoids cache miss)
   "https://i.imgur.com/B1YfPqn.png"
@@ -83,15 +83,15 @@ const INITIAL_ASSETS = [
 // These are loaded silently in the background when the user is idle.
 const DEFERRED_ASSETS = [
     // Manor Hero (High Res for Detail View)
-    getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg", 1920),
+    getOptimizedUrl("/media/Financement%20Artistique/centered%20copy.jpg", 1920),
     // Kitchen Portal
-    getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg", 800),
+    getOptimizedUrl("/media/Cuisine/Plating%20alexis%20ai%20(1).jpg", 800),
     // Massage Portal
-    getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/massage/massage%20andre.png", 800),
+    getOptimizedUrl("/media/massage/massage%20andre.png", 800),
     // Local Guide Parallax
-    getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg", 1920),
+    getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1920),
     // Gallery Highlight
-    getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png", 1920),
+    getOptimizedUrl("/media/Auberge%20photos/Maison%20main.png", 1920),
     // Listing Thumbnails (First image of each accommodation, Card size)
     ...ACCOMMODATIONS.map(acc => getOptimizedUrl(acc.images[0], 800))
 ];
@@ -409,7 +409,7 @@ const App: React.FC = () => {
             name: 'Le Salon des Inconnus',
             url: SITE_URL,
           },
-          image: 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
+          image: '/media/inn/golden%20drone%20copy.jpg',
           url: `${SITE_URL}/ceilidh`,
         });
       }

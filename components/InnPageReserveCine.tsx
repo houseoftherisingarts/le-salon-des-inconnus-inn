@@ -22,7 +22,7 @@ import {
 } from './InnPage';
 import { RoomOrbProvider } from './RoomOrbModal';
 
-const CEILIDH_DOORS_PHOTO = 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg';
+const CEILIDH_DOORS_PHOTO = '/media/inn/golden%20drone%20copy.jpg';
 const WWOOFING_DOORS_PHOTO = '/wwoof/bw-6.jpg';
 const CEILIDH_DOORS_DATE = new Date('2026-05-21T12:00:00');
 
@@ -60,9 +60,9 @@ interface Props {
 // touch where video.currentTime seeking is not.
 const CINE_FRAME_COUNT = 48;
 
-const KITCHEN_PHOTO = 'https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg';
-const MASSAGE_PHOTO = 'https://storage.googleapis.com/salondesinconnus/massage/massage%20andre.png';
-const ESPACE_COVER_PHOTO = 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jardins%20auberge.jpg';
+const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
+const MASSAGE_PHOTO = '/media/massage/massage%20andre.png';
+const ESPACE_COVER_PHOTO = '/media/Auberge%20photos/jardins%20auberge.jpg';
 
 // 12 spaces shown in the L'Espace 3D deck.
 // FR text restored verbatim from the original SpacesGrid in InnPage.tsx — never paraphrase or

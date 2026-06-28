@@ -193,11 +193,11 @@ export const KitchenPage: React.FC<KitchenPageProps> = ({ onNavigate, language }
   }, []);
 
   const signatureImages = [
-      "https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg",
-      "https://storage.googleapis.com/salondesinconnus/Cuisine/13736082_681443872003519_178441360_n_edited.jpg",
-      "https://storage.googleapis.com/salondesinconnus/Cuisine/bubbles.jpg",
-      "https://storage.googleapis.com/salondesinconnus/Cuisine/IMG_20161116_161655.jpg",
-      "https://storage.googleapis.com/salondesinconnus/Cuisine/sauce.jpg"
+      "/media/Cuisine/Plating%20alexis%20ai%20(1).jpg",
+      "/media/Cuisine/13736082_681443872003519_178441360_n_edited.jpg",
+      "/media/Cuisine/bubbles.jpg",
+      "/media/Cuisine/IMG_20161116_161655.jpg",
+      "/media/Cuisine/sauce.jpg"
   ];
 
   const services = [
@@ -236,33 +236,33 @@ export const KitchenPage: React.FC<KitchenPageProps> = ({ onNavigate, language }
     { 
         title: "Mariages", 
         type: 'IMAGE', 
-        src: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20Mariage%20Namur.png" 
+        src: "/media/Cuisine/Menu%20Mariage%20Namur.png" 
     },
     { 
         title: "Traiteur Mariage Futuriste", 
         type: 'FLIP', 
-        front: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20neon.jpg",
-        back: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20Cocktails.jpg"
+        front: "/media/Cuisine/Menu%20neon.jpg",
+        back: "/media/Cuisine/Menu%20Cocktails.jpg"
     },
     { 
         title: "Traiteur Mariage", 
         type: 'IMAGE', 
-        src: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20MAriage%20Theo.jpg" 
+        src: "/media/Cuisine/Menu%20MAriage%20Theo.jpg" 
     },
     { 
         title: "Soupers Privés", 
         type: 'IMAGE', 
-        src: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20BBQ%20mariage.png" 
+        src: "/media/Cuisine/Menu%20BBQ%20mariage.png" 
     },
     { 
         title: "Installations Artistiques", 
         type: 'IMAGE', 
-        src: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20Artistique%20Phenomenal.png" 
+        src: "/media/Cuisine/Menu%20Artistique%20Phenomenal.png" 
     },
     { 
         title: "Menu Mariage Végé", 
         type: 'IMAGE', 
-        src: "https://storage.googleapis.com/salondesinconnus/Cuisine/Menu%20MAriage%20Theo.jpg" 
+        src: "/media/Cuisine/Menu%20MAriage%20Theo.jpg" 
     }
   ];
 
@@ -312,7 +312,7 @@ export const KitchenPage: React.FC<KitchenPageProps> = ({ onNavigate, language }
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <OptimizedImage
-                        src="https://storage.googleapis.com/salondesinconnus/Cuisine/waiter.jpg" 
+                        src="/media/Cuisine/waiter.jpg" 
                         alt="Plating Art" 
                         className="w-full h-full"
                         imageClassName="w-full h-full object-cover object-center"
@@ -361,7 +361,7 @@ export const KitchenPage: React.FC<KitchenPageProps> = ({ onNavigate, language }
                   </RevealOnScroll>
                   <div className="order-1 md:order-2 relative h-[500px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
                       <OptimizedImage
-                        src="https://storage.googleapis.com/salondesinconnus/Cuisine/alexis%20chef.jpg" 
+                        src="/media/Cuisine/alexis%20chef.jpg" 
                         alt="Chef" 
                         className="w-full h-full"
                         imageClassName="w-full h-full object-cover transition-all duration-1000 hover:scale-105"

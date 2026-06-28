@@ -40,7 +40,7 @@ const SALON_EVENTS: EventEntry[] = [
     endDate: '2026-05-25',
     isNext: true,
     status: 'open',
-    image: 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
+    image: '/media/inn/golden%20drone%20copy.jpg',
     navigateTo: 'CEILIDH',
     tag: 'Next Event',
     tag_fr: 'Prochain Événement',

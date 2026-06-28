@@ -1,6 +1,6 @@
 import type { ArtistProfile } from './types';
 
-const ARTIST_IMG_BASE = "https://storage.googleapis.com/salondesinconnus/Artistes/";
+const ARTIST_IMG_BASE = "/media/Artistes/";
 
 export const ARTISTS_ROSTER: ArtistProfile[] = [
   {

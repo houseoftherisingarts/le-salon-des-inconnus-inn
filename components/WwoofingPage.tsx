@@ -46,11 +46,11 @@ const ACCOMMODATION_OPTIONS = [
 // When the user is on the "Logistics" section and changes the dropdown,
 // the sticky rail picture switches to the matching accommodation.
 const ACCOMMODATION_IMAGES: Record<string, string> = {
-  shared:   'https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg',
-  private:  'https://storage.googleapis.com/salondesinconnus/inn/ecrivaine%20banana.jpg',
-  yurt:     'https://storage.googleapis.com/salondesinconnus/inn/yourte.png',
-  tent:     'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg',
-  flexible: 'https://storage.googleapis.com/salondesinconnus/inn/yourte.png',
+  shared:   '/media/Financement%20Artistique/centered%20copy.jpg',
+  private:  '/media/inn/ecrivaine%20banana.jpg',
+  yurt:     '/media/inn/yourte.png',
+  tent:     '/media/Auberge%20photos/nature%20coco%20upscale.jpg',
+  flexible: '/media/inn/yourte.png',
 };
 
 const MIN_DAYS = 7;
@@ -106,42 +106,42 @@ const APPLY_SECTIONS: {
   {
     id: 'contact', number: '01',
     titleFr: 'Contact', titleEn: 'Contact',
-    image: 'https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg',
+    image: '/media/Financement%20Artistique/centered%20copy.jpg',
     quoteFr: "Avant d'ouvrir la porte, on aime savoir qui frappe.",
     quoteEn: "Before we open the door, we like to know who's knocking.",
   },
   {
     id: 'tasks', number: '02',
     titleFr: 'Tâches & Expérience', titleEn: 'Tasks & Experience',
-    image: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg',
+    image: '/media/Auberge%20photos/nature%20coco%20upscale.jpg',
     quoteFr: 'Les mains parlent souvent plus que les mots.',
     quoteEn: 'Hands often say more than words.',
   },
   {
     id: 'health', number: '03',
     titleFr: 'Diète & Santé', titleEn: 'Diet & Health',
-    image: 'https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg',
+    image: '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg',
     quoteFr: "On cuisine pour vous comme pour nous, avec attention.",
     quoteEn: "We cook for you the way we cook for ourselves, with care.",
   },
   {
     id: 'logistics', number: '04',
     titleFr: 'Logistique', titleEn: 'Logistics',
-    image: 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
+    image: '/media/inn/golden%20drone%20copy.jpg',
     quoteFr: "Il y a plusieurs façons de dormir ici.",
     quoteEn: "There are several ways to sleep here.",
   },
   {
     id: 'dates', number: '05',
     titleFr: 'Dates Demandées', titleEn: 'Requested Dates',
-    image: 'https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg',
+    image: '/media/Artistes/aliel%20campfire.jpg',
     quoteFr: "Sept jours minimum. Moins, et on ne se rencontre pas vraiment.",
     quoteEn: "Seven days minimum. Less than that, and we don't really meet.",
   },
   {
     id: 'needs', number: '06',
     titleFr: 'Vos Besoins', titleEn: 'Your Needs',
-    image: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/biblio.png',
+    image: '/media/Auberge%20photos/biblio.png',
     quoteFr: "Pour bien donner, il faut savoir recevoir.",
     quoteEn: "To give well, one must know how to receive.",
   },

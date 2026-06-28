@@ -315,7 +315,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
       {/* Hero — push below the fixed header */}
       <div className="relative h-[45vh] min-h-[300px] mt-14 flex items-end overflow-hidden">
         <img
-          src={getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg", 1400)}
+          src={getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1400)}
           alt="Petite-Nation"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />

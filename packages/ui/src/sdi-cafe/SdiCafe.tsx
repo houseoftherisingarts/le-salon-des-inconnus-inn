@@ -22,22 +22,22 @@ type CreatorView = 'CINEMA' | 'GALLERY' | 'MUSIC' | 'CREATE' | 'ROSTER';
 // --- DATA CONSTANTS ---
 
 const PARTNER_PRODUCTIONS = [
-    { title: "L'habitude de mourir", artist: "La Bronze", type: "Music Video", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/vignes%20et%20cam.jpg" },
-    { title: "Where the Witch Lives", artist: "Mariel Sharp", type: "Short Film", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/WHERE-THE-WITCH-LIVES_Mariel-Sharp_Director-Headshot-1-400x600.jpg" }
+    { title: "L'habitude de mourir", artist: "La Bronze", type: "Music Video", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "/media/Artistes/vignes%20et%20cam.jpg" },
+    { title: "Where the Witch Lives", artist: "Mariel Sharp", type: "Short Film", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "/media/Artistes/WHERE-THE-WITCH-LIVES_Mariel-Sharp_Director-Headshot-1-400x600.jpg" }
 ];
 
 const SALON_PRODUCTIONS = {
     LIVE: [
-        { title: "Improvisation No. 3", artist: "Sebastien Leblanc", type: "Live Session", url: "#", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/thumbnail%20sebastien%20leblanc%20one%20for%20all%201.png" },
+        { title: "Improvisation No. 3", artist: "Sebastien Leblanc", type: "Live Session", url: "#", thumb: "/media/Artistes/thumbnail%20sebastien%20leblanc%20one%20for%20all%201.png" },
         { title: "Salon Sessions Vol. 1", artist: "Collectif", type: "Full Set", url: "#", thumb: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=1000&auto=format&fit=crop" }
     ],
     CLIPS: [
-        { title: "Fallin", artist: "Leslie", type: "Music Video", url: "#", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/EXP15_1.48.1.png" },
-        { title: "Fille des bois", artist: "Tania Martin", type: "Music Video", url: "#", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/oqqArs4S41o-HD.jpg" }
+        { title: "Fallin", artist: "Leslie", type: "Music Video", url: "#", thumb: "/media/Artistes/EXP15_1.48.1.png" },
+        { title: "Fille des bois", artist: "Tania Martin", type: "Music Video", url: "#", thumb: "/media/Artistes/oqqArs4S41o-HD.jpg" }
     ],
     VISUAL: [
-        { title: "Magnetosphere", artist: "Magnetosphere", type: "Visual Art", url: "#", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/buJf1H0Im6w-HD.jpg" },
-        { title: "Futuristic Slums", artist: "Jean-Guilhem", type: "Digital Art", url: "#", thumb: "https://storage.googleapis.com/salondesinconnus/Artistes/jean-guilhem-bargues-futuristic-slums-small.jpg" }
+        { title: "Magnetosphere", artist: "Magnetosphere", type: "Visual Art", url: "#", thumb: "/media/Artistes/buJf1H0Im6w-HD.jpg" },
+        { title: "Futuristic Slums", artist: "Jean-Guilhem", type: "Digital Art", url: "#", thumb: "/media/Artistes/jean-guilhem-bargues-futuristic-slums-small.jpg" }
     ]
 };
 
@@ -192,7 +192,7 @@ export const SdiCafe: React.FC<SdiCafeProps> = ({ language }) => {
               playsInline
               className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none mix-blend-multiply z-0"
           >
-              <source src="https://storage.googleapis.com/salondesinconnus/inn/Temp%20video%20site.mov" type="video/mp4" />
+              <source src="/media/inn/Temp%20video%20site.mov" type="video/mp4" />
           </video>
 
           {/* Coffee Stains & Texture */}
@@ -443,7 +443,7 @@ export const SdiCafe: React.FC<SdiCafeProps> = ({ language }) => {
                                 {/* Background: Artistic Sketches (Faded overlay) */}
                                 <div className="absolute right-0 bottom-0 w-1/2 h-full opacity-[0.08] pointer-events-none mix-blend-multiply z-0">
                                     <img 
-                                        src="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg" 
+                                        src="/media/inn/golden%20drone%20copy.jpg" 
                                         className="w-full h-full object-cover grayscale contrast-150 filter sepia"
                                         style={{ maskImage: 'linear-gradient(to left, black, transparent)' }}
                                     />

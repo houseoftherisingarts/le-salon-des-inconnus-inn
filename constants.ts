@@ -4,27 +4,27 @@ import { Accommodation, ArtistProfile, PlatformService, LocalGuideCategory } fro
 import { GUIDE_BLOG_POSTS } from './data/guideBlogPosts';
 
 export const MUSIC_GENRES = {
-  Blues: "https://storage.googleapis.com/salondesinconnus/music/background%20blues.mp3",
-  Baroque: "https://storage.googleapis.com/salondesinconnus/music/01.01.%20Concerto%20No.%201%20In%20D%20Major_%20Largo-Allegro-Largo-Allegro%3B%20Largo%3B%20Allegro%3B%20Allegro.mp3",
-  Celtic: "https://storage.googleapis.com/salondesinconnus/music/background%20celtic.mp3"
+  Blues: "/media/music/background%20blues.mp3",
+  Baroque: "/media/music/01.01.%20Concerto%20No.%201%20In%20D%20Major_%20Largo-Allegro-Largo-Allegro%3B%20Largo%3B%20Allegro%3B%20Allegro.mp3",
+  Celtic: "/media/music/background%20celtic.mp3"
 };
 
 // Placeholder images for the Inn section
 const PLACEHOLDER_ROOM = "https://images.unsplash.com/photo-1590490360182-f33efe29a79d?q=80&w=1000&auto=format&fit=crop";
-const PLACEHOLDER_MANOR = "https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg";
-const PLACEHOLDER_YURT = "https://storage.googleapis.com/salondesinconnus/inn/yourte.png";
-const PLACEHOLDER_BUS = "https://storage.googleapis.com/salondesinconnus/inn/us%20copy.jpg";
-const PLACEHOLDER_TINY = "https://storage.googleapis.com/salondesinconnus/inn/For%20site%20temp%20mini%20(1).jpg";
+const PLACEHOLDER_MANOR = "/media/Financement%20Artistique/centered%20copy.jpg";
+const PLACEHOLDER_YURT = "/media/inn/yourte.png";
+const PLACEHOLDER_BUS = "/media/inn/us%20copy.jpg";
+const PLACEHOLDER_TINY = "/media/inn/For%20site%20temp%20mini%20(1).jpg";
 
 // Shared spaces of the manor/auberge, common to every stay — appended to each unit's own gallery
 const COMMON_PHOTOS = [
-  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/IMG_0864.jpg",         // salon / living room
-  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/cuisine%20grande.jpg", // kitchen
-  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/biblio.png",           // library
-  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jeux%20auberge.jpg",   // games library
-  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jardins%20auberge.jpg",// gardens
-  "https://storage.googleapis.com/salondesinconnus/inn/maison.jpg",                         // manor exterior
-  "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg"           // aerial of the estate
+  "/media/Auberge%20photos/IMG_0864.jpg",         // salon / living room
+  "/media/Auberge%20photos/cuisine%20grande.jpg", // kitchen
+  "/media/Auberge%20photos/biblio.png",           // library
+  "/media/Auberge%20photos/jeux%20auberge.jpg",   // games library
+  "/media/Auberge%20photos/jardins%20auberge.jpg",// gardens
+  "/media/inn/maison.jpg",                         // manor exterior
+  "/media/inn/golden%20drone%20copy.jpg"           // aerial of the estate
 ];
 
 const COMMON_AMENITIES: Accommodation['amenities'] = ['parking', 'wifi', 'hot-tub', 'terrasse', 'projector', 'boardgames'];
@@ -43,7 +43,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: 2,
     amenities: COMMON_AMENITIES,
-    images: ["https://storage.googleapis.com/salondesinconnus/inn/ecrivaine%20banana.jpg", PLACEHOLDER_MANOR],
+    images: ["/media/inn/ecrivaine%20banana.jpg", PLACEHOLDER_MANOR],
     bookingLink: "https://salon.holidayfuture.com/listings/345789"
   },
   {
@@ -59,7 +59,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: 2,
     amenities: COMMON_AMENITIES,
-    images: ["https://storage.googleapis.com/salondesinconnus/inn/musicienne%20banana%202.jpg", PLACEHOLDER_MANOR],
+    images: ["/media/inn/musicienne%20banana%202.jpg", PLACEHOLDER_MANOR],
     bookingLink: "https://salon.holidayfuture.com/listings/345790"
   },
   {
@@ -75,7 +75,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: 2,
     amenities: COMMON_AMENITIES,
-    images: ["https://storage.googleapis.com/salondesinconnus/inn/cineast%20banana%202.jpg", PLACEHOLDER_MANOR],
+    images: ["/media/inn/cineast%20banana%202.jpg", PLACEHOLDER_MANOR],
     bookingLink: "https://salon.holidayfuture.com/listings/345792"
   },
   {
@@ -91,7 +91,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: 3,
     amenities: [...COMMON_AMENITIES!, 'private-bath'],
-    images: ["https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg", PLACEHOLDER_MANOR],
+    images: ["/media/inn/amphiteatre%20banana.jpg", PLACEHOLDER_MANOR],
     bookingLink: "https://salon.holidayfuture.com/listings/345787"
   },
   {
@@ -140,11 +140,11 @@ export const ACCOMMODATIONS: Accommodation[] = [
     baths: "0.5 + 3",
     amenities: ['parking', 'no-wifi', 'off-grid', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
     images: [
-      "https://storage.googleapis.com/salondesinconnus/inn/meditante-1.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/meditante-2.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/meditante-3.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/meditante-4.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/meditante-5.jpeg",
+      "/media/inn/meditante-1.jpeg",
+      "/media/inn/meditante-2.jpeg",
+      "/media/inn/meditante-3.jpeg",
+      "/media/inn/meditante-4.jpeg",
+      "/media/inn/meditante-5.jpeg",
       ...COMMON_PHOTOS
     ],
     bookingLink: "https://salon.holidayfuture.com/listings/563826"
@@ -163,11 +163,11 @@ export const ACCOMMODATIONS: Accommodation[] = [
     baths: "0.5 + 3",
     amenities: ['parking', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
     images: [
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-exterieur.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-3.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-2.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-1.jpeg",
-      "https://storage.googleapis.com/salondesinconnus/inn/mini-maison-4.jpeg",
+      "/media/inn/mini-maison-exterieur.jpeg",
+      "/media/inn/mini-maison-3.jpeg",
+      "/media/inn/mini-maison-2.jpeg",
+      "/media/inn/mini-maison-1.jpeg",
+      "/media/inn/mini-maison-4.jpeg",
       ...COMMON_PHOTOS
     ],
     bookingLink: "https://salon.holidayfuture.com/listings/559483"
@@ -470,7 +470,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 location: "Montpellier",
                 description: "La meute d'huskies sibériens d'Éric Pichette — balades de traîneau d'une heure où vous pilotez vous-même 4 chiens à travers des sentiers forestiers vallonnés de Montpellier. Le contact avec les chiens est intense, chaleureux, inoubliable. Une expérience hivernale comme nulle part ailleurs en région.",
                 link: "https://www.tanwen.qc.ca/en",
-                image: "https://storage.googleapis.com/salondesinconnus/guide/meute-tanwen.jpg",
+                image: "/media/guide/meute-tanwen.jpg",
                 isFavorite: true,
                 isVip: true
             },

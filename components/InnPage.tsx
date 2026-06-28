@@ -25,8 +25,8 @@ const getStructuredData = (language: 'EN' | 'FR') => {
     "name": "Le Salon des Inconnus",
     "description": meta.description,
     "image": [
-      "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg",
-      "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png"
+      "/media/inn/golden%20drone%20copy.jpg",
+      "/media/Auberge%20photos/Maison%20main.png"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -313,13 +313,13 @@ const VictorianCard: React.FC<{ children: React.ReactNode; className?: string; o
 // --- SECTIONS ---
 
 export const INN_HERO_IMAGES = [
-  "https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg",
-  "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png",
-  "https://storage.googleapis.com/salondesinconnus/inn/ecrivaine%20banana.jpg",
-  "https://storage.googleapis.com/salondesinconnus/inn/musicienne%20banana%202.jpg",
-  "https://storage.googleapis.com/salondesinconnus/inn/cineast%20banana%202.jpg",
-  "https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg",
-  "https://storage.googleapis.com/salondesinconnus/inn/yourte.png",
+  "/media/inn/golden%20drone%20copy.jpg",
+  "/media/Auberge%20photos/Maison%20main.png",
+  "/media/inn/ecrivaine%20banana.jpg",
+  "/media/inn/musicienne%20banana%202.jpg",
+  "/media/inn/cineast%20banana%202.jpg",
+  "/media/inn/amphiteatre%20banana.jpg",
+  "/media/inn/yourte.png",
 ];
 
 // Per-image horizontal focal point in CSS object-position terms (0 = show the
@@ -804,7 +804,7 @@ const HistorySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode }> = ({ l
                 <div className={`relative h-[300px] md:h-[500px] border shadow-2xl rotate-1 group-hover:rotate-0 transition-all duration-700 ease-out overflow-hidden transform-gpu ${vibe === 'HOSTEL' ? 'bg-[#1e1e24] border-[#c5a059]/50 shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-t-full' : vibe === 'SHIRE' ? 'bg-[#20241e] border-[#dcb055]/40 rounded-full rotate-0 p-8' : 'bg-[#121212] border-[#333]'}`} style={{ clipPath: vibe === 'HOSTEL' ? 'inset(0% round 9999px 9999px 0px 0px)' : vibe === 'SHIRE' ? 'inset(0% round 9999px)' : 'inset(0%)' }}>
                     <div className={`absolute top-0 left-0 w-full h-full border border-white/5 pointer-events-none z-20 ${vibe === 'HOSTEL' ? 'rounded-t-full' : vibe === 'SHIRE' ? 'rounded-full' : ''}`}></div>
                     <OptimizedImage 
-                        src="https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg" 
+                        src="/media/Financement%20Artistique/centered%20copy.jpg" 
                         alt="Maison Favier History" 
                         className="w-full h-full"
                         imageClassName={`w-full h-full object-cover transition-all duration-1000 ${vibe === 'SHIRE' ? 'rounded-full' : 'rounded-none'}`}
@@ -974,13 +974,13 @@ export const PhotoGallerySection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMo
     const [startY, setStartY] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
 
-    const userImages = ["https://storage.googleapis.com/salondesinconnus/Auberge%20photos/PicsArt_11-19-06.49.25.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/alice%20renard%20devant%20maison.jpeg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/bus%20pov%20arriere%202.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/cuisine%20grande.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/devant%20sciure%20de%20bois.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/charlotnature.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jacuzzi%20ouvert%20ete.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/snip%20cynthia.png", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/yourte%20coucher%20de%20soleil.png", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/salle%20a%20manger.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/machine%20barista%20main.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jardins%20auberge.jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/hemerocales%20auberge.jpg"];
+    const userImages = ["/media/Auberge%20photos/PicsArt_11-19-06.49.25.jpg", "/media/Auberge%20photos/alice%20renard%20devant%20maison.jpeg", "/media/Auberge%20photos/bus%20pov%20arriere%202.jpg", "/media/Auberge%20photos/cuisine%20grande.jpg", "/media/Auberge%20photos/Maison%20main.png", "/media/Auberge%20photos/devant%20sciure%20de%20bois.jpg", "/media/Auberge%20photos/charlotnature.jpg", "/media/Auberge%20photos/jacuzzi%20ouvert%20ete.jpg", "/media/Auberge%20photos/snip%20cynthia.png", "/media/Auberge%20photos/yourte%20coucher%20de%20soleil.png", "/media/Auberge%20photos/salle%20a%20manger.jpg", "/media/Auberge%20photos/machine%20barista%20main.jpg", "/media/Auberge%20photos/jardins%20auberge.jpg", "/media/Auberge%20photos/hemerocales%20auberge.jpg"];
     const accommodationImages = ACCOMMODATIONS.flatMap(acc => acc.images);
-    const otherAssets = ["https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg", "https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg", "https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg", "https://storage.googleapis.com/salondesinconnus/Artistes/profle%20wide.jpg", "https://storage.googleapis.com/salondesinconnus/Artistes/evi%20wide.png", "https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg", "https://storage.googleapis.com/salondesinconnus/inn/andree%20banner.png", "https://storage.googleapis.com/salondesinconnus/massage/Andre%CC%81e%20temp.png", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/gramophone.png", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/handpan%202.png", "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/projecteur.png", "https://storage.googleapis.com/salondesinconnus/inn/ecrivaine%20banana.jpg", "https://storage.googleapis.com/salondesinconnus/inn/musicienne%20banana%202.jpg", "https://storage.googleapis.com/salondesinconnus/inn/cineast%20banana%202.jpg", "https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg", "https://storage.googleapis.com/salondesinconnus/inn/yourte.png", "https://storage.googleapis.com/salondesinconnus/inn/For%20site%20temp%20mini%20(1).jpg", "https://storage.googleapis.com/salondesinconnus/inn/us%20copy.jpg"];
+    const otherAssets = ["/media/inn/golden%20drone%20copy.jpg", "/media/Financement%20Artistique/centered%20copy.jpg", "/media/Cuisine/Plating%20alexis%20ai%20(1).jpg", "/media/Auberge%20photos/nature%20coco%20upscale.jpg", "/media/Artistes/profle%20wide.jpg", "/media/Artistes/evi%20wide.png", "/media/Artistes/aliel%20campfire.jpg", "/media/inn/andree%20banner.png", "/media/massage/Andre%CC%81e%20temp.png", "/media/Auberge%20photos/gramophone.png", "/media/Auberge%20photos/handpan%202.png", "/media/Auberge%20photos/projecteur.png", "/media/inn/ecrivaine%20banana.jpg", "/media/inn/musicienne%20banana%202.jpg", "/media/inn/cineast%20banana%202.jpg", "/media/inn/amphiteatre%20banana.jpg", "/media/inn/yourte.png", "/media/inn/For%20site%20temp%20mini%20(1).jpg", "/media/inn/us%20copy.jpg"];
     const allRawImages = [...userImages, ...accommodationImages, ...otherAssets];
     let validImages = Array.from(new Set(allRawImages)).filter(url => url.startsWith("https://storage.googleapis.com/"));
     validImages = validImages.filter(img => !img.includes("Andre%CC%81e%20temp%20wide.png") && !img.includes("massage%20andre.png") && !img.includes("biblio.png"));
-    const mainImage = "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png";
+    const mainImage = "/media/Auberge%20photos/Maison%20main.png";
     const busImages = validImages.filter(img => img.toLowerCase().includes('bus') || img.toLowerCase().includes('us%20copy')).reverse();
     const yurtImages = validImages.filter(img => img.toLowerCase().includes('yourte') || img.toLowerCase().includes('yurt'));
     const otherImages = validImages.filter(img => !busImages.includes(img) && !yurtImages.includes(img) && img !== mainImage);
@@ -1148,7 +1148,7 @@ export const DetailsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; a
     const [isInView, setIsInView] = useState(false);
     const animationFrameRef = useRef<number | null>(null);
 
-    const details = [{ title: language === 'EN' ? "Gramophone" : "Gramophone", desc: "1920s Music", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/gramophone.png", list: language === 'EN' ? ["Vintage Vinyl Collection", "1920s Ambiance", "Jazz & Blues Classics", "Restored Sound System"] : ["Collection Vinyles", "Ambiance Années 20", "Classiques Jazz & Blues", "Système Sonore Restauré"] }, { title: language === 'EN' ? "Barista" : "Barista", desc: language === 'EN' ? "Specialty Coffee with or without service" : "Cafés Spécialisés avec ou sans service", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/machine%20barista%20main.jpg", list: language === 'EN' ? ["Italian Espresso Machine", "Specialty Coffee", "Latte Art Tools", "Loose Leaf Teas"] : ["Machine Espresso", "Café de Spécialité", "Outils Latte Art", "Thés en Feuilles"] }, { title: "Spa", desc: "Jacuzzi 24/7", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jacuzzi%20ouvert%20ete.jpg", list: language === 'EN' ? ["6-Seater Jacuzzi", "Open 24/7", "Stargazing View", "Towels Provided"] : ["Jacuzzi 6 Places", "Ouvert 24/7", "Vue sur les Étoiles", "Serviettes Fournies"] }, { title: language === 'EN' ? "Games" : "Jeux", desc: language === 'EN' ? "Selection of Collectible Games" : "sélection de jeux de collection", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/jeux%20auberge.jpg", list: language === 'EN' ? ["Gwent", "Catan", "Minstrels", "Citadels", "Azul", "And much more..."] : ["Gwent", "Catan", "Ménestrels", "Citadelles", "Azul", "et bien plus..."] }, { title: language === 'EN' ? "Music" : "Musique", desc: language === 'EN' ? "Varied Instruments" : "instruments variés", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/handpan%202.png", list: language === 'EN' ? ["Classical Guitar", "Handpan", "Double Flutes", "Electronic Piano", "Kirby Otamatone", "And more..."] : ["Guitare classique", "handpan", "flutes double", "piano électronique", "otamatone kirby", "et plus..."] }, { title: language === 'EN' ? "Library" : "Bibliothèque", desc: "Books", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/biblio.png", list: language === 'EN' ? ["Curated Books", "Cozy Reading Nooks", "Book Exchange", "Comics"] : ["Livres Choisis", "Coins Lecture", "Échange de Livres", "Bandes Dessinées"] }, { title: language === 'EN' ? "Projector" : "Projecteur", desc: "Cinema", image: "https://storage.googleapis.com/salondesinconnus/Auberge%20photos/projecteur.png", list: language === 'EN' ? ["HD Projector", "Streaming Apps", "Surround Sound", "Cinema Screen"] : ["Projecteur HD", "Streaming", "Son Surround", "Écran Cinéma"] }];
+    const details = [{ title: language === 'EN' ? "Gramophone" : "Gramophone", desc: "1920s Music", image: "/media/Auberge%20photos/gramophone.png", list: language === 'EN' ? ["Vintage Vinyl Collection", "1920s Ambiance", "Jazz & Blues Classics", "Restored Sound System"] : ["Collection Vinyles", "Ambiance Années 20", "Classiques Jazz & Blues", "Système Sonore Restauré"] }, { title: language === 'EN' ? "Barista" : "Barista", desc: language === 'EN' ? "Specialty Coffee with or without service" : "Cafés Spécialisés avec ou sans service", image: "/media/Auberge%20photos/machine%20barista%20main.jpg", list: language === 'EN' ? ["Italian Espresso Machine", "Specialty Coffee", "Latte Art Tools", "Loose Leaf Teas"] : ["Machine Espresso", "Café de Spécialité", "Outils Latte Art", "Thés en Feuilles"] }, { title: "Spa", desc: "Jacuzzi 24/7", image: "/media/Auberge%20photos/jacuzzi%20ouvert%20ete.jpg", list: language === 'EN' ? ["6-Seater Jacuzzi", "Open 24/7", "Stargazing View", "Towels Provided"] : ["Jacuzzi 6 Places", "Ouvert 24/7", "Vue sur les Étoiles", "Serviettes Fournies"] }, { title: language === 'EN' ? "Games" : "Jeux", desc: language === 'EN' ? "Selection of Collectible Games" : "sélection de jeux de collection", image: "/media/Auberge%20photos/jeux%20auberge.jpg", list: language === 'EN' ? ["Gwent", "Catan", "Minstrels", "Citadels", "Azul", "And much more..."] : ["Gwent", "Catan", "Ménestrels", "Citadelles", "Azul", "et bien plus..."] }, { title: language === 'EN' ? "Music" : "Musique", desc: language === 'EN' ? "Varied Instruments" : "instruments variés", image: "/media/Auberge%20photos/handpan%202.png", list: language === 'EN' ? ["Classical Guitar", "Handpan", "Double Flutes", "Electronic Piano", "Kirby Otamatone", "And more..."] : ["Guitare classique", "handpan", "flutes double", "piano électronique", "otamatone kirby", "et plus..."] }, { title: language === 'EN' ? "Library" : "Bibliothèque", desc: "Books", image: "/media/Auberge%20photos/biblio.png", list: language === 'EN' ? ["Curated Books", "Cozy Reading Nooks", "Book Exchange", "Comics"] : ["Livres Choisis", "Coins Lecture", "Échange de Livres", "Bandes Dessinées"] }, { title: language === 'EN' ? "Projector" : "Projecteur", desc: "Cinema", image: "/media/Auberge%20photos/projecteur.png", list: language === 'EN' ? ["HD Projector", "Streaming Apps", "Surround Sound", "Cinema Screen"] : ["Projecteur HD", "Streaming", "Son Surround", "Écran Cinéma"] }];
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => { setIsInView(entry.isIntersecting); }, { threshold: 0.1 });
@@ -1220,7 +1220,7 @@ export const ServicesSection: React.FC<{ language: 'EN' | 'FR'; onNavigate: (vie
                 {/* 1. KITCHEN PORTAL */}
                 <div onClick={() => onNavigate('KITCHEN')} className={`relative group w-full min-h-[400px] md:h-full cursor-pointer overflow-hidden border-2 ${vibe === 'HOSTEL' ? 'rounded-t-[30px] md:rounded-tr-none md:rounded-l-[30px] border-[#c5a059]' : vibe === 'SHIRE' ? 'rounded-[30px] border-[#dcb055]' : 'border-[#d4af37] border-b-0 md:border-b-2 md:border-r-0 md:rounded-l-full'}`}>
                     <div className="absolute inset-0 bg-black z-0 pointer-events-none overflow-hidden">
-                        <OptimizedImage src="https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg" alt="Cuisine" className="w-full h-full" imageClassName="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 ease-out will-change-transform group-hover:scale-110" imageStyle={{ backfaceVisibility: 'hidden', transform: 'translateZ(0)' }} variant="CARD" />
+                        <OptimizedImage src="/media/Cuisine/Plating%20alexis%20ai%20(1).jpg" alt="Cuisine" className="w-full h-full" imageClassName="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 ease-out will-change-transform group-hover:scale-110" imageStyle={{ backfaceVisibility: 'hidden', transform: 'translateZ(0)' }} variant="CARD" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#2a0a00] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-10 flex flex-col items-center text-center">
@@ -1231,7 +1231,7 @@ export const ServicesSection: React.FC<{ language: 'EN' | 'FR'; onNavigate: (vie
                 {/* 2. MASSAGE PORTAL */}
                 <div onClick={() => window.open('https://www.salonlenvolee.com', '_blank', 'noopener,noreferrer')} className={`relative group w-full min-h-[400px] md:h-full cursor-pointer overflow-hidden border-2 ${vibe === 'HOSTEL' ? 'rounded-b-[30px] md:rounded-bl-none md:rounded-r-[30px] border-[#c5a059]' : vibe === 'SHIRE' ? 'rounded-[30px] border-[#dcb055]' : 'border-[#d4af37] border-t-0 md:border-t-2 md:border-l-0 md:rounded-r-full'}`}>
                     <div className="absolute inset-0 bg-black z-0 pointer-events-none overflow-hidden">
-                        <OptimizedImage src="https://storage.googleapis.com/salondesinconnus/massage/massage%20andre.png" alt="Massage" className="w-full h-full" imageClassName="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 ease-out will-change-transform group-hover:scale-110" imageStyle={{ backfaceVisibility: 'hidden', transform: 'translateZ(0)' }} variant="CARD" />
+                        <OptimizedImage src="/media/massage/massage%20andre.png" alt="Massage" className="w-full h-full" imageClassName="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 ease-out will-change-transform group-hover:scale-110" imageStyle={{ backfaceVisibility: 'hidden', transform: 'translateZ(0)' }} variant="CARD" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#001a1a] via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-10 flex flex-col items-center text-center">
@@ -1253,7 +1253,7 @@ export const VideoTourSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode 
         <RevealOnScroll animation="fadeIn">
             <div className={`relative w-full aspect-video shadow-2xl bg-[#0a0a0a] group p-2 ${vibe === 'HOSTEL' ? 'border-[4px] border-[#1e1e24] outline outline-1 outline-[#c5a059] rounded-t-[50px] rounded-b-lg' : vibe === 'SHIRE' ? 'border-4 border-[#dcb055] rounded-[60px] shadow-lg' : 'border border-[#333]'}`}>
                 <div className={`w-full h-full relative overflow-hidden transform-gpu ${vibe === 'HOSTEL' ? 'rounded-t-[40px] rounded-b-md border border-[#c5a059]/50' : vibe === 'SHIRE' ? 'rounded-full border border-[#dcb055]/50' : 'border border-white/5'}`}>
-                    <video src="https://storage.googleapis.com/salondesinconnus/inn/Temp%20video%20site.mov" className={`w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity`} controls playsInline preload="metadata"><p>Your browser does not support the video tag.</p></video>
+                    <video src="/media/inn/Temp%20video%20site.mov" className={`w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity`} controls playsInline preload="metadata"><p>Your browser does not support the video tag.</p></video>
                 </div>
             </div>
         </RevealOnScroll>
@@ -1264,7 +1264,7 @@ export const LocalGuideSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
     return (
         <div className="relative h-[60vh] flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                <img src={getOptimizedUrl("https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg", 1200)} alt="Local Region" className="w-full h-full object-cover object-center will-change-transform" decoding="async" loading="lazy" />
+                <img src={getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1200)} alt="Local Region" className="w-full h-full object-cover object-center will-change-transform" decoding="async" loading="lazy" />
                 <div className="absolute inset-0 bg-black/40"></div>
             </div>
             <div className="relative z-10 text-center px-6">
@@ -1285,7 +1285,7 @@ export const EventsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; on
             {/* Background */}
             <div className="absolute inset-0">
                 <img
-                    src="https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg"
+                    src="/media/inn/golden%20drone%20copy.jpg"
                     alt="Ceilidh de Mai"
                     className="w-full h-full object-cover object-center"
                     style={{ objectPosition: '50% 40%' }}
@@ -1355,7 +1355,7 @@ export const WwoofingSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; 
         <div className="relative overflow-hidden" style={{ height: '100vh' }}>
             <div className="absolute inset-0">
                 <img
-                    src="https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg"
+                    src="/media/Artistes/aliel%20campfire.jpg"
                     alt="Wwoofing à la Maison Favier"
                     className="w-full h-full object-cover object-center"
                     style={{ objectPosition: '50% 40%' }}

@@ -200,7 +200,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
           {/* 2. Hero Section (Base Layer) */}
           <div className="relative z-0 h-[80vh] w-full" style={{ position: 'sticky', top: 0 }}>
                 <OptimizedImage
-                    src="https://storage.googleapis.com/salondesinconnus/inn/andree%20banner.png" 
+                    src="/media/inn/andree%20banner.png" 
                     alt="Massotherapy Banner" 
                     className="w-full h-full"
                     imageClassName="w-full h-full object-cover brightness-75"
@@ -389,7 +389,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
                                    {/* Image Container - 40% Width on Mobile */}
                                    <div className="w-[40%] md:w-1/2 relative h-full">
                                        <OptimizedImage
-                                         src="https://storage.googleapis.com/salondesinconnus/massage/Andre%CC%81e%20temp.png" 
+                                         src="/media/massage/Andre%CC%81e%20temp.png" 
                                          alt="Andrée Dancause" 
                                          className="w-full h-full"
                                          imageClassName="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity"
@@ -407,7 +407,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
                                        
                                        {/* RMPQ Logo Front - Scaled for corner alignment on mobile */}
                                        <img 
-                                          src="https://storage.googleapis.com/salondesinconnus/inn/rmpq%20logo%20transparent.png"
+                                          src="/media/inn/rmpq%20logo%20transparent.png"
                                           alt="RMPQ Logo"
                                           className="absolute top-2 right-2 w-10 md:top-6 md:right-6 md:w-48 h-auto drop-shadow-xl z-20 brightness-0 invert opacity-70 pointer-events-none" 
                                        />
@@ -438,7 +438,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
                                <div className="w-full h-full bg-[#0f3c39] rounded-[30px] md:rounded-[40px] overflow-hidden shadow-2xl flex items-center justify-center relative border border-[#d4af37]/30">
                                     <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')]"></div>
                                     <img 
-                                        src="https://storage.googleapis.com/salondesinconnus/inn/rmpq%20logo%20transparent.png"
+                                        src="/media/inn/rmpq%20logo%20transparent.png"
                                         alt="RMPQ Logo"
                                         className="absolute top-2 right-2 w-10 md:top-6 md:right-6 md:w-48 h-auto drop-shadow-xl z-20 brightness-0 invert opacity-70 pointer-events-none"
                                     />

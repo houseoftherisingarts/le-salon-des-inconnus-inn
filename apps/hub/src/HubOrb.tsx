@@ -26,7 +26,7 @@ const CHOICES: Choice[] = [
       'Cinq chambres · Table partagée · Silence entre Montebello et Tremblant',
     url: 'https://aubergedesinconnus.com/',
     image:
-      'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/Maison%20main.png',
+      '/media/Auberge%20photos/Maison%20main.png',
     available: true,
   },
   {
@@ -54,7 +54,7 @@ const CHOICES: Choice[] = [
       'Hub communautaire · Projets partagés · Bâtir ensemble · Bientôt',
     url: 'https://ledomdesinconnus.com/',
     image:
-      'https://storage.googleapis.com/salondesinconnus/Artistes/evi%20wide.png',
+      '/media/Artistes/evi%20wide.png',
     // Evinali sits in the right portion of this wide shot — pull the focal
     // point to her face so she lands centered in the orb.
     imagePosition: '72% 38%',

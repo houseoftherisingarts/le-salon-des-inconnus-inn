@@ -45,7 +45,19 @@ const T = {
 const IMG = {
   garden: '/wwoof/fire-bw.jpg',   // around the fire, the manor behind (hero)
   nature: '/wwoof/bw-2.jpg',   // the crew at work (full-bleed band)
-  bus:    '/wwoof/bw-4.jpg',
+};
+
+// The converted bus — the actual home on offer. Kept in true colour (the warm
+// wood + golden field already sit in the section's palette) so the visitor sees
+// the real space they'd live in.
+const BUS = {
+  ext: '/media/inn/us%20copy.jpg',  // the orange bus in a golden field at dusk
+  interiors: [
+    { src: '/media/Auberge%20photos/bus%20pov%20avant.jpg',     en: 'Front: piano and daybed', fr: 'Avant : piano et banquette' },
+    { src: '/media/Auberge%20photos/bus%20foyer.jpg',           en: 'Pellet stove',            fr: 'Foyer aux granules' },
+    { src: '/media/Auberge%20photos/bus%20pov%20arriere.jpg',   en: 'Kitchen and bed',         fr: 'Cuisine et lit' },
+    { src: '/media/Auberge%20photos/bus%20pov%20arriere%202.jpg', en: 'Living length',         fr: 'Toute la longueur' },
+  ],
 };
 
 const LETTER: { fr: string; en: string }[] = [
@@ -290,6 +302,35 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
+      {/* ── LE BUS — the home on offer (true colour) ─────────────────────── */}
+      <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex items-center gap-5 mb-6">
+            <Eyebrow>{t('Your home', 'Ton chez-toi')}</Eyebrow>
+            <span className="h-px flex-1" style={{ background: T.line }} />
+          </div>
+          <figure className="comm-busfig relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
+            <img
+              src={BUS.ext}
+              alt={t('The converted bus in a golden field at dusk.', 'Le bus aménagé dans un champ doré au crépuscule.')}
+              className="w-full h-full object-cover"
+            />
+            <span className="comm-vignette absolute inset-0 pointer-events-none" />
+            <figcaption className="absolute bottom-4 left-5 font-cinzel uppercase" style={{ color: T.ink, fontSize: '11px', letterSpacing: '0.3em', textShadow: '0 1px 14px rgba(0,0,0,0.85)' }}>
+              {t('The converted bus', 'Le bus aménagé')}
+            </figcaption>
+          </figure>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mt-2 md:mt-3">
+            {BUS.interiors.map((p, i) => (
+              <figure key={i} className="comm-busshot relative overflow-hidden" style={{ aspectRatio: '4 / 3' }}>
+                <img src={p.src} alt={t(p.en, p.fr)} loading="lazy" className="w-full h-full object-cover" />
+                <span className="comm-vignette absolute inset-0 pointer-events-none" style={{ opacity: 0.6 }} />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
       {/* ── TERMS — game-menu stat panel (bracketed glass, indexed stats) ── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
         <div className="mx-auto max-w-6xl comm-statpanel">
@@ -375,6 +416,12 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         }
         /* Warm duotone on the B&W photos — gentle brass tone, not orange */
         .comm-photo { filter: sepia(0.28) saturate(1.05) brightness(0.92) contrast(1.04); }
+        /* The bus — true-colour gallery, thin brass frame, soft lift on hover */
+        .comm-busfig { border-radius: 6px; box-shadow: inset 0 0 0 1px rgba(197,160,89,0.22); }
+        .comm-busfig img, .comm-busshot img { transition: transform 1.1s cubic-bezier(0.16,1,0.3,1); }
+        .comm-busfig:hover img { transform: scale(1.03); }
+        .comm-busshot { border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(197,160,89,0.18); }
+        .comm-busshot:hover img { transform: scale(1.05); }
         /* Game-menu eyebrow */
         .comm-eyebrow { display: inline-flex; align-items: center; gap: 0.7em; color: ${T.gold};
           font-size: 12px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; }

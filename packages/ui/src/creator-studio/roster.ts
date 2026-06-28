@@ -1,6 +1,6 @@
 import type { ArtistProfile } from './types';
 
-const ROSTER_BASE_URL = "https://storage.googleapis.com/salondesinconnus/Artistes/";
+const ROSTER_BASE_URL = "/media/Artistes/";
 
 export const ARTISTS_ROSTER: ArtistProfile[] = [
   {

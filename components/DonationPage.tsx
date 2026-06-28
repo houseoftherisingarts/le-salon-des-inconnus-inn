@@ -14,7 +14,7 @@ interface Props {
   onShowPrivacy: () => void;
 }
 
-const HERO_IMG = 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg';
+const HERO_IMG = '/media/inn/golden%20drone%20copy.jpg';
 
 export const DonationPage: React.FC<Props> = ({
   onNavigate, language, user, onUserChange, onShowPrivacy,

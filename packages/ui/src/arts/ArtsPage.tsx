@@ -302,19 +302,19 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
          <MenuCard
            title={language === 'EN' ? "See Our Artists" : "Nos Artistes"}
            subtitle={language === 'EN' ? "The Roster" : "Le Registre"}
-           bg="https://storage.googleapis.com/salondesinconnus/Artistes/leslie%20main.png"
+           bg="/media/Artistes/leslie%20main.png"
            onClick={() => setBuyerView('CATALOG')}
          />
          <MenuCard
            title={language === 'EN' ? "Invest & Save" : "Investir & Économiser"}
            subtitle={language === 'EN' ? "Fiscal Advantages" : "Avantages Fiscaux"}
-           bg="https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/kamy%20museum.png"
+           bg="/media/Financement%20Artistique/kamy%20museum.png"
            onClick={() => setBuyerView('TAXES')}
          />
          <MenuCard
            title={language === 'EN' ? "Support Projects" : "Soutenir des Projets"}
            subtitle={language === 'EN' ? "Patronage" : "Mécénat"}
-           bg="https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/kamy%20christina%20barcelona.jpg"
+           bg="/media/Financement%20Artistique/kamy%20christina%20barcelona.jpg"
            onClick={() => {
               setBuyerView('SUPPORT');
               setPatronTab('CENTER'); // Default tab
@@ -1295,7 +1295,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             
             {/* SECTION 1: HERO PARALLAX */}
             <section className="relative min-h-screen flex items-center justify-center bg-fixed bg-center bg-cover" 
-                style={{ backgroundImage: `url("https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/kamy%20christina%20barcelona.jpg")` }}
+                style={{ backgroundImage: `url("/media/Financement%20Artistique/kamy%20christina%20barcelona.jpg")` }}
             >
                 <div className="absolute inset-0 bg-black/60" />
                 <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -1327,7 +1327,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
 
             {/* SECTION 2: FISCAL ADVANTAGES (STICKY SCROLL) */}
             <section id="fiscal-section" className="relative w-full bg-fixed bg-center bg-cover"
-                 style={{ backgroundImage: `url("https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg")` }}
+                 style={{ backgroundImage: `url("/media/Financement%20Artistique/centered%20copy.jpg")` }}
             >
                 <div className="absolute inset-0 bg-black/90 md:bg-black/80" />
                 
@@ -1453,7 +1453,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
 
             {/* SECTION 3: FINANCING (STACKED LAYOUT) */}
             <section id="financing-section" className="relative min-h-screen flex flex-col items-center bg-fixed bg-center bg-cover py-24" 
-                style={{ backgroundImage: `url("https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/kamy%20inside.jpg")` }}
+                style={{ backgroundImage: `url("/media/Financement%20Artistique/kamy%20inside.jpg")` }}
             >
                 <div className="absolute inset-0 bg-black/70" />
                 
@@ -1541,7 +1541,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
 
              {/* SECTION 4: SELLING (PARALLAX) */}
              <section className="relative min-h-[80vh] flex items-center justify-center bg-fixed bg-center bg-cover" 
-                style={{ backgroundImage: `url("https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/top%20down.jpg")` }}
+                style={{ backgroundImage: `url("/media/Financement%20Artistique/top%20down.jpg")` }}
             >
                 <div className="absolute inset-0 bg-black/50" />
                 <div className="relative z-10 text-center px-6 max-w-3xl mx-auto bg-black/40 backdrop-blur-md p-12 rounded-3xl border border-white/10 shadow-2xl">

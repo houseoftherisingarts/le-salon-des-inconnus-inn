@@ -162,7 +162,7 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
     {
       name: "Alex T. St-Laurent",
       role: language === 'EN' ? "The Innkeeper" : "L'Aubergiste",
-      image: "https://storage.googleapis.com/salondesinconnus/Artistes/profle%20wide.jpg", 
+      image: "/media/Artistes/profle%20wide.jpg", 
       flavor: language === 'EN' ? "Guardian of the keys and keeper of the flame. Orchestrating the unseen magic of the Salon." : "Gardien des clés et porteur de la flamme. Orchestrant la magie invisible du Salon.",
       objectPosition: "top"
       // Removed flip/nudge for the new wide picture
@@ -170,14 +170,14 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
     {
       name: "Evinali T. St-Laurent",
       role: language === 'EN' ? "The Storyteller" : "Le Conteur",
-      image: "https://storage.googleapis.com/salondesinconnus/Artistes/evi%20wide.png",
+      image: "/media/Artistes/evi%20wide.png",
       flavor: language === 'EN' ? "Weaving tales and connections with the threads of time, creating the narrative fabric of the house." : "Tissant des récits et des liens avec les fils du temps, créant le tissu narratif de la maison.",
       objectPosition: "top"
     },
     {
       name: "Aliel St-Laurent",
       role: language === 'EN' ? "Cuteness Officer" : "Préposé en Cuteness",
-      image: "https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg",
+      image: "/media/Artistes/aliel%20campfire.jpg",
       flavor: language === 'EN' ? "A bundle of energy with a playful heart, he brings life to the evenings." : "Boule d'énergie au coeur joueur, il anime les soirées.",
       objectPosition: "50% 25%" // Reframed to upper third
     },

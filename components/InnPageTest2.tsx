@@ -28,9 +28,9 @@ interface InnPageTest2Props {
   onNavigate: (view: string) => void;
 }
 
-const SECTION2_PHOTO = 'https://storage.googleapis.com/salondesinconnus/Financement%20Artistique/centered%20copy.jpg';
-const KITCHEN_PHOTO = 'https://storage.googleapis.com/salondesinconnus/Cuisine/Plating%20alexis%20ai%20(1).jpg';
-const MASSAGE_PHOTO = 'https://storage.googleapis.com/salondesinconnus/massage/massage%20andre.png';
+const SECTION2_PHOTO = '/media/Financement%20Artistique/centered%20copy.jpg';
+const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
+const MASSAGE_PHOTO = '/media/massage/massage%20andre.png';
 
 export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate }) => {
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);

@@ -72,9 +72,9 @@ interface Chapter {
 }
 
 const HERO_IMAGES = [
-  'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
-  'https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg',
-  'https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg',
+  '/media/inn/golden%20drone%20copy.jpg',
+  '/media/Artistes/aliel%20campfire.jpg',
+  '/media/inn/amphiteatre%20banana.jpg',
 ];
 
 const CHAPTERS: Chapter[] = [
@@ -85,7 +85,7 @@ const CHAPTERS: Chapter[] = [
     titleFr: "L'Événement",
     taglineEn: 'May 21–25, 2026 · Maison Favier',
     taglineFr: '21–25 mai 2026 · Maison Favier',
-    image: 'https://storage.googleapis.com/salondesinconnus/inn/golden%20drone%20copy.jpg',
+    image: '/media/inn/golden%20drone%20copy.jpg',
     status: 'inprogress',
   },
   {
@@ -95,7 +95,7 @@ const CHAPTERS: Chapter[] = [
     titleFr: 'Programme',
     taglineEn: '5 days · 30+ shared moments',
     taglineFr: '5 jours · 30+ moments partagés',
-    image: 'https://storage.googleapis.com/salondesinconnus/inn/amphiteatre%20banana.jpg',
+    image: '/media/inn/amphiteatre%20banana.jpg',
     status: 'inprogress',
   },
   {
@@ -105,7 +105,7 @@ const CHAPTERS: Chapter[] = [
     titleFr: 'Les Équipes',
     taglineEn: '8 teams · pick yours',
     taglineFr: '8 équipes · choisissez la vôtre',
-    image: 'https://storage.googleapis.com/salondesinconnus/Artistes/aliel%20campfire.jpg',
+    image: '/media/Artistes/aliel%20campfire.jpg',
     status: 'inprogress',
   },
   {
@@ -115,7 +115,7 @@ const CHAPTERS: Chapter[] = [
     titleFr: 'Hébergement',
     taglineEn: '11 spaces · 50 sleeping spots',
     taglineFr: '11 espaces · 50 couchages',
-    image: 'https://storage.googleapis.com/salondesinconnus/inn/yourte.png',
+    image: '/media/inn/yourte.png',
     status: 'done',
   },
   {
@@ -125,7 +125,7 @@ const CHAPTERS: Chapter[] = [
     titleFr: 'Pratique',
     taglineEn: 'How to get here · what to bring',
     taglineFr: 'Comment venir · quoi apporter',
-    image: 'https://storage.googleapis.com/salondesinconnus/Auberge%20photos/nature%20coco%20upscale.jpg',
+    image: '/media/Auberge%20photos/nature%20coco%20upscale.jpg',
     status: 'inprogress',
   },
 ];
