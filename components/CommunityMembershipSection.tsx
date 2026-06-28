@@ -60,10 +60,17 @@ const BUS = {
   ],
 };
 
+// The shared common spaces of the inn — what you share when you live here.
+const COMMON = [
+  { src: '/media/Auberge%20photos/salle%20a%20manger.jpg', en: 'The salon',  fr: 'Le salon' },
+  { src: '/media/Auberge%20photos/cuisine%20grande.jpg',   en: 'The kitchen', fr: 'La cuisine' },
+  { src: '/media/Auberge%20photos/jardins%20auberge.jpg',  en: 'The garden',  fr: 'Le jardin' },
+];
+
 const LETTER: { fr: string; en: string }[] = [
   {
-    fr: "André Dancause, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. On le laisse partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
-    en: "André Dancause, who has watched over the house and kept it clean for a good while now, is moving on to live closer to his family. We let him go with a full heart and all our gratitude. His departure opens a rare spot: living here, inside the small core that keeps the inn alive day to day.",
+    fr: "André, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. On le laisse partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
+    en: "André, who has watched over the house and kept it clean for a good while now, is moving on to live closer to his family. We let him go with a full heart and all our gratitude. His departure opens a rare spot: living here, inside the small core that keeps the inn alive day to day.",
   },
   {
     fr: "Le Salon des Inconnus, c'est une petite communauté grandissante, enracinée dans une auberge familiale. Il y a des membres permanents qui vivent sur place, et des membres comètes qui passent, laissent leur trace, puis repartent. L'auberge, c'est la business qui nous fait vivre ; et en retour, la communauté prend soin de l'auberge, l'anime et lui donne une âme.",
@@ -216,7 +223,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
     { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
     { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
     { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
-    { v: t('Your time', 'Ton temps'), l: t('keep your own work', 'garde tes projets') },
+    { v: t('Your time', 'Ton temps'), l: t('time and space for your projects', 'du temps et de l\'espace pour tes projets') },
   ];
 
   return (
@@ -325,6 +332,18 @@ export const CommunityMembershipSection: React.FC<Props> = ({
               <figure key={i} className="comm-busshot relative overflow-hidden" style={{ aspectRatio: '4 / 3' }}>
                 <img src={p.src} alt={t(p.en, p.fr)} loading="lazy" className="w-full h-full object-cover" />
                 <span className="comm-vignette absolute inset-0 pointer-events-none" style={{ opacity: 0.6 }} />
+              </figure>
+            ))}
+          </div>
+          {/* shared common spaces — salon · cuisine · jardin */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-2 md:mt-3">
+            {COMMON.map((p, i) => (
+              <figure key={i} className="comm-busshot relative overflow-hidden" style={{ aspectRatio: '4 / 3' }}>
+                <img src={p.src} alt={t(p.en, p.fr)} loading="lazy" className="w-full h-full object-cover" />
+                <span className="comm-vignette absolute inset-0 pointer-events-none" style={{ opacity: 0.6 }} />
+                <figcaption className="absolute bottom-3 left-4 font-cinzel uppercase" style={{ color: T.ink, fontSize: '10px', letterSpacing: '0.28em', textShadow: '0 1px 12px rgba(0,0,0,0.85)' }}>
+                  {t(p.en, p.fr)}
+                </figcaption>
               </figure>
             ))}
           </div>
