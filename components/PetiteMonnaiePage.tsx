@@ -92,6 +92,17 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
           with a toned-down green that drifts across it, never a full green field */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }} aria-hidden>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #080907 0%, #0b120d 32%, #112a1d 50%, #0b120d 68%, #080907 100%)' }} />
+        {/* the inn's office (Shire grade) — a very subtle warm photo behind the
+            glass, anchored near the hero and feathered out so it reads as
+            atmosphere, not a picture. The green drift + grain layer over it. */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url('/media/inn/bureau-shire.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 26%',
+          opacity: 0.13,
+          WebkitMaskImage: 'radial-gradient(125% 78% at 50% 20%, #000 0%, transparent 60%)',
+          maskImage: 'radial-gradient(125% 78% at 50% 20%, #000 0%, transparent 60%)',
+        }} />
         <div className="absolute inset-0 will-change-transform" style={{ background: 'radial-gradient(56% 42% at 50% 26%, rgba(44,76,54,0.32), transparent 72%)', animation: 'pmGreenDrift 40s ease-in-out infinite' }} />
         {/* edges fall back to warm black so the green reads as a glow, not a wash */}
         <div className="absolute inset-0" style={{ background: 'radial-gradient(125% 95% at 50% 38%, transparent 52%, rgba(8,7,6,0.92) 100%)' }} />

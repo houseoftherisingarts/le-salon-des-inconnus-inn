@@ -312,9 +312,18 @@ const VictorianCard: React.FC<{ children: React.ReactNode; className?: string; o
 
 // --- SECTIONS ---
 
+// Hero cycle order (Alex, 2026-06-28): the place first, then the spaces, with the
+// styled bedrooms held until much later. 1 drone · 2 façade · 3 salon · 4 cuisine
+// · 5 jardins · 6 bureau (Shire grade) · 7 bus · 8 mini-maison · then the rooms.
 export const INN_HERO_IMAGES = [
   "/media/inn/golden%20drone%20copy.jpg",
   "/media/Auberge%20photos/Maison%20main.jpg",
+  "/media/Financement%20Artistique/centered%20copy.jpg",
+  "/media/Auberge%20photos/cuisine%20grande.jpg",
+  "/media/Auberge%20photos/jardins%20auberge.jpg",
+  "/media/inn/bureau-shire.jpg",
+  "/media/inn/us%20copy.jpg",
+  "/media/inn/mini-maison-exterieur.jpeg",
   "/media/inn/ecrivaine%20banana.jpg",
   "/media/inn/musicienne%20banana%202.jpg",
   "/media/inn/cineast%20banana%202.jpg",
@@ -329,6 +338,12 @@ export const INN_HERO_IMAGES = [
 export const INN_HERO_FOCUS = [
   0.50, // drone — aerial, centred
   0.32, // maison — house sits left of centre; bias the crop left to centre it
+  0.50, // salon (centered copy) — orange room, centred
+  0.50, // cuisine — centred
+  0.50, // jardins — centred
+  0.55, // bureau — desk sits centre-right
+  0.50, // bus extérieur — centred
+  0.50, // mini-maison — centred
   0.58, // ecrivaine — bed centre-right
   0.66, // musicienne — bed on the right
   0.34, // cineast — bed on the left
