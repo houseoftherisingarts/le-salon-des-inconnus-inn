@@ -99,9 +99,9 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
           backgroundImage: `url('/media/inn/bureau-shire.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center 26%',
-          opacity: 0.13,
-          WebkitMaskImage: 'radial-gradient(125% 78% at 50% 20%, #000 0%, transparent 60%)',
-          maskImage: 'radial-gradient(125% 78% at 50% 20%, #000 0%, transparent 60%)',
+          opacity: 0.30,
+          WebkitMaskImage: 'radial-gradient(140% 95% at 50% 24%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 78%)',
+          maskImage: 'radial-gradient(140% 95% at 50% 24%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 78%)',
         }} />
         <div className="absolute inset-0 will-change-transform" style={{ background: 'radial-gradient(56% 42% at 50% 26%, rgba(44,76,54,0.32), transparent 72%)', animation: 'pmGreenDrift 40s ease-in-out infinite' }} />
         {/* edges fall back to warm black so the green reads as a glow, not a wash */}
