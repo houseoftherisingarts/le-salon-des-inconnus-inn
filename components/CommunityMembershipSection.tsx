@@ -61,10 +61,13 @@ const BUS = {
 };
 
 // The shared common spaces of the inn — what you share when you live here.
+// "Le salon" is the signature orange room (centered copy.jpg), the inn's
+// principal photo (also the Petite Monnaie pastille).
 const COMMON = [
-  { src: '/media/Auberge%20photos/salle%20a%20manger.jpg', en: 'The salon',  fr: 'Le salon' },
-  { src: '/media/Auberge%20photos/cuisine%20grande.jpg',   en: 'The kitchen', fr: 'La cuisine' },
-  { src: '/media/Auberge%20photos/jardins%20auberge.jpg',  en: 'The garden',  fr: 'Le jardin' },
+  { src: '/media/Financement%20Artistique/centered%20copy.jpg', en: 'The salon',       fr: 'Le salon' },
+  { src: '/media/Auberge%20photos/salle%20a%20manger.jpg',      en: 'The dining room', fr: 'La salle à manger' },
+  { src: '/media/Auberge%20photos/cuisine%20grande.jpg',        en: 'The kitchen',     fr: 'La cuisine' },
+  { src: '/media/Auberge%20photos/jardins%20auberge.jpg',       en: 'The garden',      fr: 'Le jardin' },
 ];
 
 const LETTER: { fr: string; en: string }[] = [
@@ -335,8 +338,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
               </figure>
             ))}
           </div>
-          {/* shared common spaces — salon · cuisine · jardin */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-2 md:mt-3">
+          {/* shared common spaces — salon · salle à manger · cuisine · jardin */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mt-2 md:mt-3">
             {COMMON.map((p, i) => (
               <figure key={i} className="comm-busshot relative overflow-hidden" style={{ aspectRatio: '4 / 3' }}>
                 <img src={p.src} alt={t(p.en, p.fr)} loading="lazy" className="w-full h-full object-cover" />
