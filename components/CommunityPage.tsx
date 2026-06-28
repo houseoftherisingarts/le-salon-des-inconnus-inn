@@ -28,7 +28,7 @@ export const CommunityPage: React.FC<Props> = ({
   }, [onUserChange]);
 
   return (
-    <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#050505] text-neutral-200 animate-fadeInCommunity">
+    <div className="comm-scroll fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#050505] text-neutral-200 animate-fadeInCommunity">
       <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#050505]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <button
@@ -56,15 +56,9 @@ export const CommunityPage: React.FC<Props> = ({
           <div className="max-w-6xl flex flex-wrap items-center gap-8">
             <button
               onClick={() => onNavigate('WWOOFING')}
-              className="font-cinzel text-xs uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+              className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-500 hover:text-[#c5a059] transition-colors"
             >
-              {t('See volunteer wwoofing', 'Voir le wwoofing bénévole')} →
-            </button>
-            <button
-              onClick={() => onNavigate('INN')}
-              className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-500 hover:text-white transition-colors"
-            >
-              {t('Back to the Inn', "Retour à l'auberge")}
+              {t('Prefer a shorter volunteer stay? See wwoofing', 'Plutôt un séjour bénévole plus court ? Voir le wwoofing')} →
             </button>
           </div>
         </footer>
@@ -80,8 +74,15 @@ export const CommunityPage: React.FC<Props> = ({
       )}
 
       <style>{`
+        /* Opacity-only fade: a lingering filter would make this the containing
+           block for position:fixed children (header + floating CTA) and break them. */
         .animate-fadeInCommunity { animation: fadeInCommunity 0.6s ease-out forwards; }
-        @keyframes fadeInCommunity { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+        @keyframes fadeInCommunity { from { opacity: 0; } to { opacity: 1; } }
+        .comm-scroll { scrollbar-width: thin; scrollbar-color: rgba(197,160,89,0.35) transparent; }
+        .comm-scroll::-webkit-scrollbar { width: 8px; }
+        .comm-scroll::-webkit-scrollbar-track { background: #050505; }
+        .comm-scroll::-webkit-scrollbar-thumb { background: rgba(197,160,89,0.30); border-radius: 8px; }
+        .comm-scroll::-webkit-scrollbar-thumb:hover { background: rgba(197,160,89,0.5); }
       `}</style>
     </div>
   );

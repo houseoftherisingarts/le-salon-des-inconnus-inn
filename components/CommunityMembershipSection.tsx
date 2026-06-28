@@ -156,8 +156,21 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   const [application, setApplication] = useState<CommunityApplication | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => { if (autoOpen && user && memberProfile) setShowForm(true); }, [autoOpen, user, memberProfile]);
+
+  // Floating "Postuler" appears once past the hero so the visitor can act from
+  // anywhere, not only at the bottom of a long page. Listens on the nested scroller.
+  useEffect(() => {
+    const section = document.getElementById('communaute');
+    const scroller = section?.closest('.overflow-y-auto') as HTMLElement | null;
+    const tgt: HTMLElement | Window = scroller ?? window;
+    const onS = () => setScrolled((scroller ? scroller.scrollTop : window.scrollY) > 700);
+    tgt.addEventListener('scroll', onS, { passive: true });
+    onS();
+    return () => tgt.removeEventListener('scroll', onS);
+  }, []);
 
   // Arriving from the Espace Membre ("Postuler" button): open the form directly.
   useEffect(() => {
@@ -231,10 +244,10 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   const body = LETTER;
 
   const TERMS = [
-    { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
     { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
     { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
     { v: t('Your time', 'Ton temps'), l: t('time and space for your projects', 'du temps et de l\'espace pour tes projets') },
+    { v: '1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
   ];
 
   return (
@@ -363,7 +376,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
       {/* ── TERMS — game-menu stat panel (bracketed glass, indexed stats) ── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
-        <div className="mx-auto max-w-6xl comm-statpanel">
+        <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-5 mb-2">
             <Eyebrow>{t('The terms', 'Les conditions')}</Eyebrow>
             <span className="h-px flex-1" style={{ background: T.line }} />
@@ -379,6 +392,18 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           </dl>
         </div>
       </Reveal>
+
+      {/* Decision-point CTA — right where the offer becomes concrete. */}
+      {!hasApplied && !showForm && (
+        <Reveal className="px-6 md:px-12 lg:px-20 pb-2 md:pb-4">
+          <div className="max-w-6xl">
+            <button onClick={handleCta} className="comm-cta font-inter uppercase">
+              {t('Apply for the place', 'Postuler pour la place')}
+              <span className="comm-cta-arrow" aria-hidden>→</span>
+            </button>
+          </div>
+        </Reveal>
+      )}
 
       {/* ── BODY 2 (work + pay) ──────────────────────────────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-12 md:py-16">
@@ -446,8 +471,15 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </div>
 
+      {/* Floating apply — lets the visitor act from anywhere on this long page. */}
+      {scrolled && !hasApplied && !showForm && (
+        <button onClick={handleCta} className="comm-fab font-inter uppercase" aria-label={t('Apply for the place', 'Postuler pour la place')}>
+          {t('Apply', 'Postuler')}
+          <span aria-hidden>→</span>
+        </button>
+      )}
+
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Inter:wght@300;400;500;600;700&display=swap');
         .comm .font-fraunces { font-family: 'Cinzel', serif; font-weight: 600; }
         .comm .font-fraunces-it { font-family: 'Cormorant Garamond', serif; font-style: normal; font-weight: 700; }
         .comm .font-inter { font-family: 'Lato', sans-serif; }
@@ -463,6 +495,19 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-busfig:hover img { transform: scale(1.03); }
         .comm-busshot { border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(197,160,89,0.18); }
         .comm-busshot:hover img { transform: scale(1.05); }
+        /* Gentle unifying grade so the colour rooms (warm kitchen, cool dining, green garden) cohere */
+        .comm-busshot img { filter: saturate(1.04) contrast(1.02) sepia(0.05); }
+        /* Floating apply button — small brass pill, sits above content */
+        .comm-fab {
+          position: fixed; z-index: 90; right: clamp(1rem, 4vw, 2.5rem); bottom: clamp(1rem, 4vw, 2.5rem);
+          display: inline-flex; align-items: center; gap: 0.6em; color: #1a1408; background: ${T.goldDeep};
+          padding: 0.85rem 1.5rem; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+          box-shadow: 0 12px 34px -12px rgba(197,160,89,0.7), 0 0 0 1px rgba(197,160,89,0.25);
+          animation: commFabIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+          transition: transform .35s cubic-bezier(0.16,1,0.3,1), background .3s ease;
+        }
+        .comm-fab:hover { transform: translateY(-2px); background: #f3e5ab; }
+        @keyframes commFabIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
         /* Game-menu eyebrow */
         .comm-eyebrow { display: inline-flex; align-items: center; gap: 0.7em; color: ${T.gold};
           font-size: 12px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; }
