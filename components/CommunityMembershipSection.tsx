@@ -100,8 +100,8 @@ const LETTER: { fr: string; en: string }[] = [
     en: "On the human side, a few things really matter to us: healthy, honest communication (naming things, listening, easing a tension), a certain lightness of being, a love of children (there are some, and they run everywhere), and a taste for cooking. And if cooking calls to you, know that by cooking for the household you're also fed for free.",
   },
   {
-    fr: "Concrètement, on cherche une personne qui se sent bien dans un environnement propre et qui a le souci du détail : tasser les meubles avant de passer la balayeuse, remarquer la petite chose qui traîne, ce genre d'attention. Quelqu'un de solide en communication, capable de réguler ses émotions, et qui aime créer des systèmes pour rendre sa contribution plus fluide.",
-    en: "In practice, we're looking for someone who feels good in a clean space and has an eye for detail: nudging the furniture aside before vacuuming, noticing the small thing out of place, that kind of care. Someone solid in communication, able to regulate their emotions, and who enjoys building systems to make their contribution flow.",
+    fr: "Concrètement, on cherche une personne qui se sent bien dans un environnement propre et qui a le souci du détail : tasser les meubles avant de passer la balayeuse, remarquer la petite chose qui traîne, ce genre d'attention. Quelqu'un de solide en communication, capable de réguler son système nerveux, et qui aime créer des systèmes pour rendre sa contribution plus fluide.",
+    en: "In practice, we're looking for someone who feels good in a clean space and has an eye for detail: nudging the furniture aside before vacuuming, noticing the small thing out of place, that kind of care. Someone solid in communication, able to regulate their nervous system, and who enjoys building systems to make their contribution flow.",
   },
   {
     fr: "Et tu peux attendre exactement la même chose de notre part : le même soin dans la communication, la même empathie, le même engagement à se parler pour vrai.",

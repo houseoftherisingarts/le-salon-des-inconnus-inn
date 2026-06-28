@@ -129,7 +129,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
         { q: "Où est-ce qu'on est logé ?", a: "Dans le bus aménagé, équipé et chauffé, avec accès complet à l'auberge, à la cuisine et au terrain. Tu es chez toi dans ton bus, tout en faisant partie de la vie de la maison." },
         { q: "Quelles sont les tâches ?", a: "Surtout le ménage des chambres et des espaces communs, au cœur de l'expérience des invités. S'ajoutent des moments où tu tiens le fort quand on est partis, et des tâches partagées entre membres parce qu'on vit ensemble." },
         { q: "Quelle est la différence avec le wwoofing ?", a: "Le wwoofing est bénévole et plutôt court, en échange du gîte et du couvert. La place de membre résident est un engagement plus durable et rémunéré, au centre de la raison d'être du lieu." },
-        { q: "Quel profil recherchez-vous ?", a: "Une personne qui se sent bien dans un environnement propre et qui a le souci du détail, solide en communication, capable de réguler ses émotions, et qui aime créer des systèmes pour optimiser sa contribution. En retour, on s'engage au même soin dans la communication, à la même empathie et au même engagement." },
+        { q: "Quel profil recherchez-vous ?", a: "Une personne qui se sent bien dans un environnement propre et qui a le souci du détail, solide en communication, capable de réguler son système nerveux, et qui aime créer des systèmes pour optimiser sa contribution. En retour, on s'engage au même soin dans la communication, à la même empathie et au même engagement." },
       ],
     },
     EN: {
@@ -155,7 +155,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
         { q: "Where do you live?", a: "In the converted bus, equipped and heated, with full access to the inn, the kitchen and the land. You are home in your own bus, while being part of the life of the house." },
         { q: "What are the tasks?", a: "Mainly housekeeping the rooms and common spaces, at the heart of the guests' experience. On top of that, holding the fort while the hosts are away, and tasks shared among members because we live together." },
         { q: "How is it different from wwoofing?", a: "Wwoofing is volunteer and fairly short, in exchange for room and board. The resident-member place is a longer, paid commitment, at the very centre of why the place exists." },
-        { q: "What kind of person are you looking for?", a: "Someone who feels good in a clean space and has an eye for detail, solid in communication, able to regulate their emotions, and who enjoys building systems to optimize their contribution. In return, we commit to the same care in communication, the same empathy and the same engagement." },
+        { q: "What kind of person are you looking for?", a: "Someone who feels good in a clean space and has an eye for detail, solid in communication, able to regulate their nervous system, and who enjoys building systems to optimize their contribution. In return, we commit to the same care in communication, the same empathy and the same engagement." },
       ],
     },
   },
