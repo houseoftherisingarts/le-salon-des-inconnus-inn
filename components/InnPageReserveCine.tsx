@@ -57,14 +57,11 @@ interface Props {
 // every browser where video.currentTime seeking is not.
 const CINE_FRAME_COUNT = 48;
 
-// Whether the cinematic motion (smooth scroll, hero parallax, scroll-scrub) must
-// stay disabled. True when the OS asks to reduce motion — EXCEPT when the page is
-// opened with ?motion=1, a preview override so the build can be checked on a Mac
-// that keeps "Reduce Motion" on system-wide (e.g. for thermal reasons) without
-// changing that setting. Real reduced-motion visitors still get the static version.
-const FORCE_MOTION = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('motion');
+// Reduce-motion gate for the *extra* motion only: Lenis smooth-scroll and the hero
+// parallax. The cinematic scroll-scrub itself ALWAYS plays (owner's call) — it's the
+// signature of the page and, now that it's a light canvas frame-sequence rather than
+// a decoded video, it's gentle enough to keep on for everyone.
 const prefersReducedMotion = () =>
-  !FORCE_MOTION &&
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -297,18 +294,8 @@ export const InnPageReserveCine: React.FC<Props> = ({
     const editorial = reserveEditorialRef.current;
     if (!root || !track || !canvas) return;
 
-    const reduced = prefersReducedMotion();
-    if (reduced) {
-      // Static, fully legible: hide the beat-1 title, show the Bienvenue editorial
-      // over the final frame, no scrub, no dead scroll (extent collapsed in CSS).
-      if (copy) { copy.style.opacity = '0'; }
-      if (editorial) { editorial.style.opacity = '1'; editorial.style.transform = 'none'; }
-      if (overlay) overlay.style.opacity = '0.5';
-      cineFrameIdxRef.current = (cineFramesRef.current.length || CINE_FRAME_COUNT) - 1;
-      fitCine(); drawCine();
-      return;
-    }
-
+    // The scrub always plays (no reduce-motion bail): it's the signature of the page
+    // and is now a light canvas frame draw rather than a decoded video.
     fitCine();
     let rafTick = 0;
     let lastP = -1;
@@ -485,7 +472,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
             text verbatim) resolves in over the settled, dimmed room. The booking
             section below still renders completely normally, with no video.
             ==================================================================== */}
-        <div ref={reserveTrackRef} className={`reserve-cine-track relative bg-[#050505]${FORCE_MOTION ? ' force-motion' : ''}`}>
+        <div ref={reserveTrackRef} className="reserve-cine-track relative bg-[#050505]">
           {/* Sticky scrubbed backdrop -- pinned for the length of the track. The
               poster sits behind as a fallback so there's never a blank flash. */}
           <div
@@ -1240,13 +1227,10 @@ export const InnPageReserveCine: React.FC<Props> = ({
         .reserve-cine-track { isolation: isolate; }
         .reserve-cine-extent { height: 240vh; }
 
-        @media (prefers-reduced-motion: reduce) {
-          /* Collapse the scroll extent so there's no dead scroll — the poster
-             frame + copy show statically and the booking section follows.
-             The .force-motion guard lets ?motion=1 keep the scrub region (preview
-             override) even when the OS asks to reduce motion. */
-          .reserve-cine-track:not(.force-motion) .reserve-cine-extent { height: 0 !important; }
-        }
+        /* The scrub extent stays full height for everyone — the scroll-scrub plays
+           regardless of the OS reduce-motion setting (owner's call), so there is no
+           dead scroll to collapse. Only the hero entrance animations below are
+           reduced for prefers-reduced-motion. */
 
         @media (prefers-reduced-motion: reduce) {
           .hero3-eyebrow, .hero3-rule, .hero3-title, .hero3-tagline, .hero3-ctas, .hero3-scroll, .hero3-scroll-line {
