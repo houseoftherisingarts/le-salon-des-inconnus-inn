@@ -48,16 +48,13 @@ const CEILIDH_DOORS_DATE = new Date('2026-05-21T12:00:00');
 interface Props {
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
-  // Cinematic backdrop. Defaults to the forward push-in (used on the live main page).
-  // The /reserve-cine experiment passes the reversed clip that ends on the full
-  // living-room shot, so the two can be compared side by side.
-  videoSrc?: string;
+  // Poster frame shown behind the canvas backdrop until the scrub frames load.
   posterSrc?: string;
 }
 
-// Mobile cinematic: number of pre-extracted frames in /public/hero/cine-rev/
+// Cinematic backdrop: number of pre-extracted frames in /public/hero/cine-rev/
 // (f_01.jpg … f_48.jpg), drawn to a canvas as the scroll scrubs — reliable on
-// touch where video.currentTime seeking is not.
+// every browser where video.currentTime seeking is not.
 const CINE_FRAME_COUNT = 48;
 
 const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
@@ -85,7 +82,6 @@ const SPACES_DATA: Array<{ titleEn: string; titleFr: string; itemsEn: string[]; 
 export const InnPageReserveCine: React.FC<Props> = ({
   language,
   onNavigate,
-  videoSrc = '/hero/reserve-hero-scrub.mp4',
   posterSrc = '/hero/reserve-hero-poster.jpg',
 }) => {
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
@@ -96,23 +92,23 @@ export const InnPageReserveCine: React.FC<Props> = ({
   const roomsRef = useRef<HTMLDivElement>(null);
   // ── Cinematic "Réserver" backdrop: scroll-scrubbed Veo establishing shot ──
   // reserveTrackRef = the tall scroll track that wraps the whole booking section.
-  // reserveVideoRef = the sticky video scrubbed by scroll progress through that track.
+  // The backdrop is scrubbed as a canvas frame-sequence (reserveCanvasRef, below)
+  // on every viewport — see the note there.
   // reserveOverlayRef / reserveCopyRef = the establishing title that resolves over
   // the footage before the real half-moon estate card + balloon rooms reveal.
   const reserveTrackRef = useRef<HTMLDivElement>(null);
-  const reserveVideoRef = useRef<HTMLVideoElement>(null);
   const reserveOverlayRef = useRef<HTMLDivElement>(null);
   const reserveCopyRef = useRef<HTMLDivElement>(null);       // beat 1 — "Entrez dans le Manoir"
   const reserveEditorialRef = useRef<HTMLDivElement>(null);  // beat 2 — "Bienvenue…" editorial
 
-  // ── Mobile cinematic backdrop ──────────────────────────────────────────────
-  // On phones, video.currentTime seeking can't be decode-scrubbed smoothly during
-  // touch scroll, so the backdrop is a <canvas> driven by pre-extracted frame
-  // images instead. Desktop keeps the sharp <video> scrub.
+  // ── Cinematic backdrop: canvas frame-sequence (all viewports) ──────────────
+  // The backdrop is a <canvas> driven by pre-extracted frame images, scrubbed by
+  // scroll progress. video.currentTime seeking was unreliable (black first frame
+  // on Safari/iOS) and decode-on-seek of the 10MB clip thrashed the GPU; drawing
+  // pre-decoded JPEGs is light and identical on every browser.
   const reserveCanvasRef = useRef<HTMLCanvasElement>(null);
   const cineFramesRef = useRef<HTMLImageElement[]>([]);
   const cineFrameIdxRef = useRef(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   // Hero photo framing — defaults from INN_HERO_FOCUS, overridable live via the
   // /?herofocal drag editor (stored in Firestore config/innHeroFocus).
@@ -153,19 +149,10 @@ export const InnPageReserveCine: React.FC<Props> = ({
     ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
   }, []);
 
-  // Track the mobile breakpoint (drives canvas-vs-video).
+  // Preload the cinematic frames once; redraw the current frame as each image
+  // arrives so there's no blank flash. Frames are ~115KB each (5.6MB total) —
+  // lighter than the old 10MB clip, and they drive the scrub on every viewport.
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    const apply = () => setIsMobile(mq.matches);
-    apply();
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
-  }, []);
-
-  // Preload the cinematic frames once on a small screen; redraw the current frame
-  // as each image arrives so there's no blank flash.
-  useEffect(() => {
-    if (!isMobile) return;
     const imgs: HTMLImageElement[] = [];
     for (let i = 1; i <= CINE_FRAME_COUNT; i++) {
       const im = new Image();
@@ -176,7 +163,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
     }
     cineFramesRef.current = imgs;
     return () => { cineFramesRef.current = []; };
-  }, [isMobile, fitCine, drawCine]);
+  }, [fitCine, drawCine]);
 
   const scrollToRooms = () => {
     const root = scrollRef.current;
@@ -293,13 +280,11 @@ export const InnPageReserveCine: React.FC<Props> = ({
   useEffect(() => {
     const root = scrollRef.current;
     const track = reserveTrackRef.current;
-    const vid = reserveVideoRef.current;
     const canvas = reserveCanvasRef.current;
     const overlay = reserveOverlayRef.current;
     const copy = reserveCopyRef.current;
     const editorial = reserveEditorialRef.current;
-    if (!root || !track) return;
-    if (isMobile ? !canvas : !vid) return; // backdrop element must exist for this mode
+    if (!root || !track || !canvas) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
@@ -308,12 +293,12 @@ export const InnPageReserveCine: React.FC<Props> = ({
       if (copy) { copy.style.opacity = '0'; }
       if (editorial) { editorial.style.opacity = '1'; editorial.style.transform = 'none'; }
       if (overlay) overlay.style.opacity = '0.5';
-      if (isMobile) { cineFrameIdxRef.current = CINE_FRAME_COUNT - 1; fitCine(); drawCine(); }
+      cineFrameIdxRef.current = (cineFramesRef.current.length || CINE_FRAME_COUNT) - 1;
+      fitCine(); drawCine();
       return;
     }
 
-    if (vid) vid.pause();
-    if (canvas) fitCine();
+    fitCine();
     let rafTick = 0;
     let lastP = -1;
     const update = () => {
@@ -331,15 +316,9 @@ export const InnPageReserveCine: React.FC<Props> = ({
       // Push-in completes by ~0.62 (when the editorial takes over), then holds on
       // the settled final frame so the Bienvenue copy sits over a stable room.
       const vp = Math.min(1, Math.max(0, p / 0.62));
-      if (isMobile) {
-        const n = cineFramesRef.current.length || CINE_FRAME_COUNT;
-        cineFrameIdxRef.current = Math.round(vp * (n - 1));
-        drawCine();
-      } else if (vid) {
-        const dur = (vid.duration && isFinite(vid.duration)) ? vid.duration : 8;
-        const tTarget = Math.min(dur - 0.05, vp * dur);
-        if (Math.abs(vid.currentTime - tTarget) > 0.02) vid.currentTime = tTarget;
-      }
+      const n = cineFramesRef.current.length || CINE_FRAME_COUNT;
+      cineFrameIdxRef.current = Math.round(vp * (n - 1));
+      drawCine();
 
       // Beat 1 — "Entrez dans le Manoir": resolve 0.05–0.20, hold, lift away 0.48–0.62.
       if (copy) {
@@ -366,34 +345,14 @@ export const InnPageReserveCine: React.FC<Props> = ({
     const onResize = () => { if (canvas) fitCine(); lastP = -1; if (!rafTick) rafTick = requestAnimationFrame(update); };
 
     const start = () => { update(); root.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onResize); };
-    // Safari/iOS only paint a decoded frame after the element has actually played
-    // once. A scrubbed video that is only ever seeked (currentTime) stays on a
-    // black/poster frame there. Prime the decoder with a muted play→pause, then a
-    // tiny seek, so the very first scrubbed frame renders. Harmless on Chrome.
-    const primeVideo = () => {
-      if (!vid) return;
-      const kick = () => {
-        try {
-          const pr = vid.play();
-          if (pr && typeof pr.then === 'function') {
-            pr.then(() => { vid.pause(); vid.currentTime = 0.05; }).catch(() => { vid.currentTime = 0.05; });
-          } else { vid.pause(); vid.currentTime = 0.05; }
-        } catch { /* seeking still works below */ }
-        start();
-      };
-      if (vid.readyState >= 1) kick();
-      else vid.addEventListener('loadedmetadata', kick, { once: true });
-    };
-    if (isMobile) start();                          // canvas: frames may still be loading; redraw as they arrive
-    else primeVideo();                              // video: prime the decoder, then scrub
+    start();                                         // canvas frames: redraw as each arrives; no video decode to wait on
 
     return () => {
       root.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
-      if (vid) vid.removeEventListener('loadedmetadata', start);
       if (rafTick) cancelAnimationFrame(rafTick);
     };
-  }, [isMobile, videoSrc, fitCine, drawCine]);
+  }, [fitCine, drawCine]);
 
   return (
     <RoomOrbProvider language={language}>
@@ -522,26 +481,16 @@ export const InnPageReserveCine: React.FC<Props> = ({
             className="sticky top-0 h-screen w-full overflow-hidden bg-center bg-cover"
             style={{ backgroundImage: `url(${posterSrc})` }}
           >
-            {isMobile ? (
-              // Phones: frame-image scrub on a canvas (touch-reliable).
-              <canvas
-                ref={reserveCanvasRef}
-                aria-hidden
-                className="absolute inset-0 w-full h-full"
-              />
-            ) : (
-              // Desktop: sharp video scrubbed via currentTime.
-              <video
-                ref={reserveVideoRef}
-                src={videoSrc}
-                poster={posterSrc}
-                muted
-                playsInline
-                preload="auto"
-                aria-hidden
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            )}
+            {/* All viewports: frame-image scrub on a canvas. Reliable on every
+                browser (no video.currentTime decode-on-seek, no Safari black
+                first frame), and far lighter than streaming + seeking a 10MB
+                clip — so it never thrashes the GPU/compositor the way the old
+                video scrub did. The poster behind covers any pre-load flash. */}
+            <canvas
+              ref={reserveCanvasRef}
+              aria-hidden
+              className="absolute inset-0 w-full h-full"
+            />
             {/* Base vignette -- top/bottom legibility for the beat-1 title. */}
             <div
               ref={reserveOverlayRef}

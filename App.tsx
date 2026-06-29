@@ -639,7 +639,6 @@ const App: React.FC = () => {
           <InnPageReserveCine
             language={language}
             onNavigate={(view) => handleNavigation(view as ViewState)}
-            videoSrc="/hero/reserve-hero-scrub-rev.mp4"
             posterSrc="/hero/reserve-hero-poster-rev.jpg"
           />
         )}
@@ -667,7 +666,6 @@ const App: React.FC = () => {
           <InnPageReserveCine
             language={language}
             onNavigate={(view) => handleNavigation(view as ViewState)}
-            videoSrc="/hero/reserve-hero-scrub-rev.mp4"
             posterSrc="/hero/reserve-hero-poster-rev.jpg"
           />
         )}
