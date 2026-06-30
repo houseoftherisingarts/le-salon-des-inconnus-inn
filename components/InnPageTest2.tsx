@@ -106,8 +106,8 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
               style={{ textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}
             >
               {t(
-                'A Victorian manor on twelve forested acres above the Lac Simon valley. We restored it room by room — preserving the bones, layering in art, music, food, and the quiet space artists need to make work that matters.',
-                'Un manoir victorien sur douze acres boisés surplombant la vallée du Lac Simon. Nous l\'avons restauré pièce par pièce — préservant les os, ajoutant l\'art, la musique, la nourriture et l\'espace silencieux dont les artistes ont besoin pour créer.',
+                'A Victorian manor on twelve forested acres in Namur, ten minutes from Lac Simon. We restored it room by room — preserving the bones, layering in art, music, food, and the quiet space artists need to make work that matters.',
+                'Un manoir victorien sur douze acres boisés à Namur, à dix minutes du Lac Simon. Nous l\'avons restauré pièce par pièce — préservant les os, ajoutant l\'art, la musique, la nourriture et l\'espace silencieux dont les artistes ont besoin pour créer.',
               )}
             </p>
             <button

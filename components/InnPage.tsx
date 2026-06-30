@@ -45,7 +45,7 @@ const getStructuredData = (language: 'EN' | 'FR') => {
     "telephone": CONTACT_INFO.phone,
     "priceRange": "$$$",
     "amenityFeature": [
-      { "@type": "LocationFeatureSpecification", "name": "Access to Lac-Simon", "value": "true" },
+      { "@type": "LocationFeatureSpecification", "name": "Lac-Simon nearby", "value": "10 min" },
       { "@type": "LocationFeatureSpecification", "name": "Event Venue (Lac à l'épaule)", "value": "true" },
       { "@type": "LocationFeatureSpecification", "name": "Piano Bar / Music", "value": "true" },
       ...SEMANTIC_NEIGHBORS.map(n => ({

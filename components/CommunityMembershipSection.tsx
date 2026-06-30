@@ -72,16 +72,16 @@ const COMMON = [
 
 const LETTER: { fr: string; en: string }[] = [
   {
-    fr: "André, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. On le laisse partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
-    en: "André, who has watched over the house and kept it clean for a good while now, is moving on to live closer to his family. We let him go with a full heart and all our gratitude. His departure opens a rare spot: living here, inside the small core that keeps the inn alive day to day.",
+    fr: "Andrée, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. On la laisse partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
+    en: "Andrée, who has watched over the house and kept it clean for a good while now, is moving on to live closer to her family. We let her go with a full heart and all our gratitude. Her departure opens a rare spot: living here, inside the small core that keeps the inn alive day to day.",
   },
   {
     fr: "Le Salon des Inconnus, c'est une petite communauté grandissante, enracinée dans une auberge familiale. Il y a des membres permanents qui vivent sur place, et des membres comètes qui passent, laissent leur trace, puis repartent. L'auberge, c'est la business qui nous fait vivre ; et en retour, la communauté prend soin de l'auberge, l'anime et lui donne une âme.",
     en: "Le Salon des Inconnus is a small, growing community rooted in a family inn. There are permanent members who live on site, and comet members who pass through, leave their mark, then move on. The inn is the business that makes our living; and in return, the community takes care of the inn, brings it to life, and gives it a soul.",
   },
   {
-    fr: "En ce moment, la place qui se libère, c'est vivre dans le bus aménagé, avec accès complet à l'auberge et au terrain. Tu es chez toi dans ton bus, tout en faisant partie de la vie de la maison.",
-    en: "Right now, the spot opening up is to live in the converted bus, with full access to the inn and the land. You're home in your own bus, while being part of the life of the house.",
+    fr: "En ce moment, la place qui se libère, c'est vivre dans le Magic Bus, avec accès complet à l'auberge et au terrain. Tu es chez toi dans ton bus, tout en faisant partie de la vie de la maison.",
+    en: "Right now, the spot opening up is to live in the Magic Bus, with full access to the inn and the land. You're home in your own bus, while being part of the life of the house.",
   },
   {
     fr: "C'est un vrai travail. La tâche principale, c'est le ménage des chambres et des espaces communs, au cœur de l'expérience de nos invités. C'est répétitif, c'est physique, et c'est précieux. À ça s'ajoutent des moments où tu tiens le fort quand on est partis : accueillir des invités, être là pour les enfants de temps en temps. Et puis il y a les tâches qu'on partage entre membres parce qu'on vit ensemble : arroser le jardin, donner un coup de main à la cuisine, la vie de tous les jours.",
@@ -343,12 +343,12 @@ export const CommunityMembershipSection: React.FC<Props> = ({
           <figure className="comm-busfig relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
             <img
               src={BUS.ext}
-              alt={t('The converted bus in a golden field at dusk.', 'Le bus aménagé dans un champ doré au crépuscule.')}
+              alt={t('The Magic Bus in a golden field at dusk.', 'Le Magic Bus dans un champ doré au crépuscule.')}
               className="w-full h-full object-cover"
             />
             <span className="comm-vignette absolute inset-0 pointer-events-none" />
             <figcaption className="absolute bottom-4 left-5 font-cinzel uppercase" style={{ color: T.ink, fontSize: '11px', letterSpacing: '0.3em', textShadow: '0 1px 14px rgba(0,0,0,0.85)' }}>
-              {t('The converted bus', 'Le bus aménagé')}
+              {t('The Magic Bus', 'Le Magic Bus')}
             </figcaption>
           </figure>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mt-2 md:mt-3">
