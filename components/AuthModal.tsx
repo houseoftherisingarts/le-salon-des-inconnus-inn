@@ -220,19 +220,52 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
     }
   };
 
+  // Mot de passe déjà fuité ? Interroge HaveIBeenPwned en k-anonymat : seuls
+  // les 5 premiers caractères du SHA-1 partent sur le réseau, jamais le mot de
+  // passe. En cas d'échec réseau on laisse passer (le check est best-effort).
+  const isPasswordPwned = async (pw: string): Promise<boolean> => {
+    try {
+      const data = new TextEncoder().encode(pw);
+      const digest = await crypto.subtle.digest('SHA-1', data);
+      const hex = [...new Uint8Array(digest)]
+        .map((b) => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+      const res = await fetch(`https://api.pwnedpasswords.com/range/${hex.slice(0, 5)}`);
+      if (!res.ok) return false;
+      const body = await res.text();
+      return body.split('\n').some((line) => line.split(':')[0].trim() === hex.slice(5));
+    } catch {
+      return false;
+    }
+  };
+
   const handleEmailAuth = async () => {
     if (!auth) { setError('Firebase non configuré'); return; }
     if (mode === 'signup' && !consentChecked) {
       setError(t('You must accept the Privacy Policy to create an account.', 'Vous devez accepter la Politique de Confidentialité pour créer un compte.'));
       return;
     }
+    if (mode === 'signup' && password.length < 8) {
+      setError(t('Password must be at least 8 characters.', 'Mot de passe trop court (min. 8 caractères).'));
+      return;
+    }
     setLoading(true); setError('');
+    if (mode === 'signup' && await isPasswordPwned(password)) {
+      setError(t(
+        'This password appears in known data breaches. Please choose another one.',
+        'Ce mot de passe apparaît dans des fuites de données connues. Veuillez en choisir un autre.',
+      ));
+      setLoading(false);
+      return;
+    }
     try {
       let user: User;
       if (mode === 'signup') {
         const result = await createUserWithEmailAndPassword(auth, email, password);
         user = result.user;
         if (name) await updateProfile(user, { displayName: name });
+        // La vérification n'est pas bloquante pour le compte membre, mais les
+        // règles Firestore exigent email_verified pour tout accès admin.
+        sendEmailVerification(user).catch(() => {});
       } else {
         const result = await signInWithEmailAndPassword(auth, email, password);
         user = result.user;
