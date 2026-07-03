@@ -9,11 +9,15 @@ service firebase.storage {
 
     // Admin shorthand: same email allow-list as firestore.rules. Keep these
     // two helpers in sync.
+    // email_verified obligatoire — même raison que firestore.rules : sans lui,
+    // un compte mot-de-passe créé avec une adresse admin usurpée passerait.
     function isAdmin() {
-      return request.auth != null && (
-        request.auth.token.email == 'houseoftherisingarts@gmail.com' ||
-        request.auth.token.email == 'alex@lesalondesinconnus.com'
-      );
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && (
+          request.auth.token.email == 'houseoftherisingarts@gmail.com' ||
+          request.auth.token.email == 'alex@lesalondesinconnus.com'
+        );
     }
 
     function isImage() {

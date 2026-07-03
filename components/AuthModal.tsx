@@ -7,6 +7,7 @@ import {
   signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   updateProfile,
   RecaptchaVerifier,
   signInWithPhoneNumber,
