@@ -535,8 +535,11 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     >
       {bookingUrl &&
         createPortal(
+          {/* z-[300]: doit passer au-dessus du CookieBanner (z-[250]), sinon le
+              bandeau intercepte les clics au bas du checkout HostAway, dont le
+              bouton « Compléter la réservation ». */}
           <div
-            className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm flex flex-col"
+            className="fixed inset-0 z-[300] bg-black/90 backdrop-blur-sm flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-5 py-3 bg-[#0c0c0c] border-b border-[#c5a059]/30 shrink-0">
