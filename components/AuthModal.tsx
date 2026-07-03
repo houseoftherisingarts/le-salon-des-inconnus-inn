@@ -474,7 +474,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
                     className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#d4af37]/60 placeholder:text-neutral-600" />
                   <input type="email" placeholder={t('Email', 'Courriel')} value={email} onChange={e => setEmail(e.target.value)}
                     className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#d4af37]/60 placeholder:text-neutral-600" />
-                  <input type="password" placeholder={t('Password (min. 6 chars)', 'Mot de passe (min. 6 caractères)')} value={password} onChange={e => setPassword(e.target.value)}
+                  <input type="password" placeholder={t('Password (min. 8 chars)', 'Mot de passe (min. 8 caractères)')} value={password} onChange={e => setPassword(e.target.value)}
                     className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#d4af37]/60 placeholder:text-neutral-600" />
                   <ConsentCheckbox />
                   <button onClick={handleEmailAuth} disabled={loading || !email || !password || !consentChecked}
