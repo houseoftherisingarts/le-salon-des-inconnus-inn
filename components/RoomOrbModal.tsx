@@ -820,21 +820,6 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             </div>
           )}
 
-          {/* Direct-booking perk — booking here beats the OTAs */}
-          {room.status !== 'COMING_SOON' && (
-            <div
-              className="flex items-center gap-3 mt-1 px-4 py-3 border border-[#c5a059]/30 bg-[#c5a059]/[0.06] text-left"
-              style={{ boxShadow: 'inset 0 1px 0 rgba(197,160,89,0.12)' }}
-            >
-              <span className="text-[#c5a059] text-base leading-none" aria-hidden="true">✦</span>
-              <span className="font-lato text-[13px] text-[#f3e5ab]">
-                {t('Book direct for the best price · code ', 'Réserver en direct = meilleur prix · code ')}
-                <span className="font-cinzel tracking-[0.15em] text-[#c5a059]">WUWEI2026</span>
-                {t(' gives 10% off.', ' pour 10 % de rabais.')}
-              </span>
-            </div>
-          )}
-
           {/* Buttons */}
           <div className="flex flex-wrap gap-4 mt-2 justify-center md:justify-start">
             <button
