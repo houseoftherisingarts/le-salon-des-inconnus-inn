@@ -277,7 +277,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
         'auth/invalid-credential':    t('Wrong email or password.', 'Courriel ou mot de passe incorrect.'),
         'auth/wrong-password':        t('Wrong password.', 'Mot de passe incorrect.'),
         'auth/user-not-found':        t('No account with this email.', 'Aucun compte avec ce courriel.'),
-        'auth/weak-password':         t('Password must be at least 6 characters.', 'Mot de passe trop court (min. 6 caractères).'),
+        'auth/weak-password':         t('Password must be at least 8 characters.', 'Mot de passe trop court (min. 8 caractères).'),
+        'auth/password-does-not-meet-requirements': t('Password must be at least 8 characters.', 'Mot de passe trop court (min. 8 caractères).'),
         'auth/invalid-email':         t('Invalid email address.', 'Adresse courriel invalide.'),
       };
       setError(msgs[e.code] || e.message);
