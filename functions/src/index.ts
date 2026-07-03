@@ -330,10 +330,11 @@ const HOSTAWAY_ACCOUNT_ID = defineSecret('HOSTAWAY_ACCOUNT_ID');
 
 const HOSTAWAY_BASE = 'https://api.hostaway.com/v1';
 
-// The 7 confirmed live listing ids. Requests for anything else are rejected so
+// The confirmed live listing ids. Requests for anything else are rejected so
 // this endpoint can't be turned into an open proxy against the HostAway account.
 const ALLOWED_LISTINGS = new Set([
   345789, 345790, 345792, 345787, 345786, 345791, 345788, 559483,
+  563826, // La Méditante
 ]);
 
 // Token cache shared across warm invocations of a single instance. HostAway
