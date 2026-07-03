@@ -4,11 +4,17 @@ service cloud.firestore {
 
     // Both addresses are admins. Used in many places below — kept as a small
     // helper-like list so adding/removing an admin is one edit.
+    // email_verified est OBLIGATOIRE : sans lui, n'importe qui peut créer un
+    // compte mot-de-passe avec une adresse admin qu'il ne possède pas et le
+    // jeton porterait cet email. Le courriel de vérification n'arrive que
+    // dans la vraie boîte, donc seul le vrai propriétaire passe ce contrôle.
     function isAdmin() {
-      return request.auth != null && (
-        request.auth.token.email == 'houseoftherisingarts@gmail.com' ||
-        request.auth.token.email == 'alex@lesalondesinconnus.com'
-      );
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && (
+          request.auth.token.email == 'houseoftherisingarts@gmail.com' ||
+          request.auth.token.email == 'alex@lesalondesinconnus.com'
+        );
     }
 
     // Curated-artist check. The flag lives at /members/{uid}/admin/flags.isArtist
