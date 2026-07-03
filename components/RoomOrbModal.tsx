@@ -828,7 +828,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             >
               <span className="text-[#c5a059] text-base leading-none" aria-hidden="true">✦</span>
               <span className="font-lato text-[13px] text-[#f3e5ab]">
-                {t('Book direct for the best price — code ', 'Réserver en direct = meilleur prix — code ')}
+                {t('Book direct for the best price · code ', 'Réserver en direct = meilleur prix · code ')}
                 <span className="font-cinzel tracking-[0.15em] text-[#c5a059]">WUWEI2026</span>
                 {t(' gives 10% off.', ' pour 10 % de rabais.')}
               </span>
