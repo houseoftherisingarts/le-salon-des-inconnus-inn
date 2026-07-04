@@ -134,8 +134,8 @@ const APPLY_SECTIONS: {
     id: 'dates', number: '05',
     titleFr: 'Dates Demandées', titleEn: 'Requested Dates',
     image: '/media/Artistes/aliel%20campfire.jpg',
-    quoteFr: "Sept jours minimum. Moins, et on ne se rencontre pas vraiment.",
-    quoteEn: "Seven days minimum. Less than that, and we don't really meet.",
+    quoteFr: "Sept jours minimum, jusqu'à la fin octobre. Moins, et on ne se rencontre pas vraiment.",
+    quoteEn: "Seven days minimum, until the end of October. Less than that, and we don't really meet.",
   },
   {
     id: 'needs', number: '06',
