@@ -183,6 +183,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   EVENTS:         '/evenements',
   CEILIDH:        '/ceilidh',
   WWOOFING:       '/wwoofing',
+  PPS:            '/soiree-thematique-pps',
   COMMUNITY:      '/communaute',
   DONATION:       '/don',
   MY_PROFILE:     '/profil',
