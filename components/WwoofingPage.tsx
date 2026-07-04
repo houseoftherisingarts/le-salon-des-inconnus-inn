@@ -36,21 +36,17 @@ const TASK_OPTIONS = [
 ];
 
 const ACCOMMODATION_OPTIONS = [
-  { id: 'shared',  en: 'Shared room in the manor',  fr: 'Chambre partagée au manoir' },
-  { id: 'private', en: 'Private room (if available)', fr: 'Chambre privée (selon disponibilité)' },
-  { id: 'yurt',    en: 'Yurt',                      fr: 'Yourte' },
-  { id: 'tent',    en: 'Tent / camping',            fr: 'Tente / camping' },
-  { id: 'flexible',en: 'Flexible, whatever works', fr: 'Flexible, à votre convenance' },
+  { id: 'prospector', en: 'Prospector tent (community bunkhouse)', fr: 'Tente prospecteur (dortoir communautaire)' },
+  { id: 'tiny',       en: 'Tiny house (when available)',           fr: 'Mini-maison (selon disponibilité)' },
+  { id: 'flexible',   en: 'Flexible, whatever works',              fr: 'Flexible, à votre convenance' },
 ];
 
 // When the user is on the "Logistics" section and changes the dropdown,
 // the sticky rail picture switches to the matching accommodation.
 const ACCOMMODATION_IMAGES: Record<string, string> = {
-  shared:   '/media/Financement%20Artistique/centered%20copy.jpg',
-  private:  '/media/inn/ecrivaine%20banana.jpg',
-  yurt:     '/media/inn/yourte.jpg',
-  tent:     '/media/Auberge%20photos/nature%20coco%20upscale.jpg',
-  flexible: '/media/inn/yourte.jpg',
+  prospector: '/media/Auberge%20photos/nature%20coco%20upscale.jpg',
+  tiny:       '/media/inn/mini-maison-exterieur.jpeg',
+  flexible:   '/media/inn/golden%20drone%20copy.jpg',
 };
 
 const MIN_DAYS = 7;
