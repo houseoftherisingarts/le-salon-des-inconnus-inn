@@ -874,7 +874,8 @@ const App: React.FC = () => {
           .includes(currentUser.email.toLowerCase()) && (
         <button
           onClick={() => handleNavigation('ADMIN')}
-          className="fixed bottom-3 left-4 z-[50] text-[9px] font-cinzel text-neutral-800 hover:text-neutral-500 uppercase tracking-widest transition-colors"
+          className="fixed bottom-0 left-0 z-[50] min-h-[44px] min-w-[44px] px-4 pb-3 flex items-end
+                     text-[9px] font-cinzel text-neutral-800 hover:text-neutral-500 uppercase tracking-widest transition-colors"
         >
           Admin
         </button>
