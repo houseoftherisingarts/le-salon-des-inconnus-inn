@@ -55,10 +55,15 @@ const ACCOMMODATION_IMAGES: Record<string, string> = {
 
 const MIN_DAYS = 7;
 
-// TODO: PLACEHOLDER COPY, please review/edit.
 const HERO_COPY = {
-  fr: "Vous voulez vivre la maison de l'intérieur, pas la visiter, l'habiter une ou deux semaines. C'est exactement ce qu'on cherche aussi : des mains, des idées, des soirées autour du feu.",
-  en: "You want to live the house from the inside, not visit it, inhabit it for a week or two. That's exactly what we're looking for: hands, ideas, nights around the fire.",
+  fr: "Jusqu'à la fin octobre, on accueille des wwoofers à la semaine ou au mois : quatre heures par jour au jardin, sur le terrain et dans les finitions des mini-maisons, en échange du gîte, du couvert et des soirées autour du feu.",
+  en: "Until the end of October, we welcome wwoofers by the week or by the month: four hours a day in the gardens, on the land and finishing the tiny houses, in exchange for room, board and evenings around the fire.",
+};
+
+// Season 2026: the concrete offer, shown as a band right under the hero.
+const SEASON_2026 = {
+  fr: "Cette saison, les chantiers sont clairs : l'aménagement paysager, les jardins, et les finitions autour des mini-maisons et de la tente prospecteur. Les séjours se prennent à la semaine ou au mois, jusqu'à la fin octobre. On dort dans la tente prospecteur, un dortoir chaleureux au cœur de la communauté, ou dans la mini-maison lorsqu'elle est disponible.",
+  en: "This season the work is clear: landscaping, the gardens, and the finishing touches around the tiny houses and the prospector tent. Stays run by the week or by the month, until the end of October. You sleep in the prospector tent, a warm bunkhouse at the heart of the community, or in the tiny house when it is available.",
 };
 
 // Definitions. The Wwoofing block stays; the Ceilidh block contextualises the
