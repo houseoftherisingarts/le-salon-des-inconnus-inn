@@ -68,7 +68,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 to-transparent pointer-events-none" style={{ top: '-60px' }}></div>
 
       <div className="relative bg-[#0d0d0d] border-t border-[#d4af37]/20">
-        <div className="max-w-6xl mx-auto px-6 py-5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 sm:py-5">
           <div className="flex flex-col md:flex-row gap-4 md:items-start">
 
             {/* Icon + text */}
