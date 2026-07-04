@@ -10,7 +10,7 @@ import { MUSIC_GENRES } from '../constants';
 
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
-  | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'COMMUNITY' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
+  | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
   | 'MESSAGING' | 'ADMIN';
 
 interface SiteHeaderProps {
