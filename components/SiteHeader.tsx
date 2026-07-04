@@ -52,6 +52,7 @@ const FAIRE: NavItem[] = [
   { view: 'EVENTS',       label_fr: 'Événements',       label_en: 'Events',          desc_fr: 'Spectacles & résidences',        desc_en: 'Shows & residencies',          icon: '🌙' },
   { view: 'CEILIDH',      label_fr: 'Ceilidh de Mai',   label_en: 'May Ceilidh',     desc_fr: 'Festival communautaire 2026',    desc_en: 'Community festival 2026',      icon: '🎶' },
   { view: 'WWOOFING',     label_fr: 'Wwoofing',         label_en: 'Wwoofing',        desc_fr: 'Vivez et travaillez sur le domaine', desc_en: 'Live and work on the estate', icon: '🌿' },
+  { view: 'PPS',          label_fr: 'Soirées thématiques', label_en: 'Theme Evenings', desc_fr: 'Retraites d\'équipe, avec PPS Canada', desc_en: 'Team retreats, with PPS Canada', icon: '🎪' },
 ];
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
