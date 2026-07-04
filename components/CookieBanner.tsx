@@ -79,10 +79,19 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
                   {t('Your Privacy', 'Votre Vie Privée')}
                 </p>
                 <p className="text-neutral-400 text-xs font-lato leading-relaxed">
-                  {t(
-                    'This site uses Firebase Authentication to manage your Member Space. If you sign in with Google or by phone, Google may set cookies. We do not use advertising trackers.',
-                    'Ce site utilise Firebase Authentication pour gérer votre Espace Membre. Si vous vous connectez via Google ou par téléphone, Google peut déposer des témoins. Nous n\'utilisons pas de traceurs publicitaires.',
-                  )}
+                  {/* Mobile: une ligne; le détail complet vit sous « En savoir plus ». */}
+                  <span className="sm:hidden">
+                    {t(
+                      'Sign-in cookies only (Member Space). No ad trackers.',
+                      'Témoins de connexion seulement (Espace Membre). Aucun traceur publicitaire.',
+                    )}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {t(
+                      'This site uses Firebase Authentication to manage your Member Space. If you sign in with Google or by phone, Google may set cookies. We do not use advertising trackers.',
+                      'Ce site utilise Firebase Authentication pour gérer votre Espace Membre. Si vous vous connectez via Google ou par téléphone, Google peut déposer des témoins. Nous n\'utilisons pas de traceurs publicitaires.',
+                    )}
+                  </span>
                   {' '}
                   <button
                     onClick={() => setShowDetails(!showDetails)}

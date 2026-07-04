@@ -29,7 +29,7 @@ export const CommunityPage: React.FC<Props> = ({
 
   return (
     <div className="comm-scroll fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#050505] text-neutral-200 animate-fadeInCommunity">
-      <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#050505]/80 backdrop-blur-md">
+      <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#050505]/95 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <button
             onClick={() => onNavigate('INN')}

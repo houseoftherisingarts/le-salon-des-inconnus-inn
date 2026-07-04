@@ -499,7 +499,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-busshot img { filter: saturate(1.04) contrast(1.02) sepia(0.05); }
         /* Floating apply button — small brass pill, sits above content */
         .comm-fab {
-          position: fixed; z-index: 90; right: clamp(1rem, 4vw, 2.5rem); bottom: clamp(1rem, 4vw, 2.5rem);
+          position: fixed; z-index: 90; right: clamp(1rem, 4vw, 2.5rem);
+          bottom: max(clamp(1rem, 4vw, 2.5rem), env(safe-area-inset-bottom, 0px));
           display: inline-flex; align-items: center; gap: 0.6em; color: #1a1408; background: ${T.goldDeep};
           padding: 0.85rem 1.5rem; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
           box-shadow: 0 12px 34px -12px rgba(197,160,89,0.7), 0 0 0 1px rgba(197,160,89,0.25);
