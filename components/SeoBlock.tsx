@@ -7,6 +7,7 @@ import { SEO_CONTENT, type SeoViewKey, type SeoLink } from '../config/seo.conten
 const VIEW_PATHS: Record<SeoViewKey, string> = {
   INN: '/',
   WWOOFING: '/wwoofing',
+  PPS: '/soiree-thematique-pps',
   EVENTS: '/evenements',
   CEILIDH: '/ceilidh',
   MASSOTHERAPY: '/massage',
