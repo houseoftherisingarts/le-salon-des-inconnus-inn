@@ -5,7 +5,7 @@ import {
   collection, collectionGroup, onSnapshot, doc, updateDoc, deleteDoc, setDoc, addDoc,
   query, orderBy, serverTimestamp,
 } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
+import { signOut, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
 import type { CommunityApplication, CommunityApplicationStatus } from '../types';
