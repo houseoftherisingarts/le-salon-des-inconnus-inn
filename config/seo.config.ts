@@ -170,4 +170,5 @@ export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
   MASSOTHERAPY:   `${SITE_URL}/media/massage/massage%20andre.jpg`,
   WWOOFING:       `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   HOSTS:          `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  PPS:            `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
 };
