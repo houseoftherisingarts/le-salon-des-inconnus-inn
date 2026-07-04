@@ -47,7 +47,7 @@ type PerLanguage<T> = { FR: T; EN: T };
 /** Pages that get a full SeoBlock. Other pages can inherit from INN. */
 export type SeoViewKey = Extract<
   ViewKey,
-  'INN' | 'WWOOFING' | 'EVENTS' | 'CEILIDH' | 'MASSOTHERAPY' | 'KITCHEN' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'COMMUNITY'
+  'INN' | 'WWOOFING' | 'EVENTS' | 'CEILIDH' | 'MASSOTHERAPY' | 'KITCHEN' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'COMMUNITY' | 'PPS'
 >;
 
 export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
