@@ -70,8 +70,8 @@ const WWOOFING_DEFINITION = {
 };
 
 const CEILIDH_DEFINITION = {
-  fr: "Un ceilidh (prononcé « keilī ») est un rassemblement d'origine écossaise et irlandaise : musique, danse, récits autour du feu. Notre Grand Ceilidh de Mai 2026 a lieu du 21 au 25 mai : cinq jours de spectacles, de banquets et de chantiers communs à la Maison Favier. Plusieurs wwoofers y prennent part, c'est l'aboutissement de la saison.",
-  en: "A ceilidh (pronounced \"kay-lee\") is a Scottish/Irish gathering: music, dance, storytelling around the fire. Our Grand Ceilidh de Mai 2026 runs May 21–25, five days of shows, banquets and shared work at Maison Favier. Many wwoofers take part, it's the season's culmination.",
+  fr: "Un ceilidh (prononcé « keilī ») est un rassemblement d'origine écossaise et irlandaise : musique, danse, récits autour du feu. Chaque année en mai, la Maison Favier tient son Grand Ceilidh : cinq jours de spectacles, de banquets et de chantiers communs. Plusieurs wwoofers y prennent part, c'est l'aboutissement du printemps.",
+  en: "A ceilidh (pronounced \"kay-lee\") is a Scottish/Irish gathering: music, dance, storytelling around the fire. Every May, Maison Favier holds its Grand Ceilidh: five days of shows, banquets and shared work. Many wwoofers take part, it's the culmination of spring.",
 };
 
 // Expectations + daily rhythm, kindly stated, with reciprocity (we ask the
