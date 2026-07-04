@@ -17,6 +17,7 @@ const KitchenPage       = lazy(() => import('./components/KitchenPage').then(m =
 const EventsPage        = lazy(() => import('./components/EventsPage').then(m => ({ default: m.EventsPage })));
 const CeilidhPage       = lazy(() => import('./components/CeilidhPage').then(m => ({ default: m.CeilidhPage })));
 const WwoofingPage      = lazy(() => import('./components/WwoofingPage').then(m => ({ default: m.WwoofingPage })));
+const PPSPage           = lazy(() => import('./components/PPSPage').then(m => ({ default: m.PPSPage })));
 const CommunityPage     = lazy(() => import('./components/CommunityPage').then(m => ({ default: m.CommunityPage })));
 const DonationPage      = lazy(() => import('./components/DonationPage').then(m => ({ default: m.DonationPage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
