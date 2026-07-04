@@ -76,29 +76,71 @@ function fmtDate(ts: any): string {
 
 // ─── Access Gate (email-based; matches firestore.rules admin check) ──────────
 
-const AccessDenied: React.FC<{ user: User | null; onNavigate: (view: string) => void }> = ({ user, onNavigate }) => (
-  <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6">
-    <div className="w-full max-w-sm">
-      <div className="text-center mb-10">
-        <p className="text-[#d4af37] text-xs font-cinzel uppercase tracking-[0.5em] mb-3">Le Salon des Inconnus</p>
-        <h1 className="font-cinzel text-3xl text-white">Admin CRM</h1>
-      </div>
-      <div className="border border-white/10 bg-[#0a0a0a] p-8 text-center">
-        <p className="font-lato text-sm text-neutral-400 mb-6">
-          {user
-            ? "Ce compte n'a pas accès à l'administration."
-            : "Connexion administrateur requise. Connectez-vous depuis l'accueil."}
-        </p>
-        <button
-          onClick={() => onNavigate('INN')}
-          className="w-full py-3 bg-[#d4af37] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] transition-all"
-        >
-          Retour à l'accueil
-        </button>
+const AccessDenied: React.FC<{ user: User | null; onNavigate: (view: string) => void }> = ({ user, onNavigate }) => {
+  const [signingIn, setSigningIn] = useState(false);
+  const [error, setError] = useState('');
+
+  // Connexion Google sur place — indispensable sur mobile, où « retourne à
+  // l'accueil te connecter puis reviens » est une impasse. Popup d'abord,
+  // repli redirect (Safari iOS bloque souvent les popups).
+  const signIn = async () => {
+    if (!auth) return;
+    setSigningIn(true); setError('');
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // onAuthStateChanged (App) met currentUser à jour → la vue admin s'ouvre.
+    } catch (e: any) {
+      if (['auth/popup-blocked', 'auth/popup-closed-by-user', 'auth/cancelled-popup-request'].includes(e.code)) {
+        try { await signInWithRedirect(auth, provider); return; }
+        catch (r: any) { setError(r.message || 'Erreur de connexion'); }
+      } else {
+        setError(e.message || 'Erreur de connexion');
+      }
+    } finally { setSigningIn(false); }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-10">
+          <p className="text-[#d4af37] text-xs font-cinzel uppercase tracking-[0.5em] mb-3">Le Salon des Inconnus</p>
+          <h1 className="font-cinzel text-3xl text-white">Admin CRM</h1>
+        </div>
+        <div className="border border-white/10 bg-[#0a0a0a] p-8 text-center">
+          <p className="font-lato text-sm text-neutral-400 mb-6">
+            {user
+              ? "Ce compte n'a pas accès à l'administration."
+              : 'Connexion administrateur requise.'}
+          </p>
+          {!user && (
+            <button
+              onClick={signIn}
+              disabled={signingIn}
+              className="w-full min-h-[48px] py-3 mb-3 bg-white text-black font-lato font-bold text-sm rounded-sm
+                         hover:bg-neutral-200 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden>
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18A10.97 10.97 0 001 12c0 1.77.42 3.45 1.18 4.94l3.66-2.84z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              {signingIn ? 'Connexion…' : 'Se connecter avec Google'}
+            </button>
+          )}
+          {error && <p className="font-lato text-xs text-red-400 mb-3">{error}</p>}
+          <button
+            onClick={() => onNavigate('INN')}
+            className="w-full min-h-[44px] py-3 border border-white/15 text-neutral-300 font-cinzel text-xs uppercase tracking-widest hover:border-[#d4af37]/50 hover:text-[#f3e5ab] transition-all"
+          >
+            Retour à l'accueil
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ─── Feature Requests panel ──────────────────────────────────────────────────
 // Consumed by the Artistic CRM "Demandes" tab. Pending requests get a compact
