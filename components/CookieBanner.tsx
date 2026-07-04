@@ -145,17 +145,17 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
               </div>
             </div>
 
-            {/* Action buttons */}
-            <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+            {/* Action buttons — côte à côte sur mobile pour garder le bandeau bas */}
+            <div className="flex flex-row gap-2 shrink-0">
               <button
                 onClick={() => accept('essential')}
-                className="px-5 py-2.5 border border-white/15 text-neutral-400 hover:border-white/40 hover:text-white font-cinzel text-xs uppercase tracking-wider transition-all duration-200 whitespace-nowrap"
+                className="flex-1 sm:flex-none px-3 sm:px-5 py-2.5 min-h-[44px] border border-white/15 text-neutral-400 hover:border-white/40 hover:text-white font-cinzel text-[11px] sm:text-xs uppercase tracking-wider transition-all duration-200 whitespace-nowrap"
               >
                 {t('Essential Only', 'Essentiel Seulement')}
               </button>
               <button
                 onClick={() => accept('all')}
-                className="px-5 py-2.5 bg-[#d4af37] text-black font-cinzel text-xs font-bold uppercase tracking-wider hover:bg-[#f3e5ab] transition-all duration-200 whitespace-nowrap"
+                className="flex-1 sm:flex-none px-3 sm:px-5 py-2.5 min-h-[44px] bg-[#d4af37] text-black font-cinzel text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-[#f3e5ab] transition-all duration-200 whitespace-nowrap"
               >
                 {t('Accept & Continue', 'Accepter & Continuer')}
               </button>
@@ -163,8 +163,8 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
 
           </div>
 
-          {/* Law reference */}
-          <p className="text-neutral-700 text-[10px] font-lato mt-3 text-right">
+          {/* Law reference — plein écran seulement; sur mobile la place est comptée */}
+          <p className="hidden sm:block text-neutral-700 text-[10px] font-lato mt-3 text-right">
             {t(
               'Compliant with Quebec Law 25 (L.Q. 2021, c. 25) and PIPEDA.',
               'Conforme à la Loi 25 du Québec (L.Q. 2021, c. 25) et à la LPRPDE.',
