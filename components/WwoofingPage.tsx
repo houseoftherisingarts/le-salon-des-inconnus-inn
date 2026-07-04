@@ -82,16 +82,14 @@ const NEEDS_STATEMENT = {
 };
 
 const SCHEDULE: { time: string; fr: string; en: string }[] = [
-  { time: '7:00 – 8:00',   fr: 'Matin relax',                  en: 'Easy morning' },
-  { time: '8:00 – 9:00',   fr: 'Méditation (facultative)',     en: 'Meditation (optional)' },
-  { time: '9:00 – 12:00',  fr: 'Travail · Période 1',          en: 'Work · Period 1' },
-  { time: '12:00 – 13:00', fr: 'Repas partagé',                en: 'Shared meal' },
-  { time: '13:00 – 14:00', fr: 'Pause',                        en: 'Rest' },
-  { time: '14:00 – 17:00', fr: 'Travail · Période 2',          en: 'Work · Period 2' },
-  { time: '17:00 – 18:00', fr: 'Repas partagé',                en: 'Shared meal' },
-  { time: '18:00 – 20:00', fr: 'Temps libre',                  en: 'Free time' },
-  { time: '20:00 – 21:00', fr: 'Méditation (facultative)',     en: 'Meditation (optional)' },
-  { time: '21:00 – 23:00', fr: 'Détente ou repos',             en: 'Wind down or sleep' },
+  { time: '7:00 – 8:00',   fr: 'Matin relax',                          en: 'Easy morning' },
+  { time: '8:00 – 9:00',   fr: 'Méditation (facultative)',             en: 'Meditation (optional)' },
+  { time: '9:00 – 13:00',  fr: 'Travail · le bloc de la journée',      en: 'Work · the block of the day' },
+  { time: '13:00 – 14:00', fr: 'Repas partagé',                        en: 'Shared meal' },
+  { time: '14:00 – 18:00', fr: 'Temps libre : bois, rivière, création', en: 'Free time: woods, river, creating' },
+  { time: '18:00 – 19:00', fr: 'Repas partagé',                        en: 'Shared meal' },
+  { time: '20:00 – 21:00', fr: 'Méditation (facultative)',             en: 'Meditation (optional)' },
+  { time: '21:00 – 23:00', fr: 'Feu, musique, repos',                  en: 'Fire, music, rest' },
 ];
 
 // Section meta for the apply-form sticky rail
