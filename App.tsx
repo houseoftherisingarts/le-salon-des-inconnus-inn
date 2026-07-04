@@ -808,13 +808,18 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 11: ADMIN CRM */}
+        {/* VIEW 11: ADMIN CRM — its own scroll container: the app root is
+            h-screen overflow-hidden (public-site architecture), but the admin
+            relies on document-style scrolling; without this wrapper its content
+            is clipped on mobile and cannot scroll. */}
         {currentView === 'ADMIN' && (
-          <AdminCRM
-            language={language}
-            onNavigate={(view) => handleNavigation(view as ViewState)}
-            user={currentUser}
-          />
+          <div className="h-screen overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
+            <AdminCRM
+              language={language}
+              onNavigate={(view) => handleNavigation(view as ViewState)}
+              user={currentUser}
+            />
+          </div>
         )}
 
         {/* VIEW 12: CREATOR STUDIO — gated by sign-in (or "view as visitor"). */}
