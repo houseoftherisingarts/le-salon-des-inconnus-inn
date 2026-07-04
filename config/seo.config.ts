@@ -124,8 +124,8 @@ export const PAGE_META = {
     FR: { title: "Grand Ceilidh de Mai 2026 · Festival à Namur | Le Salon des Inconnus", description: "Festival communautaire de cinq jours à la Maison Favier, du 21 au 25 mai 2026. Musique, danse, banquet, chantiers communs et wwoofing en Outaouais.", keywords: "Ceilidh Québec, Festival communautaire 2026, Événement Wwoofing" }
   },
   WWOOFING: {
-    EN: { title: "Wwoofing in Outaouais | Le Salon des Inconnus, Namur", description: "Wwoofing program at Maison Favier: 4 hours of work a day in exchange for room, board and shared community. Min. 7-day stays in Namur, Outaouais.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },
-    FR: { title: "Programme de Wwoofing en Outaouais | Le Salon des Inconnus", description: "Programme de wwoofing à la Maison Favier : 4 heures de travail par jour en échange du gîte, du couvert et de la vie communautaire. Séjour min. 7 jours.", keywords: "Wwoofing Québec, Wwoofing Outaouais, Ferme bénévole Québec" }
+    EN: { title: "Wwoofing in Outaouais | Le Salon des Inconnus, Namur", description: "Wwoofing at Maison Favier: 4 hours of work a day for room, board and community life. Weekly or monthly stays until end of October, prospector bunkhouse tent or tiny house. Namur, Outaouais.", keywords: "Wwoofing Quebec, Wwoofing Outaouais, Volunteer farm Quebec" },
+    FR: { title: "Programme de Wwoofing en Outaouais | Le Salon des Inconnus", description: "Wwoofing à la Maison Favier : 4 h de travail par jour en échange du gîte et de la vie communautaire. Séjours à la semaine ou au mois jusqu'à fin octobre, tente prospecteur ou mini-maison.", keywords: "Wwoofing Québec, Wwoofing Outaouais, Ferme bénévole Québec" }
   },
   COMMUNITY: {
     EN: { title: "Join the Community | Le Salon des Inconnus, Namur", description: "Live and work at Le Salon des Inconnus in Namur: a paid resident-member place, housed in the converted bus, at the heart of an artists' inn in Outaouais.", keywords: "intentional community Quebec, live in community Outaouais, resident member, artist community Quebec" },

@@ -307,6 +307,34 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
           </div>
         </section>
 
+        {/* ── SEASON 2026, the concrete offer band ───────────────────────── */}
+        <section className="relative border-b border-[#c5a059]/10 bg-[#0a0a0a]">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-10 lg:gap-16 items-center px-6 md:px-12 py-16 md:py-20">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-px w-12 bg-[#c5a059]"></div>
+                <span className="text-[10px] uppercase tracking-[0.5em] text-[#c5a059] font-cinzel">
+                  {t('Season 2026 · until the end of October', "Saison 2026 · jusqu'à la fin octobre")}
+                </span>
+              </div>
+              <h2 className="font-prata text-3xl md:text-4xl text-[#f3e5ab] tracking-tight mb-5">
+                {t('This season on the land', 'Cette saison sur le terrain')}
+              </h2>
+              <p className="font-lato text-[15px] md:text-base text-neutral-300 leading-[1.8] max-w-2xl">
+                {t(SEASON_2026.en, SEASON_2026.fr)}
+              </p>
+            </div>
+            <div className="relative overflow-hidden min-h-[260px] lg:min-h-[320px] border border-[#c5a059]/20">
+              <img
+                src="/media/inn/mini-maison-exterieur.jpeg"
+                alt={t('The tiny house on the land, Maison Favier', 'La mini-maison sur le terrain, Maison Favier')}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* ── CONTEXT, what is wwoofing, what is the Ceilidh ────────────── */}
         <section className="relative py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-[#c5a059]/10">
           <div className="max-w-6xl mx-auto">
@@ -841,8 +869,8 @@ const ApplyForm: React.FC<{
             mobileQuote={t(APPLY_SECTIONS[4].quoteEn, APPLY_SECTIONS[4].quoteFr)}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-4">
-              <FieldDate label={t('Arrival *', 'Arrivée *')}  value={start} min={todayISO()}          onChange={setStart} />
-              <FieldDate label={t('Departure *', 'Départ *')} value={end}   min={start || todayISO()} onChange={setEnd} />
+              <FieldDate label={t('Arrival *', 'Arrivée *')}  value={start} min={todayISO()} max="2026-10-31" onChange={setStart} />
+              <FieldDate label={t('Departure *', 'Départ *')} value={end}   min={start || todayISO()} max="2026-10-31" onChange={setEnd} />
             </div>
             <div className="flex items-center gap-3 mb-6">
               <span className={`font-cinzel text-3xl ${numberOfDays >= MIN_DAYS ? 'text-[#c5a059]' : 'text-neutral-600'}`}>
@@ -1203,8 +1231,8 @@ const RequestDatesForm: React.FC<{
   return (
     <div className="border border-[#c5a059]/30 p-6 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-4">
-        <FieldDate label={t('Arrival', 'Arrivée')}  value={start} min={todayISO()}          onChange={setStart} />
-        <FieldDate label={t('Departure', 'Départ')} value={end}   min={start || todayISO()} onChange={setEnd} />
+        <FieldDate label={t('Arrival', 'Arrivée')}  value={start} min={todayISO()} max="2026-10-31" onChange={setStart} />
+        <FieldDate label={t('Departure', 'Départ')} value={end}   min={start || todayISO()} max="2026-10-31" onChange={setEnd} />
       </div>
       <div className="text-xs text-neutral-500 font-lato mb-4">
         {numberOfDays > 0

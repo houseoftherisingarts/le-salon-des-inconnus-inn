@@ -259,12 +259,12 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       sectionTitle: "Wwoofer à la Maison Favier",
       paragraphs: [
         "Le programme de wwoofing du Salon des Inconnus accueille des bénévoles à la Maison Favier, à Namur en Outaouais, dans le cadre du réseau WWOOF (World Wide Opportunities on Organic Farms). En échange du gîte, du couvert et du temps partagé en communauté, les wwoofers offrent environ quatre heures de travail concentré par jour : aux jardins, à la cuisine, à l'entretien des espaces communs ou à la production d'événements.",
-        "Le séjour minimum est de sept jours. Plusieurs formules d'hébergement sont possibles selon la disponibilité : chambre partagée au manoir, chambre privée, yourte ou tente. Les repas se prennent à la grande table et la méditation est offerte deux fois par jour, sans obligation. Le reste du temps appartient au wwoofer, pour lire, créer, marcher dans les bois ou rejoindre les autres résidents.",
+        "Les séjours se prennent à la semaine ou au mois, jusqu'à la fin octobre, avec un minimum de sept jours. Cette saison, les chantiers sont l'aménagement paysager, les jardins et les finitions autour des mini-maisons et de la tente prospecteur. On loge dans la tente prospecteur, un dortoir communautaire chaleureux, ou dans la mini-maison lorsqu'elle est disponible. Les repas se prennent à la grande table et la méditation est offerte deux fois par jour, sans obligation. Le reste du temps appartient au wwoofer, pour lire, créer, marcher dans les bois ou rejoindre les autres résidents.",
         "Plusieurs wwoofers participent ensuite au Grand Ceilidh de Mai, l'aboutissement de la saison. Les candidatures se font directement en ligne après création d'un compte membre.",
       ],
       internalLinks: [
         { to: 'INN', label: "l'auberge et la Maison Favier" },
-        { to: 'CEILIDH', label: 'le Grand Ceilidh de Mai 2026', hint: 'rassemblement communautaire du 21 au 25 mai' },
+        { to: 'CEILIDH', label: 'le Grand Ceilidh de Mai', hint: 'rassemblement communautaire annuel en mai' },
         { to: 'KITCHEN', label: 'la cuisine et la table partagée' },
         { to: 'GUIDE', label: 'la région et la Petite-Nation' },
       ],
@@ -275,7 +275,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       faq: [
         {
           q: "Combien d'heures faut-il travailler par jour ?",
-          a: "Quatre heures de travail concentré par jour, en deux périodes (matin et après-midi). Les repas et la méditation sont en dehors de ce temps.",
+          a: "Quatre heures de travail concentré par jour, en un seul bloc le matin. L'après-midi et la soirée appartiennent au wwoofer.",
         },
         {
           q: "Quelle est la durée minimale d'un séjour de wwoofing ?",
@@ -283,7 +283,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
         },
         {
           q: "Quels types d'hébergement sont offerts aux wwoofers ?",
-          a: "Chambre partagée au manoir, chambre privée selon disponibilité, yourte avec foyer au bois, ou camping en tente. Le choix se fait dans le formulaire de candidature.",
+          a: "La tente prospecteur, un dortoir communautaire chaleureux au cœur du terrain, ou la mini-maison lorsqu'elle est disponible. Le choix se fait dans le formulaire de candidature.",
         },
         {
           q: "Faut-il être membre WWOOF Canada pour postuler ?",
@@ -297,12 +297,12 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       sectionTitle: "Wwoofing at Maison Favier",
       paragraphs: [
         "The wwoofing program at Le Salon des Inconnus welcomes volunteers to Maison Favier, in Namur, Outaouais, within the WWOOF (World Wide Opportunities on Organic Farms) network. In exchange for room, board and shared community time, wwoofers contribute about four focused hours of work a day: in the gardens, the kitchen, maintaining shared spaces, or helping produce events.",
-        "Minimum stay is seven days. Lodging options include a shared manor room, a private room when available, a yurt, or a tent. Meals are taken at the long table and meditation is offered twice a day, never required. The rest of the time belongs to the wwoofer.",
+        "Stays run by the week or by the month until the end of October, with a seven-day minimum. This season's work: landscaping, the gardens, and the finishing touches around the tiny houses and the prospector tent. Wwoofers sleep in the prospector tent, a warm community bunkhouse, or in the tiny house when it is available. Meals are taken at the long table and meditation is offered twice a day, never required. The rest of the time belongs to the wwoofer.",
         "Many wwoofers go on to take part in the Grand Ceilidh de Mai, the season's culmination. Applications are made online after creating a member account.",
       ],
       internalLinks: [
         { to: 'INN', label: 'the inn and Maison Favier' },
-        { to: 'CEILIDH', label: 'the Grand Ceilidh de Mai 2026', hint: 'community gathering, May 21–25' },
+        { to: 'CEILIDH', label: 'the Grand Ceilidh de Mai', hint: 'annual community gathering each May' },
         { to: 'KITCHEN', label: 'the kitchen and shared table' },
         { to: 'GUIDE', label: 'the Petite-Nation region' },
       ],
@@ -313,7 +313,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       faq: [
         {
           q: "How many hours of work per day?",
-          a: "Four focused hours, split across morning and afternoon. Meals and meditation are outside that time.",
+          a: "Four focused hours in a single morning block. Afternoons and evenings belong to the wwoofer.",
         },
         {
           q: "What is the minimum stay?",
@@ -321,7 +321,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
         },
         {
           q: "What lodging is available to wwoofers?",
-          a: "A shared manor room, a private room when available, a yurt with a wood stove, or tent camping. You pick in the application form.",
+          a: "The prospector tent, a warm community bunkhouse at the heart of the land, or the tiny house when it is available. You pick in the application form.",
         },
         {
           q: "Do I need a WWOOF Canada membership to apply?",
