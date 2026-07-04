@@ -749,6 +749,14 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7b-2: PPS (theme evenings & team retreats, PPS Canada partnership) */}
+        {currentView === 'PPS' && (
+          <PPSPage
+            onNavigate={() => handleNavigation('INN')}
+            language={language}
+          />
+        )}
+
         {/* VIEW 7c: COMMUNITY (paid resident-member place) */}
         {currentView === 'COMMUNITY' && (
           <CommunityPage
