@@ -330,6 +330,72 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
       ],
     },
   },
+  PPS: {
+    FR: {
+      h1: "Soirées thématiques et retraites d'équipe à la Maison Favier — en partenariat avec PPS Canada",
+      kicker: "Événementiel corporatif",
+      sectionTitle: "Soirées thématiques PPS Canada",
+      paragraphs: [
+        "Le Salon des Inconnus s'associe à PPS Canada, agence événementielle québécoise, pour offrir des soirées thématiques clés en main aux groupes corporatifs et aux équipes en retraite à la Maison Favier, à Namur en Outaouais.",
+        "Les concepts proposés incluent des soirées beach party, une cabane à sucre hivernale façon bûcheron, un tournoi de golf thématique, une kermesse fête foraine, ainsi que de la musique live, de l'humour, des conférences et du team building. Le Manoir fournit les chambres, les espaces communs et le terrain; PPS Canada apporte le concept, l'animation et la production.",
+        "Idéal pour une retraite d'équipe de plusieurs jours combinant hébergement au Manoir et soirée thématique sur mesure.",
+      ],
+      internalLinks: [
+        { to: 'INN', label: "l'auberge et la Maison Favier" },
+        { to: 'HOSTS', label: 'les hôtes du Manoir' },
+        { to: 'KITCHEN', label: 'la cuisine et les repas de groupe' },
+      ],
+      externalLinks: [
+        { to: 'https://www.ppscanada.com', label: 'PPS Canada' },
+      ],
+      faq: [
+        {
+          q: "Qu'est-ce que PPS Canada ?",
+          a: "Une agence événementielle québécoise qui conçoit des concepts immersifs clés en main : soirées thématiques, team building, musique, humour et conférences.",
+        },
+        {
+          q: "Peut-on combiner hébergement et soirée thématique ?",
+          a: "Oui, c'est l'usage prévu : une retraite d'équipe de plusieurs jours au Manoir, avec une soirée thématique PPS Canada intégrée au séjour.",
+        },
+        {
+          q: "Comment obtenir une proposition ?",
+          a: "En écrivant directement à l'auberge : on construit la proposition avec vous selon la taille du groupe et le concept souhaité.",
+        },
+      ],
+    },
+    EN: {
+      h1: "Theme Evenings and Team Retreats at Maison Favier — in Partnership with PPS Canada",
+      kicker: "Corporate events",
+      sectionTitle: "PPS Canada Theme Evenings",
+      paragraphs: [
+        "Le Salon des Inconnus partners with PPS Canada, a Quebec event agency, to offer turnkey theme evenings for corporate groups and teams on retreat at Maison Favier, in Namur, Outaouais.",
+        "Concepts on offer include beach party evenings, a winter lumberjack-style sugar shack theme, a themed golf tournament, a fairground kermesse, plus live music, comedy, conferences and team building. The Manor provides the rooms, shared spaces and grounds; PPS Canada brings the concept, animation and production.",
+        "Ideal for a multi-day team retreat combining lodging at the Manor with a custom theme evening.",
+      ],
+      internalLinks: [
+        { to: 'INN', label: 'the inn and Maison Favier' },
+        { to: 'HOSTS', label: 'the Manor hosts' },
+        { to: 'KITCHEN', label: 'the kitchen and group meals' },
+      ],
+      externalLinks: [
+        { to: 'https://www.ppscanada.com', label: 'PPS Canada' },
+      ],
+      faq: [
+        {
+          q: "What is PPS Canada?",
+          a: "A Quebec event agency that designs turnkey immersive concepts: theme evenings, team building, music, comedy and conferences.",
+        },
+        {
+          q: "Can lodging and a theme evening be combined?",
+          a: "Yes, that's the intended use: a multi-day team retreat at the Manor, with a PPS Canada theme evening built into the stay.",
+        },
+        {
+          q: "How do we get a proposal?",
+          a: "By writing directly to the inn: we build the proposal with you based on group size and the concept you want.",
+        },
+      ],
+    },
+  },
 
   // ───────────────────────────────────────────────────────────────────────────
   CEILIDH: {
