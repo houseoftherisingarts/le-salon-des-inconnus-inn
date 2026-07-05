@@ -299,33 +299,6 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     setImgIdx((i) => (i + 1) % room.images.length);
   }, [room.images.length]);
 
-  // Open HostAway's booking + payment in a new tab (a first-party context).
-  // Embedding it in an on-site iframe left Stripe as a nested third-party frame;
-  // browsers that block third-party storage (Safari, hardened Chrome) never let
-  // Stripe finish loading, so HostAway kept its "Finalize booking" button
-  // disabled and the guest's click did nothing. A top-level tab restores the
-  // payment flow until the native checkout ships.
-  //
-  // Carry the dates + guest count the visitor already picked here through
-  // HostAway's URL params so they never re-enter them. When the site has
-  // already confirmed those dates are free, jump straight to the pre-filled
-  // checkout (the Finalize form); otherwise open the listing (dates
-  // pre-selected when we have them) so HostAway can walk availability.
-  const choose = useCallback(() => {
-    const link = room.bookingLink;
-    if (!link || link === '#') return;
-    const hasDates = Boolean(checkIn && checkOut);
-    const qs = hasDates
-      ? `?start=${checkIn}&end=${checkOut}&numberOfGuests=${guests}`
-      : '';
-    const confirmedFree =
-      hasDates && Boolean(availability?.allAvailable) && Boolean(availability?.meetsMinStay);
-    const url = confirmedFree
-      ? `${link.replace('/listings/', '/checkout/')}${qs}`
-      : `${link}${qs}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }, [room.bookingLink, checkIn, checkOut, guests, availability]);
-
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
   // ── HostAway live availability + price (Phase 1) ──────────────────────────
