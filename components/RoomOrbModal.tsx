@@ -299,13 +299,15 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     setImgIdx((i) => (i + 1) % room.images.length);
   }, [room.images.length]);
 
-  // Keep the guest on lesalondesinconnus.com: open HostAway's booking + payment
-  // inside an on-site overlay instead of a new tab. (Full native checkout is the
-  // next phase; this already removes the off-site redirect.)
-  const [bookingUrl, setBookingUrl] = useState<string | null>(null);
+  // Open HostAway's booking + payment in a new tab (a first-party context).
+  // Embedding it in an on-site iframe left Stripe as a nested third-party frame;
+  // browsers that block third-party storage (Safari, hardened Chrome) never let
+  // Stripe finish loading, so HostAway kept its "Finalize booking" button
+  // disabled and the guest's click did nothing. A top-level tab restores the
+  // payment flow until the native checkout ships.
   const choose = useCallback(() => {
     if (!room.bookingLink || room.bookingLink === '#') return;
-    setBookingUrl(room.bookingLink);
+    window.open(room.bookingLink, '_blank', 'noopener,noreferrer');
   }, [room.bookingLink]);
 
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
