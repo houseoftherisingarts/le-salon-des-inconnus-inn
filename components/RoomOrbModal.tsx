@@ -535,36 +535,6 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
       onClick={onClose}
       className="room-orb-root fixed inset-0 z-[120] flex bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 pt-16 pb-12 md:py-8 overflow-y-auto"
     >
-      {bookingUrl &&
-        createPortal(
-          // z-[300]: doit passer au-dessus du CookieBanner (z-[250]), sinon le
-          // bandeau intercepte les clics au bas du checkout HostAway, dont le
-          // bouton « Compléter la réservation ».
-          <div
-            className="fixed inset-0 z-[300] bg-black/90 backdrop-blur-sm flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-5 py-3 bg-[#0c0c0c] border-b border-[#c5a059]/30 shrink-0">
-              <span className="font-cinzel text-xs uppercase tracking-[0.3em] text-[#f3e5ab] truncate pr-3">
-                {t('Booking', 'Réservation')} · {room.title}
-              </span>
-              <button
-                onClick={() => setBookingUrl(null)}
-                aria-label={t('Close', 'Fermer')}
-                className="font-cinzel text-[#c5a059] hover:text-[#f3e5ab] text-3xl leading-none px-2 shrink-0"
-              >
-                ×
-              </button>
-            </div>
-            <iframe
-              src={bookingUrl}
-              title={t('Booking', 'Réservation')}
-              className="flex-1 w-full border-0 bg-white"
-              allow="payment *; clipboard-write"
-            />
-          </div>,
-          document.body,
-        )}
       {/* Per-room animated gradient — sits behind everything, ~50% transparency,
           drifting "lights" use the room's accent palette. The key forces a
           fresh fade-in on every room change. */}
