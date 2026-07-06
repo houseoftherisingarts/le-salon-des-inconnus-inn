@@ -783,6 +783,14 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7e: PENSEES (daily journal) */}
+        {currentView === 'PENSEES' && (
+          <PenseesPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
         {/* VIEW 8: MY PROFILE */}
         {currentView === 'MY_PROFILE' && currentUser && memberProfile && (
           <ProfilePage
