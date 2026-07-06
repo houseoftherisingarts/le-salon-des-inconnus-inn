@@ -193,6 +193,8 @@ const VIEW_PATHS: Record<ViewState, string> = {
   COMMUNITY:      '/communaute',
   DONATION:       '/don',
   PENSEES:        '/pensees',
+  INVITATION:     '/invitation',
+  ENTREPRISES:    '/entreprises',
   MY_PROFILE:     '/profil',
   PUBLIC_PROFILE: '/membre',
   MESSAGING:      '/messages',
