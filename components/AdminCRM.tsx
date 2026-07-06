@@ -425,7 +425,8 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     | 'newsletter'
     | 'messages'
     | 'media'
-    | 'showoffers';
+    | 'showoffers'
+    | 'product-ladder';
   const [tab, setTab] = useState<SectionId>('dashboard');
 
   const [registrations, setRegistrations] = useState<CRMRegistration[]>([]);
