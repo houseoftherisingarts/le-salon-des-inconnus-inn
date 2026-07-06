@@ -11,6 +11,7 @@
   "dependencies": {
     "@inconnus/ui": "*",
     "@google/genai": "^1.30.0",
+    "firebase": "^11.6.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
