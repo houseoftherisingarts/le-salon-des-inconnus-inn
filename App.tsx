@@ -21,6 +21,10 @@ const PPSPage           = lazy(() => import('./components/PPSPage').then(m => ({
 const CommunityPage     = lazy(() => import('./components/CommunityPage').then(m => ({ default: m.CommunityPage })));
 const DonationPage      = lazy(() => import('./components/DonationPage').then(m => ({ default: m.DonationPage })));
 const PenseesPage       = lazy(() => import('./components/PenseesPage').then(m => ({ default: m.PenseesPage })));
+// Unlisted, no nav link: /invitation (noindex) and /entreprises. Reached only
+// by direct URL (QR code / shared link).
+const InvitationPage    = lazy(() => import('./components/InvitationPage').then(m => ({ default: m.InvitationPage })));
+const EntreprisesPage   = lazy(() => import('./components/EntreprisesPage').then(m => ({ default: m.EntreprisesPage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
