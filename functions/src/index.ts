@@ -313,6 +313,37 @@ export const onNewMember = functions
     await notifyAlex(`Nouvelle adhésion — ${m.displayName ?? m.email ?? 'Inconnu'}`, body);
   });
 
+// 6. Invitation RSVP — private evening at the manor, QR-code invitation only.
+export const onRsvpInvitation = functions
+  .runWith(RUNTIME_WITH_SMTP)
+  .firestore.document('rsvpInvitation/{id}')
+  .onCreate(async (snap) => {
+    const r = snap.data() ?? {};
+    const body =
+      `Nouvelle confirmation — La Table des Inconnus (page /invitation).\n\n` +
+      line('Nom', r.name) +
+      line('Courriel', r.email) +
+      line('Date proposée', r.proposedDate) +
+      `\nÀ traiter directement par courriel.`;
+    await notifyAlex(`RSVP La Table des Inconnus — ${r.name ?? 'Inconnu'}`, body);
+  });
+
+// 7. Proposal request — corporate retreats pitch (events/entreprises).
+export const onProposalRequest = functions
+  .runWith(RUNTIME_WITH_SMTP)
+  .firestore.document('proposalRequests/{id}')
+  .onCreate(async (snap) => {
+    const r = snap.data() ?? {};
+    const body =
+      `Nouvelle demande de proposition — page /entreprises.\n\n` +
+      line('Nom', r.name) +
+      line('Courriel', r.email) +
+      line('Entreprise', r.company) +
+      (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
+      `\nÀ traiter directement par courriel.`;
+    await notifyAlex(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
+  });
+
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
 // Read-only: real availability + an authoritative live price quote. These are
 // 2nd-gen callable functions so they can pull HOSTAWAY_API_KEY / ACCOUNT_ID from
