@@ -139,6 +139,10 @@ export const PAGE_META = {
     EN: { title: "Support Le Salon des Inconnus | Donate", description: "Support the artists' inn Le Salon des Inconnus in Namur, Outaouais. Every gift helps keep the place, the residencies and the events alive.", keywords: "support artists Quebec, donate" },
     FR: { title: "Soutenir Le Salon des Inconnus | Faire un don", description: "Soutenez l'auberge d'artistes Le Salon des Inconnus à Namur, en Outaouais. Chaque don aide à faire vivre le lieu, les résidences et les événements.", keywords: "soutenir artistes Québec, faire un don" }
   },
+  PENSEES: {
+    EN: { title: "Thoughts of the Day | Le Salon des Inconnus", description: "A short daily paragraph on hospitality, art and the life of the house, written at Le Salon des Inconnus, Namur, Outaouais.", keywords: "daily journal, hospitality, artists inn Quebec" },
+    FR: { title: "Pensée du jour | Le Salon des Inconnus", description: "Un court paragraphe quotidien sur l'hospitalité, l'art et la vie de la maison, écrit au Salon des Inconnus, à Namur, en Outaouais.", keywords: "journal quotidien, hospitalité, auberge d'artistes Québec" }
+  },
   MY_PROFILE: {
     EN: { title: "My Profile | Le Salon des Inconnus", description: "Your member space at Le Salon des Inconnus.", keywords: "" },
     FR: { title: "Mon Profil | Le Salon des Inconnus", description: "Votre espace membre au Salon des Inconnus.", keywords: "" }
