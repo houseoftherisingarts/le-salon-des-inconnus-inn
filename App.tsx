@@ -426,6 +426,32 @@ const App: React.FC = () => {
         });
       }
 
+      // Blog + BlogPosting — daily journal on /pensees (one referenceable post
+      // per entry, aimed at crawlers and AI assistants; no visible blog UI).
+      if (currentView === 'PENSEES') {
+        const org = { '@type': 'Organization', name: 'Le Salon des Inconnus', url: SITE_URL };
+        blocks.push({
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: language === 'FR' ? 'Pensées, le journal quotidien du Salon des Inconnus' : 'Thoughts, the daily journal of Le Salon des Inconnus',
+          url: `${SITE_URL}/pensees`,
+          inLanguage: language === 'FR' ? 'fr' : 'en',
+          author: org,
+          publisher: org,
+          blogPost: PENSEES.map((p) => ({
+            '@type': 'BlogPosting',
+            headline: language === 'FR' ? p.title_fr : p.title_en,
+            articleBody: language === 'FR' ? p.body_fr : p.body_en,
+            datePublished: p.date,
+            inLanguage: language === 'FR' ? 'fr' : 'en',
+            author: org,
+            publisher: org,
+            url: `${SITE_URL}/pensees/${p.date}`,
+            mainEntityOfPage: `${SITE_URL}/pensees/${p.date}`,
+          })),
+        });
+      }
+
       routeScript.textContent = blocks.length === 0 ? '' : JSON.stringify(blocks.length === 1 ? blocks[0] : blocks);
     }
   }, [currentView, language]);
