@@ -1,3 +1,4 @@
+import './firebase'; // initialize default Firebase app before App renders
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
