@@ -21,7 +21,7 @@ export default function Splitter({ onEnterArts }: { onEnterArts: () => void }) {
   const [hovered, setHovered] = useState<Side>(null);
 
   const panelClass = (side: Exclude<Side, null>) =>
-    `group relative cursor-pointer h-[38vh] md:h-full rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+    `group relative cursor-pointer h-[42vh] md:h-[70vh] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
       hovered === side
         ? 'flex-[1.5] -translate-y-4 z-10 ring-1 ring-white/20'
         : hovered
