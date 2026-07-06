@@ -158,10 +158,25 @@ export const PAGE_META = {
   ADMIN: {
     EN: { title: "Admin CRM | Le Salon des Inconnus", description: "Administration space.", keywords: "" },
     FR: { title: "Admin CRM | Le Salon des Inconnus", description: "Espace d'administration.", keywords: "" }
+  },
+  INVITATION: {
+    EN: { title: "You Have Been Invited | Le Salon des Inconnus", description: "A private evening at the manor, by named invitation only.", keywords: "" },
+    FR: { title: "Vous avez été invité | Le Salon des Inconnus", description: "Une soirée privée au manoir, sur invitation nominative uniquement.", keywords: "" }
+  },
+  ENTREPRISES: {
+    EN: { title: "Corporate Retreats & Team Building | Le Salon des Inconnus", description: "Privatized team days at Maison Favier, Namur: chef's table, massage therapy, staged theme evenings and on-site accommodation, less than an hour from Ottawa.", keywords: "corporate retreat Outaouais, team building Namur, executive offsite Quebec" },
+    FR: { title: "Retraites d'entreprise & team building | Le Salon des Inconnus", description: "Journées d'équipe privatisées à la Maison Favier, Namur : table du chef, massothérapie, soirées thématiques mises en scène et hébergement sur place, à moins d'une heure d'Ottawa.", keywords: "retraite d'entreprise Outaouais, team building Namur, offsite exécutif Québec" }
   }
 } as const;
 
 export type ViewKey = keyof typeof PAGE_META;
+
+// Per-route <meta name="robots"> override — most routes are index,follow by
+// default (set in index.html) and don't need an entry here. Add a route only
+// when it must deviate (e.g. an unlisted invitation page reached by QR code).
+export const ROBOTS_OVERRIDES: Partial<Record<ViewKey, string>> = {
+  INVITATION: 'noindex, nofollow',
+};
 
 // Social/AI share image per route — ABSOLUTE URLs (crawlers require absolute).
 // Routes not listed fall back to DEFAULT_OG_IMAGE.
