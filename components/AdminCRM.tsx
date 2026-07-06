@@ -836,6 +836,12 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     );
   };
 
+  // Inspirosphere pending-video count is bubbled up from the section
+  // component via onPendingCountChange so the sidebar badge stays live
+  // without AdminCRM owning the subscription. Declared here (with the other
+  // hooks, before the auth gate) so hook order stays stable across renders.
+  const [inspirospherePending, setInspirospherePending] = useState(0);
+
   if (!authed) return <AccessDenied user={user} onNavigate={onNavigate} />;
 
   // Counters for sidebar badges + dashboard tiles
