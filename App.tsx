@@ -54,7 +54,7 @@ import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { MemberPanel } from './components/MemberPanel';
 import { AuthModal } from './components/AuthModal';
 import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
-import { PAGE_META, SITE_URL, CONTACT_INFO, OG_IMAGES, DEFAULT_OG_IMAGE } from './config/seo.config';
+import { PAGE_META, SITE_URL, CONTACT_INFO, OG_IMAGES, DEFAULT_OG_IMAGE, ROBOTS_OVERRIDES } from './config/seo.config';
 import { SEO_CONTENT, type SeoViewKey } from './config/seo.content';
 import { PENSEES } from './data/pensees';
 import { getOptimizedUrl } from './utils/imageOptimizer';
