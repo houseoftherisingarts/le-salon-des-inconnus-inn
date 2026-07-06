@@ -120,10 +120,9 @@ export default function Splitter({ onEnterArts }: { onEnterArts: () => void }) {
           Notre hébergement, réservable aussi sur
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-          {PLATFORM_LOGOS.map(({ name, label, Logo }) => (
+          {PLATFORM_LOGOS.map(({ name, Logo }) => (
             <Logo
               key={name}
-              aria-label={label}
               className="h-6 md:h-7 w-auto text-neutral-400/70 hover:text-amber-100 transition-colors duration-300"
             />
           ))}
