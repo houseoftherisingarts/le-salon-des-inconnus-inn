@@ -15,8 +15,8 @@ const outDir = '/private/tmp/claude-501/-Users-lesalondesinconnus/bbdb5113-9d7c-
   for (const t of targets) {
     for (const v of viewports) {
       const page = await browser.newPage({ viewport: { width: v.width, height: v.height } });
-      await page.goto(t.url, { waitUntil: 'networkidle', timeout: 60000 });
-      await page.waitForTimeout(2000);
+      await page.goto(t.url, { waitUntil: 'load', timeout: 60000 });
+      await page.waitForTimeout(4000);
       await page.screenshot({ path: `${outDir}/${t.name}-${v.name}.png`, fullPage: true });
       await page.close();
     }
