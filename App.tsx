@@ -827,6 +827,22 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7f: INVITATION (unlisted, QR-code only, noindex) */}
+        {currentView === 'INVITATION' && (
+          <InvitationPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 7g: ENTREPRISES (unlisted, B2B corporate retreats pitch) */}
+        {currentView === 'ENTREPRISES' && (
+          <EntreprisesPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
         {/* VIEW 8: MY PROFILE */}
         {currentView === 'MY_PROFILE' && currentUser && memberProfile && (
           <ProfilePage
