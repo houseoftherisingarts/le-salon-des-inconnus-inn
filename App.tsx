@@ -356,6 +356,7 @@ const App: React.FC = () => {
       if (el) el.setAttribute('content', value);
     };
     setMeta('meta[name="description"]', meta.description);
+    setMeta('meta[name="robots"]', ROBOTS_OVERRIDES[currentView] ?? 'index, follow');
     setMeta('meta[property="og:title"]', meta.title);
     setMeta('meta[property="og:description"]', meta.description);
     setMeta('meta[property="og:url"]', canonicalUrl);
