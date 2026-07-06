@@ -42,6 +42,7 @@ const ETRE: NavItem[] = [
   { view: 'INN',       label_fr: 'L\'Auberge',  label_en: 'The Inn',    desc_fr: 'Chambres, yourte et bus',         desc_en: 'Rooms, yurt and converted bus',  icon: '🏛️' },
   { view: 'COMMUNITY', label_fr: 'Communauté',  label_en: 'Community',  desc_fr: 'Rejoindre le collectif du domaine', desc_en: 'Join the estate\'s collective',  icon: '🔥' },
   { view: 'HOSTS',     label_fr: 'Les Hôtes',   label_en: 'Our Hosts',  desc_fr: 'L\'équipe derrière le projet',    desc_en: 'The team behind the project',    icon: '✧' },
+  { view: 'PENSEES',   label_fr: 'Pensées',     label_en: 'Thoughts',   desc_fr: 'Le journal quotidien de la maison', desc_en: 'The house\'s daily journal',   icon: '🕯️' },
 ];
 
 const FAIRE: NavItem[] = [
