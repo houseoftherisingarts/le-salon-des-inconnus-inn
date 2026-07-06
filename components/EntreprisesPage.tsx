@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { db } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
 
 // Unlisted page at /entreprises — B2B pitch for exclusive team building and
@@ -53,40 +51,6 @@ const OFFER_SECTIONS = [
 export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
   const fr = language === 'FR';
   const t = (en: string, frText: string) => (fr ? frText : en);
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
-  const [message, setMessage] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!db || submitting) return;
-    if (!name.trim() || !email.trim() || !company.trim()) {
-      setError(t('Please fill in your name, email and company.', 'Veuillez indiquer votre nom, courriel et entreprise.'));
-      return;
-    }
-    setSubmitting(true);
-    setError(null);
-    try {
-      await addDoc(collection(db, 'proposalRequests'), {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        company: company.trim(),
-        message: message.trim() || null,
-        language,
-        createdAt: serverTimestamp(),
-      });
-      setSuccess(true);
-    } catch (err: any) {
-      setError(err?.message ?? String(err));
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200" style={{ background: '#0a0808' }}>
@@ -184,96 +148,24 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* Proposal request */}
+        {/* Contact direct */}
         <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20">
           <div className="max-w-xl">
             <span className="font-cinzel uppercase text-[#c5a059] block mb-4" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
-              {t('Request a proposal', 'Demander une proposition')}
+              {t('Private days and retreats', 'Journées et retraites privatisées')}
             </span>
-            <h2 className="font-prata text-[#f3e5ab] mb-8" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.1 }}>
-              {t('Tell us about your group.', 'Parlez-nous de votre groupe.')}
+            <h2 className="font-prata text-[#f3e5ab] mb-4" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.1 }}>
+              {t('From $2,500.', 'À partir de 2 500 $.')}
             </h2>
-
-            {success ? (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="border border-[#c5a059]/30 bg-[#c5a059]/[0.06] px-7 py-8"
-              >
-                <p className="font-prata text-[#f3e5ab] text-xl mb-2">
-                  {t('Received.', 'Reçu.')}
-                </p>
-                <p className="font-cormorant text-white/70" style={{ fontSize: '1.1rem' }}>
-                  {t(
-                    'We will write back with a tailored proposal.',
-                    'Nous vous reviendrons avec une proposition sur mesure.',
-                  )}
-                </p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5 font-lato">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <label className="block">
-                    <span className="block font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-500 mb-2">
-                      {t('Name', 'Nom')} <span className="text-[#c5a059]">*</span>
-                    </span>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="w-full bg-[#050505] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37]/50"
-                    />
-                  </label>
-                  <label className="block">
-                    <span className="block font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-500 mb-2">
-                      Email <span className="text-[#c5a059]">*</span>
-                    </span>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="w-full bg-[#050505] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37]/50"
-                    />
-                  </label>
-                </div>
-                <label className="block">
-                  <span className="block font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-500 mb-2">
-                    {t('Company', 'Entreprise')} <span className="text-[#c5a059]">*</span>
-                  </span>
-                  <input
-                    type="text"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    required
-                    className="w-full bg-[#050505] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-[#d4af37]/50"
-                  />
-                </label>
-                <label className="block">
-                  <span className="block font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-500 mb-2">
-                    {t('Message or dates (optional)', 'Message ou dates (facultatif)')}
-                  </span>
-                  <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    rows={4}
-                    placeholder={t('Group size, preferred dates, what you have in mind…', "Taille du groupe, dates envisagées, ce que vous avez en tête…")}
-                    className="w-full bg-[#050505] border border-white/10 text-white px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#d4af37]/50"
-                  />
-                </label>
-
-                {error && <p className="text-rose-400 text-xs font-lato">{error}</p>}
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-[#d4af37] text-black font-cinzel text-[11px] font-bold uppercase tracking-[0.4em] hover:bg-[#f3e5ab] disabled:opacity-40 transition-colors"
-                >
-                  {submitting ? t('Sending…', 'Envoi…') : t('Request a proposal', 'Demander une proposition')}
-                </button>
-              </form>
-            )}
+            <p className="font-cormorant text-white/70 mb-10" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
+              {t('One call is enough to shape your day.', 'Un appel suffit pour dessiner votre journée.')}
+            </p>
+            <a
+              href="tel:+15144183450"
+              className="inline-block px-10 py-4 border border-[#c5a059]/50 text-[#f3e5ab] font-cinzel text-sm uppercase tracking-[0.35em] hover:bg-[#c5a059]/10 hover:border-[#c5a059] transition-colors"
+            >
+              514 418-3450
+            </a>
           </div>
         </section>
       </main>
