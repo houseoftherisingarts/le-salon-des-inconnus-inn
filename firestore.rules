@@ -617,5 +617,15 @@ service cloud.firestore {
     match /dossiers/{docId} {
       allow read, write: if true;
     }
+
+    // ── Échelle de produits + métriques admin (CRM interne) ─────────────────
+    // Admin-only : grille prix/statut des produits et services, et un
+    // compteur de collaborateurs d'affaires potentiels.
+    match /admin_product_ladder/{docId} {
+      allow read, write: if isAdmin();
+    }
+    match /admin_metrics/{docId} {
+      allow read, write: if isAdmin();
+    }
   }
 }
