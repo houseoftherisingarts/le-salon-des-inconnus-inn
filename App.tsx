@@ -187,6 +187,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   PPS:            '/soiree-thematique-pps',
   COMMUNITY:      '/communaute',
   DONATION:       '/don',
+  PENSEES:        '/pensees',
   MY_PROFILE:     '/profil',
   PUBLIC_PROFILE: '/membre',
   MESSAGING:      '/messages',
