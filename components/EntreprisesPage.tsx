@@ -42,11 +42,11 @@ const OFFER_SECTIONS = [
   },
   {
     key: 'stay',
-    img: '/media/inn/us%20copy.jpg',
+    img: '/media/Financement%20Artistique/centered%20copy.jpg',
     titleFr: 'Hébergement sur le domaine',
     titleEn: 'On-site accommodation',
-    bodyFr: 'Chambres du manoir, yourte et autobus aménagé : de quoi loger un groupe complet sans jamais quitter le domaine.',
-    bodyEn: 'Manor rooms, a yurt and a converted bus: enough to house a full group without ever leaving the grounds.',
+    bodyFr: "Jusqu'à 35 personnes logées sur place, tout confondu : chambres du manoir, yourte, autobus aménagé et mini-maisons en forêt. Le groupe au complet, sans jamais quitter le domaine.",
+    bodyEn: 'Up to 35 people housed on site, all told: manor rooms, yurt, converted bus and forest tiny houses. The whole group, without ever leaving the grounds.',
   },
 ];
 
