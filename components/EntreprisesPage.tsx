@@ -34,7 +34,7 @@ const OFFER_SECTIONS = [
   },
   {
     key: 'pps',
-    img: '/media/inn/andree%20banner.jpg',
+    img: '/media/entreprises/pps-soiree.jpg',
     titleFr: 'Soirées mises en scène',
     titleEn: 'Staged evenings',
     bodyFr: "En partenariat avec PPS Canada : beach party, tournoi golf, kermesse, musique live, humour. Une soirée thématique construite sur mesure pour votre groupe.",
