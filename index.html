@@ -91,6 +91,33 @@
     <!-- Per-route JSON-LD (FAQPage, Event, etc.) is injected at runtime by App.tsx. -->
     <script type="application/ld+json" id="route-jsonld"></script>
 
+    <!-- Pensée du jour — static copy of the latest daily journal entry so its
+         text exists in the served HTML for crawlers and AI assistants.
+         Updated each morning by the com.alex.pensee-du-jour job, in sync with
+         data/pensees.ts and public/sitemap.xml. -->
+    <script type="application/ld+json" id="pensee-jsonld">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "L'art d'accueillir",
+      "alternativeHeadline": "The art of welcoming",
+      "datePublished": "2026-07-05",
+      "inLanguage": "fr",
+      "url": "https://www.lesalondesinconnus.com/pensees/2026-07-05",
+      "mainEntityOfPage": "https://www.lesalondesinconnus.com/pensees/2026-07-05",
+      "isPartOf": { "@type": "Blog", "name": "Pensées, le journal quotidien du Salon des Inconnus", "url": "https://www.lesalondesinconnus.com/pensees" },
+      "author": { "@type": "Organization", "name": "Le Salon des Inconnus", "url": "https://www.lesalondesinconnus.com" },
+      "publisher": { "@type": "Organization", "name": "Le Salon des Inconnus", "url": "https://www.lesalondesinconnus.com" },
+      "articleBody": "On pense souvent que l'hospitalité consiste à offrir un lit, un repas, un toit. Mais un inconnu qui franchit la porte n'a pas d'abord besoin d'un lit. Il a besoin qu'on le regarde comme quelqu'un qu'on attendait. Le reste, la chambre, le feu, le café du matin, ce sont des détails qui prennent leur sens après ce premier regard. Chaque salon du monde a été bâti pour ça : un endroit où l'on cesse d'être un étranger le temps d'une conversation. Et si c'était ça, au fond, le métier le plus ancien qui soit, faire de la place à quelqu'un dans son propre monde?",
+      "workTranslation": {
+        "@type": "BlogPosting",
+        "headline": "The art of welcoming",
+        "inLanguage": "en",
+        "articleBody": "We often think hospitality means offering a bed, a meal, a roof. But a stranger walking through the door does not need a bed first. He needs to be looked at like someone we were expecting. The rest, the room, the fire, the morning coffee, those are details that take their meaning after that first look. Every salon in the world was built for this: a place where you stop being a stranger for the length of a conversation. And what if that were, in the end, the oldest craft there is, making room for someone inside your own world?"
+      }
+    }
+    </script>
+
   </head>
   <body class="bg-neutral-900 text-neutral-100 antialiased overflow-hidden">
     <div id="root"></div>
