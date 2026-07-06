@@ -15,6 +15,7 @@ import { MessagesSection } from './admin/MessagesSection';
 import { MediaSection } from './admin/MediaSection';
 import { ShowOffersSection } from './admin/ShowOffersSection';
 import { InspirosphereSection } from './admin/InspirosphereSection';
+import { ProductLadderSection } from './admin/ProductLadderSection';
 import type { ShowOffer } from '../types';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
