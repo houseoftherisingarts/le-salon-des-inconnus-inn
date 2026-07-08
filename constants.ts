@@ -114,7 +114,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: "21 + Matelas",
     baths: 3,
     amenities: COMMON_AMENITIES,
-    images: [PLACEHOLDER_MANOR, PLACEHOLDER_ROOM],
+    images: gallery([PLACEHOLDER_MANOR], 345791),
     bookingLink: "https://salon.holidayfuture.com/listings/345791"
   },
   {
