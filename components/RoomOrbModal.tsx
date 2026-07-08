@@ -1031,6 +1031,62 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
         </div>
       </div>
 
+      {/* Fullscreen photo viewer — opened by tapping the orb. Portalled to the
+          body so it sits above the whole modal; swipe or ‹ › to browse. */}
+      {lightbox &&
+        createPortal(
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={t('Photo', 'Photo')}
+            onClick={() => setLightbox(false)}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 animate-roomFadeIn select-none"
+          >
+            <img
+              src={room.images[imgIdx]}
+              alt={title}
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-[96vw] max-h-[92vh] object-contain rounded-sm shadow-2xl"
+            />
+
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setLightbox(false); }}
+              aria-label={t('Close', 'Fermer')}
+              className="fixed top-5 right-5 w-11 h-11 rounded-full border border-white/25 bg-black/60 backdrop-blur-md text-neutral-200 hover:text-white hover:border-[#c5a059] transition-colors flex items-center justify-center text-2xl leading-none"
+            >
+              ×
+            </button>
+
+            {room.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); showPrevImg(); }}
+                  aria-label={t('Previous photo', 'Photo précédente')}
+                  className="fixed left-2 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/25 bg-black/55 backdrop-blur-md text-neutral-100 hover:text-[#f3e5ab] hover:border-[#c5a059] transition-colors flex items-center justify-center text-3xl leading-none"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); showNextImg(); }}
+                  aria-label={t('Next photo', 'Photo suivante')}
+                  className="fixed right-2 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/25 bg-black/55 backdrop-blur-md text-neutral-100 hover:text-[#f3e5ab] hover:border-[#c5a059] transition-colors flex items-center justify-center text-3xl leading-none"
+                >
+                  ›
+                </button>
+                <div className="fixed bottom-6 left-0 right-0 flex justify-center font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-300">
+                  {imgIdx + 1} / {room.images.length}
+                </div>
+              </>
+            )}
+          </div>,
+          document.body,
+        )}
+
       <style>{`
         .room-orb-img {
           will-change: transform, opacity;
