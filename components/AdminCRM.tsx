@@ -798,7 +798,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   const allEmails = (() => {
     const map = new Map<string, { name: string; source: string; email: string }>();
     registrations.forEach(r => {
-      if (r.email) map.set(r.email, { email: r.email, name: r.displayName, source: 'Woofer' });
+      if (r.email) map.set(r.email, { email: r.email, name: r.displayName, source: 'Ceilidh' });
     });
     showTickets.forEach(t => {
       if (t.email) {
