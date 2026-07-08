@@ -98,7 +98,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: 3,
     amenities: [...COMMON_AMENITIES!, 'private-bath'],
-    images: ["/media/inn/amphiteatre%20banana.jpg", PLACEHOLDER_MANOR],
+    images: gallery(["/media/inn/amphiteatre%20banana.jpg"], 345787),
     bookingLink: "https://salon.holidayfuture.com/listings/345787"
   },
   {
