@@ -338,6 +338,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
     setLoading(true);
     try {
       const profile = await createMemberProfile(pendingUser, selectedMembership, pendingName);
+      // Doors that map to a mandatory application form: send the new member
+      // straight into that form. The target page reads these sessionStorage
+      // flags on mount and auto-opens its form (same pattern as the Espace
+      // Membre to Communaute link), so a woofer or community member can never
+      // be created without the form Alex needs to reply.
+      if (selectedMembership === 'woofer') {
+        try { sessionStorage.setItem('openWwoofForm', '1'); } catch { /* private mode */ }
+        onNavigate?.('WWOOFING');
+      } else if (selectedMembership === 'membre-communaute') {
+        try { sessionStorage.setItem('openCommunityForm', '1'); } catch { /* private mode */ }
+        onNavigate?.('COMMUNITY');
+      }
       onAuthSuccess(pendingUser, profile);
     } catch (e: any) {
       setError(e.message);
