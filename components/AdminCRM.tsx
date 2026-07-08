@@ -846,7 +846,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
 
   // Counters for sidebar badges + dashboard tiles
   const counts = {
-    woofers: registrations.length,
+    ceilidh: registrations.length,
     tickets: showTickets.length,
     emails: allEmails.length,
     wwoofing: wwoofers.length,
