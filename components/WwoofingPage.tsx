@@ -37,7 +37,6 @@ const TASK_OPTIONS = [
 
 const ACCOMMODATION_OPTIONS = [
   { id: 'prospector', en: 'Prospector tent (community bunkhouse)', fr: 'Tente prospecteur (dortoir communautaire)' },
-  { id: 'tiny',       en: 'Tiny house (when available)',           fr: 'Mini-maison (selon disponibilité)' },
   { id: 'flexible',   en: 'Flexible, whatever works',              fr: 'Flexible, à votre convenance' },
 ];
 
