@@ -1094,7 +1094,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                 Cliquez sur une cellule pour modifier. Les changements sont sauvegardés automatiquement.
               </p>
               <button
-                onClick={exportWoofers}
+                onClick={exportCeilidh}
                 className="px-4 py-2 border border-white/10 text-neutral-400 font-cinzel text-xs uppercase tracking-widest hover:border-[#d4af37]/50 hover:text-[#d4af37] transition-all"
               >
                 ↓ Export CSV
