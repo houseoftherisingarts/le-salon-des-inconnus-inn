@@ -310,6 +310,20 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
+  // Swipe left/right in the fullscreen viewer to step photos (mobile).
+  const touchStartX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0]?.clientX ?? null;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = (e.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) showNextImg();
+    else showPrevImg();
+  };
+
   // ── HostAway live availability + price (Phase 1) ──────────────────────────
   // Tomorrow is the earliest selectable check-in; default a 2-night window.
   const listingId = useMemo(
