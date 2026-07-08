@@ -236,6 +236,18 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
     }
   }, [pendingApply, user, memberProfile]);
 
+  // Arriving from a signup that picked "Woofer" (any door: header, Espace
+  // Membre, Ceilidh, etc). AuthModal set this flag then navigated here; open
+  // the mandatory application form directly so no woofer lands without a form.
+  useEffect(() => {
+    if (typeof sessionStorage === 'undefined') return;
+    if (sessionStorage.getItem('openWwoofForm') === '1' && user && memberProfile) {
+      sessionStorage.removeItem('openWwoofForm');
+      setShowWwooferForm(true);
+      setTimeout(() => document.getElementById('wwoofing-apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
+    }
+  }, [user, memberProfile]);
+
   const hasApplied = !!wwooferProfile;
 
   return (
