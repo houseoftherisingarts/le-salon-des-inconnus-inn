@@ -669,7 +669,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
           {/* HostAway live availability + price (Phase 1). Booking still hands
               off to the HostAway page via the Choose button below. */}
-          {room.status !== 'COMING_SOON' && listingId && (
+          {SHOW_LIVE_AVAILABILITY && room.status !== 'COMING_SOON' && listingId && (
             <div className="flex flex-col gap-3 border-t border-[#c5a059]/20 pt-5 text-left">
               <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">
                 {t('Check Dates and Price', 'Vérifier Dates et Tarif')}
