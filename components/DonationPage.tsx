@@ -153,6 +153,7 @@ export const DonationPage: React.FC<Props> = ({
           onClose={() => setShowAuth(false)}
           onAuthSuccess={handleAuthSuccess}
           onShowPrivacy={onShowPrivacy}
+          onNavigate={onNavigate}
         />
       )}
 
