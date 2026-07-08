@@ -415,7 +415,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     | 'feature-requests'
     | 'collab-requests'
     | 'inspirosphere'
-    | 'woofers'
+    | 'ceilidh'
     | 'tickets'
     | 'emails'
     | 'wwoofing'
