@@ -945,8 +945,8 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                 </p>
                 <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/5">
                   <div>
-                    <p className="font-cinzel text-[#f3e5ab] text-xl">{counts.woofers}</p>
-                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Inscriptions</p>
+                    <p className="font-cinzel text-[#f3e5ab] text-xl">{counts.ceilidh}</p>
+                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Ceilidh</p>
                   </div>
                   <div>
                     <p className="font-cinzel text-[#f3e5ab] text-xl">{counts.tickets}</p>
