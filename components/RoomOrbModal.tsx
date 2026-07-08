@@ -522,13 +522,21 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
   // Esc to close, ←/→ to cycle rooms.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // While the fullscreen photo is open, keys drive the photos, and Esc
+      // closes the photo (not the whole modal).
+      if (lightbox) {
+        if (e.key === 'Escape') setLightbox(false);
+        else if (e.key === 'ArrowRight') showNextImg();
+        else if (e.key === 'ArrowLeft') showPrevImg();
+        return;
+      }
       if (e.key === 'Escape') onClose();
       else if (e.key === 'ArrowRight') nextRoom();
       else if (e.key === 'ArrowLeft') prevRoom();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose, nextRoom, prevRoom]);
+  }, [onClose, nextRoom, prevRoom, lightbox, showNextImg, showPrevImg]);
 
   // Lock body scroll while open.
   useEffect(() => {
