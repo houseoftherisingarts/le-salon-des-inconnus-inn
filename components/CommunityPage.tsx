@@ -70,6 +70,7 @@ export const CommunityPage: React.FC<Props> = ({
           onClose={() => { setShowAuth(false); setAuthPending(false); }}
           onAuthSuccess={handleAuthSuccess}
           onShowPrivacy={onShowPrivacy}
+          onNavigate={onNavigate}
         />
       )}
 
