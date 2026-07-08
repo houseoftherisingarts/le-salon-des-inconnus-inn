@@ -1087,7 +1087,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
         )}
 
         {/* ── Woofers tab ── */}
-        {tab === 'woofers' && (
+        {tab === 'ceilidh' && (
           <div>
             <div className="flex items-center justify-between mb-4">
               <p className="text-neutral-600 text-xs font-lato">
