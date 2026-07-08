@@ -1040,7 +1040,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
               Vue d'ensemble du Ceilidh de mai 2026. Cliquez sur une tuile pour ouvrir la section complète.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <DashboardTile label="Inscriptions"  value={counts.woofers}    accent="text-amber-300"   onClick={() => setTab('woofers')} />
+              <DashboardTile label="Ceilidh"       value={counts.ceilidh}    accent="text-amber-300"   onClick={() => setTab('ceilidh')} />
               <DashboardTile label="Billets"       value={`${counts.tickets}/20`} accent="text-[#c5a059]" onClick={() => setTab('tickets')} />
               <DashboardTile label="Emails"        value={counts.emails}     accent="text-neutral-300" onClick={() => setTab('emails')} />
               <DashboardTile label="Wwoofing"      value={counts.wwoofing}   accent="text-emerald-300" onClick={() => setTab('wwoofing')} />
