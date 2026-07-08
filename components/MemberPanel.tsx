@@ -115,6 +115,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
           <AuthModal
             language={language}
             onClose={() => { setShowAuth(false); onRedirectUserHandled?.(); }}
+            onNavigate={onNavigate}
             onAuthSuccess={(u, p) => {
               onUserChange(u, p);
               setShowAuth(false);
