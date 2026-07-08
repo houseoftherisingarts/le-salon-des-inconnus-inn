@@ -47,6 +47,11 @@ interface AuthModalProps {
   /** If the user returned from a Google redirect and has no Firestore profile yet,
    *  pass them here so the modal opens directly at the membership step. */
   redirectPendingUser?: User | null;
+  /** Route a brand-new member into a mandatory application form when the
+   *  membership type they picked maps to one (woofer to WWOOFING,
+   *  membre-communaute to COMMUNITY). Keeps every signup door leading to the
+   *  same form instead of creating a "typed but formless" account. */
+  onNavigate?: (view: string) => void;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
