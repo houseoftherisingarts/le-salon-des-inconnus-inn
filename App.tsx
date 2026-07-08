@@ -988,6 +988,7 @@ const App: React.FC = () => {
           onAuthSuccess={(user, profile) => handleUserChange(user, profile)}
           onShowPrivacy={() => setShowPrivacyPolicy(true)}
           redirectPendingUser={redirectPendingUser}
+          onNavigate={(view) => handleNavigation(view as ViewState)}
         />
       )}
 
