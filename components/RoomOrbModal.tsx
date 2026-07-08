@@ -115,6 +115,12 @@ function useShimmer() {
   };
 }
 
+// The on-site live availability + date/price picker is hidden for now: running it
+// alongside HostAway's own calendar confused guests with two booking systems.
+// The block below is kept intact (not deleted) so it can be switched back on when
+// the Salon's own PMS ships. Booking still hands off to HostAway via "Choose".
+const SHOW_LIVE_AVAILABILITY = false;
+
 type RoomOrbCtx = { openRoomOrb: (acc: Accommodation) => void };
 const Ctx = createContext<RoomOrbCtx | null>(null);
 
