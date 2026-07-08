@@ -3584,6 +3584,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
           onClose={() => { setShowAuth(false); setPendingTeamId(null); }}
           onAuthSuccess={handleAuthSuccess}
           onShowPrivacy={onShowPrivacy}
+          onNavigate={onNavigate}
         />
       )}
 
