@@ -531,6 +531,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
           onClose={() => { setShowAuth(false); setPendingApply(false); }}
           onAuthSuccess={handleAuthSuccess}
           onShowPrivacy={onShowPrivacy}
+          onNavigate={onNavigate}
         />
       )}
 
