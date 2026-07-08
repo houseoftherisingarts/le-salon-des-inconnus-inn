@@ -947,6 +947,15 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
                 }}
               />
 
+              {/* Tap the orb to open the current photo full-screen. Sits above the
+                  decorative shells but below the ‹ › photo arrows (z-20). */}
+              <button
+                type="button"
+                onClick={() => setLightbox(true)}
+                aria-label={t('View photo full screen', 'Voir la photo en plein écran')}
+                className="absolute inset-0 z-10 rounded-full cursor-zoom-in focus:outline-none"
+              />
+
               {/* Bottom name banner inside the orb */}
               <div className="absolute left-0 right-0 bottom-[16%] flex justify-center pointer-events-none">
                 <span
