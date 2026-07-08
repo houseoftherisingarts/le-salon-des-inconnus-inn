@@ -303,6 +303,13 @@ export const onNewMember = functions
   .firestore.document('members/{uid}')
   .onCreate(async (snap) => {
     const m = snap.data() ?? {};
+    // "Woofer" and "membre-communaute" are only the first step of a flow that
+    // ends in a dedicated mandatory form (wwoofers / communityApplications),
+    // each with its own notification (onWwooferApplication / onCommunityApplication).
+    // Skip the generic adhésion email for those so Alex only ever gets a woofer
+    // or community "candidature" once the form is actually filled, never a
+    // formless one he cannot reply to.
+    if (m.membershipType === 'woofer' || m.membershipType === 'membre-communaute') return;
     const body =
       `Nouvelle adhésion sur le site.\n\n` +
       line('Nom', m.displayName) +
