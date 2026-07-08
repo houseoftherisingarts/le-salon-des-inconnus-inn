@@ -313,10 +313,10 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
   // Swipe left/right in the fullscreen viewer to step photos (mobile).
   const touchStartX = useRef<number | null>(null);
-  const onTouchStart = (e: React.TouchEvent) => {
+  const onTouchStart = (e: ReactTouchEvent) => {
     touchStartX.current = e.touches[0]?.clientX ?? null;
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
+  const onTouchEnd = (e: ReactTouchEvent) => {
     if (touchStartX.current == null) return;
     const dx = (e.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current;
     touchStartX.current = null;
