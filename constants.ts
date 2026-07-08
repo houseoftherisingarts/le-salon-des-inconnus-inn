@@ -2,6 +2,13 @@
 
 import { Accommodation, ArtistProfile, PlatformService, LocalGuideCategory } from './types';
 import { GUIDE_BLOG_POSTS } from './data/guideBlogPosts';
+import { LISTING_PHOTOS } from './data/listingPhotos';
+
+// Build a room gallery: the branded lead image(s) first, then the live HostAway
+// listing photos for that listing id, de-duplicated. Re-pull the HostAway side
+// with `node scripts/fetch-listing-photos.mjs`.
+const gallery = (leadImages: string[], listingId: number): string[] =>
+  Array.from(new Set([...leadImages, ...(LISTING_PHOTOS[listingId] ?? [])]));
 
 export const MUSIC_GENRES = {
   Blues: "/media/music/background%20blues.mp3",
