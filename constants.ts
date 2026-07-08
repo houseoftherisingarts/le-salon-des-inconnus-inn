@@ -50,7 +50,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     beds: 1,
     baths: 2,
     amenities: COMMON_AMENITIES,
-    images: ["/media/inn/ecrivaine%20banana.jpg", PLACEHOLDER_MANOR],
+    images: gallery(["/media/inn/ecrivaine%20banana.jpg"], 345789),
     bookingLink: "https://salon.holidayfuture.com/listings/345789"
   },
   {
