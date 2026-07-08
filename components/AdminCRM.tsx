@@ -821,7 +821,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     );
   };
 
-  const exportWoofers = () => {
+  const exportCeilidh = () => {
     downloadCSV(
       'woofers-ceilidh-2026.csv',
       registrations.map(r => [
