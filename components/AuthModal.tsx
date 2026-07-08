@@ -124,7 +124,7 @@ const GoogleIcon = () => (
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, language, onShowPrivacy, redirectPendingUser }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, language, onShowPrivacy, redirectPendingUser, onNavigate }) => {
   const [mode, setMode] = useState<AuthMode>('login');
 
   // Email/password fields
