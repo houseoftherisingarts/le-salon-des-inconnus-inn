@@ -8,6 +8,7 @@ import {
   useState,
   type CSSProperties,
   type ReactNode,
+  type TouchEvent as ReactTouchEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { getFunctions, httpsCallable } from 'firebase/functions';
