@@ -1148,7 +1148,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                   })}
                   {registrations.length === 0 && (
                     <tr>
-                      <td colSpan={9} className="py-12 text-center text-neutral-700 italic">Aucun woofer inscrit.</td>
+                      <td colSpan={9} className="py-12 text-center text-neutral-700 italic">Aucune inscription Ceilidh.</td>
                     </tr>
                   )}
                 </tbody>
