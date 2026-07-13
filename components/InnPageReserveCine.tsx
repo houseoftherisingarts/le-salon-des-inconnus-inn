@@ -421,6 +421,45 @@ export const InnPageReserveCine: React.FC<Props> = ({
             >
               {t('A sanctuary for travelers, artists, and dreamers.', 'Un sanctuaire pour voyageurs, artistes et rêveurs.')}
             </p>
+            {/* CITQ classification — Gîte touristique classé 4 soleils. Small on-brand
+                plaque: four gold suns + label, in the warm-dark hero palette. */}
+            <div className="hero3-soleils mb-8 md:mb-10 mx-auto md:mx-0 w-fit">
+              <div
+                className="flex items-center gap-2.5 rounded-[3px] border border-[#c5a059]/40 bg-black/25 px-3.5 py-2 backdrop-blur-sm"
+                style={{ boxShadow: '0 4px 18px rgba(0,0,0,0.45)' }}
+                title={t('Tourist home rated 4 suns', 'Gîte touristique classé 4 soleils')}
+                aria-label={t('Tourist home rated 4 suns', 'Gîte touristique classé 4 soleils')}
+              >
+                <span className="flex items-center gap-[3px]" aria-hidden>
+                  {[0, 1, 2, 3].map((i) => (
+                    <svg
+                      key={i}
+                      viewBox="0 0 24 24"
+                      className="w-[15px] h-[15px] md:w-[17px] md:h-[17px]"
+                      style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.85))' }}
+                    >
+                      <circle cx="12" cy="12" r="4.1" fill="#f3d27a" />
+                      <g stroke="#f3d27a" strokeWidth="1.6" strokeLinecap="round">
+                        <line x1="12" y1="1.6" x2="12" y2="4.4" />
+                        <line x1="12" y1="19.6" x2="12" y2="22.4" />
+                        <line x1="1.6" y1="12" x2="4.4" y2="12" />
+                        <line x1="19.6" y1="12" x2="22.4" y2="12" />
+                        <line x1="4.7" y1="4.7" x2="6.7" y2="6.7" />
+                        <line x1="17.3" y1="17.3" x2="19.3" y2="19.3" />
+                        <line x1="4.7" y1="19.3" x2="6.7" y2="17.3" />
+                        <line x1="17.3" y1="6.7" x2="19.3" y2="4.7" />
+                      </g>
+                    </svg>
+                  ))}
+                </span>
+                <span
+                  className="font-cinzel text-[#f3e5ab] text-[8px] md:text-[10px] uppercase tracking-[0.26em] md:tracking-[0.34em] whitespace-nowrap"
+                  style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}
+                >
+                  {t('Tourist Home · Rated 4 Suns', 'Gîte touristique · Classé 4 soleils')}
+                </span>
+              </div>
+            </div>
             <div className="hero3-ctas w-full max-w-md md:max-w-none mx-auto md:mx-0 flex flex-col items-center md:flex-row md:items-center md:flex-wrap gap-3">
               {/* On mobile both CTAs share a row, equal width via flex-1.
                   On desktop they're auto-width as before. */}
