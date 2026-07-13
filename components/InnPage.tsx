@@ -1485,6 +1485,7 @@ export const MapFooterSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode 
             </a>
         </div>
         <div className={`text-center pb-10 text-[10px] uppercase tracking-[0.3em] opacity-40 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-500'}`}>
+            <span className="block mb-1.5 opacity-90">{language === 'EN' ? 'Registered establishment · CITQ 209613' : 'Établissement enregistré · CITQ 209613'}</span>
             © 2026 Le Salon des Inconnus
         </div>
     </section>
