@@ -1273,7 +1273,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
            reduced for prefers-reduced-motion. */
 
         @media (prefers-reduced-motion: reduce) {
-          .hero3-eyebrow, .hero3-rule, .hero3-title, .hero3-tagline, .hero3-ctas, .hero3-scroll, .hero3-scroll-line {
+          .hero3-eyebrow, .hero3-rule, .hero3-title, .hero3-tagline, .hero3-soleils, .hero3-ctas, .hero3-scroll, .hero3-scroll-line {
             opacity: 1 !important; transform: none !important; animation: none !important;
           }
           .hero3-rule { width: 56px !important; }
