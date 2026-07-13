@@ -1162,7 +1162,8 @@ export const InnPageReserveCine: React.FC<Props> = ({
         }
         @keyframes hero3TitleIn { to { opacity: 1; transform: translate3d(0, 0, 0); } }
         .hero3-tagline { opacity: 0; animation: hero3FadeUp 0.9s ease-out 1.1s forwards; }
-        .hero3-ctas { opacity: 0; animation: hero3FadeUp 0.7s ease-out 1.35s forwards; }
+        .hero3-soleils { opacity: 0; animation: hero3FadeUp 0.8s ease-out 1.3s forwards; }
+        .hero3-ctas { opacity: 0; animation: hero3FadeUp 0.7s ease-out 1.5s forwards; }
         .hero3-scroll { opacity: 0; animation: hero3FadeIn 0.9s ease-out 1.7s forwards; }
         .hero3-scroll-line { animation: hero3ScrollPulse 2.4s ease-in-out infinite; }
         @keyframes hero3ScrollPulse {
