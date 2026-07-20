@@ -3520,7 +3520,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                         </div>
                         <div className="relative w-full border-y border-white/10" style={{ height: 'min(55vh, 520px)' }}>
                           <iframe
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=-75.0%2C45.85%2C-74.85%2C45.95&layer=mapnik&marker=45.897%2C-74.912"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=-74.966%2C45.881%2C-74.906%2C45.912&layer=mapnik&marker=45.89647%2C-74.93624"
                             className="w-full h-full block"
                             title="Maison Favier"
                             loading="lazy"
