@@ -1476,7 +1476,7 @@ export const MapFooterSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode 
         </div>
         <div className="text-center py-6 px-6">
             <a
-                href="https://www.openstreetmap.org/?mlat=45.897&mlon=-74.912#map=14/45.897/-74.912"
+                href="https://www.openstreetmap.org/?mlat=45.89647&mlon=-74.93624#map=16/45.89647/-74.93624"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-block text-[11px] font-lato opacity-50 hover:opacity-90 transition-opacity ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-300'}`}
