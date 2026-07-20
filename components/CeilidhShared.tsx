@@ -3529,7 +3529,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                         </div>
                         <div className="mt-3 mb-6 text-center px-6">
                           <a
-                            href="https://www.openstreetmap.org/?mlat=45.897&mlon=-74.912#map=14/45.897/-74.912"
+                            href="https://www.openstreetmap.org/?mlat=45.89647&mlon=-74.93624#map=16/45.89647/-74.93624"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[11px] font-lato text-neutral-500 hover:text-[#d4af37] transition-colors"
