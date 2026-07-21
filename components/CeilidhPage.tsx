@@ -1744,6 +1744,7 @@ const TeamsChapterBody: React.FC<{
   // off Cuisine if it was there). Support memberships are left untouched.
   const handleJoinTeam = async (teamId: string) => {
     if (selectedDays.length === 0) return;
+    setJoinError(null);
 
     let u: User | null = effectiveUser ?? auth?.currentUser ?? null;
     if (!u) u = await resolveCurrentUser(auth);
