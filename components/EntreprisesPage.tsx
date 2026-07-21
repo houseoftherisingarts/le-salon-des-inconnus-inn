@@ -48,7 +48,7 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
       ),
     },
     {
-      img: '/media/entreprises/pps-soiree.jpg',
+      img: '/media/Auberge%20photos/gramophone.jpg',
       kicker: t('Staged evenings', 'Soirées mises en scène'),
       title: t('An evening built for your group', 'Une soirée construite pour votre groupe'),
       body: t(
