@@ -342,7 +342,7 @@ const MobileMenu: React.FC<{
           </div>
         </div>
 
-        {/* LA FAMILLE — liens externes vers les autres propriétés, hors ViewState */}
+        {/* LA FAMILLE : liens externes vers les autres propriétés, hors ViewState */}
         <div>
           <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
             {language === 'FR' ? 'La famille' : 'The family'}
