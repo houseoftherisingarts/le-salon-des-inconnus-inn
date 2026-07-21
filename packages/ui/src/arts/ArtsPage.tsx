@@ -343,15 +343,20 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
               setPatronTab('CENTER'); // Default tab
            }}
          />
-         {/* Café replaces the Digital Atelier tile for now (per Alex).
-             Reuses the 'PLATFORMS' buyerView slot — render branch below
-             swaps DigitalAtelier for <SdiCafe>. */}
-         <MenuCard
-           title="Café"
-           subtitle={language === 'EN' ? "Productions & Artists" : "Productions & Artistes"}
-           bg="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1000&auto=format&fit=crop"
-           onClick={() => setBuyerView('PLATFORMS')}
-         />
+         {/* Café: EN ATTENTE (décision Alex 2026-07-21) — intégration à définir.
+             Tuile visible mais non cliquable, badge « Bientôt ». Le slot
+             'PLATFORMS' et <SdiCafe> restent en place pour la réactivation. */}
+         <div className="group relative h-64 md:h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-default">
+           <div className="absolute inset-0 bg-indigo-950/70" />
+           <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1000&auto=format&fit=crop" alt="Café" className="w-full h-full object-cover opacity-30" />
+           <div className="absolute top-4 right-4 px-4 py-1.5 rounded-full border border-[#d4af37]/40 bg-black/50 backdrop-blur-md">
+             <span className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">{language === 'EN' ? "Coming soon" : "Bientôt"}</span>
+           </div>
+           <div className="absolute inset-0 flex flex-col items-center justify-center">
+             <h3 className="font-cinzel text-2xl md:text-3xl text-white/70 tracking-widest">Café</h3>
+             <span className="font-lato text-xs tracking-[0.2em] text-indigo-300/60 mt-2">{language === 'EN' ? "Productions & Artists" : "Productions & Artistes"}</span>
+           </div>
+         </div>
       </div>
     </div>
   );
