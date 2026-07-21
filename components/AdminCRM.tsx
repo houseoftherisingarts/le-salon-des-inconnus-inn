@@ -650,8 +650,48 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       snap => setCollabRequests(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }) as CollabRequestRow)),
       () => {},
     );
+    // Artist profiles — collection-group over `artistProfile` (same proven
+    // pattern as the `admin` flags query above). We keep only the canonical
+    // `profile` doc the Creator Studio reads/writes; the parent member's uid is
+    // the grandparent segment. This is what the Annuaire tab lists.
+    const unsub10 = onSnapshot(
+      query(collectionGroup(db, 'artistProfile')),
+      snap => {
+        const rows: ArtistProfileRow[] = [];
+        snap.docs.forEach(d => {
+          if (d.id !== 'profile') return;
+          const parent = d.ref.parent.parent;
+          if (!parent) return;
+          const data = d.data() as any;
+          rows.push({
+            uid: parent.id,
+            name: data.name ?? data.displayName,
+            class: data.class,
+            category: data.category,
+            avatarUrl: data.avatarUrl ?? data.photoURL,
+            galleryImages: Array.isArray(data.galleryImages) ? data.galleryImages : [],
+            location: data.location,
+            medium: data.medium,
+            subjects: Array.isArray(data.subjects) ? data.subjects : [],
+            currentExpos: data.currentExpos,
+            stats: data.stats,
+            bio: data.bio,
+            links: data.links,
+          });
+        });
+        setArtistProfiles(rows);
+      },
+      () => {},
+    );
+    // Public roster presence — drives the promote/retirer toggle state.
+    const unsub11 = onSnapshot(
+      query(collection(db, 'publicRoster')),
+      snap => setPublicRosterUids(new Set(snap.docs.map(d => d.id))),
+      () => {},
+    );
     return () => {
       unsub1(); unsub2(); unsub3(); unsub4(); unsubCommunity(); unsub5(); unsub6(); unsub7(); unsub8(); unsub9();
+      unsub10(); unsub11();
       tierUnsubs.forEach(fn => fn());
     };
   }, [authed]);
