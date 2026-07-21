@@ -263,32 +263,24 @@ export function HubOrb() {
                 <li key={c.id}>
                   <button
                     onClick={() => onChoiceClick(i)}
-                    className="group w-full text-left py-3 md:py-4 flex items-baseline gap-4 md:gap-6 transition-all duration-300"
+                    className={`group h-full w-full md:w-auto text-center px-6 md:px-8 py-4 md:py-5 rounded-[18px] border transition-all duration-300 backdrop-blur-md ${
+                      isSelected
+                        ? 'border-[#c5a059]/70 bg-[#c5a059]/10 shadow-[0_0_30px_rgba(197,160,89,0.25)]'
+                        : 'border-white/10 bg-black/30 hover:border-[#c5a059]/40 hover:bg-black/40'
+                    }`}
                   >
-                    {/* Selection indicator dot */}
-                    <span
-                      className={`shrink-0 w-2 h-2 rounded-full transition-all duration-300 translate-y-[-3px] ${
-                        isSelected
-                          ? 'bg-[#f3e5ab] shadow-[0_0_14px_rgba(243,229,171,0.95)]'
-                          : 'bg-white/15 group-hover:bg-white/40'
-                      }`}
-                    />
-                    <span className="flex flex-col">
+                    <span className="flex flex-col items-center">
                       <span
-                        className={`font-cinzel uppercase transition-all duration-300 leading-[0.95] ${
-                          isSelected
-                            ? 'text-[#f3e5ab] tracking-[0.05em]'
-                            : 'text-neutral-500 group-hover:text-neutral-200 tracking-[0.02em]'
+                        className={`font-cinzel uppercase transition-all duration-300 leading-tight ${
+                          isSelected ? 'text-[#f3e5ab]' : 'text-neutral-400 group-hover:text-neutral-100'
                         }`}
-                        style={{
-                          fontSize: 'clamp(1.5rem, 3vw, 2.6rem)',
-                        }}
+                        style={{ fontSize: 'clamp(1rem, 1.6vw, 1.3rem)', letterSpacing: '0.08em' }}
                       >
                         {c.name}
                       </span>
                       <span
-                        className={`font-cinzel text-[10px] uppercase tracking-[0.4em] mt-2 transition-colors ${
-                          isSelected ? 'text-[#c5a059]' : 'text-neutral-700 group-hover:text-neutral-500'
+                        className={`font-cinzel text-[10px] uppercase tracking-[0.34em] mt-2 transition-colors ${
+                          isSelected ? 'text-[#c5a059]' : 'text-neutral-600 group-hover:text-neutral-400'
                         }`}
                       >
                         {c.taglineFr}
