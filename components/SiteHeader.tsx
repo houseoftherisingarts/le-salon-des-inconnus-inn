@@ -342,6 +342,33 @@ const MobileMenu: React.FC<{
           </div>
         </div>
 
+        {/* LA FAMILLE — liens externes vers les autres propriétés, hors ViewState */}
+        <div>
+          <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
+            {language === 'FR' ? 'La famille' : 'The family'}
+          </p>
+          <div className="flex flex-col gap-1">
+            {FAMILLE.map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_self"
+                className="flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-colors hover:bg-white/5"
+              >
+                <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-sm flex-shrink-0">{item.icon}</span>
+                <div>
+                  <p className="text-[11px] font-cinzel font-bold uppercase tracking-[0.15em] text-white/90">
+                    {language === 'FR' ? item.label_fr : item.label_en}
+                  </p>
+                  <p className="text-[10px] text-white/40 font-lato mt-0.5">
+                    {language === 'FR' ? item.desc_fr : item.desc_en}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
         {/* Réserver CTA */}
         <button
           onClick={() => go('INN')}
