@@ -57,7 +57,7 @@ const FAIRE: NavItem[] = [
 ];
 
 // Liens externes vers les autres propriétés de la famille des Inconnus.
-// Ces liens sortent volontairement de la navigation interne (ViewState) — ce sont
+// Ces liens sortent volontairement de la navigation interne (ViewState) : ce sont
 // des ancres <a> ordinaires vers d'autres apps Firebase, pas des vues internes.
 type FamilyLink = { href: string; label_fr: string; label_en: string; desc_fr: string; desc_en: string; icon: string };
 
