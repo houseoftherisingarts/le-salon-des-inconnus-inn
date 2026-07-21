@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { GoogleGenAI } from "@google/genai";
 import { ARTISTS_ROSTER } from './roster';
 import { ArtistProfile } from './types';
