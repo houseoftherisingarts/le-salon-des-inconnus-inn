@@ -318,10 +318,12 @@ const JoinSection: React.FC = () => (
 );
 
 // ── 4 · LA FAMILLE DES INCONNUS ─────────────────────────────────────────────
+// Staging URLs for the sibling properties. Swap to the real domains
+// (aubergedesinconnus.com, lesalondesinconnus.com, lesinconnus.com) once DNS connects.
 const FAMILY = [
-  { label: "L'Auberge", href: 'https://inconnus-auberge.web.app' },
-  { label: 'Le Salon', href: 'https://inconnus-salon.web.app' },
-  { label: 'Le Hub', href: 'https://inconnus-hub.web.app' },
+  { label: "L'Auberge", href: 'https://inconnus-auberge.web.app/' },
+  { label: 'Le Salon', href: 'https://inconnus-salon.web.app/' },
+  { label: 'Le Hub', href: 'https://inconnus-hub.web.app/' },
 ];
 
 const FooterBand: React.FC = () => (
