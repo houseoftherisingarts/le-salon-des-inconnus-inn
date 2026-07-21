@@ -356,6 +356,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen text-[#f6ead0]">
       <Atmosphere />
+      <BackToHub />
       <main>
         <Hero />
         <LifeSection />
