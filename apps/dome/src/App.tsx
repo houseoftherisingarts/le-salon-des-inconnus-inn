@@ -116,6 +116,18 @@ const Reveal: React.FC<{
   );
 };
 
+/** Fixed top-left way back to the hub. Swap href to https://lesinconnus.com/ once DNS connects. */
+const BackToHub: React.FC = () => (
+  <a
+    href="https://inconnus-hub.web.app/"
+    rel="noopener"
+    className="dome-pill fixed top-5 left-5 md:top-7 md:left-7 z-50 inline-flex items-center gap-2 font-cinzel uppercase rounded-full px-5 py-2.5"
+    style={{ fontSize: '11px', letterSpacing: '0.28em', color: GOLD }}
+  >
+    ← Les Inconnus
+  </a>
+);
+
 /** Section overline: a gold rule + tracked Cinzel label. */
 const Overline: React.FC<{ label: string }> = ({ label }) => (
   <div className="flex items-center gap-4 mb-10 md:mb-14">
