@@ -55,14 +55,14 @@ export const ProposalRequestForm: React.FC<Props> = ({ language, subject, showCo
   };
 
   const inputClass =
-    'w-full bg-transparent border-0 border-b border-[#c5a059]/25 focus:border-[#c5a059] text-[#f3e5ab] ' +
-    'font-cormorant text-xl px-0 py-3 outline-none transition-colors placeholder:text-white/25';
+    'rs-field w-full rounded-[14px] text-[#f6ead0] font-cormorant text-lg px-4 py-3 outline-none ' +
+    'placeholder:text-white/25';
 
   if (success) {
     return (
-      <div className="border border-[#c5a059]/30 bg-[#c5a059]/[0.04] px-8 py-10 max-w-xl">
-        <p className="font-prata text-[#f3e5ab] text-2xl mb-3">{t('Message received.', 'Message reçu.')}</p>
-        <p className="font-cormorant text-white/70" style={{ fontSize: '1.15rem', lineHeight: 1.55 }}>
+      <div className="rounded-[16px] px-8 py-10" style={{ background: 'rgba(217,180,92,0.06)', border: '1px solid rgba(217,180,92,0.24)' }}>
+        <p className="font-prata text-2xl mb-3" style={{ color: '#f6ead0' }}>{t('Message received.', 'Message reçu.')}</p>
+        <p className="font-cormorant" style={{ color: 'rgba(255,250,240,0.72)', fontSize: '1.15rem', lineHeight: 1.55, fontWeight: 500 }}>
           {t(
             'Thank you. Alex will get back to you personally, usually within a day.',
             "Merci. Alex vous revient personnellement, en général dans la journée.",
