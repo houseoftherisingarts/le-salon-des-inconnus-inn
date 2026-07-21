@@ -41,6 +41,13 @@ export default function Splitter({ onEnterArts }: { onEnterArts: () => void }) {
 
       {/* Wordmark */}
       <header className="relative z-10 pt-10 pb-6 text-center shrink-0">
+        {/* Discreet way back to the wider famille des Inconnus */}
+        <a
+          href={INCONNUS_HUB_URL}
+          className="absolute top-4 left-4 md:top-6 md:left-8 font-lato text-[0.65rem] md:text-xs tracking-[0.25em] uppercase text-neutral-500 hover:text-amber-100 transition-colors duration-300"
+        >
+          ← Les Inconnus
+        </a>
         <p className="font-cinzel text-sm md:text-base tracking-[0.45em] text-amber-100/80">
           LE SALON DES INCONNUS
         </p>
