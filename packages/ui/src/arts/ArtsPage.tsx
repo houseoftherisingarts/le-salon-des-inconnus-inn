@@ -876,7 +876,13 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                          {/* Membership Tiers */}
                          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
                              {/* Tier 1 */}
-                             <div className="bg-[#141414] border border-white/10 rounded-2xl p-8 flex flex-col h-[400px]">
+                             <motion.div
+                                initial={{ opacity: 0, y: 18 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                                className="bg-[#141414] border border-white/10 rounded-2xl p-8 flex flex-col h-[400px]"
+                             >
                                  <h4 className="font-cinzel text-2xl text-white mb-2">{language === 'EN' ? "The Initiate" : "L'Initié"}</h4>
                                  <div className="text-4xl font-cinzel text-white mb-8">$20 <span className="text-xs font-sans text-neutral-500 font-normal">/ month</span></div>
                                  <ul className="space-y-4 mb-8 flex-1">
