@@ -292,11 +292,11 @@ export function HubOrb() {
             })}
           </ul>
 
-          {/* Confirm — indented to line up with the title text (past the dot). */}
+          {/* Confirm — centered under the choice row */}
           <button
             onClick={onConfirm}
             disabled={!choice.available || confirming}
-            className={`self-start ml-6 md:ml-8 px-9 py-4 font-cinzel font-bold text-xs uppercase tracking-[0.35em] transition-all duration-300 border ${
+            className={`self-center px-10 py-4 rounded-full font-cinzel font-bold text-xs uppercase tracking-[0.35em] transition-all duration-300 border ${
               choice.available
                 ? 'bg-[#c5a059] text-[#18181b] border-[#c5a059] hover:bg-[#d4b06a] hover:scale-[1.02]'
                 : 'bg-transparent text-neutral-600 border-white/10 cursor-not-allowed'
