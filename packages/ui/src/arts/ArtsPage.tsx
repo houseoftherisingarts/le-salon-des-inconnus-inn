@@ -917,10 +917,16 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                  <button className="w-full py-4 bg-indigo-900/40 hover:bg-indigo-900/60 border border-indigo-500/30 text-indigo-100 font-cinzel font-bold text-xs uppercase tracking-widest rounded transition-colors shadow-lg">
                                      Join The Circle
                                  </button>
-                             </div>
+                             </motion.div>
 
                              {/* Tier 3 */}
-                             <div className="bg-[#14120a] border border-[#d4af37]/30 rounded-2xl p-8 flex flex-col h-[450px]">
+                             <motion.div
+                                initial={{ opacity: 0, y: 18 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                                className="bg-[#14120a] border border-[#d4af37]/30 rounded-2xl p-8 flex flex-col h-[450px]"
+                             >
                                  <h4 className="font-cinzel text-2xl text-white mb-2">{language === 'EN' ? "The Maecenas" : "Le Mécène"}</h4>
                                  <div className="text-5xl font-cinzel text-white mb-8">$500 <span className="text-xs font-sans text-neutral-500 font-normal">/ month</span></div>
                                  <ul className="space-y-4 mb-8 flex-1">
