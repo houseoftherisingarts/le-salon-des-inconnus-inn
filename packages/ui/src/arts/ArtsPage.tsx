@@ -62,7 +62,7 @@ const FadeInRight: React.FC<{ children: React.ReactNode; delay?: number }> = ({ 
     return (
         <div
             ref={ref}
-            className={`transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
+            className={`transition-all duration-500 ease-out transform will-change-transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
             style={{ transitionDelay: `${delay}ms` }}
         >
             {children}
