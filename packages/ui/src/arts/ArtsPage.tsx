@@ -1665,7 +1665,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                  </tbody>
                              </table>
                          </div>
-                         <p className="text-[10px] text-neutral-600 mt-6 italic text-center leading-relaxed">
+                         <p className="text-[10px] text-neutral-600 mt-6 text-center leading-relaxed">
                             * Calcul basé sur : Taux DPA de 20% (Catégorie 8), Règle de la demi-année (10% an 1), Taux d'impôt corporatif de {taxRateInput}%.<br/>
                             Le tableau affiche un maximum de 10 ans.
                          </p>
