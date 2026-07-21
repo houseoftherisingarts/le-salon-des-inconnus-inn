@@ -1882,6 +1882,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
 
       {/* Main Content Area */}
       <main ref={mainScrollRef} className="pt-20 h-full overflow-y-auto custom-scrollbar">
+       <ArtsScrollerContext.Provider value={mainScrollRef}>
         {rootView === 'HUB' && <Hub />}
         
         {/*
