@@ -1906,6 +1906,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 {buyerView === 'PLATFORMS' && <SdiCafe language={language} />}
             </>
         )}
+       </ArtsScrollerContext.Provider>
       </main>
 
       <style>{`
