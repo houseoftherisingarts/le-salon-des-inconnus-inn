@@ -1574,7 +1574,7 @@ export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
                             className="flex flex-col items-center gap-1.5 group"
                         >
                             <span className={`block w-full aspect-square rounded-full overflow-hidden border ${vibe === 'HOSTEL' ? 'border-[#c5a059]/70' : vibe === 'SHIRE' ? 'border-[#dcb055]/70' : 'border-white/30'} shadow-[0_6px_18px_rgba(0,0,0,0.5)] transition-transform group-active:scale-95`}>
-                                <img src={room.images[0]} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                                <img src={getOptimizedUrl(room.images[0], 200)} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                             </span>
                             <span className="text-[7.5px] leading-tight uppercase tracking-wide text-[#f3e5ab] font-josefin text-center w-full truncate">
                                 {label}
@@ -1624,7 +1624,7 @@ export const IndependentStaysSection: React.FC<{ language: 'EN' | 'FR'; vibe: Vi
                                 <span className={`relative block w-full aspect-square rounded-full overflow-hidden border-2
                                     ${vibe === 'HOSTEL' ? 'border-[#c5a059]/70' : vibe === 'SHIRE' ? 'border-[#dcb055]/70' : 'border-white/30'}
                                     shadow-[0_10px_30px_rgba(0,0,0,0.55)] transition-transform duration-300 group-hover:scale-[1.03] group-active:scale-95`}>
-                                    <img src={room.images[0]} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                                    <img src={getOptimizedUrl(room.images[0], 200)} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                     {room.status === 'COMING_SOON' && (
                                         <span className={`absolute bottom-[12%] left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full border text-[8px] md:text-[10px] uppercase tracking-[0.18em]
                                             ${vibe === 'HOSTEL' ? 'bg-[#1e1e24]/85 border-[#c5a059] text-[#f3e5ab] font-josefin' :
