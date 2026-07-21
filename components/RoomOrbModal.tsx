@@ -1051,7 +1051,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 animate-roomFadeIn select-none"
           >
             <img
-              src={room.images[imgIdx]}
+              src={getOptimizedUrl(room.images[imgIdx], 1600)}
               alt={title}
               onClick={(e) => e.stopPropagation()}
               className="max-w-[96vw] max-h-[92vh] object-contain rounded-sm shadow-2xl"
