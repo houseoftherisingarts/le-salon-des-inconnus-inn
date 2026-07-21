@@ -1782,7 +1782,13 @@ const TeamsChapterBody: React.FC<{
         },
         { merge: true },
       );
-    } catch (e) { /* eslint-disable-next-line no-console */ console.warn('team join write failed', e); }
+    } catch (e) {
+      /* eslint-disable-next-line no-console */ console.warn('team join write failed', e);
+      setJoinError(t(
+        'Could not save your team choice. Check your connection and try again.',
+        "Impossible d'enregistrer votre choix d'équipe. Vérifiez votre connexion et réessayez.",
+      ));
+    }
   };
 
   // Show-offer modal state. The same modal handles both donation and paid
