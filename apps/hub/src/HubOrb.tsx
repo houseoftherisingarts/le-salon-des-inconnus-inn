@@ -243,10 +243,20 @@ export function HubOrb() {
         />
       </div>
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6 md:px-12 py-12 md:py-16 grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-20 items-center min-h-screen">
-        {/* LEFT — text list of choices + selected meta + confirm */}
-        <div className="flex flex-col gap-10 md:gap-14">
-          <ul className="flex flex-col">
+      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12 py-10 md:py-12 flex flex-col items-center justify-center gap-8 md:gap-10 min-h-screen">
+        {/* TITLE — centered above the orb */}
+        <div className="order-1 text-center">
+          <span className="font-cinzel uppercase block mb-3" style={{ fontSize: '11px', letterSpacing: '0.42em', color: '#c5a059' }}>
+            Les Inconnus
+          </span>
+          <h1 className="font-cinzel uppercase text-[#f3e5ab]" style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.6rem)', letterSpacing: '0.12em' }}>
+            Faites votre sélection
+          </h1>
+        </div>
+
+        {/* CHOICES + confirm — row beneath the orb */}
+        <div className="order-3 flex flex-col items-center gap-8 md:gap-10">
+          <ul className="flex flex-col md:flex-row items-stretch justify-center gap-3 md:gap-5 flex-wrap">
             {CHOICES.map((c, i) => {
               const isSelected = i === selectedIdx;
               return (
