@@ -1,20 +1,18 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-// One row per branch of the family. Order = list display order, top to bottom.
+// lesinconnus.com — the family selection page. One cinematic background (the
+// golden-hour drone shot of the domain), a welcome title, and three glass
+// image cards side by side on desktop. Click = go. Redesigned 2026-07-21 per
+// Alex: no orb, no blurb box, no confirm step; AI Studio bar (glass, rounded,
+// glow, zero italics).
+
 type Choice = {
   id: string;
   name: string;
   taglineFr: string;
-  blurbFr: string;
   url: string;
   image: string;
-  available: boolean;
-  // Per-image framing inside the circular orb. Defaults: center / cover.
-  // Use `imageSize: '78% auto'` + `imageBg` to shrink an image whose subject
-  // would otherwise be clipped by the circle's rim (e.g. text near edges).
   imagePosition?: string;
-  imageSize?: string;
-  imageBg?: string;
 };
 
 const CHOICES: Choice[] = [
@@ -22,511 +20,165 @@ const CHOICES: Choice[] = [
     id: 'auberge',
     name: "L'Auberge des Inconnus",
     taglineFr: 'Maison Favier · Namur',
-    blurbFr:
-      'Cinq chambres · Table partagée · Silence entre Montebello et Tremblant',
     url: 'https://aubergedesinconnus.com/',
-    image:
-      '/media/Auberge%20photos/Maison%20main.jpg',
-    available: true,
+    image: '/media/Auberge%20photos/Maison%20main.jpg',
   },
   {
     id: 'salon',
     name: 'Le Salon des Inconnus',
     taglineFr: "Centre d'art & activités",
-    blurbFr:
-      "Galerie · Ateliers · Fiscalité de l'art · Pour créateurs et acquéreurs",
     // Interim: the art surface lives on the inconnus-salon Firebase site until
     // the lesalondesinconnus.com domain swap (Phase 2.1). Update then.
     url: 'https://inconnus-salon.web.app/',
-    image: '/salon-creator-studio.png',
-    // Screenshot has text near the edges — shrink so it sits safely inside
-    // the circular rim, with a dark backdrop matching the orb interior.
-    imageSize: '78% auto',
-    imageBg: '#0a0a0a',
-    available: true,
+    image: '/media/kamy%20museum.png',
+    imagePosition: '50% 30%',
   },
-  // House of the Rising Arts is intentionally NOT a door on the FR hub.
-  // The domain houseoftherisingarts.com is just an English-friendly alias that
-  // redirects to the Salon — it is not a separate destination users pick here.
   {
     id: 'dome',
     name: 'Le Dôme des Inconnus',
     taglineFr: 'La communauté',
-    blurbFr:
-      'Hub communautaire · Projets partagés · Bâtir ensemble · Bientôt',
-    url: 'https://ledomedesinconnus.com/',
-    image:
-      '/media/Artistes/evi%20wide.jpg',
-    // Evinali sits in the right portion of this wide shot — pull the focal
-    // point to her face so she lands centered in the orb.
-    imagePosition: '72% 38%',
-    available: false,
+    // Interim: swap to https://ledomedesinconnus.com/ once DNS is connected.
+    url: 'https://inconnus-dome.web.app/',
+    image: '/media/yourte%20coucher%20de%20soleil.jpg',
   },
 ];
 
-// Synthesize a slow "shimmer" via Web Audio — a stacked cluster of high
-// sine partials (A major-ish) that swell in over ~0.3s, drift upward a
-// touch for a rising/magical feel, and decay over ~1.6s. A faint
-// high-passed noise wash sits on top for airy sparkle. No transient: the
-// cluster fades in rather than hitting.
-function useShimmer() {
-  const ctxRef = useRef<AudioContext | null>(null);
-  return () => {
-    try {
-      if (!ctxRef.current) {
-        const Ctor = (window as any).AudioContext || (window as any).webkitAudioContext;
-        if (!Ctor) return;
-        ctxRef.current = new Ctor();
-      }
-      const ctx = ctxRef.current!;
-      if (ctx.state === 'suspended') ctx.resume();
-      const now = ctx.currentTime;
-      const duration = 1.6;
+const GOLD = '#d9b45c';
+const CREAM = '#f6ead0';
+const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
 
-      const master = ctx.createGain();
-      master.gain.setValueAtTime(0.0001, now);
-      master.gain.exponentialRampToValueAtTime(0.22, now + 0.3);
-      master.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-      master.connect(ctx.destination);
-
-      // High partials — stagger their entries so the chord blooms rather
-      // than arrives all at once.
-      const partials: { freq: number; offset: number; gain: number }[] = [
-        { freq: 880,  offset: 0.00, gain: 0.18 }, // A5
-        { freq: 1320, offset: 0.06, gain: 0.14 }, // E6
-        { freq: 1760, offset: 0.12, gain: 0.12 }, // A6
-        { freq: 2217, offset: 0.18, gain: 0.09 }, // C#7
-        { freq: 2637, offset: 0.24, gain: 0.07 }, // E7
-        { freq: 3520, offset: 0.30, gain: 0.05 }, // A7
-      ];
-
-      partials.forEach((p) => {
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(p.freq, now);
-        // Slow upward glide — the "rising shimmer" character.
-        osc.frequency.linearRampToValueAtTime(p.freq * 1.012, now + duration);
-        const start = now + p.offset;
-        g.gain.setValueAtTime(0.0001, start);
-        g.gain.exponentialRampToValueAtTime(p.gain, start + 0.3);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-        osc.connect(g);
-        g.connect(master);
-        osc.start(start);
-        osc.stop(now + duration + 0.05);
-      });
-
-      // Airy sparkle — high-passed white noise, very faint.
-      const bufferSize = Math.floor(ctx.sampleRate * duration);
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      const hp = ctx.createBiquadFilter();
-      hp.type = 'highpass';
-      hp.frequency.value = 5500;
-      hp.Q.value = 0.7;
-      const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.0001, now);
-      noiseGain.gain.exponentialRampToValueAtTime(0.04, now + 0.4);
-      noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-      noise.connect(hp);
-      hp.connect(noiseGain);
-      noiseGain.connect(master);
-      noise.start(now);
-      noise.stop(now + duration);
-    } catch {
-      /* audio context creation can fail in private mode; silently no-op */
-    }
-  };
+// Soft rising shimmer on hover/confirm — a small cluster of high sine
+// partials that swell and decay. Kept from the original orb as the page's
+// audio signature.
+function playShimmer(ctx: AudioContext, gainScale = 1) {
+  const now = ctx.currentTime;
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(0, now);
+  master.gain.linearRampToValueAtTime(0.06 * gainScale, now + 0.3);
+  master.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
+  master.connect(ctx.destination);
+  [880, 1108.7, 1318.5, 1760].forEach((f, i) => {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(f, now);
+    o.frequency.linearRampToValueAtTime(f * 1.02, now + 1.4);
+    g.gain.setValueAtTime(0.25 - i * 0.04, now);
+    o.connect(g);
+    g.connect(master);
+    o.start(now);
+    o.stop(now + 1.6);
+  });
 }
 
 export function HubOrb() {
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  const [confirming, setConfirming] = useState(false);
-  const playShimmer = useShimmer();
+  const [leaving, setLeaving] = useState(false);
+  const audioRef = useRef<AudioContext | null>(null);
 
-  // Cross-fade state — two stacked layers swap which one is "current"; the
-  // other fades out underneath. Each layer stores a choice index so it
-  // carries its own framing (position/size/backdrop).
-  const [layerA, setLayerA] = useState<number>(0);
-  const [layerB, setLayerB] = useState<number | null>(null);
-  const [activeLayer, setActiveLayer] = useState<'A' | 'B'>('A');
-
-  useEffect(() => {
-    if (activeLayer === 'A') {
-      setLayerB(selectedIdx);
-      requestAnimationFrame(() => setActiveLayer('B'));
-    } else {
-      setLayerA(selectedIdx);
-      requestAnimationFrame(() => setActiveLayer('A'));
+  const shimmer = useCallback((scale = 1) => {
+    try {
+      if (!audioRef.current) audioRef.current = new AudioContext();
+      if (audioRef.current.state === 'suspended') audioRef.current.resume();
+      playShimmer(audioRef.current, scale);
+    } catch {
+      // audio is a garnish; never block navigation on it
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedIdx]);
+  }, []);
 
-  const choiceA = CHOICES[layerA];
-  const choiceB = layerB !== null ? CHOICES[layerB] : null;
-  const layerStyle = (c: Choice): CSSProperties => ({
-    backgroundImage: `url(${c.image})`,
-    backgroundPosition: c.imagePosition ?? 'center',
-    backgroundSize: c.imageSize ?? 'cover',
-    backgroundColor: c.imageBg ?? 'transparent',
-    backgroundRepeat: 'no-repeat',
-  });
-
-  const onChoiceClick = (i: number) => {
-    if (i === selectedIdx) return;
-    playShimmer();
-    setSelectedIdx(i);
-  };
-
-  const onConfirm = () => {
-    const choice = CHOICES[selectedIdx];
-    if (!choice.available) return;
-    setConfirming(true);
-    setTimeout(() => {
-      window.location.href = choice.url;
-    }, 600);
-  };
-
-  const choice = CHOICES[selectedIdx];
+  const go = useCallback(
+    (url: string) => {
+      shimmer(1.4);
+      setLeaving(true);
+      window.setTimeout(() => {
+        window.location.href = url;
+      }, 420);
+    },
+    [shimmer],
+  );
 
   return (
-    <div className="hub-orb-root relative w-full min-h-screen overflow-hidden bg-[#050505] text-neutral-100 font-lato">
-      {/* Atmospheric background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-60"
-          style={{
-            background:
-              'radial-gradient(ellipse at 75% 50%, rgba(197,160,89,0.18), transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(40,80,140,0.14), transparent 60%)',
-          }}
+    <div
+      className={`relative min-h-screen w-full overflow-hidden transition-opacity duration-500 ${leaving ? 'opacity-0' : 'opacity-100'}`}
+      style={{ background: '#0b0908' }}
+    >
+      {/* Cinematic background — golden-hour drone shot of the domain */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <img
+          src="/media/golden%20drone%20copy.jpg"
+          alt=""
+          className="hub-kenburns absolute inset-0 w-full h-full object-cover"
         />
-
-        {/* Iridescent Creator-Studio gradient over the whole page — fades in
-            only for the Salon door. Two stacked layers (conic + drifting blobs)
-            blended in screen/overlay so it tints the existing scene rather
-            than covering it. Slow rotation + drift gives the water-like feel. */}
-        <div
-          className={`hub-iridescent absolute inset-0 transition-opacity duration-[1600ms] ease-out ${
-            choice.id === 'salon' ? 'opacity-25' : 'opacity-0'
-          }`}
-        >
-          <div
-            className="hub-iridescent-conic absolute inset-0"
-            style={{
-              background:
-                'conic-gradient(from 0deg at 50% 50%, rgba(217,70,239,0.55), rgba(34,211,238,0.5), rgba(253,224,71,0.45), rgba(168,85,247,0.55), rgba(34,211,238,0.5), rgba(217,70,239,0.55))',
-              filter: 'blur(90px) saturate(1.25)',
-              mixBlendMode: 'screen',
-            }}
-          />
-          <div
-            className="hub-iridescent-blobs absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(35% 45% at 22% 30%, rgba(232,121,249,0.55), transparent 70%), radial-gradient(40% 45% at 78% 38%, rgba(34,211,238,0.5), transparent 70%), radial-gradient(45% 40% at 50% 82%, rgba(253,224,71,0.4), transparent 70%), radial-gradient(30% 35% at 12% 70%, rgba(168,85,247,0.45), transparent 70%)',
-              filter: 'blur(70px) saturate(1.15)',
-              mixBlendMode: 'overlay',
-            }}
-          />
-        </div>
-
-        <div
-          className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              'url("https://www.transparenttextures.com/patterns/black-linen.png")',
-          }}
-        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,6,5,0.55) 0%, rgba(8,6,5,0.35) 40%, rgba(8,6,5,0.88) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(90% 70% at 50% 42%, transparent 35%, rgba(8,6,5,0.65) 100%)' }} />
+        <div className="hub-glow absolute" style={{ top: '-15%', left: '25%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(217,180,92,0.14), transparent 65%)', filter: 'blur(90px)' }} />
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: `url('${GRAIN}')` }} />
       </div>
 
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12 py-8 flex flex-col items-center justify-center gap-5 md:gap-6 min-h-screen">
-        {/* TITLE — centered above the orb */}
-        <div className="order-1 text-center">
-          <h1 className="font-cinzel uppercase text-[#f3e5ab]" style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.1rem)', letterSpacing: '0.12em' }}>
-            Faites votre sélection
-          </h1>
-        </div>
-
-        {/* CHOICES + confirm — row beneath the orb */}
-        <div className="order-3 flex flex-col items-center gap-5 md:gap-6">
-          <ul className="flex flex-col md:flex-row items-stretch justify-center gap-3 md:gap-5 flex-wrap">
-            {CHOICES.map((c, i) => {
-              const isSelected = i === selectedIdx;
-              return (
-                <li key={c.id}>
-                  <button
-                    onClick={() => onChoiceClick(i)}
-                    className={`group h-full w-full md:w-auto text-center px-6 md:px-8 py-4 md:py-5 rounded-[18px] border transition-all duration-300 backdrop-blur-md ${
-                      isSelected
-                        ? 'border-[#c5a059]/70 bg-[#c5a059]/10 shadow-[0_0_30px_rgba(197,160,89,0.25)]'
-                        : 'border-white/10 bg-black/30 hover:border-[#c5a059]/40 hover:bg-black/40'
-                    }`}
-                  >
-                    <span className="flex flex-col items-center">
-                      <span
-                        className={`font-cinzel uppercase transition-all duration-300 leading-tight ${
-                          isSelected ? 'text-[#f3e5ab]' : 'text-neutral-400 group-hover:text-neutral-100'
-                        }`}
-                        style={{ fontSize: 'clamp(1rem, 1.6vw, 1.3rem)', letterSpacing: '0.08em' }}
-                      >
-                        {c.name}
-                      </span>
-                      <span
-                        className={`font-cinzel text-[10px] uppercase tracking-[0.34em] mt-2 transition-colors ${
-                          isSelected ? 'text-[#c5a059]' : 'text-neutral-600 group-hover:text-neutral-400'
-                        }`}
-                      >
-                        {c.taglineFr}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Confirm — centered under the choice row */}
-          <button
-            onClick={onConfirm}
-            disabled={!choice.available || confirming}
-            className={`self-center px-10 py-4 rounded-full font-cinzel font-bold text-xs uppercase tracking-[0.35em] transition-all duration-300 border ${
-              choice.available
-                ? 'bg-[#c5a059] text-[#18181b] border-[#c5a059] hover:bg-[#d4b06a] hover:scale-[1.02]'
-                : 'bg-transparent text-neutral-600 border-white/10 cursor-not-allowed'
-            } ${confirming ? 'opacity-50 scale-[0.98]' : ''}`}
-            style={{
-              boxShadow: choice.available
-                ? '0 6px 24px rgba(197,160,89,0.3), inset 0 1px 0 rgba(255,255,255,0.2)'
-                : 'none',
-            }}
-          >
-            {confirming ? 'Ouverture…' : 'Confirmer'}
-          </button>
-        </div>
-
-        {/* CENTER — glass orb + blurb beneath it */}
-        <div className="order-2 hub-orb-wrap relative flex flex-col items-center justify-center gap-6 md:gap-8 w-full">
-          <div className="relative w-full max-w-[380px] aspect-square">
-            {/* Outer glow ring */}
-            <div
-              className="absolute inset-0 rounded-full pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(circle at 50% 50%, rgba(197,160,89,0.22), transparent 60%)',
-                filter: 'blur(50px)',
-              }}
-            />
-
-          <div
-            role="button"
-            tabIndex={choice.available ? 0 : -1}
-            onClick={onConfirm}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onConfirm();
-              }
-            }}
-            aria-label={choice.available ? `Confirmer ${choice.name}` : `${choice.name} — lancement prochain`}
-            aria-disabled={!choice.available}
-            className={`hub-orb relative aspect-square w-full max-w-[560px] rounded-full overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a059]/70 ${
-              choice.available ? 'cursor-pointer' : 'cursor-not-allowed'
-            }`}
-          >
-            {/* IMAGE LAYERS — cross-fade with Ken Burns */}
-            <div
-              className={`hub-img-layer absolute inset-0 transition-opacity duration-[1400ms] ease-out ${
-                activeLayer === 'A' ? 'opacity-100 hub-img-active' : 'opacity-0'
-              }`}
-              style={layerStyle(choiceA)}
-            />
-            {choiceB && (
-              <div
-                className={`hub-img-layer absolute inset-0 transition-opacity duration-[1400ms] ease-out ${
-                  activeLayer === 'B' ? 'opacity-100 hub-img-active' : 'opacity-0'
-                }`}
-                style={layerStyle(choiceB)}
-              />
-            )}
-
-            {/* Vignette inside the orb so the image meets the rim softly */}
-            <div
-              className="absolute inset-0 rounded-full pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)',
-              }}
-            />
-
-            {/* Glassy refraction shell on top of the image */}
-            <div
-              className="absolute inset-0 rounded-full pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(circle at 32% 28%, rgba(255,255,255,0.18), rgba(0,0,0,0) 38%)',
-                mixBlendMode: 'screen',
-              }}
-            />
-
-            {/* Top specular highlight, breathing */}
-            <div
-              className="absolute inset-x-[15%] top-[5%] h-[36%] rounded-full pointer-events-none hub-orb-shine"
-              style={{
-                background:
-                  'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.55), rgba(255,255,255,0) 65%)',
-                filter: 'blur(2px)',
-              }}
-            />
-
-            {/* Gold ornate ring */}
-            <div
-              className="absolute inset-0 rounded-full pointer-events-none"
-              style={{
-                border: '1px solid rgba(243,229,171,0.5)',
-                boxShadow:
-                  'inset 0 0 0 5px rgba(0,0,0,0.55), inset 0 0 0 6px rgba(197,160,89,0.6), inset 0 0 70px rgba(197,160,89,0.2), 0 0 80px rgba(197,160,89,0.18), 0 0 200px rgba(197,160,89,0.08), 0 30px 80px rgba(0,0,0,0.6)',
-              }}
-            />
-
-            {/* Bottom name banner inside the orb (LoL nameplate) */}
-            <div className="absolute left-0 right-0 bottom-[16%] flex justify-center pointer-events-none">
-              <span
-                key={choice.id}
-                className="hub-nameplate px-6 py-2 font-cinzel uppercase text-[#f3e5ab]"
-                style={{
-                  letterSpacing: '0.15em',
-                  fontSize: 'clamp(0.85rem, 1.1vw, 1.05rem)',
-                  background:
-                    'linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 25%, rgba(0,0,0,0.55) 75%, transparent 100%)',
-                  textShadow: '0 2px 12px rgba(0,0,0,0.85)',
-                }}
-              >
-                {choice.name}
-              </span>
-            </div>
-          </div>
-          </div>
-
-          {/* Selected blurb — glass container that echoes the orb's
-              language: dark interior, gold rim, breathing top highlight. */}
-          <div
-            key={choice.id}
-            className="hub-blurb-glass relative w-full max-w-[560px] rounded-2xl overflow-hidden"
-          >
-            {/* Dark glassy interior */}
-            <div className="relative px-8 py-4 bg-black/35 backdrop-blur-md">
-              <p
-                className="hub-blurb font-cinzel uppercase text-[#e8d8a6] text-[11px] md:text-[12px] tracking-[0.28em] leading-[1.7] text-center"
-                style={{
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                }}
-              >
-                {choice.blurbFr}
-              </p>
-            </div>
-
-            {/* Refraction sheen */}
-            <div
-              className="absolute inset-0 rounded-2xl pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(ellipse at 30% 0%, rgba(255,255,255,0.18), rgba(0,0,0,0) 55%)',
-                mixBlendMode: 'screen',
-              }}
-            />
-
-            {/* Top specular highlight, breathing (reuses orb shine) */}
-            <div
-              className="hub-orb-shine absolute inset-x-[12%] top-0 h-[42%] pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.45), rgba(255,255,255,0) 70%)',
-                filter: 'blur(2px)',
-              }}
-            />
-
-            {/* Gold ornate rim — same palette as the orb */}
-            <div
-              className="absolute inset-0 rounded-2xl pointer-events-none"
-              style={{
-                border: '1px solid rgba(243,229,171,0.45)',
-                boxShadow:
-                  'inset 0 0 0 2px rgba(0,0,0,0.45), inset 0 0 0 3px rgba(197,160,89,0.4), inset 0 0 30px rgba(197,160,89,0.12), 0 0 30px rgba(197,160,89,0.12), 0 12px 30px rgba(0,0,0,0.5)',
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Top-left wordmark */}
-      <div className="absolute top-6 left-6 md:top-8 md:left-12 z-20 flex items-center gap-3">
-        <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em]">
+      {/* Brand mark */}
+      <div className="absolute top-6 left-6 md:top-8 md:left-10 z-20">
+        <span className="font-cinzel text-[11px] uppercase tracking-[0.45em]" style={{ color: 'rgba(217,180,92,0.8)' }}>
           Les Inconnus
         </span>
       </div>
 
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-5 md:px-10 py-16 gap-9 md:gap-12">
+        <header className="text-center hub-rise">
+          <h1
+            className="mb-4"
+            style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(2.1rem, 5vw, 4rem)', lineHeight: 1.05, textShadow: '0 4px 40px rgba(0,0,0,0.65)' }}
+          >
+            Bienvenue chez les Inconnus
+          </h1>
+          <p className="font-cinzel uppercase" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', letterSpacing: '0.45em', color: GOLD }}>
+            Faites votre sélection
+          </p>
+        </header>
+
+        <nav className="hub-rise-late grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-5xl">
+          {CHOICES.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => go(c.url)}
+              onMouseEnter={() => shimmer(0.5)}
+              className="hub-card group relative overflow-hidden rounded-[22px] text-left"
+              style={{ aspectRatio: '3 / 3.6', border: '1px solid rgba(255,255,255,0.12)' }}
+            >
+              <img
+                src={c.image}
+                alt={c.name}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
+                style={c.imagePosition ? { objectPosition: c.imagePosition } : undefined}
+              />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,6,5,0.05) 30%, rgba(8,6,5,0.4) 62%, rgba(8,6,5,0.92) 100%)' }} />
+              <div className="absolute inset-x-3 bottom-3 rounded-[16px] px-5 py-4 backdrop-blur-md transition-colors duration-300"
+                   style={{ background: 'rgba(20,15,11,0.5)', border: '1px solid rgba(217,180,92,0.2)' }}>
+                <span className="block" style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(1.02rem, 1.4vw, 1.2rem)', lineHeight: 1.25 }}>
+                  {c.name}
+                </span>
+                <span className="font-cinzel uppercase block mt-1.5" style={{ fontSize: '9.5px', letterSpacing: '0.32em', color: GOLD }}>
+                  {c.taglineFr}
+                </span>
+              </div>
+            </button>
+          ))}
+        </nav>
+      </div>
+
       <style>{`
-        .hub-img-layer {
-          will-change: transform, opacity;
-        }
-        .hub-img-active {
-          animation: hubKenBurns 16s ease-in-out infinite alternate;
-        }
-        @keyframes hubKenBurns {
-          0%   { transform: scale(1.05); }
-          100% { transform: scale(1.14) translateY(-1.5%); }
-        }
-        .hub-orb-shine {
-          animation: hubShine 6s ease-in-out infinite alternate;
-        }
-        @keyframes hubShine {
-          0%   { opacity: 0.45; transform: translateY(0); }
-          100% { opacity: 0.7;  transform: translateY(2px); }
-        }
-        .hub-blurb,
-        .hub-nameplate {
-          animation: hubFadeText 600ms ease-out;
-        }
-        @keyframes hubFadeText {
-          0%   { opacity: 0; transform: translateY(6px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .hub-blurb-glass {
-          animation: hubGlassIn 800ms ease-out;
-        }
-        @keyframes hubGlassIn {
-          0%   { opacity: 0; transform: translateY(10px) scale(0.97); }
-          100% { opacity: 1; transform: translateY(0)    scale(1);    }
-        }
-        .hub-iridescent-conic {
-          transform-origin: 50% 50%;
-          animation: hubIrConic 22s linear infinite;
-        }
-        @keyframes hubIrConic {
-          0%   { transform: rotate(0deg)   scale(1.05); }
-          50%  { transform: rotate(180deg) scale(1.12); }
-          100% { transform: rotate(360deg) scale(1.05); }
-        }
-        .hub-iridescent-blobs {
-          animation: hubIrBlobs 14s ease-in-out infinite alternate;
-        }
-        @keyframes hubIrBlobs {
-          0%   { transform: translate(-2%,  1%)   scale(1.05); opacity: 0.85; }
-          50%  { transform: translate( 2%, -1.5%) scale(1.10); opacity: 1;    }
-          100% { transform: translate(-1%,  2%)   scale(1.07); opacity: 0.9;  }
-        }
+        .hub-kenburns { animation: hubKen 30s ease-in-out infinite alternate; transform-origin: 50% 40%; }
+        @keyframes hubKen { from { transform: scale(1.04); } to { transform: scale(1.13) translate3d(0, -1.5%, 0); } }
+        .hub-glow { animation: hubGlow 36s ease-in-out infinite; }
+        @keyframes hubGlow { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(4%,5%,0) scale(1.1); } }
+        .hub-rise { animation: hubRise 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+        .hub-rise-late { animation: hubRise 0.9s cubic-bezier(0.16,1,0.3,1) 0.15s both; }
+        @keyframes hubRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+        .hub-card { box-shadow: 0 30px 70px -30px rgba(0,0,0,0.8); transition: transform .5s cubic-bezier(0.16,1,0.3,1), border-color .4s, box-shadow .5s; }
+        .hub-card:hover { transform: translateY(-6px); border-color: rgba(217,180,92,0.55) !important; box-shadow: 0 40px 90px -30px rgba(0,0,0,0.9), 0 0 40px -6px rgba(217,180,92,0.25); }
         @media (prefers-reduced-motion: reduce) {
-          .hub-img-active { animation: none !important; }
-          .hub-orb-shine  { animation: none !important; }
-          .hub-blurb, .hub-nameplate, .hub-blurb-glass { animation: none !important; }
-          .hub-iridescent-conic, .hub-iridescent-blobs { animation: none !important; }
+          .hub-kenburns, .hub-glow { animation: none !important; }
+          .hub-rise, .hub-rise-late { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .hub-card, .hub-card img { transition: none !important; }
         }
       `}</style>
     </div>
