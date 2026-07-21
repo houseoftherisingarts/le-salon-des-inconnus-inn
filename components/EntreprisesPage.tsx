@@ -1,216 +1,150 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { getOptimizedUrl } from '../utils/imageOptimizer';
 import { ProposalRequestForm } from './ProposalRequestForm';
+import { Atmosphere, TopBar, HeroFramed, SectionLabel, EditorialRow } from './RetreatShared';
 
-// Unlisted page at /entreprises — B2B pitch for exclusive team building and
-// corporate retreats. No nav link, but indexed (unlike /invitation).
+// Unlisted page at /entreprises — B2B pitch for exclusive corporate retreats.
+// Art-directed (2026-07-21): cinematic framed hero, editorial rows on real
+// estate imagery, oversized price treatment, working lead form.
 
 interface Props {
   onNavigate: (view: any) => void;
   language: 'EN' | 'FR';
 }
 
-const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
-const HERO_IMG = getOptimizedUrl('/media/inn/golden%20drone%20copy.jpg', 1920);
-
-const OFFER_SECTIONS = [
-  {
-    key: 'kitchen',
-    img: '/media/Cuisine/alexis%20chef.jpg',
-    titleFr: 'La table du chef',
-    titleEn: "The chef's table",
-    bodyFr: "Bistronomie portugaise et cuisine moléculaire, signées par le chef Marc Alexis Pepin. Une table d'hôte pensée pour marquer une journée d'équipe, pas simplement la nourrir.",
-    bodyEn: 'Portuguese bistronomy and molecular cuisine, signed by chef Marc Alexis Pepin. A table d\'hôte built to mark a team day, not just feed it.',
-  },
-  {
-    key: 'massage',
-    img: '/media/massage/massage%20andre.jpg',
-    titleFr: 'Massothérapie & reiki',
-    titleEn: 'Massage therapy & reiki',
-    bodyFr: 'Andrée Dancause reçoit sur place, spa et jacuzzi à disposition. De quoi vider les épaules avant que la soirée commence.',
-    bodyEn: 'Andrée Dancause receives on site, spa and hot tub included. Enough to clear the shoulders before the evening starts.',
-  },
-  {
-    key: 'pps',
-    img: '/media/entreprises/pps-soiree.jpg',
-    titleFr: 'Soirées mises en scène',
-    titleEn: 'Staged evenings',
-    bodyFr: "En partenariat avec PPS Canada : beach party, tournoi golf, kermesse, musique live, humour. Une soirée thématique construite sur mesure pour votre groupe.",
-    bodyEn: 'In partnership with PPS Canada: beach party, golf tournament, kermesse, live music, comedy. A theme evening built specifically for your group.',
-  },
-  {
-    key: 'stay',
-    img: '/media/Financement%20Artistique/centered%20copy.jpg',
-    titleFr: 'Hébergement sur le domaine',
-    titleEn: 'On-site accommodation',
-    bodyFr: "Jusqu'à 35 personnes logées sur place, tout confondu : chambres du manoir, yourte, autobus aménagé et mini-maisons en forêt. Le groupe au complet, sans jamais quitter le domaine.",
-    bodyEn: 'Up to 35 people housed on site, all told: manor rooms, yurt, converted bus and forest tiny houses. The whole group, without ever leaving the grounds.',
-  },
-];
+const GOLD = '#c5a059';
+const CREAM = '#f3e5ab';
 
 export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
   const fr = language === 'FR';
   const t = (en: string, frText: string) => (fr ? frText : en);
 
+  const rows = [
+    {
+      img: '/media/Cuisine/alexis%20chef.jpg',
+      kicker: t('The chef', 'La table du chef'),
+      title: t('A table that marks the day', "Une table qui marque la journée"),
+      body: t(
+        'Portuguese bistronomy and molecular cuisine by chef Marc Alexis Pepin. A table d\'hôte built to make a team day memorable, not simply feed it.',
+        "Bistronomie portugaise et cuisine moléculaire du chef Marc Alexis Pepin. Une table d'hôte pensée pour marquer une journée d'équipe, pas simplement la nourrir.",
+      ),
+    },
+    {
+      img: '/media/Auberge%20photos/biblio.jpg',
+      kicker: t('The work room', 'La salle de travail'),
+      title: t('Think in a room with soul', 'Réfléchir dans une pièce qui a une âme'),
+      body: t(
+        'The manor library or dining hall becomes your room for the day: wood, light, and quiet, a world away from the hotel conference floor.',
+        "La bibliothèque ou la salle à manger du manoir devient votre pièce pour la journée : le bois, la lumière, le calme, à mille lieues de la salle de conférence d'hôtel.",
+      ),
+    },
+    {
+      img: '/media/Auberge%20photos/jacuzzi%20ouvert%20ete.jpg',
+      kicker: t('Spa & reiki', 'Spa et reiki'),
+      title: t('Clear the shoulders', 'Vider les épaules'),
+      body: t(
+        'Andrée Dancause receives on site, spa and hot tub at hand. Enough to loosen a team before the evening even begins.',
+        "Andrée Dancause reçoit sur place, spa et jacuzzi à disposition. De quoi dénouer une équipe avant même que la soirée commence.",
+      ),
+    },
+    {
+      img: '/media/inn/amphiteatre%20banana.jpg',
+      kicker: t('Staged evenings', 'Soirées mises en scène'),
+      title: t('An evening built for your group', 'Une soirée construite pour votre groupe'),
+      body: t(
+        'With PPS Canada: beach party, golf tournament, kermesse, live music, comedy. Under the trees, in the outdoor amphitheatre.',
+        "En partenariat avec PPS Canada : beach party, tournoi golf, kermesse, musique live, humour. Sous les arbres, dans l'amphithéâtre extérieur.",
+      ),
+    },
+  ];
+
   return (
-    <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200" style={{ background: '#0a0808' }}>
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }} aria-hidden>
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 50% 0%, #14100c 0%, #0a0808 55%, #060505 100%)' }} />
-        <div
-          className="absolute inset-0 will-change-transform"
-          style={{ background: 'radial-gradient(48% 38% at 50% 18%, rgba(201,168,90,0.10), transparent 72%)', animation: 'entreprisesDrift 48s ease-in-out infinite' }}
-        />
-        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: `url('${GRAIN}')` }} />
-      </div>
-      <style>{`
-        @keyframes entreprisesDrift {
-          0%, 100% { transform: translate3d(0,0,0) scale(1); }
-          50% { transform: translate3d(0,2%,0) scale(1.05); }
-        }
-      `}</style>
+    <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200" style={{ background: '#0b0908' }}>
+      <Atmosphere />
+      <TopBar onBack={() => onNavigate('INN')} title={t("CORPORATE RETREATS", "RETRAITES D'ENTREPRISE")} back={t('The Inn', "L'Auberge")} />
 
-      <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#0a0808]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <button
-            onClick={() => onNavigate('INN')}
-            className="text-[#c5a059] hover:text-[#f3e5ab] transition-colors text-sm font-cinzel uppercase tracking-widest"
-          >
-            ← {t('The Inn', "L'Auberge")}
-          </button>
-          <span className="font-cinzel text-sm text-[#c5a059] tracking-[0.4em] hidden md:block">
-            {t('CORPORATE RETREATS', 'RETRAITES D\'ENTREPRISE')}
-          </span>
-        </div>
-      </header>
+      <HeroFramed
+        img="/media/Financement%20Artistique/centered%20copy.jpg"
+        kicker={t('A private estate · Outaouais', 'Un domaine privé · Outaouais')}
+        lead={t('Team building with', 'Le team building qui a du')}
+        accent={t('character', 'caractère')}
+        sub={t(
+          'A classic manor domain less than an hour from Ottawa, for teams who want the alternative to the golf club.',
+          "Un domaine classique de moins d'une heure d'Ottawa, pour les équipes qui cherchent l'alternative au club de golf.",
+        )}
+      />
 
-      <main className="pt-28 md:pt-36 pb-24">
-        {/* Hero */}
-        <section className="relative px-6 md:px-12 lg:px-20 pb-14 md:pb-20 overflow-hidden">
-          <div className="absolute inset-0 -z-10 opacity-30" aria-hidden>
-            <img src={HERO_IMG} alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,8,8,0.35) 0%, rgba(10,8,8,0.92) 85%)' }} />
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-          >
-            <div className="flex items-center gap-4 mb-6">
-              <span className="h-px w-12 bg-[#c5a059]" />
-              <span className="font-cinzel uppercase text-[#c5a059]" style={{ fontSize: '12px', letterSpacing: '0.4em' }}>
-                {t('A private estate in the Outaouais', 'Un domaine privé en Outaouais')}
-              </span>
-            </div>
-            <h1 className="font-prata text-[#f3e5ab]" style={{ fontSize: 'clamp(2.6rem, 6.5vw, 5.5rem)', lineHeight: 0.95, letterSpacing: '-0.02em' }}>
-              {t('Team building with character', "Le team building qui a du caractère")}
-            </h1>
-            <p className="font-cormorant italic mt-8 text-white/80" style={{ fontSize: 'clamp(1.15rem, 2vw, 1.6rem)', lineHeight: 1.5, maxWidth: '58ch' }}>
-              {t(
-                'A classic manor domain less than an hour from Ottawa, for teams who want the alternative to the golf club.',
-                "Un domaine classique de moins d'une heure d'Ottawa, pour les équipes qui cherchent l'alternative au club de golf.",
-              )}
-            </p>
-          </motion.div>
-        </section>
-
-        {/* Offer sections */}
-        <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20 border-y border-[#c5a059]/15">
-          <span className="font-cinzel uppercase text-white/40 block mb-10" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
-            {t('What we bring to a privatized day', "Ce que nous apportons à une journée privatisée")}
-          </span>
-          <div className="grid gap-10 md:gap-14 md:grid-cols-2">
-            {OFFER_SECTIONS.map((o, i) => (
-              <motion.article
-                key={o.key}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.55, ease: 'easeOut', delay: Math.min(i, 4) * 0.06 }}
-                className="group"
-              >
-                <div className="w-full aspect-[16/10] overflow-hidden mb-5 border border-[#c5a059]/15">
-                  <img
-                    src={getOptimizedUrl(o.img, 900)}
-                    alt={fr ? o.titleFr : o.titleEn}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="font-prata text-[#f3e5ab] text-xl md:text-2xl">
-                  {fr ? o.titleFr : o.titleEn}
-                </h3>
-                <p className="font-cormorant mt-3 text-white/70" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
-                  {fr ? o.bodyFr : o.bodyEn}
-                </p>
-              </motion.article>
+      <main className="relative">
+        {/* I — what the house offers */}
+        <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32">
+          <SectionLabel numeral="I" label={t('What the house offers', 'Ce que la maison offre')} />
+          <div className="space-y-20 md:space-y-32">
+            {rows.map((r, i) => (
+              <EditorialRow key={r.kicker} {...r} flip={i % 2 === 1} />
             ))}
           </div>
         </section>
 
-        {/* Two ways to book */}
-        <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20 border-b border-[#c5a059]/15">
-          <span className="font-cinzel uppercase text-[#c5a059] block mb-10" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
-            {t('Two ways to gather', 'Deux façons de vous réunir')}
-          </span>
-          <div className="grid gap-10 md:gap-14 md:grid-cols-2 max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, ease: 'easeOut' }}
-              className="border border-[#c5a059]/20 p-8"
-            >
-              <h3 className="font-prata text-[#f3e5ab] text-xl md:text-2xl mb-2">
-                {t('The Manor, to yourselves', 'Le Manoir, à vous seuls')}
-              </h3>
-              <p className="font-cormorant text-white/70 mb-5" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
-                {t(
-                  'The 1898 Victorian manor privatized, up to 20 people: a light-filled work room, the spa, the trails, the outdoor amphitheatre.',
-                  "Le Manoir victorien de 1898 privatisé, jusqu'à 20 personnes : une salle de travail baignée de lumière, le spa, les sentiers, l'amphithéâtre extérieur.",
-                )}
-              </p>
-              <p className="font-prata text-[#f3e5ab]" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.1rem)' }}>
-                {t('From $1,600 / night', 'À partir de 1 600 $ / nuit')}
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, ease: 'easeOut', delay: 0.08 }}
-              className="border border-[#c5a059]/20 p-8"
-            >
-              <h3 className="font-prata text-[#f3e5ab] text-xl md:text-2xl mb-2">
-                {t('The whole estate', 'Le domaine complet')}
-              </h3>
-              <p className="font-cormorant text-white/70 mb-5" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
-                {t(
-                  'Up to 35 people housed on site, a full privatized day with the chef, the spa, the staged evening. Built around you.',
-                  "Jusqu'à 35 personnes logées sur place, une journée privatisée complète avec le chef, le spa, la soirée mise en scène. Construite autour de vous.",
-                )}
-              </p>
-              <p className="font-prata text-[#f3e5ab]" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.1rem)' }}>
-                {t('From $2,500', 'À partir de 2 500 $')}
-              </p>
-            </motion.div>
+        {/* II — two tiers, price as centerpiece */}
+        <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
+          <SectionLabel numeral="II" label={t('Two ways to gather', 'Deux façons de vous réunir')} />
+          <div className="grid md:grid-cols-2 gap-16 md:gap-8">
+            {[
+              {
+                name: t('The Manor, to yourselves', 'Le Manoir, à vous seuls'),
+                body: t('The 1898 Victorian manor privatized, up to 20 people: a light-filled work room, the spa, the trails, the outdoor amphitheatre.',
+                  "Le Manoir victorien de 1898 privatisé, jusqu'à 20 personnes : la salle de travail, le spa, les sentiers, l'amphithéâtre extérieur."),
+                num: '1 600', unit: t('/ night', '/ nuit'),
+              },
+              {
+                name: t('The whole estate', 'Le domaine complet'),
+                body: t('Up to 35 people housed on site, a full privatized day with the chef, the spa, the staged evening. Built around you.',
+                  "Jusqu'à 35 personnes logées sur place, une journée privatisée complète avec le chef, le spa, la soirée mise en scène. Construite autour de vous."),
+                num: '2 500', unit: t('and up', 'et plus'),
+              },
+            ].map((tier, i) => (
+              <motion.div
+                key={tier.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+                className={i === 1 ? 'md:pl-16 md:border-l' : 'md:pr-16'}
+                style={i === 1 ? { borderColor: 'rgba(197,160,89,0.15)' } : undefined}
+              >
+                <h3 className="font-prata mb-5" style={{ color: CREAM, fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)' }}>{tier.name}</h3>
+                <p className="font-cormorant mb-10" style={{ color: 'rgba(255,252,244,0.7)', fontSize: 'clamp(1.08rem, 1.5vw, 1.24rem)', lineHeight: 1.6, maxWidth: '42ch' }}>{tier.body}</p>
+                <div className="flex items-baseline gap-3">
+                  <span className="font-cinzel" style={{ color: GOLD, fontSize: '1.1rem' }}>{fr ? 'dès' : 'from'}</span>
+                  <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(3.4rem, 8vw, 6rem)' }}>{tier.num}<span style={{ fontSize: '0.42em', color: GOLD }}> $</span></span>
+                  <span className="font-cormorant italic" style={{ color: 'rgba(255,252,244,0.55)', fontSize: '1.15rem' }}>{tier.unit}</span>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </section>
 
-        {/* Inquiry form */}
-        <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20">
-          <span className="font-cinzel uppercase text-[#c5a059] block mb-4" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
-            {t('Request a proposal', 'Demander une soumission')}
-          </span>
-          <h2 className="font-prata text-[#f3e5ab] mb-8" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.1 }}>
-            {t('Tell us about your team.', 'Parlez-nous de votre équipe.')}
-          </h2>
-          <ProposalRequestForm language={language} subject={t('Corporate retreat', 'Retraite d\'entreprise')} showCompany />
-          <p className="font-cormorant text-white/50 mt-8" style={{ fontSize: '1.05rem' }}>
-            {t('Prefer to call? ', 'Vous préférez appeler ? ')}
-            <a href="tel:+15144183450" className="text-[#c5a059] hover:text-[#f3e5ab] transition-colors">514 418-3450</a>
-          </p>
+        {/* III — inquiry */}
+        <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
+          <SectionLabel numeral="III" label={t('Request a proposal', 'Demander une soumission')} />
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16">
+            <div className="md:col-span-5">
+              <h2 className="font-prata" style={{ color: CREAM, fontSize: 'clamp(2rem, 4vw, 3.2rem)', lineHeight: 1.05 }}>
+                {t('Tell us about', 'Parlez-nous de')}<br />
+                <span className="font-cormorant italic" style={{ color: GOLD }}>{t('your team.', 'votre équipe.')}</span>
+              </h2>
+              <p className="font-cormorant italic mt-6" style={{ color: 'rgba(255,252,244,0.62)', fontSize: '1.25rem', lineHeight: 1.5, maxWidth: '34ch' }}>
+                {t('One message, and we shape the day with you.', 'Un message, et nous dessinons la journée avec vous.')}
+              </p>
+              <p className="font-cormorant mt-10" style={{ color: 'rgba(255,252,244,0.5)', fontSize: '1.05rem' }}>
+                {t('Prefer to call? ', 'Vous préférez appeler ? ')}
+                <a href="tel:+15144183450" className="rs-link" style={{ color: GOLD }}>514 418-3450</a>
+              </p>
+            </div>
+            <div className="md:col-span-7">
+              <ProposalRequestForm language={language} subject={t('Corporate retreat', "Retraite d'entreprise")} showCompany />
+            </div>
+          </div>
         </section>
       </main>
     </div>
