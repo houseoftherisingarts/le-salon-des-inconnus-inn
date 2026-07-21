@@ -70,11 +70,16 @@ const FadeInRight: React.FC<{ children: React.ReactNode; delay?: number }> = ({ 
     );
 };
 
+// The page scrolls inside <main> (overflow-y-auto), not the window; parallax
+// must track that container or scrollYProgress never moves.
+const ArtsScrollerContext = createContext<React.RefObject<HTMLElement> | null>(null);
+
 // Parallax Band Component — true scroll-linked parallax on a background image layer
 const ParallaxBand: React.FC<{ img: string; className?: string; children?: React.ReactNode }> = ({ img, className = '', children }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const scroller = useContext(ArtsScrollerContext);
     const reduceMotion = useReducedMotion();
-    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+    const { scrollYProgress } = useScroll({ target: ref, container: scroller ?? undefined, offset: ['start end', 'end start'] });
     const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
     return (
         <div ref={ref} className={`absolute inset-0 overflow-hidden ${className}`}>
