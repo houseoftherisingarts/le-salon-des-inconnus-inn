@@ -310,7 +310,7 @@ export function HubOrb() {
 
         {/* CENTER — glass orb + blurb beneath it */}
         <div className="order-2 hub-orb-wrap relative flex flex-col items-center justify-center gap-6 md:gap-8 w-full">
-          <div className="relative w-full max-w-[440px] aspect-square">
+          <div className="relative w-full max-w-[380px] aspect-square">
             {/* Outer glow ring */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none"
