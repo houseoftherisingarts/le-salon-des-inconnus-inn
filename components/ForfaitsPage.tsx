@@ -78,24 +78,26 @@ export const ForfaitsPage: React.FC<Props> = ({ onNavigate, language }) => {
         </section>
 
         {/* II — price centerpiece */}
-        <section className="px-6 md:px-14 lg:px-24 py-24 md:py-36 border-t text-center" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
+        <section className="px-4 md:px-14 lg:px-24 py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="font-cinzel uppercase block mb-8" style={{ fontSize: '11px', letterSpacing: '0.34em', color: GOLD }}>{t('The package', 'Le forfait')}</span>
-            <div className="flex items-baseline justify-center gap-3 mb-8">
-              <span className="font-prata leading-none" style={{ color: GOLD, fontSize: 'clamp(2.4rem, 6vw, 4.4rem)' }}>+</span>
-              <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(4.4rem, 13vw, 9rem)' }}>85<span style={{ fontSize: '0.4em', color: GOLD }}> $</span></span>
-              <span className="font-cormorant italic" style={{ color: 'rgba(255,252,244,0.55)', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)' }}>{t('/ person', '/ personne')}</span>
-            </div>
-            <p className="font-cormorant mx-auto mb-12" style={{ color: 'rgba(255,252,244,0.7)', fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)', lineHeight: 1.6, maxWidth: '42ch' }}>
-              {t('Added to your room rate: three-course dinner and breakfast. Choose it when you book your stay.',
-                "En sus du tarif de votre chambre : souper trois services et déjeuner. Choisissez-le au moment de réserver votre séjour.")}
-            </p>
-            <GoldButton onClick={() => onNavigate('INN')}>{t('Book a room', 'Réserver une chambre')}</GoldButton>
+            <Glass className="px-6 md:px-12 py-16 md:py-20 text-center max-w-4xl mx-auto">
+              <span className="font-cinzel uppercase block mb-8" style={{ fontSize: '11px', letterSpacing: '0.34em', color: GOLD }}>{t('The package', 'Le forfait')}</span>
+              <div className="flex items-baseline justify-center gap-3 mb-8">
+                <span className="font-prata leading-none" style={{ color: GOLD, fontSize: 'clamp(2.4rem, 6vw, 4.4rem)' }}>+</span>
+                <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(4.4rem, 13vw, 9rem)' }}>85<span style={{ fontSize: '0.4em', color: GOLD }}> $</span></span>
+                <span className="font-cormorant" style={{ color: 'rgba(255,250,240,0.55)', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', fontWeight: 500 }}>{t('/ person', '/ personne')}</span>
+              </div>
+              <p className="font-cormorant mx-auto mb-12" style={{ color: 'rgba(255,250,240,0.72)', fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)', lineHeight: 1.6, maxWidth: '42ch', fontWeight: 500 }}>
+                {t('Added to your room rate: three-course dinner and breakfast. Choose it when you book your stay.',
+                  "En sus du tarif de votre chambre : souper trois services et déjeuner. Choisissez-le au moment de réserver votre séjour.")}
+              </p>
+              <GoldButton onClick={() => onNavigate('INN')}>{t('Book a room', 'Réserver une chambre')}</GoldButton>
+            </Glass>
           </motion.div>
         </section>
 
