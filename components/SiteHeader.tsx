@@ -238,7 +238,7 @@ const FamilyDropdown: React.FC<{
           >
             {items.map((item) => (
               <li key={item.href}>
-                {/* External link — plain anchor, does not go through the internal ViewState navigation */}
+                {/* External link, plain anchor: does not go through the internal ViewState navigation */}
                 <a
                   href={item.href}
                   target="_self"
