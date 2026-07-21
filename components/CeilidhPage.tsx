@@ -2870,6 +2870,9 @@ const LodgingChapterBody: React.FC<{
               )
             : t('No bed claimed — choose where you\'ll sleep.', 'Aucun lit réservé — choisissez où vous dormirez.')}
         </p>
+        {roomError && (
+          <p className="w-full font-josefin text-[11px] text-red-400/90">{roomError}</p>
+        )}
         {joinedRoomId && (
           <button
             onClick={handleReleaseRoom}
