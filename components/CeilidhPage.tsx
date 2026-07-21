@@ -2696,6 +2696,7 @@ const LodgingChapterBody: React.FC<{
   const handleViewRoom = (id: string) => setViewingId((prev) => (prev === id ? null : id));
 
   const handleClaimRoom = async (l: typeof LODGING[number]) => {
+    setRoomError(null);
     let u: User | null = authUser ?? auth?.currentUser ?? null;
     if (!u) u = await resolveCurrentUser(auth);
     if (!u) return; // genuinely not signed in — abort silently
