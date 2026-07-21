@@ -246,10 +246,7 @@ export function HubOrb() {
       <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12 py-10 md:py-12 flex flex-col items-center justify-center gap-8 md:gap-10 min-h-screen">
         {/* TITLE — centered above the orb */}
         <div className="order-1 text-center">
-          <span className="font-cinzel uppercase block mb-3" style={{ fontSize: '11px', letterSpacing: '0.42em', color: '#c5a059' }}>
-            Les Inconnus
-          </span>
-          <h1 className="font-cinzel uppercase text-[#f3e5ab]" style={{ fontSize: 'clamp(1.6rem, 3.4vw, 2.6rem)', letterSpacing: '0.12em' }}>
+          <h1 className="font-cinzel uppercase text-[#f3e5ab]" style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.1rem)', letterSpacing: '0.12em' }}>
             Faites votre sélection
           </h1>
         </div>
