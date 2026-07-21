@@ -196,6 +196,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   PENSEES:        '/pensees',
   INVITATION:     '/invitation',
   ENTREPRISES:    '/entreprises',
+  FORFAITS:       '/forfaits',
   MY_PROFILE:     '/profil',
   PUBLIC_PROFILE: '/membre',
   MESSAGING:      '/messages',
