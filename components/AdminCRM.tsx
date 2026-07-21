@@ -1482,6 +1482,86 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
+        {/* ── Annuaire public — promote Creator Studio profiles onto publicRoster ── */}
+        {tab === 'roster' && (
+          <div>
+            <div className="mb-4">
+              <p className="text-neutral-600 text-xs font-lato">
+                Annuaire public des artistes. « Promouvoir » copie le profil Creator Studio du membre
+                vers <code className="text-neutral-500">publicRoster/{'{uid}'}</code> et lève le drapeau{' '}
+                <code className="text-neutral-500">members/{'{uid}'}/admin/flags.onPublicRoster</code>.
+                La page publique lit uniquement cette copie sûre.
+              </p>
+              <p className="text-neutral-700 text-[10px] font-lato mt-1">
+                Seuls les membres avec un profil d'artiste (Creator Studio) apparaissent ici.
+                « Retirer » supprime la copie publique et rabaisse le drapeau.
+              </p>
+            </div>
+
+            <div className="border border-white/10 bg-[#0a0a0a] overflow-x-auto">
+              <div className="grid grid-cols-[auto_2fr_1.5fr_auto] gap-3 px-4 py-2 text-[9px] uppercase tracking-widest text-neutral-500 border-b border-white/5 font-cinzel min-w-[720px]">
+                <span>Avatar</span>
+                <span>Artiste</span>
+                <span>Discipline</span>
+                <span className="text-right">Annuaire public</span>
+              </div>
+              {artistProfiles.map(p => {
+                const onRoster = publicRosterUids.has(p.uid);
+                return (
+                  <div key={p.uid} className="grid grid-cols-[auto_2fr_1.5fr_auto] gap-3 px-4 py-3 items-center border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] text-xs min-w-[720px]">
+                    {p.avatarUrl ? (
+                      <img src={p.avatarUrl} alt="" className="w-10 h-10 rounded-full object-cover shrink-0" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-[#1a1208] border border-[#c5a059]/30 flex items-center justify-center text-[10px] font-cinzel text-[#f3e5ab] shrink-0">
+                        {(p.name?.[0] || '?').toUpperCase()}
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <p className="text-white font-lato truncate">
+                        {p.name || <span className="text-neutral-700">Sans nom</span>}
+                      </p>
+                      {p.location && (
+                        <p className="text-neutral-600 text-[10px] font-lato truncate">{p.location}</p>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-neutral-400 font-lato truncate">{p.class || '·'}</p>
+                      {p.category && (
+                        <p className="text-[#c5a059] text-[9px] font-cinzel uppercase tracking-[0.3em] mt-0.5">{p.category}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-end gap-3">
+                      {onRoster && (
+                        <span className="text-emerald-400 text-[10px] font-cinzel uppercase tracking-[0.3em]">En ligne</span>
+                      )}
+                      {onRoster ? (
+                        <button
+                          onClick={() => removeFromRoster(p.uid)}
+                          className="px-4 py-2 border border-rose-400/40 text-rose-200 font-cinzel font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-rose-500/10 transition-all whitespace-nowrap"
+                        >
+                          Retirer
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => promoteToRoster(p)}
+                          className="px-4 py-2 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] transition-all whitespace-nowrap"
+                        >
+                          Promouvoir
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              {artistProfiles.length === 0 && (
+                <div className="px-4 py-8 text-center text-neutral-600 text-xs font-lato">
+                  Aucun profil d'artiste pour l'instant.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* ── Feature requests inbox ── */}
         {tab === 'feature-requests' && (
           <FeatureRequestsPanel
