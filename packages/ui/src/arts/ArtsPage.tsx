@@ -1892,7 +1892,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 </button>
             )}
 
-            {/* Famille des Inconnus — reach the rest of the properties without
+            {/* Famille des Inconnus: reach the rest of the properties without
                 leaving through "Quitter". Desktop: individual compact links.
                 Mobile: collapsed into one "Famille" toggle + glass dropdown. */}
             <div className="hidden md:flex items-center gap-2">
