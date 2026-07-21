@@ -1459,7 +1459,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                         <span className="text-sm text-neutral-400">20 % du solde restant chaque année</span>
                                     </div>
                                 </div>
-                                <p className="text-xs text-neutral-500 mt-6 italic">
+                                <p className="text-xs text-neutral-500 mt-6">
                                     Vous continuez à réclamer la déduction jusqu’à ce que l’œuvre soit entièrement amortie.
                                 </p>
                             </div>
