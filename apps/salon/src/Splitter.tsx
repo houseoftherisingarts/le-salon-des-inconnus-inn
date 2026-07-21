@@ -7,7 +7,12 @@ import { PLATFORM_LOGOS } from './platformLogos';
 // side. Visual language mirrors the existing arts Hub (split-screen, hover
 // grow, Cinzel titles, gold-glow separator) so it reads as the same family.
 
-const AUBERGE_URL = 'https://aubergedesinconnus.com';
+// aubergedesinconnus.com is still parked (DNS not connected yet) — point at the
+// live Firebase URL for now. Swap back to the custom domain once DNS resolves.
+const AUBERGE_URL = 'https://inconnus-auberge.web.app/';
+
+// The hub for the wider famille des Inconnus (all four properties).
+const INCONNUS_HUB_URL = 'https://inconnus-hub.web.app/';
 
 // Evocative backdrops (same external-image approach the arts Hub already uses).
 const ART_IMG =
