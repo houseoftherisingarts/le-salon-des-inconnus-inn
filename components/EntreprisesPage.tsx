@@ -149,25 +149,68 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* Contact direct */}
-        <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20">
-          <div className="max-w-xl">
-            <span className="font-cinzel uppercase text-[#c5a059] block mb-4" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
-              {t('Private days and retreats', 'Journées et retraites privatisées')}
-            </span>
-            <h2 className="font-prata text-[#f3e5ab] mb-4" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.1 }}>
-              {t('From $2,500.', 'À partir de 2 500 $.')}
-            </h2>
-            <p className="font-cormorant text-white/70 mb-10" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
-              {t('One call is enough to shape your day.', 'Un appel suffit pour dessiner votre journée.')}
-            </p>
-            <a
-              href="tel:+15144183450"
-              className="inline-block px-10 py-4 border border-[#c5a059]/50 text-[#f3e5ab] font-cinzel text-sm uppercase tracking-[0.35em] hover:bg-[#c5a059]/10 hover:border-[#c5a059] transition-colors"
+        {/* Two ways to book */}
+        <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20 border-b border-[#c5a059]/15">
+          <span className="font-cinzel uppercase text-[#c5a059] block mb-10" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
+            {t('Two ways to gather', 'Deux façons de vous réunir')}
+          </span>
+          <div className="grid gap-10 md:gap-14 md:grid-cols-2 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, ease: 'easeOut' }}
+              className="border border-[#c5a059]/20 p-8"
             >
-              514 418-3450
-            </a>
+              <h3 className="font-prata text-[#f3e5ab] text-xl md:text-2xl mb-2">
+                {t('The Manor, to yourselves', 'Le Manoir, à vous seuls')}
+              </h3>
+              <p className="font-cormorant text-white/70 mb-5" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
+                {t(
+                  'The 1898 Victorian manor privatized, up to 20 people: a light-filled work room, the spa, the trails, the outdoor amphitheatre.',
+                  "Le Manoir victorien de 1898 privatisé, jusqu'à 20 personnes : une salle de travail baignée de lumière, le spa, les sentiers, l'amphithéâtre extérieur.",
+                )}
+              </p>
+              <p className="font-prata text-[#f3e5ab]" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.1rem)' }}>
+                {t('From $1,600 / night', 'À partir de 1 600 $ / nuit')}
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, ease: 'easeOut', delay: 0.08 }}
+              className="border border-[#c5a059]/20 p-8"
+            >
+              <h3 className="font-prata text-[#f3e5ab] text-xl md:text-2xl mb-2">
+                {t('The whole estate', 'Le domaine complet')}
+              </h3>
+              <p className="font-cormorant text-white/70 mb-5" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', lineHeight: 1.55 }}>
+                {t(
+                  'Up to 35 people housed on site, a full privatized day with the chef, the spa, the staged evening. Built around you.',
+                  "Jusqu'à 35 personnes logées sur place, une journée privatisée complète avec le chef, le spa, la soirée mise en scène. Construite autour de vous.",
+                )}
+              </p>
+              <p className="font-prata text-[#f3e5ab]" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.1rem)' }}>
+                {t('From $2,500', 'À partir de 2 500 $')}
+              </p>
+            </motion.div>
           </div>
+        </section>
+
+        {/* Inquiry form */}
+        <section className="px-6 md:px-12 lg:px-20 py-14 md:py-20">
+          <span className="font-cinzel uppercase text-[#c5a059] block mb-4" style={{ fontSize: '11px', letterSpacing: '0.3em' }}>
+            {t('Request a proposal', 'Demander une soumission')}
+          </span>
+          <h2 className="font-prata text-[#f3e5ab] mb-8" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.1 }}>
+            {t('Tell us about your team.', 'Parlez-nous de votre équipe.')}
+          </h2>
+          <ProposalRequestForm language={language} subject={t('Corporate retreat', 'Retraite d\'entreprise')} showCompany />
+          <p className="font-cormorant text-white/50 mt-8" style={{ fontSize: '1.05rem' }}>
+            {t('Prefer to call? ', 'Vous préférez appeler ? ')}
+            <a href="tel:+15144183450" className="text-[#c5a059] hover:text-[#f3e5ab] transition-colors">514 418-3450</a>
+          </p>
         </section>
       </main>
     </div>
