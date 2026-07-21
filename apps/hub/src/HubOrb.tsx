@@ -35,7 +35,9 @@ const CHOICES: Choice[] = [
     taglineFr: "Centre d'art · Petite Nation",
     blurbFr:
       "Galerie · Ateliers · Fiscalité de l'art · Pour créateurs et acquéreurs",
-    url: 'https://lesalondesinconnus.com/',
+    // Interim: the art surface lives on the inconnus-salon Firebase site until
+    // the lesalondesinconnus.com domain swap (Phase 2.1). Update then.
+    url: 'https://inconnus-salon.web.app/',
     image: '/salon-creator-studio.png',
     // Screenshot has text near the edges — shrink so it sits safely inside
     // the circular rim, with a dark backdrop matching the orb interior.
