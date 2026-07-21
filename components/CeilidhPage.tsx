@@ -2715,7 +2715,13 @@ const LodgingChapterBody: React.FC<{
         },
         { merge: true },
       );
-    } catch (e) { /* eslint-disable-next-line no-console */ console.warn('room claim write failed', e); }
+    } catch (e) {
+      /* eslint-disable-next-line no-console */ console.warn('room claim write failed', e);
+      setRoomError(t(
+        'Could not claim this room. Check your connection and try again.',
+        "Impossible de réserver cette chambre. Vérifiez votre connexion et réessayez.",
+      ));
+    }
   };
 
   const handleReleaseRoom = async () => {
