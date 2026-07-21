@@ -1891,7 +1891,64 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                    {language === 'EN' ? "Up One Level" : "Retour"}
                 </button>
             )}
-            <button 
+
+            {/* Famille des Inconnus — reach the rest of the properties without
+                leaving through "Quitter". Desktop: individual compact links.
+                Mobile: collapsed into one "Famille" toggle + glass dropdown. */}
+            <div className="hidden md:flex items-center gap-2">
+              <a
+                href={FAMILY_LINKS.hub}
+                className="px-3 py-2 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 hover:text-white transition-all text-xs uppercase tracking-widest text-neutral-300"
+              >
+                {language === 'EN' ? "The Family" : "Les Inconnus"}
+              </a>
+              <a
+                href={FAMILY_LINKS.auberge}
+                className="px-3 py-2 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 hover:text-white transition-all text-xs uppercase tracking-widest text-neutral-300"
+              >
+                {language === 'EN' ? "The Inn" : "L'Auberge"}
+              </a>
+              <a
+                href={FAMILY_LINKS.dome}
+                className="px-3 py-2 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 hover:text-white transition-all text-xs uppercase tracking-widest text-neutral-300"
+              >
+                {language === 'EN' ? "The Dome" : "Le Dôme"}
+              </a>
+            </div>
+
+            <div className="relative md:hidden">
+              <button
+                onClick={() => setIsFamilyMenuOpen(prev => !prev)}
+                className="w-8 h-8 rounded-full flex items-center justify-center border border-white/10 text-neutral-500 hover:text-white hover:bg-white/5 transition-all"
+                title={language === 'EN' ? "Family" : "Famille"}
+              >
+                &#8942;
+              </button>
+              {isFamilyMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-44 rounded-xl border border-white/10 bg-[#1a1a1a]/95 backdrop-blur-md shadow-2xl overflow-hidden z-50">
+                  <a
+                    href={FAMILY_LINKS.hub}
+                    className="block px-4 py-3 text-xs uppercase tracking-widest text-neutral-300 hover:bg-white/5 hover:text-white transition-all"
+                  >
+                    {language === 'EN' ? "The Family" : "Les Inconnus"}
+                  </a>
+                  <a
+                    href={FAMILY_LINKS.auberge}
+                    className="block px-4 py-3 text-xs uppercase tracking-widest text-neutral-300 hover:bg-white/5 hover:text-white transition-all"
+                  >
+                    {language === 'EN' ? "The Inn" : "L'Auberge"}
+                  </a>
+                  <a
+                    href={FAMILY_LINKS.dome}
+                    className="block px-4 py-3 text-xs uppercase tracking-widest text-neutral-300 hover:bg-white/5 hover:text-white transition-all"
+                  >
+                    {language === 'EN' ? "The Dome" : "Le Dôme"}
+                  </a>
+                </div>
+              )}
+            </div>
+
+            <button
                 onClick={() => onNavigate('DESK')}
                 className="px-5 py-2 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 hover:text-white transition-all text-xs uppercase tracking-widest text-neutral-300"
             >
