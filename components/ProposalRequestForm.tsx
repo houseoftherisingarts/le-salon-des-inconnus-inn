@@ -106,9 +106,9 @@ export const ProposalRequestForm: React.FC<Props> = ({ language, subject, showCo
       <button
         type="submit"
         disabled={submitting}
-        className="rs-cta relative inline-block px-11 py-4 font-cinzel text-[12px] uppercase tracking-[0.34em] overflow-hidden disabled:opacity-50 mt-2"
+        className="rs-cta inline-block px-10 py-4 rounded-full font-cinzel text-[12px] uppercase tracking-[0.28em] disabled:opacity-50 mt-3"
       >
-        <span className="relative z-10">{submitting ? t('Sending…', 'Envoi…') : t('Send my request', 'Envoyer ma demande')}</span>
+        {submitting ? t('Sending…', 'Envoi…') : t('Send my request', 'Envoyer ma demande')}
       </button>
     </form>
   );
