@@ -102,20 +102,22 @@ export const ForfaitsPage: React.FC<Props> = ({ onNavigate, language }) => {
         </section>
 
         {/* III — special request */}
-        <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
+        <section className="px-6 md:px-14 lg:px-24 py-16 md:py-28">
           <SectionLabel numeral="II" label={t('A special request?', 'Une demande particulière ?')} />
-          <div className="grid md:grid-cols-12 gap-10 md:gap-16">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-center">
             <div className="md:col-span-5">
-              <h2 className="font-prata" style={{ color: CREAM, fontSize: 'clamp(1.9rem, 3.6vw, 2.8rem)', lineHeight: 1.08 }}>
+              <h2 className="font-prata" style={{ color: CREAM, fontSize: 'clamp(1.9rem, 3.6vw, 2.8rem)', lineHeight: 1.1 }}>
                 {t('We shape it', 'On le prépare')}<br />
-                <span className="font-cormorant italic" style={{ color: GOLD }}>{t('with you.', 'avec vous.')}</span>
+                <span style={{ color: GOLD }}>{t('with you.', 'avec vous.')}</span>
               </h2>
-              <p className="font-cormorant italic mt-6" style={{ color: 'rgba(255,252,244,0.62)', fontSize: '1.2rem', lineHeight: 1.5, maxWidth: '34ch' }}>
+              <p className="font-cormorant mt-6" style={{ color: 'rgba(255,250,240,0.66)', fontSize: '1.25rem', lineHeight: 1.5, maxWidth: '34ch', fontWeight: 500 }}>
                 {t('A diet, a celebration, a larger group? Write to us.', "Un régime, une célébration, un plus grand groupe ? Écrivez-nous.")}
               </p>
             </div>
             <div className="md:col-span-7">
-              <ProposalRequestForm language={language} subject={t('Nuit & Table package', 'Forfait Nuit & Table')} showCompany={false} />
+              <Glass className="p-7 md:p-9">
+                <ProposalRequestForm language={language} subject={t('Nuit & Table package', 'Forfait Nuit & Table')} showCompany={false} />
+              </Glass>
             </div>
           </div>
         </section>
