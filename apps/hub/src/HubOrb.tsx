@@ -50,7 +50,7 @@ const CHOICES: Choice[] = [
   // redirects to the Salon — it is not a separate destination users pick here.
   {
     id: 'dome',
-    name: 'Le Dôme',
+    name: 'Le Dôme des Inconnus',
     taglineFr: 'La communauté',
     blurbFr:
       'Hub communautaire · Projets partagés · Bâtir ensemble · Bientôt',
