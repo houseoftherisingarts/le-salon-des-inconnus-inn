@@ -412,6 +412,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   type SectionId =
     | 'dashboard'
     | 'members'
+    | 'roster'
     | 'feature-requests'
     | 'collab-requests'
     | 'inspirosphere'
