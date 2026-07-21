@@ -455,7 +455,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   const accent = themeAccent(artistTheme);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-lato overflow-y-auto relative">
+    <div className="fixed inset-0 z-50 bg-[#050505] text-white font-lato overflow-y-auto custom-scrollbar relative">
 
       {/* Wardrobe accent — top gradient bar reflecting the artist's chosen
           theme, plus a subtle glow behind the avatar. Renders only when the
