@@ -311,8 +311,8 @@ export function HubOrb() {
           </button>
         </div>
 
-        {/* RIGHT — glass orb + blurb beneath it */}
-        <div className="hub-orb-wrap relative flex flex-col items-center justify-center gap-8 md:gap-10">
+        {/* CENTER — glass orb + blurb beneath it */}
+        <div className="order-2 hub-orb-wrap relative flex flex-col items-center justify-center gap-6 md:gap-8 w-full">
           <div className="relative w-full max-w-[560px] aspect-square">
             {/* Outer glow ring */}
             <div
