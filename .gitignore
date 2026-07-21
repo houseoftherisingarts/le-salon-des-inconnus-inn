@@ -21,6 +21,9 @@ packages/*/dist
 .env.local
 .env.*.local
 
+# Seed data with generated artist passwords — NEVER commit these
+scripts/seed-roster-data.json
+
 # Firebase
 .firebase/
 .firebaserc.local
