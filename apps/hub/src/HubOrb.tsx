@@ -243,7 +243,7 @@ export function HubOrb() {
         />
       </div>
 
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12 py-10 md:py-12 flex flex-col items-center justify-center gap-8 md:gap-10 min-h-screen">
+      <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12 py-8 flex flex-col items-center justify-center gap-5 md:gap-6 min-h-screen">
         {/* TITLE — centered above the orb */}
         <div className="order-1 text-center">
           <h1 className="font-cinzel uppercase text-[#f3e5ab]" style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.1rem)', letterSpacing: '0.12em' }}>
