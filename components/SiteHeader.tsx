@@ -532,6 +532,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               currentView={currentView}
               onNavigate={handleNavigate}
             />
+            <FamilyDropdown
+              label={language === 'FR' ? 'La famille' : 'The family'}
+              items={FAMILLE}
+              language={language}
+            />
           </div>
 
           {/* Right cluster */}
