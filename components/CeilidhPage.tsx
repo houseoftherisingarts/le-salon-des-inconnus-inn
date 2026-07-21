@@ -1735,6 +1735,9 @@ const TeamsChapterBody: React.FC<{
     setPickedId((prev) => (prev === teamId ? null : teamId));
   };
 
+  // Write-failure message surfaced under the commit CTA.
+  const [joinError, setJoinError] = useState<string | null>(null);
+
   // Commit — merge the picked team + selected days into the user's
   // teams[] array. Days picked here are *removed* from any other primary
   // team they had for those days (so picking Sam 23 for Arts moves Sam 23
