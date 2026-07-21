@@ -55,8 +55,8 @@ export const ProposalRequestForm: React.FC<Props> = ({ language, subject, showCo
   };
 
   const inputClass =
-    'w-full bg-transparent border border-[#c5a059]/25 focus:border-[#c5a059] text-[#f3e5ab] ' +
-    'font-cormorant text-lg px-4 py-3 outline-none transition-colors placeholder:text-white/30';
+    'w-full bg-transparent border-0 border-b border-[#c5a059]/25 focus:border-[#c5a059] text-[#f3e5ab] ' +
+    'font-cormorant text-xl px-0 py-3 outline-none transition-colors placeholder:text-white/25';
 
   if (success) {
     return (
