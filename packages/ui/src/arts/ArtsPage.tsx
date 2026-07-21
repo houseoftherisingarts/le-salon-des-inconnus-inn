@@ -149,6 +149,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
   // Admin Mode State
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [isSiteMapOpen, setIsSiteMapOpen] = useState(false);
+  // Mobile-only toggle for the collapsed "Famille" links dropdown in the header
+  const [isFamilyMenuOpen, setIsFamilyMenuOpen] = useState(false);
   
   // Local state for artists to allow adding new ones
   const [artists, setArtists] = useState<ArtistProfile[]>(ARTISTS_ROSTER);
