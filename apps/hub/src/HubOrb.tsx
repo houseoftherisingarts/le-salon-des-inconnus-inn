@@ -195,6 +195,8 @@ export function HubOrb() {
         @keyframes hubRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .hub-card { box-shadow: 0 30px 70px -30px rgba(0,0,0,0.8); transition: transform .5s cubic-bezier(0.16,1,0.3,1), border-color .4s, box-shadow .5s; }
         .hub-card:hover { transform: translateY(-6px); border-color: rgba(217,180,92,0.55) !important; box-shadow: 0 40px 90px -30px rgba(0,0,0,0.9), 0 0 40px -6px rgba(217,180,92,0.25); }
+        .hub-seal { animation: hubSeal 26s linear infinite; }
+        @keyframes hubSeal { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @media (prefers-reduced-motion: reduce) {
           .hub-kenburns, .hub-glow { animation: none !important; }
           .hub-rise, .hub-rise-late { animation: none !important; opacity: 1 !important; transform: none !important; }
