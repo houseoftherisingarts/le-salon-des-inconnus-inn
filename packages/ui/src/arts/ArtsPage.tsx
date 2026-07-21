@@ -1375,9 +1375,15 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                     {/* Left: Sticky */}
                     <div className="w-full md:w-1/2 min-h-screen md:h-screen md:sticky md:top-0 flex flex-col justify-center p-12 md:p-24 border-r border-white/5 backdrop-blur-sm">
                         <span className="text-[#d4af37] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">Fiscalité Québec</span>
-                        <h2 className="font-cinzel text-3xl md:text-4xl text-white mb-8 leading-tight">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="font-cinzel text-3xl md:text-4xl text-white mb-8 leading-tight"
+                        >
                             Plus qu'une décoration :<br /> un Actif Stratégique
-                        </h2>
+                        </motion.h2>
                         
                         <div className="space-y-6 text-neutral-300 font-lato text-lg leading-relaxed">
                             <p>
