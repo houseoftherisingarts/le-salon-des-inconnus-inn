@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
+import { ProposalRequestForm } from './ProposalRequestForm';
 
 // Unlisted page at /entreprises — B2B pitch for exclusive team building and
 // corporate retreats. No nav link, but indexed (unlike /invitation).
