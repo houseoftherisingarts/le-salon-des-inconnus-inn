@@ -60,11 +60,28 @@ const FadeInRight: React.FC<{ children: React.ReactNode; delay?: number }> = ({ 
     const options = useMemo(() => ({ threshold: 0.2 }), []);
     const [ref, isVisible] = useOnScreen(options);
     return (
-        <div 
+        <div
             ref={ref}
             className={`transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
             style={{ transitionDelay: `${delay}ms` }}
         >
+            {children}
+        </div>
+    );
+};
+
+// Parallax Band Component — true scroll-linked parallax on a background image layer
+const ParallaxBand: React.FC<{ img: string; className?: string; children?: React.ReactNode }> = ({ img, className = '', children }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const reduceMotion = useReducedMotion();
+    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+    const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+    return (
+        <div ref={ref} className={`absolute inset-0 overflow-hidden ${className}`}>
+            <motion.div
+                className="absolute inset-0 bg-center bg-cover will-change-transform"
+                style={{ backgroundImage: `url("${img}")`, y: reduceMotion ? '0%' : y, scale: reduceMotion ? 1.02 : 1.18 }}
+            />
             {children}
         </div>
     );
