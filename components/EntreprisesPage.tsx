@@ -88,7 +88,7 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
         {/* II — two tiers, price as centerpiece */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
           <SectionLabel numeral="II" label={t('Two ways to gather', 'Deux façons de vous réunir')} />
-          <div className="grid md:grid-cols-2 gap-16 md:gap-8">
+          <div className="grid md:grid-cols-2 gap-7">
             {[
               {
                 name: t('The Manor, to yourselves', 'Le Manoir, à vous seuls'),
@@ -109,16 +109,16 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
-                className={i === 1 ? 'md:pl-16 md:border-l' : 'md:pr-16'}
-                style={i === 1 ? { borderColor: 'rgba(197,160,89,0.15)' } : undefined}
               >
-                <h3 className="font-prata mb-5" style={{ color: CREAM, fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)' }}>{tier.name}</h3>
-                <p className="font-cormorant mb-10" style={{ color: 'rgba(255,252,244,0.7)', fontSize: 'clamp(1.08rem, 1.5vw, 1.24rem)', lineHeight: 1.6, maxWidth: '42ch' }}>{tier.body}</p>
-                <div className="flex items-baseline gap-3">
-                  <span className="font-cinzel" style={{ color: GOLD, fontSize: '1.1rem' }}>{fr ? 'dès' : 'from'}</span>
-                  <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(3.4rem, 8vw, 6rem)' }}>{tier.num}<span style={{ fontSize: '0.42em', color: GOLD }}> $</span></span>
-                  <span className="font-cormorant italic" style={{ color: 'rgba(255,252,244,0.55)', fontSize: '1.15rem' }}>{tier.unit}</span>
-                </div>
+                <Glass className="p-8 md:p-10 h-full">
+                  <h3 className="font-prata mb-5" style={{ color: CREAM, fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)' }}>{tier.name}</h3>
+                  <p className="font-cormorant mb-10" style={{ color: 'rgba(255,250,240,0.72)', fontSize: 'clamp(1.08rem, 1.5vw, 1.24rem)', lineHeight: 1.6, fontWeight: 500 }}>{tier.body}</p>
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-cinzel" style={{ color: GOLD, fontSize: '1rem' }}>{fr ? 'dès' : 'from'}</span>
+                    <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(3.2rem, 7vw, 5.4rem)' }}>{tier.num}<span style={{ fontSize: '0.42em', color: GOLD }}> $</span></span>
+                    <span className="font-cormorant" style={{ color: 'rgba(255,250,240,0.55)', fontSize: '1.1rem', fontWeight: 500 }}>{tier.unit}</span>
+                  </div>
+                </Glass>
               </motion.div>
             ))}
           </div>
