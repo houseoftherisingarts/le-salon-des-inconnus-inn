@@ -1343,9 +1343,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             </section>
 
             {/* SECTION 2: FISCAL ADVANTAGES (STICKY SCROLL) */}
-            <section id="fiscal-section" className="relative w-full bg-fixed bg-center bg-cover"
-                 style={{ backgroundImage: `url("/media/Financement%20Artistique/centered%20copy.jpg")` }}
-            >
+            <section id="fiscal-section" className="relative w-full overflow-hidden">
+                <ParallaxBand img="/media/Financement%20Artistique/centered%20copy.jpg" />
                 <div className="absolute inset-0 bg-black/90 md:bg-black/80" />
                 
                 <div className="relative z-10 flex flex-col md:flex-row max-w-none">
