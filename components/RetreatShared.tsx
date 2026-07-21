@@ -145,6 +145,10 @@ const RetreatStyle: React.FC = () => (
     .rs-pill:hover { border-color: rgba(217,180,92,0.55); color:#f6ead0; }
     .rs-cta { position: relative; color:#120d08; background: linear-gradient(135deg, #e6c778 0%, #c5a059 100%); box-shadow: 0 14px 34px -10px rgba(217,180,92,0.55); transition: transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s; }
     .rs-cta:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -10px rgba(217,180,92,0.7); }
+    .rs-field { background: rgba(255,246,224,0.045); border: 1px solid rgba(217,180,92,0.18); transition: border-color .3s, box-shadow .3s, background .3s; }
+    .rs-field:focus { border-color: rgba(217,180,92,0.55); background: rgba(255,246,224,0.07); box-shadow: 0 0 0 3px rgba(217,180,92,0.12); }
+    .rs-link { position: relative; transition: color .3s; }
+    .rs-link:hover { color:#f6ead0; }
     @media (prefers-reduced-motion: reduce) {
       .rs-kenburns { animation: none !important; transform: scale(1.04) !important; }
       .rs-glow, .rs-glow2, .rs-scroll { animation: none !important; }
