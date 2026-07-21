@@ -2084,6 +2084,9 @@ const TeamsChapterBody: React.FC<{
                           : t(`Choose this team — ${totalSelected} day${totalSelected > 1 ? 's' : ''}`,
                               `Choisir cette équipe — ${totalSelected} jour${totalSelected > 1 ? 's' : ''}`)}
                     </button>
+                    {joinError && (
+                      <p className="mt-2 font-josefin text-[11px] text-red-400/90 text-center">{joinError}</p>
+                    )}
                   </div>
                 );
               })()}
