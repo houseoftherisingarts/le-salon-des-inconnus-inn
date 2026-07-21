@@ -189,6 +189,82 @@ const Dropdown: React.FC<{
   );
 };
 
+// ─── Family dropdown (external links, outside ViewState) ──────────────────────
+
+const FamilyDropdown: React.FC<{
+  label: string;
+  items: FamilyLink[];
+  language: 'EN' | 'FR';
+}> = ({ label, items, language }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    if (open) document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onMouseEnter={() => setOpen(true)}
+        onClick={() => setOpen(o => !o)}
+        className="flex items-center gap-1.5 px-3 py-2 rounded-md text-[11px] font-cinzel font-bold uppercase tracking-[0.18em] transition-all duration-200 text-white/70 hover:text-white"
+      >
+        {label}
+        <svg
+          width="9" height="6" viewBox="0 0 9 6" fill="none"
+          className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        >
+          <path d="M1 1l3.5 3.5L8 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div
+          onMouseLeave={() => setOpen(false)}
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 animate-header-drop"
+          style={{ minWidth: '340px' }}
+        >
+          {/* Arrow */}
+          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-[#111] border-l border-t border-[#d4af37]/20" />
+
+          <ul
+            className="relative bg-[#0e0e0e]/95 backdrop-blur-xl border border-[#d4af37]/20 rounded-xl shadow-2xl overflow-hidden"
+            style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08)' }}
+          >
+            {items.map((item) => (
+              <li key={item.href}>
+                {/* External link — plain anchor, does not go through the internal ViewState navigation */}
+                <a
+                  href={item.href}
+                  target="_self"
+                  className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 group hover:bg-white/[0.04] border-l-2 border-transparent"
+                >
+                  <div className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-base border transition-colors bg-white/5 border-white/10 group-hover:border-[#d4af37]/30">
+                    <span>{item.icon}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] font-cinzel font-bold uppercase tracking-[0.15em] transition-colors text-white/90 group-hover:text-white">
+                      {language === 'FR' ? item.label_fr : item.label_en}
+                    </p>
+                    <p className="text-[10px] text-white/40 mt-0.5 font-lato leading-tight truncate">
+                      {language === 'FR' ? item.desc_fr : item.desc_en}
+                    </p>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── Mobile menu (portal) ─────────────────────────────────────────────────────
 
 const MobileMenu: React.FC<{
