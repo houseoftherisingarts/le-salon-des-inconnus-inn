@@ -893,10 +893,16 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                  <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 font-cinzel font-bold text-xs uppercase tracking-widest rounded transition-colors">
                                      Join The Circle
                                  </button>
-                             </div>
+                             </motion.div>
 
                              {/* Tier 2 (Featured) */}
-                             <div className="bg-[#0f0f1a] border border-indigo-500/30 rounded-2xl p-8 flex flex-col h-[450px] relative shadow-[0_0_30px_rgba(79,70,229,0.15)] transform md:-translate-y-4">
+                             <motion.div
+                                initial={{ opacity: 0, y: 18 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                                className="bg-[#0f0f1a] border border-indigo-500/30 rounded-2xl p-8 flex flex-col h-[450px] relative shadow-[0_0_30px_rgba(79,70,229,0.15)] transform md:-translate-y-4"
+                             >
                                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-lg">
                                      Most Popular
                                  </div>
