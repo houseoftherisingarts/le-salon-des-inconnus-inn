@@ -845,6 +845,14 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7h: FORFAITS (unlisted, B2C packages — Nuit & Table) */}
+        {currentView === 'FORFAITS' && (
+          <ForfaitsPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
         {/* VIEW 8: MY PROFILE */}
         {currentView === 'MY_PROFILE' && currentUser && memberProfile && (
           <ProfilePage
