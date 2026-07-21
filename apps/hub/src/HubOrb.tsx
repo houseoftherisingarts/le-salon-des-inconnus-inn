@@ -20,8 +20,8 @@ type Choice = {
 const CHOICES: Choice[] = [
   {
     id: 'auberge',
-    name: "L'Auberge",
-    taglineFr: 'Maison Favier · Lac Simon',
+    name: "L'Auberge des Inconnus",
+    taglineFr: 'Maison Favier · Namur',
     blurbFr:
       'Cinq chambres · Table partagée · Silence entre Montebello et Tremblant',
     url: 'https://aubergedesinconnus.com/',
