@@ -939,7 +939,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                  <button className="w-full py-4 bg-[#d4af37] hover:bg-[#b89c6f] text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)]">
                                      Join The Circle
                                  </button>
-                             </div>
+                             </motion.div>
                          </div>
                     </div>
                 )}
