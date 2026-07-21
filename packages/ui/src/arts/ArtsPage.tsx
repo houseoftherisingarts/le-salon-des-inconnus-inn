@@ -1805,6 +1805,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
 
   // --- RENDER LOGIC ---
 
+  const mainScrollRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="min-h-screen bg-[#141414] text-neutral-100 w-full absolute inset-0 z-50 animate-fadeIn scroll-smooth font-sans overflow-hidden">
       {/* Background Texture */}
