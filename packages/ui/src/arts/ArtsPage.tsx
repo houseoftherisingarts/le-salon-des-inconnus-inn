@@ -840,7 +840,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 {patronTab === 'ARTIST' && (
                     <div className="animate-fadeIn">
                         <div className="text-center mb-12">
-                             <p className="text-neutral-400 italic font-lato text-lg max-w-3xl mx-auto">
+                             <p className="text-neutral-400 font-medium font-lato text-lg max-w-3xl mx-auto">
                                  {language === 'EN' ? "Directly support a creator's livelihood. Flip a card to see their specific needs and the rewards they offer in return." : "Soutenez directement un créateur. Retournez une carte pour voir ses besoins et les contreparties offertes."}
                              </p>
                         </div>
