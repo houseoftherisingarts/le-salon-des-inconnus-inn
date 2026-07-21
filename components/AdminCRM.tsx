@@ -472,6 +472,29 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   const [members, setMembers] = useState<MemberRow[]>([]);
   const [memberSearch, setMemberSearch] = useState('');
 
+  // Public roster (Annuaire) — every member who has a Creator Studio artist
+  // profile (members/{uid}/artistProfile/profile). The admin promotes one into
+  // the public-facing publicRoster/{uid} collection with a single click; the
+  // toggle state is driven by presence in that collection (the actual public
+  // truth), so it stays honest even if the gate flag ever drifts.
+  type ArtistProfileRow = {
+    uid: string;
+    name?: string;
+    class?: string;
+    category?: string;
+    avatarUrl?: string;
+    galleryImages?: string[];
+    location?: string;
+    medium?: string;
+    subjects?: string[];
+    currentExpos?: string;
+    stats?: { creativity?: number; technique?: number; vision?: number };
+    bio?: string;
+    links?: any;
+  };
+  const [artistProfiles, setArtistProfiles] = useState<ArtistProfileRow[]>([]);
+  const [publicRosterUids, setPublicRosterUids] = useState<Set<string>>(new Set());
+
   // Feature requests submitted from the Creator Studio. Doc id = uid so each
   // user has at most one pending row at a time.
   type FeatureRequestRow = {
