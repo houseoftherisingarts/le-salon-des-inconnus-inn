@@ -30,8 +30,7 @@ const CHOICES: Choice[] = [
     // Interim: the art surface lives on the inconnus-salon Firebase site until
     // the lesalondesinconnus.com domain swap (Phase 2.1). Update then.
     url: 'https://inconnus-salon.web.app/',
-    image: '/media/kamy%20museum.png',
-    imagePosition: '50% 30%',
+    image: '/media/biblio.jpg',
   },
   {
     id: 'dome',
@@ -121,28 +120,30 @@ export function HubOrb() {
         </span>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-5 md:px-10 py-16 gap-9 md:gap-12">
-        <header className="text-center hub-rise">
-          <h1
-            className="mb-4"
-            style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(2.1rem, 5vw, 4rem)', lineHeight: 1.05, textShadow: '0 4px 40px rgba(0,0,0,0.65)' }}
-          >
-            Bienvenue chez les Inconnus
+      {/* Content — Arkkhe-anchored lockup left, floating glass cards, rotating seal */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-center px-6 md:px-14 lg:px-20 py-14 gap-8 md:gap-10 max-w-[1280px] mx-auto w-full">
+        <header className="hub-rise">
+          <h1 style={{ fontFamily: "'Prata', serif", color: CREAM, lineHeight: 1.02, textShadow: '0 4px 44px rgba(0,0,0,0.7)' }}>
+            <span className="block" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
+              Bienvenue <span aria-hidden style={{ color: GOLD, fontSize: '0.72em' }}>›</span> chez
+            </span>
+            <span className="block" style={{ fontSize: 'clamp(3rem, 7.2vw, 5.8rem)', letterSpacing: '-0.01em' }}>
+              les Inconnus
+            </span>
           </h1>
-          <p className="font-cinzel uppercase" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', letterSpacing: '0.45em', color: GOLD }}>
+          <p className="font-cinzel uppercase mt-5" style={{ fontSize: 'clamp(10px, 1.1vw, 12px)', letterSpacing: '0.45em', color: GOLD }}>
             Faites votre sélection
           </p>
         </header>
 
-        <nav className="hub-rise-late grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-5xl">
+        <nav className="hub-rise-late grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full">
           {CHOICES.map((c) => (
             <button
               key={c.id}
               onClick={() => go(c.url)}
               onMouseEnter={() => shimmer(0.5)}
-              className="hub-card group relative overflow-hidden rounded-[22px] text-left"
-              style={{ aspectRatio: '3 / 3.6', border: '1px solid rgba(255,255,255,0.12)' }}
+              className="hub-card group relative overflow-hidden rounded-[28px] text-left"
+              style={{ aspectRatio: '3 / 3.3', border: '1px solid rgba(255,255,255,0.14)' }}
             >
               <img
                 src={c.image}
@@ -150,19 +151,38 @@ export function HubOrb() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
                 style={c.imagePosition ? { objectPosition: c.imagePosition } : undefined}
               />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,6,5,0.05) 30%, rgba(8,6,5,0.4) 62%, rgba(8,6,5,0.92) 100%)' }} />
-              <div className="absolute inset-x-3 bottom-3 rounded-[16px] px-5 py-4 backdrop-blur-md transition-colors duration-300"
-                   style={{ background: 'rgba(20,15,11,0.5)', border: '1px solid rgba(217,180,92,0.2)' }}>
-                <span className="block" style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(1.02rem, 1.4vw, 1.2rem)', lineHeight: 1.25 }}>
-                  {c.name}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,6,5,0) 40%, rgba(8,6,5,0.32) 68%, rgba(8,6,5,0.78) 100%)' }} />
+              <div className="absolute inset-x-3 bottom-3 rounded-[20px] px-4 py-3.5 backdrop-blur-xl flex items-center gap-3.5 transition-colors duration-300"
+                   style={{ background: 'rgba(28,22,16,0.55)', border: '1px solid rgba(217,180,92,0.22)' }}>
+                <span className="hub-chip grid place-items-center shrink-0 rounded-full" aria-hidden
+                      style={{ width: '40px', height: '40px', background: 'linear-gradient(135deg, #e6c778, #c5a059)', color: '#171009', fontSize: '1.05rem', boxShadow: '0 6px 18px -6px rgba(217,180,92,0.6)' }}>
+                  ›
                 </span>
-                <span className="font-cinzel uppercase block mt-1.5" style={{ fontSize: '9.5px', letterSpacing: '0.32em', color: GOLD }}>
-                  {c.taglineFr}
+                <span className="flex flex-col min-w-0">
+                  <span className="truncate" style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(0.98rem, 1.3vw, 1.12rem)', lineHeight: 1.2 }}>
+                    {c.name}
+                  </span>
+                  <span className="font-cinzel uppercase mt-1" style={{ fontSize: '9px', letterSpacing: '0.3em', color: GOLD }}>
+                    {c.taglineFr}
+                  </span>
                 </span>
               </div>
             </button>
           ))}
         </nav>
+
+        {/* Rotating seal — Arkkhe's circular-text signature, in the house voice */}
+        <div className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2 items-center justify-center pointer-events-none" aria-hidden>
+          <svg className="hub-seal" width="104" height="104" viewBox="0 0 104 104">
+            <defs>
+              <path id="sealCircle" d="M 52,52 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+            </defs>
+            <text style={{ fontFamily: "'Cinzel', serif", fontSize: '8.6px', letterSpacing: '0.32em', fill: 'rgba(217,180,92,0.75)' }}>
+              <textPath href="#sealCircle">FAITES VOTRE SÉLECTION · LES INCONNUS ·</textPath>
+            </text>
+          </svg>
+          <span className="absolute" style={{ color: GOLD, fontSize: '1.1rem', transform: 'rotate(90deg)' }}>›</span>
+        </div>
       </div>
 
       <style>{`
