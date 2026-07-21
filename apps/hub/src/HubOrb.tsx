@@ -54,7 +54,7 @@ const CHOICES: Choice[] = [
     taglineFr: 'La communauté',
     blurbFr:
       'Hub communautaire · Projets partagés · Bâtir ensemble · Bientôt',
-    url: 'https://ledomdesinconnus.com/',
+    url: 'https://ledomedesinconnus.com/',
     image:
       '/media/Artistes/evi%20wide.jpg',
     // Evinali sits in the right portion of this wide shot — pull the focal
