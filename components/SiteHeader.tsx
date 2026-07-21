@@ -56,6 +56,36 @@ const FAIRE: NavItem[] = [
   { view: 'PPS',          label_fr: 'Soirées thématiques', label_en: 'Theme Evenings', desc_fr: 'Retraites d\'équipe, avec PPS Canada', desc_en: 'Team retreats, with PPS Canada', icon: '🎪' },
 ];
 
+// Liens externes vers les autres propriétés de la famille des Inconnus.
+// Ces liens sortent volontairement de la navigation interne (ViewState) — ce sont
+// des ancres <a> ordinaires vers d'autres apps Firebase, pas des vues internes.
+type FamilyLink = { href: string; label_fr: string; label_en: string; desc_fr: string; desc_en: string; icon: string };
+
+const FAMILLE: FamilyLink[] = [
+  {
+    // Page de sélection de la famille des Inconnus — double comme retour à la sélection.
+    // TODO: remplacer par lesinconnus.com une fois le DNS branché.
+    href: 'https://inconnus-hub.web.app/',
+    label_fr: '← Les Inconnus', label_en: '← Les Inconnus',
+    desc_fr: 'Retour à la sélection', desc_en: 'Back to selection',
+    icon: '🧭',
+  },
+  {
+    // TODO: remplacer par lesalondesinconnus.com une fois le DNS branché (post-échange de noms).
+    href: 'https://inconnus-salon.web.app/',
+    label_fr: 'Le Salon', label_en: 'Le Salon',
+    desc_fr: 'Centre d\'art', desc_en: 'Art center',
+    icon: '🎭',
+  },
+  {
+    // TODO: remplacer par ledomedesinconnus.com une fois le DNS branché.
+    href: 'https://inconnus-dome.web.app/',
+    label_fr: 'Le Dôme', label_en: 'Le Dôme',
+    desc_fr: 'La communauté', desc_en: 'The community',
+    icon: '⛺',
+  },
+];
+
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 
 function useScroll(threshold: number) {
