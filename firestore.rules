@@ -416,6 +416,22 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // ── Annuaire public des artistes (public roster) ─────────────────────────
+    // Copie publique, sûre à lire par tous (visiteurs anonymes inclus), d'un
+    // profil d'artiste promu depuis le Creator Studio. Un membre n'arrive
+    // JAMAIS ici de lui-même : seul un admin, via le bouton « Promouvoir » de
+    // l'Annuaire du CRM, écrit dans cette collection (et lève au même moment le
+    // drapeau members/{uid}/admin/flags.onPublicRoster, lui aussi admin-only en
+    // écriture). Retirer un artiste = supprimer son doc + rabaisser le drapeau.
+    // La forme du document (name, class, category, avatarUrl, galleryImages,
+    // location, medium, subjects, currentExpos, stats, bio, links, promotedAt,
+    // uid) vit dans le code (CRM + script de seed) ; la règle ne verrouille que
+    // l'écriture, pas la forme, pour rester souple pendant la Phase 1.
+    match /publicRoster/{uid} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
     // ── Puzzle gifts ─────────────────────────────────────────────────────────
     // A member can offer a completed puzzle from their display case to another
     // member. The recipient accepts (puzzle joins their case) or declines
