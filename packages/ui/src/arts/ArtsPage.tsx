@@ -8,6 +8,15 @@ import { SiteMap } from './SiteMap';
 import { CreatorStudio } from '../creator-studio/CreatorStudioShell';
 import { SdiCafe } from '../sdi-cafe/SdiCafe';
 
+// Header links to the rest of the famille des Inconnus. Auberge points at the
+// live Firebase URL because aubergedesinconnus.com is still parked; swap to
+// the custom domain once DNS connects. Dome and hub are already live.
+const FAMILY_LINKS = {
+  hub: 'https://inconnus-hub.web.app/',
+  auberge: 'https://inconnus-auberge.web.app/',
+  dome: 'https://inconnus-dome.web.app/',
+};
+
 export interface ArtsPageProps {
   language: 'EN' | 'FR';
   // Optional: when the page is hosted standalone (one app per domain), there is
