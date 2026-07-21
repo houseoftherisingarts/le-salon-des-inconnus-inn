@@ -63,7 +63,7 @@ type FamilyLink = { href: string; label_fr: string; label_en: string; desc_fr: s
 
 const FAMILLE: FamilyLink[] = [
   {
-    // Page de sélection de la famille des Inconnus — double comme retour à la sélection.
+    // Page de sélection de la famille des Inconnus (double comme retour à la sélection).
     // TODO: remplacer par lesinconnus.com une fois le DNS branché.
     href: 'https://inconnus-hub.web.app/',
     label_fr: '← Les Inconnus', label_en: '← Les Inconnus',
