@@ -252,7 +252,7 @@ export function HubOrb() {
         </div>
 
         {/* CHOICES + confirm — row beneath the orb */}
-        <div className="order-3 flex flex-col items-center gap-8 md:gap-10">
+        <div className="order-3 flex flex-col items-center gap-5 md:gap-6">
           <ul className="flex flex-col md:flex-row items-stretch justify-center gap-3 md:gap-5 flex-wrap">
             {CHOICES.map((c, i) => {
               const isSelected = i === selectedIdx;
