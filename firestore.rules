@@ -618,6 +618,35 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // ── Demandes de soumission (pages /entreprises et /forfaits) ────────────
+    // Formulaires publics : un visiteur non authentifié laisse ses coordonnées,
+    // la Cloud Function onProposalRequest envoie un courriel à Alex. Création
+    // ouverte mais validée (champs présents, tailles bornées) pour limiter
+    // l'abus; lecture réservée aux admins.
+    match /proposalRequests/{id} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() < 200
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() > 0
+                    && request.resource.data.email.size() < 200
+                    && (!('message' in request.resource.data) || request.resource.data.message.size() < 5000);
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── Confirmations RSVP (page /invitation, code QR) ──────────────────────
+    // Même posture : création publique validée (déclenche onRsvpInvitation),
+    // lecture admin. Sans cette règle, les RSVP échouaient en silence.
+    match /rsvpInvitation/{id} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() < 200
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() > 0
+                    && request.resource.data.email.size() < 200;
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Échelle de produits + métriques admin (CRM interne) ─────────────────
     // Admin-only : grille prix/statut des produits et services, et un
     // compteur de collaborateurs d'affaires potentiels.
