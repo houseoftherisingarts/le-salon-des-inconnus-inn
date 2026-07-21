@@ -2676,6 +2676,9 @@ const LodgingChapterBody: React.FC<{
   // below as `joinedRoomId`. Same view-vs-commit split as the team picker.
   const [viewingId, setViewingId] = useState<string | null>(null);
 
+  // Write-failure message surfaced in the status card below.
+  const [roomError, setRoomError] = useState<string | null>(null);
+
   // Live auth fallback so a stale `user` prop on mobile doesn't break the
   // confirmation flow.
   const [authUser, setAuthUser] = useState<User | null>(() => auth?.currentUser ?? null);
