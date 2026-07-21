@@ -25,6 +25,7 @@ const PenseesPage       = lazy(() => import('./components/PenseesPage').then(m =
 // by direct URL (QR code / shared link).
 const InvitationPage    = lazy(() => import('./components/InvitationPage').then(m => ({ default: m.InvitationPage })));
 const EntreprisesPage   = lazy(() => import('./components/EntreprisesPage').then(m => ({ default: m.EntreprisesPage })));
+const ForfaitsPage      = lazy(() => import('./components/ForfaitsPage').then(m => ({ default: m.ForfaitsPage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
