@@ -1622,7 +1622,13 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                     <div className="p-8 md:p-10 w-full bg-neutral-900/80 backdrop-blur-sm border-b border-white/5 relative z-10">
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                             <div className="flex-1">
-                                <h3 className="font-cinzel text-2xl text-white mb-2">Simulateur d'Économies</h3>
+                                <motion.h3
+                                    initial={{ opacity: 0, y: 18 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-50px' }}
+                                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                                    className="font-cinzel text-2xl text-white mb-2"
+                                >Simulateur d'Économies</motion.h3>
                                 <p className="text-xs text-neutral-500 max-w-xl">
                                     Simulez les déductions fiscales (DPA Catégorie 8 - 20%) et l'économie d'impôt nette.<br/>
                                     <span className="text-[#d4af37]">Note :</span> L'économie réelle est souvent supérieure grâce au retour de taxes (CTI/RTI) de ~15% pour les inscrits.
