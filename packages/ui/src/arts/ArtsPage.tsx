@@ -1504,9 +1504,15 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 
                 {/* 1. Header Text (Top) */}
                 <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center mb-16">
-                    <h2 className="font-cinzel text-4xl md:text-6xl mb-8 leading-tight drop-shadow-lg text-white">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 18 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-50px' }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        className="font-cinzel text-4xl md:text-6xl mb-8 leading-tight drop-shadow-lg text-white"
+                    >
                         L'accessibilité avant tout
-                    </h2>
+                    </motion.h2>
                     <div className="w-24 h-1 bg-[#d4af37] mb-8 mx-auto" />
                     <p className="font-lato text-lg md:text-xl text-neutral-200 leading-relaxed mb-6 drop-shadow-md max-w-3xl mx-auto">
                         Il existe à première vue un conflit entre le fait qu'un artiste doit être payé à sa juste valeur et la philosophie que l'Art n'appartient pas qu'à l'élite économique.
