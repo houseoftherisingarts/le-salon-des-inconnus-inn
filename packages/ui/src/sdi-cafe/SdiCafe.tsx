@@ -166,7 +166,7 @@ export const SdiCafe: React.FC<SdiCafeProps> = ({ language }) => {
       <header className="fixed top-0 w-full z-50 backdrop-blur-md border-b shadow-sm transition-colors duration-500 bg-[#E6DDC6]/90 border-[#2C1A1D]/10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-             <img src="https://i.imgur.com/B1YfPqn.png" alt="Logo" className="w-12 h-auto drop-shadow-lg filter invert opacity-80" />
+             <img src="/media/logo.png" alt="Logo" className="w-12 h-auto drop-shadow-lg filter invert opacity-80" />
              <span className="font-cinzel font-bold text-lg tracking-widest hidden md:block text-[#2C1A1D]">Le Salon des Inconnus</span>
           </div>
           <div className="flex gap-4 items-center">

@@ -214,7 +214,7 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
             className="flex items-center gap-2.5 flex-shrink-0 group"
           >
             <img
-              src="https://i.imgur.com/B1YfPqn.png"
+              src="/media/logo.png"
               alt="Le Salon des Inconnus"
               className="h-7 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
               style={{ filter: 'brightness(0) invert(1)' }}

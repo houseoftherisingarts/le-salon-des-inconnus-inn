@@ -63,7 +63,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, images
           }}
         >
            <img 
-            src="https://i.imgur.com/B1YfPqn.png" 
+            src="/media/logo.png" 
             alt="Logo" 
             className="w-full h-auto drop-shadow-[0_0_25px_rgba(250,204,21,0.5)]"
             referrerPolicy="no-referrer"

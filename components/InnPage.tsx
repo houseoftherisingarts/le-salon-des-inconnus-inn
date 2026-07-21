@@ -1432,7 +1432,7 @@ export const WwoofingSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; 
 export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => (
     <div className="min-h-screen flex flex-col justify-center items-center max-w-7xl mx-auto px-6 py-32 text-center">
         <div className="w-48 h-auto mb-8 animate-fadeIn">
-             <img src="https://i.imgur.com/B1YfPqn.png" alt="Maison Favier Logo" className={`w-full h-full object-contain drop-shadow-2xl transition-all duration-1000 ${vibe === 'HOSTEL' ? 'brightness-125 sepia-[.5] hue-rotate-[-30deg]' : vibe === 'SHIRE' ? 'brightness-110 sepia-[0.8] hue-rotate-[5deg] saturate-[1.4]' : 'brightness-100'}`} />
+             <img src="/media/logo.png" alt="Maison Favier Logo" className={`w-full h-full object-contain drop-shadow-2xl transition-all duration-1000 ${vibe === 'HOSTEL' ? 'brightness-125 sepia-[.5] hue-rotate-[-30deg]' : vibe === 'SHIRE' ? 'brightness-110 sepia-[0.8] hue-rotate-[5deg] saturate-[1.4]' : 'brightness-100'}`} />
         </div>
         <RevealOnScroll>
             <h2 className={`text-4xl md:text-6xl text-white mb-6 tracking-widest ${vibe === 'HOSTEL' ? 'font-prata' : vibe === 'SHIRE' ? 'font-medieval' : 'font-cinzel'}`}>{language === 'EN' ? "DISCOVER YOUR HOSTS" : "DÉCOUVREZ VOS HÔTES"}</h2>

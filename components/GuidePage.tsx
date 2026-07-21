@@ -291,11 +291,11 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#0e0e0e] text-white font-sans guide-scrollbar"
+      className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#0a0808] text-white font-sans guide-scrollbar"
     >
 
       {/* Fixed header — position:fixed is relative to viewport, sits above the container */}
-      <header className="fixed top-0 w-full z-[60] bg-[#0e0e0e]/92 backdrop-blur-md border-b border-[#c5a059]/15">
+      <header className="fixed top-0 w-full z-[60] bg-[#0a0808]/92 backdrop-blur-md border-b border-[#c5a059]/15">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between">
           <button
             onClick={onNavigate}
@@ -319,7 +319,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
           alt="Petite-Nation"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0808] via-[#0a0808]/40 to-black/20" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-10 w-full">
           <span className="font-josefin text-[#c5a059] text-xs uppercase tracking-[0.4em] block mb-2">
             Petite-Nation · Outaouais
@@ -340,7 +340,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         onClick={() => window.dispatchEvent(new CustomEvent('salon:navigate', { detail: { view: 'PETITE_MONNAIE' } }))}
         className="group block w-full text-left"
       >
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center gap-4 md:gap-6 border-y border-[#C9A85A]/25 bg-gradient-to-r from-[#143f28]/45 via-[#0e0e0e] to-[#0e0e0e] hover:from-[#143f28]/65 transition-colors">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center gap-4 md:gap-6 border-y border-[#C9A85A]/25 bg-gradient-to-r from-[#143f28]/45 via-[#0a0808] to-[#0a0808] hover:from-[#143f28]/65 transition-colors">
           <img
             src="https://pmonnaie.ca/wp-content/uploads/2024/04/cropped-PM_profil-e1712766855885-270x270.png"
             alt="Petite Monnaie"
@@ -363,7 +363,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
       </button>
 
       {/* Sticky category nav — sticky relative to the scrollable container */}
-      <div className="sticky top-14 z-40 bg-[#0e0e0e]/95 backdrop-blur-md border-b border-white/5">
+      <div className="sticky top-14 z-40 bg-[#0a0808]/95 backdrop-blur-md border-b border-white/5">
         <div
           ref={navRef}
           className="max-w-7xl mx-auto px-4 flex gap-2 py-3 overflow-x-auto guide-scrollbar-hide"
@@ -466,7 +466,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         .font-josefin { font-family: 'Josefin Sans', sans-serif; }
         .font-lato    { font-family: 'Lato', sans-serif; }
         .guide-scrollbar::-webkit-scrollbar { width: 5px; }
-        .guide-scrollbar::-webkit-scrollbar-track { background: #0e0e0e; }
+        .guide-scrollbar::-webkit-scrollbar-track { background: #0a0808; }
         .guide-scrollbar::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 3px; }
         .guide-scrollbar-hide::-webkit-scrollbar { display: none; }
         .guide-scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

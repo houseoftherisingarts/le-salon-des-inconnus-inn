@@ -464,7 +464,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                     </button>
 
                     <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                        <img src="https://i.imgur.com/B1YfPqn.png" alt="Logo" className="w-12 h-auto drop-shadow-lg" />
+                        <img src="/media/logo.png" alt="Logo" className="w-12 h-auto drop-shadow-lg" />
                         <span className={`font-cinzel font-bold text-lg tracking-widest hidden md:block ${theme === 'CLASSY' ? 'text-[#c8aa6e]' : 'text-white'}`}>Le Salon des Inconnus</span>
                     </div>
                 </div>

@@ -79,6 +79,15 @@ service cloud.firestore {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
 
+      // Creator Studio articles (Reads / Hot Seat drafts). Owner reads and
+      // writes their own; admins can read for review. No public read until
+      // the publish flow (draft/requested/public) lands in these rules.
+      match /articles/{docId} {
+        allow read:  if request.auth != null
+                     && (request.auth.uid == userId || isAdmin());
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+
       // ── Call sheets ───────────────────────────────────────────────────
       // Per-user shoot call sheets created from the Creator Studio Call
       // Sheets tool. The owner reads/writes their own. Anyone (no auth) may

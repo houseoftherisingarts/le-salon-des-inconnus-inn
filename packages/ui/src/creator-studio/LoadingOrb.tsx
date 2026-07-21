@@ -29,7 +29,7 @@ interface LoadingOrbProps {
  */
 export const LoadingOrb: React.FC<LoadingOrbProps> = ({
     label = 'STUDIO',
-    logoUrl = 'https://i.imgur.com/B1YfPqn.png',
+    logoUrl = '/media/logo.png',
     durationMs = 1400,
     onDone,
 }) => {

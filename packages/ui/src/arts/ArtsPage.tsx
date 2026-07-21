@@ -1759,7 +1759,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
              className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
              onClick={() => onNavigate('DESK')}
           >
-             <img src="https://i.imgur.com/B1YfPqn.png" alt="Logo" className="w-12 h-auto drop-shadow-lg" />
+             <img src="/media/logo.png" alt="Logo" className="w-12 h-auto drop-shadow-lg" />
              <span className="font-cinzel font-bold text-lg tracking-widest hidden md:block text-indigo-100">Le Salon des Inconnus</span>
           </div>
           <div className="flex gap-4 items-center">

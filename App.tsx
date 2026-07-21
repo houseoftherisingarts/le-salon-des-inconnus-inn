@@ -84,7 +84,7 @@ const INITIAL_ASSETS = [
   getOptimizedUrl("/media/Financement%20Artistique/centered%20copy.jpg", 800),
 
   // Logo - Kept raw to match the hardcoded <img> in LoadingScreen (avoids cache miss)
-  "https://i.imgur.com/B1YfPqn.png"
+  "/media/logo.png"
 ];
 
 // --- 2. DEFERRED ASSETS (Below the fold) ---
