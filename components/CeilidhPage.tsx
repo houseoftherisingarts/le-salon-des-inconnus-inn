@@ -2733,7 +2733,13 @@ const LodgingChapterBody: React.FC<{
         { roomId: null, roomName: null, updatedAt: serverTimestamp() },
         { merge: true },
       );
-    } catch (e) { /* eslint-disable-next-line no-console */ console.warn('room release failed', e); }
+    } catch (e) {
+      /* eslint-disable-next-line no-console */ console.warn('room release failed', e);
+      setRoomError(t(
+        'Could not release the room. Check your connection and try again.',
+        "Impossible de libérer la chambre. Vérifiez votre connexion et réessayez.",
+      ));
+    }
   };
 
   return (
