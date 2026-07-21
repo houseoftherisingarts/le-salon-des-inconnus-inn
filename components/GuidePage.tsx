@@ -292,6 +292,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
     <div
       ref={containerRef}
       className="fixed inset-0 z-50 w-full h-full overflow-y-auto bg-[#0a0808] text-white font-sans guide-scrollbar"
+      style={{ background: 'radial-gradient(48% 38% at 50% 12%, rgba(197,160,89,0.07), transparent 70%), radial-gradient(120% 90% at 50% 0%, #14100c 0%, #0a0808 55%, #060505 100%)' }}
     >
 
       {/* Fixed header — position:fixed is relative to viewport, sits above the container */}
