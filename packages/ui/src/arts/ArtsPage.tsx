@@ -1595,9 +1595,15 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 <ParallaxBand img="/media/Financement%20Artistique/top%20down.jpg" />
                 <div className="absolute inset-0 bg-black/50" />
                 <div className="relative z-10 text-center px-6 max-w-3xl mx-auto bg-black/40 backdrop-blur-md p-12 rounded-3xl border border-white/10 shadow-2xl">
-                    <h2 className="font-cinzel text-5xl md:text-7xl text-white mb-2 leading-tight">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 18 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-50px' }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        className="font-cinzel text-5xl md:text-7xl text-white mb-2 leading-tight"
+                    >
                         Vendre
-                    </h2>
+                    </motion.h2>
                     <h3 className="font-cinzel text-2xl md:text-4xl text-neutral-300 mb-8 uppercase tracking-widest">
                         vos oeuvres
                     </h3>
