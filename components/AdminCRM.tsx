@@ -712,6 +712,58 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     }
   }, []);
 
+  // Promote a member's Creator Studio profile onto the public roster. Two
+  // writes, both admin-gated by firestore.rules: (1) raise the onPublicRoster
+  // gate flag at members/{uid}/admin/flags (merge, so other flags survive);
+  // (2) write the public-safe copy to publicRoster/{uid}. Everything is
+  // defaulted so no undefined ever reaches Firestore.
+  const promoteToRoster = useCallback(async (p: ArtistProfileRow) => {
+    if (!db) return;
+    try {
+      await setDoc(
+        doc(db, 'members', p.uid, 'admin', 'flags'),
+        { onPublicRoster: true, updatedAt: serverTimestamp() },
+        { merge: true },
+      );
+      await setDoc(doc(db, 'publicRoster', p.uid), {
+        uid: p.uid,
+        name: p.name ?? '',
+        class: p.class ?? '',
+        category: p.category ?? '',
+        avatarUrl: p.avatarUrl ?? '',
+        galleryImages: Array.isArray(p.galleryImages) ? p.galleryImages : [],
+        location: p.location ?? '',
+        medium: p.medium ?? '',
+        subjects: Array.isArray(p.subjects) ? p.subjects : [],
+        currentExpos: p.currentExpos ?? '',
+        stats: p.stats ?? { creativity: 0, technique: 0, vision: 0 },
+        bio: p.bio ?? '',
+        links: p.links ?? { buy: '#', website: '#', support: '#' },
+        promotedAt: serverTimestamp(),
+      });
+    } catch (e) {
+      console.error('promoteToRoster failed', e);
+      alert("Échec de la promotion vers l'annuaire public. Vérifiez la console.");
+    }
+  }, []);
+
+  // Pull a member back off the public roster: lower the gate flag and delete
+  // the public copy. Same admin-only path.
+  const removeFromRoster = useCallback(async (uid: string) => {
+    if (!db) return;
+    try {
+      await setDoc(
+        doc(db, 'members', uid, 'admin', 'flags'),
+        { onPublicRoster: false, updatedAt: serverTimestamp() },
+        { merge: true },
+      );
+      await deleteDoc(doc(db, 'publicRoster', uid));
+    } catch (e) {
+      console.error('removeFromRoster failed', e);
+      alert("Échec du retrait de l'annuaire public. Vérifiez la console.");
+    }
+  }, []);
+
   // Toggle one of the three feature surfaces (Café / Mécène / Creator Studio).
   // Same admin-only path. Independent of isArtist — admin can choose any
   // combination, e.g. "feature in Café only" or "approve as artist but don't
