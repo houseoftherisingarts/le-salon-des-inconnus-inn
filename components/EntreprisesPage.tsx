@@ -127,22 +127,24 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
         {/* III — inquiry */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
           <SectionLabel numeral="III" label={t('Request a proposal', 'Demander une soumission')} />
-          <div className="grid md:grid-cols-12 gap-10 md:gap-16">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-center">
             <div className="md:col-span-5">
-              <h2 className="font-prata" style={{ color: CREAM, fontSize: 'clamp(2rem, 4vw, 3.2rem)', lineHeight: 1.05 }}>
+              <h2 className="font-prata" style={{ color: CREAM, fontSize: 'clamp(2rem, 4vw, 3.2rem)', lineHeight: 1.08 }}>
                 {t('Tell us about', 'Parlez-nous de')}<br />
-                <span className="font-cormorant italic" style={{ color: GOLD }}>{t('your team.', 'votre équipe.')}</span>
+                <span style={{ color: GOLD }}>{t('your team.', 'votre équipe.')}</span>
               </h2>
-              <p className="font-cormorant italic mt-6" style={{ color: 'rgba(255,252,244,0.62)', fontSize: '1.25rem', lineHeight: 1.5, maxWidth: '34ch' }}>
+              <p className="font-cormorant mt-6" style={{ color: 'rgba(255,250,240,0.66)', fontSize: '1.3rem', lineHeight: 1.5, maxWidth: '34ch', fontWeight: 500 }}>
                 {t('One message, and we shape the day with you.', 'Un message, et nous dessinons la journée avec vous.')}
               </p>
-              <p className="font-cormorant mt-10" style={{ color: 'rgba(255,252,244,0.5)', fontSize: '1.05rem' }}>
+              <p className="font-cormorant mt-10" style={{ color: 'rgba(255,250,240,0.5)', fontSize: '1.05rem', fontWeight: 500 }}>
                 {t('Prefer to call? ', 'Vous préférez appeler ? ')}
                 <a href="tel:+15144183450" className="rs-link" style={{ color: GOLD }}>514 418-3450</a>
               </p>
             </div>
             <div className="md:col-span-7">
-              <ProposalRequestForm language={language} subject={t('Corporate retreat', "Retraite d'entreprise")} showCompany />
+              <Glass className="p-7 md:p-9">
+                <ProposalRequestForm language={language} subject={t('Corporate retreat', "Retraite d'entreprise")} showCompany />
+              </Glass>
             </div>
           </div>
         </section>
