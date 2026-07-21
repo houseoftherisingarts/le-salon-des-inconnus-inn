@@ -789,9 +789,15 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             
             {/* Hero Section */}
             <div className="relative pt-24 pb-12 text-center px-4 bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
-                <h2 className="font-cinzel text-5xl md:text-6xl text-white tracking-widest mb-4 drop-shadow-lg">
+                <motion.h2
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-cinzel text-5xl md:text-6xl text-white tracking-widest mb-4 drop-shadow-lg"
+                >
                     {language === 'EN' ? "The Art of Patronage" : "L'Art du Mécénat"}
-                </h2>
+                </motion.h2>
                 <p className="max-w-2xl mx-auto text-neutral-400 mb-8 font-light text-lg">
                     {language === 'EN' 
                      ? "Support the cultural heartbeat of Petite Nation. Choose to empower a specific creator, fund a project, or sustain the center itself."
