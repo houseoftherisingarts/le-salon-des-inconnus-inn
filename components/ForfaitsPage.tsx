@@ -89,7 +89,7 @@ export const ForfaitsPage: React.FC<Props> = ({ onNavigate, language }) => {
               <span className="font-cinzel uppercase block mb-8" style={{ fontSize: '11px', letterSpacing: '0.34em', color: GOLD }}>{t('The package', 'Le forfait')}</span>
               <div className="flex items-baseline justify-center gap-3 mb-8">
                 <span className="font-prata leading-none" style={{ color: GOLD, fontSize: 'clamp(2.4rem, 6vw, 4.4rem)' }}>+</span>
-                <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(4.4rem, 13vw, 9rem)' }}>85<span style={{ fontSize: '0.4em', color: GOLD }}> $</span></span>
+                <span className="font-prata leading-none" style={{ color: CREAM, fontSize: 'clamp(4.4rem, 13vw, 9rem)' }}>120<span style={{ fontSize: '0.4em', color: GOLD }}> $</span></span>
                 <span className="font-cormorant" style={{ color: 'rgba(255,250,240,0.55)', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', fontWeight: 500 }}>{t('/ person', '/ personne')}</span>
               </div>
               <p className="font-cormorant mx-auto mb-12" style={{ color: 'rgba(255,250,240,0.72)', fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)', lineHeight: 1.6, maxWidth: '42ch', fontWeight: 500 }}>
