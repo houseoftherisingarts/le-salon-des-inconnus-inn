@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-07-21",
+        title_fr: "Le sentier",
+        title_en: "The footpath",
+        body_fr: "Derrière l'auberge, un sentier s'enfonce dans le bois. Personne ne l'a dessiné : il existe parce que des centaines de pas, ceux d'inconnus pour la plupart, ont choisi à peu près la même ligne entre les fougères. Chaque marcheur croyait suivre le chemin, alors qu'il était en train de le faire. Si tout le monde cessait d'y passer, l'herbe le reprendrait en deux étés, sans rancune. Je trouve ça beau, une œuvre commune que personne ne signe et que tout le monde continue. Nos habitudes, nos amitiés, nos villages tiennent probablement de la même manière : par le passage répété de gens qui ne se sont jamais consultés. Quel sentier suis-je en train d'entretenir aujourd'hui, sans m'en rendre compte?",
+        body_en: "Behind the inn, a footpath slips into the woods. Nobody designed it: it exists because hundreds of footsteps, most of them strangers', chose roughly the same line between the ferns. Each walker believed they were following the path while they were actually making it. If everyone stopped walking there, the grass would take it back within two summers, holding no grudge. I find that beautiful, a common work that nobody signs and everybody continues. Our habits, our friendships, our villages probably hold together the same way: through the repeated passage of people who never consulted one another. Which path am I keeping alive today without noticing?",
+    },
+    {
         date: "2026-07-20",
         title_fr: "Le bois de juillet",
         title_en: "July firewood",
