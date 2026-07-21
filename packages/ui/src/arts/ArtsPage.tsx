@@ -1391,7 +1391,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                         <strong className="text-white">Amortissement Annuel :</strong> Le coût restant est amorti annuellement, réduisant vos impôts corporatifs année après année.
                                     </li>
                                 </ol>
-                                <p className="text-neutral-500 text-sm mt-4 italic">
+                                <p className="text-neutral-500 text-sm mt-4 font-medium">
                                     Contrairement à une chaise de bureau qui finit sans valeur, l'œuvre reste un actif au bilan qui conserve sa valeur marchande.
                                 </p>
                             </div>
