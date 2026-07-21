@@ -82,10 +82,15 @@ const ParallaxBand: React.FC<{ img: string; className?: string; children?: React
     const { scrollYProgress } = useScroll({ target: ref, container: scroller ?? undefined, offset: ['start end', 'end start'] });
     const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
     return (
-        <div ref={ref} className={`absolute inset-0 overflow-hidden ${className}`}>
-            <motion.div
-                className="absolute inset-0 bg-center bg-cover will-change-transform"
-                style={{ backgroundImage: `url("${img}")`, y: reduceMotion ? '0%' : y, scale: reduceMotion ? 1.02 : 1.18 }}
+        <div ref={ref} className={`absolute inset-0 overflow-hidden ${className}`} style={{ contain: 'paint' }}>
+            <motion.img
+                src={img}
+                alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-cover will-change-transform"
+                style={{ y: reduceMotion ? '0%' : y, scale: reduceMotion ? 1.02 : 1.18 }}
+                loading="lazy"
+                decoding="async"
             />
             {children}
         </div>
