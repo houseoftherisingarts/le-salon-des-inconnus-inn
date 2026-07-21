@@ -31,8 +31,8 @@ const CHOICES: Choice[] = [
   },
   {
     id: 'salon',
-    name: 'Le Salon',
-    taglineFr: "Centre d'art · Petite Nation",
+    name: 'Le Salon des Inconnus',
+    taglineFr: "Centre d'art & activités",
     blurbFr:
       "Galerie · Ateliers · Fiscalité de l'art · Pour créateurs et acquéreurs",
     // Interim: the art surface lives on the inconnus-salon Firebase site until
