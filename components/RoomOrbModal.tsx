@@ -16,6 +16,7 @@ import type { Accommodation } from '../types';
 import { ACCOMMODATIONS } from '../constants';
 import RoomAmenities, { getRoomAccent } from './RoomAmenities';
 import { AvailabilityCalendar } from './AvailabilityCalendar';
+import { getOptimizedUrl } from '../utils/imageOptimizer';
 
 // Pull the HostAway listing id out of the room's booking link
 // (https://salon.holidayfuture.com/listings/<id>). Returns null for rooms
