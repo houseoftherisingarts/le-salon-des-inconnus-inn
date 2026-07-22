@@ -14,6 +14,16 @@ const GOLD_SOFT = '#c5a059';
 const CREAM = '#f6ead0';
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+// Sparse, slow-drifting embers for the hero. Transform + opacity only, cheap.
+const EMBERS = [
+  { left: '13%', bottom: '26%', delay: '0s',  dur: '17s' },
+  { left: '29%', bottom: '34%', delay: '5s',  dur: '21s' },
+  { left: '47%', bottom: '30%', delay: '9s',  dur: '19s' },
+  { left: '66%', bottom: '38%', delay: '3s',  dur: '23s' },
+  { left: '81%', bottom: '28%', delay: '7s',  dur: '18s' },
+  { left: '91%', bottom: '36%', delay: '11s', dur: '22s' },
+];
+
 // Self-contained SVG grain (no external asset), very light, static, cheap.
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
