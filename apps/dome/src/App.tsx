@@ -268,52 +268,29 @@ const LifeSection: React.FC = () => (
   </section>
 );
 
-// ── 3 · COMMENT NOUS REJOINDRE ──────────────────────────────────────────────
-// Both CTAs point at the REAL working programs on the inn site.
-// Swap to aubergedesinconnus.com once the DNS is connected.
-const JOIN_PANELS = [
-  {
-    kicker: 'Séjour bénévole',
-    title: 'Le wwoofing',
-    body: "Un séjour à la semaine ou au mois, jusqu'à la fin octobre. Le gîte, le couvert et le temps partagé, en échange de quatre heures de travail par jour sur le terrain.",
-    cta: 'Postuler comme wwoofer',
-    href: 'https://inconnus-auberge.web.app/wwoofing',
-  },
-  {
-    kicker: 'Vivre sur place',
-    title: 'La communauté',
-    body: "Habiter le domaine dans le noyau qui fait vivre l'auberge au quotidien. Une place rare, hybride, pour qui a le goût de prendre soin d'un lieu et d'y greffer un peu de son âme.",
-    cta: 'Découvrir la place',
-    href: 'https://inconnus-auberge.web.app/communaute',
-  },
-];
-
+// ── 3 · VENIR AU DÔME ───────────────────────────────────────────────────────
+// A single warm invitation. The way in stays backstage; the CTA leads to the
+// existing intake on the inn site. Swap to aubergedesinconnus.com once DNS connects.
 const JoinSection: React.FC = () => (
-  <section className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
-    <Overline label="Comment nous rejoindre" />
-    <div className="grid gap-7 md:grid-cols-2">
-      {JOIN_PANELS.map((panel, i) => (
-        <Reveal key={panel.title} delay={i * 0.1}>
-          <Glass className="h-full p-9 md:p-12 flex flex-col" style={{ borderRadius: 24 }}>
-            <span className="font-cinzel uppercase block mb-5" style={{ fontSize: '10px', letterSpacing: '0.3em', color: GOLD }}>
-              {panel.kicker}
-            </span>
-            <h3 className="font-prata mb-5" style={{ color: CREAM, fontSize: 'clamp(1.9rem, 3.2vw, 2.7rem)', lineHeight: 1.06, letterSpacing: '-0.015em' }}>
-              {panel.title}
-            </h3>
-            <p
-              className="font-cormorant mb-9 flex-1"
-              style={{ color: 'rgba(255,250,240,0.78)', fontSize: 'clamp(1.15rem, 1.6vw, 1.32rem)', lineHeight: 1.6, fontWeight: 500, maxWidth: '46ch' }}
-            >
-              {panel.body}
-            </p>
-            <div>
-              <GoldLink href={panel.href}>{panel.cta}</GoldLink>
-            </div>
-          </Glass>
-        </Reveal>
-      ))}
-    </div>
+  <section className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-4xl mx-auto w-full">
+    <Overline label="Venir au Dôme" />
+    <Reveal>
+      <Glass className="p-9 md:p-14 flex flex-col items-start" style={{ borderRadius: 26 }}>
+        <h3
+          className="font-prata mb-6"
+          style={{ color: CREAM, fontSize: 'clamp(1.9rem, 3.4vw, 3rem)', lineHeight: 1.06, letterSpacing: '-0.015em', maxWidth: '20ch' }}
+        >
+          Y prendre place, le temps d'une saison
+        </h3>
+        <p
+          className="font-cormorant mb-9"
+          style={{ color: 'rgba(255,250,240,0.8)', fontSize: 'clamp(1.2rem, 1.7vw, 1.4rem)', lineHeight: 1.62, fontWeight: 500, maxWidth: '58ch' }}
+        >
+          Le Dôme accueille celles et ceux qui ont envie de s'arrêter un moment, pour une saison ou pour l'été entier, et de prendre part à la vie d'un lieu bien vivant. Si le coeur vous en dit, écrivez-nous et venez voir, et nous trouverons ensemble la place qui vous ressemble.
+        </p>
+        <GoldLink href="https://inconnus-auberge.web.app/wwoofing">Venir vivre une saison</GoldLink>
+      </Glass>
+    </Reveal>
   </section>
 );
 
