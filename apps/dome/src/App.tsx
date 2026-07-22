@@ -231,10 +231,10 @@ function Voies() {
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-5xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {VOIES.map((v, i) => (
-            <Reveal key={v.titre} delay={(i % 2) * 0.12} className={i % 2 === 1 ? 'sm:translate-y-8' : ''}>
-              <div className="rounded-[15px] bg-black/40 backdrop-blur-md border border-white/15 p-8 h-full group hover:border-[#c5a059]/40 transition-colors">
+            <Reveal key={v.titre} delay={(i % 2) * 0.12}>
+              <div className={`rounded-[15px] bg-black/40 backdrop-blur-md border border-white/15 p-8 h-full group hover:border-[#c5a059]/40 transition-colors ${i % 2 === 1 ? 'sm:mt-8' : ''}`}>
                 <span className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/5 mb-6 group-hover:border-[#c5a059]/70 transition-colors">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c5a059" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     {v.icone}
