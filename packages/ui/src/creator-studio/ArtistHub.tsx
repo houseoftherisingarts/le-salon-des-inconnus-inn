@@ -4087,12 +4087,18 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">Craft your pitch, build your skill tree & CV.</p>
                             </div>
 
-                            {/* Tool 4: Copyrighter (NEW) */}
+                            {/* Tool 4: Copyrighter (NEW) — BETA gated.
+                                The registry is simulated (fake hash, no upload, nothing
+                                persisted), so the card is non-clickable with a "Bientôt"
+                                pill until it's wired for real. Reactivate by restoring
+                                onClick={() => setActiveTool('COPYRIGHTER')} and cursor-pointer;
+                                CopyrighterModal + its renderToolModal branch are untouched. */}
                             <div
-                                onClick={() => setActiveTool('COPYRIGHTER')}
-                                className={`bg-black/40 border ${currentStyles.border} p-8 hover:bg-white/5 transition-all group cursor-pointer aspect-square flex flex-col items-center justify-center text-center`}
+                                title={language === 'EN' ? 'Coming soon' : 'Bientôt'}
+                                className={`relative bg-black/40 border ${currentStyles.border} p-8 aspect-square flex flex-col items-center justify-center text-center opacity-60 cursor-not-allowed select-none`}
                             >
-                                <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 text-neutral-400 group-hover:text-white`}>
+                                <div className="absolute top-4 right-4"><BientotPill language={language} /></div>
+                                <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 flex items-center justify-center bg-black/50 text-neutral-400`}>
                                     <Icons.Shield />
                                 </div>
                                 <h3 className="font-cinzel text-white uppercase font-bold text-xl">Copyrighter</h3>
