@@ -57,6 +57,58 @@ interface AdminCRMProps {
 const ADMIN_EMAILS = ['houseoftherisingarts@gmail.com', 'alex@lesalondesinconnus.com'];
 const EVENT_ID = 'ceilidh-mai-2026';
 
+// ─── Sections & audiences ─────────────────────────────────────────────────────
+// Every section the CRM can render. `hostaway` is new: the Hôtel audience's
+// honest "reservations live in Hostaway" view (there is no integration yet).
+type SectionId =
+  | 'dashboard' | 'members' | 'roster' | 'feature-requests' | 'collab-requests'
+  | 'inspirosphere' | 'ceilidh' | 'tickets' | 'emails' | 'wwoofing' | 'community'
+  | 'affiliates' | 'd20codes' | 'newsletter' | 'messages' | 'media' | 'showoffers'
+  | 'product-ladder' | 'hostaway';
+
+// The five audiences Alex switches between. One dashboard, one lens at a time.
+type Audience = 'HOTEL' | 'WWOOFERS' | 'COMMUNAUTE' | 'ARTISTES' | 'MAISON';
+
+const AUDIENCES: { id: Audience; label: string }[] = [
+  { id: 'HOTEL',      label: 'Hôtel' },
+  { id: 'WWOOFERS',   label: 'Wwoofers' },
+  { id: 'COMMUNAUTE', label: 'Communauté' },
+  { id: 'ARTISTES',   label: 'Artistes' },
+  { id: 'MAISON',     label: 'Maison' },
+];
+
+// Which sections live under each audience. The first id is that audience's
+// default landing tab. Every existing section appears under exactly one
+// audience, nothing is duplicated.
+const AUDIENCE_SECTIONS: Record<Audience, SectionId[]> = {
+  HOTEL:      ['hostaway', 'ceilidh', 'tickets', 'showoffers'],
+  WWOOFERS:   ['wwoofing', 'messages'],
+  COMMUNAUTE: ['community', 'members'],
+  ARTISTES:   ['roster', 'feature-requests', 'collab-requests', 'inspirosphere'],
+  MAISON:     ['dashboard', 'emails', 'affiliates', 'd20codes', 'newsletter', 'media', 'product-ladder'],
+};
+
+// Reverse lookup: which audience owns a given section. Lets the displayed
+// audience follow the active tab, so cross-links (e.g. dashboard tiles) stay
+// consistent without touching any section's internals.
+function audienceOf(section: SectionId): Audience {
+  for (const a of Object.keys(AUDIENCE_SECTIONS) as Audience[]) {
+    if (AUDIENCE_SECTIONS[a].includes(section)) return a;
+  }
+  return 'MAISON';
+}
+
+const AUDIENCE_STORAGE_KEY = 'salon-crm-audience';
+
+function readStoredAudience(): Audience {
+  if (typeof window === 'undefined') return 'MAISON';
+  try {
+    const v = window.localStorage.getItem(AUDIENCE_STORAGE_KEY);
+    if (v === 'HOTEL' || v === 'WWOOFERS' || v === 'COMMUNAUTE' || v === 'ARTISTES' || v === 'MAISON') return v;
+  } catch { /* noop */ }
+  return 'MAISON';
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function downloadCSV(filename: string, rows: string[][], headers: string[]) {
