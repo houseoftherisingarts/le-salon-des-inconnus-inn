@@ -1047,6 +1047,15 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
     );
 };
 
+// Small gold "Bientôt / Coming soon" pill used to mark beta-gated actions.
+// Glass + gold border, Cinzel uppercase — mirrors the café gating tile in
+// ArtsPage so the whole studio reads as an honest beta.
+const BientotPill: React.FC<{ language: 'EN' | 'FR'; className?: string }> = ({ language, className = '' }) => (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full border border-[#d4af37]/40 bg-black/40 backdrop-blur-md font-cinzel text-[9px] uppercase tracking-[0.25em] text-[#d4af37] whitespace-nowrap ${className}`}>
+        {language === 'EN' ? 'Coming soon' : 'Bientôt'}
+    </span>
+);
+
 // 3. Copyrighter Modal (New Tool)
 const CopyrighterModal: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose, themeStyles }) => {
     const [step, setStep] = useState(1);
