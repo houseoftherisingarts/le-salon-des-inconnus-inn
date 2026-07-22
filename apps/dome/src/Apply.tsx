@@ -125,7 +125,7 @@ export default function Apply() {
       if (!name.trim()) throw new Error('nom');
       if (activities.length === 0) throw new Error('activites');
       if (!wantText.trim() || !whyText.trim()) throw new Error('textes');
-      await setDoc(doc(db, 'coopApplications', user.uid), {
+      const payload: Record<string, unknown> = {
         uid: user.uid,
         name: name.trim(),
         email: user.email ?? '',
@@ -136,9 +136,10 @@ export default function Apply() {
         whyText: whyText.trim(),
         charteVersion: VERSION_CHARTE,
         status: existing ? 'mise-a-jour' : 'nouvelle',
-        createdAt: existing ? undefined : serverTimestamp(),
         updatedAt: serverTimestamp(),
-      }, { merge: true });
+      };
+      if (!existing) payload.createdAt = serverTimestamp();
+      await setDoc(doc(db, 'coopApplications', user.uid), payload, { merge: true });
       setExisting({ name, activities, council, wantText, whyText });
       setStep('done');
     });
