@@ -454,33 +454,11 @@ interface D20Code {
 
 export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }) => {
   const authed = !!user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase());
-  // Two-space CRM: admins pick "Inn" (everything operational — Ceilidh,
-  // wwoofing, tickets, etc.) or "Artistic Center" (Members + Creator Studio
-  // moderation, growing as Phase 1+ ships). The chooser is the default landing
-  // so the admin makes a deliberate choice each session.
-  type CrmMode = 'CHOOSE' | 'INN' | 'ARTISTIC';
-  const [crmMode, setCrmMode] = useState<CrmMode>('CHOOSE');
-
-  type SectionId =
-    | 'dashboard'
-    | 'members'
-    | 'roster'
-    | 'feature-requests'
-    | 'collab-requests'
-    | 'inspirosphere'
-    | 'ceilidh'
-    | 'tickets'
-    | 'emails'
-    | 'wwoofing'
-    | 'community'
-    | 'affiliates'
-    | 'd20codes'
-    | 'newsletter'
-    | 'messages'
-    | 'media'
-    | 'showoffers'
-    | 'product-ladder';
-  const [tab, setTab] = useState<SectionId>('dashboard');
+  // Audience-first CRM: one dashboard, five audiences (Hôtel, Wwoofers,
+  // Communauté, Artistes, Maison). The tab (active section) is the single
+  // source of truth; the displayed audience is derived from it. The last
+  // audience is persisted so Alex lands where he left.
+  const [tab, setTab] = useState<SectionId>(() => AUDIENCE_SECTIONS[readStoredAudience()][0]);
 
   const [registrations, setRegistrations] = useState<CRMRegistration[]>([]);
   const [showTickets, setShowTickets] = useState<ShowTicket[]>([]);
