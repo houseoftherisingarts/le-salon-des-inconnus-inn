@@ -54,6 +54,9 @@ const FAIRE: NavItem[] = [
   { view: 'CEILIDH',      label_fr: 'Ceilidh de Mai',   label_en: 'May Ceilidh',     desc_fr: 'Festival communautaire 2026',    desc_en: 'Community festival 2026',      icon: '🎶' },
   { view: 'WWOOFING',     label_fr: 'Wwoofing',         label_en: 'Wwoofing',        desc_fr: 'Vivez et travaillez sur le domaine', desc_en: 'Live and work on the estate', icon: '🌿' },
   { view: 'PPS',          label_fr: 'Soirées thématiques', label_en: 'Theme Evenings', desc_fr: 'Retraites d\'équipe, avec PPS Canada', desc_en: 'Team retreats, with PPS Canada', icon: '🎪' },
+  // Internal route (/creator) through the app's ViewState navigation, same as
+  // every other FAIRE entry. Marked Bêta while the studio ships as a beta.
+  { view: 'CREATOR_STUDIO', label_fr: 'Creator Studio · Bêta', label_en: 'Creator Studio · Beta', desc_fr: 'L\'atelier des artistes', desc_en: 'The artists\' workshop', icon: '🎨' },
 ];
 
 // Liens externes vers les autres propriétés de la famille des Inconnus.
