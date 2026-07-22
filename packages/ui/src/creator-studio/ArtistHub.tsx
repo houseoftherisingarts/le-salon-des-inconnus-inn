@@ -5287,10 +5287,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             )}
                                         </div>
 
-                                        {/* Claim affordance — shown only when unclaimed AND signed in.
+                                        {/* Claim affordance — shown only for a curated seed placeholder
+                                            (not a real publicRoster profile), when unclaimed AND signed in.
                                             Once any user claims this artist, the button vanishes for
                                             everyone forever (the rosterClaims doc is locked). */}
-                                        {isUnclaimed && accessLevel === 'MEMBER' && (
+                                        {!isRealProfile && isUnclaimed && accessLevel === 'MEMBER' && (
                                             <button
                                                 onClick={() => { setClaimingArtistId(artist.id); setClaimPassword(''); setClaimError(null); }}
                                                 className="mt-4 w-full py-2.5 text-[10px] font-cinzel uppercase tracking-[0.25em] border border-fuchsia-400/40 bg-fuchsia-500/5 text-fuchsia-200 hover:bg-fuchsia-500/15 hover:border-fuchsia-300 rounded transition-colors"
