@@ -272,9 +272,9 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
           {/* Background & Image */}
           <div className="absolute inset-0 bg-neutral-900" />
           <div className="absolute inset-0 bg-indigo-950/20" />
-          <img 
-            src="https://images.unsplash.com/photo-1545518514-ce8448f542b3?q=80&w=2000&auto=format&fit=crop" 
-            alt="Patron" 
+          <img
+            src="/media/Financement%20Artistique/kamy%20museum.png"
+            alt="Le Mécène"
             className={`w-full h-full object-cover transition-all duration-1000 ${hoveredSide === 'PATRON' ? 'scale-105 grayscale-0' : 'grayscale opacity-50'}`} 
           />
           
