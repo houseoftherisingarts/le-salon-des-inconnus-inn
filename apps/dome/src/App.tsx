@@ -174,7 +174,7 @@ const Hero: React.FC = () => {
           className="relative px-6 md:px-14 lg:px-20 pb-16 md:pb-20 w-full"
         >
           <Pill className="mb-7 px-5 py-2" style={{ color: GOLD }}>
-            La Coop · Le Dôme des Inconnus
+            Au coeur de la Petite-Nation
           </Pill>
           <h1
             className="font-prata"
@@ -186,13 +186,13 @@ const Hero: React.FC = () => {
               textShadow: '0 4px 40px rgba(0,0,0,0.6)',
             }}
           >
-            Vivre et bâtir <span style={{ color: GOLD }}>ensemble</span> au domaine
+            Le Dôme <span style={{ color: GOLD }}>des Inconnus</span>
           </h1>
           <p
             className="font-cormorant mt-7"
-            style={{ color: 'rgba(255,250,240,0.86)', fontSize: 'clamp(1.2rem, 2vw, 1.7rem)', lineHeight: 1.5, maxWidth: '54ch', fontWeight: 500 }}
+            style={{ color: 'rgba(255,250,240,0.88)', fontSize: 'clamp(1.2rem, 2vw, 1.7rem)', lineHeight: 1.55, maxWidth: '52ch', fontWeight: 500 }}
           >
-            Le Dôme, c'est la vie de la communauté du domaine : les jardins, la grande table, les feux, les saisons qu'on traverse côte à côte, tout autour d'une auberge familiale.
+            Il y a, au bout des chemins de la Petite-Nation, un domaine où la terre se cultive à plusieurs mains et où l'on peut poser ses racines le temps d'une saison. On y sème et l'on y récolte, on y partage ce que l'on crée, et quand le soir descend, on allume des feux autour desquels naissent les fêtes. La porte vous est grande ouverte.
           </p>
         </motion.div>
 
