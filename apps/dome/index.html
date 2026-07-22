@@ -3,22 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Le Dôme des Inconnus — Salle de spectacle · Namur, QC (à venir)</title>
-    <meta name="description" content="Salle de spectacle et plateforme de programmation à Maison Favier, Namur, QC. Lancement prochain." />
+    <title>La Coopérative · Le Dôme des Inconnus — 10 places · Namur, QC</title>
+    <meta name="description" content="Coopérative de solidarité au Dôme des Inconnus, Maison Favier, Namur. Dix places : cultiver la terre, vendre à la boutique, tenir le café, offrir des soins. 10 $ par mois, tu gardes tout ce que tu vends." />
 
-    <link rel="canonical" href="https://ledomdesinconnus.com/" />
-    <link rel="alternate" hreflang="fr" href="https://ledomdesinconnus.com/" />
-    <link rel="alternate" hreflang="x-default" href="https://ledomdesinconnus.com/" />
+    <link rel="canonical" href="https://ledomedesinconnus.com/" />
+    <link rel="alternate" hreflang="fr" href="https://ledomedesinconnus.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://ledomedesinconnus.com/" />
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "EventVenue",
-      "@id": "https://ledomdesinconnus.com/#venue",
-      "name": "Le Dôme des Inconnus",
-      "url": "https://ledomdesinconnus.com/",
+      "@type": "Organization",
+      "@id": "https://ledomedesinconnus.com/#coop",
+      "name": "La Coopérative du Dôme des Inconnus",
+      "url": "https://ledomedesinconnus.com/",
       "inLanguage": "fr-CA",
-      "description": "Salle de spectacle à Namur, QC — lancement prochain.",
+      "description": "Coopérative de solidarité à Maison Favier, Namur, QC. Dix places de membre : culture de la terre, boutique d'artisanat et d'œuvres, café, espaces de soins.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Namur",
@@ -31,13 +31,42 @@
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Prata&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
     <style>
       .font-cinzel { font-family: 'Cinzel', serif; }
-      .font-lato { font-family: 'Lato', sans-serif; }
+      .font-prata  { font-family: 'Prata', serif; }
+      .font-lato   { font-family: 'Lato', sans-serif; }
+
+      html { scroll-behavior: smooth; }
+      ::selection { background: #c5a059; color: #0a0808; }
+      :focus-visible { outline: 2px solid #c5a059; outline-offset: 2px; }
+
+      /* B2 — entrée staggered du hero */
+      .in > * { opacity: 0; transform: translateY(22px); animation: rise 1.1s cubic-bezier(.22,1,.36,1) forwards; }
+      .in > *:nth-child(1) { animation-delay: .20s; }
+      .in > *:nth-child(2) { animation-delay: .38s; }
+      .in > *:nth-child(3) { animation-delay: .56s; }
+      .in > *:nth-child(4) { animation-delay: .74s; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+
+      /* D2 — indice de défilement */
+      .cue { animation: cue 2.6s ease-in-out infinite; }
+      @keyframes cue { 0%,100% { opacity:.5; transform:translateY(0); } 50% { opacity:1; transform:translateY(4px); } }
+
+      /* Lueur ambiante lente du dôme */
+      .breathe { animation: breathe 9s ease-in-out infinite alternate; }
+      @keyframes breathe { from { opacity:.55; } to { opacity:.95; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        .in > * { animation: none; opacity: 1; transform: none; }
+        .cue, .breathe { animation: none; }
+        html { scroll-behavior: auto; }
+      }
     </style>
   </head>
-  <body class="bg-[#050505] text-neutral-100 antialiased">
+  <body class="bg-[#0a0808] text-neutral-100 antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
