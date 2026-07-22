@@ -1392,8 +1392,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             </section>
 
             {/* SECTION 2: FISCAL ADVANTAGES (STICKY SCROLL) */}
-            <section id="fiscal-section" className="relative w-full">
-                <div aria-hidden className="absolute inset-0 pointer-events-none"><div className="sticky top-0 w-full bg-center bg-cover" style={{ height: '100vh', backgroundImage: `url("/media/Financement%20Artistique/centered%20copy.jpg")` }} /></div>
+            <section id="fiscal-section" className="relative w-full bg-fixed bg-center bg-cover" style={{ backgroundImage: `url("/media/Financement%20Artistique/centered%20copy.jpg")` }}>
                 <div className="absolute inset-0 bg-black/90 md:bg-black/80" />
                 
                 <div className="relative z-10 flex flex-col md:flex-row max-w-none">
