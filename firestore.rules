@@ -592,6 +592,20 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // ── Candidatures coopérative (Le Dôme) ──────────────────────────────────
+    // Applications for the 10-member coop de solidarité on ledomedesinconnus.com.
+    // Same posture as communityApplications: keyed by uid, applicant owns their
+    // own doc, admins read all and manage status. The `category` field
+    // (membre / conseil) is how the CRM splits council volunteers out.
+    match /coopApplications/{userId} {
+      allow read:   if request.auth != null
+                    && (request.auth.uid == userId || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null
+                    && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
     // ── Production docs (Call sheets, shot lists, storyboards) ──────────────
     // Public read/write for collaborative production documents. Document IDs
     // are per-shoot (e.g. 'jour-1', 'jour-2'). The URL obscurity at
