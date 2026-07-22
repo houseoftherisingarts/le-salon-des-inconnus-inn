@@ -272,8 +272,13 @@ const App: React.FC = () => {
   // "Sign in with Google / Email". Mounts AuthModal next to the studio.
   const [creatorAuthOpen, setCreatorAuthOpen] = useState(false);
 
-  // Social space state
-  const [publicProfileUid, setPublicProfileUid] = useState<string | null>(null);
+  // Social space state. Seed the target uid from a /membre?uid=… query string
+  // on first load so a direct link (e.g. the Creator Studio roster's "View
+  // Dossier") resolves without an in-app navigation callback.
+  const [publicProfileUid, setPublicProfileUid] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    return new URLSearchParams(window.location.search).get('uid');
+  });
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
 
   // Super Profile slug — populated from the URL when on a /{username} path.
