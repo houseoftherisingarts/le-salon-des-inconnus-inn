@@ -6997,12 +6997,20 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         Every investment grants <span className="text-white font-bold">10 Points</span>.
                                     </p>
                                 </div>
-                                <button 
-                                    onClick={handleInvest}
-                                    className="px-8 py-4 bg-emerald-700 hover:bg-emerald-600 text-white font-bold uppercase tracking-widest text-xs rounded shadow-lg"
-                                >
-                                    Invest 100 Credits
-                                </button>
+                                {/* BETA gated — no real investment ledger or payment behind
+                                    this (the old handler confirm()'d then only added 10 points,
+                                    never deducting the advertised 100 credits). Disabled with a
+                                    "Bientôt" pill. Reactivate by restoring onClick={handleInvest}
+                                    and removing disabled. */}
+                                <div className="flex flex-col items-end gap-2 shrink-0">
+                                    <button
+                                        disabled
+                                        className="px-8 py-4 bg-emerald-900/40 border border-emerald-500/30 text-emerald-200/60 font-bold uppercase tracking-widest text-xs rounded opacity-60 cursor-not-allowed select-none"
+                                    >
+                                        {language === 'EN' ? 'Invest 100 Credits' : 'Investir 100 crédits'}
+                                    </button>
+                                    <BientotPill language={language} />
+                                </div>
                             </div>
                         </section>
 
