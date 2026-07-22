@@ -314,9 +314,9 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
           {/* Background & Image */}
           <div className="absolute inset-0 bg-neutral-900" />
           <div className="absolute inset-0 bg-fuchsia-950/20" />
-          <img 
-            src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=2000&auto=format&fit=crop" 
-            alt="Artist" 
+          <img
+            src="/media/Financement%20Artistique/kamy%20christina%20barcelona.jpg"
+            alt="Le Créateur"
             className={`w-full h-full object-cover transition-all duration-1000 ${hoveredSide === 'CREATOR' ? 'scale-105 saturate-150' : 'saturate-50 opacity-50'}`} 
           />
           
