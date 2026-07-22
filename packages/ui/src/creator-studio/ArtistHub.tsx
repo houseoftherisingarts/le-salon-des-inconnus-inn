@@ -7,7 +7,7 @@ import { KanbanTool } from './KanbanTool';
 import { CallSheetTool } from './CallSheetTool';
 import { GoogleGenAI, Modality } from "@google/genai";
 import {
-    getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc,
+    getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, addDoc, deleteDoc,
     collection, query, where, orderBy, onSnapshot,
     serverTimestamp, type Firestore,
 } from 'firebase/firestore';
