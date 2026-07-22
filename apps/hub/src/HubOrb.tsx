@@ -174,15 +174,18 @@ export function HubOrb() {
             <span className="font-cinzel uppercase block mb-4" style={{ fontSize: '10px', letterSpacing: '0.42em', color: GOLD }}>
               Qui sommes-nous
             </span>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.9)', fontSize: 'clamp(1.1rem, 1.7vw, 1.35rem)', lineHeight: 1.6, fontWeight: 500 }}>
-              Un inconnu, c'est quelqu'un que l'on n'a pas encore rencontré, et qui a pourtant sa place à notre table. Les Inconnus, c'est une famille de lieux au coeur de la Petite-Nation où l'on vient séjourner, créer et vivre ensemble, le temps d'un soir ou d'une saison. Trois maisons, une même idée: faire de l'étranger un ami.
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.9)', fontSize: 'clamp(1.1rem, 1.7vw, 1.35rem)', lineHeight: 1.62, fontWeight: 500 }}>
+              Un inconnu, c'est un ami que nous n'avons pas encore rencontré. Les Inconnus, c'est cette idée devenue un projet: bâtir, partout dans le monde, des lieux où l'étranger est reçu comme un proche, où les artistes créent et rencontrent celles et ceux qui les soutiennent, et où une communauté veille sur un lieu bien vivant. Un pont entre des mondes qui se croisent trop peu: les voyageurs et leurs hôtes, les créateurs et leurs mécènes, le concret et le rêve. La première maison a ouvert ses portes dans la Petite-Nation, au Québec. L'idée, elle, n'a pas de frontière: elle grandit pour prendre racine partout où des femmes et des hommes veulent créer et vivre ensemble.
+            </p>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.82)', fontSize: 'clamp(1rem, 1.4vw, 1.15rem)', lineHeight: 1.55, fontWeight: 500, marginTop: '1.1rem' }}>
+              Que vous soyez de passage ou venu pour rester, vous êtes déjà des nôtres.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4 mt-8 text-left">
               {[
-                ["L'Auberge", "On y pose ses valises, on dort sous les étoiles et l'on partage la grande table."],
-                ['Le Salon', "Le centre d'art, là où les créateurs exposent, vendent et rencontrent leurs mécènes."],
-                ['Le Dôme', 'La communauté qui fait vivre le domaine, cultive la terre et invente les fêtes.'],
+                ["L'Auberge", "La porte ouverte: un toit, une grande table, des feux le soir, là où le voyageur devient un familier."],
+                ['Le Salon', "L'art sans frontière: les créateurs y exposent, y vendent et rencontrent leurs mécènes, sur place comme en ligne."],
+                ['Le Dôme', 'La communauté: celles et ceux qui habitent le lieu, cultivent la terre et inventent la vie commune.'],
               ].map(([label, body]) => (
                 <div key={label}>
                   <span className="font-cinzel uppercase block mb-1.5" style={{ fontSize: '10px', letterSpacing: '0.28em', color: GOLD }}>
