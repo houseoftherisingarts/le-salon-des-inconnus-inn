@@ -3963,13 +3963,28 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
                 {/* Tabs */}
                 <div className="flex gap-2 overflow-x-auto">
-                    {(Object.keys(tabTranslations) as Tab[]).map(tab => (
+                    {(Object.keys(tabTranslations) as Tab[]).map(tab => {
+                        // Beta-gated tab: visible for the map, but non-clickable with
+                        // a "Bientôt / Coming soon" pill (café gating pattern).
+                        if (GATED_TABS.has(tab)) {
+                            return (
+                                <div
+                                    key={tab}
+                                    title={language === 'EN' ? 'Coming soon' : 'Bientôt'}
+                                    className="px-4 py-2 flex items-center gap-1.5 opacity-50 cursor-not-allowed select-none"
+                                >
+                                    <span className="font-cinzel font-bold text-[10px] uppercase tracking-[0.15em] text-neutral-500">{tabTranslations[tab]}</span>
+                                    <BientotPill language={language} className="!text-[7px] !px-1.5 !tracking-[0.15em]" />
+                                </div>
+                            );
+                        }
+                        return (
                         <button
                             key={tab}
                             onClick={() => { setActiveTab(tab); setHasNavigated(true); }}
                             className={`px-4 py-2 font-cinzel font-bold text-[10px] uppercase tracking-[0.15em] transition-all relative group
-                                ${activeTab === tab 
-                                    ? currentStyles.highlight 
+                                ${activeTab === tab
+                                    ? currentStyles.highlight
                                     : 'text-neutral-500 hover:text-neutral-300'
                                 }`}
                         >
@@ -3979,7 +3994,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             )}
                             {tabTranslations[tab]}
                         </button>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* Tokens (Was Essence) / Admin Toggle */}
