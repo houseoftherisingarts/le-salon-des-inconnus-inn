@@ -164,6 +164,38 @@ export function HubOrb() {
             </button>
           ))}
         </nav>
+
+        {/* Who we are — a short explainer under the selection. */}
+        <section className="hub-rise-late w-full max-w-3xl">
+          <div
+            className="mx-auto rounded-[20px] px-6 py-7 md:px-10 md:py-8 backdrop-blur-md text-center"
+            style={{ background: 'rgba(20,15,11,0.42)', border: '1px solid rgba(217,180,92,0.18)' }}
+          >
+            <span className="font-cinzel uppercase block mb-4" style={{ fontSize: '10px', letterSpacing: '0.42em', color: GOLD }}>
+              Qui sommes-nous
+            </span>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.9)', fontSize: 'clamp(1.1rem, 1.7vw, 1.35rem)', lineHeight: 1.6, fontWeight: 500 }}>
+              Un inconnu, c'est quelqu'un que l'on n'a pas encore rencontré, et qui a pourtant sa place à notre table. Les Inconnus, c'est une famille de lieux au coeur de la Petite-Nation où l'on vient séjourner, créer et vivre ensemble, le temps d'un soir ou d'une saison. Trois maisons, une même idée: faire de l'étranger un ami.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4 mt-8 text-left">
+              {[
+                ["L'Auberge", "On y pose ses valises, on dort sous les étoiles et l'on partage la grande table."],
+                ['Le Salon', "Le centre d'art, là où les créateurs exposent, vendent et rencontrent leurs mécènes."],
+                ['Le Dôme', 'La communauté qui fait vivre le domaine, cultive la terre et invente les fêtes.'],
+              ].map(([label, body]) => (
+                <div key={label}>
+                  <span className="font-cinzel uppercase block mb-1.5" style={{ fontSize: '10px', letterSpacing: '0.28em', color: GOLD }}>
+                    {label}
+                  </span>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.72)', fontSize: '1.04rem', lineHeight: 1.45, fontWeight: 500 }}>
+                    {body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
 
       <style>{`
