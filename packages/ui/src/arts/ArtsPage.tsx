@@ -281,7 +281,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
           {/* Content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
              <h2 className={`font-cinzel text-4xl md:text-6xl text-white mb-4 tracking-widest drop-shadow-xl transition-transform duration-700 ${hoveredSide === 'PATRON' ? '-translate-y-2' : ''}`}>
-               {language === 'EN' ? "The Patron" : "Le Mécène"}
+               {language === 'EN' ? "Patron" : "Mécène"}
              </h2>
              <p className={`font-lato text-sm tracking-[0.3em] text-indigo-200 border-b border-indigo-400/50 pb-1 transition-all duration-500 delay-100 ${hoveredSide === 'PATRON' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                {language === 'EN' ? "I AM A CUSTOMER" : "JE SUIS CLIENT"}
