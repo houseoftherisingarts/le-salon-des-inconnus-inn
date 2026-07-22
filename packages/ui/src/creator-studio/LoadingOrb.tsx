@@ -135,7 +135,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
                     Le Salon des Inconnus
                 </span>
                 <span
-                    className="font-studio-display font-black italic uppercase tracking-tight text-3xl text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_20px_rgba(34,211,238,0.7)]"
+                    className="font-studio-display font-black uppercase tracking-tight text-3xl text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_20px_rgba(34,211,238,0.7)]"
                 >
                     {label}
                 </span>

@@ -1379,7 +1379,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // read as siblings of the welcome-hero "STUDIO" wordmark. Other themes
     // already feel coherent with cinzel.
     const pageTitleClass = theme === 'RAINBOW'
-        ? 'font-studio-display font-black italic uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.6)]'
+        ? 'font-studio-display font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.6)]'
         : 'font-cinzel text-white';
 
     // Per-theme form styling — drives the Hot Seat submission form (and any
@@ -1479,7 +1479,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         <div className="flex items-baseline gap-3 mb-3">
             <span className={`font-mono text-[11px] tracking-[0.3em] tabular-nums ${formStyles.accentText} opacity-70`}>{n}</span>
             <div className="flex-1 min-w-0">
-                <h4 className={`text-sm font-cinzel uppercase tracking-[0.25em] ${theme === 'COMIC' ? 'font-black italic' : ''}`}>
+                <h4 className={`text-sm font-cinzel uppercase tracking-[0.25em] ${theme === 'COMIC' ? 'font-black' : ''}`}>
                     {language === 'FR' ? fr : en}
                 </h4>
                 {(helpEn || helpFr) && (

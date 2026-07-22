@@ -195,7 +195,7 @@ export const ChatRoom: React.FC<Props> = ({
                     <header className={`px-5 py-4 border-b ${themeStyles.border} flex items-center gap-4`}>
                         <span className={`text-2xl ${themeStyles.highlight}`}>{room.icon}</span>
                         <div className="flex-1 min-w-0">
-                            <h3 className={`text-xl font-cinzel uppercase tracking-wider ${accent} ${isNeon ? 'font-black italic drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]' : ''}`}>
+                            <h3 className={`text-xl font-cinzel uppercase tracking-wider ${accent} ${isNeon ? 'font-black drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]' : ''}`}>
                                 {language === 'FR' ? room.fr : room.en}
                             </h3>
                             <p className="text-[11px] text-neutral-500 mt-0.5">

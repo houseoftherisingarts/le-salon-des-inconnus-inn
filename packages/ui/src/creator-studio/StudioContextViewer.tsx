@@ -74,7 +74,7 @@ interface Props {
 // today; the other themes already feel coherent with the default font-prata.
 const themedTitleClass = (theme: string): string => {
     if (theme === 'RAINBOW') {
-        return 'font-studio-display font-black italic uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_25px_rgba(34,211,238,0.7)] leading-[0.95]';
+        return 'font-studio-display font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_25px_rgba(34,211,238,0.7)] leading-[0.95]';
     }
     return 'font-prata text-white leading-[0.95]';
 };
@@ -488,7 +488,7 @@ const WelcomeHero: React.FC<{ theme: string; language: 'EN' | 'FR' }> = ({ theme
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[200px] bg-[#facc15] -rotate-12 opacity-5 pointer-events-none" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[200px] bg-[#ef4444] rotate-6 opacity-5 pointer-events-none" />
                 <div className="relative z-10 flex flex-col items-center">
-                    <h1 className="welcome-line font-studio-display font-black italic text-7xl md:text-[8rem] leading-[0.85] tracking-tighter transform -skew-x-12 relative z-10"
+                    <h1 className="welcome-line font-studio-display font-black text-7xl md:text-[8rem] leading-[0.85] tracking-tighter transform -skew-x-12 relative z-10"
                         style={{
                             color: 'transparent',
                             WebkitTextStroke: '3px white',
@@ -499,12 +499,12 @@ const WelcomeHero: React.FC<{ theme: string; language: 'EN' | 'FR' }> = ({ theme
                     <div className="welcome-line relative mt-3 transform skew-x-[-12deg]" style={{ animationDelay: '160ms' }}>
                         <div className="absolute inset-0 bg-black translate-x-3 translate-y-3" />
                         <div className="relative bg-[#facc15] border-4 border-black px-6 py-1">
-                            <h1 className="font-studio-display font-black italic text-7xl md:text-[8rem] text-black leading-[0.85] tracking-tighter">STUDIO</h1>
+                            <h1 className="font-studio-display font-black text-7xl md:text-[8rem] text-black leading-[0.85] tracking-tighter">STUDIO</h1>
                         </div>
                     </div>
                     <div className="welcome-line mt-6 transform rotate-2" style={{ animationDelay: '320ms' }}>
                         <div className="bg-[#22d3ee] border-4 border-black px-5 py-1.5 shadow-[4px_4px_0px_#000]">
-                            <span className="font-studio-display font-bold italic text-black text-base md:text-xl uppercase tracking-widest">
+                            <span className="font-studio-display font-bold text-black text-base md:text-xl uppercase tracking-widest">
                                 {language === 'EN' ? 'SKILL TREE ACTIVE' : 'ARBRE DE TALENTS ACTIF'}
                             </span>
                         </div>
@@ -562,7 +562,7 @@ const WelcomeHero: React.FC<{ theme: string; language: 'EN' | 'FR' }> = ({ theme
                 <span className="welcome-line block text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.5)]">
                     {language === 'EN' ? 'CREATOR' : 'STUDIO'}
                 </span>
-                <span className="block italic text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_35px_rgba(34,211,238,0.9)] filter neon-text">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_35px_rgba(34,211,238,0.9)] filter neon-text">
                     {language === 'EN' ? 'STUDIO' : 'CRÉATIF'}
                 </span>
             </h1>

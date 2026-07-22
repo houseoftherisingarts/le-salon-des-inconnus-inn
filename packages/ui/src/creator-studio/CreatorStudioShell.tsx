@@ -272,7 +272,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  // 2XKO / Borderlands Inspired - RETHOUGHT
                  return {
                      bg: 'bg-[#121214]', // Dark Zinc
-                     text: 'text-white font-sans font-black italic tracking-tight',
+                     text: 'text-white font-sans font-black tracking-tight',
                      highlight: 'text-[#facc15] drop-shadow-[2px_2px_0px_#000]',
                      // Pop Art Borders: Thick Black + Vibrant Shadow
                      border: 'border-2 border-black shadow-[4px_4px_0px_#facc15]', 
@@ -286,7 +286,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  return {
                      bg: 'bg-[#050505]',
                      text: 'text-white font-sans',
-                     highlight: 'text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 italic', 
+                     highlight: 'text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300', 
                      border: 'border-white/20',
                      card: 'bg-transparent border-transparent', 
                      gridItem: (item: any) => item,
