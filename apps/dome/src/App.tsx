@@ -372,16 +372,16 @@ const CharteSection: React.FC = () => (
 // ── 5 · LA CANDIDATURE ────────────────────────────────────────────────────────
 const CandidatureSection: React.FC = () => {
   const etapes = [
-    { n: '01', t: 'Ton profil', d: 'Avec Google ou ton courriel.' },
-    { n: '02', t: 'La charte', d: "Toute la documentation, avant de t'engager." },
-    { n: '03', t: 'Ta candidature', d: 'Tes voies, tes mots, ta place au conseil si tu la veux.' },
+    { n: '01', t: 'Ton profil', d: 'Avec Google ou votre courriel.' },
+    { n: '02', t: 'La charte', d: "Toute la documentation, avant de vous engager." },
+    { n: '03', t: 'Ta candidature', d: 'Vos voies, vos mots, votre place au conseil si vous la voulez.' },
   ];
   return (
     <section id="candidature" className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
       <Overline label="La candidature" />
       <div className="grid lg:grid-cols-[1fr,1.15fr] gap-12 lg:gap-16 items-start">
         <Reveal>
-          <SectionTitle max="18ch">On choisit dix personnes. Dis-nous pourquoi toi</SectionTitle>
+          <SectionTitle max="18ch">Nous ne retenons que dix personnes. Dites-nous pourquoi ce sera vous</SectionTitle>
           <p
             className="font-cormorant mt-6"
             style={{ color: 'rgba(255,250,240,0.76)', fontSize: 'clamp(1.15rem, 1.6vw, 1.35rem)', lineHeight: 1.6, fontWeight: 500, maxWidth: '44ch' }}

@@ -172,10 +172,10 @@ export default function Apply() {
           <motion.div key="auth" {...stepMotion} className={`${glass} p-6 md:p-10`}>
             <Eyebrow>Étape 1 · Ton profil</Eyebrow>
             <h3 className="font-prata text-2xl md:text-3xl text-[#f3e5ab] mt-4 mb-2">
-              Entre par la grande porte
+              Entrez par la grande porte
             </h3>
             <p className="font-lato text-sm text-neutral-400 mb-8 max-w-md">
-              Crée ton profil pour déposer ta candidature. Il te suivra du dépôt jusqu'à la vie de membre.
+              Créez votre profil pour déposer votre candidature. Il vous suivra du dépôt jusqu'à la vie de membre.
             </p>
 
             <button
@@ -194,7 +194,7 @@ export default function Apply() {
 
             <div className="space-y-3">
               {signupMode && (
-                <input className={field} type="text" placeholder="Ton nom" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+                <input className={field} type="text" placeholder="Votre nom" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
               )}
               <input className={field} type="email" placeholder="Courriel" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
               <input className={field} type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={signupMode ? 'new-password' : 'current-password'} />
@@ -222,7 +222,7 @@ export default function Apply() {
               <div>
                 <Eyebrow>Étape 2 · La charte</Eyebrow>
                 <h3 className="font-prata text-2xl md:text-3xl text-[#f3e5ab] mt-4">
-                  Lis avant de signer
+                  Lisez avant de signer
                 </h3>
               </div>
               <span className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-neutral-500 mt-1">{VERSION_CHARTE}</span>
@@ -274,18 +274,18 @@ export default function Apply() {
           <motion.div key="form" {...stepMotion} className={`${glass} p-6 md:p-10`}>
             <Eyebrow>Étape 3 · Ta candidature</Eyebrow>
             <h3 className="font-prata text-2xl md:text-3xl text-[#f3e5ab] mt-4 mb-8">
-              Ce que tes mains veulent faire
+              Ce que vos mains veulent faire
             </h3>
 
             <div className="space-y-8">
               <div>
-                <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">Ton nom</label>
-                <input className={field} type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ton nom" />
+                <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">Votre nom</label>
+                <input className={field} type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Votre nom" />
               </div>
 
               <div>
                 <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">
-                  Tes voies <span className="text-neutral-600 normal-case tracking-normal font-lato">(choisis-en une ou plusieurs)</span>
+                  Vos voies <span className="text-neutral-600 normal-case tracking-normal font-lato">(choisissez-en une ou plusieurs)</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {ACTIVITES.map((a) => {
@@ -317,22 +317,22 @@ export default function Apply() {
               </label>
 
               <div>
-                <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">Ce que tu voudrais vivre ici</label>
+                <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">Ce que vous voudriez vivre ici</label>
                 <textarea
                   className={`${field} min-h-[110px] resize-y`}
                   value={wantText}
                   onChange={(e) => setWantText(e.target.value)}
-                  placeholder="Ce que tu cultiverais, créerais ou offrirais dans cette collaboration."
+                  placeholder="Ce que vous cultiveriez, créeriez ou offririez dans cette collaboration."
                 />
               </div>
 
               <div>
-                <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">Pourquoi toi</label>
+                <label className="block font-cinzel text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">Pourquoi vous</label>
                 <textarea
                   className={`${field} min-h-[110px] resize-y`}
                   value={whyText}
                   onChange={(e) => setWhyText(e.target.value)}
-                  placeholder="Ce que tu apporterais aux neuf autres."
+                  placeholder="Ce que vous apporteriez aux neuf autres."
                 />
               </div>
             </div>
@@ -361,8 +361,8 @@ export default function Apply() {
             </span>
             <h3 className="font-prata text-2xl md:text-3xl text-[#f3e5ab] mb-3">Candidature reçue</h3>
             <p className="font-lato text-sm text-neutral-400 max-w-md mx-auto leading-relaxed">
-              Merci {existing?.name?.split(' ')[0] ?? ''}. On lit chaque candidature avec attention et on te revient rapidement.
-              {existing?.council && ' Ton intérêt pour le conseil est noté.'}
+              Merci {existing?.name?.split(' ')[0] ?? ''}. Nous lisons chaque candidature avec attention et nous vous revenons rapidement.
+              {existing?.council && ' Votre intérêt pour le conseil est noté.'}
             </p>
             <div className="flex items-center justify-center gap-6 mt-8">
               <button
@@ -402,13 +402,13 @@ export default function Apply() {
 function messageErreur(e: unknown): string {
   const code = (e as { code?: string; message?: string })?.code ?? '';
   const msg = (e as { message?: string })?.message ?? '';
-  if (msg === 'nom') return 'Écris ton nom pour continuer.';
-  if (msg === 'activites') return 'Choisis au moins une voie.';
-  if (msg === 'textes') return 'Les deux réponses nous aident à te choisir : prends le temps de les écrire.';
-  if (code.includes('email-already-in-use')) return 'Ce courriel a déjà un profil. Essaie de te reconnecter.';
+  if (msg === 'nom') return 'Écrivez votre nom pour continuer.';
+  if (msg === 'activites') return 'Choisissez au moins une voie.';
+  if (msg === 'textes') return 'Les deux réponses nous aident à vous choisir : prenez le temps de les écrire.';
+  if (code.includes('email-already-in-use')) return 'Ce courriel a déjà un profil. Essayez de vous reconnecter.';
   if (code.includes('invalid-email')) return 'Ce courriel ne semble pas valide.';
-  if (code.includes('weak-password')) return 'Choisis un mot de passe de six caractères ou plus.';
+  if (code.includes('weak-password')) return 'Choisissez un mot de passe de six caractères ou plus.';
   if (code.includes('wrong-password') || code.includes('invalid-credential')) return 'Courriel ou mot de passe incorrect.';
   if (code.includes('popup-closed-by-user')) return '';
-  return 'Un pépin est survenu. Réessaie dans un instant.';
+  return 'Un pépin est survenu. Réessayez dans un instant.';
 }
