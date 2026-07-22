@@ -375,6 +375,17 @@ const DomeStyle: React.FC = () => (
     @keyframes domeGlow { 0%,100% { transform: translate3d(0,0,0) scale(1); opacity:.9; } 50% { transform: translate3d(3%,4%,0) scale(1.12); opacity:1; } }
     .dome-scroll { animation: domeScroll 2.6s ease-in-out infinite; }
     @keyframes domeScroll { 0%,100% { opacity:.3; transform: translate(-50%,0); } 50% { opacity:.9; transform: translate(-50%,6px); } }
+    .dome-embers { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .dome-ember { position:absolute; width:5px; height:5px; border-radius:9999px;
+      background: radial-gradient(circle, rgba(244,208,132,0.95), rgba(217,180,92,0) 70%);
+      opacity:0; will-change: transform, opacity;
+      animation-name: domeEmber; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+    @keyframes domeEmber {
+      0%   { transform: translate3d(0,0,0) scale(0.6); opacity:0; }
+      12%  { opacity:0.85; }
+      55%  { opacity:0.55; }
+      100% { transform: translate3d(20px,-190px,0) scale(1.2); opacity:0; }
+    }
     .dome-img { transition: transform 1.2s cubic-bezier(0.16,1,0.3,1); }
     .dome-imgwrap:hover .dome-img { transform: scale(1.05); }
     .dome-pill { background: rgba(20,15,11,0.5); border: 1px solid rgba(217,180,92,0.22); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
