@@ -5215,10 +5215,16 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {ARTISTS_ROSTER.map((artist) => {
+                            {rosterList.map((artist) => {
                                 const claim = rosterClaims[String(artist.id)];
                                 const isClaimedByMe = claim?.uid === currentUser?.uid;
                                 const isUnclaimed = !claim;
+                                // A live publicRoster entry carries its own uid (a real,
+                                // already-owned member profile); a curated seed does not.
+                                const isRealProfile = !!artist.uid;
+                                // Whose public profile the "View Dossier" link points to:
+                                // the entry's own uid, or the uid of whoever claimed a seed.
+                                const dossierUid = artist.uid || claim?.uid || null;
                                 return (
                                 <div key={artist.id} className={`group bg-[#1a1a1a] border border-white/10 hover:${currentStyles.border} transition-all duration-300 overflow-hidden relative`}>
                                     {/* Image */}
