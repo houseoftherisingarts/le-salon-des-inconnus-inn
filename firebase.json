@@ -203,6 +203,138 @@
             }
           ]
         }
+      ],
+      "redirects": [
+        {
+          "source": "/reserve-cine",
+          "destination": "https://aubergedesinconnus.com/reserve-cine",
+          "type": 301
+        },
+        {
+          "source": "/massage",
+          "destination": "https://aubergedesinconnus.com/massage",
+          "type": 301
+        },
+        {
+          "source": "/about",
+          "destination": "https://aubergedesinconnus.com/about",
+          "type": 301
+        },
+        {
+          "source": "/guide",
+          "destination": "https://aubergedesinconnus.com/guide",
+          "type": 301
+        },
+        {
+          "source": "/petite-monnaie",
+          "destination": "https://aubergedesinconnus.com/petite-monnaie",
+          "type": 301
+        },
+        {
+          "source": "/cuisine",
+          "destination": "https://aubergedesinconnus.com/cuisine",
+          "type": 301
+        },
+        {
+          "source": "/evenements",
+          "destination": "https://aubergedesinconnus.com/evenements",
+          "type": 301
+        },
+        {
+          "source": "/ceilidh",
+          "destination": "https://aubergedesinconnus.com/ceilidh",
+          "type": 301
+        },
+        {
+          "source": "/wwoofing",
+          "destination": "https://aubergedesinconnus.com/wwoofing",
+          "type": 301
+        },
+        {
+          "source": "/soiree-thematique-pps",
+          "destination": "https://aubergedesinconnus.com/soiree-thematique-pps",
+          "type": 301
+        },
+        {
+          "source": "/communaute",
+          "destination": "https://aubergedesinconnus.com/communaute",
+          "type": 301
+        },
+        {
+          "source": "/don",
+          "destination": "https://aubergedesinconnus.com/don",
+          "type": 301
+        },
+        {
+          "source": "/pensees",
+          "destination": "https://aubergedesinconnus.com/pensees",
+          "type": 301
+        },
+        {
+          "source": "/invitation",
+          "destination": "https://aubergedesinconnus.com/invitation",
+          "type": 301
+        },
+        {
+          "source": "/entreprises",
+          "destination": "https://aubergedesinconnus.com/entreprises",
+          "type": 301
+        },
+        {
+          "source": "/forfaits",
+          "destination": "https://aubergedesinconnus.com/forfaits",
+          "type": 301
+        },
+        {
+          "source": "/profil",
+          "destination": "https://aubergedesinconnus.com/profil",
+          "type": 301
+        },
+        {
+          "source": "/membre",
+          "destination": "https://aubergedesinconnus.com/membre",
+          "type": 301
+        },
+        {
+          "source": "/messages",
+          "destination": "https://aubergedesinconnus.com/messages",
+          "type": 301
+        },
+        {
+          "source": "/admin",
+          "destination": "https://aubergedesinconnus.com/admin",
+          "type": 301
+        },
+        {
+          "source": "/highstest",
+          "destination": "https://aubergedesinconnus.com/highstest",
+          "type": 301
+        },
+        {
+          "source": "/mainpagetest2",
+          "destination": "https://aubergedesinconnus.com/mainpagetest2",
+          "type": 301
+        },
+        {
+          "source": "/mainpagetest3",
+          "destination": "https://aubergedesinconnus.com/mainpagetest3",
+          "type": 301
+        },
+        {
+          "source": "/pensees/:date",
+          "destination": "https://aubergedesinconnus.com/pensees/:date",
+          "type": 301
+        },
+        {
+          "source": "/c/:uid/:slug",
+          "destination": "https://aubergedesinconnus.com/c/:uid/:slug",
+          "type": 301
+        },
+        {
+          "source": "/creator",
+          "destination": "/createur",
+          "type": 301
+        }
       ]
     },
     {
