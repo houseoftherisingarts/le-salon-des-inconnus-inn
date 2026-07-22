@@ -6465,6 +6465,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </div>
                                 ))}
                             </div>
+                            )}
                         </div>
                     </div>
                 )}
