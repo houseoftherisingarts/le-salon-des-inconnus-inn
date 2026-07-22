@@ -1524,7 +1524,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             </section>
 
             {/* SECTION 3: FINANCING (STACKED LAYOUT) */}
-            <section id="financing-section" className="relative min-h-screen flex flex-col items-center bg-fixed bg-center bg-cover py-24" style={{ backgroundImage: `url("/media/Financement%20Artistique/kamy%20inside.jpg")` }}>
+            <section id="financing-section" className="relative min-h-screen flex flex-col items-center py-24">
+                <div aria-hidden className="absolute inset-0 pointer-events-none"><div className="sticky top-0 w-full bg-center bg-cover" style={{ height: '100vh', backgroundImage: `url("/media/Financement%20Artistique/kamy%20inside.jpg")` }} /></div>
                 <div className="absolute inset-0 bg-black/70" />
                 
                 {/* 1. Header Text (Top) */}
