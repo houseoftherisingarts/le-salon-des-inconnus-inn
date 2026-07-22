@@ -305,7 +305,7 @@ function Charte() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2 max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2">
           {CHARTE.map((a, i) => (
             <Reveal key={a.numero} delay={(i % 2) * 0.08}>
               <details className="group border-b border-white/10 py-5">
