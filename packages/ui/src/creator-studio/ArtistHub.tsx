@@ -6967,13 +6967,21 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             ))}
                                         </ul>
                                         
-                                        <HexButton 
-                                            themeStyles={currentStyles} 
-                                            onClick={() => handleUpgradeMembership(tier.id as MembershipTier)}
-                                            className={`w-full ${idx === 1 ? 'border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black' : ''}`}
-                                        >
-                                            {membershipTier === tier.id ? 'Current Plan' : 'Subscribe'}
-                                        </HexButton>
+                                        {/* BETA gated — no payment processor behind this yet
+                                            (membershipTier is never persisted; the old handler just
+                                            alert()'d). Disabled with a "Bientôt" pill. Reactivate by
+                                            restoring onClick={() => handleUpgradeMembership(tier.id as MembershipTier)}
+                                            and removing disabled. */}
+                                        <div className="w-full flex flex-col items-center gap-2">
+                                            <HexButton
+                                                themeStyles={currentStyles}
+                                                disabled
+                                                className={`w-full ${idx === 1 ? 'border-[#d4af37] text-[#d4af37]' : ''}`}
+                                            >
+                                                {membershipTier === tier.id ? (language === 'EN' ? 'Current Plan' : 'Plan actuel') : (language === 'EN' ? 'Subscribe' : "S'abonner")}
+                                            </HexButton>
+                                            <BientotPill language={language} />
+                                        </div>
                                     </div>
                                 ))}
                             </div>
