@@ -402,17 +402,49 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          )}
                      </p>
 
-                     <div className="space-y-3">
+                     <div className="space-y-3 text-left">
                          <button
-                             onClick={onRequestSignIn}
-                             className="w-full py-4 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-xs uppercase tracking-[0.35em] hover:bg-[#d4b06a] hover:scale-[1.01] transition-all"
+                             onClick={() => (onRequestSignIn ? onRequestSignIn() : googleSignIn())}
+                             disabled={authBusy}
+                             className="w-full py-4 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-xs uppercase tracking-[0.35em] hover:bg-[#d4b06a] hover:scale-[1.01] transition-all disabled:opacity-50"
                              style={{ boxShadow: '0 6px 24px rgba(197,160,89,0.3), inset 0 1px 0 rgba(255,255,255,0.2)' }}
                          >
-                             {t('Sign in', 'Se connecter')}
+                             {t('Continue with Google', 'Continuer avec Google')}
                          </button>
-                         <p className="text-[9px] font-cinzel uppercase tracking-[0.3em] text-neutral-600 py-1">
-                             {t('Google · Email · Phone', 'Google · Courriel · Téléphone')}
-                         </p>
+
+                         <div className="flex items-center gap-3 py-1 text-neutral-700">
+                             <span className="flex-1 h-px bg-white/10" />
+                             <span className="text-[9px] font-cinzel uppercase tracking-[0.35em]">{t('or by email', 'ou par courriel')}</span>
+                             <span className="flex-1 h-px bg-white/10" />
+                         </div>
+
+                         {authMode === 'signup' && (
+                             <input value={authName} onChange={e => setAuthName(e.target.value)} type="text" autoComplete="name"
+                                 placeholder={t('Your name', 'Votre nom')}
+                                 className="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 font-lato text-sm text-neutral-100 placeholder:text-neutral-600 focus:border-[#c5a059]/60 outline-none transition-colors" />
+                         )}
+                         <input value={authEmail} onChange={e => setAuthEmail(e.target.value)} type="email" autoComplete="email"
+                             placeholder={t('Email', 'Courriel')}
+                             className="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 font-lato text-sm text-neutral-100 placeholder:text-neutral-600 focus:border-[#c5a059]/60 outline-none transition-colors" />
+                         <input value={authPassword} onChange={e => setAuthPassword(e.target.value)} type="password"
+                             autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
+                             onKeyDown={e => { if (e.key === 'Enter') emailAuth(); }}
+                             placeholder={t('Password', 'Mot de passe')}
+                             className="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 font-lato text-sm text-neutral-100 placeholder:text-neutral-600 focus:border-[#c5a059]/60 outline-none transition-colors" />
+                         <button
+                             onClick={emailAuth}
+                             disabled={authBusy}
+                             className="w-full py-3.5 border border-[#c5a059]/50 text-[#f3e5ab] font-cinzel text-[11px] uppercase tracking-[0.3em] hover:bg-[#c5a059]/10 hover:border-[#c5a059] transition-all disabled:opacity-50"
+                         >
+                             {authBusy ? t('Please wait', 'Un instant') : authMode === 'signup' ? t('Create my account', 'Créer mon compte') : t('Sign in', 'Se connecter')}
+                         </button>
+                         {authError && <p className="text-[11px] text-rose-300 font-lato text-center pt-1">{authError}</p>}
+                         <button
+                             onClick={() => { setAuthMode(m => m === 'signup' ? 'signin' : 'signup'); setAuthError(''); }}
+                             className="w-full text-center text-[10px] text-neutral-500 hover:text-[#f3e5ab] font-lato pt-1 transition-colors"
+                         >
+                             {authMode === 'signup' ? t('Already have an account? Sign in', 'Déjà un compte ? Se connecter') : t('New here? Create an account', 'Nouveau ici ? Créer un compte')}
+                         </button>
                      </div>
 
                      <div className="flex items-center gap-3 my-8 text-neutral-700">
