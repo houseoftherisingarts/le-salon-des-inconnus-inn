@@ -323,7 +323,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
           {/* Content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
              <h2 className={`font-cinzel text-4xl md:text-6xl text-white mb-4 tracking-widest drop-shadow-xl transition-transform duration-700 ${hoveredSide === 'CREATOR' ? '-translate-y-2' : ''}`}>
-               {language === 'EN' ? "The Creator" : "Le Créateur"}
+               {language === 'EN' ? "Artist" : "Artiste"}
              </h2>
              <p className={`font-lato text-sm tracking-[0.3em] text-fuchsia-200 border-b border-fuchsia-400/50 pb-1 transition-all duration-500 delay-100 ${hoveredSide === 'CREATOR' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                {language === 'EN' ? "I AM AN ARTIST" : "JE SUIS ARTISTE"}
