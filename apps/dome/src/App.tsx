@@ -1,6 +1,9 @@
-import Apply from './Apply';
+import { Suspense, lazy } from 'react';
 import { CHARTE, VERSION_CHARTE } from './charte';
 import { Atmosphere, Eyebrow, Reveal } from './motion';
+
+// Firebase ne se charge qu'avec la section candidature, la landing reste légère
+const Apply = lazy(() => import('./Apply'));
 
 export default function App() {
   return (
