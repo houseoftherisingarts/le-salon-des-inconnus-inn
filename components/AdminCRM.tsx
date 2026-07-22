@@ -1046,128 +1046,6 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     onNavigate('INN');
   };
 
-  // ── CRM space chooser ──────────────────────────────────────────────────
-  // Two distinct administrative spaces. Inn covers operations (Ceilidh,
-  // bookings, wwoofing). Artistic covers the Creator Studio surfaces
-  // (artist curation, artist submissions). Each has its own AdminShell
-  // instance below, switchable via the "Changer d'espace" button in the
-  // sidebar.
-  if (crmMode === 'CHOOSE') {
-    const onlineNow = members.filter(m => m.isArtist).length;
-    return (
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 font-lato">
-        <div className="w-full max-w-4xl">
-          <div className="text-center mb-12">
-            <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] mb-3">
-              Le Salon des Inconnus
-            </p>
-            <h1 className="font-prata text-[#f3e5ab] text-4xl md:text-5xl">Espace administratif</h1>
-            <p className="font-josefin text-neutral-500 text-xs uppercase tracking-[0.35em] mt-3">
-              Choisissez un espace
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Inn CRM */}
-            <button
-              onClick={() => enterCrmMode('INN')}
-              className="group relative text-left bg-[#0a0a0a] border border-white/10 hover:border-[#c5a059]/50 hover:-translate-y-1 transition-all p-8 overflow-hidden"
-            >
-              <div
-                aria-hidden
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                style={{
-                  background: 'radial-gradient(ellipse at 30% 20%, rgba(197,160,89,0.08), transparent 60%)',
-                }}
-              />
-              <div className="relative">
-                <div className="flex items-baseline justify-between mb-6">
-                  <span className="font-cinzel text-[#c5a059] text-[9px] uppercase tracking-[0.45em]">01 — Auberge</span>
-                  <span className="font-cinzel text-neutral-700 text-[10px] uppercase tracking-widest">CRM</span>
-                </div>
-                <h2 className="font-prata text-[#f3e5ab] text-2xl md:text-3xl mb-4 leading-tight">
-                  L'Auberge
-                </h2>
-                <p className="font-lato text-neutral-400 text-sm leading-relaxed mb-8">
-                  Inscriptions Ceilidh, billets, wwoofing, affiliés, codes D20, infolettre, médiathèque, spectacles.
-                </p>
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/5">
-                  <div>
-                    <p className="font-cinzel text-[#f3e5ab] text-xl">{counts.ceilidh}</p>
-                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Ceilidh</p>
-                  </div>
-                  <div>
-                    <p className="font-cinzel text-[#f3e5ab] text-xl">{counts.tickets}</p>
-                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Billets</p>
-                  </div>
-                  <div>
-                    <p className="font-cinzel text-[#f3e5ab] text-xl">{counts.showoffers}</p>
-                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Spectacles</p>
-                  </div>
-                </div>
-                <span className="block mt-8 font-cinzel text-[10px] uppercase tracking-[0.35em] text-neutral-500 group-hover:text-[#c5a059] transition-colors">
-                  Entrer →
-                </span>
-              </div>
-            </button>
-
-            {/* Artistic CRM */}
-            <button
-              onClick={() => enterCrmMode('ARTISTIC')}
-              className="group relative text-left bg-[#0a0a0a] border border-white/10 hover:border-fuchsia-400/40 hover:-translate-y-1 transition-all p-8 overflow-hidden"
-            >
-              <div
-                aria-hidden
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                style={{
-                  background: 'radial-gradient(ellipse at 70% 20%, rgba(217,70,239,0.10), transparent 60%)',
-                }}
-              />
-              <div className="relative">
-                <div className="flex items-baseline justify-between mb-6">
-                  <span className="font-cinzel text-fuchsia-300 text-[9px] uppercase tracking-[0.45em]">02 — Centre Artistique</span>
-                  <span className="font-cinzel text-neutral-700 text-[10px] uppercase tracking-widest">CRM</span>
-                </div>
-                <h2 className="font-prata text-[#f3e5ab] text-2xl md:text-3xl mb-4 leading-tight">
-                  Centre Artistique
-                </h2>
-                <p className="font-lato text-neutral-400 text-sm leading-relaxed mb-8">
-                  Annuaire des membres, curation artiste, modération du Creator Studio (lectures, hot seat, soumissions). S'étoffera au fur et à mesure des phases.
-                </p>
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/5">
-                  <div>
-                    <p className="font-cinzel text-[#f3e5ab] text-xl">{members.length}</p>
-                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Membres</p>
-                  </div>
-                  <div>
-                    <p className="font-cinzel text-fuchsia-200 text-xl">{onlineNow}</p>
-                    <p className="font-josefin text-neutral-600 text-[9px] uppercase tracking-widest mt-1">Artistes</p>
-                  </div>
-                  <div>
-                    <p className="font-cinzel text-neutral-700 text-xl">—</p>
-                    <p className="font-josefin text-neutral-700 text-[9px] uppercase tracking-widest mt-1">À venir</p>
-                  </div>
-                </div>
-                <span className="block mt-8 font-cinzel text-[10px] uppercase tracking-[0.35em] text-neutral-500 group-hover:text-fuchsia-300 transition-colors">
-                  Entrer →
-                </span>
-              </div>
-            </button>
-          </div>
-
-          <div className="mt-10 text-center">
-            <button
-              onClick={() => onNavigate('INN')}
-              className="font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-600 hover:text-neutral-300 transition-colors"
-            >
-              ↗ Retour au site
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <AdminShell<SectionId>
       user={user!}
@@ -1176,10 +1054,75 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       nav={nav}
       onBackToSite={() => onNavigate('INN')}
       onSignOut={handleSignOut}
-      subtitle={crmMode === 'ARTISTIC' ? 'Centre Artistique' : 'Ceilidh · Mai 2026'}
-      onSwitchSpace={() => setCrmMode('CHOOSE')}
+      subtitle={audienceLabel}
     >
+      {/* ── Audience switcher — glass pill tabs. One dashboard, one lens at a
+          time; replaces the former two-space chooser. The chosen audience is
+          derived from the active section, so cross-links stay consistent. ── */}
+      <div className="mb-8 flex flex-wrap gap-2">
+        {AUDIENCES.map(a => {
+          const active = currentAudience === a.id;
+          return (
+            <button
+              key={a.id}
+              type="button"
+              onClick={() => setTab(AUDIENCE_SECTIONS[a.id][0])}
+              className={`px-5 py-2.5 rounded-full font-cinzel text-[10px] uppercase tracking-[0.3em] border backdrop-blur-md transition-all ${
+                active
+                  ? 'bg-[#c5a059]/15 border-[#c5a059]/60 text-[#f3e5ab] shadow-[0_0_24px_rgba(197,160,89,0.12)]'
+                  : 'bg-white/5 border-white/10 text-neutral-400 hover:text-white hover:border-white/25 hover:bg-white/[0.08]'
+              }`}
+            >
+              {a.label}
+            </button>
+          );
+        })}
+      </div>
+
       <div>
+
+        {/* ── Hôtel · réservations & clients (données live dans Hostaway) ── */}
+        {tab === 'hostaway' && (
+          <div className="space-y-6">
+            <p className="text-neutral-500 text-sm font-lato max-w-2xl">
+              L'audience « Hôtel » regroupe ce qui touche aux invités payants. Les
+              événements (Ceilidh, billets, spectacles) vivent dans les onglets voisins.
+              Les séjours eux-mêmes sont gérés dans Hostaway.
+            </p>
+            <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-8">
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 20% 0%, rgba(197,160,89,0.08), transparent 60%)' }}
+              />
+              <div className="relative">
+                <p className="font-cinzel text-[#c5a059] text-[9px] uppercase tracking-[0.45em] mb-3">
+                  Hôtel
+                </p>
+                <h2 className="font-prata text-[#f3e5ab] text-2xl md:text-3xl mb-3 leading-tight">
+                  Réservations &amp; clients
+                </h2>
+                <p className="font-lato text-neutral-400 text-sm leading-relaxed max-w-xl mb-6">
+                  Les réservations, arrivées, départs et paiements des séjours sont
+                  gérés dans Hostaway. Le CRM n'y est pas encore connecté, il n'affiche
+                  donc aucune donnée de séjour ici plutôt que d'en inventer.
+                </p>
+                <a
+                  href="https://dashboard.hostaway.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 bg-[#d4af37] text-black font-cinzel font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-[#f3e5ab] transition-colors"
+                >
+                  Ouvrir Hostaway →
+                </a>
+                <p className="text-neutral-600 text-[11px] font-lato mt-5">
+                  Une intégration Hostaway (réservations et clients directement dans ce
+                  tableau de bord) est planifiée.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Tableau de bord — overview tiles ── */}
         {tab === 'dashboard' && (
