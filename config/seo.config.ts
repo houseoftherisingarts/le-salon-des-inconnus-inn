@@ -111,6 +111,10 @@ export const PAGE_META = {
     EN: { title: "Local Guide to Petite-Nation & Outaouais | Le Salon des Inconnus", description: "What to do around the inn: Parc Oméga, Lac-Simon, Montagnes Noires, Mont-Tremblant, Petite-Nation festivals and local food and drink.", keywords: "Guide Outaouais, Things to do Montebello" },
     FR: { title: "Guide local de la Petite-Nation et de l'Outaouais", description: "Quoi faire autour de l'auberge : Parc Oméga, Lac-Simon, Montagnes Noires, Mont-Tremblant, festivals et adresses gourmandes de la Petite-Nation.", keywords: "Guide Outaouais, Quoi faire Montebello" }
   },
+  PETITE_MONNAIE: {
+    EN: { title: "La Petite Monnaie · Local Currency of the Petite-Nation | Le Salon des Inconnus", description: "What La Petite Monnaie is, how to get it, and a scroll-through route of the artistic and community merchants of the Petite-Nation that accept it, starting at the inn.", keywords: "Petite Monnaie, monnaie locale Outaouais, Petite-Nation, achat local" },
+    FR: { title: "La Petite Monnaie · la monnaie locale de la Petite-Nation | Le Salon des Inconnus", description: "Ce qu'est la Petite Monnaie, comment s'en procurer, et un parcours immersif des commerces artistiques et communautaires de la Petite-Nation qui l'acceptent, au départ de l'auberge.", keywords: "Petite Monnaie, monnaie locale Outaouais, Petite-Nation, achat local, pmonnaie" }
+  },
   EVENTS: {
     EN: { title: "Events at Maison Favier | Le Salon des Inconnus", description: "Live shows, residencies and gatherings at Le Salon des Inconnus, Namur. Next: Grand Ceilidh de Mai 2026 (May 21–25). Private bookings available.", keywords: "Events Outaouais, Cultural events Quebec" },
     FR: { title: "Événements à la Maison Favier | Le Salon des Inconnus", description: "Spectacles, résidences et rassemblements au Salon des Inconnus, Namur. Prochain : Grand Ceilidh de Mai 2026 (21–25 mai). Réservations privées.", keywords: "Événements Outaouais, Événements culturels Québec" }

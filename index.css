@@ -36,3 +36,30 @@ button:where(:not([data-inn-scroll] *)) { border-radius: 15px; }
   content-visibility: auto;
   contain-intrinsic-size: auto 800px;
 }
+
+/* ── Petite Monnaie parcours — ambient atmosphere (warm dark, like the home) ── */
+@keyframes pmFogDrift { from { background-position: 0 0; } to { background-position: 1200px 0; } }
+@keyframes pmFogDriftRev { from { background-position: 0 0; } to { background-position: -1200px 0; } }
+@keyframes pmEmber {
+  0%   { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+  12%  { opacity: var(--pm-ember-op, 0.7); }
+  88%  { opacity: var(--pm-ember-op, 0.7); }
+  100% { transform: translate3d(var(--pm-ember-dx, 14px), -180px, 0) scale(1); opacity: 0; }
+}
+@keyframes pmReveal {
+  from { opacity: 0; transform: translateY(34px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.pm-reveal { opacity: 0; }
+.pm-reveal.pm-in { animation: pmReveal 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+/* moving green gradient (money) behind the Petite Monnaie page */
+@keyframes pmGreenShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes pmGreenDrift {
+  0%   { transform: translate3d(-7%, -5%, 0) scale(1.15); }
+  50%  { transform: translate3d(7%, 6%, 0) scale(1.32); }
+  100% { transform: translate3d(-7%, -5%, 0) scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-reveal { opacity: 1 !important; animation: none !important; }
+  .pm-ember, .pm-fog { animation: none !important; }
+}

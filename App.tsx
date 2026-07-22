@@ -12,6 +12,7 @@ const InnPageReserveCine = lazy(() => import('./components/InnPageReserveCine').
 const MassotherapyPage  = lazy(() => import('./components/MassotherapyPage').then(m => ({ default: m.MassotherapyPage })));
 const HostsPage         = lazy(() => import('./components/HostsPage').then(m => ({ default: m.HostsPage })));
 const GuidePage         = lazy(() => import('./components/GuidePage').then(m => ({ default: m.GuidePage })));
+const PetiteMonnaiePage = lazy(() => import('./components/PetiteMonnaiePage').then(m => ({ default: m.PetiteMonnaiePage })));
 const KitchenPage       = lazy(() => import('./components/KitchenPage').then(m => ({ default: m.KitchenPage })));
 const EventsPage        = lazy(() => import('./components/EventsPage').then(m => ({ default: m.EventsPage })));
 const CeilidhPage       = lazy(() => import('./components/CeilidhPage').then(m => ({ default: m.CeilidhPage })));
@@ -161,7 +162,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'COMMUNITY' | 'DONATION'
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'COMMUNITY' | 'DONATION'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
@@ -176,6 +177,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   MASSOTHERAPY:   '/massage',
   HOSTS:          '/about',
   GUIDE:          '/guide',
+  PETITE_MONNAIE: '/petite-monnaie',
   KITCHEN:        '/cuisine',
   EVENTS:         '/evenements',
   CEILIDH:        '/ceilidh',
@@ -684,6 +686,14 @@ const App: React.FC = () => {
         {/* VIEW 4: GUIDE */}
         {currentView === 'GUIDE' && (
           <GuidePage
+            onNavigate={() => handleNavigation('INN')}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 4b: PETITE MONNAIE */}
+        {currentView === 'PETITE_MONNAIE' && (
+          <PetiteMonnaiePage
             onNavigate={() => handleNavigation('INN')}
             language={language}
           />
