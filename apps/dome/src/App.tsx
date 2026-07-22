@@ -398,6 +398,7 @@ const DomeStyle: React.FC = () => (
     @media (prefers-reduced-motion: reduce) {
       .dome-kenburns { animation: none !important; transform: scale(1.04) !important; }
       .dome-glow, .dome-glow2, .dome-scroll { animation: none !important; }
+      .dome-ember { animation: none !important; opacity: 0 !important; }
       .dome-img, .dome-cta { transition: none !important; }
     }
   `}</style>
