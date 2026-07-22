@@ -175,6 +175,17 @@ const Hero: React.FC = () => {
             className="absolute inset-0"
             style={{ background: 'radial-gradient(85% 65% at 50% 28%, transparent 42%, rgba(8,6,5,0.42) 100%)' }}
           />
+          {!reduce && (
+            <div className="dome-embers" aria-hidden>
+              {EMBERS.map((e, i) => (
+                <span
+                  key={i}
+                  className="dome-ember"
+                  style={{ left: e.left, bottom: e.bottom, animationDelay: e.delay, animationDuration: e.dur }}
+                />
+              ))}
+            </div>
+          )}
         </motion.div>
 
         <motion.div
