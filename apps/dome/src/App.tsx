@@ -1,13 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { CHARTE, VERSION_CHARTE } from './charte';
 
-// ── Le Dôme des Inconnus · La Coop ──────────────────────────────────────────
-// The community / wwoofing surface of the four-property family (hub · Salon ·
-// Auberge · Dôme). Design language and motion recipes copied from the house
-// RetreatShared primitives: warm near-black, soft amber glows, glassmorphism,
-// rounded corners, Ken Burns hero, whileInView reveals.
-// HARD RULES: no italics anywhere (accent = gold colour + weight only), no
-// em dashes in copy, transform-only motion, prefers-reduced-motion guarded.
+// ── Le Dôme des Inconnus ─────────────────────────────────────────────────────
+// The community surface of the four-property family (hub · Salon · Auberge ·
+// Dôme). Warm hero + the full coop substance: les voies, le cercle, la charte,
+// la candidature (real Firebase form). Warm near-black, soft amber glows,
+// glassmorphism, rounded corners, drifting embers, whileInView reveals.
+// HARD RULES: no italics (accent = gold + weight), no em dashes, transform-only
+// motion, prefers-reduced-motion guarded.
+
+// The application form pulls Firebase; keep it out of the initial bundle.
+const Apply = lazy(() => import('./Apply'));
 
 const GOLD = '#d9b45c';
 const GOLD_SOFT = '#c5a059';
@@ -94,17 +98,6 @@ const Pill: React.FC<{ children: React.ReactNode; className?: string; style?: Re
   </span>
 );
 
-/** Rounded gold pill CTA with a soft glow. */
-const GoldLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
-  <a
-    href={href}
-    rel="noopener"
-    className="dome-cta inline-block font-cinzel text-[12px] uppercase tracking-[0.28em] px-9 py-4 rounded-full"
-  >
-    {children}
-  </a>
-);
-
 /** Opacity + gentle lift reveal, guarded for reduced motion. */
 const Reveal: React.FC<{
   children: React.ReactNode;
@@ -150,6 +143,15 @@ const Overline: React.FC<{ label: string }> = ({ label }) => (
     </span>
     <span className="h-px flex-1" style={{ background: 'linear-gradient(90deg, rgba(217,180,92,0.22), transparent)' }} />
   </div>
+);
+
+const SectionTitle: React.FC<{ children: React.ReactNode; max?: string }> = ({ children, max = '18ch' }) => (
+  <h2
+    className="font-prata"
+    style={{ color: CREAM, fontSize: 'clamp(2rem, 4.4vw, 3.4rem)', lineHeight: 1.05, letterSpacing: '-0.015em', maxWidth: max }}
+  >
+    {children}
+  </h2>
 );
 
 // ── 1 · HERO ────────────────────────────────────────────────────────────────
@@ -215,6 +217,14 @@ const Hero: React.FC = () => {
           >
             Il y a, au bout des chemins de la Petite-Nation, un domaine où la terre se cultive à plusieurs mains et où l'on peut poser ses racines le temps d'une saison. On y sème et l'on y récolte, on y partage ce que l'on crée, et quand le soir descend, on allume des feux autour desquels naissent les fêtes. La porte vous est grande ouverte.
           </p>
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <a href="#candidature" className="dome-cta inline-block font-cinzel text-[12px] uppercase tracking-[0.28em] px-9 py-4 rounded-full">
+              Déposer ma candidature
+            </a>
+            <a href="#charte" className="dome-ghost inline-block font-cinzel text-[12px] uppercase tracking-[0.28em] px-9 py-4 rounded-full">
+              Lire la charte
+            </a>
+          </div>
         </motion.div>
 
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 dome-scroll" aria-hidden>
@@ -225,63 +235,63 @@ const Hero: React.FC = () => {
   );
 };
 
-// ── 2 · LA VIE AU DOMAINE ─────────────────────────────────────────────────────
-const LIFE_CARDS = [
+// ── 2 · LES VOIES ─────────────────────────────────────────────────────────────
+const VOIES: { titre: string; body: string; icon: React.ReactNode }[] = [
   {
-    img: '/media/jardins-auberge.jpg',
-    kicker: 'La terre',
-    title: 'Cultiver le domaine',
-    body: "Mettre les mains dans la terre, voir lever un potager, veiller un verger et le mener jusqu'à l'automne. Ici la terre se travaille à plusieurs, et saison après saison elle rend bien plus que ce qu'on lui confie.",
+    titre: 'Cultiver la terre',
+    body: "Les jardins et les terres du domaine attendent des mains. On sème, on entretient, on récolte, et la saison rend ce qu'on lui a confié.",
+    icon: <path d="M12 21V11m0 0c0-3.5-2.5-6-6-6 0 3.5 2.5 6 6 6Zm0-2c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6Z" />,
   },
   {
-    img: '/media/salle-a-manger.jpg',
-    kicker: "L'ouvrage",
-    title: 'Créer, offrir, vendre',
-    body: "Ce que vos mains façonnent trouve sa place et trouve preneur. Récoltes, objets, oeuvres, chacun peut faire vivre le fruit de son travail et le déposer entre les mains de ceux qui sauront l'aimer.",
+    titre: "Vendre ce que l'on crée",
+    body: "Un comptoir pour les récoltes, les savons et l'artisanat, une aile pour les oeuvres. Ce qui sort de vos mains trouve preneur, et vous revient en entier.",
+    icon: <path d="M4 9l1.5-4h13L20 9M4 9h16M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M9 13h6" />,
   },
   {
-    img: '/media/handpan.jpg',
-    kicker: 'Les veillées',
-    title: 'Se rassembler, célébrer',
-    body: "Des feux le soir, de la musique qui monte, des veillées et des fêtes que l'on imagine ensemble. Chacun peut convier les autres, ouvrir un atelier ou lancer une célébration, et offrir au domaine une soirée de plus à raconter.",
+    titre: 'Tenir le café',
+    body: "Des heures derrière le comptoir du café, un revenu, un rythme, et le pouls du lieu qui passe entre vos mains.",
+    icon: <path d="M4 8h12v6a5 5 0 01-5 5H9a5 5 0 01-5-5V8Zm12 1h2.5a2 2 0 010 4H16M7 4.5c.6-.8.6-1.4 0-2m4 2c.6-.8.6-1.4 0-2" />,
+  },
+  {
+    titre: 'Offrir des soins',
+    body: "Des salles prêtes à recevoir votre pratique. Vous apportez votre art du soin, le domaine apporte le calme et le silence.",
+    icon: <path d="M12 20s-7-4.5-7-9.5A3.8 3.8 0 0112 7.6 3.8 3.8 0 0119 10.5C19 15.5 12 20 12 20Z" />,
   },
 ];
 
-const LifeSection: React.FC = () => (
-  <section className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
-    <Overline label="La vie au domaine" />
+const VoiesSection: React.FC = () => (
+  <section id="voies" className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
+    <Overline label="Les voies" />
     <Reveal>
-      <h2
-        className="font-prata mb-12 md:mb-16"
-        style={{ color: CREAM, fontSize: 'clamp(2rem, 4.4vw, 3.4rem)', lineHeight: 1.05, letterSpacing: '-0.015em', maxWidth: '18ch' }}
+      <SectionTitle max="20ch">Quatre façons d'habiter le domaine</SectionTitle>
+    </Reveal>
+    <Reveal>
+      <p
+        className="font-cormorant mt-5 mb-12 md:mb-16"
+        style={{ color: 'rgba(255,250,240,0.72)', fontSize: 'clamp(1.15rem, 1.6vw, 1.35rem)', lineHeight: 1.6, fontWeight: 500, maxWidth: '54ch' }}
       >
-        Ce que l'on vient y vivre
-      </h2>
+        On choisit une voie ou plusieurs, à son rythme, selon ce que les mains ont envie de faire.
+      </p>
     </Reveal>
 
-    <div className="grid gap-7 md:grid-cols-3">
-      {LIFE_CARDS.map((card, i) => (
-        <Reveal key={card.kicker} delay={i * 0.08}>
-          <Glass className="h-full overflow-hidden flex flex-col">
-            <div className="dome-imgwrap relative overflow-hidden" style={{ aspectRatio: '4 / 3' }}>
-              <img src={card.img} alt={card.title} loading="lazy" className="dome-img w-full h-full object-cover" />
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(11,9,8,0.5) 100%)' }}
-                aria-hidden
-              />
-            </div>
-            <div className="p-7 md:p-8 flex flex-col flex-1">
-              <span className="font-cinzel uppercase block mb-3" style={{ fontSize: '10px', letterSpacing: '0.3em', color: GOLD }}>
-                {card.kicker}
-              </span>
-              <h3 className="font-prata mb-4" style={{ color: CREAM, fontSize: 'clamp(1.4rem, 2.4vw, 1.85rem)', lineHeight: 1.12 }}>
-                {card.title}
-              </h3>
-              <p className="font-cormorant" style={{ color: 'rgba(255,250,240,0.74)', fontSize: '1.15rem', lineHeight: 1.6, fontWeight: 500 }}>
-                {card.body}
-              </p>
-            </div>
+    <div className="grid gap-6 sm:grid-cols-2">
+      {VOIES.map((v, i) => (
+        <Reveal key={v.titre} delay={(i % 2) * 0.1}>
+          <Glass className="h-full p-8 md:p-9">
+            <span
+              className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-6"
+              style={{ border: '1px solid rgba(217,180,92,0.4)', background: 'rgba(217,180,92,0.05)' }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                {v.icon}
+              </svg>
+            </span>
+            <h3 className="font-prata mb-3" style={{ color: CREAM, fontSize: 'clamp(1.35rem, 2.2vw, 1.7rem)', lineHeight: 1.12 }}>
+              {v.titre}
+            </h3>
+            <p className="font-cormorant" style={{ color: 'rgba(255,250,240,0.74)', fontSize: '1.15rem', lineHeight: 1.6, fontWeight: 500 }}>
+              {v.body}
+            </p>
           </Glass>
         </Reveal>
       ))}
@@ -289,35 +299,125 @@ const LifeSection: React.FC = () => (
   </section>
 );
 
-// ── 3 · VENIR AU DÔME ───────────────────────────────────────────────────────
-// A single warm invitation. The way in stays backstage; the CTA leads to the
-// existing intake on the inn site. Swap to aubergedesinconnus.com once DNS connects.
-const JoinSection: React.FC = () => (
-  <section className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-4xl mx-auto w-full">
-    <Overline label="Venir au Dôme" />
-    <Reveal>
-      <Glass className="p-9 md:p-14 flex flex-col items-start" style={{ borderRadius: 26 }}>
-        <h3
-          className="font-prata mb-6"
-          style={{ color: CREAM, fontSize: 'clamp(1.9rem, 3.4vw, 3rem)', lineHeight: 1.06, letterSpacing: '-0.015em', maxWidth: '20ch' }}
-        >
-          Y prendre place, le temps d'une saison
-        </h3>
+// ── 3 · LE CERCLE ─────────────────────────────────────────────────────────────
+const CercleSection: React.FC = () => (
+  <section className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
+    <Overline label="Le cercle" />
+    <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+      <Reveal>
+        <SectionTitle max="16ch">Dix sièges autour d'une même table</SectionTitle>
         <p
-          className="font-cormorant mb-9"
-          style={{ color: 'rgba(255,250,240,0.8)', fontSize: 'clamp(1.2rem, 1.7vw, 1.4rem)', lineHeight: 1.62, fontWeight: 500, maxWidth: '58ch' }}
+          className="font-cormorant mt-6"
+          style={{ color: 'rgba(255,250,240,0.78)', fontSize: 'clamp(1.2rem, 1.7vw, 1.4rem)', lineHeight: 1.62, fontWeight: 500, maxWidth: '48ch' }}
         >
-          Le Dôme accueille celles et ceux qui ont envie de s'arrêter un moment, pour une saison ou pour l'été entier, et de prendre part à la vie d'un lieu bien vivant. Si le coeur vous en dit, écrivez-nous et venez voir, et nous trouverons ensemble la place qui vous ressemble.
+          Le cercle ne compte que dix places, pas une de plus, pour que chaque voix pèse vraiment. Les décisions se prennent ensemble, et celles et ceux qui le souhaitent veillent sur la maison commune au sein du conseil.
         </p>
-        <GoldLink href="https://inconnus-auberge.web.app/wwoofing">Venir vivre une saison</GoldLink>
-      </Glass>
-    </Reveal>
+      </Reveal>
+      <Reveal delay={0.12}>
+        <Glass className="p-10 flex flex-col items-center">
+          <svg viewBox="0 0 300 160" className="w-full max-w-[320px]" fill="none" aria-hidden>
+            <path d="M20 150 A130 130 0 0 1 280 150" stroke={GOLD_SOFT} strokeOpacity="0.35" strokeWidth="1" />
+            {Array.from({ length: 10 }).map((_, i) => {
+              const a = Math.PI - (Math.PI * i) / 9;
+              const x = 150 + 130 * Math.cos(a);
+              const y = 150 - 130 * Math.sin(a);
+              return (
+                <circle key={i} cx={x} cy={y} r="6" fill={GOLD_SOFT} fillOpacity={0.25 + (i % 3) * 0.2} stroke={CREAM} strokeOpacity="0.7" strokeWidth="1" />
+              );
+            })}
+          </svg>
+          <span className="font-cinzel uppercase mt-6" style={{ fontSize: '10px', letterSpacing: '0.4em', color: 'rgba(255,250,240,0.5)' }}>
+            Les dix sièges du cercle
+          </span>
+        </Glass>
+      </Reveal>
+    </div>
   </section>
 );
 
-// ── 4 · LA FAMILLE DES INCONNUS ─────────────────────────────────────────────
-// Staging URLs for the sibling properties. Swap to the real domains
-// (aubergedesinconnus.com, lesalondesinconnus.com, lesinconnus.com) once DNS connects.
+// ── 4 · LA CHARTE ─────────────────────────────────────────────────────────────
+const CharteSection: React.FC = () => (
+  <section id="charte" className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
+    <Overline label="La charte" />
+    <Reveal>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 md:mb-16">
+        <SectionTitle max="16ch">Sept articles, rien de caché</SectionTitle>
+        <span className="font-cinzel uppercase" style={{ fontSize: '10px', letterSpacing: '0.3em', color: 'rgba(255,250,240,0.4)' }}>
+          {VERSION_CHARTE}
+        </span>
+      </div>
+    </Reveal>
+
+    <div className="grid md:grid-cols-2 gap-x-14 gap-y-1">
+      {CHARTE.map((a, i) => (
+        <Reveal key={a.numero} delay={(i % 2) * 0.06}>
+          <details className="dome-article py-5" style={{ borderBottom: '1px solid rgba(255,250,240,0.1)' }}>
+            <summary className="flex items-baseline gap-4 cursor-pointer list-none">
+              <span className="font-cinzel" style={{ color: GOLD, fontSize: '0.9rem' }}>{a.numero}</span>
+              <span className="font-cinzel uppercase flex-1" style={{ fontSize: '12px', letterSpacing: '0.22em', color: 'rgba(255,250,240,0.85)' }}>
+                {a.titre}
+              </span>
+              <span className="dome-plus font-cormorant" style={{ color: GOLD, fontSize: '1.4rem', lineHeight: 1 }}>+</span>
+            </summary>
+            <p className="font-cormorant mt-4 pl-9" style={{ color: 'rgba(255,250,240,0.72)', fontSize: '1.12rem', lineHeight: 1.6, fontWeight: 500 }}>
+              {a.texte}
+            </p>
+          </details>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+);
+
+// ── 5 · LA CANDIDATURE ────────────────────────────────────────────────────────
+const CandidatureSection: React.FC = () => {
+  const etapes = [
+    { n: '01', t: 'Ton profil', d: 'Avec Google ou ton courriel.' },
+    { n: '02', t: 'La charte', d: "Toute la documentation, avant de t'engager." },
+    { n: '03', t: 'Ta candidature', d: 'Tes voies, tes mots, ta place au conseil si tu la veux.' },
+  ];
+  return (
+    <section id="candidature" className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
+      <Overline label="La candidature" />
+      <div className="grid lg:grid-cols-[1fr,1.15fr] gap-12 lg:gap-16 items-start">
+        <Reveal>
+          <SectionTitle max="18ch">On choisit dix personnes. Dis-nous pourquoi toi</SectionTitle>
+          <p
+            className="font-cormorant mt-6"
+            style={{ color: 'rgba(255,250,240,0.76)', fontSize: 'clamp(1.15rem, 1.6vw, 1.35rem)', lineHeight: 1.6, fontWeight: 500, maxWidth: '44ch' }}
+          >
+            Trois étapes, quelques minutes. Chaque candidature est lue par le cercle.
+          </p>
+          <ol className="mt-10 space-y-6">
+            {etapes.map((e) => (
+              <li key={e.n} className="flex items-start gap-5">
+                <span className="font-cinzel pt-1" style={{ color: GOLD, fontSize: '0.9rem' }}>{e.n}</span>
+                <div>
+                  <p className="font-cinzel uppercase" style={{ fontSize: '12px', letterSpacing: '0.22em', color: 'rgba(255,250,240,0.85)' }}>{e.t}</p>
+                  <p className="font-cormorant mt-1" style={{ color: 'rgba(255,250,240,0.6)', fontSize: '1.1rem', fontWeight: 500 }}>{e.d}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <Suspense
+            fallback={
+              <Glass className="p-10 text-center font-cinzel" style={{ fontSize: '11px', letterSpacing: '0.4em', color: 'rgba(255,250,240,0.5)' }}>
+                UN INSTANT
+              </Glass>
+            }
+          >
+            <Apply />
+          </Suspense>
+        </Reveal>
+      </div>
+    </section>
+  );
+};
+
+// ── 6 · LA FAMILLE DES INCONNUS ─────────────────────────────────────────────
+// Staging URLs for the sibling properties. Swap to the real domains once DNS connects.
 const FAMILY = [
   { label: "L'Auberge", href: 'https://inconnus-auberge.web.app/' },
   { label: 'Le Salon', href: 'https://inconnus-salon.web.app/' },
@@ -357,8 +457,10 @@ export default function App() {
       <BackToHub />
       <main>
         <Hero />
-        <LifeSection />
-        <JoinSection />
+        <VoiesSection />
+        <CercleSection />
+        <CharteSection />
+        <CandidatureSection />
       </main>
       <FooterBand />
       <DomeStyle />
@@ -386,11 +488,14 @@ const DomeStyle: React.FC = () => (
       55%  { opacity:0.55; }
       100% { transform: translate3d(20px,-190px,0) scale(1.2); opacity:0; }
     }
-    .dome-img { transition: transform 1.2s cubic-bezier(0.16,1,0.3,1); }
-    .dome-imgwrap:hover .dome-img { transform: scale(1.05); }
     .dome-pill { background: rgba(20,15,11,0.5); border: 1px solid rgba(217,180,92,0.22); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-    .dome-cta { position: relative; color:#120d08; background: linear-gradient(135deg, #e6c778 0%, #c5a059 100%); box-shadow: 0 14px 34px -10px rgba(217,180,92,0.55); transition: transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s; }
+    .dome-cta { color:#120d08; background: linear-gradient(135deg, #e6c778 0%, #c5a059 100%); box-shadow: 0 14px 34px -10px rgba(217,180,92,0.55); transition: transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s; }
     .dome-cta:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -10px rgba(217,180,92,0.7); }
+    .dome-ghost { color: rgba(255,250,240,0.82); border: 1px solid rgba(217,180,92,0.35); transition: border-color .35s, color .35s, background .35s; }
+    .dome-ghost:hover { color:#f6ead0; border-color: rgba(217,180,92,0.7); background: rgba(217,180,92,0.08); }
+    .dome-article summary::-webkit-details-marker { display:none; }
+    .dome-plus { transition: transform .3s cubic-bezier(0.16,1,0.3,1); }
+    .dome-article[open] .dome-plus { transform: rotate(45deg); }
     .dome-link { position: relative; transition: color .3s; }
     .dome-link:hover { color:#f6ead0; }
     .dome-link::after { content:''; position:absolute; left:0; bottom:-4px; width:100%; height:1px; background: rgba(217,180,92,0.5); transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(0.16,1,0.3,1); }
@@ -399,7 +504,7 @@ const DomeStyle: React.FC = () => (
       .dome-kenburns { animation: none !important; transform: scale(1.04) !important; }
       .dome-glow, .dome-glow2, .dome-scroll { animation: none !important; }
       .dome-ember { animation: none !important; opacity: 0 !important; }
-      .dome-img, .dome-cta { transition: none !important; }
+      .dome-cta, .dome-ghost, .dome-plus { transition: none !important; }
     }
   `}</style>
 );
