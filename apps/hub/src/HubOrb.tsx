@@ -103,7 +103,7 @@ export function HubOrb() {
       style={{ background: '#0b0908' }}
     >
       {/* Cinematic background — golden-hour drone shot of the domain */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+      <div className="fixed inset-0 pointer-events-none" aria-hidden>
         <img
           src="/media/golden%20drone%20copy.jpg"
           alt=""
