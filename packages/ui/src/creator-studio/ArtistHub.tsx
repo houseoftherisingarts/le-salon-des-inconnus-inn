@@ -3699,6 +3699,14 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         CHAT: language === 'EN' ? 'CHAT' : 'CLAVARDAGE'
     };
 
+    // BETA gating — these tabs are still simulated (no Firestore behind them:
+    // Hot Seat is local-only React state, Market posts vanish on reload). They
+    // stay visible in the nav so the map of the studio is honest, but they're
+    // non-clickable with a "Bientôt / Coming soon" pill until the real backend
+    // lands. The tab render blocks below are untouched and reactivate the moment
+    // a tab is removed from this set.
+    const GATED_TABS = new Set<Tab>(['HOT_SEAT', 'MARKET']);
+
     // --- GATEWAY (Selection Screen) ---
     if (phase === 'GATEWAY') {
         return (
