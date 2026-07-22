@@ -323,7 +323,7 @@ const FooterBand: React.FC = () => (
         ))}
       </div>
       <span className="font-cinzel uppercase block" style={{ fontSize: '10px', letterSpacing: '0.28em', color: 'rgba(255,250,240,0.3)' }}>
-        © Le Dôme des Inconnus · Namur, QC
+        © Le Dôme des Inconnus, à Namur au Québec
       </span>
     </div>
   </footer>
