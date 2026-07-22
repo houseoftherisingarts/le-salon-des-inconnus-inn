@@ -345,6 +345,35 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      // auth flips. Anonymous visitors who haven't opted into "view as
      // visitor" mode see this card; everyone else falls through to the
      // full studio.
+     const googleSignIn = async () => {
+         setAuthBusy(true); setAuthError('');
+         try { await signInWithPopup(getAuth(getApp()), new GoogleAuthProvider()); }
+         catch (e: any) { if (!String(e?.code || '').includes('popup-closed')) setAuthError(t('Sign-in failed. Try again.', 'Connexion échouée. Réessayez.')); }
+         finally { setAuthBusy(false); }
+     };
+     const emailAuth = async () => {
+         if (!authEmail.trim() || !authPassword) { setAuthError(t('Enter your email and password.', 'Entrez votre courriel et votre mot de passe.')); return; }
+         setAuthBusy(true); setAuthError('');
+         try {
+             const auth = getAuth(getApp());
+             if (authMode === 'signup') {
+                 const cred = await createUserWithEmailAndPassword(auth, authEmail.trim(), authPassword);
+                 if (authName.trim()) await updateProfile(cred.user, { displayName: authName.trim() });
+             } else {
+                 await signInWithEmailAndPassword(auth, authEmail.trim(), authPassword);
+             }
+         } catch (e: any) {
+             const c = String(e?.code || '');
+             setAuthError(
+                 c.includes('email-already-in-use') ? t('This email already has an account. Sign in instead.', 'Ce courriel a déjà un compte. Connectez-vous plutôt.') :
+                 c.includes('invalid-email') ? t('That email looks invalid.', 'Ce courriel semble invalide.') :
+                 c.includes('weak-password') ? t('Use a password of 6 characters or more.', 'Choisissez un mot de passe de 6 caractères ou plus.') :
+                 (c.includes('wrong-password') || c.includes('invalid-credential') || c.includes('user-not-found')) ? t('Wrong email or password.', 'Courriel ou mot de passe incorrect.') :
+                 t('Something went wrong. Try again.', 'Un pépin est survenu. Réessayez.'),
+             );
+         } finally { setAuthBusy(false); }
+     };
+
      if (!currentUser && !asVisitor) {
          return (
              <div className="fixed inset-0 z-50 bg-[#050505] text-neutral-100 font-lato flex items-center justify-center p-6 overflow-hidden">
