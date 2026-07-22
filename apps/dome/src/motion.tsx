@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
 
-export const EASE = [0.22, 1, 0.36, 1] as const;
+export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 // D3 — grain fin (SVG feTurbulence inline, mix-blend overlay)
 const GRAIN_URI =
