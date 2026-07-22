@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-07-22",
+        title_fr: "Accorder avant de jouer",
+        title_en: "Tuning before playing",
+        body_fr: "Hier soir, un invité accordait sa guitare près du feu, et j'ai trouvé ce moment plus beau que la chanson qui a suivi. Pendant qu'on accorde, personne ne performe encore : on cherche seulement à être juste. La corde trop tendue tire vers le haut, la corde relâchée traîne vers le bas, et l'oreille patiente les ramène au vrai. Je me suis dit que les conversations demandent le même soin. Les premières minutes avec un inconnu servent à ça, tendre un peu, relâcher un peu, jusqu'à ce que deux voix se répondent sans forcer. La musique qui vient ensuite ne fait que confirmer un accord déjà trouvé. Ce matin, avant de me mettre à jouer ma journée, j'essaie d'écouter où je force et où je traîne.",
+        body_en: "Last night a guest was tuning their guitar by the fire, and I found that moment more beautiful than the song that followed. While the tuning lasts, nobody is performing yet: you are only trying to be true. The string wound too tight pulls sharp, the loose one drags flat, and a patient ear brings them back to honest. It struck me that conversations ask for the same care. The first minutes with a stranger serve that purpose, tightening a little, loosening a little, until two voices answer each other without strain. The music that comes afterward only confirms an agreement already found. This morning, before I start playing my day, I am trying to hear where I force and where I drag.",
+    },
+    {
         date: "2026-07-21",
         title_fr: "Le sentier",
         title_en: "The footpath",
