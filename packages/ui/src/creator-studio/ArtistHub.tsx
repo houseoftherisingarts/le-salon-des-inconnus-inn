@@ -7117,12 +7117,18 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                         <span>{skin.priceTokens ?? '—'}</span>
                                                         <span className="text-[8px] opacity-80">{language === 'EN' ? 'tokens' : 'jetons'}</span>
                                                     </button>
-                                                    <button
+                                                    {/* USD / card checkout — BETA gated. Stripe isn't wired
+                                                        (the 'usd' path in handlePurchaseSkin is a simulated
+                                                        confirm()). Coins and tokens above are REAL and stay
+                                                        live. Reactivate by restoring
                                                         onClick={(e) => { e.stopPropagation(); handlePurchaseSkin(skin.id, 'usd'); }}
-                                                        disabled={!canBuyUSD}
-                                                        className={`py-2 border ${skin.style.border} ${skin.style.text.split(' ')[0]} text-[10px] font-bold uppercase tracking-widest transition-all rounded ${canBuyUSD ? 'bg-black/5 hover:bg-black/15' : 'opacity-40 cursor-not-allowed'}`}
+                                                        and disabled={!canBuyUSD}. */}
+                                                    <button
+                                                        disabled
+                                                        title={language === 'EN' ? 'Card checkout coming soon' : 'Paiement par carte bientôt'}
+                                                        className={`py-2 border ${skin.style.border} text-[#d4af37] text-[8px] font-cinzel font-bold uppercase tracking-[0.15em] rounded opacity-50 cursor-not-allowed select-none`}
                                                     >
-                                                        {typeof skin.priceUSD === 'number' ? `$${skin.priceUSD.toFixed(2)}` : '—'}
+                                                        {language === 'EN' ? 'Soon' : 'Bientôt'}
                                                     </button>
                                                 </div>
                                             )}
