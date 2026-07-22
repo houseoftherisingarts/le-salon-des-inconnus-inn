@@ -1988,8 +1988,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             animation: fadeInPage 0.8s ease-out forwards;
         }
         @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .text-shadow-lg {
             text-shadow: 0 4px 10px rgba(0,0,0,0.5);
