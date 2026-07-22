@@ -5266,7 +5266,25 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
                                         <div className="flex justify-between items-center pt-4 border-t border-white/5">
                                             <span className="text-[10px] text-neutral-400">{artist.location}</span>
-                                            <button className="text-xs text-white hover:text-cyan-400 transition-colors">View Dossier →</button>
+                                            {/* View Dossier → the artist's public profile at /membre?uid=…
+                                                (App reads the uid query param on load). Only a claimed seed
+                                                or a live publicRoster entry has a uid to point at; an
+                                                unclaimed seed placeholder has no profile yet, so it's inert. */}
+                                            {dossierUid ? (
+                                                <a
+                                                    href={`/membre?uid=${dossierUid}`}
+                                                    className="text-xs text-white hover:text-cyan-400 transition-colors"
+                                                >
+                                                    {language === 'EN' ? 'View Dossier →' : 'Voir le dossier →'}
+                                                </a>
+                                            ) : (
+                                                <span
+                                                    className="text-xs text-neutral-600 cursor-not-allowed"
+                                                    title={language === 'EN' ? 'No profile claimed yet' : 'Profil pas encore réclamé'}
+                                                >
+                                                    {language === 'EN' ? 'View Dossier →' : 'Voir le dossier →'}
+                                                </span>
+                                            )}
                                         </div>
 
                                         {/* Claim affordance — shown only when unclaimed AND signed in.
