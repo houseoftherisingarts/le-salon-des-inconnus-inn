@@ -3038,6 +3038,47 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         return () => unsub();
     }, []);
 
+    // ─── Live roster (publicRoster) ────────────────────────────────────────
+    // The Annuaire the admin curates in AdminCRM ("Promouvoir" copies a member's
+    // profile to publicRoster/{uid}). Public read per firestore.rules. We fetch
+    // once, ordered by name; if it has entries they replace the seed. If it's
+    // EMPTY (the default until Alex runs the seed) or the read fails, we keep the
+    // hardcoded ARTISTS_ROSTER fallback so the beta never shows an empty room.
+    useEffect(() => {
+        const db = studioFirestore(); if (!db) return;
+        let cancelled = false;
+        (async () => {
+            try {
+                const snap = await getDocs(query(collection(db, 'publicRoster'), orderBy('name')));
+                if (cancelled || snap.empty) return; // keep the seed fallback
+                const mapped: RosterEntry[] = [];
+                snap.forEach(d => {
+                    const data = d.data() as any;
+                    mapped.push({
+                        // Synthetic numeric id keeps ArtistProfile's shape; the real
+                        // identity of a live entry is its `uid`, used for View Dossier.
+                        id: 100000 + mapped.length,
+                        uid: data.uid || d.id,
+                        name: data.name || (language === 'EN' ? 'Unnamed' : 'Sans nom'),
+                        class: data.class || '',
+                        category: (data.category || 'VISUAL'),
+                        avatarUrl: data.avatarUrl || '',
+                        galleryImages: Array.isArray(data.galleryImages) ? data.galleryImages : [],
+                        location: data.location || '',
+                        medium: data.medium || '',
+                        subjects: Array.isArray(data.subjects) ? data.subjects : [],
+                        skills: Array.isArray(data.skills) ? data.skills : [],
+                        stats: data.stats || { creativity: 0, technique: 0, vision: 0 },
+                        bio: data.bio || '',
+                        links: data.links || { buy: '#', website: '#', support: '#' },
+                    } as RosterEntry);
+                });
+                if (!cancelled && mapped.length) setRosterList(mapped);
+            } catch { /* keep the seed fallback */ }
+        })();
+        return () => { cancelled = true; };
+    }, [language]);
+
     /**
      * Claim a curated roster artist. Validates the shared password, writes a
      * rosterClaims doc (Firestore rule blocks overwrites, so the first
