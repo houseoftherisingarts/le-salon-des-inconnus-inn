@@ -11,7 +11,7 @@ import { MUSIC_GENRES } from '../constants';
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
-  | 'MESSAGING' | 'ADMIN';
+  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO';
 
 interface SiteHeaderProps {
   language: 'EN' | 'FR';
