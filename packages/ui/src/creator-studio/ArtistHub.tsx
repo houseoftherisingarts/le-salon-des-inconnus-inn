@@ -1272,6 +1272,12 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // claim doc is written.
     interface RosterClaim { uid: string; uidName?: string }
     const [rosterClaims, setRosterClaims] = useState<Record<string, RosterClaim>>({});
+    // Live roster source. Seeds from the hardcoded ARTISTS_ROSTER so the room
+    // is never empty, then swaps to the admin-curated `publicRoster` collection
+    // once it has entries (see the fetch effect below). A `uid` marks a real
+    // member profile (from publicRoster) vs a curated seed placeholder.
+    type RosterEntry = (typeof ARTISTS_ROSTER)[number] & { uid?: string };
+    const [rosterList, setRosterList] = useState<RosterEntry[]>(ARTISTS_ROSTER);
     // Roster card the user is currently trying to claim (null = modal closed).
     const [claimingArtistId, setClaimingArtistId] = useState<number | null>(null);
     const [claimPassword, setClaimPassword] = useState('');
