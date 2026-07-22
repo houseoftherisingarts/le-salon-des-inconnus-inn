@@ -3699,7 +3699,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         CHAT: language === 'EN' ? 'CHAT' : 'CLAVARDAGE'
     };
 
-    // BETA gating — these tabs are still simulated (no Firestore behind them:
+    // BETA gating: these tabs are still simulated (no Firestore behind them:
     // Hot Seat is local-only React state, Market posts vanish on reload). They
     // stay visible in the nav so the map of the studio is honest, but they're
     // non-clickable with a "Bientôt / Coming soon" pill until the real backend
@@ -4087,7 +4087,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">Craft your pitch, build your skill tree & CV.</p>
                             </div>
 
-                            {/* Tool 4: Copyrighter (NEW) — BETA gated.
+                            {/* Tool 4: Copyrighter (NEW), BETA gated.
                                 The registry is simulated (fake hash, no upload, nothing
                                 persisted), so the card is non-clickable with a "Bientôt"
                                 pill until it's wired for real. Reactivate by restoring
@@ -5317,7 +5317,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             )}
                                         </div>
 
-                                        {/* Claim affordance — shown only for a curated seed placeholder
+                                        {/* Claim affordance: shown only for a curated seed placeholder
                                             (not a real publicRoster profile), when unclaimed AND signed in.
                                             Once any user claims this artist, the button vanishes for
                                             everyone forever (the rosterClaims doc is locked). */}
@@ -6410,7 +6410,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                  </div>
                             </div>
 
-                            {/* Content List — BETA gated. The community reading feed is
+                            {/* Content List, BETA gated. The community reading feed is
                                 seeded demo content ("System"-authored placeholders), not a
                                 live cross-artist feed (there is no collectionGroup('articles')
                                 behind it). Shown as a "Bientôt" panel. The user's OWN writings
@@ -6985,7 +6985,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             ))}
                                         </ul>
                                         
-                                        {/* BETA gated — no payment processor behind this yet
+                                        {/* BETA gated: no payment processor behind this yet
                                             (membershipTier is never persisted; the old handler just
                                             alert()'d). Disabled with a "Bientôt" pill. Reactivate by
                                             restoring onClick={() => handleUpgradeMembership(tier.id as MembershipTier)}
@@ -7015,7 +7015,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         Every investment grants <span className="text-white font-bold">10 Points</span>.
                                     </p>
                                 </div>
-                                {/* BETA gated — no real investment ledger or payment behind
+                                {/* BETA gated: no real investment ledger or payment behind
                                     this (the old handler confirm()'d then only added 10 points,
                                     never deducting the advertised 100 credits). Disabled with a
                                     "Bientôt" pill. Reactivate by restoring onClick={handleInvest}
@@ -7135,7 +7135,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                         <span>{skin.priceTokens ?? '—'}</span>
                                                         <span className="text-[8px] opacity-80">{language === 'EN' ? 'tokens' : 'jetons'}</span>
                                                     </button>
-                                                    {/* USD / card checkout — BETA gated. Stripe isn't wired
+                                                    {/* USD / card checkout, BETA gated. Stripe isn't wired
                                                         (the 'usd' path in handlePurchaseSkin is a simulated
                                                         confirm()). Coins and tokens above are REAL and stay
                                                         live. Reactivate by restoring

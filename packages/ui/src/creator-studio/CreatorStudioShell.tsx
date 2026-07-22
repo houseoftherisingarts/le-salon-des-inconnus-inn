@@ -466,7 +466,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                     <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
                         <img src="/media/logo.png" alt="Logo" className="w-12 h-auto drop-shadow-lg" />
                         <span className={`font-cinzel font-bold text-lg tracking-widest hidden md:block ${theme === 'CLASSY' ? 'text-[#c8aa6e]' : 'text-white'}`}>Le Salon des Inconnus</span>
-                        {/* BETA marker — the Creator Studio ships as an honest beta.
+                        {/* BETA marker: the Creator Studio ships as an honest beta.
                             Discreet gold glass pill, always visible (even on mobile). */}
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-[#d4af37]/40 bg-black/40 backdrop-blur-md font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
                             {language === 'EN' ? 'Beta' : 'Bêta'}
