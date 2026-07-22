@@ -43,7 +43,41 @@ interface CreatorStudioProps {
     onExit?: () => void;
 }
 
-export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLanguage, currentUser = null, isArtist = false, onRequestSignIn, onExit }) => {
+export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLanguage, currentUser: currentUserProp = null, isArtist: isArtistProp = false, onRequestSignIn, onExit }) => {
+     // Self-contained Firebase auth so the studio works even when the host
+     // mounts it without wiring auth (as the salon ArtsPage does). The parent
+     // may still pass currentUser/isArtist to override.
+     const [authUser, setAuthUser] = useState<CreatorStudioUser | null>(null);
+     useEffect(() => {
+         let auth; try { auth = getAuth(getApp()); } catch { return; }
+         return onAuthStateChanged(auth, (u) =>
+             setAuthUser(u ? { uid: u.uid, email: u.email, displayName: u.displayName, photoURL: u.photoURL } : null),
+         );
+     }, []);
+     const currentUser = currentUserProp ?? authUser;
+
+     // Gate sign-in form state (Google + email). Hooks stay top-level so the
+     // hook count is stable across the gate/full-studio conditional return.
+     const [authEmail, setAuthEmail] = useState('');
+     const [authPassword, setAuthPassword] = useState('');
+     const [authName, setAuthName] = useState('');
+     const [authMode, setAuthMode] = useState<'signup' | 'signin'>('signup');
+     const [authBusy, setAuthBusy] = useState(false);
+     const [authError, setAuthError] = useState('');
+
+     // Vetted flag ("curated artist") from members/{uid}/admin/flags.isArtist.
+     const [isArtistInternal, setIsArtistInternal] = useState(false);
+     useEffect(() => {
+         if (!currentUser?.uid) { setIsArtistInternal(false); return; }
+         (async () => {
+             try {
+                 const db = getFirestore(getApp());
+                 const s = await getDoc(doc(db, 'members', currentUser.uid, 'admin', 'flags'));
+                 setIsArtistInternal(s.exists() && (s.data() as any).isArtist === true);
+             } catch { /* default false */ }
+         })();
+     }, [currentUser?.uid]);
+     const isArtist = isArtistProp || isArtistInternal;
      // "View as visitor" — a logged-out user can opt into a limited browse
      // experience (no profile editing, no publish actions). Reset whenever
      // currentUser flips so the gate isn't stuck after sign-out.
