@@ -99,7 +99,7 @@ export function HubOrb() {
 
   return (
     <div
-      className={`relative min-h-screen w-full overflow-hidden transition-opacity duration-500 ${leaving ? 'opacity-0' : 'opacity-100'}`}
+      className={`relative min-h-screen w-full overflow-x-hidden transition-opacity duration-500 ${leaving ? 'opacity-0' : 'opacity-100'}`}
       style={{ background: '#0b0908' }}
     >
       {/* Cinematic background — golden-hour drone shot of the domain */}
