@@ -1362,8 +1362,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
         <div className="w-full bg-[#0a0a0a] animate-fadeIn pb-32">
             
             {/* SECTION 1: HERO PARALLAX */}
-            <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                <ParallaxBand img="/media/Financement%20Artistique/kamy%20christina%20barcelona.jpg" />
+            <section className="relative min-h-screen flex items-center justify-center bg-fixed bg-center bg-cover" style={{ backgroundImage: `url("/media/Financement%20Artistique/kamy%20christina%20barcelona.jpg")` }}>
                 <div className="absolute inset-0 bg-black/60" />
                 <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
                     <h1 className="font-cinzel text-6xl md:text-8xl text-white mb-4 tracking-widest drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
