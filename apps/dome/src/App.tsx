@@ -208,21 +208,21 @@ const Hero: React.FC = () => {
 const LIFE_CARDS = [
   {
     img: '/media/jardins-auberge.jpg',
-    kicker: 'Wwoofing',
-    title: 'Les jardins, la terre',
-    body: "Quatre heures par jour au jardin, sur le terrain et dans les finitions des mini-maisons. En échange du gîte, du couvert et des soirées autour du feu.",
+    kicker: 'La terre',
+    title: 'Cultiver le domaine',
+    body: "Mettre les mains dans la terre, voir lever un potager, veiller un verger et le mener jusqu'à l'automne. Ici la terre se travaille à plusieurs, et saison après saison elle rend bien plus que ce qu'on lui confie.",
   },
   {
     img: '/media/salle-a-manger.jpg',
-    kicker: 'La communauté',
-    title: 'Résidents, projets partagés',
-    body: "Des membres qui vivent sur place, d'autres qui passent et laissent leur trace. Une grande table où les repas se prennent ensemble, des projets qu'on porte à plusieurs.",
+    kicker: "L'ouvrage",
+    title: 'Créer, offrir, vendre',
+    body: "Ce que vos mains façonnent trouve sa place et trouve preneur. Récoltes, objets, oeuvres, chacun peut faire vivre le fruit de son travail et le déposer entre les mains de ceux qui sauront l'aimer.",
   },
   {
     img: '/media/handpan.jpg',
-    kicker: 'Les saisons',
-    title: 'Feux, musique, ceilidhs',
-    body: "Des événements, des feux, de la musique et des récits qui rythment l'année. Du printemps jusqu'aux dernières soirées d'octobre, chaque saison a sa fête.",
+    kicker: 'Les veillées',
+    title: 'Se rassembler, célébrer',
+    body: "Des feux le soir, de la musique qui monte, des veillées et des fêtes que l'on imagine ensemble. Chacun peut convier les autres, ouvrir un atelier ou lancer une célébration, et offrir au domaine une soirée de plus à raconter.",
   },
 ];
 
