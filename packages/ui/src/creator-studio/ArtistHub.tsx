@@ -6410,7 +6410,24 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                  </div>
                             </div>
 
-                            {/* Content List */}
+                            {/* Content List — BETA gated. The community reading feed is
+                                seeded demo content ("System"-authored placeholders), not a
+                                live cross-artist feed (there is no collectionGroup('articles')
+                                behind it). Shown as a "Bientôt" panel. The user's OWN writings
+                                stay real and live in the Profile tab. The original feed render
+                                is preserved under {false && …} below for reactivation. */}
+                            <div className="flex-1 flex items-center justify-center min-h-[40vh]">
+                                <div className="relative w-full max-w-2xl text-center rounded-2xl border border-[#d4af37]/25 bg-black/30 backdrop-blur-md p-12 overflow-hidden">
+                                    <div className="absolute top-4 right-4"><BientotPill language={language} /></div>
+                                    <h3 className="font-cinzel text-2xl text-white/80 tracking-widest mb-3">{language === 'EN' ? 'Community Reads' : 'Lectures de la communauté'}</h3>
+                                    <p className="font-lato text-sm text-neutral-400 leading-relaxed">
+                                        {language === 'EN'
+                                            ? 'A shared space to browse writings from every artist in residence. Coming soon. Your own writings are live now in your Profile tab.'
+                                            : 'Un espace partagé pour parcourir les écrits de tous les artistes en résidence. Bientôt. Vos propres écrits sont déjà en ligne dans votre Profil.'}
+                                    </p>
+                                </div>
+                            </div>
+                            {false && (
                             <div className="flex-1 flex flex-col gap-20">
                                 {articles
                                     .filter(a => filterSubject === 'ALL' || a.tags.includes(filterSubject))
