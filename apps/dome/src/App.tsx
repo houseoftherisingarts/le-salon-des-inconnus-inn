@@ -357,7 +357,15 @@ function Candidature() {
           </ol>
         </Reveal>
         <Reveal delay={0.15}>
-          <Apply />
+          <Suspense
+            fallback={
+              <div className="rounded-[15px] bg-black/40 backdrop-blur-md border border-white/15 p-10 text-center font-cinzel text-[11px] uppercase tracking-[0.4em] text-neutral-500">
+                Un instant
+              </div>
+            }
+          >
+            <Apply />
+          </Suspense>
         </Reveal>
       </div>
     </section>
