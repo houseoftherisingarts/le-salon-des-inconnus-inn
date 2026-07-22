@@ -988,6 +988,13 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   // hooks, before the auth gate) so hook order stays stable across renders.
   const [inspirospherePending, setInspirospherePending] = useState(0);
 
+  // Persist the audience of the active section so a reload lands Alex in the
+  // same lens. Runs on any tab change, whoever triggered it.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try { window.localStorage.setItem(AUDIENCE_STORAGE_KEY, audienceOf(tab)); } catch { /* noop */ }
+  }, [tab]);
+
   if (!authed) return <AccessDenied user={user} onNavigate={onNavigate} />;
 
   // Counters for sidebar badges + dashboard tiles
