@@ -234,7 +234,7 @@ const LifeSection: React.FC = () => (
         className="font-prata mb-12 md:mb-16"
         style={{ color: CREAM, fontSize: 'clamp(2rem, 4.4vw, 3.4rem)', lineHeight: 1.05, letterSpacing: '-0.015em', maxWidth: '18ch' }}
       >
-        Trois manières d'habiter la saison
+        Ce que l'on vient y vivre
       </h2>
     </Reveal>
 
