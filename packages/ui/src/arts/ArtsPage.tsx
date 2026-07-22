@@ -1614,8 +1614,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             </section>
 
              {/* SECTION 4: SELLING (PARALLAX) */}
-             <section className="relative min-h-[80vh] flex items-center justify-center">
-                <div aria-hidden className="absolute inset-0 pointer-events-none"><div className="sticky top-0 w-full bg-center bg-cover" style={{ height: '100vh', backgroundImage: `url("/media/Financement%20Artistique/top%20down.jpg")` }} /></div>
+             <section className="relative min-h-[80vh] flex items-center justify-center bg-fixed bg-center bg-cover" style={{ backgroundImage: `url("/media/Financement%20Artistique/top%20down.jpg")` }}>
                 <div className="absolute inset-0 bg-black/50" />
                 <div className="relative z-10 text-center px-6 max-w-3xl mx-auto bg-black/40 backdrop-blur-md p-12 rounded-3xl border border-white/10 shadow-2xl">
                     <motion.h2
