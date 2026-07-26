@@ -13,13 +13,6 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
-        date: "2026-07-26",
-        title_fr: "La porte qui grince",
-        title_en: "The creaking door",
-        body_fr: "La porte d'entrée de l'auberge grince depuis des années. Un peu d'huile réglerait l'affaire en deux minutes, et chaque fois que je sors le bidon, quelque chose me retient. Ce grincement annonce chaque arrivée : de la cuisine, du jardin, on sait qu'un inconnu vient de franchir le seuil, et la maison entière se tourne vers lui sans même y penser. Une porte parfaite se ferait oublier; celle-là fait un travail de cloche. Nous vivons entourés de petits défauts qui rendent service, l'escalier qui craque et trahit l'enfant descendu en cachette, la théière qui goutte et oblige à verser lentement. Avant de huiler, de sabler, de corriger, je me demande maintenant ce que le défaut faisait pour nous. Qu'est-ce qui grince dans ma vie, et que je ferais mieux d'écouter avant de le faire taire?",
-        body_en: "The front door of the inn has been creaking for years. A little oil would settle the matter in two minutes, and every time I bring out the can, something holds me back. That creak announces every arrival: from the kitchen, from the garden, we know a stranger has just crossed the threshold, and the whole house turns toward them without even thinking. A perfect door would let itself be forgotten; this one does the work of a bell. We live surrounded by small flaws that quietly serve us, the stair that cracks and betrays the child sneaking down, the teapot that drips and makes you pour slowly. Before oiling, sanding, correcting, I now ask myself what the flaw was doing for us. What is creaking in my life that I would do better to listen to before silencing it?",
-    },
-    {
         date: "2026-07-25",
         title_fr: "Le héron de la rivière",
         title_en: "The river heron",
