@@ -13,13 +13,6 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
-        date: "2026-07-25",
-        title_fr: "Le héron de la rivière",
-        title_en: "The river heron",
-        body_fr: "Un héron s'est installé au bord de la rivière, et depuis quelques matins je le regarde pêcher en buvant mon café. En apparence, il ne fait rien : une patte dans l'eau, le cou replié, immobile au point de passer pour un bout de bois gris. Puis l'éclair, une seconde à peine, et le poisson est pris. Une heure de silence pour un seul geste. Nous vivons à l'envers de lui, cent gestes à l'heure et si peu de silence, et nos poissons nous échappent souvent. Lui semble savoir que l'attente fait partie de la pêche autant que le coup de bec. J'aimerais tenir ma journée comme il tient la sienne : longtemps immobile, prêt, et vif au seul moment qui compte.",
-        body_en: "A heron has settled at the edge of the river, and for a few mornings now I have watched it fish while I drink my coffee. To all appearances it does nothing: one leg in the water, neck folded, so still it could pass for a piece of grey wood. Then the flash, barely a second, and the fish is caught. An hour of silence for a single gesture. We live the other way around, a hundred gestures an hour and so little silence, and our fish often get away. The heron seems to know that waiting belongs to fishing as much as the strike does. I would like to hold my day the way it holds its own: long and still, ready, and quick only at the moment that counts.",
-    },
-    {
         date: "2026-07-23",
         title_fr: "La saison des framboises",
         title_en: "Raspberry season",
