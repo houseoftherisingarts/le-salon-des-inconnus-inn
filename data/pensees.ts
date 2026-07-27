@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-07-27",
+        title_fr: "La vaisselle du soir",
+        title_en: "The evening dishes",
+        body_fr: "Le soir, quand la maison retrouve son silence, il reste la vaisselle des invités. Je pourrais expédier la corvée, mais chaque tasse a été tenue par des mains que je ne connaissais pas la veille, et la laver ramène la journée au ralenti : une conversation au coin de la table, un rire qui a surpris tout le monde, un silence confortable entre deux inconnus. Les moines disent que la façon de faire une petite chose révèle la façon de faire toutes les choses. Alors je prends mon temps, l'eau chaude sur les mains, une tasse à la fois. Il n'y a rien à réussir dans ce geste, et c'est peut-être pour ça qu'il repose autant. Quand la dernière tasse sèche sur le comptoir, on dirait que la journée elle-même a été déposée là, propre, prête à être rangée.",
+        body_en: "In the evening, when the house settles back into silence, the guests' dishes remain. I could rush through the chore, but every cup was held by hands I did not know the day before, and washing it brings the day back in slow motion: a conversation at the corner of the table, a laugh that surprised everyone, a comfortable silence between two strangers. The monks say that the way we do a small thing reveals the way we do all things. So I take my time, warm water over my hands, one cup at a time. There is nothing to succeed at in this gesture, and maybe that is why it rests me so deeply. When the last cup dries on the counter, it feels as if the day itself has been set down there, clean, ready to be put away.",
+    },
+    {
         date: "2026-07-23",
         title_fr: "La saison des framboises",
         title_en: "Raspberry season",
