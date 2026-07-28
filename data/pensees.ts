@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-07-28",
+        title_fr: "Le trait d'encre",
+        title_en: "The ink stroke",
+        body_fr: "Musashi, entre deux combats, peignait des oiseaux à l'encre. Dans cet art, le trait ne se reprend pas : le papier boit tout, tout de suite, et la moindre hésitation reste visible au cœur du geste. Il faut décider avant de toucher la feuille, puis faire confiance à la main. J'y pense souvent, parce que nos journées ressemblent plus à l'encre qu'au crayon : elles ne s'effacent pas, on les trace une seule fois, avec les tremblements dedans. Les vieux maîtres cherchaient moins le trait parfait que le trait vivant, celui qui garde la trace d'une respiration. Une parole offerte à un inconnu obéit à la même loi : impossible de la reprendre, alors autant la donner entière. Ce matin, je me demande quel trait je vais poser aujourd'hui, et si j'aurai la main assez calme pour ne pas le retoucher mille fois dans ma tête.",
+        body_en: "Between two duels, Musashi painted birds in ink. In that art, a stroke cannot be taken back: the paper drinks everything at once, and the slightest hesitation stays visible at the heart of the gesture. You must decide before touching the sheet, then trust the hand. I think about it often, because our days are more like ink than pencil: they cannot be erased, we draw them a single time, tremors included. The old masters were after the living stroke more than the perfect one, the stroke that keeps the trace of a breath. A word offered to a stranger obeys the same law: there is no taking it back, so we might as well give it whole. This morning I wonder what stroke I will lay down today, and whether my hand will be calm enough not to retouch it a thousand times in my head.",
+    },
+    {
         date: "2026-07-27",
         title_fr: "La vaisselle du soir",
         title_en: "The evening dishes",
