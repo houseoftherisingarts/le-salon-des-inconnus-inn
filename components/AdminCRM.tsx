@@ -65,7 +65,7 @@ type SectionId =
   | 'dashboard' | 'members' | 'roster' | 'feature-requests' | 'collab-requests'
   | 'inspirosphere' | 'ceilidh' | 'tickets' | 'emails' | 'wwoofing' | 'community'
   | 'affiliates' | 'd20codes' | 'newsletter' | 'messages' | 'media' | 'showoffers'
-  | 'product-ladder' | 'hostaway';
+  | 'product-ladder' | 'hostaway' | 'blog';
 
 // The five audiences Alex switches between. One dashboard, one lens at a time.
 type Audience = 'HOTEL' | 'WWOOFERS' | 'COMMUNAUTE' | 'ARTISTES' | 'MAISON';
