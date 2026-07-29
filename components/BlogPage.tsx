@@ -39,9 +39,20 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
   useEffect(() => {
     const previewSlug = new URLSearchParams(window.location.search).get('preview');
     if (!previewSlug || !db) return;
-    getDocs(query(collection(db, 'blogPosts'), where('slug', '==', previewSlug), limit(1)))
-      .then(snap => { if (!snap.empty) setPreview({ ...(snap.docs[0].data() as BlogPost), id: snap.docs[0].id }); })
-      .catch(() => { /* not an admin: preview stays private */ });
+    let cancelled = false;
+    const fetchPreview = () => {
+      getDocs(query(collection(db!, 'blogPosts'), where('slug', '==', previewSlug), limit(1)))
+        .then(snap => { if (!cancelled && !snap.empty) setPreview({ ...(snap.docs[0].data() as BlogPost), id: snap.docs[0].id }); })
+        .catch(() => { /* not an admin: preview stays private */ });
+    };
+    // Wait for the restored auth state before querying, otherwise the request
+    // leaves anonymously and the rules (rightly) refuse the draft.
+    if (auth) {
+      const unsub = onAuthStateChanged(auth, () => { unsub(); if (!cancelled) fetchPreview(); });
+      return () => { cancelled = true; unsub(); };
+    }
+    fetchPreview();
+    return () => { cancelled = true; };
   }, []);
 
   // Published posts, newest first. Sorted client-side so first launch needs
