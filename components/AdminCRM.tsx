@@ -86,7 +86,7 @@ const AUDIENCE_SECTIONS: Record<Audience, SectionId[]> = {
   WWOOFERS:   ['wwoofing', 'messages'],
   COMMUNAUTE: ['community', 'members'],
   ARTISTES:   ['roster', 'feature-requests', 'collab-requests', 'inspirosphere'],
-  MAISON:     ['dashboard', 'emails', 'affiliates', 'd20codes', 'newsletter', 'media', 'product-ladder'],
+  MAISON:     ['dashboard', 'blog', 'emails', 'affiliates', 'd20codes', 'newsletter', 'media', 'product-ladder'],
 };
 
 // Reverse lookup: which audience owns a given section. Lets the displayed
