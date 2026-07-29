@@ -143,6 +143,10 @@ export const PAGE_META = {
     EN: { title: "Thoughts of the Day | Le Salon des Inconnus", description: "A short daily paragraph on hospitality, art and the life of the house, written at Le Salon des Inconnus, Namur, Outaouais.", keywords: "daily journal, hospitality, artists inn Quebec" },
     FR: { title: "Pensée du jour | Le Salon des Inconnus", description: "Un court paragraphe quotidien sur l'hospitalité, l'art et la vie de la maison, écrit au Salon des Inconnus, à Namur, en Outaouais.", keywords: "journal quotidien, hospitalité, auberge d'artistes Québec" }
   },
+  BLOG: {
+    EN: { title: "Chronicles | Le Salon des Inconnus", description: "The inn's notebook: finances of a small inn, travels and encounters, art, daily life and philosophy, written at Le Salon des Inconnus in Namur, Outaouais.", keywords: "inn blog, artists inn Quebec, Petite-Nation, hospitality chronicles" },
+    FR: { title: "Chroniques | Le Salon des Inconnus", description: "Le carnet de l'auberge : finances d'une petite auberge, voyages et rencontres, art, vie quotidienne et philosophie, écrit au Salon des Inconnus à Namur, en Outaouais.", keywords: "blog auberge, auberge d'artistes Québec, Petite-Nation, chroniques" }
+  },
   MY_PROFILE: {
     EN: { title: "My Profile | Le Salon des Inconnus", description: "Your member space at Le Salon des Inconnus.", keywords: "" },
     FR: { title: "Mon Profil | Le Salon des Inconnus", description: "Votre espace membre au Salon des Inconnus.", keywords: "" }
