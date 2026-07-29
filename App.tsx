@@ -838,6 +838,14 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7e-bis: BLOG (chronicles — index + /blog/{slug} articles) */}
+        {currentView === 'BLOG' && (
+          <BlogPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
         {/* VIEW 7f: INVITATION (unlisted, QR-code only, noindex) */}
         {currentView === 'INVITATION' && (
           <InvitationPage
