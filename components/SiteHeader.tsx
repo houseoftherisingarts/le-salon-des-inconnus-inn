@@ -294,9 +294,10 @@ const MobileMenu: React.FC<{
   open: boolean;
   language: 'EN' | 'FR';
   currentView: ViewState;
+  etre: NavItem[];
   onNavigate: (v: ViewState) => void;
   onClose: () => void;
-}> = ({ open, language, currentView, onNavigate, onClose }) => {
+}> = ({ open, language, currentView, etre, onNavigate, onClose }) => {
   if (!open || typeof window === 'undefined') return null;
 
   const go = (v: ViewState) => { onNavigate(v); onClose(); };
