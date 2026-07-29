@@ -35,6 +35,16 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // ── Blog · chroniques ─────────────────────────────────────────────────────
+    // The morning writer inserts drafts server-side (admin SDK, bypasses rules)
+    // with status 'pending'. The public site may only ever read PUBLISHED posts;
+    // drafts and hidden posts stay admin-only, and every write from the client
+    // (publish / edit / hide / delete in AdminCRM) is admin-only.
+    match /blogPosts/{postId} {
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
     // ── Members ──────────────────────────────────────────────────────────────
     // Any authenticated user can read any member profile (for public profile pages).
     // Each user can only write their own profile.
