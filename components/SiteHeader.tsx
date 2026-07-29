@@ -644,6 +644,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         open={mobileOpen}
         language={language}
         currentView={currentView}
+        etre={etreItems}
         onNavigate={handleNavigate}
         onClose={() => setMobileOpen(false)}
       />
