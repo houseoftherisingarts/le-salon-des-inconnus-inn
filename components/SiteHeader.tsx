@@ -546,7 +546,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
           <div className="hidden md:flex items-center gap-0.5">
             <Dropdown
               label={language === 'FR' ? 'Être' : 'Be'}
-              items={ETRE}
+              items={etreItems}
               language={language}
               currentView={currentView}
               onNavigate={handleNavigate}
