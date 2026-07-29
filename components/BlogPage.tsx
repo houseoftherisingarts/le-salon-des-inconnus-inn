@@ -36,14 +36,6 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
   // the real page. Firestore rules only let admins read non-published posts,
   // so for everyone else the fetch fails silently and nothing shows.
   const [preview, setPreview] = useState<BlogPost | null>(null);
-  // TEMP visual-QA mock (dev server only, stripped from prod builds)
-  useEffect(() => {
-    if (!import.meta.env.DEV || !new URLSearchParams(window.location.search).has('devmock')) return;
-    fetch('/billet-001-finances.json').then(r => r.json()).then(d => setPreview({
-      ...d, id: 'devmock', status: 'pending', author: 'claude',
-      createdAt: { seconds: 1753747200 }, updatedAt: { seconds: 1753747200 }, publishedAt: { seconds: 1753747200 },
-    })).catch(() => {});
-  }, []);
   useEffect(() => {
     const previewSlug = new URLSearchParams(window.location.search).get('preview');
     if (!previewSlug || !db) return;
