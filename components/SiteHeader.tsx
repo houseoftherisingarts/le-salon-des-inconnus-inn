@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import type { User } from 'firebase/auth';
+import { collection, getDocs, limit, query, where } from 'firebase/firestore';
+import { db } from '../firebase';
 import type { MemberProfile } from './AuthModal';
 import { MemberPanel } from './MemberPanel';
 import { MUSIC_GENRES } from '../constants';
@@ -10,7 +12,7 @@ import { MUSIC_GENRES } from '../constants';
 
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
-  | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
+  | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'BLOG' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
   | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO';
 
 interface SiteHeaderProps {
