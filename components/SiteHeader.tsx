@@ -47,6 +47,24 @@ const ETRE: NavItem[] = [
   { view: 'PENSEES',   label_fr: 'Pensées',     label_en: 'Thoughts',   desc_fr: 'Le journal quotidien de la maison', desc_en: 'The house\'s daily journal',   icon: '🕯️' },
 ];
 
+// The chronicles entry only appears once at least one post has been approved
+// and published in AdminCRM · Blog — before that, the blog stays unlisted.
+const BLOG_NAV: NavItem = {
+  view: 'BLOG', label_fr: 'Chroniques', label_en: 'Chronicles',
+  desc_fr: 'Le carnet de l\'auberge', desc_en: 'The inn\'s notebook', icon: '📜',
+};
+
+const useHasChronicles = (): boolean => {
+  const [has, setHas] = useState(false);
+  useEffect(() => {
+    if (!db) return;
+    getDocs(query(collection(db, 'blogPosts'), where('status', '==', 'published'), limit(1)))
+      .then(snap => setHas(!snap.empty))
+      .catch(() => { /* nav simply stays without the entry */ });
+  }, []);
+  return has;
+};
+
 const FAIRE: NavItem[] = [
   { view: 'KITCHEN',      label_fr: 'Cuisine',          label_en: 'Kitchen',         desc_fr: 'Chef privé & bistronomie',       desc_en: 'Private chef & bistronomy',    icon: '🍽️' },
   { view: 'MASSOTHERAPY', label_fr: 'Massothérapie',    label_en: 'Massotherapy',    desc_fr: 'Soins holistiques & reiki',      desc_en: 'Holistic care & reiki',        icon: '✦' },
