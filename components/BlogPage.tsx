@@ -72,8 +72,8 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
   };
 
   const active = useMemo(
-    () => (slug && posts ? posts.find(p => p.slug === slug) ?? null : null),
-    [slug, posts],
+    () => (slug && posts ? posts.find(p => p.slug === slug) ?? null : null) ?? preview,
+    [slug, posts, preview],
   );
 
   // Per-article document title + canonical-ish JSON-LD in a dedicated block.
