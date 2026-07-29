@@ -63,7 +63,7 @@ export const BlogBody: React.FC<{ body: string }> = ({ body }) => (
             <ul key={i} className="my-6 space-y-3">
               {b.items.map((item, j) => (
                 <li key={j} className="font-lato text-white/75 flex gap-4" style={{ fontSize: 'clamp(1.02rem, 1.35vw, 1.13rem)', lineHeight: 1.75 }}>
-                  <span aria-hidden className="text-[#c5a059] shrink-0 mt-[2px]">·</span>
+                  <span aria-hidden className="block shrink-0 w-4 h-px bg-[#c5a059] mt-[0.85em]" />
                   <span>{renderInline(item)}</span>
                 </li>
               ))}
