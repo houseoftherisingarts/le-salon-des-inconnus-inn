@@ -1658,6 +1658,14 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           />
         )}
 
+        {/* ── Blog · chronicles approval desk ── */}
+        {tab === 'blog' && user && (
+          <BlogSection
+            user={user}
+            onPendingCountChange={setBlogPending}
+          />
+        )}
+
         {/* ── Emails tab ── */}
         {tab === 'emails' && (
           <div>
