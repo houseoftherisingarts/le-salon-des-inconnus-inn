@@ -360,14 +360,14 @@ export const BlogSection: React.FC<Props> = ({ user, onPendingCountChange }) => 
                                         >
                                             Supprimer
                                         </button>
-                                        {p.status === 'published' && p.slug && (
+                                        {p.slug && (
                                             <a
-                                                href={`/blog/${p.slug}`}
+                                                href={p.status === 'published' ? `/blog/${p.slug}` : `/blog?preview=${p.slug}`}
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 className="ml-auto px-4 py-2 border border-white/15 text-neutral-300 hover:text-[#f3e5ab] hover:border-[#c5a059]/40 text-[10px] font-cinzel uppercase tracking-widest rounded transition-colors"
                                             >
-                                                ↗ Voir sur le site
+                                                {p.status === 'published' ? '↗ Voir sur le site' : '↗ Aperçu sur le site'}
                                             </a>
                                         )}
                                     </div>
