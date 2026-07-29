@@ -244,6 +244,8 @@ const pathToView = (pathname: string): ViewState => {
   if (extractCallsheet(normalized)) return 'CALLSHEET_PUBLIC';
   // Stable per-post URLs for the daily journal: /pensees/AAAA-MM-JJ
   if (/^\/pensees\/\d{4}-\d{2}-\d{2}$/.test(normalized)) return 'PENSEES';
+  // Chronicle articles: /blog/{slug}. BlogPage resolves the slug itself.
+  if (/^\/blog\/[a-z0-9-]+$/.test(normalized)) return 'BLOG';
   if (extractSlug(normalized)) return 'SUPER_PROFILE';
   return 'INN';
 };
