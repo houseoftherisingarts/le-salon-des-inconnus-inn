@@ -989,6 +989,9 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   // hooks, before the auth gate) so hook order stays stable across renders.
   const [inspirospherePending, setInspirospherePending] = useState(0);
 
+  // Blog pending-draft count, bubbled up from BlogSection the same way.
+  const [blogPending, setBlogPending] = useState(0);
+
   // Persist the audience of the active section so a reload lands Alex in the
   // same lens. Runs on any tab change, whoever triggered it.
   useEffect(() => {
