@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { collection, getDocs, limit, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../firebase';
 import { BLOG_CATEGORIES, BlogPost, categoryLabel, formatPostDate, readingMinutes } from '../data/blog';
 import { BlogBody } from './blog/BlogBody';
 import { SITE_URL } from '../config/seo.config';
