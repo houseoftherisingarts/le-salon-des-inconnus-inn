@@ -195,6 +195,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   COMMUNITY:      '/communaute',
   DONATION:       '/don',
   PENSEES:        '/pensees',
+  BLOG:           '/blog',
   INVITATION:     '/invitation',
   ENTREPRISES:    '/entreprises',
   FORFAITS:       '/forfaits',
