@@ -318,7 +318,7 @@ const MobileMenu: React.FC<{
             {language === 'FR' ? 'Être' : 'Be'}
           </p>
           <div className="flex flex-col gap-1">
-            {ETRE.map(item => (
+            {etre.map(item => (
               <button
                 key={item.view}
                 onClick={() => go(item.view)}
