@@ -503,6 +503,8 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 }) => {
   const scrolled = useScroll(10);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const hasChronicles = useHasChronicles();
+  const etreItems = hasChronicles ? [...ETRE, BLOG_NAV] : ETRE;
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
