@@ -160,6 +160,13 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
       {/* ────────────────────────── ARTICLE ────────────────────────── */}
       {active ? (
         <main className="pt-28 md:pt-36 pb-24">
+          {active.status !== 'published' && (
+            <div className="px-6 md:px-12 lg:px-20 pb-6">
+              <p className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-amber-400/40 text-amber-200 font-cinzel uppercase" style={{ fontSize: '10px', letterSpacing: '0.3em' }}>
+                {t('Draft preview, visible only to you', 'Aperçu du brouillon, visible seulement par vous')}
+              </p>
+            </div>
+          )}
           <motion.section
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
