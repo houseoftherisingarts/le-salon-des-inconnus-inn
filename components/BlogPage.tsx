@@ -31,6 +31,18 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
   const [slug, setSlug] = useState<string | null>(() => slugFromPath());
   const [cat, setCat] = useState<'all' | string>('all');
 
+  // Admin-only draft preview: /blog?preview={slug} renders a pending post on
+  // the real page. Firestore rules only let admins read non-published posts,
+  // so for everyone else the fetch fails silently and nothing shows.
+  const [preview, setPreview] = useState<BlogPost | null>(null);
+  useEffect(() => {
+    const previewSlug = new URLSearchParams(window.location.search).get('preview');
+    if (!previewSlug || !db) return;
+    getDocs(query(collection(db, 'blogPosts'), where('slug', '==', previewSlug), limit(1)))
+      .then(snap => { if (!snap.empty) setPreview({ ...(snap.docs[0].data() as BlogPost), id: snap.docs[0].id }); })
+      .catch(() => { /* not an admin: preview stays private */ });
+  }, []);
+
   // Published posts, newest first. Sorted client-side so first launch needs
   // no composite index.
   useEffect(() => {
