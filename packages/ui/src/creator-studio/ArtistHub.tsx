@@ -4075,6 +4075,23 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? "Plan shoots: cast, crew, shot list, weather. Export PDF." : "Planifie tes tournages : cast, équipe, shot list, météo. Export PDF."}</p>
                             </div>
 
+                            {/* Tool: La Petite Banque — l'app familiale d'éducation financière.
+                                Outil public du Salon : ouvre l'app dans un nouvel onglet. */}
+                            <div
+                                onClick={() => window.open('https://petite-banque-inconnus.web.app/telecharger.html', '_blank', 'noopener')}
+                                className={`bg-black/40 border ${currentStyles.border} p-8 hover:bg-white/5 transition-all group cursor-pointer aspect-square flex flex-col items-center justify-center text-center`}
+                            >
+                                <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 text-neutral-400 group-hover:text-white`}>
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                                        <path d="M3 10l9-6 9 6" />
+                                        <path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8" />
+                                        <path d="M3 18h18M3 21h18" />
+                                    </svg>
+                                </div>
+                                <h3 className="font-cinzel text-white uppercase font-bold text-xl">{language === 'EN' ? 'Little Bank' : 'Petite Banque'}</h3>
+                                <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? 'The family bank that teaches money. Free, on all platforms.' : "La banque familiale qui enseigne l'argent. Gratuite, sur toutes les plateformes."}</p>
+                            </div>
+
                             {/* Tool 3: Bio-Forge */}
                             <div 
                                 onClick={() => setActiveTool('BIOFORGE')}

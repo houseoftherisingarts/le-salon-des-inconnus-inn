@@ -21,6 +21,7 @@ const PPSPage           = lazy(() => import('./components/PPSPage').then(m => ({
 const CommunityPage     = lazy(() => import('./components/CommunityPage').then(m => ({ default: m.CommunityPage })));
 const DonationPage      = lazy(() => import('./components/DonationPage').then(m => ({ default: m.DonationPage })));
 const PenseesPage       = lazy(() => import('./components/PenseesPage').then(m => ({ default: m.PenseesPage })));
+const DownloadPage      = lazy(() => import('./components/DownloadPage').then(m => ({ default: m.DownloadPage })));
 const BlogPage          = lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 // Unlisted, no nav link: /invitation (noindex) and /entreprises. Reached only
 // by direct URL (QR code / shared link).
@@ -172,7 +173,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 // View State Definitions
 type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS'
-              | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO'
+              | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
 // Note: SUPER_PROFILE intentionally has no fixed path — its path is the
@@ -195,6 +196,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   COMMUNITY:      '/communaute',
   DONATION:       '/don',
   PENSEES:        '/pensees',
+  DOWNLOAD:       '/download',
   BLOG:           '/blog',
   INVITATION:     '/invitation',
   ENTREPRISES:    '/entreprises',
@@ -833,6 +835,14 @@ const App: React.FC = () => {
         {/* VIEW 7e: PENSEES (daily journal) */}
         {currentView === 'PENSEES' && (
           <PenseesPage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 7e-ter: DOWNLOAD (les outils du Salon — Petite Banque et compagnie) */}
+        {currentView === 'DOWNLOAD' && (
+          <DownloadPage
             onNavigate={(view) => handleNavigation(view as ViewState)}
             language={language}
           />
