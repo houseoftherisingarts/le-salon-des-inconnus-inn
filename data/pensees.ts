@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-07-30",
+        title_fr: "Le luxe d'être inconnu",
+        title_en: "The luxury of being unknown",
+        body_fr: "Chaque voyageur qui franchit notre porte reçoit un cadeau dont il ne se doute pas : personne ici ne connaît son histoire. Pour un soir, il n'est plus ni son métier, ni son titre, ni la réputation qui le précède partout ailleurs. Il peut se raconter depuis le début, choisir ce qu'il montre, découvrir qui il est quand plus rien ne l'annonce. On passe nos vies à vouloir être connus et reconnus, et on oublie à quel point l'inverse repose. Devant un inconnu, moi aussi j'ai le droit d'être neuf; c'est peut-être pour ça que les conversations entre étrangers vont souvent plus loin que celles des vieux amis. Les moines reçoivent un nouveau nom en entrant au monastère, comme pour voyager plus léger. Et moi, qu'est-ce que je déposerais à la porte si on m'offrait d'être inconnu pour une soirée?",
+        body_en: "Every traveller who crosses our threshold receives a gift they rarely notice: nobody here knows their story. For one evening they are no longer their job, their title, or the reputation that walks ahead of them everywhere else. They can tell their story from the beginning, choose what to show, discover who they are when nothing announces them anymore. We spend our lives wanting to be known and recognized, and we forget how deeply the opposite can rest us. In front of a stranger, I too am allowed to be new; maybe that is why conversations between strangers often go further than those between old friends. Monks receive a new name when they enter the monastery, as if to travel lighter. And what would I leave at the door, if someone offered me the chance to be unknown for an evening?",
+    },
+    {
         date: "2026-07-29",
         title_fr: "Jouer pour rien",
         title_en: "Playing for nothing",
