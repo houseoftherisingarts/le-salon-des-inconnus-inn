@@ -297,21 +297,24 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <section className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6">
             <motion.h2 {...reveal()} className="font-cinzel text-3xl text-[#e8d5a3] text-center mb-12">
-              {t('Three steps, and the bank is open.', 'Trois gestes, et la banque est ouverte.')}
+              {t('Three steps, and the bank is open.', 'Trois gestes, et la banque est ouverte.', 'Tres gestos, y el banco está abierto.')}
             </motion.h2>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { n: '1', title: t('Open the Coffre', 'Ouvrez le Coffre'), body: t(
+                { n: '1', title: t('Open the Coffre', 'Ouvrez le Coffre', 'Abra el Coffre'), body: t(
                   "The welcome assistant opens each child's account in two minutes. No email, no password for them to remember.",
                   "L'assistant vous accueille et crée le compte de chaque enfant en deux minutes. Pas de courriel, pas de mot de passe à retenir pour eux.",
+                  'El asistente de bienvenida abre la cuenta de cada niño en dos minutos. Sin correo, sin contraseña que ellos deban recordar.',
                 ) },
-                { n: '2', title: t('Deposit the allowance', "Déposez l'allocation"), body: t(
+                { n: '2', title: t('Deposit the allowance', "Déposez l'allocation", 'Deposite la mesada'), body: t(
                   'Every amount splits itself across the jars: needs, savings, projects, giving, fun. Your child adjusts their profile and sees where every coin goes.',
                   "Chaque montant se répartit tout seul entre les pots : besoins, épargne, projets, générosité, plaisirs. Votre enfant ajuste son profil et voit où va chaque sou.",
+                  'Cada monto se reparte solo entre los frascos: necesidades, ahorro, proyectos, generosidad, gustos. Su hijo ajusta su perfil y ve adónde va cada moneda.',
                 ) },
-                { n: '3', title: t('Pay the interest', "Versez l'intérêt"), body: t(
+                { n: '3', title: t('Pay the interest', "Versez l'intérêt", 'Pague el interés'), body: t(
                   'You are the head banker. Compound interest lands every week, and your child watches the treasure grow on its own.',
                   "Vous êtes le banquier en chef. L'intérêt composé tombe chaque semaine, et votre enfant regarde son trésor grandir tout seul.",
+                  'Usted es el banquero en jefe. El interés compuesto cae cada semana, y su hijo ve crecer su tesoro solo.',
                 ) },
               ].map((card, i) => (
                 <motion.div key={card.n} {...reveal(i * 0.1)} className="rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-8">
