@@ -76,12 +76,12 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
 
   const demoCta = (
     <a href={DEMO} target="_blank" rel="noopener noreferrer" className={PILL_PRIMARY}>
-      {t('Open the demo', 'Ouvrir la démo')}
+      {t('Open the demo', 'Ouvrir la démo', 'Abrir la demo')}
     </a>
   );
   const microReassurance = (
     <p className="text-xs text-neutral-500">
-      {t('Free · No account · Everything stays on your device', 'Gratuit · Sans compte · Tout reste sur votre appareil')}
+      {t('Free · No account · Everything stays on your device', 'Gratuit · Sans compte · Tout reste sur votre appareil', 'Gratis · Sin cuenta · Todo permanece en su dispositivo')}
     </p>
   );
 
