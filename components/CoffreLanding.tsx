@@ -725,9 +725,9 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par', 'Una experiencia sin publicidad, presentada por')}</span>
               <span className="text-[#c5a059] font-semibold">La Petite Monnaie</span>
               <a href={SPONSOR} className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">{t('Become a sponsor', 'Devenir commanditaire', 'Convertirse en patrocinador')}</a>
-              <a href={DL_DONS} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
+              <button onClick={() => onNavigate('DONATION')} className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
                 {t('Support the project', 'Soutenir le projet', 'Apoyar el proyecto')}
-              </a>
+              </button>
             </div>
           </div>
         </motion.section>
