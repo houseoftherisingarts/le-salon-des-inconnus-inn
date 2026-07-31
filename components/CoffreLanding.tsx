@@ -353,12 +353,12 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
             <div className="max-w-7xl mx-auto px-6">
               <div className={`grid md:grid-cols-[1.1fr_0.9fr] gap-12 items-center ${b.reverse ? 'md:[&>*:first-child]:order-2' : ''}`}>
                 <div className="flex items-center">
-                  <GlassFrame src={`${M}${b.img}`} alt={t(b.alt[0], b.alt[1])} className={`w-full ${b.imgClass || ''}`} />
+                  <GlassFrame src={`${M}${b.img}`} alt={t(b.alt[0], b.alt[1], b.alt[2])} className={`w-full ${b.imgClass || ''}`} />
                 </div>
                 <div>
-                  <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t(b.eyebrow[0], b.eyebrow[1])}</p>
-                  <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t(b.title[0], b.title[1])}</h3>
-                  <p className="text-neutral-300 leading-relaxed">{t(b.body[0], b.body[1])}</p>
+                  <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t(b.eyebrow[0], b.eyebrow[1], b.eyebrow[2])}</p>
+                  <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t(b.title[0], b.title[1], b.title[2])}</h3>
+                  <p className="text-neutral-300 leading-relaxed">{t(b.body[0], b.body[1], b.body[2])}</p>
                 </div>
               </div>
               {b.ctaAfter && <div className="mt-12 flex justify-center">{demoCta}</div>}
