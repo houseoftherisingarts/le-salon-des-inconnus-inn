@@ -383,9 +383,9 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               <div className="relative grid grid-cols-10 gap-1 md:gap-3">
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
                   const label = n === 1
-                    ? t('4 years old · I count my coins', '4 ans · Je compte les sous')
+                    ? t('4 years old · I count my coins', '4 ans · Je compte les sous', '4 años · Cuento mis monedas')
                     : n === 10
-                    ? t('Adult · everything open', 'Adulte · tout ouvert')
+                    ? t('Adult · everything open', 'Adulte · tout ouvert', 'Adulto · todo abierto')
                     : '';
                   return (
                     <div key={n} className="flex flex-col items-center gap-2">
