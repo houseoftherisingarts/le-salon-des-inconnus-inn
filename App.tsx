@@ -852,6 +852,14 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7e-quater: COFFRE (landing de vente du Coffre des Inconnus) */}
+        {currentView === 'COFFRE' && (
+          <CoffreLanding
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
         {/* VIEW 7e-bis: BLOG (chronicles — index + /blog/{slug} articles) */}
         {currentView === 'BLOG' && (
           <BlogPage
