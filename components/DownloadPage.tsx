@@ -100,6 +100,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                 {t(
                   'An app for teaching personal & family economics that evolves with the child, from age 4 to a doctorate',
                   "Une application d'enseignement de l'économie personnelle & familiale qui évolue avec l'enfant, de 4 ans au doctorat",
+                  'Una aplicación para enseñar economía personal y familiar que evoluciona con el niño, desde los 4 años hasta un doctorado',
                 )}
               </p>
             </div>
@@ -108,44 +109,46 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                 {t(
                   'A complete little bank for your children: jars that split every coin, compound interest paid by the head banker, real assets, goals, taxes and even currencies. Everything stays on your device.',
                   "Une petite banque complète pour vos enfants : des pots qui répartissent chaque sou, l'intérêt composé versé par le banquier en chef, de vrais actifs, des objectifs, les impôts et même les devises. Tout reste sur votre appareil.",
+                  'Un pequeño banco completo para sus hijos: frascos que reparten cada moneda, interés compuesto pagado por el banquero en jefe, activos reales, objetivos, impuestos y hasta divisas. Todo permanece en su dispositivo.',
                 )}
               </p>
               <div className="flex flex-wrap gap-3 mt-8">
                 <a href={`${BANQUE}/dl/CoffreDesInconnus-mac.dmg`}
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
-                  {t('Download for macOS', 'Télécharger pour macOS')}
+                  {t('Download for macOS', 'Télécharger pour macOS', 'Descargar para macOS')}
                 </a>
                 <a href={`${BANQUE}/dl/CoffreDesInconnus-Setup.exe`}
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
-                  {t('Download for Windows', 'Télécharger pour Windows')}
+                  {t('Download for Windows', 'Télécharger pour Windows', 'Descargar para Windows')}
                 </a>
                 <button onClick={() => onNavigate('COFFRE')}
                   className="px-6 py-3 rounded-full border border-white/20 text-neutral-200 text-sm hover:border-[#c5a059] hover:text-[#e8d5a3] transition-colors">
-                  {t('Try the online demo', 'Essayer la démo en ligne')}
+                  {t('Try the online demo', 'Essayer la démo en ligne', 'Probar la demo en línea')}
                 </button>
                 <a href={`${BANQUE}/telecharger.html`} target="_blank" rel="noopener noreferrer"
                   className="px-6 py-3 rounded-full border border-white/20 text-neutral-200 text-sm hover:border-[#c5a059] hover:text-[#e8d5a3] transition-colors">
-                  {t('iPhone, iPad and Android', 'iPhone, iPad et Android')}
+                  {t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}
                 </a>
               </div>
               <p className="text-neutral-500 text-xs mt-6 leading-relaxed">
                 {t(
                   'Free public beta. On first launch, the bank welcomes you, opens the accounts of your children and walks you through a guided tour.',
                   "Beta publique gratuite. Au premier lancement, la banque vous accueille, ouvre les comptes de vos enfants et vous guide dans une visite.",
+                  'Beta pública gratuita. En el primer inicio, el banco le da la bienvenida, abre las cuentas de sus hijos y lo guía en un recorrido.',
                 )}
               </p>
             </div>
           </div>
           <div className="px-10 md:px-12 py-5 border-t border-[#c5a059]/15 flex flex-wrap items-center justify-center gap-3 text-xs text-neutral-500">
-            <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par')}</span>
+            <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par', 'Una experiencia sin publicidad, presentada por')}</span>
             <span className="text-[#c5a059] font-semibold">La Petite Monnaie</span>
             <a href="mailto:alex@lesalondesinconnus.com?subject=Commanditer%20les%20outils%20du%20Salon"
               className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
-              {t('Become a sponsor', 'Devenir commanditaire')}
+              {t('Become a sponsor', 'Devenir commanditaire', 'Convertirse en patrocinador')}
             </a>
             <a href="https://coffre-des-inconnus.web.app/telecharger.html#dons" target="_blank" rel="noopener noreferrer"
               className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
-              {t('Support the project', 'Soutenir le projet')}
+              {t('Support the project', 'Soutenir le projet', 'Apoyar el proyecto')}
             </a>
           </div>
         </motion.section>
