@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { MobileInstallPanel } from './MobileInstallPanel';
 
 // Page /download — la petite armurerie publique du Salon : les outils que
 // nous offrons aux voyageurs. Même atmosphère que le reste du site : noir
