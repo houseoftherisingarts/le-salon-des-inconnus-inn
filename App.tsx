@@ -22,6 +22,7 @@ const CommunityPage     = lazy(() => import('./components/CommunityPage').then(m
 const DonationPage      = lazy(() => import('./components/DonationPage').then(m => ({ default: m.DonationPage })));
 const PenseesPage       = lazy(() => import('./components/PenseesPage').then(m => ({ default: m.PenseesPage })));
 const DownloadPage      = lazy(() => import('./components/DownloadPage').then(m => ({ default: m.DownloadPage })));
+const CoffreLanding     = lazy(() => import('./components/CoffreLanding').then(m => ({ default: m.CoffreLanding })));
 const BlogPage          = lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 // Unlisted, no nav link: /invitation (noindex) and /entreprises. Reached only
 // by direct URL (QR code / shared link).
