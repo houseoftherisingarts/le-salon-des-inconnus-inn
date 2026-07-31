@@ -81,12 +81,13 @@ const SoundIcon = ({ off }: { off: boolean }) => (
 const MakerVideo: React.FC<{
   src: string;
   poster: string;
+  duration: number;
   label: string;
   playLabel: string;
   pauseLabel: string;
   muteLabel: string;
   seekLabel: string;
-}> = ({ src, poster, label, playLabel, pauseLabel, muteLabel, seekLabel }) => {
+}> = ({ src, poster, duration, label, playLabel, pauseLabel, muteLabel, seekLabel }) => {
   const vid = React.useRef<HTMLVideoElement>(null);
   const bar = React.useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = React.useState(false);
@@ -324,7 +325,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
       key: 'paliers',
       reverse: true,
       eyebrow: ['The milestones', 'Les paliers', 'Los hitos'],
-      title: ['The treasure grows, the honors follow.', 'Le trésor grandit, les honneurs suivent.', 'El tesoro crece, los honores lo siguen.'],
+      title: ['The treasure grows, honors follow.', "Le trésor grandit, l'honneur suit.", 'El tesoro crece, los honores siguen.'],
       body: [
         'Milestones mark every new peak of the treasure, and the \u{1F48E} line keeps a lifetime record of everything ever earned. The pride of building takes over from the urge to spend.',
         "Des paliers soulignent chaque sommet du trésor, et la ligne \u{1F48E} garde la trace de tout ce qui a été gagné à vie. La fierté de bâtir prend le dessus sur l'envie de dépenser.",
@@ -423,13 +424,13 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
 
       <main>
         {/* 1. HERO */}
-        <section className="max-w-7xl mx-auto px-6 pt-36 md:pt-40 pb-24 grid md:grid-cols-2 gap-14 items-center">
+        <section className="max-w-7xl mx-auto px-6 pt-36 md:pt-40 pb-24 grid md:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
           <div>
             <motion.p {...heroReveal(0)} className="text-[11px] tracking-[0.3em] uppercase text-neutral-500 mb-5">
               {t('Le Coffre des Inconnus · Free public beta', 'Le Coffre des Inconnus · Beta publique gratuite', 'Le Coffre des Inconnus · Beta pública gratuita')}
             </motion.p>
-            <motion.h1 {...heroReveal(0.12)} className="font-cinzel text-4xl md:text-6xl text-[#e8d5a3] leading-tight mb-6">
-              {t('Raise a child who understands money.', "Élevez un enfant qui comprend l'argent.", 'Eleve a un niño que entiende el dinero.')}
+            <motion.h1 {...heroReveal(0.12)} className="font-cinzel text-[26px] md:text-5xl text-[#e8d5a3] leading-tight mb-6 [text-wrap:balance]">
+              {t('A child who understands money.', "Un enfant qui comprend l'argent.", 'Un niño que entiende el dinero.')}
             </motion.h1>
             <motion.div {...heroReveal(0.24)}>
               <p className="text-[#c5a059] font-medium leading-relaxed max-w-xl mb-4">
@@ -472,7 +473,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         {/* 2. BANDE DOULEUR */}
         <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-10">
-            <h2 className="font-cinzel text-3xl text-[#e8d5a3]">{t('School will not teach it.', "L'école ne l'enseignera pas.", 'La escuela no lo va a enseñar.')}</h2>
+            <h2 className={H_SECTION}>{t('School will not teach it.', "L'école ne l'enseignera pas.", 'La escuela no lo va a enseñar.')}</h2>
             <div>
               <p className="text-neutral-300 leading-relaxed">
                 {t(
@@ -495,7 +496,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         {/* 3. TROIS GESTES */}
         <section className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6">
-            <motion.h2 {...reveal()} className="font-cinzel text-3xl text-[#e8d5a3] text-center mb-12">
+            <motion.h2 {...reveal()} className={`${H_SECTION} text-center mb-12`}>
               {t('Three steps, and the bank is open.', 'Trois gestes, et la banque est ouverte.', 'Tres gestos, y el banco está abierto.')}
             </motion.h2>
             <div className="grid md:grid-cols-3 gap-6">
@@ -540,7 +541,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                 </div>
                 <div>
                   <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t(b.eyebrow[0], b.eyebrow[1], b.eyebrow[2])}</p>
-                  <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t(b.title[0], b.title[1], b.title[2])}</h3>
+                  <h3 className={`${H_SECTION} mb-5`}>{t(b.title[0], b.title[1], b.title[2])}</h3>
                   <p className="text-neutral-300 leading-relaxed">{t(b.body[0], b.body[1], b.body[2])}</p>
                 </div>
               </div>
@@ -553,7 +554,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6">
             <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4 text-center">{t('Ten levels', 'Dix niveaux', 'Diez niveles')}</p>
-            <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5 text-center">{t('A bank that grows with your child.', 'Une banque qui grandit avec votre enfant.', 'Un banco que crece con su hijo.')}</h3>
+            <h3 className={`${H_SECTION} mb-5 text-center`}>{t('A bank that grows with your child.', "Une banque qui grandit avec l'enfant.", 'Un banco que crece con su hijo.')}</h3>
             <p className="text-neutral-300 leading-relaxed max-w-3xl mx-auto text-center mb-14">
               {t(
                 'From the little one counting coins to the adult handling taxes, credit and currencies: every level opens its modules, and every level comes with its guideposts for the parent. You always know what to show, and when.',
@@ -619,8 +620,8 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
             </motion.div>
             <div>
               <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t('The resistance', 'La résistance', 'La resistencia')}</p>
-              <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">
-                {t('You will own this program. And you will be happy.', 'Vous posséderez ce programme. Et vous serez heureux.', 'Usted poseerá este programa. Y será feliz.')}
+              <h3 className={`${H_SECTION} mb-5`}>
+                {t('You will own this program.', 'Vous posséderez ce programme.', 'Usted poseerá este programa.')}
               </h3>
               <p className="text-[#e8d5a3] font-semibold leading-relaxed mb-5">
                 {t(
@@ -651,8 +652,8 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section {...reveal()} className="border-t border-white/5 py-24 md:py-32 relative overflow-hidden">
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(55% 65% at 50% 45%, rgba(201,168,90,0.09), transparent 75%)' }} aria-hidden />
           <div className="relative max-w-4xl mx-auto px-6">
-            <p className="font-cinzel text-[110px] md:text-[160px] leading-none text-[#c5a059]/15 text-center select-none" aria-hidden>«</p>
-            <p className="font-cinzel text-2xl md:text-4xl text-[#e8d5a3] text-center leading-relaxed -mt-10 md:-mt-16">
+            <p className="font-cormorant text-[110px] md:text-[160px] leading-none text-[#c5a059]/15 text-center select-none" aria-hidden>«</p>
+            <p className="font-cormorant text-[22px] md:text-[34px] text-[#e8d5a3] text-center leading-snug -mt-10 md:-mt-16 [text-wrap:pretty]">
               {t(
                 'Picture the next family dinner. Your child gets ten dollars as a gift and calls it before the bill even touches the table: "2.50 to savings, 2.50 to invest, 1.50 for fun and 1 to share."',
                 'Imaginez le prochain souper. Votre enfant reçoit dix dollars en cadeau et annonce, avant même que le billet touche la table : "2,50 $ en épargne, 2,50 $ à investir, 1,50 $ pour le fun et 1 $ à partager."',
@@ -691,7 +692,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                 <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">
                   {t('Made by a homeschooling family, for all families', 'Une app de famille-école, pour toutes les familles', 'Hecha por una familia que educa en casa, para todas las familias')}
                 </p>
-                <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Built by a family, not by a bank.', 'Bâti par une famille, pas par une banque.', 'Construido por una familia, no por un banco.')}</h3>
+                <h3 className={`${H_SECTION} mb-5`}>{t('Built by a family, not by a bank.', 'Bâti par une famille, pas par une banque.', 'Construido por una familia, no por un banco.')}</h3>
                 <p className="text-neutral-300 leading-relaxed">
                   {t(
                     'The Coffre was born in an inn of the Petite-Nation, for my two children. We homeschool: teaching them the jars, the interest and the goals at ages 4 and 5, I watched mathematics settle in right alongside the sense of money. The tool had to leave the house. The public version, richer than our first family build, is offered free for the length of the beta. The accounts you see in these images are my children’s: real deposits and real interest, paid every week.',
@@ -735,7 +736,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14">
             <div>
-              <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Nothing to lose, everything to learn.', 'Rien à perdre, tout à apprendre.', 'Nada que perder, todo que aprender.')}</h3>
+              <h3 className={`${H_SECTION} mb-5`}>{t('Nothing to lose, everything to learn.', 'Rien à perdre, tout à apprendre.', 'Nada que perder, todo que aprender.')}</h3>
               <p className="text-neutral-300 leading-relaxed">
                 {t(
                   'Free, no account, no ads. Your data lives on your device, with one-tap backups. Try the demo: if the Coffre does not win you over, your child will still have played banker for twenty minutes.',
@@ -763,7 +764,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                 <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">
                   {t('A word from the maker', 'Le mot du créateur', 'Unas palabras del creador')}
                 </p>
-                <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">
+                <h3 className={`${H_SECTION} mb-5`}>
                   {t('Two minutes, in person.', 'Deux minutes, en personne.', 'Dos minutos, en persona.')}
                 </h3>
                 <p className="text-neutral-300 leading-relaxed">
@@ -797,8 +798,8 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         {/* 8. CTA FINAL */}
         <motion.section id="telecharger" {...reveal()} className="border-t border-white/5 py-24 md:py-32">
           <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16 text-center">
-            <h3 className="font-cinzel text-3xl md:text-4xl text-[#e8d5a3] mb-8">
-              {t('The next allowance can be the first lesson.', 'La prochaine allocation peut être la première leçon.', 'La próxima mesada puede ser la primera lección.')}
+            <h3 className="font-cinzel text-[22px] md:text-4xl text-[#e8d5a3] mb-8 [text-wrap:balance]">
+              {t('The first lesson starts tomorrow.', 'La première leçon commence demain.', 'La primera lección empieza mañana.')}
             </h3>
             <div className="flex flex-wrap justify-center gap-3">
               {demoCta}
