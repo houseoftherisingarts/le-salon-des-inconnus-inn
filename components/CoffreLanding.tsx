@@ -19,7 +19,6 @@ const DEMO = 'https://coffre-des-inconnus.web.app';
 const DL_MAC = `${DEMO}/dl/CoffreDesInconnus-mac.dmg`;
 const DL_WIN = `${DEMO}/dl/CoffreDesInconnus-Setup.exe`;
 const APP_URL = DEMO;
-const SPONSOR = 'mailto:alex@lesalondesinconnus.com?subject=Commanditer%20les%20outils%20du%20Salon';
 
 const EASE = [0.22, 0.61, 0.36, 1] as const;
 const reveal = (delay = 0) => ({
