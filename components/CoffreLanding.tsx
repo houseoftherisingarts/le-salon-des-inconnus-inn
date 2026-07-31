@@ -617,11 +617,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">
                 {t('You will own this program. And you will be happy.', 'Vous posséderez ce programme. Et vous serez heureux.', 'Usted poseerá este programa. Y será feliz.')}
               </h3>
+              <p className="text-[#e8d5a3] font-semibold leading-relaxed mb-5">
+                {t(
+                  '"You will own nothing and you will be happy." That sentence was written for you, about you, and it was meant kindly. We answer no.',
+                  "« Vous ne posséderez rien et vous serez heureux. » Cette phrase a été écrite pour vous, à votre sujet, et on vous l'a présentée comme une bonne nouvelle. Nous répondons non.",
+                  '«No poseerá nada y será feliz». Esa frase fue escrita para usted, sobre usted, y se la presentaron como una buena noticia. Nosotros respondemos que no.',
+                )}
+              </p>
               <p className="text-neutral-300 leading-relaxed">
                 {t(
-                  'Everything is sliding into subscription: music, movies, software, even heated seats. Everything is rented, nothing is owned, and everyone is told to celebrate. People are fed up, and so are we. The Coffre is part of the resistance: you download it, it is yours. No subscription, no monthly rent on your children’s education, no server that shuts down and takes your data with it. Yours, until the day your computer gives out.',
-                  "Tout glisse vers l'abonnement : la musique, les films, les logiciels, jusqu'aux sièges chauffants. Tout se loue, rien ne s'appartient, et il faudrait s'en réjouir. Les gens en ont soupé, et nous aussi. Le Coffre fait partie de la résistance : vous le téléchargez, il est à vous. Pas d'abonnement, pas de loyer mensuel sur l'éducation de vos enfants, pas de serveur qui ferme en emportant vos données. À vous, jusqu'au jour où votre ordinateur rendra l'âme.",
-                  "Todo se desliza hacia la suscripción: la música, las películas, el software, hasta los asientos calefaccionados. Todo se renta, nada se posee, y se supone que hay que celebrarlo. La gente está harta, y nosotros también. Le Coffre forma parte de la resistencia: usted lo descarga, y es suyo. Sin suscripción, sin renta mensual sobre la educación de sus hijos, sin servidor que cierre y se lleve sus datos. Suyo, hasta el día en que su computadora rinda el último suspiro.",
+                  'Everything is sliding into subscription: music, movies, software, even the heated seats in a car you already paid for. Everything is rented, nothing is owned, and you are expected to celebrate. The Coffre stands on the other side of that line. You download it, it is yours. No subscription, no monthly rent on your children’s education, no server that shuts down and takes your data with it. Yours, until the day your computer gives out.',
+                  "Tout glisse vers l'abonnement : la musique, les films, les logiciels, jusqu'aux sièges chauffants d'une voiture déjà payée. Tout se loue, rien ne s'appartient, et il faudrait s'en réjouir. Le Coffre se tient de l'autre côté de cette ligne. Vous le téléchargez, il est à vous. Pas d'abonnement, pas de loyer mensuel sur l'éducation de vos enfants, pas de serveur qui ferme en emportant vos données. À vous, jusqu'au jour où votre ordinateur rendra l'âme.",
+                  "Todo se desliza hacia la suscripción: la música, las películas, el software, hasta los asientos calefaccionados de un auto ya pagado. Todo se renta, nada se posee, y se supone que hay que celebrarlo. Le Coffre se planta del otro lado de esa línea. Usted lo descarga, y es suyo. Sin suscripción, sin renta mensual sobre la educación de sus hijos, sin servidor que cierre y se lleve sus datos. Suyo, hasta el día en que su computadora rinda el último suspiro.",
                 )}
               </p>
               <p className="text-neutral-500 text-sm leading-relaxed mt-5">
