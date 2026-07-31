@@ -13,6 +13,15 @@ for (const [route, vp, tag] of [
   const page = await ctx.newPage();
   await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(3500);
+  // Bannière témoins : la fermer AVANT de mesurer, sinon elle masque le pied de page.
+  await page.evaluate(() => {
+    const b = Array.from(document.querySelectorAll('button')).find((x) => /essentiel seulement|essential only/i.test(x.textContent || ''));
+    if (b) b.click();
+  });
+  await page.waitForTimeout(900);
+  // La bannière de témoins est en position fixe et masque le pied de page :
+  // nous la retirons pour la capture (vérification seulement, le site est intact).
+  await page.addStyleTag({ content: '[class*="fixed"][class*="bottom-0"]{display:none !important}' });
   const ess = page.locator('button', { hasText: /essentiel seulement|essential only/i }).first();
   if (await ess.count()) await ess.click().catch(() => {});
   // Descendre jusqu'en bas pour declencher les reveals au scroll
