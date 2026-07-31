@@ -71,15 +71,16 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
           className="text-center"
         >
           <p className="text-[11px] tracking-[0.3em] uppercase text-neutral-500 mb-4">
-            {t('The workshop', "L'atelier")}
+            {t('The workshop', "L'atelier", 'El taller')}
           </p>
           <h1 className="font-cinzel text-4xl md:text-5xl text-[#e8d5a3] mb-5">
-            {t('Tools from the Salon', 'Les outils du Salon')}
+            {t('Tools from the Salon', 'Les outils du Salon', 'Herramientas del Salon')}
           </h1>
           <p className="max-w-2xl mx-auto text-neutral-400 leading-relaxed">
             {t(
               'Tools built by the community, for the community.',
               'Des outils développés par la communauté, pour la communauté.',
+              'Herramientas creadas por la comunidad, para la comunidad.',
             )}
           </p>
         </motion.div>
