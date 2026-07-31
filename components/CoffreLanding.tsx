@@ -569,16 +569,16 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section id="telecharger" {...reveal()} className="border-t border-white/5 py-24 md:py-32">
           <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16 text-center">
             <h3 className="font-cinzel text-3xl md:text-4xl text-[#e8d5a3] mb-8">
-              {t('The next allowance can be the first lesson.', 'La prochaine allocation peut être la première leçon.')}
+              {t('The next allowance can be the first lesson.', 'La prochaine allocation peut être la première leçon.', 'La próxima mesada puede ser la primera lección.')}
             </h3>
             <div className="flex flex-wrap justify-center gap-3">
               {demoCta}
-              <a href={DL_MAC} className={PILL_SECONDARY}>{t('Download for macOS', 'Télécharger pour macOS')}</a>
-              <a href={DL_WIN} className={PILL_SECONDARY}>{t('Download for Windows', 'Télécharger pour Windows')}</a>
-              <a href={DL_MOBILE} target="_blank" rel="noopener noreferrer" className={PILL_SECONDARY}>{t('iPhone, iPad and Android', 'iPhone, iPad et Android')}</a>
+              <a href={DL_MAC} className={PILL_SECONDARY}>{t('Download for macOS', 'Télécharger pour macOS', 'Descargar para macOS')}</a>
+              <a href={DL_WIN} className={PILL_SECONDARY}>{t('Download for Windows', 'Télécharger pour Windows', 'Descargar para Windows')}</a>
+              <a href={DL_MOBILE} target="_blank" rel="noopener noreferrer" className={PILL_SECONDARY}>{t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}</a>
             </div>
             <p className="text-xs text-neutral-500 mt-7">
-              {t('Free public beta · Presented by La Petite Monnaie', 'Beta publique gratuite · Présentée par La Petite Monnaie')}
+              {t('Free public beta · Presented by La Petite Monnaie', 'Beta publique gratuite · Présentée par La Petite Monnaie', 'Beta pública gratuita · Presentada por La Petite Monnaie')}
             </p>
           </div>
         </motion.section>
