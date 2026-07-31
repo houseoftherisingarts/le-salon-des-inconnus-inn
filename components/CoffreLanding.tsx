@@ -337,6 +337,56 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </motion.section>
 
+        {/* 4G. BANDE POSSESSION (boîte logicielle rétro, anti-abonnement) */}
+        <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
+            <div className="flex justify-center py-8" style={{ perspective: '1200px' }}>
+              <motion.div
+                initial={{ opacity: 0, rotateY: 34 }}
+                whileInView={{ opacity: 1, rotateY: 22 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 1.4, ease: EASE }}
+                className="relative w-[240px] h-[330px]"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <div className="absolute inset-0 rounded-[6px] border border-[#c5a059]/50 flex flex-col items-center justify-between p-6 text-center"
+                  style={{ background: 'linear-gradient(160deg, #191410 0%, #0a0808 60%, #060505 100%)', transform: 'translateZ(17px)', boxShadow: '0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(197,160,89,0.18)' }}>
+                  <p className="text-[9px] tracking-[0.3em] uppercase text-neutral-500">{t('Family edition', 'Édition familiale')}</p>
+                  <div>
+                    <img src="/media/logo-icon.png" alt="" className="w-20 h-20 mx-auto mb-4" style={{ filter: 'drop-shadow(0 0 18px rgba(201,168,90,0.5))' }} />
+                    <p className="font-cinzel text-xl text-[#e8d5a3] leading-snug">Le Coffre des Inconnus</p>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-[#c5a059] mt-2">{t('The family bank', 'La banque familiale')}</p>
+                  </div>
+                  <div className="w-full border-t border-[#c5a059]/30 pt-3">
+                    <p className="text-[9px] tracking-[0.25em] uppercase text-neutral-400">macOS · Windows · Web</p>
+                  </div>
+                </div>
+                <div className="absolute left-0 top-0 h-full w-[34px] rounded-l-[6px] border border-[#c5a059]/40 flex items-center justify-center"
+                  style={{ background: 'linear-gradient(180deg, #14100c, #060505)', transform: 'translateZ(17px) rotateY(-90deg)', transformOrigin: 'left center' }}>
+                  <p className="font-cinzel text-[10px] text-[#c5a059] tracking-[0.2em]" style={{ writingMode: 'vertical-rl' }}>LE COFFRE DES INCONNUS</p>
+                </div>
+                <div className="absolute -bottom-16 left-0 w-full h-12" style={{ background: 'radial-gradient(50% 100% at 50% 0%, rgba(197,160,89,0.16), transparent 75%)' }} />
+              </motion.div>
+            </div>
+            <div>
+              <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t('To own', 'À posséder')}</p>
+              <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('You download it, you own it.', 'Vous le téléchargez, vous le possédez.')}</h3>
+              <p className="text-neutral-300 leading-relaxed">
+                {t(
+                  "Software drifted into the everlasting subscription: everything is rented, nothing is bought, and everyone is told to be happy about it. The Coffre walks the other way. No subscription, no monthly rent on your children's education: the program is yours, like a box bought at the store, until the day your computer gives out.",
+                  "Le logiciel a glissé vers l'abonnement perpétuel : tout se loue, rien ne s'achète, et il faudrait s'en réjouir. Le Coffre prend le chemin inverse. Pas d'abonnement, pas de loyer mensuel sur l'éducation de vos enfants : le programme est à vous, comme une boîte achetée au magasin, jusqu'au jour où votre ordinateur rendra l'âme.",
+                )}
+              </p>
+              <p className="text-neutral-500 text-sm leading-relaxed mt-5">
+                {t(
+                  'The public beta is free. The full version will sell the old way: once.',
+                  'La beta publique est gratuite. La version complète se vendra comme dans le temps : une fois.',
+                )}
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
         {/* 5. FUTURE PACING */}
         <motion.section {...reveal()} className="border-t border-white/5 py-24 md:py-32">
           <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16">
