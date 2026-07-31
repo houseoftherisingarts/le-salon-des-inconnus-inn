@@ -172,16 +172,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     {
       key: 'skilltree',
       reverse: true,
-      eyebrow: ['The skill tree', 'L’arbre de compétences'],
-      title: ['Effort that pays.', 'L’effort qui rapporte.'],
+      eyebrow: ['The skill tree', 'L’arbre de compétences', 'El árbol de habilidades'],
+      title: ['Effort that pays.', 'L’effort qui rapporte.', 'El esfuerzo que rinde.'],
       body: [
         'Riding lessons, piano, a museum visit: you choose what the family subsidizes, at 50, 66 or 100%. An activity can feed the treasure and even boost the interest rate for thirty days. Growing up literally pays.',
         "Cours d'équitation, piano, sortie au musée : vous choisissez ce que la famille subventionne, à 50, 66 ou 100 %. L'activité peut nourrir le trésor et même bonifier le taux d'intérêt pendant trente jours. Grandir devient payant, au sens propre.",
+        'Clases de equitación, piano, una visita al museo: usted elige qué subsidia la familia, al 50, 66 o 100 %. La actividad puede alimentar el tesoro e incluso aumentar la tasa de interés durante treinta días. Crecer se vuelve literalmente rentable.',
       ],
       img: 'skilltree.webp',
       alt: [
         'The skill tree: family-subsidized activities that feed the treasure and boost interest.',
         "L'arbre de compétences : les activités subventionnées par la famille qui nourrissent le trésor et bonifient l'intérêt.",
+        'El árbol de habilidades: las actividades subsidiadas por la familia que alimentan el tesoro y aumentan el interés.',
       ],
     },
   ];
