@@ -140,14 +140,15 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     {
       key: 'paliers',
       reverse: true,
-      eyebrow: ['The milestones', 'Les paliers'],
-      title: ['The treasure grows, the honors follow.', 'Le trésor grandit, les honneurs suivent.'],
+      eyebrow: ['The milestones', 'Les paliers', 'Los hitos'],
+      title: ['The treasure grows, the honors follow.', 'Le trésor grandit, les honneurs suivent.', 'El tesoro crece, los honores lo siguen.'],
       body: [
         'Milestones mark every new peak of the treasure, and the \u{1F48E} line keeps a lifetime record of everything ever earned. The pride of building takes over from the urge to spend.',
         "Des paliers soulignent chaque sommet du trésor, et la ligne \u{1F48E} garde la trace de tout ce qui a été gagné à vie. La fierté de bâtir prend le dessus sur l'envie de dépenser.",
+        'Los hitos marcan cada nueva cima del tesoro, y la línea \u{1F48E} guarda el registro de todo lo ganado en la vida. El orgullo de construir se impone sobre las ganas de gastar.',
       ],
       img: 'paliers.webp',
-      alt: ['Treasure milestones and the lifetime earnings line.', 'Les paliers du trésor et la ligne des gains à vie.'],
+      alt: ['Treasure milestones and the lifetime earnings line.', 'Les paliers du trésor et la ligne des gains à vie.', 'Los hitos del tesoro y la línea de ganancias de por vida.'],
       ctaAfter: true,
     },
     {
