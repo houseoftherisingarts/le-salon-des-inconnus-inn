@@ -220,7 +220,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               alt={t('The Coffre des Inconnus dashboard, showing a child account with its jars and treasure.', "Le tableau de bord du Coffre des Inconnus, avec un compte enfant, ses pots et son trésor.")}
               eager
             />
-            <div className="absolute -bottom-8 -left-6 md:-bottom-10 md:-left-10 w-[180px]">
+            <div className="hidden md:block absolute md:-bottom-10 md:-left-10 w-[180px]">
               <GlassFrame
                 src={`${M}mobile.webp`}
                 alt={t('The Coffre on a phone screen.', "Le Coffre sur un écran de téléphone.")}
