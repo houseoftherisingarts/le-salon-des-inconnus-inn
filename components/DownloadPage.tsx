@@ -127,11 +127,13 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                   className="px-6 py-3 rounded-full border border-white/20 text-neutral-200 text-sm hover:border-[#c5a059] hover:text-[#e8d5a3] transition-colors">
                   {t('Try the online demo', 'Essayer la démo en ligne', 'Probar la demo en línea')}
                 </button>
-                <a href={`${BANQUE}/telecharger.html`} target="_blank" rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-full border border-white/20 text-neutral-200 text-sm hover:border-[#c5a059] hover:text-[#e8d5a3] transition-colors">
+                <button onClick={() => setShowMobile((v) => !v)}
+                  aria-expanded={showMobile}
+                  className={`px-6 py-3 rounded-full border text-sm transition-colors ${showMobile ? 'border-[#c5a059] text-[#e8d5a3]' : 'border-white/20 text-neutral-200 hover:border-[#c5a059] hover:text-[#e8d5a3]'}`}>
                   {t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}
-                </a>
+                </button>
               </div>
+              {showMobile && <MobileInstallPanel t={t} appUrl={BANQUE} />}
               <p className="text-neutral-500 text-xs mt-6 leading-relaxed">
                 {t(
                   'Free public beta. On first launch, the bank welcomes you, opens the accounts of your children and walks you through a guided tour.',
