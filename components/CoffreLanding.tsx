@@ -59,8 +59,19 @@ interface Band {
 }
 
 export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
-  const fr = language === 'FR';
-  const t = (en: string, frText: string) => (fr ? frText : en);
+  const [lang, setLang] = React.useState<Lang>(() => {
+    try {
+      const v = localStorage.getItem('salonToolsLang');
+      if (v === 'EN' || v === 'FR' || v === 'ES') return v;
+    } catch {}
+    return language;
+  });
+  const pick = (l: Lang) => {
+    setLang(l);
+    try { localStorage.setItem('salonToolsLang', l); } catch {}
+  };
+  const fr = lang === 'FR';
+  const t = (en: string, frText: string, es: string) => (lang === 'FR' ? frText : lang === 'ES' ? es : en);
   const M = '/media/coffre/';
 
   const demoCta = (
