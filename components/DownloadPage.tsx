@@ -28,6 +28,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
     try { localStorage.setItem('salonToolsLang', l); } catch {}
   };
   const t = (en: string, frText: string, es: string) => (lang === 'FR' ? frText : lang === 'ES' ? es : en);
+  const [showMobile, setShowMobile] = React.useState(false);
 
   return (
     <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200" style={{ background: '#0a0808' }}>
