@@ -466,6 +466,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               {t(
                 'Picture the next family dinner. Your child gets ten dollars as a gift and calls it before the bill even touches the table: "2.50 to savings, 2.50 to invest, 1.50 for fun and 1 to share."',
                 'Imaginez le prochain souper. Votre enfant reçoit dix dollars en cadeau et annonce, avant même que le billet touche la table : "2,50 $ en épargne, 2,50 $ à investir, 1,50 $ pour le fun et 1 $ à partager."',
+                'Imagine la próxima cena familiar. Su hijo recibe diez dólares de regalo y lo anuncia antes de que el billete toque la mesa: "2,50 $ al ahorro, 2,50 $ a invertir, 1,50 $ para gustos y 1 $ para compartir."',
               )}
             </p>
             <div className="flex flex-wrap justify-center gap-3 mt-10">
