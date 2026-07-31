@@ -46,6 +46,157 @@ const GlassFrame: React.FC<{ src: string; alt: string; eager?: boolean; classNam
   </div>
 );
 
+// Lecteur maison : les contrôles natifs portent toujours un bouton plein écran
+// (et Safari ignore controlsList), donc on les cache et on dessine les nôtres.
+// Le lecteur reste petit, dans sa boîte, en toutes circonstances.
+const fmtTime = (s: number) => {
+  if (!isFinite(s) || s < 0) return '0:00';
+  const m = Math.floor(s / 60);
+  const r = Math.floor(s % 60);
+  return `${m}:${r.toString().padStart(2, '0')}`;
+};
+
+const MakerVideo: React.FC<{
+  src: string;
+  poster: string;
+  label: string;
+  playLabel: string;
+  pauseLabel: string;
+  muteLabel: string;
+  seekLabel: string;
+}> = ({ src, poster, label, playLabel, pauseLabel, muteLabel, seekLabel }) => {
+  const vid = React.useRef<HTMLVideoElement>(null);
+  const bar = React.useRef<HTMLDivElement>(null);
+  const [playing, setPlaying] = React.useState(false);
+  const [started, setStarted] = React.useState(false);
+  const [muted, setMuted] = React.useState(false);
+  const [time, setTime] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
+
+  const toggle = () => {
+    const v = vid.current;
+    if (!v) return;
+    if (v.paused) { setStarted(true); v.play().catch(() => {}); } else v.pause();
+  };
+
+  const seekTo = (ratio: number) => {
+    const v = vid.current;
+    if (!v || !isFinite(v.duration)) return;
+    v.currentTime = Math.min(1, Math.max(0, ratio)) * v.duration;
+  };
+
+  const seekFromEvent = (clientX: number) => {
+    const el = bar.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    seekTo((clientX - r.left) / r.width);
+  };
+
+  // Garde-fou iOS : Safari mobile peut basculer une vidéo en plein écran natif
+  // malgré playsInline. Si ça arrive, nous refermons immédiatement.
+  React.useEffect(() => {
+    const v = vid.current as any;
+    if (!v) return;
+    const bail = () => { if (typeof v.webkitExitFullscreen === 'function') v.webkitExitFullscreen(); };
+    v.addEventListener('webkitbeginfullscreen', bail);
+    return () => v.removeEventListener('webkitbeginfullscreen', bail);
+  }, []);
+
+  const pct = total > 0 ? (time / total) * 100 : 0;
+
+  return (
+    <figure className="w-full max-w-[460px] md:ml-auto">
+      <div className="relative rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md shadow-[0_0_60px_rgba(197,160,89,0.15)] overflow-hidden">
+        <video
+          ref={vid}
+          src={src}
+          poster={poster}
+          aria-label={label}
+          preload="none"
+          playsInline
+          disablePictureInPicture
+          controlsList="nofullscreen nodownload noplaybackrate noremoteplayback"
+          className="w-full h-auto block cursor-pointer"
+          onClick={toggle}
+          onDoubleClick={(e) => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
+          onPlay={() => { setPlaying(true); setStarted(true); }}
+          onPause={() => setPlaying(false)}
+          onEnded={() => { setPlaying(false); setStarted(false); }}
+          onLoadedMetadata={(e) => setTotal(e.currentTarget.duration)}
+          onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
+          onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
+        />
+
+        {!started && (
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={playLabel}
+            className="absolute inset-0 flex items-center justify-center bg-[#0a0808]/25 hover:bg-[#0a0808]/10 transition-colors group"
+          >
+            <span
+              className="w-16 h-16 rounded-full flex items-center justify-center text-[#171308] text-xl pl-1 group-hover:scale-105 transition-transform"
+              style={{ background: 'linear-gradient(135deg, #c5a059, #e8d5a3, #c5a059)', boxShadow: '0 0 30px rgba(197,160,89,0.45)' }}
+              aria-hidden
+            >
+              ▶
+            </span>
+          </button>
+        )}
+
+        <div className="flex items-center gap-3 px-4 py-3 bg-[#0a0808]/85 border-t border-[#c5a059]/15">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={playing ? pauseLabel : playLabel}
+            className="text-[#c5a059] hover:text-[#e8d5a3] transition-colors text-sm w-4 text-center shrink-0"
+          >
+            {playing ? '❚❚' : '▶'}
+          </button>
+
+          <div
+            ref={bar}
+            role="slider"
+            tabIndex={0}
+            aria-label={seekLabel}
+            aria-valuemin={0}
+            aria-valuemax={Math.round(total)}
+            aria-valuenow={Math.round(time)}
+            aria-valuetext={`${fmtTime(time)} / ${fmtTime(total)}`}
+            onClick={(e) => seekFromEvent(e.clientX)}
+            onKeyDown={(e) => {
+              const v = vid.current;
+              if (!v || !isFinite(v.duration)) return;
+              if (e.key === 'ArrowRight') { e.preventDefault(); v.currentTime = Math.min(v.duration, v.currentTime + 5); }
+              if (e.key === 'ArrowLeft') { e.preventDefault(); v.currentTime = Math.max(0, v.currentTime - 5); }
+              if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+            }}
+            className="flex-1 h-4 flex items-center cursor-pointer group focus:outline-none focus-visible:ring-1 focus-visible:ring-[#c5a059] rounded"
+          >
+            <div className="w-full h-[3px] rounded-full bg-white/15 overflow-hidden">
+              <div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #c5a059, #e8d5a3)' }} />
+            </div>
+          </div>
+
+          <span className="text-[11px] text-neutral-400 tabular-nums shrink-0">
+            {fmtTime(time)} / {fmtTime(total)}
+          </span>
+
+          <button
+            type="button"
+            onClick={() => { const v = vid.current; if (v) v.muted = !v.muted; }}
+            aria-label={muteLabel}
+            className="text-[#c5a059] hover:text-[#e8d5a3] transition-colors text-sm shrink-0"
+          >
+            {muted ? '🔇' : '🔊'}
+          </button>
+        </div>
+      </div>
+    </figure>
+  );
+};
+
 interface Band {
   key: string;
   reverse: boolean;
