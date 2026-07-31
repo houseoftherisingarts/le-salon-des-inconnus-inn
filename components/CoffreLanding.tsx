@@ -722,14 +722,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               </div>
               <GlassFrame src={`${M}wizard.webp`} alt={t('The welcome assistant guiding a new family through the Coffre.', "L'assistant d'accueil qui guide une nouvelle famille dans le Coffre.", 'El asistente de bienvenida que guía a una nueva familia por Le Coffre.')} />
             </div>
-            <div className="mt-10 pt-8 border-t border-[#c5a059]/15 flex flex-wrap items-center justify-center gap-3 text-xs text-neutral-500">
-              <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par', 'Una experiencia sin publicidad, presentada por')}</span>
-              <span className="text-[#c5a059] font-semibold">La Petite Monnaie</span>
-              <a href={SPONSOR} className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">{t('Become a sponsor', 'Devenir commanditaire', 'Convertirse en patrocinador')}</a>
-              <button onClick={() => onNavigate('DONATION')} className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
-                {t('Support the project', 'Soutenir le projet', 'Apoyar el proyecto')}
-              </button>
-            </div>
+            <SponsorBand t={t} onNavigate={onNavigate} variant="inset" />
           </div>
         </motion.section>
 
