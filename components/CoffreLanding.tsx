@@ -651,12 +651,12 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section {...reveal()} className="border-t border-white/5 py-24 md:py-32 relative overflow-hidden">
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(55% 65% at 50% 45%, rgba(201,168,90,0.09), transparent 75%)' }} aria-hidden />
           <div className="relative max-w-4xl mx-auto px-6">
-            <p className="font-cormorant text-[110px] md:text-[160px] leading-none text-[#c5a059]/15 text-center select-none" aria-hidden>«</p>
-            <p className="font-cormorant text-[22px] md:text-[34px] text-[#e8d5a3] text-center leading-snug -mt-10 md:-mt-16 [text-wrap:pretty]">
+            <p className="font-cinzel text-[90px] md:text-[130px] leading-none text-[#c5a059]/15 text-center select-none" aria-hidden>«</p>
+            <p className="font-cormorant text-[22px] md:text-[34px] text-[#e8d5a3] text-center leading-snug -mt-6 md:-mt-8 [text-wrap:pretty]">
               {t(
                 'Picture the next family dinner. Your child gets ten dollars as a gift and calls it before the bill even touches the table: "2.50 to savings, 2.50 to invest, 1.50 for fun and 1 to share."',
-                'Imaginez le prochain souper. Votre enfant reçoit dix dollars en cadeau et annonce, avant même que le billet touche la table : "2,50 $ en épargne, 2,50 $ à investir, 1,50 $ pour le fun et 1 $ à partager."',
-                'Imagine la próxima cena familiar. Su hijo recibe diez dólares de regalo y lo anuncia antes de que el billete toque la mesa: "2,50 $ al ahorro, 2,50 $ a invertir, 1,50 $ para gustos y 1 $ para compartir."',
+                "Imaginez le prochain souper. Votre enfant reçoit dix dollars en cadeau et annonce, avant même que le billet touche la table : « 2,50 $ en épargne, 2,50 $ à investir, 1,50 $ pour le fun et 1 $ à partager. »",
+                "Imagine la próxima cena familiar. Su hijo recibe diez dólares de regalo y lo anuncia antes de que el billete toque la mesa: « 2,50 $ al ahorro, 2,50 $ a invertir, 1,50 $ para gustos y 1 $ para compartir. »",
               )}
             </p>
             <div className="flex flex-wrap justify-center gap-3 mt-10">
