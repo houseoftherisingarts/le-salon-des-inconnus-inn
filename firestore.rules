@@ -691,5 +691,21 @@ service cloud.firestore {
     match /admin_metrics/{docId} {
       allow read, write: if isAdmin();
     }
+
+    // ── Petite Banque : coffres de synchronisation chiffrés ─────────────────
+    // Sync familiale sans compte : le document est un blob AES-GCM chiffré
+    // CÔTÉ CLIENT (le serveur ne peut rien lire), l'identifiant est le
+    // SHA-256 de la phrase familiale (inguessable). Taille bornée, aucun
+    // autre champ accepté, pas de listage possible par construction.
+    match /pbsync/{vaultId} {
+      allow get: if true;
+      allow list: if false;
+      allow create, update: if request.resource.data.keys().hasOnly(['b', 't', 'v'])
+                    && request.resource.data.b is string
+                    && request.resource.data.b.size() < 800000
+                    && request.resource.data.t is int
+                    && request.resource.data.v is int;
+      allow delete: if false;
+    }
   }
 }

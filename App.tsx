@@ -243,6 +243,7 @@ const pathToView = (pathname: string): ViewState => {
   const normalized = pathname.replace(/\/$/, '') || '/';
   if (PATH_VIEWS[pathname]) return PATH_VIEWS[pathname];
   if (PATH_VIEWS[normalized]) return PATH_VIEWS[normalized];
+  if (normalized === '/tools' || normalized === '/outils') return 'DOWNLOAD';
   if (extractCallsheet(normalized)) return 'CALLSHEET_PUBLIC';
   // Stable per-post URLs for the daily journal: /pensees/AAAA-MM-JJ
   if (/^\/pensees\/\d{4}-\d{2}-\d{2}$/.test(normalized)) return 'PENSEES';

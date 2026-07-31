@@ -85,11 +85,11 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                 )}
               </p>
               <div className="flex flex-wrap gap-3 mt-8">
-                <a href={`${BANQUE}/dl/PetiteBanque-1.0.3-mac.dmg`}
+                <a href={`${BANQUE}/dl/PetiteBanque-mac.dmg`}
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
                   {t('Download for macOS', 'Télécharger pour macOS')}
                 </a>
-                <a href={`${BANQUE}/dl/PetiteBanque-Setup-1.0.3.exe`}
+                <a href={`${BANQUE}/dl/PetiteBanque-Setup.exe`}
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
                   {t('Download for Windows', 'Télécharger pour Windows')}
                 </a>
