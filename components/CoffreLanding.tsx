@@ -49,11 +49,11 @@ const GlassFrame: React.FC<{ src: string; alt: string; eager?: boolean; classNam
 interface Band {
   key: string;
   reverse: boolean;
-  eyebrow: [string, string];
-  title: [string, string];
-  body: [string, string];
+  eyebrow: [string, string, string];
+  title: [string, string, string];
+  body: [string, string, string];
   img: string;
-  alt: [string, string];
+  alt: [string, string, string];
   imgClass?: string;
   ctaAfter?: boolean;
 }
