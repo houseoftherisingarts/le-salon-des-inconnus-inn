@@ -479,7 +479,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               ].map(([emo, frAmt, enAmt]) => (
                 <span key={emo} className="inline-flex items-center gap-2 rounded-full border border-[#c5a059]/30 bg-black/40 backdrop-blur-md px-4 py-2 text-sm">
                   <span aria-hidden>{emo}</span>
-                  <span className="text-[#e8d5a3] font-semibold">{fr ? frAmt : enAmt}</span>
+                  <span className="text-[#e8d5a3] font-semibold">{lang === 'EN' ? enAmt : frAmt}</span>
                 </span>
               ))}
             </div>
