@@ -487,6 +487,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               {t(
                 'A year from now, talking about money at home will feel as normal as talking about school.',
                 "Dans un an, parler d'argent chez vous sera aussi normal que parler d'école.",
+                'Dentro de un año, hablar de dinero en casa será tan normal como hablar de la escuela.',
               )}
             </p>
           </div>
