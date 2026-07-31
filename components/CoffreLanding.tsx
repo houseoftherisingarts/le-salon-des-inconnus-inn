@@ -89,16 +89,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     {
       key: 'pots',
       reverse: false,
-      eyebrow: ['The jars', 'Les pots'],
-      title: ['Every coin finds its place.', 'Chaque sou trouve sa place.'],
+      eyebrow: ['The jars', 'Les pots', 'Los frascos'],
+      title: ['Every coin finds its place.', 'Chaque sou trouve sa place.', 'Cada moneda encuentra su lugar.'],
       body: [
         "Five jars, a split profile on every transaction. Your child decides where each deposit goes and withdraws from the jar of their choice. Budgeting becomes a motion they make themselves, week after week.",
         "Cinq pots, un profil de répartition par transaction. Votre enfant décide où va chaque dépôt et retire du pot de son choix. Le budget devient un geste qu'il pose lui-même, semaine après semaine.",
+        "Cinco frascos, un perfil de reparto en cada transacción. Su hijo decide adónde va cada depósito y retira del frasco que elige. El presupuesto se vuelve un gesto que él mismo hace, semana tras semana.",
       ],
       img: 'carte.webp',
       alt: [
         "A real child's account card: name, balance and the five jars with their live amounts.",
         "La carte d'un vrai compte d'enfant : le nom, le solde et les cinq pots avec leurs montants en direct.",
+        "La tarjeta de una cuenta infantil real: el nombre, el saldo y los cinco frascos con sus montos en vivo.",
       ],
     },
     {
