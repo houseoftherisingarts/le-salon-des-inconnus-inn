@@ -177,12 +177,15 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                 <g fill="none" stroke="url(#apprGold)" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="22" y="10" width="68" height="92" rx="3" strokeWidth="2.5" />
                   <rect x="29.5" y="17.5" width="53" height="77" rx="1.5" strokeWidth="1" opacity="0.55" />
-                  <g transform="translate(0,11)">
-                    <path d="M 47 30 L 56 21.5 L 65 30" strokeWidth="2.5" />
-                    <path d="M 50 37 L 56 31.5 L 62 37" strokeWidth="2" opacity="0.85" />
-                    <path d="M 56 40 C 57 50, 54.5 56, 55.5 63 C 56 71, 65 73.5, 67 66.5 C 68.5 60.5, 62.5 56.5, 58.5 59 C 55 61.2, 55.5 66.5, 59.5 67.5" strokeWidth="2.5" />
-                  </g>
                 </g>
+                <text
+                  x="56" y="57"
+                  textAnchor="middle" dominantBaseline="central"
+                  fontFamily="Cinzel, serif" fontSize="46" fontWeight={600}
+                  fill="url(#apprGold)"
+                >
+                  $
+                </text>
                 <g fill="url(#apprGold)">
                   <path d="M 22 5.5 L 26 10 L 22 14.5 L 18 10 Z" opacity="0.9" />
                   <path d="M 90 5.5 L 94 10 L 90 14.5 L 86 10 Z" opacity="0.9" />
