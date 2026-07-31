@@ -807,8 +807,9 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
             </div>
             {showMobile && <MobileInstallPanel t={t} appUrl={APP_URL} />}
             <p className="text-xs text-neutral-500 mt-7">
-              {t('Free public beta · Presented by La Petite Monnaie', 'Beta publique gratuite · Présentée par La Petite Monnaie', 'Beta pública gratuita · Presentada por La Petite Monnaie')}
+              {t('Free public beta', 'Beta publique gratuite', 'Beta pública gratuita')}
             </p>
+            <SponsorBand t={t} onNavigate={onNavigate} variant="inset" />
           </div>
         </motion.section>
       </main>
