@@ -716,6 +716,45 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </motion.section>
 
+        {/* 7B. MOT DU CRÉATEUR (vidéo, petit lecteur verrouillé) */}
+        <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-12 items-center">
+              <div>
+                <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">
+                  {t('A word from the maker', 'Le mot du créateur', 'Unas palabras del creador')}
+                </p>
+                <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">
+                  {t('Two minutes, in person.', 'Deux minutes, en personne.', 'Dos minutos, en persona.')}
+                </h3>
+                <p className="text-neutral-300 leading-relaxed">
+                  {t(
+                    'Before you try it, let me tell you myself where the Coffre comes from: a homeschooling app for my two children, which the families around us then wanted for their own. I also explain why it belongs to you, with no subscription.',
+                    "Avant de vous laisser essayer, je vous raconte moi-même d'où vient Le Coffre : une application d'école à la maison pour mes deux enfants, que les familles autour de nous ont voulu à leur tour. J'y explique aussi pourquoi elle vous appartient, sans abonnement.",
+                    'Antes de que la pruebe, le cuento yo mismo de dónde viene Le Coffre: una aplicación de educación en casa para mis dos hijos, que las familias a nuestro alrededor quisieron también. También explico por qué le pertenece, sin suscripción.',
+                  )}
+                </p>
+                <p className="text-xs text-neutral-500 mt-5">
+                  {t('2 min 16 · In French · Alex, Le Salon des Inconnus', '2 min 16 · En français · Alex, Le Salon des Inconnus', '2 min 16 · En francés · Alex, Le Salon des Inconnus')}
+                </p>
+              </div>
+              <MakerVideo
+                src={`${M}mot-du-createur.mp4`}
+                poster={`${M}mot-du-createur.webp`}
+                label={t(
+                  'Alex, founder of Le Salon des Inconnus, explains where Le Coffre des Inconnus comes from.',
+                  "Alex, fondateur du Salon des Inconnus, raconte d'où vient Le Coffre des Inconnus.",
+                  'Alex, fundador de Le Salon des Inconnus, cuenta de dónde viene Le Coffre des Inconnus.',
+                )}
+                playLabel={t('Play the video', 'Lire la vidéo', 'Reproducir el video')}
+                pauseLabel={t('Pause the video', 'Mettre la vidéo en pause', 'Pausar el video')}
+                muteLabel={t('Mute or unmute', 'Couper ou rétablir le son', 'Silenciar o restablecer el sonido')}
+                seekLabel={t('Video position', 'Position dans la vidéo', 'Posición en el video')}
+              />
+            </div>
+          </div>
+        </motion.section>
+
         {/* 8. CTA FINAL */}
         <motion.section id="telecharger" {...reveal()} className="border-t border-white/5 py-24 md:py-32">
           <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16 text-center">
