@@ -721,7 +721,6 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               </div>
               <GlassFrame src={`${M}wizard.webp`} alt={t('The welcome assistant guiding a new family through the Coffre.', "L'assistant d'accueil qui guide une nouvelle famille dans le Coffre.", 'El asistente de bienvenida que guía a una nueva familia por Le Coffre.')} />
             </div>
-            <SponsorBand t={t} onNavigate={onNavigate} variant="inset" />
           </div>
         </motion.section>
 
