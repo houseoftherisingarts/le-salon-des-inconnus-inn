@@ -499,41 +499,43 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">
-                  {t('Made by a homeschooling family, for all families', 'Une app de famille-école, pour toutes les familles')}
+                  {t('Made by a homeschooling family, for all families', 'Une app de famille-école, pour toutes les familles', 'Hecha por una familia que educa en casa, para todas las familias')}
                 </p>
-                <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Built by a family, not by a bank.', 'Bâti par une famille, pas par une banque.')}</h3>
+                <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Built by a family, not by a bank.', 'Bâti par une famille, pas par une banque.', 'Construido por una familia, no por un banco.')}</h3>
                 <p className="text-neutral-300 leading-relaxed">
                   {t(
                     'The Coffre was born in an inn of the Petite-Nation, for my two children. We homeschool: teaching them the jars, the interest and the goals at ages 4 and 5, I watched mathematics settle in right alongside the sense of money. The tool had to leave the house. The public version, richer than our first family build, is offered free for the length of the beta. The accounts you see in these images are my children’s: real deposits and real interest, paid every week.',
                     "Le Coffre est né dans une auberge de la Petite-Nation, pour mes deux enfants. Nous faisons l'école à la maison : en leur enseignant les pots, l'intérêt et les objectifs à 4 et 5 ans, j'ai vu les mathématiques s'installer en même temps que le sens de l'argent. L'outil devait sortir de la maison. La version publique, enrichie de fonctions que notre première version n'avait pas, est offerte gratuitement le temps de la beta. Les comptes que vous voyez dans ces images sont ceux de mes enfants : de vrais dépôts et de vrais intérêts, versés chaque semaine.",
+                    "Le Coffre nació en una posada de la Petite-Nation, para mis dos hijos. Educamos en casa: al enseñarles los frascos, el interés y los objetivos a los 4 y 5 años, vi cómo las matemáticas se instalaban junto con el sentido del dinero. La herramienta tenía que salir de la casa. La versión pública, más completa que nuestra primera versión familiar, se ofrece gratis mientras dure la beta. Las cuentas que ve en estas imágenes son las de mis hijos: depósitos reales e intereses reales, pagados cada semana.",
                   )}
                 </p>
                 <p className="text-neutral-300 leading-relaxed mt-5">
                   {t(
                     'The only thing we ask: if you meet a bug or dream up a feature, write to us. Every email shapes what comes next.',
                     "La seule chose que nous demandons : si vous croisez un bug ou rêvez d'une nouvelle fonction, écrivez-nous. Chaque courriel façonne la suite.",
+                    'Lo único que pedimos: si encuentra un error o imagina una nueva función, escríbanos. Cada correo moldea lo que viene.',
                   )}
                 </p>
                 <div className="flex flex-wrap gap-3 mt-6">
                   <a href="mailto:alex@lesalondesinconnus.com?subject=Coffre%20%C2%B7%20Bug" className={PILL_SECONDARY}>
-                    {t('Report a bug', 'Signaler un bug')}
+                    {t('Report a bug', 'Signaler un bug', 'Reportar un error')}
                   </a>
                   <a href="mailto:alex@lesalondesinconnus.com?subject=Coffre%20%C2%B7%20Id%C3%A9e%20de%20fonction" className={PILL_SECONDARY}>
-                    {t('Suggest a feature', 'Proposer une fonction')}
+                    {t('Suggest a feature', 'Proposer une fonction', 'Sugerir una función')}
                   </a>
                   <a href={DL_DONS} target="_blank" rel="noopener noreferrer" className={PILL_SECONDARY}>
-                    {t('Give to the project', 'Donner au projet')}
+                    {t('Give to the project', 'Donner au projet', 'Donar al proyecto')}
                   </a>
                 </div>
               </div>
-              <GlassFrame src={`${M}wizard.webp`} alt={t('The welcome assistant guiding a new family through the Coffre.', "L'assistant d'accueil qui guide une nouvelle famille dans le Coffre.")} />
+              <GlassFrame src={`${M}wizard.webp`} alt={t('The welcome assistant guiding a new family through the Coffre.', "L'assistant d'accueil qui guide une nouvelle famille dans le Coffre.", 'El asistente de bienvenida que guía a una nueva familia por Le Coffre.')} />
             </div>
             <div className="mt-10 pt-8 border-t border-[#c5a059]/15 flex flex-wrap items-center justify-center gap-3 text-xs text-neutral-500">
-              <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par')}</span>
+              <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par', 'Una experiencia sin publicidad, presentada por')}</span>
               <span className="text-[#c5a059] font-semibold">La Petite Monnaie</span>
-              <a href={SPONSOR} className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">{t('Become a sponsor', 'Devenir commanditaire')}</a>
+              <a href={SPONSOR} className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">{t('Become a sponsor', 'Devenir commanditaire', 'Convertirse en patrocinador')}</a>
               <a href={DL_DONS} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
-                {t('Support the project', 'Soutenir le projet')}
+                {t('Support the project', 'Soutenir le projet', 'Apoyar el proyecto')}
               </a>
             </div>
           </div>
