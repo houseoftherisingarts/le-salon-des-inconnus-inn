@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 // Page /download — la petite armurerie publique du Salon : les outils que
 // nous offrons aux voyageurs. Même atmosphère que le reste du site : noir
-// chaud, or discret, brume et grain. Premier outil : la Petite Banque.
+// chaud, or discret, brume et grain. Premier outil : le Coffre des Inconnus.
 interface Props {
   onNavigate: (view: any) => void;
   language: 'EN' | 'FR';
@@ -72,7 +72,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
             <div className="p-10 md:p-12 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-[#c5a059]/15"
               style={{ background: 'radial-gradient(80% 80% at 50% 30%, rgba(201,168,90,0.08), transparent 75%)' }}>
               <img src="/media/logo-icon.png" alt="" className="w-28 h-28 mb-6" style={{ filter: 'drop-shadow(0 0 24px rgba(201,168,90,0.45))' }} />
-              <h2 className="font-cinzel text-2xl text-[#e8d5a3]">La Petite Banque des Inconnus</h2>
+              <h2 className="font-cinzel text-2xl text-[#e8d5a3]">Le Coffre des Inconnus</h2>
               <p className="text-[11px] tracking-[0.25em] uppercase text-neutral-500 mt-2">
                 {t('The family bank that teaches money', "La banque familiale qui enseigne l'argent")}
               </p>
@@ -85,11 +85,11 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                 )}
               </p>
               <div className="flex flex-wrap gap-3 mt-8">
-                <a href={`${BANQUE}/dl/PetiteBanque-mac.dmg`}
+                <a href={`${BANQUE}/dl/CoffreDesInconnus-mac.dmg`}
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
                   {t('Download for macOS', 'Télécharger pour macOS')}
                 </a>
-                <a href={`${BANQUE}/dl/PetiteBanque-Setup.exe`}
+                <a href={`${BANQUE}/dl/CoffreDesInconnus-Setup.exe`}
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
                   {t('Download for Windows', 'Télécharger pour Windows')}
                 </a>

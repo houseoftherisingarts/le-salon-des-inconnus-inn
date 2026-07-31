@@ -4075,7 +4075,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? "Plan shoots: cast, crew, shot list, weather. Export PDF." : "Planifie tes tournages : cast, équipe, shot list, météo. Export PDF."}</p>
                             </div>
 
-                            {/* Tool: La Petite Banque — l'app familiale d'éducation financière.
+                            {/* Tool: Le Coffre des Inconnus — l'app familiale d'éducation financière.
                                 Outil public du Salon : ouvre l'app dans un nouvel onglet. */}
                             <div
                                 onClick={() => window.open('https://petite-banque-inconnus.web.app/telecharger.html', '_blank', 'noopener')}
@@ -4088,7 +4088,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         <path d="M3 18h18M3 21h18" />
                                     </svg>
                                 </div>
-                                <h3 className="font-cinzel text-white uppercase font-bold text-xl">{language === 'EN' ? 'Little Bank' : 'Petite Banque'}</h3>
+                                <h3 className="font-cinzel text-white uppercase font-bold text-xl">{language === 'EN' ? 'Coffre des Inconnus' : 'Coffre des Inconnus'}</h3>
                                 <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? 'The family bank that teaches money. Free, on all platforms.' : "La banque familiale qui enseigne l'argent. Gratuite, sur toutes les plateformes."}</p>
                             </div>
 
