@@ -206,9 +206,19 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               LE SALON DES INCONNUS
             </span>
           </button>
-          <button onClick={() => onNavigate('DOWNLOAD')} className="text-xs tracking-[0.18em] uppercase text-neutral-400 hover:text-[#c5a059] transition-colors">
-            {t('Back to tools', 'Retour aux outils')}
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-[11px] tracking-[0.18em]">
+              {(['FR', 'EN', 'ES'] as Lang[]).map((l) => (
+                <button key={l} onClick={() => pick(l)}
+                  className={lang === l ? 'text-[#c5a059] border-b border-[#c5a059] pb-0.5' : 'text-neutral-500 hover:text-[#e8d5a3] transition-colors pb-0.5'}>
+                  {l}
+                </button>
+              ))}
+            </div>
+            <button onClick={() => onNavigate('DOWNLOAD')} className="text-xs tracking-[0.18em] uppercase text-neutral-400 hover:text-[#c5a059] transition-colors">
+              {t('Back to tools', 'Retour aux outils', 'Volver a las herramientas')}
+            </button>
+          </div>
         </div>
       </header>
 
