@@ -56,6 +56,23 @@ const fmtTime = (s: number) => {
   return `${m}:${r.toString().padStart(2, '0')}`;
 };
 
+const PlayIcon = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden><path d="M8 5.5v13l10.5-6.5z" /></svg>
+);
+const PauseIcon = ({ size = 14 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z" /></svg>
+);
+const SoundIcon = ({ off }: { off: boolean }) => (
+  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M4 9.5h3L11 6v12l-4-3.5H4z" fill="currentColor" stroke="none" />
+    {off ? (
+      <><path d="M15 9.5l4.5 5" /><path d="M19.5 9.5l-4.5 5" /></>
+    ) : (
+      <><path d="M14.8 9.2a4 4 0 010 5.6" /><path d="M17.4 7a7.4 7.4 0 010 10" /></>
+    )}
+  </svg>
+);
+
 const MakerVideo: React.FC<{
   src: string;
   poster: string;
