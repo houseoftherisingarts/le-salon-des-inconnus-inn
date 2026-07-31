@@ -195,6 +195,12 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               {t('Raise a child who understands money.', "Élevez un enfant qui comprend l'argent.")}
             </motion.h1>
             <motion.div {...heroReveal(0.24)}>
+              <p className="text-[#c5a059] font-medium leading-relaxed max-w-xl mb-4">
+                {t(
+                  'An app for teaching personal & family economics that evolves with the child, from age 4 to a doctorate.',
+                  "Une application d'enseignement de l'économie personnelle & familiale qui évolue avec l'enfant, de 4 ans au doctorat.",
+                )}
+              </p>
               <p className="text-neutral-300 max-w-xl leading-relaxed mb-8">
                 {t(
                   'A real little family bank. Every deposit splits into jars, interest lands every week, goals show their true price, taxes included. Your child runs their own bank, with you as head banker.',
