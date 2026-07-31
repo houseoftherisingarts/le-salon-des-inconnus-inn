@@ -33,6 +33,11 @@ const heroReveal = (delay = 0) => ({
   transition: { duration: 0.8, ease: EASE, delay },
 });
 
+// Règle de landing : aucun titre ne dépasse deux lignes, desktop comme mobile.
+// Cinzel est une police large (environ 0,82 em par caractère), donc les tailles
+// mobiles sont abaissées et les titres tenus sous ~38 caractères.
+const H_SECTION = 'font-cinzel text-[22px] md:text-3xl text-[#e8d5a3] [text-wrap:balance]';
+
 const PILL_PRIMARY =
   'px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow';
 const PILL_SECONDARY =
