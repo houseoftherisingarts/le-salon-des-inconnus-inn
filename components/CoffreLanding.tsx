@@ -331,23 +331,39 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                 "Du tout-petit qui compte les sous à l'adulte qui gère impôts, crédit et devises : chaque niveau ouvre ses modules, et chaque niveau vient avec ses repères pour le parent. Vous savez toujours quoi montrer, et quand.",
               )}
             </p>
-            <div className="flex flex-wrap justify-center gap-4 md:gap-5">
-              {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
-                const labeled = n === 1 || n === 10;
-                const label = n === 1
-                  ? t('1 · I count my coins', '1 · Je compte les sous')
-                  : n === 10
-                  ? t('10 · Adult · everything open', '10 · Adulte · tout ouvert')
-                  : '';
-                return (
-                  <div key={n} className="flex flex-col items-center gap-2 w-20">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-cinzel text-[#171308] font-bold" style={{ background: 'linear-gradient(135deg, #c5a059, #e8d5a3, #c5a059)' }}>
-                      {n}
+            <div className="relative max-w-4xl mx-auto">
+              <div className="absolute left-0 right-0 top-[18px] md:top-[24px] h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(197,160,89,0.55), transparent)' }} />
+              <div className="relative grid grid-cols-10 gap-1 md:gap-3">
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
+                  const label = n === 1
+                    ? t('4 years old · I count my coins', '4 ans · Je compte les sous')
+                    : n === 10
+                    ? t('Adult · everything open', 'Adulte · tout ouvert')
+                    : '';
+                  return (
+                    <div key={n} className="flex flex-col items-center gap-2">
+                      <div className="w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center font-cinzel text-[#171308] font-bold text-sm md:text-base" style={{ background: 'linear-gradient(135deg, #c5a059, #e8d5a3, #c5a059)', boxShadow: '0 0 18px rgba(197,160,89,0.25)' }}>
+                        {n}
+                      </div>
+                      {label && <p className="hidden md:block text-[10px] text-neutral-400 text-center leading-snug">{label}</p>}
                     </div>
-                    {labeled && <p className="text-[10px] text-neutral-400 text-center leading-snug">{label}</p>}
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+              <div className="grid grid-cols-10 gap-1 md:gap-3 mt-6">
+                <div className="col-span-4 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
+                  {t('Child · from age 4', 'Enfant · dès 4 ans')}
+                </div>
+                <div className="col-span-3 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
+                  {t('Teen', 'Adolescent')}
+                </div>
+                <div className="col-span-2 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
+                  {t('Young adult', 'Jeune adulte')}
+                </div>
+                <div className="col-span-1 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
+                  {t('Adult', 'Adulte')}
+                </div>
+              </div>
             </div>
           </div>
         </motion.section>
