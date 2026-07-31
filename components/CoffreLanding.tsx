@@ -82,15 +82,30 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         "Five jars, a split profile on every transaction. Your child decides where each deposit goes and withdraws from the jar of their choice. Budgeting becomes a motion they make themselves, week after week.",
         "Cinq pots, un profil de répartition par transaction. Votre enfant décide où va chaque dépôt et retire du pot de son choix. Le budget devient un geste qu'il pose lui-même, semaine après semaine.",
       ],
-      img: 'pots.webp',
+      img: 'carte.webp',
       alt: [
-        'The Coffre jars panel: five spending and saving categories with live balances.',
-        "Le panneau des pots du Coffre : cinq catégories avec leur solde en direct.",
+        "A real child's account card: name, balance and the five jars with their live amounts.",
+        "La carte d'un vrai compte d'enfant : le nom, le solde et les cinq pots avec leurs montants en direct.",
+      ],
+    },
+    {
+      key: 'caisse',
+      reverse: true,
+      eyebrow: ['The till', 'La caisse'],
+      title: ['Count in real coins.', 'Comptez en vraies pièces.'],
+      body: [
+        'The real-money theme shows Canadian coins and bills: the beaver, the loonie, the polar bear, the polymer notes. Your child taps a till, deposits, withdraws and counts like at the store. Mathematics becomes a set of motions.',
+        "Le thème vraie monnaie affiche les pièces et les billets canadiens : le castor, le huard, l'ours polaire, les coupures polymère. Votre enfant touche une caisse, dépose, retire et compte comme au magasin. Les mathématiques deviennent des gestes.",
+      ],
+      img: 'caisse.webp',
+      alt: [
+        'The till with real Canadian coins and polymer bills, and the deposit split above.',
+        'La caisse avec les vraies pièces canadiennes, les billets polymère et la répartition du dépôt.',
       ],
     },
     {
       key: 'objectifs',
-      reverse: true,
+      reverse: false,
       eyebrow: ['The goals', 'Les objectifs'],
       title: ['Dreams with a real price.', 'Des rêves avec un vrai prix.'],
       body: [
