@@ -178,7 +178,14 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                   <rect x="22" y="10" width="68" height="92" rx="3" strokeWidth="2.5" />
                   <rect x="29.5" y="17.5" width="53" height="77" rx="1.5" strokeWidth="1" opacity="0.55" />
                 </g>
-                <image href="/media/logo-icon.png" x="33" y="29" width="46" height="54" />
+                <text
+                  x="56" y="57"
+                  textAnchor="middle" dominantBaseline="central"
+                  fontFamily="Cinzel, serif" fontSize="46" fontWeight={600}
+                  fill="url(#apprGold)"
+                >
+                  $
+                </text>
                 <g fill="url(#apprGold)">
                   <path d="M 22 5.5 L 26 10 L 22 14.5 L 18 10 Z" opacity="0.9" />
                   <path d="M 90 5.5 L 94 10 L 90 14.5 L 86 10 Z" opacity="0.9" />

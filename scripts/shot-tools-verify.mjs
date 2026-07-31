@@ -6,13 +6,13 @@ const browser = await chromium.launch();
 async function shoot(viewport, suffix) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: 2, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
-  await page.goto('http://localhost:4173/tools', { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.goto('https://lesalondesinconnus.com/tools', { waitUntil: 'domcontentloaded', timeout: 30000 });
   await page.waitForTimeout(4000);
   // Fermer la bannière témoins si présente
-  const ess = page.locator('button', { hasText: /essentiel seulement/i }).first();
+  const ess = page.locator('button', { hasText: /essentiel seulement|essential only/i }).first();
   if (await ess.count()) await ess.click().catch(() => {});
   // Ouvrir le panneau mobile
-  const mob = page.locator('button', { hasText: 'iPhone, iPad et Android' }).first();
+  const mob = page.locator('button', { hasText: /iPhone, iPad (et|and|y) Android/ }).first();
   await mob.click();
   await page.waitForTimeout(800);
   await mob.scrollIntoViewIfNeeded();
