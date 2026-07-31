@@ -9,12 +9,24 @@ interface Props {
   language: 'EN' | 'FR';
 }
 
+type Lang = 'EN' | 'FR' | 'ES';
+
 const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
 const BANQUE = 'https://petite-banque-inconnus.web.app';
 
 export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
-  const fr = language === 'FR';
-  const t = (en: string, frText: string) => (fr ? frText : en);
+  const [lang, setLang] = React.useState<Lang>(() => {
+    try {
+      const v = localStorage.getItem('salonToolsLang');
+      if (v === 'EN' || v === 'FR' || v === 'ES') return v;
+    } catch {}
+    return language;
+  });
+  const pick = (l: Lang) => {
+    setLang(l);
+    try { localStorage.setItem('salonToolsLang', l); } catch {}
+  };
+  const t = (en: string, frText: string, es: string) => (lang === 'FR' ? frText : lang === 'ES' ? es : en);
 
   return (
     <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200" style={{ background: '#0a0808' }}>
