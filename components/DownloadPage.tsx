@@ -143,18 +143,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
               </p>
             </div>
           </div>
-          <div className="px-10 md:px-12 py-5 border-t border-[#c5a059]/15 flex flex-wrap items-center justify-center gap-3 text-xs text-neutral-500">
-            <span>{t('An ad-free experience, presented by', 'Une expérience sans publicité, présentée par', 'Una experiencia sin publicidad, presentada por')}</span>
-            <span className="text-[#c5a059] font-semibold">La Petite Monnaie</span>
-            <a href="mailto:alex@lesalondesinconnus.com?subject=Commanditer%20les%20outils%20du%20Salon"
-              className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
-              {t('Become a sponsor', 'Devenir commanditaire', 'Convertirse en patrocinador')}
-            </a>
-            <button onClick={() => onNavigate('DONATION')}
-              className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
-              {t('Support the project', 'Soutenir le projet', 'Apoyar el proyecto')}
-            </button>
-          </div>
+          <SponsorBand t={t} onNavigate={onNavigate} />
         </motion.section>
 
         <motion.section
