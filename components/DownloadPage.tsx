@@ -105,7 +105,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
               <p className="text-neutral-500 text-xs mt-6 leading-relaxed">
                 {t(
                   'Free public beta. On first launch, the bank welcomes you, opens the accounts of your children and walks you through a guided tour.',
-                  "Bêta publique gratuite. Au premier lancement, la banque vous accueille, ouvre les comptes de vos enfants et vous guide dans une visite.",
+                  "Beta publique gratuite. Au premier lancement, la banque vous accueille, ouvre les comptes de vos enfants et vous guide dans une visite.",
                 )}
               </p>
             </div>
