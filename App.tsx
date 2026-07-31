@@ -574,8 +574,12 @@ const App: React.FC = () => {
     setCurrentGenre(randomGenre);
 
     const audio = new Audio(MUSIC_GENRES[randomGenre]);
+    // new Audio() précharge en entier par défaut : chaque visite tirait ~18 Mo
+    // de musique même si personne n'appuyait sur lecture. Le fichier ne se
+    // charge maintenant qu'au premier play().
+    audio.preload = 'none';
     audio.loop = true;
-    audio.volume = TARGET_VOLUME; 
+    audio.volume = TARGET_VOLUME;
     audioRef.current = audio;
 
     return () => {
