@@ -123,16 +123,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     {
       key: 'objectifs',
       reverse: false,
-      eyebrow: ['The goals', 'Les objectifs'],
-      title: ['Dreams with a real price.', 'Des rêves avec un vrai prix.'],
+      eyebrow: ['The goals', 'Les objectifs', 'Los objetivos'],
+      title: ['Dreams with a real price.', 'Des rêves avec un vrai prix.', 'Sueños con un precio real.'],
       body: [
         'A goal is created with its link, its price, the taxes and a waiting period before the purchase. Your child learns to see the impulse coming and let it pass.',
         "Un objectif se crée avec son lien, son prix, les taxes et un temps d'attente avant l'achat. Votre enfant apprend à voir venir l'impulsion et à la laisser passer.",
+        'Un objetivo se crea con su enlace, su precio, los impuestos y un tiempo de espera antes de la compra. Su hijo aprende a ver venir el impulso y a dejarlo pasar.',
       ],
       img: 'objectifs.webp',
       alt: [
         'A savings goal card with its link, taxed price and countdown before purchase.',
         "Une carte d'objectif avec son lien, son prix taxé et le compte à rebours avant l'achat.",
+        'Una tarjeta de objetivo con su enlace, su precio con impuestos y la cuenta regresiva antes de la compra.',
       ],
     },
     {
