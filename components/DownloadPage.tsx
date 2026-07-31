@@ -163,9 +163,9 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
             <div className="p-10 md:p-12 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-[#c5a059]/15"
               style={{ background: 'radial-gradient(80% 80% at 50% 30%, rgba(201,168,90,0.08), transparent 75%)' }}>
               <span className="text-7xl mb-6" style={{ filter: 'drop-shadow(0 0 24px rgba(201,168,90,0.45))' }} aria-hidden>🎨</span>
-              <h2 className="font-cinzel text-2xl text-[#e8d5a3]">{t('The Artwork Appraisal Tool', "L'Outil d'appréciation des œuvres")}</h2>
+              <h2 className="font-cinzel text-2xl text-[#e8d5a3]">{t('The Artwork Appraisal Tool', "L'Outil d'appréciation des œuvres", 'La Herramienta de Avalúo de Obras')}</h2>
               <p className="text-xs text-neutral-400 mt-3 leading-relaxed max-w-[280px]">
-                {t('Artist sheet & fair market value', 'Fiche d’artiste & juste valeur marchande')}
+                {t('Artist sheet & fair market value', 'Fiche d’artiste & juste valeur marchande', 'Ficha de artista y justo valor de mercado')}
               </p>
             </div>
             <div className="p-10 md:p-12">
@@ -173,18 +173,20 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                 {t(
                   'Upload a photo of your artwork, answer the dossier questions, and receive an indicative estimate of its fair market value. The tool builds your artist sheet and prepares the acquisition dossier, made also for businesses displaying original artwork in their place of business.',
                   "Téléversez une photo de votre œuvre, répondez aux questions du dossier, et recevez une estimation indicative de sa juste valeur marchande. L'outil monte votre fiche d'artiste et prépare le dossier d'acquisition, pensé aussi pour les entreprises qui exposent des œuvres originales dans leur lieu d'affaires.",
+                  'Suba una foto de su obra, responda las preguntas del expediente, y reciba una estimación indicativa de su justo valor de mercado. La herramienta arma su ficha de artista y prepara el expediente de adquisición, pensado también para las empresas que exhiben obras originales en su lugar de negocio.',
                 )}
               </p>
               <div className="flex flex-wrap gap-3 mt-8">
                 <a href="https://appreciationdossier.netlify.app" target="_blank" rel="noopener noreferrer"
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
-                  {t('Open the tool', "Ouvrir l'outil")}
+                  {t('Open the tool', "Ouvrir l'outil", 'Abrir la herramienta')}
                 </a>
               </div>
               <p className="text-neutral-500 text-xs mt-6 leading-relaxed">
                 {t(
                   'The estimate is indicative; the final amount is confirmed by our financial expert.',
                   "L'estimation est donnée à titre indicatif; le montant final est confirmé par notre expert financier.",
+                  'La estimación se entrega a título indicativo; el monto final es confirmado por nuestro experto financiero.',
                 )}
               </p>
             </div>
