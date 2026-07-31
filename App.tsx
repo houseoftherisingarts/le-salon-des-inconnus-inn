@@ -90,6 +90,13 @@ const INITIAL_ASSETS = [
   "/media/logo.png"
 ];
 
+// Pages autonomes (/coffre, /tools) : elles ne montrent aucune photo de
+// l'auberge, donc l'écran de chargement ne précharge que le logo et le grain.
+const STANDALONE_ASSETS = [
+  getOptimizedUrl("https://www.transparenttextures.com/patterns/stardust.png", 1000),
+  "/media/logo.png"
+];
+
 // --- 2. DEFERRED ASSETS (Below the fold) ---
 // These are loaded silently in the background when the user is idle.
 const DEFERRED_ASSETS = [
