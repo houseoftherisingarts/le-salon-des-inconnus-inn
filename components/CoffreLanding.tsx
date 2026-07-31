@@ -806,8 +806,12 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               {demoCta}
               <a href={DL_MAC} className={PILL_SECONDARY}>{t('Download for macOS', 'Télécharger pour macOS', 'Descargar para macOS')}</a>
               <a href={DL_WIN} className={PILL_SECONDARY}>{t('Download for Windows', 'Télécharger pour Windows', 'Descargar para Windows')}</a>
-              <a href={DL_MOBILE} target="_blank" rel="noopener noreferrer" className={PILL_SECONDARY}>{t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}</a>
+              <button onClick={() => setShowMobile((v) => !v)} aria-expanded={showMobile}
+                className={showMobile ? 'px-6 py-3 rounded-full border border-[#c5a059] text-[#e8d5a3] text-sm transition-colors' : PILL_SECONDARY}>
+                {t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}
+              </button>
             </div>
+            {showMobile && <MobileInstallPanel t={t} appUrl={APP_URL} />}
             <p className="text-xs text-neutral-500 mt-7">
               {t('Free public beta · Presented by La Petite Monnaie', 'Beta publique gratuite · Présentée par La Petite Monnaie', 'Beta pública gratuita · Presentada por La Petite Monnaie')}
             </p>
