@@ -409,15 +409,35 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         </motion.section>
 
         {/* 5. FUTURE PACING */}
-        <motion.section {...reveal()} className="border-t border-white/5 py-24 md:py-32">
-          <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16">
-            <p className="font-cinzel text-2xl md:text-3xl text-[#e8d5a3] text-center leading-relaxed">
-              {'« '}
+        <motion.section {...reveal()} className="border-t border-white/5 py-24 md:py-32 relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(55% 65% at 50% 45%, rgba(201,168,90,0.09), transparent 75%)' }} aria-hidden />
+          <div className="relative max-w-4xl mx-auto px-6">
+            <p className="font-cinzel text-[110px] md:text-[160px] leading-none text-[#c5a059]/15 text-center select-none" aria-hidden>«</p>
+            <p className="font-cinzel text-2xl md:text-4xl text-[#e8d5a3] text-center leading-relaxed -mt-10 md:-mt-16">
               {t(
-                'Picture the next family dinner: your child gets ten dollars and asks "which jar does it go to?". A year from now, talking about money at home will feel as normal as talking about school.',
-                'Imaginez le prochain souper : votre enfant reçoit dix dollars et demande "je le mets sur quel pot?". Dans un an, parler d\'argent chez vous sera aussi normal que parler d\'école.',
+                'Picture the next family dinner. Your child gets ten dollars as a gift and calls it before the bill even touches the table: "2.50 to savings, 2.50 to invest, 1.50 for fun and 1 to share."',
+                'Imaginez le prochain souper. Votre enfant reçoit dix dollars en cadeau et annonce, avant même que le billet touche la table : "2,50 $ en épargne, 2,50 $ à investir, 1,50 $ pour le fun et 1 $ à partager."',
               )}
-              {' »'}
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 mt-10">
+              {[
+                ['🧾', '2,50 $', '2.50'],
+                ['🏦', '2,50 $', '2.50'],
+                ['🌱', '2,50 $', '2.50'],
+                ['🎉', '1,50 $', '1.50'],
+                ['🎁', '1,00 $', '1.00'],
+              ].map(([emo, frAmt, enAmt]) => (
+                <span key={emo} className="inline-flex items-center gap-2 rounded-full border border-[#c5a059]/30 bg-black/40 backdrop-blur-md px-4 py-2 text-sm">
+                  <span aria-hidden>{emo}</span>
+                  <span className="text-[#e8d5a3] font-semibold">{fr ? frAmt : enAmt}</span>
+                </span>
+              ))}
+            </div>
+            <p className="text-neutral-400 text-center leading-relaxed mt-10 max-w-2xl mx-auto">
+              {t(
+                'A year from now, talking about money at home will feel as normal as talking about school.',
+                "Dans un an, parler d'argent chez vous sera aussi normal que parler d'école.",
+              )}
             </p>
           </div>
         </motion.section>
