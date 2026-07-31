@@ -94,7 +94,7 @@ const MakerVideo: React.FC<{
   const [started, setStarted] = React.useState(false);
   const [muted, setMuted] = React.useState(false);
   const [time, setTime] = React.useState(0);
-  const [total, setTotal] = React.useState(0);
+  const [total, setTotal] = React.useState(duration);
 
   const toggle = () => {
     const v = vid.current;
@@ -145,7 +145,7 @@ const MakerVideo: React.FC<{
           src={src}
           poster={poster}
           aria-label={label}
-          preload="metadata"
+          preload="none"
           playsInline
           disablePictureInPicture
           controlsList="nofullscreen nodownload noplaybackrate noremoteplayback"
@@ -156,7 +156,6 @@ const MakerVideo: React.FC<{
           onPlay={() => { setPlaying(true); setStarted(true); }}
           onPause={() => setPlaying(false)}
           onEnded={() => { setPlaying(false); setStarted(false); }}
-          onLoadedMetadata={(e) => setTotal(e.currentTarget.duration)}
           onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
           onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
         />
@@ -781,6 +780,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               <MakerVideo
                 src={`${M}mot-du-createur.mp4`}
                 poster={`${M}mot-du-createur.webp`}
+                duration={136.3}
                 label={t(
                   'Alex, founder of Le Salon des Inconnus, explains where Le Coffre des Inconnus comes from.',
                   "Alex, fondateur du Salon des Inconnus, raconte d'où vient Le Coffre des Inconnus.",

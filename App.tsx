@@ -312,8 +312,13 @@ const App: React.FC = () => {
   const [isMusicMenuOpen, setIsMusicMenuOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Les pages autonomes (/coffre, /tools) sont des calques plein écran : elles ne
+  // montrent jamais les photos de l'auberge. Sans ce garde-fou, y arriver
+  // directement téléchargeait ~16 Mo d'images invisibles.
+  const isStandalonePage = currentView === 'COFFRE' || currentView === 'DOWNLOAD';
+
   // Trigger Background Loading when initial loading finishes
-  useIdlePreloader(DEFERRED_ASSETS, !isLoading);
+  useIdlePreloader(DEFERRED_ASSETS, !isLoading && !isStandalonePage);
 
   // --- 1. NAVIGATION HELPER ---
   const handleNavigation = (destination: ViewState) => {
