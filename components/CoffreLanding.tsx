@@ -234,12 +234,20 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-10">
             <h2 className="font-cinzel text-3xl text-[#e8d5a3]">{t('School will not teach it.', "L'école ne l'enseignera pas.")}</h2>
-            <p className="text-neutral-300 leading-relaxed">
-              {t(
-                'Most adults learned money the hard way: first credit card at 18, first debts at 20. Books and lectures slide right off children. What stays is what they live, week after week, with their own coins.',
-                "La plupart des adultes ont appris l'argent à la dure : première carte de crédit à 18 ans, premières dettes à 20. Les livres et les discours glissent sur les enfants. Ce qui reste, c'est ce qu'ils vivent, semaine après semaine, avec leurs propres sous.",
-              )}
-            </p>
+            <div>
+              <p className="text-neutral-300 leading-relaxed">
+                {t(
+                  'Most adults learned money the hard way: first credit card at 18, first debts at 20. Books and lectures slide right off children. What stays is what they live, week after week, with their own coins.',
+                  "La plupart des adultes ont appris l'argent à la dure : première carte de crédit à 18 ans, premières dettes à 20. Les livres et les discours glissent sur les enfants. Ce qui reste, c'est ce qu'ils vivent, semaine après semaine, avec leurs propres sous.",
+                )}
+              </p>
+              <p className="text-[#e8d5a3] font-semibold leading-relaxed mt-6">
+                {t(
+                  "They removed family economics classes from schools. No matter: let's take that power back through self-education.",
+                  "Ils ont enlevé les cours d'économie familiale des écoles. Ce n'est pas grave : reprenons ce pouvoir par l'auto-éducation.",
+                )}
+              </p>
+            </div>
           </div>
         </motion.section>
 
