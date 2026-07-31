@@ -435,20 +435,22 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               />
             </motion.div>
             <div>
-              <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t('The resistance', 'La résistance')}</p>
+              <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">{t('The resistance', 'La résistance', 'La resistencia')}</p>
               <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">
-                {t('You will own this program. And you will be happy.', 'Vous posséderez ce programme. Et vous serez heureux.')}
+                {t('You will own this program. And you will be happy.', 'Vous posséderez ce programme. Et vous serez heureux.', 'Usted poseerá este programa. Y será feliz.')}
               </h3>
               <p className="text-neutral-300 leading-relaxed">
                 {t(
                   'Everything is sliding into subscription: music, movies, software, even heated seats. Everything is rented, nothing is owned, and everyone is told to celebrate. People are fed up, and so are we. The Coffre is part of the resistance: you download it, it is yours. No subscription, no monthly rent on your children’s education, no server that shuts down and takes your data with it. Yours, until the day your computer gives out.',
                   "Tout glisse vers l'abonnement : la musique, les films, les logiciels, jusqu'aux sièges chauffants. Tout se loue, rien ne s'appartient, et il faudrait s'en réjouir. Les gens en ont soupé, et nous aussi. Le Coffre fait partie de la résistance : vous le téléchargez, il est à vous. Pas d'abonnement, pas de loyer mensuel sur l'éducation de vos enfants, pas de serveur qui ferme en emportant vos données. À vous, jusqu'au jour où votre ordinateur rendra l'âme.",
+                  "Todo se desliza hacia la suscripción: la música, las películas, el software, hasta los asientos calefaccionados. Todo se renta, nada se posee, y se supone que hay que celebrarlo. La gente está harta, y nosotros también. Le Coffre forma parte de la resistencia: usted lo descarga, y es suyo. Sin suscripción, sin renta mensual sobre la educación de sus hijos, sin servidor que cierre y se lleve sus datos. Suyo, hasta el día en que su computadora rinda el último suspiro.",
                 )}
               </p>
               <p className="text-neutral-500 text-sm leading-relaxed mt-5">
                 {t(
                   'The public beta is free. The full version will sell the old way: once, in its box.',
                   'La beta publique est gratuite. La version complète se vendra comme dans le temps : une fois, dans sa boîte.',
+                  'La beta pública es gratuita. La versión completa se venderá a la antigua: una sola vez, en su caja.',
                 )}
               </p>
             </div>
