@@ -133,7 +133,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     },
     {
       key: 'toolbox',
-      reverse: true,
+      reverse: false,
       eyebrow: ['The toolbox', "La boîte à outils"],
       title: ['Signal before noise.', 'Le signal avant le bruit.'],
       body: [
