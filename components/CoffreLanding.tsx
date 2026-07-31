@@ -399,16 +399,16 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               </div>
               <div className="grid grid-cols-10 gap-1 md:gap-3 mt-6">
                 <div className="col-span-4 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
-                  {t('Child · from age 4', 'Enfant · dès 4 ans')}
+                  {t('Child · from age 4', 'Enfant · dès 4 ans', 'Niño · desde los 4 años')}
                 </div>
                 <div className="col-span-3 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
-                  {t('Teen', 'Adolescent')}
+                  {t('Teen', 'Adolescent', 'Adolescente')}
                 </div>
                 <div className="col-span-2 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
-                  {t('Young adult', 'Jeune adulte')}
+                  {t('Young adult', 'Jeune adulte', 'Joven adulto')}
                 </div>
                 <div className="col-span-1 border-t border-[#c5a059]/35 pt-2 text-center text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-[#c5a059]">
-                  {t('Adult', 'Adulte')}
+                  {t('Adult', 'Adulte', 'Adulto')}
                 </div>
               </div>
             </div>
