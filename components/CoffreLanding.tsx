@@ -227,27 +227,29 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <section className="max-w-7xl mx-auto px-6 pt-36 md:pt-40 pb-24 grid md:grid-cols-2 gap-14 items-center">
           <div>
             <motion.p {...heroReveal(0)} className="text-[11px] tracking-[0.3em] uppercase text-neutral-500 mb-5">
-              {t('Le Coffre des Inconnus · Free public beta', 'Le Coffre des Inconnus · Beta publique gratuite')}
+              {t('Le Coffre des Inconnus · Free public beta', 'Le Coffre des Inconnus · Beta publique gratuite', 'Le Coffre des Inconnus · Beta pública gratuita')}
             </motion.p>
             <motion.h1 {...heroReveal(0.12)} className="font-cinzel text-4xl md:text-6xl text-[#e8d5a3] leading-tight mb-6">
-              {t('Raise a child who understands money.', "Élevez un enfant qui comprend l'argent.")}
+              {t('Raise a child who understands money.', "Élevez un enfant qui comprend l'argent.", 'Eleve a un niño que entiende el dinero.')}
             </motion.h1>
             <motion.div {...heroReveal(0.24)}>
               <p className="text-[#c5a059] font-medium leading-relaxed max-w-xl mb-4">
                 {t(
                   'An app for teaching personal & family economics that evolves with the child, from age 4 to a doctorate.',
                   "Une application d'enseignement de l'économie personnelle & familiale qui évolue avec l'enfant, de 4 ans au doctorat.",
+                  'Una aplicación para enseñar economía personal y familiar que evoluciona con el niño, desde los 4 años hasta un doctorado.',
                 )}
               </p>
               <p className="text-neutral-300 max-w-xl leading-relaxed mb-8">
                 {t(
                   'A real little family bank. Every deposit splits into jars, interest lands every week, goals show their true price, taxes included. Your child runs their own bank, with you as head banker.',
                   "Une vraie petite banque familiale. Chaque dépôt se répartit en pots, l'intérêt tombe chaque semaine, les objectifs affichent leur vrai prix, taxes comprises. Votre enfant tient sa propre banque, avec vous comme banquier en chef.",
+                  'Un verdadero pequeño banco familiar. Cada depósito se reparte en frascos, el interés cae cada semana, los objetivos muestran su precio real, impuestos incluidos. Su hijo dirige su propio banco, con usted como banquero en jefe.',
                 )}
               </p>
               <div className="flex flex-wrap gap-3">
                 {demoCta}
-                <a href="#telecharger" className={PILL_SECONDARY}>{t('Download the app', "Télécharger l'app")}</a>
+                <a href="#telecharger" className={PILL_SECONDARY}>{t('Download the app', "Télécharger l'app", 'Descargar la app')}</a>
               </div>
               <div className="mt-5">{microReassurance}</div>
             </motion.div>
@@ -255,13 +257,13 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }} className="relative">
             <GlassFrame
               src={`${M}dash-desktop.webp`}
-              alt={t('The Coffre des Inconnus dashboard, showing a child account with its jars and treasure.', "Le tableau de bord du Coffre des Inconnus, avec un compte enfant, ses pots et son trésor.")}
+              alt={t('The Coffre des Inconnus dashboard, showing a child account with its jars and treasure.', "Le tableau de bord du Coffre des Inconnus, avec un compte enfant, ses pots et son trésor.", 'El tablero de Le Coffre des Inconnus, con una cuenta infantil, sus frascos y su tesoro.')}
               eager
             />
             <div className="hidden md:block absolute md:-bottom-10 md:-left-10 w-[180px]">
               <GlassFrame
                 src={`${M}mobile.webp`}
-                alt={t('The Coffre on a phone screen.', "Le Coffre sur un écran de téléphone.")}
+                alt={t('The Coffre on a phone screen.', "Le Coffre sur un écran de téléphone.", 'Le Coffre en la pantalla de un teléfono.')}
                 className="shadow-[0_10px_40px_rgba(0,0,0,0.55)]"
               />
             </div>
