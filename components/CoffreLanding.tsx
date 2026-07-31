@@ -120,7 +120,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     },
     {
       key: 'paliers',
-      reverse: false,
+      reverse: true,
       eyebrow: ['The milestones', 'Les paliers'],
       title: ['The treasure grows, the honors follow.', 'Le trésor grandit, les honneurs suivent.'],
       body: [
