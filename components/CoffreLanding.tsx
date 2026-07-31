@@ -188,17 +188,22 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     },
   ];
 
-  const faq: [string, string, string, string][] = [
+  const faq: [string, string, string, string, string, string][] = [
     ['From what age?', 'From 4 or 5 at level 1, where the child counts coins. The ten levels climb all the way to adult financial education.',
-      'À partir de quel âge ?', "Dès 4 ou 5 ans au niveau 1, où l'enfant compte les sous. Les dix niveaux montent jusqu'à l'éducation financière adulte."],
+      'À partir de quel âge ?', "Dès 4 ou 5 ans au niveau 1, où l'enfant compte les sous. Les dix niveaux montent jusqu'à l'éducation financière adulte.",
+      '¿A partir de qué edad?', 'Desde los 4 o 5 años en el nivel 1, donde el niño cuenta monedas. Los diez niveles suben hasta la educación financiera adulta.'],
     ['Do I need to know finance?', 'No. Every level comes with guideposts for the parent, and the built-in guide explains each module, in French and in English.',
-      "Faut-il s'y connaître en finances ?", "Non. Chaque niveau vient avec ses repères pour le parent, et le guide intégré explique chaque module, en français et en anglais."],
+      "Faut-il s'y connaître en finances ?", "Non. Chaque niveau vient avec ses repères pour le parent, et le guide intégré explique chaque module, en français et en anglais.",
+      '¿Necesito saber de finanzas?', 'No. Cada nivel viene con guías para el padre o la madre, y la guía integrada explica cada módulo, en francés e inglés.'],
     ['Is it really free?', 'Yes. The public beta is free and ad-free. Donations and sponsors keep the project alive.',
-      "C'est vraiment gratuit ?", "Oui. La beta publique est gratuite et sans publicité. Les dons et les commanditaires gardent le projet vivant."],
+      "C'est vraiment gratuit ?", "Oui. La beta publique est gratuite et sans publicité. Les dons et les commanditaires gardent le projet vivant.",
+      '¿De verdad es gratis?', 'Sí. La beta pública es gratuita y sin publicidad. Las donaciones y los patrocinadores mantienen vivo el proyecto.'],
     ['Where does the data go?', 'Nowhere. Everything stays on your device, and you can create timestamped backups whenever you want.',
-      'Où vont les données ?', "Nulle part. Tout reste sur votre appareil, et vous pouvez créer des sauvegardes horodatées quand vous voulez."],
+      'Où vont les données ?', "Nulle part. Tout reste sur votre appareil, et vous pouvez créer des sauvegardes horodatées quand vous voulez.",
+      '¿Adónde van los datos?', 'A ningún lado. Todo permanece en su dispositivo, y usted puede crear copias de seguridad con fecha y hora cuando quiera.'],
     ['On which devices?', 'In the browser, on macOS and Windows, and on phones or tablets by adding it to the home screen.',
-      'Sur quels appareils ?', "Dans le navigateur, sur macOS et Windows, et sur téléphone ou tablette en l'ajoutant à l'écran d'accueil."],
+      'Sur quels appareils ?', "Dans le navigateur, sur macOS et Windows, et sur téléphone ou tablette en l'ajoutant à l'écran d'accueil.",
+      '¿En qué dispositivos?', 'En el navegador, en macOS y Windows, y en teléfonos o tabletas agregándola a la pantalla de inicio.'],
   ];
 
   return (
