@@ -129,7 +129,7 @@ const MakerVideo: React.FC<{
           src={src}
           poster={poster}
           aria-label={label}
-          preload="none"
+          preload="metadata"
           playsInline
           disablePictureInPicture
           controlsList="nofullscreen nodownload noplaybackrate noremoteplayback"
