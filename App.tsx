@@ -663,7 +663,9 @@ const App: React.FC = () => {
       {isLoading && (
           <LoadingScreen 
             onComplete={() => setIsLoading(false)} 
-            images={INITIAL_ASSETS} // ONLY load critical assets initially
+            // Sur une page autonome, seuls le logo et le grain servent : les
+            // photos de l'auberge n'apparaissent nulle part.
+            images={isStandalonePage ? STANDALONE_ASSETS : INITIAL_ASSETS}
           />
       )}
 
