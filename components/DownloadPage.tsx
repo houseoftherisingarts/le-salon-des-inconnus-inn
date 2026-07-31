@@ -73,8 +73,11 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
               style={{ background: 'radial-gradient(80% 80% at 50% 30%, rgba(201,168,90,0.08), transparent 75%)' }}>
               <img src="/media/logo-icon.png" alt="" className="w-28 h-28 mb-6" style={{ filter: 'drop-shadow(0 0 24px rgba(201,168,90,0.45))' }} />
               <h2 className="font-cinzel text-2xl text-[#e8d5a3]">Le Coffre des Inconnus</h2>
-              <p className="text-[11px] tracking-[0.25em] uppercase text-neutral-500 mt-2">
-                {t('The family bank that teaches money', "La banque familiale qui enseigne l'argent")}
+              <p className="text-xs text-neutral-400 mt-3 leading-relaxed max-w-[280px]">
+                {t(
+                  'An app for teaching personal & family economics that evolves with the child, from age 4 to a doctorate',
+                  "Une application d'enseignement de l'économie personnelle & familiale qui évolue avec l'enfant, de 4 ans au doctorat",
+                )}
               </p>
             </div>
             <div className="p-10 md:p-12">
