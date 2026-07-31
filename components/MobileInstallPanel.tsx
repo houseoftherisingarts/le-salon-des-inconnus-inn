@@ -10,7 +10,6 @@ interface Props {
 }
 
 const STEP = 'flex gap-3 items-start text-sm text-neutral-300 leading-relaxed';
-// (voir DownloadPage pour l'emblème doré de l'outil d'appréciation)
 const NUM =
   'shrink-0 w-6 h-6 rounded-full border border-[#c5a059]/50 text-[#e8d5a3] text-xs flex items-center justify-center font-semibold mt-0.5';
 
