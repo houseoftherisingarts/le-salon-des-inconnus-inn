@@ -369,12 +369,13 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         {/* 4F. BANDE NIVEAUX */}
         <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6">
-            <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4 text-center">{t('Ten levels', 'Dix niveaux')}</p>
-            <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5 text-center">{t('A bank that grows with your child.', 'Une banque qui grandit avec votre enfant.')}</h3>
+            <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4 text-center">{t('Ten levels', 'Dix niveaux', 'Diez niveles')}</p>
+            <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5 text-center">{t('A bank that grows with your child.', 'Une banque qui grandit avec votre enfant.', 'Un banco que crece con su hijo.')}</h3>
             <p className="text-neutral-300 leading-relaxed max-w-3xl mx-auto text-center mb-14">
               {t(
                 'From the little one counting coins to the adult handling taxes, credit and currencies: every level opens its modules, and every level comes with its guideposts for the parent. You always know what to show, and when.',
                 "Du tout-petit qui compte les sous à l'adulte qui gère impôts, crédit et devises : chaque niveau ouvre ses modules, et chaque niveau vient avec ses repères pour le parent. Vous savez toujours quoi montrer, et quand.",
+                'Del pequeño que cuenta monedas al adulto que maneja impuestos, crédito y divisas: cada nivel abre sus módulos, y cada nivel viene con sus guías para el padre o la madre. Usted siempre sabe qué mostrar, y cuándo.',
               )}
             </p>
             <div className="relative max-w-4xl mx-auto">
