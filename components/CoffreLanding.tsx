@@ -106,16 +106,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     {
       key: 'caisse',
       reverse: true,
-      eyebrow: ['The till', 'La caisse'],
-      title: ['Count in real coins.', 'Comptez en vraies pièces.'],
+      eyebrow: ['The till', 'La caisse', 'La caja'],
+      title: ['Count in real coins.', 'Comptez en vraies pièces.', 'Cuente con monedas reales.'],
       body: [
         'The real-money theme shows Canadian coins and bills: the beaver, the loonie, the polar bear, the polymer notes. Your child taps a till, deposits, withdraws and counts like at the store. Mathematics becomes a set of motions.',
         "Le thème vraie monnaie affiche les pièces et les billets canadiens : le castor, le huard, l'ours polaire, les coupures polymère. Votre enfant touche une caisse, dépose, retire et compte comme au magasin. Les mathématiques deviennent des gestes.",
+        'El tema de dinero real muestra las monedas y los billetes canadienses: el castor, el huard, el oso polar, los billetes de polímero. Su hijo toca una caja, deposita, retira y cuenta como en la tienda. Las matemáticas se convierten en gestos.',
       ],
       img: 'caisse.webp',
       alt: [
         'The till with real Canadian coins and polymer bills, and the deposit split above.',
         'La caisse avec les vraies pièces canadiennes, les billets polymère et la répartition du dépôt.',
+        'La caja con las monedas canadienses reales, los billetes de polímero y el reparto del depósito arriba.',
       ],
     },
     {
