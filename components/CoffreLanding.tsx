@@ -545,19 +545,20 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
         <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14">
             <div>
-              <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Nothing to lose, everything to learn.', 'Rien à perdre, tout à apprendre.')}</h3>
+              <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Nothing to lose, everything to learn.', 'Rien à perdre, tout à apprendre.', 'Nada que perder, todo que aprender.')}</h3>
               <p className="text-neutral-300 leading-relaxed">
                 {t(
                   'Free, no account, no ads. Your data lives on your device, with one-tap backups. Try the demo: if the Coffre does not win you over, your child will still have played banker for twenty minutes.',
                   "Gratuit, sans compte, sans publicité. Vos données vivent sur votre appareil, avec des sauvegardes en un geste. Essayez la démo : si le Coffre ne vous convainc pas, votre enfant aura quand même joué au banquier vingt minutes.",
+                  'Gratis, sin cuenta, sin publicidad. Sus datos viven en su dispositivo, con copias de seguridad en un toque. Pruebe la demo: si Le Coffre no lo convence, su hijo habrá jugado al banquero durante veinte minutos de todas formas.',
                 )}
               </p>
             </div>
             <dl className="space-y-7">
-              {faq.map(([qEn, aEn, qFr, aFr]) => (
+              {faq.map(([qEn, aEn, qFr, aFr, qEs, aEs]) => (
                 <div key={qEn}>
-                  <dt className="font-semibold text-[#e8d5a3] mb-2">{t(qEn, qFr)}</dt>
-                  <dd className="text-neutral-400 leading-relaxed">{t(aEn, aFr)}</dd>
+                  <dt className="font-semibold text-[#e8d5a3] mb-2">{t(qEn, qFr, qEs)}</dt>
+                  <dd className="text-neutral-400 leading-relaxed">{t(aEn, aFr, aEs)}</dd>
                 </div>
               ))}
             </dl>
