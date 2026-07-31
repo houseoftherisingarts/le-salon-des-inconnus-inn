@@ -150,10 +150,10 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
               className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
               {t('Become a sponsor', 'Devenir commanditaire', 'Convertirse en patrocinador')}
             </a>
-            <a href="https://coffre-des-inconnus.web.app/telecharger.html#dons" target="_blank" rel="noopener noreferrer"
+            <button onClick={() => onNavigate('DONATION')}
               className="underline decoration-dotted underline-offset-4 hover:text-[#e8d5a3] transition-colors">
               {t('Support the project', 'Soutenir le projet', 'Apoyar el proyecto')}
-            </a>
+            </button>
           </div>
         </motion.section>
 
