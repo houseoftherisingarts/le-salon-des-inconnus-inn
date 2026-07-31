@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MobileInstallPanel } from './MobileInstallPanel';
+import { SponsorBand } from './SponsorBand';
 
 // Route /coffre — page de vente du Coffre des Inconnus, insérée entre /tools
 // et la vraie démo web. Même atmosphère que DownloadPage : noir chaud, or
