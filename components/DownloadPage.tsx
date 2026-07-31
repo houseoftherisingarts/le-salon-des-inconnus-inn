@@ -200,7 +200,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
           className="mt-10 rounded-2xl border border-white/10 bg-black/25 p-10 text-center"
         >
           <p className="font-cinzel text-lg text-neutral-400">
-            {t('Other tools are on their way to this shelf.', "D'autres outils s'en viennent sur cette étagère.")}
+            {t('Other tools are on their way to this shelf.', "D'autres outils s'en viennent sur cette étagère.", 'Más herramientas están en camino a este estante.')}
           </p>
         </motion.div>
       </main>
