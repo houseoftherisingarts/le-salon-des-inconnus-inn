@@ -255,6 +255,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
   };
   const fr = lang === 'FR';
   const t = (en: string, frText: string, es: string) => (lang === 'FR' ? frText : lang === 'ES' ? es : en);
+  const [showMobile, setShowMobile] = React.useState(false);
   const M = '/media/coffre/';
 
   const demoCta = (
