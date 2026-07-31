@@ -109,14 +109,24 @@ const MakerVideo: React.FC<{
     seekTo((clientX - r.left) / r.width);
   };
 
-  // Garde-fou iOS : Safari mobile peut basculer une vidéo en plein écran natif
-  // malgré playsInline. Si ça arrive, nous refermons immédiatement.
   React.useEffect(() => {
     const v = vid.current as any;
     if (!v) return;
+    // Fichier déjà en cache : loadedmetadata part avant que React n'attache ses
+    // écouteurs, donc nous lisons la durée à la main en plus d'écouter.
+    const syncDuration = () => { if (isFinite(v.duration)) setTotal(v.duration); };
+    syncDuration();
+    v.addEventListener('loadedmetadata', syncDuration);
+    v.addEventListener('durationchange', syncDuration);
+    // Garde-fou iOS : Safari mobile peut basculer une vidéo en plein écran natif
+    // malgré playsInline. Si ça arrive, nous refermons immédiatement.
     const bail = () => { if (typeof v.webkitExitFullscreen === 'function') v.webkitExitFullscreen(); };
     v.addEventListener('webkitbeginfullscreen', bail);
-    return () => v.removeEventListener('webkitbeginfullscreen', bail);
+    return () => {
+      v.removeEventListener('loadedmetadata', syncDuration);
+      v.removeEventListener('durationchange', syncDuration);
+      v.removeEventListener('webkitbeginfullscreen', bail);
+    };
   }, []);
 
   const pct = total > 0 ? (time / total) * 100 : 0;
