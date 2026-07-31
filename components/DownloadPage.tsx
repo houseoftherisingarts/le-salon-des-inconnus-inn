@@ -56,8 +56,8 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
           </h1>
           <p className="max-w-2xl mx-auto text-neutral-400 leading-relaxed">
             {t(
-              'Some of what we build for ourselves, we polish and offer to travelers. Each tool lives on your device, quietly, without accounts and without ads.',
-              "Une part de ce que nous bâtissons pour nous, nous la polissons et l'offrons aux voyageurs. Chaque outil vit sur votre appareil, sans compte et sans publicité.",
+              'Tools built by the community, for the community.',
+              'Des outils développés par la communauté, pour la communauté.',
             )}
           </p>
         </motion.div>
