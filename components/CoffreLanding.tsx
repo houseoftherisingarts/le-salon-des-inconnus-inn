@@ -167,9 +167,9 @@ const MakerVideo: React.FC<{
             type="button"
             onClick={toggle}
             aria-label={playing ? pauseLabel : playLabel}
-            className="text-[#c5a059] hover:text-[#e8d5a3] transition-colors text-sm w-4 text-center shrink-0"
+            className="text-[#c5a059] hover:text-[#e8d5a3] transition-colors shrink-0 flex items-center"
           >
-            {playing ? '❚❚' : '▶'}
+            {playing ? <PauseIcon /> : <PlayIcon />}
           </button>
 
           <div
