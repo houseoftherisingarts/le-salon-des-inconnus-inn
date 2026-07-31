@@ -162,7 +162,28 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
           <div className="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             <div className="p-10 md:p-12 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-[#c5a059]/15"
               style={{ background: 'radial-gradient(80% 80% at 50% 30%, rgba(201,168,90,0.08), transparent 75%)' }}>
-              <span className="text-7xl mb-6" style={{ filter: 'drop-shadow(0 0 24px rgba(201,168,90,0.45))' }} aria-hidden>🎨</span>
+              <svg viewBox="0 0 112 112" className="w-28 h-28 mb-6" style={{ filter: 'drop-shadow(0 0 24px rgba(201,168,90,0.45))' }} aria-hidden>
+                <defs>
+                  <linearGradient id="apprGold" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stopColor="#c5a059" />
+                    <stop offset="0.5" stopColor="#e8d5a3" />
+                    <stop offset="1" stopColor="#c5a059" />
+                  </linearGradient>
+                </defs>
+                <g fill="none" stroke="url(#apprGold)" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="22" y="10" width="68" height="92" rx="3" strokeWidth="2.5" />
+                  <rect x="29.5" y="17.5" width="53" height="77" rx="1.5" strokeWidth="1" opacity="0.55" />
+                  <path d="M 47 30 L 56 21.5 L 65 30" strokeWidth="2.5" />
+                  <path d="M 50 37 L 56 31.5 L 62 37" strokeWidth="2" opacity="0.85" />
+                  <path d="M 56 40 C 57 50, 54.5 56, 55.5 63 C 56 71, 65 73.5, 67 66.5 C 68.5 60.5, 62.5 56.5, 58.5 59 C 55 61.2, 55.5 66.5, 59.5 67.5" strokeWidth="2.5" />
+                </g>
+                <g fill="url(#apprGold)">
+                  <path d="M 22 5.5 L 26 10 L 22 14.5 L 18 10 Z" opacity="0.9" />
+                  <path d="M 90 5.5 L 94 10 L 90 14.5 L 86 10 Z" opacity="0.9" />
+                  <path d="M 22 97.5 L 26 102 L 22 106.5 L 18 102 Z" opacity="0.9" />
+                  <path d="M 90 97.5 L 94 102 L 90 106.5 L 86 102 Z" opacity="0.9" />
+                </g>
+              </svg>
               <h2 className="font-cinzel text-2xl text-[#e8d5a3]">{t('The Artwork Appraisal Tool', "L'Outil d'appréciation des œuvres", 'La Herramienta de Avalúo de Obras')}</h2>
               <p className="text-xs text-neutral-400 mt-3 leading-relaxed max-w-[280px]">
                 {t('Artist sheet & fair market value', 'Fiche d’artiste & juste valeur marchande', 'Ficha de artista y justo valor de mercado')}
