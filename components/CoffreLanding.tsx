@@ -779,7 +779,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               </div>
               <MakerVideo
                 src={`${M}mot-du-createur.mp4`}
-                poster={`${M}mot-du-createur-v2.webp`}
+                poster={`${M}mot-du-createur-v3.webp`}
                 duration={136.3}
                 label={t(
                   'Alex, founder of Le Salon des Inconnus, explains where Le Coffre des Inconnus comes from.',
