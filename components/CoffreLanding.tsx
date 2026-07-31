@@ -154,16 +154,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     {
       key: 'toolbox',
       reverse: false,
-      eyebrow: ['The toolbox', "La boîte à outils"],
-      title: ['Signal before noise.', 'Le signal avant le bruit.'],
+      eyebrow: ['The toolbox', "La boîte à outils", 'La caja de herramientas'],
+      title: ['Signal before noise.', 'Le signal avant le bruit.', 'La señal antes del ruido.'],
       body: [
         "The entrepreneur's toolbox: one big rock a month, two small ones, the list of what your child is avoiding, and a board that separates signal from noise. Great careers begin with that discipline.",
         "La boîte à outils de l'entrepreneur : un gros caillou par mois, deux petits, la liste de ce que votre enfant évite, et un tableau qui sépare le signal du bruit. Les grandes carrières commencent par cette discipline.",
+        "La caja de herramientas del emprendedor: una piedra grande al mes, dos pequeñas, la lista de lo que su hijo evita, y un tablero que separa la señal del ruido. Las grandes carreras empiezan con esa disciplina.",
       ],
       img: 'toolbox.webp',
       alt: [
         "The entrepreneur's toolbox: the month's big rock, small rocks, avoidance list and signal/noise board.",
         "La boîte à outils de l'entrepreneur : le gros caillou du mois, les petits cailloux, la liste d'évitement et le tableau signal/bruit.",
+        "La caja de herramientas del emprendedor: la piedra grande del mes, las piedras pequeñas, la lista de evitación y el tablero señal/ruido.",
       ],
       imgClass: 'md:w-3/4 md:mx-auto',
     },
