@@ -93,10 +93,10 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                   className="px-6 py-3 rounded-full bg-gradient-to-r from-[#c5a059] via-[#e8d5a3] to-[#c5a059] text-[#171308] text-sm font-bold hover:shadow-[0_0_30px_rgba(197,160,89,0.35)] transition-shadow">
                   {t('Download for Windows', 'Télécharger pour Windows')}
                 </a>
-                <a href={BANQUE} target="_blank" rel="noopener noreferrer"
+                <button onClick={() => onNavigate('COFFRE')}
                   className="px-6 py-3 rounded-full border border-white/20 text-neutral-200 text-sm hover:border-[#c5a059] hover:text-[#e8d5a3] transition-colors">
                   {t('Try the online demo', 'Essayer la démo en ligne')}
-                </a>
+                </button>
                 <a href={`${BANQUE}/telecharger.html`} target="_blank" rel="noopener noreferrer"
                   className="px-6 py-3 rounded-full border border-white/20 text-neutral-200 text-sm hover:border-[#c5a059] hover:text-[#e8d5a3] transition-colors">
                   {t('iPhone, iPad and Android', 'iPhone, iPad et Android')}
