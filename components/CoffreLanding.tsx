@@ -406,13 +406,30 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
+                <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">
+                  {t('Made by a homeschooling family, for all families', 'Une app de famille-école, pour toutes les familles')}
+                </p>
                 <h3 className="font-cinzel text-3xl text-[#e8d5a3] mb-5">{t('Built by a family, not by a bank.', 'Bâti par une famille, pas par une banque.')}</h3>
                 <p className="text-neutral-300 leading-relaxed">
                   {t(
-                    'The Coffre was born in an inn of the Petite-Nation, for two very real children. The accounts you see in these images are theirs: real deposits, real goals, real interest paid every week. The app is offered as a free public beta, and every family suggestion shapes what comes next.',
-                    "Le Coffre est né dans une auberge de la Petite-Nation, pour deux enfants bien réels. Les comptes que vous voyez dans ces images sont les leurs : de vrais dépôts, de vrais objectifs, de vrais intérêts versés chaque semaine. L'app est offerte en beta publique gratuite, et chaque suggestion des familles façonne la suite.",
+                    'The Coffre was born in an inn of the Petite-Nation, for my two children. We homeschool: teaching them the jars, the interest and the goals at ages 4 and 5, I watched mathematics settle in right alongside the sense of money. The tool had to leave the house. The public version, richer than our first family build, is offered free for the length of the beta. The accounts you see in these images are my children’s: real deposits and real interest, paid every week.',
+                    "Le Coffre est né dans une auberge de la Petite-Nation, pour mes deux enfants. Nous faisons l'école à la maison : en leur enseignant les pots, l'intérêt et les objectifs à 4 et 5 ans, j'ai vu les mathématiques s'installer en même temps que le sens de l'argent. L'outil devait sortir de la maison. La version publique, enrichie de fonctions que notre première version n'avait pas, est offerte gratuitement le temps de la beta. Les comptes que vous voyez dans ces images sont ceux de mes enfants : de vrais dépôts et de vrais intérêts, versés chaque semaine.",
                   )}
                 </p>
+                <p className="text-neutral-300 leading-relaxed mt-5">
+                  {t(
+                    'The only thing we ask: if you meet a bug or dream up a feature, write to us. Every email shapes what comes next.',
+                    "La seule chose que nous demandons : si vous croisez un bug ou rêvez d'une nouvelle fonction, écrivez-nous. Chaque courriel façonne la suite.",
+                  )}
+                </p>
+                <div className="flex flex-wrap gap-3 mt-6">
+                  <a href="mailto:alex@lesalondesinconnus.com?subject=Coffre%20%C2%B7%20Bug" className={PILL_SECONDARY}>
+                    {t('Report a bug', 'Signaler un bug')}
+                  </a>
+                  <a href="mailto:alex@lesalondesinconnus.com?subject=Coffre%20%C2%B7%20Id%C3%A9e%20de%20fonction" className={PILL_SECONDARY}>
+                    {t('Suggest a feature', 'Proposer une fonction')}
+                  </a>
+                </div>
               </div>
               <GlassFrame src={`${M}wizard.webp`} alt={t('The welcome assistant guiding a new family through the Coffre.', "L'assistant d'accueil qui guide une nouvelle famille dans le Coffre.")} />
             </div>
