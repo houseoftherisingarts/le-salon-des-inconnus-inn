@@ -153,11 +153,11 @@ const MakerVideo: React.FC<{
             className="absolute inset-0 flex items-center justify-center bg-[#0a0808]/25 hover:bg-[#0a0808]/10 transition-colors group"
           >
             <span
-              className="w-16 h-16 rounded-full flex items-center justify-center text-[#171308] text-xl pl-1 group-hover:scale-105 transition-transform"
+              className="w-16 h-16 rounded-full flex items-center justify-center text-[#171308] pl-1 group-hover:scale-105 transition-transform"
               style={{ background: 'linear-gradient(135deg, #c5a059, #e8d5a3, #c5a059)', boxShadow: '0 0 30px rgba(197,160,89,0.45)' }}
               aria-hidden
             >
-              ▶
+              <PlayIcon size={26} />
             </span>
           </button>
         )}
