@@ -149,7 +149,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
     },
     {
       key: 'skilltree',
-      reverse: false,
+      reverse: true,
       eyebrow: ['The skill tree', 'L’arbre de compétences'],
       title: ['Effort that pays.', 'L’effort qui rapporte.'],
       body: [
