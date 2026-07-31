@@ -165,7 +165,7 @@ const MakerVideo: React.FC<{
             type="button"
             onClick={toggle}
             aria-label={playLabel}
-            className="absolute inset-0 flex items-center justify-center bg-[#0a0808]/25 hover:bg-[#0a0808]/10 transition-colors group"
+            className="absolute inset-0 flex items-center justify-center bg-[#0a0808]/5 hover:bg-transparent transition-colors group"
           >
             <span
               className="w-16 h-16 rounded-full flex items-center justify-center text-[#171308] pl-1 group-hover:scale-105 transition-transform"
@@ -779,7 +779,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               </div>
               <MakerVideo
                 src={`${M}mot-du-createur.mp4`}
-                poster={`${M}mot-du-createur.webp`}
+                poster={`${M}mot-du-createur-v2.webp`}
                 duration={136.3}
                 label={t(
                   'Alex, founder of Le Salon des Inconnus, explains where Le Coffre des Inconnus comes from.',
