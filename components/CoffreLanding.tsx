@@ -204,9 +204,9 @@ const MakerVideo: React.FC<{
             type="button"
             onClick={() => { const v = vid.current; if (v) v.muted = !v.muted; }}
             aria-label={muteLabel}
-            className="text-[#c5a059] hover:text-[#e8d5a3] transition-colors text-sm shrink-0"
+            className="text-[#c5a059] hover:text-[#e8d5a3] transition-colors shrink-0 flex items-center"
           >
-            {muted ? '🔇' : '🔊'}
+            <SoundIcon off={muted} />
           </button>
         </div>
       </div>
