@@ -714,9 +714,9 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                   <a href="mailto:alex@lesalondesinconnus.com?subject=Coffre%20%C2%B7%20Id%C3%A9e%20de%20fonction" className={PILL_SECONDARY}>
                     {t('Suggest a feature', 'Proposer une fonction', 'Sugerir una función')}
                   </a>
-                  <a href={DL_DONS} target="_blank" rel="noopener noreferrer" className={PILL_SECONDARY}>
+                  <button onClick={() => onNavigate('DONATION')} className={PILL_SECONDARY}>
                     {t('Give to the project', 'Donner au projet', 'Donar al proyecto')}
-                  </a>
+                  </button>
                 </div>
               </div>
               <GlassFrame src={`${M}wizard.webp`} alt={t('The welcome assistant guiding a new family through the Coffre.', "L'assistant d'accueil qui guide une nouvelle famille dans le Coffre.", 'El asistente de bienvenida que guía a una nueva familia por Le Coffre.')} />
