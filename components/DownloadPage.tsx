@@ -134,7 +134,7 @@ export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
                   {t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}
                 </button>
               </div>
-              {showMobile && <MobileInstallPanel t={t} appUrl={BANQUE} />}
+              {showMobile && <MobileInstallPanel t={t} appUrl={BANQUE} apkUrl={`${BANQUE}/dl/CoffreDesInconnus.apk`} />}
               <p className="text-neutral-500 text-xs mt-6 leading-relaxed">
                 {t(
                   'Free public beta. On first launch, the bank welcomes you, opens the accounts of your children and walks you through a guided tour.',
