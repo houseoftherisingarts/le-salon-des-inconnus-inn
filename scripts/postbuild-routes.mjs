@@ -44,6 +44,12 @@ for (const r of ROUTES) {
     .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${r.description}$2`)
     .replace(/(<meta name="twitter:image" content=")[^"]*(")/, `$1${r.image}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${r.url}$2`);
+  if (r.jsonLd) {
+    html = html.replace(
+      /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
+      `<script type="application/ld+json">${JSON.stringify(r.jsonLd)}</script>`,
+    );
+  }
   const dir = join(root, 'dist', r.path);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), html);
