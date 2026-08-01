@@ -10,11 +10,24 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ROUTES = [
   {
     path: 'coffre',
-    title: "Le Coffre des Inconnus · La petite banque de votre famille",
+    title: 'Le Coffre des Inconnus · La petite banque de votre famille',
     description:
-      "Une application gratuite d'economie personnelle et familiale, de 4 ans au doctorat : pots, interet compose, objectifs, impots et devises. Le parent est le banquier en chef. Sans compte, sans publicite : tout reste sur votre appareil.",
+      "Une application gratuite d'économie personnelle et familiale, de 4 ans au doctorat : pots, intérêt composé, objectifs, impôts et devises. Le parent est le banquier en chef. Sans compte, sans publicité : tout reste sur votre appareil.",
     image: 'https://www.lesalondesinconnus.com/media/coffre/og-coffre.jpg',
     url: 'https://www.lesalondesinconnus.com/coffre',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Le Coffre des Inconnus',
+      applicationCategory: 'EducationalApplication',
+      operatingSystem: 'Web, macOS, Windows, Android, iOS',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
+      description:
+        "Application d'enseignement de l'économie personnelle et familiale qui évolue avec l'enfant, de 4 ans au doctorat.",
+      image: 'https://www.lesalondesinconnus.com/media/coffre/og-coffre.jpg',
+      url: 'https://www.lesalondesinconnus.com/coffre',
+      author: { '@type': 'Organization', name: 'Le Salon des Inconnus', url: 'https://www.lesalondesinconnus.com' },
+    },
   },
 ];
 

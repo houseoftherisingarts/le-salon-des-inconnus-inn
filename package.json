@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/postbuild-routes.mjs",
     "preview": "vite preview",
     "deploy": "npm run build && firebase deploy --only hosting",
     "mono:dev": "turbo run dev --parallel",
