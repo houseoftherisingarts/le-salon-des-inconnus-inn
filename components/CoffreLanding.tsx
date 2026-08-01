@@ -611,7 +611,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
             >
               <div className="absolute inset-0 m-auto w-3/4 h-3/4" style={{ background: 'radial-gradient(50% 50% at 50% 55%, rgba(197,160,89,0.14), transparent 75%)' }} aria-hidden />
               <img
-                src={`${M}boite-v4.webp`}
+                src={`${M}boite-v5.webp`}
                 alt={t('The Coffre des Inconnus retro software box, black and gold, with its glowing treasure chest.', 'La boîte logicielle rétro du Coffre des Inconnus, noire et or, avec son coffre au trésor lumineux.', 'La caja de software retro de Le Coffre des Inconnus, negra y dorada, con su cofre del tesoro brillante.')}
                 loading="lazy"
                 className="relative w-[300px] md:w-[380px] h-auto"
