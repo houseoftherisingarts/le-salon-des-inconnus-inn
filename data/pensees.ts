@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-01",
+        title_fr: "L'art de laisser partir",
+        title_en: "The art of parting",
+        body_fr: "À l'auberge, les au revoir sont aussi fréquents que les bienvenues, et j'ai mis du temps à comprendre qu'ils demandent le même soin. Accueillir quelqu'un, tout le monde sait à peu près comment faire; le laisser repartir sans le retenir, c'est un autre métier. Il y a une tentation discrète dans l'hospitalité : vouloir garder, transformer chaque passage en attache, mesurer la réussite d'une rencontre au fait qu'elle se prolonge. Mais un invité reste un voyageur, et le plus beau cadeau à lui offrir au matin du départ, c'est une porte qui s'ouvre aussi grand qu'à son arrivée. Les rencontres complètes n'ont pas besoin de durer pour avoir eu lieu; certaines conversations d'un soir m'accompagnent depuis des années, portées par des gens dont je n'ai jamais su le nom de famille. Aimer que les gens viennent et aimer qu'ils repartent, c'est peut-être la même tendresse, regardée des deux côtés de la porte. Qu'est-ce que je tiens encore, ce matin, qui demande seulement à reprendre la route?",
+        body_en: "At the inn, goodbyes are as frequent as welcomes, and it took me a long time to understand that they ask for the same care. Welcoming someone, most of us roughly know how to do; letting them leave without holding on is another craft entirely. There is a quiet temptation inside hospitality: wanting to keep, turning every passage into an attachment, measuring the success of an encounter by whether it continues. But a guest remains a traveller, and the finest gift to offer on the morning of departure is a door that opens as wide as it did on arrival. Complete encounters do not need to last in order to have taken place; some one-evening conversations have been travelling with me for years, carried by people whose last names I never learned. Loving that people come and loving that they leave again may be the same tenderness, seen from both sides of the door. What am I still holding onto this morning that is only asking to take the road again?",
+    },
+    {
         date: "2026-07-31",
         title_fr: "Le couvert de plus",
         title_en: "The extra place",
