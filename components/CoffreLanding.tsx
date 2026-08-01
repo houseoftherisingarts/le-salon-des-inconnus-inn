@@ -803,7 +803,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                 {t('iPhone, iPad and Android', 'iPhone, iPad et Android', 'iPhone, iPad y Android')}
               </button>
             </div>
-            {showMobile && <MobileInstallPanel t={t} appUrl={APP_URL} />}
+            {showMobile && <MobileInstallPanel t={t} appUrl={APP_URL} apkUrl={`${DEMO}/dl/CoffreDesInconnus.apk`} />}
             <p className="text-xs text-neutral-500 mt-7">
               {t('Free public beta', 'Beta publique gratuite', 'Beta pública gratuita')}
             </p>
