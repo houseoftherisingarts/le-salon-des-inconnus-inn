@@ -494,6 +494,29 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </motion.section>
 
+        {/* 2B. BANDE PRÉVENTION */}
+        <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-10">
+            <h2 className={H_SECTION}>{t('The real risk is waiting.', "Le vrai risque, c'est d'attendre.", 'El verdadero riesgo es esperar.')}</h2>
+            <div>
+              <p className="text-neutral-300 leading-relaxed">
+                {t(
+                  "A child who is taught nothing about money will learn it anyway. At 19, from a credit card. From a first late rent. From a balance that grows faster than a paycheck. Those lessons cost years, and you will watch from the front row, unable to pay them in his place.",
+                  "Un enfant à qui personne n'enseigne l'argent l'apprendra quand même. À 19 ans, d'une carte de crédit. D'un premier loyer en retard. D'un solde qui pousse plus vite que la paie. Ces leçons-là coûtent des années, et vous serez aux premières loges, sans pouvoir les payer à sa place.",
+                  'Un niño al que nadie le enseña sobre el dinero lo aprenderá de todos modos. A los 19, de una tarjeta de crédito. De una primera renta atrasada. De un saldo que crece más rápido que el sueldo. Esas lecciones cuestan años, y usted las verá desde primera fila, sin poder pagarlas en su lugar.',
+                )}
+              </p>
+              <p className="text-[#e8d5a3] font-semibold leading-relaxed mt-6">
+                {t(
+                  'Prevention costs nothing. Twenty minutes a week, a till, jars, interest paid on Sunday. The child who ran their own bank at 8 does not discover money at 19: they recognize it. The vaccine exists, it is free, and it is given at the kitchen table.',
+                  "La prévention, elle, ne coûte rien. Vingt minutes par semaine, une caisse, des pots, un intérêt versé le dimanche. L'enfant qui a tenu sa propre banque à 8 ans ne découvre pas l'argent à 19 : il le reconnaît. Le vaccin existe, il est gratuit, et il se donne à la table de la cuisine.",
+                  'La prevención no cuesta nada. Veinte minutos por semana, una caja, frascos, un interés pagado el domingo. El niño que manejó su propio banco a los 8 no descubre el dinero a los 19: lo reconoce. La vacuna existe, es gratis, y se da en la mesa de la cocina.',
+                )}
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
         {/* 3. TROIS GESTES */}
         <section className="border-t border-white/5 py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-6">
