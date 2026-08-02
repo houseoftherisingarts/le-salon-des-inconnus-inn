@@ -812,6 +812,42 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </motion.section>
 
+        {/* 7C. LE GUIDE D'ACCOMPAGNEMENT */}
+        <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[0.7fr_1.3fr] gap-12 items-center">
+            <div className="flex justify-center md:justify-start">
+              <GlassFrame
+                src={`${M}guide-cover.webp`}
+                alt={t('The cover of the family companion guide, black and gold.', "La couverture du guide d'accompagnement, noire et or.", 'La portada de la guía de acompañamiento, negra y dorada.')}
+                className="w-[240px] md:w-[300px]"
+              />
+            </div>
+            <div>
+              <p className="text-[11px] tracking-[0.3em] uppercase text-[#c5a059] mb-4">
+                {t('The companion guide', "Le guide d'accompagnement", 'La guía de acompañamiento')}
+              </p>
+              <h3 className={`${H_SECTION} mb-5`}>
+                {t('A booklet for the kitchen table.', 'Un livret pour la table de cuisine.', 'Un cuadernillo para la mesa.')}
+              </h3>
+              <p className="text-neutral-300 leading-relaxed mb-6">
+                {t(
+                  "Eighteen illustrated pages that walk alongside the app: every concept explained in the child's own words, real screenshots, and eleven pencil exercises with room to count. The same booklet guides the Salon's family workshops. Print it, or keep it on the tablet.",
+                  "Dix-huit pages illustrées qui marchent à côté de l'application : chaque concept expliqué dans les mots de l'enfant, de vraies captures, et onze exercices à faire au crayon, avec l'espace pour compter. Le même livret guide les ateliers famille du Salon. Imprimez-le, ou gardez-le sur la tablette.",
+                  'Dieciocho páginas ilustradas que caminan junto a la aplicación: cada concepto explicado en las palabras del niño, capturas reales, y once ejercicios para hacer a lápiz, con espacio para contar. El mismo cuadernillo guía los talleres familiares del Salon. Imprímalo, o guárdelo en la tableta.',
+                )}
+              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <a href={GUIDE} target="_blank" rel="noopener noreferrer" className={PILL_PRIMARY}>
+                  📘 {t('Download the guide (PDF)', 'Télécharger le guide (PDF)', 'Descargar la guía (PDF)')}
+                </a>
+                <p className="text-xs text-neutral-500">
+                  {t('Free PDF · 18 pages · In French', 'PDF gratuit · 18 pages · En français', 'PDF gratis · 18 páginas · En francés')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
         {/* 8. CTA FINAL */}
         <motion.section id="telecharger" {...reveal()} className="border-t border-white/5 py-24 md:py-32">
           <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16 text-center">
