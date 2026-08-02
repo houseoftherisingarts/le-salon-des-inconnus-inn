@@ -864,6 +864,11 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               </button>
             </div>
             {showMobile && <MobileInstallPanel t={t} appUrl={APP_URL} apkUrl={`${DEMO}/dl/CoffreDesInconnus.apk`} />}
+            <div className="flex justify-center mt-4">
+              <a href={GUIDE} target="_blank" rel="noopener noreferrer" className="text-xs text-neutral-400 hover:text-[#e8d5a3] transition-colors underline underline-offset-4">
+                📘 {t('Also grab the family guide (PDF)', "Emportez aussi le guide famille (PDF)", 'Llévese también la guía familiar (PDF)')}
+              </a>
+            </div>
             <p className="text-xs text-neutral-500 mt-7">
               {t('Free public beta', 'Beta publique gratuite', 'Beta pública gratuita')}
             </p>
