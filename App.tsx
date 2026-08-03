@@ -29,6 +29,9 @@ const BlogPage          = lazy(() => import('./components/BlogPage').then(m => (
 const InvitationPage    = lazy(() => import('./components/InvitationPage').then(m => ({ default: m.InvitationPage })));
 const EntreprisesPage   = lazy(() => import('./components/EntreprisesPage').then(m => ({ default: m.EntreprisesPage })));
 const ForfaitsPage      = lazy(() => import('./components/ForfaitsPage').then(m => ({ default: m.ForfaitsPage })));
+// Unlisted, noindex: /catalogue — artwork pre-sale catalogue sent to guests
+// before arrival. Hidden until the artwork photos exist.
+const CataloguePage     = lazy(() => import('./components/CataloguePage').then(m => ({ default: m.CataloguePage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
