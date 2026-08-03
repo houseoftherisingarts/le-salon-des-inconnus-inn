@@ -183,7 +183,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS'
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
