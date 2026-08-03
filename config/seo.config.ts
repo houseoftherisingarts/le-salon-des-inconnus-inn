@@ -170,6 +170,10 @@ export const PAGE_META = {
   ENTREPRISES: {
     EN: { title: "Corporate Retreats & Team Building | Le Salon des Inconnus", description: "Privatized team days at Maison Favier, Namur: chef's table, massage therapy, staged theme evenings and on-site accommodation, less than an hour from Ottawa.", keywords: "corporate retreat Outaouais, team building Namur, executive offsite Quebec" },
     FR: { title: "Retraites d'entreprise & team building | Le Salon des Inconnus", description: "Journées d'équipe privatisées à la Maison Favier, Namur : table du chef, massothérapie, soirées thématiques mises en scène et hébergement sur place, à moins d'une heure d'Ottawa.", keywords: "retraite d'entreprise Outaouais, team building Namur, offsite exécutif Québec" }
+  },
+  CATALOGUE: {
+    EN: { title: "Artwork Catalogue | Le Salon des Inconnus", description: "The works hanging in the manor, by the artists we represent, available to the guests who stay with us.", keywords: "" },
+    FR: { title: "Catalogue d'œuvres | Le Salon des Inconnus", description: "Les œuvres accrochées au manoir, par les artistes que nous représentons, offertes aux invités qui séjournent chez nous.", keywords: "" }
   }
 } as const;
 
