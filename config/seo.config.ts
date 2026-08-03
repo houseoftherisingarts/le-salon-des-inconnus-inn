@@ -184,6 +184,9 @@ export type ViewKey = keyof typeof PAGE_META;
 // when it must deviate (e.g. an unlisted invitation page reached by QR code).
 export const ROBOTS_OVERRIDES: Partial<Record<ViewKey, string>> = {
   INVITATION: 'noindex, nofollow',
+  // Brouillon : la page existe mais reste hors index tant que les photos des
+  // œuvres ne sont pas en place.
+  CATALOGUE: 'noindex, nofollow',
 };
 
 // Social/AI share image per route — ABSOLUTE URLs (crawlers require absolute).
