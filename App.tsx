@@ -914,6 +914,14 @@ const App: React.FC = () => {
           />
         )}
 
+        {/* VIEW 7i: CATALOGUE (unlisted, noindex — artwork pre-sale catalogue) */}
+        {currentView === 'CATALOGUE' && (
+          <CataloguePage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
         {/* VIEW 8: MY PROFILE */}
         {currentView === 'MY_PROFILE' && currentUser && memberProfile && (
           <ProfilePage
