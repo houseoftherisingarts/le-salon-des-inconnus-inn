@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-03",
+        title_fr: "Couvrir le feu",
+        title_en: "Banking the fire",
+        body_fr: "Au Moyen Âge, le couvre-feu était simplement l'heure où l'on recouvrait les braises de cendre pour que le feu dorme sans s'éteindre. Le matin venu, un souffle suffisait pour retrouver la flamme de la veille. J'aime cette idée qu'un feu bien couvert continue de vivre en secret, et qu'éteindre et préserver puissent se ressembler autant, vus de loin. Nos élans connaissent le même sort : un projet qu'on dépose, une amitié qu'on laisse reposer, une passion rangée pour une saison. Rien de tout cela n'est mort tant qu'une braise respire sous la cendre. Le soir, l'art consiste à couvrir sans étouffer; le matin, à se rappeler qu'on n'a pas besoin de tout rallumer à partir de rien. Quelle braise, dans ma vie, attend seulement un souffle?",
+        body_en: "In the Middle Ages, curfew, from the French couvre-feu, was simply the hour when embers were covered with ash so the fire could sleep without going out. Come morning, one breath was enough to bring back yesterday's flame. I love the idea that a well-covered fire keeps living in secret, and that putting out and preserving can look so much alike from a distance. Our inner fires share that fate: a project set down, a friendship left to rest, a passion put away for a season. None of it is dead as long as one ember breathes beneath the ash. In the evening, the art is to cover without smothering; in the morning, to remember that nothing needs to be relit from scratch. Which ember, in my life, is only waiting for a breath?",
+    },
+    {
         date: "2026-08-02",
         title_fr: "Le silence partagé",
         title_en: "Shared silence",
