@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+# Brouillon : le catalogue d'oeuvres reste hors index tant que les photos ne
+# sont pas en place. Le <meta robots> est pose au runtime, donc on double la
+# consigne ici pour les robots qui n'executent pas le JS.
+Disallow: /catalogue
+
 Sitemap: https://www.lesalondesinconnus.com/sitemap.xml
