@@ -114,10 +114,12 @@ function outcomeLabel(outcome: D20Outcome, language: 'EN' | 'FR'): string {
 
 // ─── The dice mesh + animation ──────────────────────────────────────────
 const Dice: React.FC<{
-    targetRoll: number | null;
-    rollNonce: number;            // bumps to retrigger the same roll value
-    onSettled: (roll: number) => void;
-}> = ({ targetRoll, rollNonce, onSettled }) => {
+    spinNonce: number;            // bumps on button press → free tumble
+    landOn: number | null;        // face the server chose
+    landNonce: number;            // bumps when a new outcome arrives
+    abortNonce: number;           // bumps when the request failed → back to idle
+    onSettled: () => void;
+}> = ({ spinNonce, landOn, landNonce, abortNonce, onSettled }) => {
     const groupRef = useRef<THREE.Group>(null);
 
     // Build geometry once and capture its 20 face descriptors.
