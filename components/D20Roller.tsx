@@ -377,7 +377,13 @@ export const D20Roller: React.FC<D20RollerProps> = ({
                         Belt-and-braces: with the CanvasTexture decals there
                         is nothing async left to suspend on. */}
                     <Suspense fallback={null}>
-                        <Dice targetRoll={pendingRoll} rollNonce={rollNonce} onSettled={handleSettled} />
+                        <Dice
+                            spinNonce={spinNonce}
+                            landOn={outcome?.roll ?? null}
+                            landNonce={outcomeNonce}
+                            abortNonce={errorNonce}
+                            onSettled={handleSettled}
+                        />
                     </Suspense>
                 </Canvas>
             </div>
