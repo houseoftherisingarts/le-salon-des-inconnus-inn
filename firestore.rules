@@ -525,13 +525,12 @@ service cloud.firestore {
     match /d20Rolls/{userId} {
       allow read:  if request.auth != null
                    && (request.auth.uid == userId || isAdmin());
-      allow create: if request.auth != null && request.auth.uid == userId;
-      // Self-write. The 7-day cooldown is enforced inside the dice
-      // transaction (which reads lastRollAt before writing), and a manual
-      // reset path ("meditate" passphrase) clears the field — both are
-      // bounded one-write operations, so we don't gate the rule by time.
-      allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if isAdmin();
+      // Read-only for members. Every write comes from the rollWeeklyD20
+      // Cloud Function through the admin SDK, which bypasses these rules.
+      // Locking clients out is what finally makes the 7-day cooldown real:
+      // when members could write here, clearing lastRollAt was enough to roll
+      // again immediately, over and over, until a code pool ran dry.
+      allow write: if isAdmin();
     }
 
     // ── D20 rebate code pools ────────────────────────────────────────────────
