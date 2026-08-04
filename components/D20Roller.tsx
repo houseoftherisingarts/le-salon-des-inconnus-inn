@@ -184,7 +184,17 @@ const Dice: React.FC<{
             return;
         }
 
-        if (phaseRef.current === 'rolling') {
+        if (phaseRef.current === 'spinning') {
+            // Constant fast tumble with a low hop. Runs until the server
+            // answers, so a slow network just means a longer throw.
+            const spinQ = new THREE.Quaternion()
+                .setFromAxisAngle(tumbleAxisRef.current, dt * 13);
+            g.quaternion.multiply(spinQ);
+            g.position.y = -0.4 + Math.abs(Math.sin(now * 5.5)) * 0.45;
+            return;
+        }
+
+        if (phaseRef.current === 'landing') {
             const t = Math.min(1, (now - startTimeRef.current) / ROLL_DURATION_SEC);
             // easeOutQuart — fast tumble at start, settling at end
             const eased = 1 - Math.pow(1 - t, 4);
