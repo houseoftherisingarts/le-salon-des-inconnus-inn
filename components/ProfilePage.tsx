@@ -8,7 +8,8 @@ import type { User } from 'firebase/auth';
 import type { MemberProfile } from './AuthModal';
 import { TEAMS, LODGING, LODGING_GROUPS, ChatRoom } from './CeilidhPage';
 import { EVENT_ID } from './CeilidhShared';
-import { D20Roller, type D20Result } from './D20Roller';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { D20Roller, type D20Outcome } from './D20Roller';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
