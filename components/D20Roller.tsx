@@ -2,18 +2,24 @@ import React, { useRef, useState, useEffect, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Tabletop-feel D20 roller. Uses Three.js / R3F for the 3D scene; the roll
-// itself is true-random via crypto.getRandomValues, then the dice is animated
-// to land on the chosen face. No physics engine — just a deterministic
-// tumble-and-slerp toward a precomputed target rotation. That's enough to
-// feel like a real dice and keeps the bundle modest.
+// Tabletop-feel D20 roller. Uses Three.js / R3F for the 3D scene. No physics
+// engine — just a tumble-and-slerp toward a target rotation, which is enough
+// to feel like a real dice and keeps the bundle modest.
+//
+// The number is NOT drawn here. The rollWeeklyD20 Cloud Function decides it,
+// claims the rebate code, and hands the result back; this component only
+// animates the dice onto the face the server chose. Rolling in the browser is
+// what let a member pick their own prize tier.
+//
+// Because the outcome now arrives over the network, pressing the button starts
+// a free tumble immediately and the dice only commits to a face once the
+// server answers. The wait reads as part of the throw instead of a dead pause.
 
-export interface D20Result {
-    roll: number;            // 1..20
-    rebatePct: number;       // -1 (Nat 1) to +20 (Nat 20)
+export interface D20Outcome {
+    roll: number;            // 1..20, decided server-side
+    rebatePct: number;       // 0 | 5 | 10 | 20
     tier: 'crit-fail' | 'nothing' | 'good' | 'great' | 'nat-20';
-    labelFr: string;
-    labelEn: string;
+    code?: string | null;    // present iff a code was claimed
 }
 
 const D20_RADIUS = 1.6;
