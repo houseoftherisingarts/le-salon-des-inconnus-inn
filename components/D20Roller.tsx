@@ -133,29 +133,45 @@ const Dice: React.FC<{
         [],
     );
 
-    // Animation phases: idle (gentle bob) → rolling (tumble + slerp) → settled.
-    const phaseRef     = useRef<'idle' | 'rolling' | 'settled'>('idle');
+    // Animation phases:
+    //   idle     → gentle bob
+    //   spinning → free tumble while the server decides (hides the latency)
+    //   landing  → tumble decays while slerping onto the chosen face
+    //   settled  → hold, with a barely-there hover
+    const phaseRef     = useRef<'idle' | 'spinning' | 'landing' | 'settled'>('idle');
     const startTimeRef = useRef<number>(0);
     const startQRef    = useRef<THREE.Quaternion>(new THREE.Quaternion());
     const targetQRef   = useRef<THREE.Quaternion>(new THREE.Quaternion());
     const tumbleAxisRef = useRef<THREE.Vector3>(new THREE.Vector3(1, 0, 0));
     const tumbleSpinsRef = useRef<number>(6);
 
-    // Kick off a new roll whenever the nonce changes (or first roll arrives).
+    // Button pressed: start tumbling right away, before we know the number.
     useEffect(() => {
-        if (targetRoll == null || !groupRef.current) return;
-        const faceIdx = Math.max(0, Math.min(19, targetRoll - 1));
+        if (spinNonce === 0 || !groupRef.current) return;
+        const r = () => Math.random() * 2 - 1;
+        tumbleAxisRef.current.set(r(), r(), r()).normalize();
+        tumbleSpinsRef.current = 5 + Math.random() * 3;
+        phaseRef.current = 'spinning';
+    }, [spinNonce]);
+
+    // Outcome arrived: commit to the face the server chose.
+    useEffect(() => {
+        if (landOn == null || !groupRef.current) return;
+        const faceIdx = Math.max(0, Math.min(19, landOn - 1));
         const face = faces[faceIdx];
         // Land that face up (+Y).
         targetQRef.current = rotationFromTo(face.normal, new THREE.Vector3(0, 1, 0));
         startQRef.current.copy(groupRef.current.quaternion);
-        // Random tumble axis for variety
-        const r = () => Math.random() * 2 - 1;
-        tumbleAxisRef.current.set(r(), r(), r()).normalize();
-        tumbleSpinsRef.current = 5 + Math.random() * 3;
         startTimeRef.current = performance.now() / 1000;
-        phaseRef.current = 'rolling';
-    }, [targetRoll, rollNonce, faces]);
+        phaseRef.current = 'landing';
+    }, [landOn, landNonce, faces]);
+
+    // The request failed. Stop mid-air rather than spinning forever.
+    useEffect(() => {
+        if (abortNonce === 0) return;
+        phaseRef.current = 'idle';
+        if (groupRef.current) groupRef.current.position.y = -0.4;
+    }, [abortNonce]);
 
     useFrame((_, dt) => {
         const g = groupRef.current;
