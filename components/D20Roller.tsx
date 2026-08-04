@@ -308,40 +308,48 @@ interface D20RollerProps {
     disabled?: boolean;
     /** Optional message under the button when disabled. */
     disabledMessage?: string;
-    /** Called once with the result when the dice settles. */
-    onResult: (result: D20Result) => void;
+    /**
+     * The server's answer. Setting it lands the dice on that face; leave it
+     * null and the dice keeps tumbling.
+     */
+    outcome: D20Outcome | null;
+    /** Bump alongside `outcome` so the same number can be rolled twice. */
+    outcomeNonce: number;
+    /** Bump when the request failed, to stop the tumble. */
+    errorNonce: number;
+    /** Pressed the button — the parent calls rollWeeklyD20. */
+    onRequestRoll: () => void;
 }
 
-export const D20Roller: React.FC<D20RollerProps> = ({ language, disabled, disabledMessage, onResult }) => {
+export const D20Roller: React.FC<D20RollerProps> = ({
+    language, disabled, disabledMessage, outcome, outcomeNonce, errorNonce, onRequestRoll,
+}) => {
     const t = (en: string, fr: string) => language === 'FR' ? fr : en;
-    const [pendingRoll, setPendingRoll] = useState<number | null>(null);
-    const [rollNonce, setRollNonce] = useState(0);
-    const [revealed, setRevealed] = useState<D20Result | null>(null);
+    const [spinNonce, setSpinNonce] = useState(0);
     const [rolling, setRolling] = useState(false);
+    const [revealed, setRevealed] = useState<D20Outcome | null>(null);
 
     const triggerRoll = () => {
         if (disabled || rolling) return;
-        // True random — uniform over 1..20 via rejection sampling so we don't
-        // skew at modulo. Uint32 max = 2^32, 20 doesn't divide evenly.
-        const limit = Math.floor(0x100000000 / 20) * 20;
-        const buf = new Uint32Array(1);
-        let n: number;
-        do { crypto.getRandomValues(buf); n = buf[0]; } while (n >= limit);
-        const result = (n % 20) + 1;
         setRevealed(null);
-        setPendingRoll(result);
-        setRollNonce(x => x + 1);
         setRolling(true);
+        setSpinNonce(x => x + 1);   // start tumbling now
+        onRequestRoll();            // ...and ask the server for the number
     };
 
-    const handleSettled = (roll: number) => {
+    // The request came back empty-handed (cooldown, dry pool, network). Drop
+    // out of the roll so the button comes back.
+    useEffect(() => {
+        if (errorNonce === 0) return;
         setRolling(false);
-        const result = rollToResult(roll);
-        setRevealed(result);
-        onResult(result);
+    }, [errorNonce]);
+
+    const handleSettled = () => {
+        setRolling(false);
+        setRevealed(outcome);
     };
 
-    const tierClass = (tier: D20Result['tier'] | null) => {
+    const tierClass = (tier: D20Outcome['tier'] | null) => {
         switch (tier) {
             case 'nat-20':    return 'text-[#f3e5ab]';
             case 'great':     return 'text-[#c5a059]';
