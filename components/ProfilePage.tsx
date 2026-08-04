@@ -212,100 +212,30 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     });
   }, [user.uid]);
 
-  // Tier → Firestore subcollection of unused codes. Add codes to these
-  // collections in advance via the admin tool / Hostaway export.
-  const tierCollection = (tier: D20Result['tier']): string | null => {
-    switch (tier) {
-      case 'good':   return 'd20Codes/good/codes';   // 5%
-      case 'great':  return 'd20Codes/great/codes';  // 10%
-      case 'nat-20': return 'd20Codes/nat20/codes';  // 20%
-      default: return null; // 'nothing' or 'crit-fail' — no code drawn
-    }
-  };
-
-  const handleD20Result = async (result: D20Result) => {
-    if (!db || d20Pending) return;
-    setD20Pending(true);
+  // Ask the server for a roll. It answers with the number and, on a win, the
+  // one code it claimed for this member. The dice starts tumbling the instant
+  // the button is pressed and lands once this resolves.
+  const requestD20Roll = async () => {
     setD20Error(null);
-
-    const userDocRef = doc(db, 'd20Rolls', user.uid);
-    const tierColl = tierCollection(result.tier);
-
     try {
-      // For tiers that get a code, find the first unused code OUTSIDE the
-      // transaction (queries inside transactions are limited), then claim
-      // it inside a transaction by id so the read+write pair is atomic.
-      let claimedCodeValue: string | undefined;
-      let claimedCodeId: string | undefined;
-      if (tierColl) {
-        const q = query(
-          collection(db, tierColl),
-          where('used', '==', false),
-          limit(1),
-        );
-        const snap = await getDocs(q);
-        if (snap.empty) {
-          throw new Error(language === 'FR'
-            ? 'Plus aucun code disponible pour ce niveau. Contactez l’hôte.'
-            : 'No more codes available at this tier. Please contact the host.');
-        }
-        claimedCodeId = snap.docs[0].id;
-      }
-
-      await runTransaction(db, async (tx) => {
-        const userSnap = await tx.get(userDocRef);
-        const data = (userSnap.exists() ? userSnap.data() : {}) as any;
-        // Server-side cooldown check — defence in depth on top of the rule.
-        const lastTs: Timestamp | undefined = data.lastRollAt;
-        if (lastTs && Date.now() - lastTs.toMillis() < COOLDOWN_MS) {
-          throw new Error(language === 'FR'
-            ? 'Vous avez déjà lancé cette semaine.'
-            : 'You\'ve already rolled this week.');
-        }
-
-        // Claim the code, if any
-        if (claimedCodeId && tierColl) {
-          const codeRef = doc(db, tierColl, claimedCodeId);
-          const codeSnap = await tx.get(codeRef);
-          if (!codeSnap.exists() || codeSnap.data().used) {
-            // Race: another roll grabbed it first. Bail; user can re-try.
-            throw new Error(language === 'FR'
-              ? 'Course de codes — réessayez dans un instant.'
-              : 'Code race — please try again in a moment.');
-          }
-          claimedCodeValue = codeSnap.data().value as string;
-          tx.update(codeRef, {
-            used: true,
-            usedBy: user.uid,
-            usedAt: serverTimestamp(),
-          });
-        }
-
-        const entry: any = {
-          roll: result.roll,
-          rebatePct: result.rebatePct,
-          tier: result.tier,
-          rolledAt: Timestamp.now(),
-        };
-        if (claimedCodeValue) entry.code = claimedCodeValue;
-
-        const update: any = {
-          uid: user.uid,
-          displayName: memberProfile.displayName || user.displayName || '',
-          email: memberProfile.email || user.email || '',
-          lastRollAt: serverTimestamp(),
-          history: arrayUnion(entry),
-        };
-        if (result.tier === 'crit-fail') {
-          // Sum of Nat-1 surcharges; the host applies this to the next invoice.
-          update.pendingSurchargePct = (data.pendingSurchargePct ?? 0) + 1;
-        }
-        tx.set(userDocRef, update, { merge: true });
-      });
+      const fn = httpsCallable(getFunctions(), 'rollWeeklyD20');
+      const res = await fn({});
+      setD20Outcome(res.data as D20Outcome);
+      setD20OutcomeNonce(n => n + 1);
     } catch (e: any) {
-      setD20Error(e?.message ?? String(e));
-    } finally {
-      setD20Pending(false);
+      const code = String(e?.message ?? e);
+      setD20Error(
+        code.includes('ALREADY_ROLLED')
+          ? t('You\'ve already rolled this week.', 'Vous avez déjà lancé cette semaine.')
+          : code.includes('POOL_EMPTY')
+          // The pool ran dry. Say so plainly instead of handing over a code
+          // that means nothing at checkout.
+          ? t('The rebate pool is empty right now. Write to your host and the code is yours.',
+              'La réserve de codes est vide en ce moment. Écrivez à votre hôte et le code vous revient.')
+          : t('The roll could not be recorded. Try again in a moment.',
+              'Le lancer n\'a pas pu être enregistré. Réessayez dans un instant.'),
+      );
+      setD20ErrorNonce(n => n + 1);
     }
   };
 
