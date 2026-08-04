@@ -218,7 +218,7 @@ const Dice: React.FC<{
                 g.quaternion.copy(targetQRef.current);
                 g.position.y = -0.4;
                 phaseRef.current = 'settled';
-                onSettled(targetRoll!);
+                onSettled();
             }
             return;
         }
