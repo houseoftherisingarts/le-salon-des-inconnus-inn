@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { auth, db, storage } from '../firebase';
 import { updateProfile, signOut } from 'firebase/auth';
-import { doc, updateDoc, collection, getDocs, query, where, limit, getDoc, onSnapshot, setDoc, serverTimestamp, runTransaction, arrayUnion, Timestamp, deleteField } from 'firebase/firestore';
+import { doc, updateDoc, collection, getDoc, onSnapshot, setDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './AuthModal';
