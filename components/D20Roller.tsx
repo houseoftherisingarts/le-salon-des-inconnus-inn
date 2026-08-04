@@ -91,27 +91,25 @@ function makeNumberTexture(n: number): THREE.CanvasTexture {
     return tex;
 }
 
-// Map roll (1..20) to result metadata.
-function rollToResult(roll: number): D20Result {
-    if (roll === 1)
-        return { roll, rebatePct: -1, tier: 'crit-fail',
-            labelFr: 'Échec critique : +1 % sur la facture',
-            labelEn: 'Critical failure: +1% on the invoice' };
-    if (roll <= 10)
-        return { roll, rebatePct: 0, tier: 'nothing',
-            labelFr: 'Pas cette fois.',
-            labelEn: 'No luck this time.' };
-    if (roll <= 15)
-        return { roll, rebatePct: 5, tier: 'good',
-            labelFr: '5 % de rabais !',
-            labelEn: '5% off!' };
-    if (roll <= 19)
-        return { roll, rebatePct: 10, tier: 'great',
-            labelFr: '10 % de rabais !',
-            labelEn: '10% off!' };
-    return { roll, rebatePct: 20, tier: 'nat-20',
-        labelFr: 'Nat 20 — 20 % de rabais !',
-        labelEn: 'Nat 20 — 20% off!' };
+// Presentation only: turn the server's tier into a line of copy. The prize
+// ladder itself lives in the Cloud Function, which is the one authority on
+// what a roll is worth.
+function outcomeLabel(outcome: D20Outcome, language: 'EN' | 'FR'): string {
+    const fr = language === 'FR';
+    switch (outcome.tier) {
+        case 'crit-fail':
+            // A Nat 1 costs a chicken sandwich, never money.
+            return fr
+                ? 'Échec critique : vous devez un sandwich au poulet à votre hôte.'
+                : 'Critical failure: you now owe your host a chicken sandwich.';
+        case 'nat-20':
+            return fr ? 'Nat 20 · 20 % de rabais !' : 'Nat 20 · 20% off!';
+        case 'great':
+        case 'good':
+            return fr ? `${outcome.rebatePct} % de rabais !` : `${outcome.rebatePct}% off!`;
+        default:
+            return fr ? 'Pas cette fois.' : 'No luck this time.';
+    }
 }
 
 // ─── The dice mesh + animation ──────────────────────────────────────────
