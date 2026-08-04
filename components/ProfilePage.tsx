@@ -180,26 +180,29 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   };
 
   // ── Weekly D20 roll ──────────────────────────────────────────────────────
-  // The rebate codes are pre-loaded in Firestore at /d20Codes/{tier}/codes/*,
-  // one document per code with { value, used: false }. On a winning roll a
-  // transaction marks the first unused code as used and records the result
-  // on the user's d20 doc. Surcharges (Nat 1) are recorded but not codes.
-  // Cooldown = 7 days from lastRollAt (also enforced by Firestore rules).
+  // The roll happens in the rollWeeklyD20 Cloud Function: it draws the number,
+  // enforces the 7-day cooldown, claims one code from the Firestore pool at
+  // /d20Codes/{tier}/codes/*, and returns the result. This page never reads
+  // the pool — those are real Hostaway coupons, and the collection is
+  // admin-only in firestore.rules. We keep the cooldown maths here purely to
+  // render the countdown; the server is the one that enforces it.
   const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
   type D20Entry = {
     roll: number;
-    rebatePct: number;             // -1 | 0 | 5 | 10 | 20
-    tier: D20Result['tier'];
+    rebatePct: number;             // 0 | 5 | 10 | 20
+    tier: D20Outcome['tier'];
     code?: string;                 // present iff a code was assigned
     rolledAt: any;                 // Firestore Timestamp
   };
   const [d20Doc, setD20Doc] = useState<{
     lastRollAt?: any;
     history?: D20Entry[];
-    pendingSurchargePct?: number;  // sum of Nat-1 +1% events
+    sandwichesOwed?: number;       // Nat 1s, payable in chicken sandwiches
   } | null>(null);
-  const [d20Pending, setD20Pending] = useState(false);
   const [d20Error, setD20Error] = useState<string | null>(null);
+  const [d20Outcome, setD20Outcome] = useState<D20Outcome | null>(null);
+  const [d20OutcomeNonce, setD20OutcomeNonce] = useState(0);
+  const [d20ErrorNonce, setD20ErrorNonce] = useState(0);
 
   useEffect(() => {
     if (!db) return;
