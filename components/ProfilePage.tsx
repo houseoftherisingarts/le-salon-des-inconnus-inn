@@ -263,27 +263,29 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   })();
 
   // ── Time-travel reset — type 'meditate' to clear the cooldown ──────────
-  // Honor-system: the password is hardcoded client-side. The dice
-  // transaction still revalidates, so resetting then rolling is one round
-  // of writes — never an unbounded flood.
+  // The passphrase used to be checked here and the reset written straight to
+  // Firestore, which meant it was in the shipped bundle for anyone to read
+  // and use: clear the cooldown, roll again, repeat until the 20% pool was
+  // empty. The reset now goes through resetD20Cooldown, which is admin-only.
+  // For everyone else the passphrase is inert, and the field flashes red.
   const TIME_TRAVEL_PASSWORD = 'meditate';
   const [travelInput, setTravelInput] = useState('');
   const [travelStatus, setTravelStatus] = useState<'idle' | 'wrong'>('idle');
   const handleTimeTravel = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
-    if (travelInput.trim().toLowerCase() !== TIME_TRAVEL_PASSWORD) {
+    const refuse = () => {
       setTravelStatus('wrong');
       // Clear the wrong-password flash after a beat so a retry doesn't feel sticky.
       setTimeout(() => setTravelStatus('idle'), 1200);
-      return;
+    };
+    if (travelInput.trim().toLowerCase() !== TIME_TRAVEL_PASSWORD) return refuse();
+    try {
+      await httpsCallable(getFunctions(), 'resetD20Cooldown')({});
+      setTravelInput('');
+      setTravelStatus('idle');
+    } catch {
+      refuse();
     }
-    setTravelInput('');
-    setTravelStatus('idle');
-    // Remove the lastRollAt field — the cooldown evaporates immediately.
-    await setDoc(doc(db, 'd20Rolls', user.uid), {
-      lastRollAt: deleteField(),
-    } as any, { merge: true });
   };
 
   // Most recent code/result — surfaced under the dice for easy copy.
