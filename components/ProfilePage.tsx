@@ -855,9 +855,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block">
                 {t('Weekly roll', 'Lancer hebdomadaire')}
               </span>
-              {d20Doc?.pendingSurchargePct ? (
-                <span className="font-cinzel text-rose-400/80 text-[10px] uppercase tracking-[0.4em]">
-                  {t('Pending surcharge', 'Majoration en attente')}: +{d20Doc.pendingSurchargePct}%
+              {d20Doc?.sandwichesOwed ? (
+                <span className="font-cinzel text-[#c5a059]/80 text-[10px] uppercase tracking-[0.4em]">
+                  {d20Doc.sandwichesOwed === 1
+                    ? t('You owe 1 chicken sandwich', 'Vous devez 1 sandwich au poulet')
+                    : t(`You owe ${d20Doc.sandwichesOwed} chicken sandwiches`,
+                        `Vous devez ${d20Doc.sandwichesOwed} sandwichs au poulet`)}
                 </span>
               ) : null}
             </div>
