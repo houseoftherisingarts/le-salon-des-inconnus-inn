@@ -410,7 +410,7 @@ export const D20Roller: React.FC<D20RollerProps> = ({
                     <div className={`text-center px-4 py-3 ${tierClass(revealed.tier)}`}>
                         <p className="font-prata text-5xl leading-none">{revealed.roll}</p>
                         <p className="font-josefin text-[11px] uppercase tracking-[0.3em] mt-2">
-                            {language === 'FR' ? revealed.labelFr : revealed.labelEn}
+                            {outcomeLabel(revealed, language)}
                         </p>
                     </div>
                 )}
