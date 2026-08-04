@@ -1824,10 +1824,25 @@ const D20CodePool: React.FC<{
           {tier.label}
         </h3>
         <p className="text-xs text-neutral-500 font-lato">
-          <span className="text-emerald-400">{unusedCount}</span> disponibles ·{' '}
+          <span className={unusedCount === 0 ? 'text-rose-400 font-bold' : unusedCount <= 3 ? 'text-amber-400 font-bold' : 'text-emerald-400'}>
+            {unusedCount}
+          </span> disponibles ·{' '}
           <span className="text-neutral-600">{usedCount}</span> utilisés
         </p>
       </div>
+
+      {/* An empty pool is how a guest ended up holding "test20": a winning
+          roll had nothing real to hand over. Say it loudly here, because
+          nobody watches this tab until something has already gone wrong. */}
+      {unusedCount === 0 ? (
+        <p className="mb-3 px-3 py-2 rounded border border-rose-500/40 bg-rose-500/10 text-rose-300 text-xs font-lato">
+          Cagnotte vide. Tout tirage gagnant à ce palier échoue jusqu'à ce que vous ajoutiez de vrais coupons Hostaway.
+        </p>
+      ) : unusedCount <= 3 ? (
+        <p className="mb-3 px-3 py-2 rounded border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-lato">
+          Plus que {unusedCount} code{unusedCount > 1 ? 's' : ''}. Créez le prochain lot dans Hostaway avant la panne sèche.
+        </p>
+      ) : null}
 
       {/* Bulk paste */}
       <div className="flex gap-2 mb-4">
