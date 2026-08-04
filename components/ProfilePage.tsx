@@ -946,7 +946,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 <ul className="space-y-2.5 font-josefin text-sm mb-6">
                   <li className="flex items-baseline justify-between gap-3">
                     <span className="font-cinzel text-rose-400 text-[10px] uppercase tracking-[0.4em]">1 · {t('Crit fail', 'Échec critique')}</span>
-                    <span className="text-rose-300/80 text-xs">+1% {t('on the invoice', 'sur la facture')}</span>
+                    <span className="text-rose-300/80 text-xs">{t('You owe your host a chicken sandwich', 'Un sandwich au poulet à votre hôte')}</span>
                   </li>
                   <li className="flex items-baseline justify-between gap-3">
                     <span className="font-cinzel text-neutral-500 text-[10px] uppercase tracking-[0.4em]">2 – 10</span>
