@@ -876,9 +876,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               >
                 <D20Roller
                   language={language}
-                  disabled={onCooldown || d20Pending}
-                  disabledMessage={d20Pending ? t('Saving…', 'Enregistrement…') : undefined}
-                  onResult={handleD20Result}
+                  disabled={onCooldown}
+                  outcome={d20Outcome}
+                  outcomeNonce={d20OutcomeNonce}
+                  errorNonce={d20ErrorNonce}
+                  onRequestRoll={requestD20Roll}
                 />
                 {d20Error && (
                   <p className="mt-3 text-center font-josefin text-rose-400 text-xs">
