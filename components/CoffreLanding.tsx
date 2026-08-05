@@ -849,6 +849,13 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </motion.section>
 
+        {/* 7D. CONFÉRENCES (six soirées familles, avec La Petite Monnaie) */}
+        <motion.section {...reveal()} className="border-t border-white/5 py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-6">
+            <ConferenceSection t={t} />
+          </div>
+        </motion.section>
+
         {/* 8. CTA FINAL */}
         <motion.section id="telecharger" {...reveal()} className="border-t border-white/5 py-24 md:py-32">
           <div className="max-w-4xl mx-auto px-6 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-10 md:p-16 text-center">
