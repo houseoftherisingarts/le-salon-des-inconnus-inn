@@ -1060,6 +1060,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
 
   const pendingRequestCount = featureRequests.filter(r => r.status === 'pending' || !r.status).length;
   const pendingCollabCount = collabRequests.filter(r => r.status === 'new' || !r.status).length;
+  const pendingConferenceCount = conferenceRequests.filter(r => r.status === 'nouveau' || !r.status).length;
 
   // Every section's sidebar nav item, badges wired to the live counts. For a
   // given audience, the sidebar shows only that audience's sections (the
