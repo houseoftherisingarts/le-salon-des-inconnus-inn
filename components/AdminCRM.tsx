@@ -899,6 +899,23 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     }
   }, [user]);
 
+  const respondToConferenceRequest = useCallback(async (
+    id: string,
+    nextStatus: 'accuse' | 'en_cours' | 'resolu' | 'archive',
+  ) => {
+    if (!db || !user) return;
+    try {
+      await updateDoc(doc(db, 'conferenceRequests', id), {
+        status: nextStatus,
+        respondedAt: serverTimestamp(),
+        respondedByEmail: user.email ?? null,
+      });
+    } catch (e) {
+      console.error('respondToConferenceRequest failed', e);
+      alert('Échec de la mise à jour du statut. Vérifiez la console.');
+    }
+  }, [user]);
+
   const declineFeatureRequest = useCallback(async (uid: string, note?: string) => {
     if (!db || !user) return;
     try {
