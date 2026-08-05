@@ -562,6 +562,28 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   // a response without losing what they typed when switching between rows.
   const [collabReplyDrafts, setCollabReplyDrafts] = useState<Record<string, string>>({});
 
+  // Conference requests inbox (page /coffre, six free family evenings with
+  // La Petite Monnaie). Own collection, own section — never mixed with the
+  // other inboxes above. Status vocabulary matches the future "signalements"
+  // dashboard model on purpose (nouveau/accuse/en_cours/resolu/archive).
+  type ConferenceRequestRow = {
+    id: string;
+    establishmentName?: string;
+    establishmentType?: 'ecole' | 'bibliotheque' | 'organisme' | 'entreprise' | 'autre';
+    municipality?: string;
+    contactName?: string;
+    email?: string;
+    phone?: string;
+    expectedFamilies?: number | null;
+    desiredDates?: string;
+    message?: string;
+    status?: 'nouveau' | 'accuse' | 'en_cours' | 'resolu' | 'archive';
+    createdAt?: any;
+    respondedAt?: any;
+    respondedByEmail?: string;
+  };
+  const [conferenceRequests, setConferenceRequests] = useState<ConferenceRequestRow[]>([]);
+
   useEffect(() => {
     if (!authed || !db) return;
 
