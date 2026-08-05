@@ -750,7 +750,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     );
     return () => {
       unsub1(); unsub2(); unsub3(); unsub4(); unsubCommunity(); unsub5(); unsub6(); unsub7(); unsub8(); unsub9();
-      unsub10(); unsub11();
+      unsub10(); unsub11(); unsub12();
       tierUnsubs.forEach(fn => fn());
     };
   }, [authed]);
