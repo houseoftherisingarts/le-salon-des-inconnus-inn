@@ -661,6 +661,34 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // ── Demandes de conférence « Le Coffre des Inconnus » (page /coffre) ────
+    // Formulaire public : un établissement (école, bibliothèque, organisme,
+    // entreprise...) demande une des six soirées famille gratuites données
+    // avec La Petite Monnaie. Écriture publique validée (déclenche
+    // onConferenceRequest), lecture réservée aux admins — section dédiée du
+    // CRM, séparée des autres demandes reçues. Champs et vocabulaire de statut
+    // alignés sur le futur modèle "signalements" du dashboard pieuvre
+    // (nouveau → accuse → en_cours → resolu → archive), pour qu'un
+    // branchement futur n'exige aucun renommage.
+    match /conferenceRequests/{id} {
+      allow create: if request.resource.data.establishmentName is string
+                    && request.resource.data.establishmentName.size() > 0
+                    && request.resource.data.establishmentName.size() < 200
+                    && request.resource.data.establishmentType in ['ecole', 'bibliotheque', 'organisme', 'entreprise', 'autre']
+                    && request.resource.data.municipality is string
+                    && request.resource.data.municipality.size() > 0
+                    && request.resource.data.municipality.size() < 200
+                    && request.resource.data.contactName is string
+                    && request.resource.data.contactName.size() > 0
+                    && request.resource.data.contactName.size() < 200
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() > 0
+                    && request.resource.data.email.size() < 200
+                    && request.resource.data.status == 'nouveau'
+                    && (!('message' in request.resource.data) || request.resource.data.message.size() < 5000);
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Confirmations RSVP (page /invitation, code QR) ──────────────────────
     // Même posture : création publique validée (déclenche onRsvpInvitation),
     // lecture admin. Sans cette règle, les RSVP échouaient en silence.
