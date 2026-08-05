@@ -351,6 +351,30 @@ export const onProposalRequest = functions
     await notifyAlex(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
   });
 
+// 8. Conference request — school/library/organization asking for one of the
+// six free family evenings (Le Coffre des Inconnus × La Petite Monnaie, page
+// /coffre). Lands in its own Firestore collection, kept separate from the
+// other request inboxes above.
+export const onConferenceRequest = functions
+  .runWith(RUNTIME_WITH_SMTP)
+  .firestore.document('conferenceRequests/{id}')
+  .onCreate(async (snap) => {
+    const r = snap.data() ?? {};
+    const body =
+      `Nouvelle demande de conférence — page /coffre.\n\n` +
+      line('Établissement', r.establishmentName) +
+      line('Type', r.establishmentType) +
+      line('Municipalité', r.municipality) +
+      line('Personne responsable', r.contactName) +
+      line('Courriel', r.email) +
+      line('Téléphone', r.phone) +
+      line('Nombre de familles attendu', r.expectedFamilies) +
+      line('Dates envisagées', r.desiredDates) +
+      (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
+      `\nÀ traiter dans le CRM admin (audience Maison, onglet Conférences).`;
+    await notifyAlex(`Nouvelle demande de conférence — ${r.establishmentName ?? 'Inconnu'}`, body);
+  });
+
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
 // Read-only: real availability + an authoritative live price quote. These are
 // 2nd-gen callable functions so they can pull HOSTAWAY_API_KEY / ACCOUNT_ID from
