@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
@@ -335,6 +335,28 @@ exports.onProposalRequest = functions
         `\nÀ traiter directement par courriel.`;
     await notifyAlex(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
 });
+// 8. Conference request — school/library/organization asking for one of the
+// six free family evenings (Le Coffre des Inconnus × La Petite Monnaie, page
+// /coffre). Lands in its own Firestore collection, kept separate from the
+// other request inboxes above.
+exports.onConferenceRequest = functions
+    .runWith(RUNTIME_WITH_SMTP)
+    .firestore.document('conferenceRequests/{id}')
+    .onCreate(async (snap) => {
+    const r = snap.data() ?? {};
+    const body = `Nouvelle demande de conférence — page /coffre.\n\n` +
+        line('Établissement', r.establishmentName) +
+        line('Type', r.establishmentType) +
+        line('Municipalité', r.municipality) +
+        line('Personne responsable', r.contactName) +
+        line('Courriel', r.email) +
+        line('Téléphone', r.phone) +
+        line('Nombre de familles attendu', r.expectedFamilies) +
+        line('Dates envisagées', r.desiredDates) +
+        (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
+        `\nÀ traiter dans le CRM admin (audience Maison, onglet Conférences).`;
+    await notifyAlex(`Nouvelle demande de conférence — ${r.establishmentName ?? 'Inconnu'}`, body);
+});
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
 // Read-only: real availability + an authoritative live price quote. These are
 // 2nd-gen callable functions so they can pull HOSTAWAY_API_KEY / ACCOUNT_ID from
@@ -610,5 +632,117 @@ exports.getRoomSuggestions = (0, https_1.onCall)({ secrets: [HOSTAWAY_API_KEY, H
         closestDates = null;
     }
     return { alternateRooms, closestDates };
+});
+// ─── Weekly D20 roll ──────────────────────────────────────────────────────────
+// The roll used to happen entirely in the browser: the client drew the number,
+// picked which tier pool to draw from, and claimed the code itself. Three holes
+// came with that. Any signed-in member could list every unused code (including
+// the 20% ones) straight from the console; the client chose its own tier, so a
+// member could claim a Nat-20 code without rolling one; and the 7-day cooldown
+// lived in a doc the member could edit, so it could be cleared at will.
+//
+// Now the server owns all of it. It draws the number, enforces the cooldown,
+// claims the code, and hands back only that member's own result. The pools are
+// closed to client reads in firestore.rules — this function reaches them
+// through the admin SDK, which bypasses rules.
+const D20_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+// The prize ladder. `pool` is the Firestore subcollection a winning roll draws
+// from; null means no code is issued. Kept in one place so the ladder and the
+// pool mapping can never drift apart.
+function d20Outcome(roll) {
+    if (roll === 1)
+        return { tier: 'crit-fail', rebatePct: 0, pool: null };
+    if (roll <= 10)
+        return { tier: 'nothing', rebatePct: 0, pool: null };
+    if (roll <= 15)
+        return { tier: 'good', rebatePct: 5, pool: 'good' };
+    if (roll <= 19)
+        return { tier: 'great', rebatePct: 10, pool: 'great' };
+    return { tier: 'nat-20', rebatePct: 20, pool: 'nat20' };
+}
+function isSiteAdmin(request) {
+    const token = request.auth?.token;
+    return token?.email_verified === true
+        && (token.email === 'houseoftherisingarts@gmail.com'
+            || token.email === 'alex@lesalondesinconnus.com');
+}
+// rollWeeklyD20() → { roll, rebatePct, tier, code, sandwichesOwed }
+// One roll per member per 7 days. Returns the drawn code only to its owner.
+exports.rollWeeklyD20 = (0, https_1.onCall)({ cors: true }, async (request) => {
+    const uid = request.auth?.uid;
+    if (!uid)
+        throw new https_1.HttpsError('unauthenticated', 'Sign in before rolling.');
+    const db = admin.firestore();
+    const rollRef = db.collection('d20Rolls').doc(uid);
+    // randomInt draws uniformly over [1, 21) using rejection sampling, so there
+    // is no modulo skew toward the low faces.
+    const { randomInt } = await Promise.resolve().then(() => __importStar(require('node:crypto')));
+    const roll = randomInt(1, 21);
+    const { tier, rebatePct, pool } = d20Outcome(roll);
+    const claimedCode = await db.runTransaction(async (tx) => {
+        // ── reads first (Firestore requires every read before any write) ──
+        const snap = await tx.get(rollRef);
+        const last = snap.get('lastRollAt');
+        if (last && Date.now() - last.toMillis() < D20_COOLDOWN_MS) {
+            throw new https_1.HttpsError('failed-precondition', 'ALREADY_ROLLED');
+        }
+        let codeRef = null;
+        let value = null;
+        if (pool) {
+            const free = await tx.get(db.collection('d20Codes').doc(pool).collection('codes')
+                .where('used', '==', false).limit(1));
+            if (free.empty) {
+                // The pool ran dry. Fail loudly rather than handing out a win with no
+                // code behind it — that is exactly how `test20` reached a guest.
+                console.error(`d20 pool "${pool}" is empty; member ${uid} rolled ${roll}`);
+                throw new https_1.HttpsError('resource-exhausted', 'POOL_EMPTY');
+            }
+            codeRef = free.docs[0].ref;
+            value = free.docs[0].get('value');
+        }
+        // ── writes ──
+        if (codeRef) {
+            tx.update(codeRef, {
+                used: true,
+                usedBy: uid,
+                usedAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+        }
+        const entry = {
+            roll,
+            rebatePct,
+            tier,
+            rolledAt: admin.firestore.Timestamp.now(),
+        };
+        if (value)
+            entry.code = value;
+        const update = {
+            uid,
+            displayName: request.auth?.token?.name ?? snap.get('displayName') ?? '',
+            email: request.auth?.token?.email ?? snap.get('email') ?? '',
+            lastRollAt: admin.firestore.FieldValue.serverTimestamp(),
+            history: admin.firestore.FieldValue.arrayUnion(entry),
+        };
+        // A Nat 1 costs a chicken sandwich, never money. The old build added +1%
+        // to the member's invoice, which is a poor thing to hand someone who came
+        // to play.
+        if (tier === 'crit-fail') {
+            update.sandwichesOwed = admin.firestore.FieldValue.increment(1);
+        }
+        tx.set(rollRef, update, { merge: true });
+        return value;
+    });
+    return { roll, rebatePct, tier, code: claimedCode, sandwich: tier === 'crit-fail' };
+});
+// resetD20Cooldown() — clears the caller's 7-day timer. Admin only.
+// This replaces the "meditate" passphrase, which was hardcoded in the client
+// bundle: any member who read the source could clear their own cooldown and
+// roll until the 20% pool was empty.
+exports.resetD20Cooldown = (0, https_1.onCall)({ cors: true }, async (request) => {
+    if (!isSiteAdmin(request)) {
+        throw new https_1.HttpsError('permission-denied', 'Admins only.');
+    }
+    await admin.firestore().collection('d20Rolls').doc(request.auth.uid).set({ lastRollAt: admin.firestore.FieldValue.delete() }, { merge: true });
+    return { ok: true };
 });
 //# sourceMappingURL=index.js.map

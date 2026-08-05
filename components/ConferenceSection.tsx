@@ -6,11 +6,11 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 // Section « Conférences » de la page /coffre : les six soirées familles
 // gratuites en Petite-Nation, données avec La Petite Monnaie (voir
 // Onyx/10_projects/coffre-des-inconnus/plan-conference.md). Écrit dans
-// Firestore `conferenceRequests` — collection dédiée, séparée des autres
-// demandes du site — avec des noms de champs et un vocabulaire de statut
+// Firestore `conferenceRequests`, une collection dédiée, séparée des autres
+// demandes du site, avec des noms de champs et un vocabulaire de statut
 // alignés sur le futur modèle "signalements" du dashboard pieuvre, pour
 // qu'un branchement futur n'exige aucun renommage.
-// Même verre noir chaud + or que le reste de la page (voir GlassFrame et
+// Même verre noir chaud et or que le reste de la page (voir GlassFrame et
 // les PILL_* dans CoffreLanding.tsx) : rien de nouveau n'est inventé ici.
 
 interface Props {
