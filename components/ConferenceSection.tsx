@@ -196,7 +196,7 @@ export const ConferenceSection: React.FC<Props> = ({ t }) => {
           {CALENDAR.map((row) => (
             <div
               key={row.n}
-              className="rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-5 flex items-center gap-4"
+              className="min-w-0 rounded-[15px] border border-[#c5a059]/25 bg-black/40 backdrop-blur-md p-5 flex flex-wrap items-center gap-x-4 gap-y-2"
             >
               <span className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-cinzel text-[#171308] font-bold text-sm" style={{ background: 'linear-gradient(135deg, #c5a059, #e8d5a3, #c5a059)' }}>
                 {row.n}
@@ -206,7 +206,7 @@ export const ConferenceSection: React.FC<Props> = ({ t }) => {
                 <p className="text-neutral-500 text-xs mt-0.5">{t('Date to be confirmed', 'Date à confirmer', 'Fecha por confirmar')}</p>
               </div>
               <span
-                className={`shrink-0 text-[9px] font-cinzel uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border ${
+                className={`shrink-0 text-[9px] font-cinzel uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border whitespace-nowrap ${
                   row.pressenti
                     ? 'border-[#c5a059]/40 text-[#e8d5a3] bg-[#c5a059]/10'
                     : 'border-white/15 text-neutral-500 bg-white/5'

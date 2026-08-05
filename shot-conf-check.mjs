@@ -8,32 +8,29 @@ const browser = await chromium.launch();
 for (const [label, viewport] of [['desktop', { width: 1280, height: 900 }], ['mobile', { width: 390, height: 844 }]]) {
   const page = await browser.newPage({ viewport });
   await page.goto(url, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(2500);
+  // Force French (localStorage key salonToolsLang) then reload to be sure.
+  await page.evaluate(() => localStorage.setItem('salonToolsLang', 'FR'));
+  await page.reload({ waitUntil: 'networkidle' });
 
+  // Find the "Voir le plan de la conférence" button and the request button, scroll to section.
   const heading = page.getByText('Une soirée famille dans votre village.', { exact: false });
   await heading.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(500);
-  await page.screenshot({ path: `${outDir}/f2-${label}-1-intro.png` });
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: `${outDir}/conf-${label}-section.png`, fullPage: false });
 
-  await page.mouse.wheel(0, 550);
-  await page.waitForTimeout(400);
-  await page.screenshot({ path: `${outDir}/f2-${label}-2-calendar.png` });
-
-  await page.mouse.wheel(0, 550);
-  await page.waitForTimeout(400);
-  await page.screenshot({ path: `${outDir}/f2-${label}-3-cta.png` });
-
+  // Click "Voir le plan de la conférence"
   const planBtn = page.getByRole('button', { name: /Voir le plan de la conférence/i });
   await planBtn.click();
   await page.waitForTimeout(700);
-  await page.screenshot({ path: `${outDir}/f2-${label}-4-plan.png` });
+  await page.screenshot({ path: `${outDir}/conf-${label}-plan.png`, fullPage: false });
 
+  // Click "Demander une conférence"
   const formBtn = page.getByRole('button', { name: /Demander une conférence/i });
+  await formBtn.scrollIntoViewIfNeeded();
   await formBtn.click();
   await page.waitForTimeout(700);
-  await page.mouse.wheel(0, 600);
-  await page.waitForTimeout(300);
-  await page.screenshot({ path: `${outDir}/f2-${label}-5-form.png` });
+  await formBtn.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `${outDir}/conf-${label}-form.png`, fullPage: false });
 
   await page.close();
 }
