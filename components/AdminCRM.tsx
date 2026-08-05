@@ -703,7 +703,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       snap => setCollabRequests(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }) as CollabRequestRow)),
       () => {},
     );
-    // Conference requests inbox (page /coffre) — own collection, newest first.
+    // Conference requests inbox (page /coffre), own collection, newest first.
     const unsub12 = onSnapshot(
       query(collection(db, 'conferenceRequests'), orderBy('createdAt', 'desc')),
       snap => setConferenceRequests(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }) as ConferenceRequestRow)),
