@@ -1697,6 +1697,115 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
+        {/* ── Conference requests inbox (page /coffre) ── */}
+        {/* Section dédiée, séparée des autres demandes : six soirées famille
+            gratuites données avec La Petite Monnaie. Statut aligné sur le
+            futur modèle "signalements" (nouveau → accuse → en_cours →
+            resolu → archive), pour un branchement futur sans renommage. */}
+        {tab === 'conferences' && (
+          <div className="space-y-3">
+            <p className="text-neutral-600 text-xs font-lato mb-1">
+              Demandes de conférence « Le Coffre des Inconnus » reçues via la page /coffre. Un courriel part
+              déjà vers alex@lesalondesinconnus.com à chaque nouvelle demande.
+            </p>
+            {conferenceRequests.length === 0 ? (
+              <p className="py-12 text-center text-neutral-700 italic">Aucune demande de conférence pour l'instant.</p>
+            ) : (
+              conferenceRequests.map((r) => {
+                const status = r.status ?? 'nouveau';
+                const statusBadge = status === 'resolu'
+                  ? 'border-emerald-400/40 text-emerald-200 bg-emerald-500/10'
+                  : status === 'archive'
+                    ? 'border-neutral-500/40 text-neutral-400 bg-neutral-500/10'
+                    : status === 'en_cours'
+                      ? 'border-amber-400/40 text-amber-200 bg-amber-500/10'
+                      : status === 'accuse'
+                        ? 'border-blue-400/40 text-blue-200 bg-blue-500/10'
+                        : 'border-cyan-400/40 text-cyan-200 bg-cyan-500/10';
+                const typeLabel: Record<string, string> = {
+                  ecole: 'École', bibliotheque: 'Bibliothèque', organisme: 'Organisme',
+                  entreprise: 'Entreprise', autre: 'Autre',
+                };
+                return (
+                  <div key={r.id} className="border border-white/10 bg-black/40 rounded-lg p-5">
+                    <div className="flex flex-wrap items-start gap-3 mb-3">
+                      <span className="text-[10px] font-cinzel uppercase tracking-[0.3em] px-2 py-1 border border-white/15 text-neutral-300 bg-black/40 rounded">
+                        {typeLabel[r.establishmentType ?? 'autre'] ?? 'Autre'}
+                      </span>
+                      <span className={`text-[10px] font-cinzel uppercase tracking-[0.3em] px-2 py-1 border rounded ${statusBadge}`}>
+                        {status}
+                      </span>
+                      <div className="flex-1 min-w-0" />
+                      {r.createdAt?.seconds && (
+                        <span className="text-[10px] text-neutral-500 font-mono tabular-nums">
+                          {new Date(r.createdAt.seconds * 1000).toLocaleString('fr-CA')}
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-4 mb-3 text-xs space-y-1.5">
+                      <div className="space-y-1.5">
+                        <p><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Établissement</span><span className="text-white">{r.establishmentName || '—'}</span></p>
+                        <p><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Municipalité</span><span className="text-white">{r.municipality || '—'}</span></p>
+                        <p><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Responsable</span><span className="text-white">{r.contactName || '—'}</span></p>
+                      </div>
+                      <div className="space-y-1.5">
+                        <p><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Courriel</span><span className="text-white">{r.email || '—'}</span></p>
+                        <p><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Téléphone</span><span className="text-white">{r.phone || '—'}</span></p>
+                        <p><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Familles attendues</span><span className="text-white">{r.expectedFamilies ?? '—'}</span></p>
+                      </div>
+                    </div>
+                    {r.desiredDates && (
+                      <p className="text-xs mb-2"><span className="text-neutral-500 uppercase tracking-widest text-[9px] mr-2">Dates envisagées</span><span className="text-white">{r.desiredDates}</span></p>
+                    )}
+                    {r.message && (
+                      <div className="mb-3">
+                        <p className="text-[9px] uppercase tracking-widest text-neutral-500 mb-1">Message</p>
+                        <p className="text-sm text-neutral-200 font-lato whitespace-pre-wrap leading-relaxed">{r.message}</p>
+                      </div>
+                    )}
+                    <div className="border-t border-white/10 pt-3 flex flex-wrap gap-2 justify-end">
+                      {r.email && (
+                        <a
+                          href={`mailto:${r.email}?subject=${encodeURIComponent('Conférence Le Coffre des Inconnus')}`}
+                          className="px-3 py-1.5 text-[10px] font-cinzel uppercase tracking-widest border border-[#c5a059]/40 text-[#e8d5a3] hover:bg-[#c5a059]/10 rounded"
+                        >
+                          Répondre
+                        </a>
+                      )}
+                      {status === 'nouveau' && (
+                        <button
+                          onClick={() => respondToConferenceRequest(r.id, 'accuse')}
+                          className="px-3 py-1.5 text-[10px] font-cinzel uppercase tracking-widest border border-blue-400/40 text-blue-200 hover:bg-blue-400/10 rounded"
+                        >
+                          Accuser réception
+                        </button>
+                      )}
+                      <button
+                        onClick={() => respondToConferenceRequest(r.id, 'en_cours')}
+                        className="px-3 py-1.5 text-[10px] font-cinzel uppercase tracking-widest border border-amber-400/40 text-amber-200 hover:bg-amber-400/10 rounded"
+                      >
+                        En cours
+                      </button>
+                      <button
+                        onClick={() => respondToConferenceRequest(r.id, 'resolu')}
+                        className="px-3 py-1.5 text-[10px] font-cinzel uppercase tracking-widest border border-emerald-400/40 text-emerald-200 hover:bg-emerald-400/10 rounded"
+                      >
+                        Résolu
+                      </button>
+                      <button
+                        onClick={() => respondToConferenceRequest(r.id, 'archive')}
+                        className="px-3 py-1.5 text-[10px] font-cinzel uppercase tracking-widest border border-white/15 text-neutral-400 hover:bg-white/5 rounded"
+                      >
+                        Archiver
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+
         {/* ── Inspirosphere · user video moderation + curated uploads ── */}
         {tab === 'inspirosphere' && user && (
           <InspirosphereSection
