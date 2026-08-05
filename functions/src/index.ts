@@ -361,7 +361,7 @@ export const onConferenceRequest = functions
   .onCreate(async (snap) => {
     const r = snap.data() ?? {};
     const body =
-      `Nouvelle demande de conférence — page /coffre.\n\n` +
+      `Nouvelle demande de conférence, page /coffre.\n\n` +
       line('Établissement', r.establishmentName) +
       line('Type', r.establishmentType) +
       line('Municipalité', r.municipality) +
@@ -372,7 +372,7 @@ export const onConferenceRequest = functions
       line('Dates envisagées', r.desiredDates) +
       (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
       `\nÀ traiter dans le CRM admin (audience Maison, onglet Conférences).`;
-    await notifyAlex(`Nouvelle demande de conférence — ${r.establishmentName ?? 'Inconnu'}`, body);
+    await notifyAlex(`Nouvelle demande de conférence : ${r.establishmentName ?? 'Inconnu'}`, body);
   });
 
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
