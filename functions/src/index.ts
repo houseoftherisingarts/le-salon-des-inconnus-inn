@@ -351,8 +351,8 @@ export const onProposalRequest = functions
     await notifyAlex(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
   });
 
-// 8. Conference request — school/library/organization asking for one of the
-// six free family evenings (Le Coffre des Inconnus × La Petite Monnaie, page
+// 8. Conference request: school/library/organization asking for one of the
+// six free family evenings (Le Coffre des Inconnus x La Petite Monnaie, page
 // /coffre). Lands in its own Firestore collection, kept separate from the
 // other request inboxes above.
 export const onConferenceRequest = functions
