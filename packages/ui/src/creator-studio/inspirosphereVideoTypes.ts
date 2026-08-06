@@ -105,7 +105,7 @@ export interface InspirosphereCuratedVideo {
 export interface InspirosphereFeaturedVideo {
     id: string;                  // = source video id
     ownerUid: string;
-    /** Display name at time of approval — snapshotted so renaming the
+    /** Display name at time of approval, snapshotted so renaming the
      *  source on the profile doesn't silently mutate the Voices feed. */
     title: string;
     /** Captured from the source video's owner at approval time so the
