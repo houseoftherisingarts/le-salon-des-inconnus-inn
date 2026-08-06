@@ -372,9 +372,9 @@ const CharteSection: React.FC = () => (
 // ── 5 · LA CANDIDATURE ────────────────────────────────────────────────────────
 const CandidatureSection: React.FC = () => {
   const etapes = [
-    { n: '01', t: 'Ton profil', d: 'Avec Google ou votre courriel.' },
+    { n: '01', t: 'Votre profil', d: 'Avec Google ou votre courriel.' },
     { n: '02', t: 'La charte', d: "Toute la documentation, avant de vous engager." },
-    { n: '03', t: 'Ta candidature', d: 'Vos voies, vos mots, votre place au conseil si vous la voulez.' },
+    { n: '03', t: 'Votre candidature', d: 'Vos voies, vos mots, votre place au conseil si vous la voulez.' },
   ];
   return (
     <section id="candidature" className="px-5 md:px-10 lg:px-16 pt-28 md:pt-36 max-w-6xl mx-auto w-full">
