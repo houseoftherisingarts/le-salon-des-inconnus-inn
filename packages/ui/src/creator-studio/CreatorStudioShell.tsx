@@ -35,7 +35,7 @@ interface CreatorStudioProps {
     isArtist?: boolean;
     /**
      * Called when an anonymous visitor clicks "Sign in" on the gate. Consumer
-     * is expected to open its own auth modal — once auth completes and
+     * is expected to open its own auth modal; once auth completes and
      * currentUser flips, the gate closes itself.
      */
     onRequestSignIn?: () => void;
