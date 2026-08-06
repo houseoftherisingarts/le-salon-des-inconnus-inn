@@ -3188,7 +3188,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                             },
                             {
                               titleEn: 'A Bit of History', titleFr: 'Un peu d\'histoire',
-                              textEn: 'Community work calls have existed for a long time — moments where people unite to help a collective project, share know-how, and strengthen human bonds around a common goal. Many cultures had forms of communal work and mutual aid, because great tasks could not be accomplished alone. People took turns giving each other "big pushes" throughout the year.',
+                              textEn: 'Community work calls have existed for a long time. They are moments where people unite to help a collective project, share know-how, and strengthen human bonds around a common goal. Many cultures had forms of communal work and mutual aid, because great tasks could not be accomplished alone. People took turns giving each other "big pushes" throughout the year.',
                               textFr: 'Les appels communautaires de corvées existent depuis longtemps. Ce sont des moments où l\'on s\'unit pour aider un projet collectif, partager des savoir-faire, et renforcer les liens humains autour d\'un objectif commun. Plusieurs cultures avaient des formes de travail commun et d\'entraide car, les gros travaux ne pouvant s\'accomplir seul, les gens se relayaient pour donner des "gros coups" dans l\'année.',
                             },
                             {
