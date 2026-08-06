@@ -5752,7 +5752,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             <p className="text-sm md:text-base text-neutral-300 max-w-2xl font-lato leading-relaxed">
                                                 {language === 'EN'
                                                     ? 'Critics see exactly what you submit. The more honest the brief, the more honest the response. Frame the work, name the stage, and tell us what kind of feedback you actually want.'
-                                                    : 'La critique voit exactement ce que tu soumets. Plus le brief est honnête, plus le retour le sera. Cadre l\'œuvre, nomme l\'étape, et dis ce que tu cherches comme retour.'}
+                                                    : 'La critique voit exactement ce que vous soumettez. Plus le brief est honnête, plus le retour le sera. Cadrez l\'œuvre, nommez l\'étape, et dites ce que vous cherchez comme retour.'}
                                             </p>
                                         </header>
 
