@@ -60,7 +60,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
   // Live-subscribe to the user's registration doc so any changes (whether made
   // here or on /ceilidh) reflect immediately. The doc id IS the uid, so we read
-  // the single doc rather than running a where('uid','==',uid) query — that
+  // the single doc rather than running a where('uid','==',uid) query. That
   // also dodges any inconsistency where teamId is stamped on .teams[] but the
   // top-level mirror is stale.
   useEffect(() => {
