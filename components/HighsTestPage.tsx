@@ -664,7 +664,7 @@ export const HighsTestPage: React.FC<HighsTestPageProps> = ({ onEnterStudio, onB
                 <div ref={runwayRef} className="relative" style={{ height: '700vh' }}>
                     <div className="sticky top-0 h-screen w-full overflow-hidden">
 
-                        {/* The world — WebGL: cosmic tunnel shader + photo flythrough + portal */}
+                        {/* The world (WebGL): cosmic tunnel shader + photo flythrough + portal */}
                         <div className="absolute inset-0 z-0">
                             <Suspense fallback={<div className="absolute inset-0 hs-fallback" />}>
                                 <Canvas

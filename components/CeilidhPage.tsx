@@ -2841,7 +2841,7 @@ const LodgingChapterBody: React.FC<{
                     onViewProfile={onViewProfile}
                   />
 
-                  {/* Confirm-to-claim CTA — only when actively viewing a
+                  {/* Confirm-to-claim CTA: only when actively viewing a
                       non-full room you don't already have. Mirrors the
                       team picker. Click stops propagation so the card's
                       view-toggle isn't triggered. */}
