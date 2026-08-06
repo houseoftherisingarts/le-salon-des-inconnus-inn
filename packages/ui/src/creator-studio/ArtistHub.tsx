@@ -6490,7 +6490,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 {/* MARKET (three sub-views: Time / Resources / Foire) */}
                 {activeTab === 'MARKET' && (
                     <div className="max-w-7xl mx-auto">
-                        {/* Sub-view switcher — sits at the top of the Marché.
+                        {/* Sub-view switcher: sits at the top of the Marché.
                             Time = the existing token economy (skill-hours).
                             Resources = peer-to-peer material lending (cameras, lights…).
                             Foire = bidding marketplace where members resell completed
