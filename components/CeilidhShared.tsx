@@ -267,7 +267,7 @@ export const KanbanBoard: React.FC<{
   language: 'EN' | 'FR';
   user: User | null;
   /** Whether the current user is a primary or support member of this team.
-      When false, the kanban renders in read-only browse mode — no add,
+      When false, the kanban renders in read-only browse mode: no add,
       no claim, no edit, no delete. Members see the full editing surface. */
   isUserInTeam?: boolean;
   /** Tap a creator/claimer avatar → open their public profile. */

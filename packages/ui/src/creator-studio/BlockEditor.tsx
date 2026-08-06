@@ -102,7 +102,7 @@ const ImageBlock: React.FC<{
             const url = await getDownloadURL(r);
             onUpload(url);
         } catch {
-            // surface nothing — caller stays in editor
+            // surface nothing, caller stays in editor
         } finally {
             setBusy(false);
         }
