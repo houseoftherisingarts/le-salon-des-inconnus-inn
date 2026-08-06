@@ -512,7 +512,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             {accent && (
               <span
                 className="inline-block mt-2 text-[9px] uppercase tracking-[0.4em] px-2 py-0.5 border border-white/15 text-neutral-300 rounded-full"
-                title={t('Wardrobe — chosen aesthetic', 'Garde-robe — esthétique choisie')}
+                title={t('Wardrobe: chosen aesthetic', 'Garde-robe : esthétique choisie')}
               >
                 <span className="inline-block w-2 h-2 rounded-full mr-2 align-middle" style={{ background: accent.gradient }} />
                 {accent.label}
