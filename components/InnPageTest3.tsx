@@ -803,7 +803,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         </div>
         {/* ── DIAGONAL DOORS: Grand Ceilidh × Wwoofing fused ────────────── */}
         <section className="cv-auto relative h-screen min-h-[720px] overflow-hidden bg-black select-none">
-          {/* Bottom-left triangle — Grand Ceilidh */}
+          {/* Bottom-left triangle: Grand Ceilidh */}
           <button
             type="button"
             onClick={() => openDoor('CEILIDH')}
