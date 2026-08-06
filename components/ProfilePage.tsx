@@ -1195,7 +1195,7 @@ const MyCeilidhPanel: React.FC<{
 
   return (
     <div className="space-y-6">
-      {/* Quick pickers — team + bed */}
+      {/* Quick pickers: team + bed */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Team picker */}
         <div className="p-5 md:p-6" style={fieldStyle}>

@@ -876,7 +876,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   );
                 })}
 
-                {/* Cover overlay — sits in front of the deck while closed.
+                {/* Cover overlay: sits in front of the deck while closed.
                     Garden image + "L'Espace" title + tagline. When the user clicks anywhere on
                     the cover (or on the stage behind it), the cover fades + scales away and the
                     12 data cards expand into the grid. */}
