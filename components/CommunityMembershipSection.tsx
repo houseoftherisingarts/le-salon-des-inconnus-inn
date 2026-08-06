@@ -556,7 +556,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         /* Pullquote: short brass rule above, no side stripe */
         .comm-quote { padding-left: 0; }
         .comm-quote::before { content: ''; display: block; width: 54px; height: 2px; background: ${T.gold}; margin-bottom: clamp(1.2rem, 2.4vw, 1.7rem); }
-        /* CTA — sun pill with ember glow (TLOU primary) */
+        /* CTA: sun pill with ember glow (TLOU primary) */
         .comm-cta {
           display: inline-flex; align-items: center; gap: 0.9em;
           color: #1a1408; background: ${T.goldDeep};
