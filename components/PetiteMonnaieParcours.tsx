@@ -98,7 +98,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
     const tick = () => {
       renderRef.current = reduce ? progressRef.current : lerp(renderRef.current, progressRef.current, 0.11);
 
-      // Idle / off-screen short-circuit — nothing moved, so don't touch the DOM.
+      // Idle / off-screen short-circuit: nothing moved, so don't touch the DOM.
       const moved = Math.abs(renderRef.current - lastRendered) > EPS;
       if (!visible || !moved) { raf = requestAnimationFrame(tick); return; }
       lastRendered = renderRef.current;
