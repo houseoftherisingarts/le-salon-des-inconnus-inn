@@ -53,7 +53,7 @@ interface Props {
 }
 
 // Cinematic backdrop: number of pre-extracted frames in /public/hero/cine-rev/
-// (f_01.jpg … f_48.jpg), drawn to a canvas as the scroll scrubs — reliable on
+// (f_01.jpg … f_48.jpg), drawn to a canvas as the scroll scrubs, reliable on
 // every browser where video.currentTime seeking is not.
 const CINE_FRAME_COUNT = 48;
 
