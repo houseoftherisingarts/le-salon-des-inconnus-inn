@@ -6,7 +6,7 @@
  *
  * Adding a video
  * ──────────────
- * 1. Drop a new entry at the end of the array. Order doesn't matter — the orb
+ * 1. Drop a new entry at the end of the array. Order doesn't matter: the orb
  *    picks at random.
  * 2. `url` accepts:
  *      • youtube.com/watch?v=ID

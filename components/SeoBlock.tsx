@@ -132,7 +132,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
           ))}
         </div>
 
-        {/* Internal links — at least 3 in-body contextual links */}
+        {/* Internal links: at least 3 in-body contextual links */}
         {content.internalLinks.length > 0 && (
           <div className="mt-12">
             <h3 className="font-cinzel text-[10px] md:text-xs text-[#c5a059] uppercase tracking-[0.4em] mb-4">
