@@ -33,7 +33,7 @@ interface BlockEditorProps {
 }
 
 // Render markdown-like wrapped text. `**bold**` → <strong>; `_italic_` →
-// <em>. Cheap regex pass — no need for a full parser inside an inline preview.
+// <em>. Cheap regex pass: no need for a full parser inside an inline preview.
 const renderInline = (raw: string) => {
     const parts: Array<{ kind: 'text' | 'b' | 'i'; v: string }> = [];
     let buf = '';
