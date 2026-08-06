@@ -6003,7 +6003,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     </div>
                                                 </section>
 
-                                                {/* 05 — DESCRIBE */}
+                                                {/* 05. DESCRIBE */}
                                                 <section>
                                                     <SectionHeader n="05" en="Describe the work" fr="Décris l'œuvre"
                                                         helpEn="Set the table. Constraints, intention, anything the critic should know."
