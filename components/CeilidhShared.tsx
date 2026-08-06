@@ -3176,7 +3176,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                           <h2 className="font-cinzel text-xl md:text-3xl text-white mb-10 leading-snug">
                             {language === 'FR'
                               ? 'Le Ceilidh, le Woofing,\nquoi que c\'est que ceci\u00a0?'
-                              : 'The Ceilidh, the Woofing —\nWhat Is This?'}
+                              : 'The Ceilidh, the Woofing:\nWhat Is This?'}
                           </h2>
                         </ScrollFade>
                         <div className="space-y-8 text-sm font-lato text-neutral-400 leading-relaxed">
