@@ -21,7 +21,7 @@ interface NameLayerProps {
 }
 
 /**
- * Middle layer — huge display name pinned to the right edge and flowing left,
+ * Middle layer: huge display name pinned to the right edge and flowing left,
  * so the cutout (positioned center) partially obscures it. Tagline sits
  * underneath in a smaller typographic voice.
  */

@@ -5210,7 +5210,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             </div>
                         </div>
 
-                        {/* My videos — upload + manage. Sits below the bio/info
+                        {/* My videos: upload + manage. Sits below the bio/info
                             columns as its own full-width section so video cards
                             have room to breathe. Members only. */}
                         {accessLevel === 'MEMBER' && currentUser && (
