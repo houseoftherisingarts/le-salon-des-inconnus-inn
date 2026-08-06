@@ -444,7 +444,7 @@ const SimpleBlock: React.FC<{
 );
 
 // ─── Welcome hero (per-theme original stylings) ──────────────────────────────
-// Restored from the pre-viewer era — each theme has its own signature treatment
+// Restored from the pre-viewer era: each theme has its own signature treatment
 // of the "CREATOR STUDIO" wordmark. Only renders for the WELCOME state, before
 // the user clicks a tab. After that the contextual blocks take over.
 
