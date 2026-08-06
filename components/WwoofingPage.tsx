@@ -76,7 +76,7 @@ const CEILIDH_DEFINITION = {
 // Expectations + daily rhythm, kindly stated, with reciprocity (we ask the
 // applicant their needs in the form, see section 06).
 const NEEDS_STATEMENT = {
-  fr: "En devenant wwoofer chez nous, vous rejoignez la communauté pour un temps. On vous demande au minimum quatre heures de travail concentré par jour, au jardin, à la cuisine, ou autour des espaces communs. Les repas, on les prend ensemble, à la grande table. La méditation est offerte deux fois par jour, sans obligation : vous y allez si ça vous fait du bien. Le reste du temps vous appartient, pour lire, créer, vous reposer, ou aller marcher dans les bois.",
+  fr: "En devenant wwoofer chez nous, vous rejoignez la communauté pour un temps. Nous vous demandons au minimum quatre heures de travail concentré par jour, au jardin, à la cuisine, ou autour des espaces communs. Les repas se prennent ensemble, à la grande table. La méditation est offerte deux fois par jour, sans obligation : vous y allez si ça vous fait du bien. Le reste du temps vous appartient, pour lire, créer, vous reposer, ou aller marcher dans les bois.",
   en: "By wwoofing with us, you join the community for a stretch of time. We ask for a minimum of four focused hours of work each day, in the garden, the kitchen, or around the shared spaces. Meals are taken together at the long table. Meditation is offered twice a day, never required, join if it does you good. The rest of the time is yours, to read, create, rest, or walk in the woods.",
 };
 
