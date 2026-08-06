@@ -206,7 +206,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
       try {
         const snap = await getDoc(doc(db!, 'members', targetUid));
         if (snap.exists()) setProfile(snap.data() as MemberProfile);
-        // Pull their Ceilidh registration too — public-read per Firestore rules.
+        // Pull their Ceilidh registration too: public-read per Firestore rules.
         const regSnap = await getDoc(doc(db!, 'events', 'ceilidh-mai-2026', 'registrations', targetUid));
         if (regSnap.exists()) setTargetReg(regSnap.data());
         // Look up their Super Profile config — if enabled, we'll show a
