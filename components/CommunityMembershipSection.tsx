@@ -92,7 +92,7 @@ const LETTER: { fr: string; en: string }[] = [
     en: "We offer a wage above community wwoofing, plus the perks, because supporting this project is a real craft. We want everyone who comes to graft a bit of their soul onto this living place to feel valued at their true worth. At the same time, we're not after a detached outside employee: the community is the very reason this space exists. That's why a hybrid approach feels truest to us: a base of security and a base wage, while leaving the person free to keep their own economic activity going (ideal for digital nomads).",
   },
   {
-    fr: "Ce que nous cherchons avant tout, c'est une psychologie de communauté. Nous bâtissons ce lieu entre amis, avec des gens qui ont le goût de prendre soin d'un endroit. Nous ne sommes ni un ashram tout-inclus ni une chaîne d'hôtels : nous sommes quelque part entre les deux, les deux pieds sur terre.",
+    fr: "Ce que nous cherchons avant tout, c'est une psychologie de communauté. Nous bâtissons ce lieu entre amis, avec des gens qui ont le goût de prendre soin d'un endroit. Nous ne sommes pas un ashram tout-inclus ni une chaîne d'hôtels : nous sommes quelque part entre les deux, les deux pieds sur terre.",
     en: "What we're looking for above all is a community frame of mind. We build this place among friends, with people who genuinely want to care for a spot. We're not an all-inclusive ashram nor a hotel chain: we sit somewhere in between, both feet on the ground.",
   },
   {
