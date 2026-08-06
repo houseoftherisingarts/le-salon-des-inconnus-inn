@@ -3510,7 +3510,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                       </ScrollFade>
                     </section>
 
-                    {/* ── MAP / ADDRESS — full-width, softer dark-mode filter ────── */}
+                    {/* ── MAP / ADDRESS: full-width, softer dark-mode filter ────── */}
                     <section className="pt-12 pb-0">
                       <ScrollFade>
                         <div className="text-center mb-6 px-6">
