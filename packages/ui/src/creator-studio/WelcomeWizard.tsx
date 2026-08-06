@@ -463,14 +463,14 @@ export const WelcomeWizard: React.FC<Props> = ({
                     )}
                     {currentStep === 'ART_TYPES' && (
                         <StepChips
-                            label={t('What kind of art do you make?', 'Quel type d\'art fais-tu ?')}
-                            sub={t('Pick everything that fits, or add your own. You can edit this later.', 'Choisis tout ce qui correspond, ou ajoute le tien. Tu pourras modifier plus tard.')}
+                            label={t('What kind of art do you make?', 'Quel type d\'art faites-vous ?')}
+                            sub={t('Pick everything that fits, or add your own. You can edit this later.', 'Choisissez tout ce qui correspond, ou ajoutez le vôtre. Vous pourrez modifier plus tard.')}
                             options={ART_TYPES.map(a => ({ id: a.id, label: language === 'FR' ? a.fr : a.en }))}
                             values={answers.artTypes}
                             onChange={v => setAnswers(a => ({ ...a, artTypes: v }))}
                             allowCustom
-                            customAddLabel={t('Add yours', 'Ajouter le tien')}
-                            customPlaceholder={t('Your discipline', 'Ta discipline')}
+                            customAddLabel={t('Add yours', 'Ajouter le vôtre')}
+                            customPlaceholder={t('Your discipline', 'Votre discipline')}
                         />
                     )}
                     {currentStep === 'LINKS' && (

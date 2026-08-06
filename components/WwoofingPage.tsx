@@ -475,11 +475,11 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                 <p className="font-lato text-neutral-300 leading-relaxed mb-4 max-w-xl">
                   {t(
                     'This is the volunteer path: a stay in exchange for room, board and shared time. Apply when you are ready.',
-                    "Ceci, c'est la voie bénévole : un séjour en échange du gîte, du couvert et du temps partagé. Postule quand tu es prêt·e."
+                    "Ceci, c'est la voie bénévole : un séjour en échange du gîte, du couvert et du temps partagé. Postulez quand vous êtes prêt·e."
                   )}
                 </p>
                 <button onClick={() => onNavigate('COMMUNITY')} className="font-cinzel text-[11px] uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors mb-8 inline-block">
-                  {t('Looking for the paid resident place? →', 'Tu cherches la place rémunérée ? →')}
+                  {t('Looking for the paid resident place? →', 'Vous cherchez la place rémunérée ? →')}
                 </button>
                 <div>
                   <button
