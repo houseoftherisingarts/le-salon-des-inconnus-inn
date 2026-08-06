@@ -24,7 +24,7 @@ interface BlockEditorProps {
     /** Serialized rows JSON. The editor parses on mount and emits JSON on change. */
     value: string;
     onChange: (next: string) => void;
-    /** Owner uid — drives the Firebase Storage upload path. Falls back to a
+    /** Owner uid: drives the Firebase Storage upload path. Falls back to a
      *  shared folder when null (visitor mode shouldn't reach here). */
     uid: string | null;
     /** Pre-uploaded media (the user's gallery) for quick image picking. */
