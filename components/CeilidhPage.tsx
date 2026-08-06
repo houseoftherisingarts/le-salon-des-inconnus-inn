@@ -258,7 +258,7 @@ export const CeilidhPage: React.FC<Props> = ({
     return out;
   }, [registrations]);
 
-  // Auth gate — first chapter open + locked-chapter taps both prompt for login.
+  // Auth gate: first chapter open + locked-chapter taps both prompt for login.
   // If the user is signed in via Firebase, skip the modal entirely.
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!user);
   useEffect(() => { if (user) setIsLoggedIn(true); }, [user]);
