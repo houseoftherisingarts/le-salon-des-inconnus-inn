@@ -6829,7 +6829,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {marketListings.length === 0 && (
                                     <div className="md:col-span-2 lg:col-span-3 flex items-center justify-center min-h-[200px] border border-white/10 bg-black/30 rounded text-sm text-neutral-500 italic">
-                                        {language === 'EN' ? 'No active listings. Be the first to put something on the block.' : 'Aucune annonce active. Sois la première à mettre quelque chose en vente.'}
+                                        {language === 'EN' ? 'No active listings. Be the first to put something on the block.' : 'Aucune annonce active. Soyez la première à mettre quelque chose en vente.'}
                                     </div>
                                 )}
                                 {marketListings.map(listing => {
