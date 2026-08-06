@@ -515,7 +515,7 @@ export const KanbanBoard: React.FC<{
 
         {/* Capacity row: people-required count + claimed avatars + claim button */}
         <div className="flex items-center gap-2 mt-2">
-          {/* People required — editable for admins/creators */}
+          {/* People required: editable for admins/creators */}
           {canEdit ? (
             <div className="flex items-center gap-0.5 text-[10px] font-cinzel text-neutral-500">
               <span>👥</span>
