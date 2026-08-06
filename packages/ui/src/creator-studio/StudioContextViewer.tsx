@@ -267,7 +267,7 @@ const ProfileBlock: React.FC<{
     };
     return (
         <div className="relative flex flex-col md:flex-row items-center gap-10 md:gap-14 max-w-5xl w-full">
-            {/* Soft maroon glow behind the profile — concentrated around the
+            {/* Soft maroon glow behind the profile, concentrated around the
                 avatar/upper half so the gradient fades to transparent before
                 meeting the viewer's bottom depth-fade (no visible seam). */}
             <div
