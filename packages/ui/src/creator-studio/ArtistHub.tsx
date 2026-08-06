@@ -3582,7 +3582,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         if (activeTool === 'COPYRIGHTER') {
             return <CopyrighterModal onClose={() => setActiveTool(null)} themeStyles={currentStyles} />;
         }
-        // Inspirosphere is intentionally NOT rendered here — it lives inline
+        // Inspirosphere is intentionally NOT rendered here: it lives inline
         // in the Main Content Area (replacing the active tab) so the Studio
         // contextual viewer at the top of the shell stays visible.
         if (activeTool === 'GRANTS_CA') {
