@@ -145,7 +145,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
               </div>
             </div>
 
-            {/* Action buttons — côte à côte sur mobile pour garder le bandeau bas */}
+            {/* Action buttons : côte à côte sur mobile pour garder le bandeau bas */}
             <div className="flex flex-row gap-2 shrink-0">
               <button
                 onClick={() => accept('essential')}
