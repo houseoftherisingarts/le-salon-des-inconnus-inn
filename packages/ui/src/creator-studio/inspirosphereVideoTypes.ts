@@ -7,7 +7,7 @@
  *      original curated catalog of web links (YouTube / FB). Lives in code,
  *      reads from `inspirosphereVideos.ts`. Powers the "Discovered" tab.
  *
- *   2. Admin-curated (`InspirosphereCuratedVideo`) — videos Alex uploads
+ *   2. Admin-curated (`InspirosphereCuratedVideo`): videos Alex uploads
  *      directly into Firebase Storage and lists in the "Featured" tab.
  *      Lives in Firestore at `inspirosphereCurated/{videoId}`.
  *
