@@ -908,7 +908,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       <span className="text-[10px] font-cinzel text-neutral-500 uppercase tracking-[0.3em]">s</span>
                     </div>
 
-                    {/* Time-travel passphrase. Discreet — small italic prompt,
+                    {/* Time-travel passphrase. Discreet: small italic prompt,
                         only the input grows when focused. Wrong password
                         flashes red briefly. */}
                     <form onSubmit={handleTimeTravel} className="mt-5 flex justify-center">
