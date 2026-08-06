@@ -1,4 +1,4 @@
-// InteractivePhotoStack — a stack of photo cards that spreads out on hover.
+// InteractivePhotoStack: a stack of photo cards that spreads out on hover.
 //
 // Adapted from a snippet the user provided. Cards stack at center; on hover,
 // they fan out to non-overlapping positions; clicking a card brings it to

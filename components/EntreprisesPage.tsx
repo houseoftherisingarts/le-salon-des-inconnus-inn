@@ -75,7 +75,7 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
       />
 
       <main className="relative">
-        {/* I — what the house offers */}
+        {/* I: what the house offers */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32">
           <SectionLabel numeral="I" label={t('What the house offers', 'Ce que la maison offre')} />
           <div className="space-y-20 md:space-y-32">
