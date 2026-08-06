@@ -1169,8 +1169,8 @@ const cardSurfaceActive: React.CSSProperties = {
   boxShadow: '0 0 60px rgba(197,160,89,0.25), inset 0 1px 0 rgba(255,255,255,0.08)',
 };
 
-// L'Événement — HMS countdown + the verbatim 4-block Ceilidh essay (sourced
-// from CeilidhPage.tsx lines 2801–2820). Don't paraphrase the essay text —
+// L'Événement: HMS countdown + the verbatim 4-block Ceilidh essay (sourced
+// from CeilidhPage.tsx lines 2801–2820). Don't paraphrase the essay text:
 // it's the author's voice and changes have to come from her, not from copy edits.
 const CEILIDH_ESSAY: { titleEn: string; titleFr: string; textEn: string; textFr: string }[] = [
   {

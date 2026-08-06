@@ -2814,7 +2814,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                 className="absolute inset-0 flex flex-col items-center justify-center gap-4 transition-all duration-300 group hover:bg-white/[0.06]"
                 style={{ opacity: isActive ? 0 : 1, pointerEvents: isActive ? 'none' : 'auto' }}
               >
-                {/* Vertical label — full opacity with shadow for legibility on any bg */}
+                {/* Vertical label: full opacity with shadow for legibility on any bg */}
                 <span
                   className="font-cinzel text-white text-[11px] uppercase tracking-[0.4em] whitespace-nowrap group-hover:text-[#d4af37] transition-colors duration-300"
                   style={{
