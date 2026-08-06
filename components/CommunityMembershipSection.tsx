@@ -33,7 +33,7 @@ interface Props {
 const T = {
   paper:   '#050505',  // site near-black ground
   panel:   'rgba(0,0,0,0.38)', // glass panel
-  ink:     '#f3ecda',  // warm parchment cream — Cinzel headings on dark
+  ink:     '#f3ecda',  // warm parchment cream: Cinzel headings on dark
   body:    '#d9d7c8',  // warm light body text
   soft:    '#9a9683',  // muted warm-sage captions
   gold:    '#c5a059',  // BRASS — eyebrows, labels, hairlines, active states
