@@ -64,7 +64,7 @@ const SEASON_2026 = {
 // Definitions. The Wwoofing block stays; the Ceilidh block contextualises the
 // secondary CTA ("Voir le Ceilidh") so visitors understand what they'd see.
 const WWOOFING_DEFINITION = {
-  fr: "WWOOF (World Wide Opportunities on Organic Farms) est un réseau mondial qui met en lien des hôtes et des bénévoles. Le principe est simple : quatre heures de travail concentré par jour aux jardins, sur le terrain ou autour du lieu, en échange du gîte, du couvert, et du temps qu'on passe ensemble. Ici, ce n'est pas une ferme classique : c'est un manoir vivant, des potagers, des arts, des saisons.",
+  fr: "WWOOF (World Wide Opportunities on Organic Farms) est un réseau mondial qui met en lien des hôtes et des bénévoles. Le principe est simple : quatre heures de travail concentré par jour aux jardins, sur le terrain ou autour du lieu, en échange du gîte, du couvert, et du temps passé ensemble. Ici, l'esprit est celui d'un manoir vivant, bien loin d'une ferme classique : potagers, arts, saisons.",
   en: "WWOOF (World Wide Opportunities on Organic Farms) is a worldwide network connecting hosts with volunteers. The arrangement is simple: four focused hours of work a day in the gardens, on the land or around the property, in exchange for room, board, and the time spent together. We're not a classic farm, we're a living manor: kitchen gardens, arts, seasons.",
 };
 
