@@ -182,7 +182,7 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
           })}
         </div>
 
-        {/* Salon perk — free barista coffee with your petites-monnaies */}
+        {/* Salon perk: free barista coffee with your petites-monnaies */}
         <div className="pm-reveal mt-6 flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border border-[#dcb055]/30 px-6 py-5"
           style={{ background: 'linear-gradient(100deg, rgba(220,176,85,0.12), rgba(220,176,85,0.02) 60%, transparent)' }}>
           <span className="text-3xl leading-none">☕</span>
