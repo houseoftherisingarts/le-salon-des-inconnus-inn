@@ -483,7 +483,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'namur': {
         _draft: true,
         intro_fr: "La patinoire de Namur est la plus tranquille des patinoires de la région. Petite, peu fréquentée, entretenue par la communauté : c'est l'endroit idéal pour glisser seul ou avec les enfants, sans la foule, dans un coin serein du village.",
-        intro_en: "The Namur skating rink is the quietest in the region. Small, lightly used, community-maintained — the ideal spot to skate alone or with kids, no crowds, in a serene corner of the village.",
+        intro_en: "The Namur skating rink is the quietest in the region. Small, lightly used, community-maintained: the ideal spot to skate alone or with kids, no crowds, in a serene corner of the village.",
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
               body_fr: "Glace soignée, éclairage nocturne, banc d'accueil. Pas de service, pas de commerce attenant — c'est ce qui en fait son charme. Apportez tout, repartez avec.",
