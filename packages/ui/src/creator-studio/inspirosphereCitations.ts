@@ -3,8 +3,8 @@
  *
  * Seed pool for the orb's "Citations" tab. Same role as
  * INSPIROSPHERE_VIDEOS, but the orb renders the `text` as typography
- * instead of streaming a video. Citations are intentionally anonymous —
- * no `credit` field — so the wisdom stands on its own.
+ * instead of streaming a video. Citations are intentionally anonymous
+ * (no `credit` field) so the wisdom stands on its own.
  *
  * Adding a citation
  * ─────────────────
