@@ -7216,7 +7216,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 titleEn="Post a Contract"
                                 titleFr="Publier un Contrat"
                                 leadEn="One token equals one hour. Ask for what you need or offer what you have; the Salon brokers the trade."
-                                leadFr="Un jeton équivaut à une heure. Demande ce dont tu as besoin ou offre ce que tu as ; le Salon orchestre l'échange."
+                                leadFr="Un jeton équivaut à une heure. Demandez ce dont vous avez besoin ou offrez ce que vous avez ; le Salon orchestre l'échange."
                             />
 
                             <div className="space-y-7">
