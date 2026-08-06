@@ -503,7 +503,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   const [members, setMembers] = useState<MemberRow[]>([]);
   const [memberSearch, setMemberSearch] = useState('');
 
-  // Public roster (Annuaire) — every member who has a Creator Studio artist
+  // Public roster (Annuaire): every member who has a Creator Studio artist
   // profile (members/{uid}/artistProfile/profile). The admin promotes one into
   // the public-facing publicRoster/{uid} collection with a single click; the
   // toggle state is driven by presence in that collection (the actual public
