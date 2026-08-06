@@ -44,7 +44,7 @@ const fragmentShader = `
 
   varying vec2 vUv;
 
-  // Bayer 4x4 dithering — runtime index lookup via if-comparison (the
+  // Bayer 4x4 dithering: runtime index lookup via if-comparison (the
   // standard GLSL workaround for non-constant array indexing).
   float bayer4x4(vec2 pos) {
     int x = int(mod(pos.x, 4.0));
