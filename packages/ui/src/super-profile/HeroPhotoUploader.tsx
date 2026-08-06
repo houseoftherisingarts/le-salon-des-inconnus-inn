@@ -120,7 +120,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                 setStatus('Checking transparency…');
                 const check = await checkPngAlpha(file);
                 if (!check.hasAlpha) {
-                    setError('This PNG looks fully opaque — no background has been removed yet. Either switch to "Remove background for me" or re-export from your editor with transparency.');
+                    setError('This PNG looks fully opaque. No background has been removed yet. Either switch to "Remove background for me" or re-export from your editor with transparency.');
                     return;
                 }
                 outputBlob = file;

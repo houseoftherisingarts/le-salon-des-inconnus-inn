@@ -7929,11 +7929,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </div>
                                 </section>
 
-                                {/* 02 — TITLE & CATEGORY */}
+                                {/* 02. TITLE & CATEGORY */}
                                 <section>
                                     <FormSectionHeader n="02" en="Headline" fr="Manchette"
-                                        helpEn="The line readers will see first — and the category that frames it."
-                                        helpFr="La ligne que le lectorat verra en premier — et la catégorie qui la cadre." />
+                                        helpEn="The line readers will see first, and the category that frames it."
+                                        helpFr="La ligne que le lectorat verra en premier, et la catégorie qui la cadre." />
                                     <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-3">
                                         <input
                                             type="text"
