@@ -1,11 +1,11 @@
 // Shared 3-layer stage used by all three Super Profile templates.
 //
-// Back   — the artist's uploaded works as a textured "wall" behind everything
+// Back:   the artist's uploaded works as a textured "wall" behind everything
 //          (varies by template: photo mosaic, scattered cards, clean grid).
-// Middle — the artist's name as a huge display headline that flows RIGHT-TO-LEFT,
+// Middle: the artist's name as a huge display headline that flows RIGHT-TO-LEFT,
 //          positioned so the cutout partially overlaps it. This is the
 //          "text behind the bg-less picture" reference Alex gave.
-// Front  — the artist cutout (transparent PNG), the focal point.
+// Front:  the artist cutout (transparent PNG), the focal point.
 //
 // Each template imports these primitives and arranges them with its own
 // back-layer variation. The middle + front are identical across templates.

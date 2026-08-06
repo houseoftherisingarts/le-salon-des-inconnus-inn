@@ -5197,7 +5197,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     );
                                 })()}
 
-                                {/* Outgoing pending — small footer hint */}
+                                {/* Outgoing pending: small footer hint */}
                                 {(() => {
                                     const outgoing = friendships.filter(f => f.status === 'pending' && f.requestedBy === currentUser?.uid);
                                     if (outgoing.length === 0) return null;

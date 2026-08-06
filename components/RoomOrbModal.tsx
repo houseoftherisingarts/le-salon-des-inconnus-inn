@@ -619,7 +619,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
         />
       </div>
 
-      {/* Close X — fixed so it stays in the viewport even on tall content,
+      {/* Close X, fixed so it stays in the viewport even on tall content,
           and z-index above the dialog's stacking context. */}
       <button
         type="button"
