@@ -88,7 +88,7 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
 
   return (
     <div ref={scrollerRef} className="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden text-white" style={{ background: '#0a0a08' }}>
-      {/* page-wide atmosphere — warm near-black base (like the rest of the site)
+      {/* page-wide atmosphere: warm near-black base (like the rest of the site)
           with a toned-down green that drifts across it, never a full green field */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }} aria-hidden>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #080907 0%, #0b120d 32%, #112a1d 50%, #0b120d 68%, #080907 100%)' }} />
