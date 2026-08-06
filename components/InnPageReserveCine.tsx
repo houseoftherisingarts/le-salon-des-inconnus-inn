@@ -664,7 +664,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
             }}
           >
             {t(
-              'Reserve a room — or reserve the whole estate',
+              'Reserve a room, or reserve the whole estate',
               'Réservez à la chambre, ou réservez tout le domaine',
             )}
           </h2>
