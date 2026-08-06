@@ -664,7 +664,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </section>
         )}
 
-        {/* ── MON CEILIDH — chats + quick team/bed pickers (only when registered) ── */}
+        {/* ── MON CEILIDH: chats + quick team/bed pickers (only when registered) ── */}
         {registrations.length > 0 && (
           <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
             <div className="max-w-[1400px] mx-auto">

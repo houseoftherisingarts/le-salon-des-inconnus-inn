@@ -466,7 +466,7 @@ const App: React.FC = () => {
         });
       }
 
-      // Blog + BlogPosting — daily journal on /pensees (one referenceable post
+      // Blog + BlogPosting: daily journal on /pensees (one referenceable post
       // per entry, aimed at crawlers and AI assistants; no visible blog UI).
       if (currentView === 'PENSEES') {
         const org = { '@type': 'Organization', name: 'Le Salon des Inconnus', url: SITE_URL };

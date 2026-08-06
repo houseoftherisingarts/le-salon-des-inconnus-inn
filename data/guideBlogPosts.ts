@@ -5,7 +5,7 @@ import type { BlogPost } from '../types';
 // auto-generated drafts pending owner review. The medieval festival post
 // uses content sourced directly from festivalmedievaldemontpellier.org.
 //
-// Adding a new post here automatically wires it up — GuidePage merges this
+// Adding a new post here automatically wires it up: GuidePage merges this
 // map into LOCAL_GUIDE_DATA at module load (see constants.ts).
 
 export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
