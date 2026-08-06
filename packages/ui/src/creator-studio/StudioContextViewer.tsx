@@ -70,7 +70,7 @@ interface Props {
 // ─── Per-theme block-title treatment ─────────────────────────────────────────
 // Block titles (Time Exchange, Featured artists, etc.) inherit the active
 // theme's wordmark feel so they read as siblings of the welcome-hero "STUDIO"
-// title — not as a generic serif drop-in. Only NEON ARCADE (RAINBOW) overrides
+// title, not as a generic serif drop-in. Only NEON ARCADE (RAINBOW) overrides
 // today; the other themes already feel coherent with the default font-prata.
 const themedTitleClass = (theme: string): string => {
     if (theme === 'RAINBOW') {
