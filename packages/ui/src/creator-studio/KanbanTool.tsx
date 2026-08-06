@@ -241,7 +241,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                 { ...patch, updatedAt: serverTimestamp() },
                 { merge: true },
             );
-        } catch { /* swallow — local optimistic state is the source of truth */ }
+        } catch { /* swallow, local optimistic state is the source of truth */ }
     }, [uid, activeBoard]);
 
     /** Patch active board locally + persist. */
