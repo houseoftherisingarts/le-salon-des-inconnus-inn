@@ -62,7 +62,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "L'expérience", title_en: "What to expect",
               body_fr: "La plage publique est de sable, surveillée pendant la haute saison, et idéale pour la baignade familiale. L'eau se tempère à partir de la mi-juin et reste agréable jusqu'en septembre. Le quai municipal, gratuit, accueille les petites embarcations : kayaks, canots, paddleboards. Plusieurs sentiers forestiers autour de Duhamel partent à quelques minutes à pied.",
-              body_en: "The public beach is sandy, supervised in peak season, and ideal for family swimming. The water warms up from mid-June and stays pleasant through September. The free municipal dock welcomes small craft — kayaks, canoes, paddleboards. Several forest trails around Duhamel start a short walk away." },
+              body_en: "The public beach is sandy, supervised in peak season, and ideal for family swimming. The water warms up from mid-June and stays pleasant through September. The free municipal dock welcomes small craft: kayaks, canoes, paddleboards. Several forest trails around Duhamel start a short walk away." },
             { title_fr: "S'y rendre", title_en: "Getting there",
               body_fr: "Accessible directement depuis le centre du village de Duhamel — environ 1h30 de Gatineau et 2h de Montréal. Stationnement gratuit pour les résidents, payant pour les visiteurs en haute saison.",
               body_en: "Accessible from the centre of Duhamel village — about 1h30 from Gatineau, 2h from Montreal. Parking is free for residents and paid for visitors in peak season." },
