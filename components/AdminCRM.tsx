@@ -1508,7 +1508,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
-        {/* ── Annuaire public — promote Creator Studio profiles onto publicRoster ── */}
+        {/* ── Annuaire public : promote Creator Studio profiles onto publicRoster ── */}
         {tab === 'roster' && (
           <div>
             <div className="mb-4">
