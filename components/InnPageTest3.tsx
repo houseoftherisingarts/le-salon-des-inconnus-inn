@@ -868,7 +868,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
             </div>
           </button>
 
-          {/* Top-right triangle — Wwoofing */}
+          {/* Top-right triangle: Wwoofing */}
           <button
             type="button"
             onClick={() => openDoor('WWOOFING')}
