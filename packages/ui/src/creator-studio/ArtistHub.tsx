@@ -7816,7 +7816,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         <p className="text-[10px] uppercase tracking-widest text-neutral-600">
                                             {language === 'EN'
                                                 ? 'Add friends from the Roster to enable gifting.'
-                                                : "Ajoute des ami·es depuis le Registre pour activer les cadeaux."}
+                                                : "Ajoutez des ami·es depuis le Registre pour activer les cadeaux."}
                                         </p>
                                     </div>
                                 ) : (
