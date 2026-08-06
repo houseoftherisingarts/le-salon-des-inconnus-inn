@@ -275,7 +275,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         <div className="absolute inset-0 pointer-events-none z-[4]"
           style={{ boxShadow: 'inset 0 0 200px 50px rgba(4,9,6,0.9)' }} />
 
-        {/* bottom-left scrim — keeps the active-stop text readable over the cluster
+        {/* bottom-left scrim: keeps the active-stop text readable over the cluster
             of incoming pastilles, without darkening the focal centre */}
         <div className="absolute inset-0 pointer-events-none z-[10]"
           style={{ background: 'linear-gradient(to top right, rgba(5,9,6,0.94) 0%, rgba(5,9,6,0.58) 24%, transparent 50%)' }} />
