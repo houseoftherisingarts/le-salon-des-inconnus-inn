@@ -7324,7 +7324,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     );
                 })()}
 
-                {/* Article Editor Modal — BlockEditor-driven; supports cover
+                {/* Article Editor Modal: BlockEditor-driven; supports cover
                     upload, multi-row layout, and request-to-publish. */}
                 {/* ─── Resource creation modal (Marché → Ressources) ────── */}
                 {isResourceModalOpen && (
