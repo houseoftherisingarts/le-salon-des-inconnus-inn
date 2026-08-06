@@ -1333,7 +1333,7 @@ const EventChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => 
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Chapter 02 — Programme: 5-day timeline with morning / afternoon / evening
+// Chapter 02: Programme: 5-day timeline with morning / afternoon / evening
 // ─────────────────────────────────────────────────────────────────────────────
 
 // Programme. Two layers:
