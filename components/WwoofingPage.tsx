@@ -51,7 +51,7 @@ const ACCOMMODATION_IMAGES: Record<string, string> = {
 const MIN_DAYS = 7;
 
 const HERO_COPY = {
-  fr: "Jusqu'à la fin octobre, on accueille des wwoofers à la semaine ou au mois : quatre heures par jour au jardin, sur le terrain et dans les finitions des mini-maisons, en échange du gîte, du couvert et des soirées autour du feu.",
+  fr: "Jusqu'à la fin octobre, nous accueillons des wwoofers à la semaine ou au mois : quatre heures par jour au jardin, sur le terrain et dans les finitions des mini-maisons, en échange du gîte, du couvert et des soirées autour du feu.",
   en: "Until the end of October, we welcome wwoofers by the week or by the month: four hours a day in the gardens, on the land and finishing the tiny houses, in exchange for room, board and evenings around the fire.",
 };
 
