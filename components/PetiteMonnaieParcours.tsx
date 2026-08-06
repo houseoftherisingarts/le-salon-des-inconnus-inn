@@ -411,7 +411,7 @@ const RealMap: React.FC = () => {
         </radialGradient>
       </defs>
 
-      {/* Ottawa river — the wide southern boundary */}
+      {/* Ottawa river: the wide southern boundary */}
       <path d={toPath(PN_OTTAWA)} fill="none" stroke="#2f6b52" strokeOpacity={0.5} strokeWidth={26} strokeLinecap="round" />
       <path d={toPath(PN_OTTAWA)} fill="none" stroke={BRASS} strokeOpacity={0.45} strokeWidth={3} strokeLinecap="round" />
 
