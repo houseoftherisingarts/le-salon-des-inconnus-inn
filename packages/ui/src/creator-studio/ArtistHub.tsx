@@ -2410,7 +2410,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     };
 
     // --- GAMIFICATION HELPERS ---
-    // Legacy `addPoints` is now a thin shim over `awardCoins` — XP and coins
+    // Legacy `addPoints` is now a thin shim over `awardCoins`: XP and coins
     // were unified per the new economy. The integer amount becomes the coin
     // award; fractional values are floored to keep the lifetime tally clean.
     // Existing call sites keep their reasons for the console log; the values
