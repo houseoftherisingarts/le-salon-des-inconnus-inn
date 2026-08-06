@@ -1543,7 +1543,7 @@ export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
                     <div className={`absolute top-0 left-3/4 w-px h-8 ${branchColor}`}></div>
                     <div className={`absolute top-0 right-0 w-px h-8 ${branchColor}`}></div>
                 </div>
-                {/* Branch fan — MOBILE: a drop-line centered over each of the 5 small
+                {/* Branch fan, MOBILE: a drop-line centered over each of the 5 small
                     bubbles below (grid-cols-5 cell centers ≈ 10/30/50/70/90%). */}
                 <div className="md:hidden w-full relative h-8">
                     <div className={`absolute top-0 h-px ${branchColor}`} style={{ left: '10%', right: '10%' }}></div>

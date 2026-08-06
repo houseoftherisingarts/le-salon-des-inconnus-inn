@@ -207,7 +207,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       section?.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
         const f = parseFloat(el.dataset.parallax || '0');
         // Displacement is relative to the element's position in the viewport,
-        // not the absolute scroll offset — keeps the shift small and centred so
+        // not the absolute scroll offset: keeps the shift small and centred so
         // deep elements can't drift up over the text above them.
         const rect = el.getBoundingClientRect();
         const rel = (rect.top + rect.height / 2) - vh / 2;
