@@ -46,7 +46,7 @@ interface Props {
     displayName?: string;
     avatarUrl?: string | null;
     accessLevel: 'GUEST' | 'MEMBER';
-    /** Active studio theme — drives accents (RAINBOW = neon arcade). */
+    /** Active studio theme, drives accents (RAINBOW = neon arcade). */
     theme: string;
     /** Theme-derived class strings (border, highlight). */
     themeStyles: { border: string; highlight: string };
