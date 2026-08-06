@@ -264,7 +264,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "Mets bio de producteurs locaux, vins naturels, cidres artisanaux. La carte change avec les saisons et reflète ce que la région offre à un moment donné. Tout y est cohérent : du café au dessert.",
               body_en: "Organic dishes from local producers, natural wines, artisanal ciders. The menu shifts with the seasons and mirrors what the region offers at any given moment. Everything is coherent: from the coffee to dessert." },
             { title_fr: "Les murs", title_en: "The walls",
-              body_fr: "Les murs sont une galerie tournante. Les artistes locaux y exposent à tour de rôle, et c'est souvent là qu'on découvre, en avance, les voix qui comptent dans la région.",
+              body_fr: "Les murs sont une galerie tournante. Les artistes locaux y exposent à tour de rôle, et c'est souvent là que se découvrent, en avance, les voix qui comptent dans la région.",
               body_en: "The walls are a rotating gallery. Local artists exhibit in turn, and it's often where you discover, ahead of the curve, the voices that matter in the region." },
             { title_fr: "Pourquoi c'est unique", title_en: "Why it's unique",
               body_fr: "Il n'y a pas d'équivalent dans la région. Aucun autre lieu ne combine cette qualité de produit, cet engagement local et cette densité humaine. C'est aussi proche d'un café littéraire parisien que la Petite-Nation peut produire, avec une authenticité que personne ne joue.",
