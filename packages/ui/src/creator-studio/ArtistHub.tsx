@@ -3382,8 +3382,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             if (typeof skin.priceUSD !== 'number') return;
             // TODO: wire Stripe. For now simulate a successful checkout via confirm.
             const ok = confirm(language === 'EN'
-                ? `Pay $${skin.priceUSD.toFixed(2)} for ${skin.name}? (Simulated checkout — no card charged yet.)`
-                : `Payer $${skin.priceUSD.toFixed(2)} pour ${skin.name} ? (Achat simulé — aucune carte débitée pour l'instant.)`);
+                ? `Pay $${skin.priceUSD.toFixed(2)} for ${skin.name}? (Simulated checkout: no card charged yet.)`
+                : `Payer $${skin.priceUSD.toFixed(2)} pour ${skin.name} ? (Achat simulé : aucune carte débitée pour l'instant.)`);
             if (!ok) return;
         } else if (method === 'level') {
             if (skin.minLevel > userLevel) {
