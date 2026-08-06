@@ -1021,7 +1021,7 @@ const App: React.FC = () => {
         )}
       </Suspense>
 
-      {/* GLOBAL: Subtle admin footer link — only shown to logged-in admins.
+      {/* GLOBAL: Subtle admin footer link, only shown to logged-in admins.
           Mirrors the email allow-list used by AdminCRM and firestore.rules.
           Non-admins (anonymous OR signed-in non-admins) don't see the link
           at all, so /admin isn't discoverable from the UI. */}
