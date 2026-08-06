@@ -130,7 +130,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'lac-croche': {
         _draft: true,
         intro_fr: "Le lac Croche, à Montpellier, est un de ces petits lacs forestiers qu'on connaît surtout par tradition orale. Ni site touristique, ni plage organisée : juste un plan d'eau silencieux, entouré de forêt, où le bruit le plus fort est celui d'un huard à la fin de la journée.",
-        intro_en: "Lac Croche, in Montpellier, is one of those small forest lakes you mostly hear about by word of mouth. Not a tourist site, not an organised beach — just a quiet body of water surrounded by forest, where the loudest sound is a loon at the end of the day.",
+        intro_en: "Lac Croche, in Montpellier, is one of those small forest lakes you mostly hear about by word of mouth. Not a tourist site, not an organised beach: just a quiet body of water surrounded by forest, where the loudest sound is a loon at the end of the day.",
         sections: [
             { title_fr: "L'expérience", title_en: "What to expect",
               body_fr: "Baignade dans une eau fraîche, pique-nique sur la rive, cueillette sauvage de bleuets en juillet. Pas d'équipement, pas de stationnement officiel — apportez ce qu'il vous faut et repartez avec.",
