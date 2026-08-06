@@ -973,7 +973,7 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* VIEW 12: CREATOR STUDIO — gated by sign-in (or "view as visitor"). */}
+        {/* VIEW 12: CREATOR STUDIO, gated by sign-in (or "view as visitor"). */}
         {currentView === 'CREATOR_STUDIO' && (
           <CreatorStudio
             language={language}
