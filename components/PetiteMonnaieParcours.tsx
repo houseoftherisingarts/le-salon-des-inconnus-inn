@@ -428,7 +428,7 @@ const RealMap: React.FC = () => {
         </g>
       ))}
 
-      {/* Roads — routes 321/323 and the 148, dotted stone-and-brass trails that
+      {/* Roads: routes 321/323 and the 148, dotted stone-and-brass trails that
           link every village (Namur↔Chénéville, down through Ripon to Montebello) */}
       {PN_ROADS.map((r, i) => (
         <g key={`road-${i}`}>
