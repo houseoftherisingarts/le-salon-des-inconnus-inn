@@ -228,7 +228,7 @@ const HOT_SEAT_FEEDBACK_TYPES: {
       icon: 'M3 4h7v7H3zM14 4h7v4h-7zM14 11h7v9h-7zM3 14h7v6H3z' },
     { key: 'audience',   en: 'Audience fit',      fr: "Public visé",       blurbEn: 'Who is this for? Who would love it?',            blurbFr: 'Pour qui ? Qui adorerait ?',
       icon: 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM17 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM2 20c0-3.3 3.1-5 7-5s7 1.7 7 5M16 14c2.8 0 6 1.2 6 4' },
-    { key: 'honesty',    en: 'Honesty check',     fr: 'Test d\'honnêteté', blurbEn: 'Is it working at all? Be blunt.',                blurbFr: "Est-ce que ça fonctionne ? Sois franc·he.",
+    { key: 'honesty',    en: 'Honesty check',     fr: 'Test d\'honnêteté', blurbEn: 'Is it working at all? Be blunt.',                blurbFr: "Est-ce que ça fonctionne ? Soyez franc·he.",
       icon: 'M12 3v18M5 7l-3 7c0 1.7 1.3 3 3 3s3-1.3 3-3l-3-7Zm14 0-3 7c0 1.7 1.3 3 3 3s3-1.3 3-3l-3-7Z' },
     { key: 'suggestions', en: 'Suggestions',      fr: 'Suggestions',       blurbEn: 'Alternatives, things to try, references.',       blurbFr: 'Alternatives, pistes, références.',
       icon: 'M12 2v3M19 5l-2 2M22 12h-3M5 5l2 2M2 12h3M9 18h6M10 21h4M12 7a5 5 0 0 0-3 9c.6.5 1 1.2 1 2h4c0-.8.4-1.5 1-2A5 5 0 0 0 12 7Z' },
