@@ -4603,7 +4603,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                      </div>
                                  )}
 
-                                 {/* Inbound puzzle gifts — pending offers from other
+                                 {/* Inbound puzzle gifts: pending offers from other
                                      members. Accepting adds the puzzle to the display
                                      case; declining returns it to the sender. */}
                                  {puzzleGiftsInbox.length > 0 && (

@@ -560,7 +560,7 @@ const ArcaneIntro: React.FC<{
 };
 
 // ─────────────────────────────────────────────────────────────────────────
-// HUD line — fades in/out for a scroll window. Solid color + glow, no
+// HUD line: fades in/out for a scroll window. Solid color + glow, no
 // bg-clip gradient (which renders washed-out on some browsers / screenshot
 // tools). Each line is its own RAF so they're cheap.
 // ─────────────────────────────────────────────────────────────────────────
