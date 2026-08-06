@@ -11,7 +11,7 @@
 //     the first card and then mousing out collapsed mid-animation. Now uses
 //     `clickedIndex === null`.
 //   • Hardcoded 5-card cap is now a `maxCards` prop (still defaults to 5).
-//   • Dropped the shadcn cn() dep — we inline the className join.
+//   • Dropped the shadcn cn() dep, we inline the className join.
 
 import * as React from 'react';
 
