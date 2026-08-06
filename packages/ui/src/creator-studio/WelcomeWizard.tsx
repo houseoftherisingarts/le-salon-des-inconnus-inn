@@ -664,7 +664,7 @@ const StepChips: React.FC<StepChipsProps> = ({
         else onChange([...values, id]);
     };
 
-    // Custom entries — anything in `values` that isn't one of the preset
+    // Custom entries: anything in `values` that isn't one of the preset
     // option ids. Rendered as removable gold chips alongside the presets.
     const presetIds = new Set(options.map(o => o.id));
     const customEntries = values.filter(v => !presetIds.has(v));
