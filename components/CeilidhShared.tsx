@@ -491,7 +491,7 @@ export const KanbanBoard: React.FC<{
               {task.title}
             </p>
           )}
-          {/* Creator avatar — photo if available, otherwise initial. Click
+          {/* Creator avatar: photo if available, otherwise initial. Click
               opens that member's public profile. */}
           <button
             type="button"
