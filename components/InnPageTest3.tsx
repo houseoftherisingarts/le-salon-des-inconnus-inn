@@ -1013,7 +1013,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
           100% { transform: scale(1.08) translate(-1%, -1%); }
         }
 
-        /* Hero — slow Ken Burns zoom on the cycler. Lives on an inner wrapper so it composes
+        /* Hero: slow Ken Burns zoom on the cycler. Lives on an inner wrapper so it composes
            with the scroll-driven transform on heroPhotoRef without overwriting it. */
         .hero3-kenburns { animation: hero3KenBurns 22s ease-in-out infinite alternate; }
         @keyframes hero3KenBurns {
