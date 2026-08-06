@@ -1284,7 +1284,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [claimError, setClaimError] = useState<string | null>(null);
     const [claimSubmitting, setClaimSubmitting] = useState(false);
     // Sections the user has visited at least once (tab keys). Drives the
-    // +5-on-first-visit coin reward — once a key is here we never re-award.
+    // +5-on-first-visit coin reward: once a key is here we never re-award.
     const [sectionsVisited, setSectionsVisited] = useState<string[]>([]);
     // Article ids that have already triggered the +10 publish bonus, so we
     // don't double-award when the snapshot re-fires for the same article.
