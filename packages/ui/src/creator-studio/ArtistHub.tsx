@@ -5747,7 +5747,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 </span>
                                             </div>
                                             <h2 className={`text-4xl md:text-6xl leading-[0.95] mb-3 ${pageTitleClass}`}>
-                                                {language === 'EN' ? 'Step into the Arena' : "Entre dans l'arène"}
+                                                {language === 'EN' ? 'Step into the Arena' : "Entrez dans l'arène"}
                                             </h2>
                                             <p className="text-sm md:text-base text-neutral-300 max-w-2xl font-lato leading-relaxed">
                                                 {language === 'EN'
