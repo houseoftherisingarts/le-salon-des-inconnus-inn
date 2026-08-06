@@ -81,7 +81,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         if (ticketSnap.exists()) setShowTicket(ticketSnap.data());
       } catch (_) {}
     })();
-    // All registrations — drives the "full" greyout in the Mon Ceilidh dropdowns.
+    // All registrations: drives the "full" greyout in the Mon Ceilidh dropdowns.
     const unsubAll = onSnapshot(
       collection(db, 'events', 'ceilidh-mai-2026', 'registrations'),
       (snap) => setAllRegistrations(snap.docs.map((d) => ({ uid: d.id, ...(d.data() as any) }))),
