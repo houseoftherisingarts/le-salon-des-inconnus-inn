@@ -6051,7 +6051,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     </div>
                                                     <p className={`text-[10px] mt-2 ${formStyles.accentText} opacity-60 tabular-nums`}>
                                                         {newSubmission.feedbackSought.length === 0
-                                                            ? (language === 'EN' ? 'Pick at least one.' : 'Choisis-en au moins un.')
+                                                            ? (language === 'EN' ? 'Pick at least one.' : 'Choisissez-en au moins un.')
                                                             : (language === 'EN' ? `${newSubmission.feedbackSought.length} selected.` : `${newSubmission.feedbackSought.length} sélectionné·s.`)}
                                                     </p>
                                                 </section>
