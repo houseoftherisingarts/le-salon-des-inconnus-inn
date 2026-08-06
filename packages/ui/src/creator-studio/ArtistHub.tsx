@@ -5439,9 +5439,9 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 PROJECT:   { en: 'Collaboration idea',     fr: 'Idée de collaboration' },
                             } as const;
                             const leads = {
-                                RESIDENCY: { en: 'Apply for a creative retreat at the Manor. Letter of intent + a tangible trace of your work earn you the official recognition.', fr: "Demande une retraite créative au Manoir. Une lettre d'intention + une trace tangible de ton travail t'accordent la reconnaissance officielle." },
-                                EVENT:     { en: 'Pitch a show, workshop, or gathering you want to host at the Salon.', fr: "Propose un spectacle, atelier ou rassemblement que tu veux tenir au Salon." },
-                                PROJECT:   { en: 'Got an idea that needs the Salon? Tell us what you bring and what you need.', fr: "Une idée qui appelle le Salon ? Dis ce que tu apportes et ce qu'il te faut." },
+                                RESIDENCY: { en: 'Apply for a creative retreat at the Manor. Letter of intent + a tangible trace of your work earn you the official recognition.', fr: "Demandez une retraite créative au Manoir. Une lettre d'intention + une trace tangible de votre travail vous accordent la reconnaissance officielle." },
+                                EVENT:     { en: 'Pitch a show, workshop, or gathering you want to host at the Salon.', fr: "Proposez un spectacle, atelier ou rassemblement que vous voulez tenir au Salon." },
+                                PROJECT:   { en: 'Got an idea that needs the Salon? Tell us what you bring and what you need.', fr: "Une idée qui appelle le Salon ? Dites ce que vous apportez et ce qu'il vous faut." },
                             } as const;
                             const ideaLabels = {
                                 RESIDENCY: { en: 'Project description & letter of intent', fr: "Description du projet & lettre d'intention" },
