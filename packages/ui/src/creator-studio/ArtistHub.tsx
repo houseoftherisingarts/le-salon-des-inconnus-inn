@@ -4363,7 +4363,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                              <button
                                                 onClick={(e) => { e.stopPropagation(); setIsFeaturedPickerOpen(true); }}
                                                 className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#1a1a1a] hover:bg-[#222] transition-colors group/empty"
-                                                title={language === 'EN' ? 'Pick or upload your featured artwork' : 'Choisir ou téléverser ton œuvre en vedette'}
+                                                title={language === 'EN' ? 'Pick or upload your featured artwork' : 'Choisir ou téléverser votre œuvre en vedette'}
                                              >
                                                  <span className="text-5xl text-neutral-600 group-hover/empty:text-fuchsia-400 transition-colors">＋</span>
                                                  <span className="text-[10px] uppercase tracking-widest text-neutral-500 group-hover/empty:text-neutral-300">
