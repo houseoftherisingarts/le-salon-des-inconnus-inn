@@ -1215,7 +1215,7 @@ const MyCeilidhPanel: React.FC<{
             className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
             style={{ border: '1px solid rgba(197,160,89,0.3)' }}
           >
-            <option value="">{t('— Choose a team —', '— Choisir une équipe —')}</option>
+            <option value="">{t('Choose a team', 'Choisir une équipe')}</option>
             {TEAMS.map((team) => {
               const full = isTeamFull(team.id, team.maxMembers);
               const count = (teamCounts.get(team.id) || 0) + (team.id === currentTeamId ? 1 : 0);

@@ -831,13 +831,10 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
                   'linear-gradient(to top right, rgba(5,5,5,0.6) 0%, rgba(5,5,5,0.2) 60%, transparent 100%)',
               }}
             />
-            {/* Text block sized to fit inside the triangle's clipped area —
+            {/* Text block sized to fit inside the triangle's clipped area:
                 tightened constraints so nothing crosses the diagonal hypotenuse
                 or runs past the viewport edge on any width. */}
             <div className="absolute bottom-10 md:bottom-16 left-5 md:left-12 z-10 max-w-[min(75%,16rem)] transition-transform duration-700 group-hover:-translate-y-2">
-              {/* Text block sized to fit inside the triangle's clipped area:
-                  tightened constraints so nothing crosses the diagonal hypotenuse
-                  or runs past the viewport edge on any width. */}
               <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.55em] block mb-3">
                 {t('May 21–25, 2026', '21–25 mai 2026')}
               </span>

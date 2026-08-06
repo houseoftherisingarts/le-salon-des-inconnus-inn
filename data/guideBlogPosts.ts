@@ -114,7 +114,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
               body_fr: "Cherchez les accès plus discrets : quelques rampes de mise à l'eau, des plages publiques moins fréquentées, et des sentiers qui longent l'eau. Le village offre dépanneur, restaurant et ce sentiment rare d'être hors du temps.",
-              body_en: "Look for the quieter access points — a few boat ramps, lesser-known public beaches, and paths along the water. The village offers a corner store, a restaurant, and that rare feeling of being outside of time." },
+              body_en: "Look for the quieter access points: a few boat ramps, lesser-known public beaches, and paths along the water. The village offers a corner store, a restaurant, and that rare feeling of being outside of time." },
             { title_fr: "Quoi y faire", title_en: "What to do there",
               body_fr: "Baignade, pêche, kayak, pique-nique. C'est aussi un excellent point de chute pour des balades à vélo dans les rangs environnants. L'hiver, le lac gèle solidement et accueille pêcheurs et patineurs.",
               body_en: "Swim, fish, kayak, picnic. It's also a great base for cycling along the surrounding country roads. In winter, the lake freezes solid and hosts ice fishers and skaters." },
