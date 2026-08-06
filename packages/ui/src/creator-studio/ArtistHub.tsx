@@ -6700,7 +6700,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
                                 {marketResources.length === 0 ? (
                                     <div className="md:col-span-2 lg:col-span-2 flex items-center justify-center min-h-[220px] border border-white/10 bg-black/30 rounded text-sm text-neutral-500 italic">
-                                        {language === 'EN' ? 'No resources listed yet. Be the first.' : 'Aucune ressource encore. Sois la première à en lister une.'}
+                                        {language === 'EN' ? 'No resources listed yet. Be the first.' : 'Aucune ressource encore. Soyez la première à en lister une.'}
                                     </div>
                                 ) : marketResources.map(r => {
                                     const isMine = r.ownerUid === currentUser?.uid;
