@@ -355,7 +355,7 @@ export const CeilidhPage: React.FC<Props> = ({
                   letterSpacing: '0.3em',
                 }}
               >
-                {t('21 — 25 May 2026', '21 — 25 mai 2026')}
+                {t('21–25 May 2026', '21–25 mai 2026')}
               </span>
             </div>
             <div

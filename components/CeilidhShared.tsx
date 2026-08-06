@@ -731,7 +731,7 @@ export const KanbanBoard: React.FC<{
         </div>
       )}
 
-      {/* Add task form — members only (or admin) */}
+      {/* Add task form: members only (or admin) */}
       {user && (isUserInTeam || isAdminEmail(user.email)) ? (
         <div className="flex flex-col gap-2 mb-6">
           <div className="flex gap-2">

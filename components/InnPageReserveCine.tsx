@@ -95,7 +95,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
   const scrollRef = useRef<HTMLDivElement>(null);
   const heroPhotoRef = useRef<HTMLDivElement>(null);
-  // Anchor for the half-moon rooms section — both "Réserver" buttons (hero + Origins)
+  // Anchor for the half-moon rooms section, both "Réserver" buttons (hero + Origins)
   // smooth-scroll here so the user lands directly on the booking grid.
   const roomsRef = useRef<HTMLDivElement>(null);
   // ── Cinematic "Réserver" backdrop: scroll-scrubbed Veo establishing shot ──

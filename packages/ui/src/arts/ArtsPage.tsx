@@ -83,7 +83,7 @@ const FadeInRight: React.FC<{ children: React.ReactNode; delay?: number }> = ({ 
 // must track that container or scrollYProgress never moves.
 const ArtsScrollerContext = createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
-// Parallax Band Component — true scroll-linked parallax on a background image layer
+// Parallax Band Component: true scroll-linked parallax on a background image layer
 const ParallaxBand: React.FC<{ img: string; className?: string; children?: React.ReactNode }> = ({ img, className = '', children }) => {
     const ref = useRef<HTMLDivElement>(null);
     const scroller = useContext(ArtsScrollerContext);

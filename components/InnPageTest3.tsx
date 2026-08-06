@@ -187,9 +187,9 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         <section className="relative h-screen min-h-[640px] overflow-hidden">
 
           {/* Hero image stack:
-              outer ref (heroPhotoRef) — scroll-driven transform (parallax/scale/opacity)
-              inner wrapper          — slow Ken Burns zoom (independent of scroll)
-              LiquidGlassCycler      — WebGL bubble transitions every 5s
+              outer ref (heroPhotoRef): scroll-driven transform (parallax/scale/opacity)
+              inner wrapper: slow Ken Burns zoom (independent of scroll)
+              LiquidGlassCycler: WebGL bubble transitions every 5s
               The two transforms compose because they live on different elements. */}
           <div
             ref={heroPhotoRef}
