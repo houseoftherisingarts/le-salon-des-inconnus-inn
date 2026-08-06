@@ -1894,7 +1894,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           <div className="space-y-6">
             <p className="text-neutral-600 text-xs font-lato">
               Chaque tirage gagnant prend automatiquement le premier code non-utilisé de la cagnotte concernée
-              et le marque comme « brûlé » (impossible à réutiliser). Collez vos codes Hostaway ci-dessous —
+              et le marque comme « brûlé » (impossible à réutiliser). Collez vos codes Hostaway ci-dessous :
               un par ligne, ou séparés par des virgules.
             </p>
             {D20_TIERS.map((tier) => (

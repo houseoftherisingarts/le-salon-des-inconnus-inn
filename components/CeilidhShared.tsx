@@ -2798,7 +2798,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                   transform: isActive ? 'scale(1.04)' : 'scale(1)',
                 }}
               />
-              {/* Gradient overlay — bottom only, just enough for text contrast */}
+              {/* Gradient overlay: bottom only, just enough for text contrast */}
               <div
                 className="absolute inset-0 transition-all duration-700"
                 style={{ background: isActive
