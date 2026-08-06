@@ -302,7 +302,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "Levain naturel, farines fraîchement moulues, cuissons au four à bois. Les miches ont une croûte épaisse, une mie alvéolée, une fermentation qu'on sent dès la première bouchée. C'est du pain qui se conserve, qui voyage, et qui transforme un repas.",
               body_en: "Natural sourdough, freshly milled flours, wood-oven baked. The loaves have a thick crust, an open crumb, a fermentation you taste at first bite. Bread that keeps, travels, and transforms a meal." },
             { title_fr: "Le rituel", title_en: "The ritual",
-              body_fr: "Le samedi matin, on vient chercher son pain — et on croise tout le village. Commandez à l'avance pour être sûr d'en avoir.",
+              body_fr: "Le samedi matin, on vient chercher son pain, et on croise tout le village. Commandez à l'avance pour être sûr d'en avoir.",
               body_en: "On Saturday morning, you come to pick up your bread — and you run into the whole village. Order ahead to be sure of getting some." },
         ],
         faqs: [
