@@ -1006,7 +1006,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         }
         @keyframes roomsRuleGrow { to { width: 80px; } }
 
-        /* Section 3 (BÂTIE EN 1898) — Ken Burns on photo */
+        /* Section 3 (BÂTIE EN 1898): Ken Burns on photo */
         .sec2-photo { animation: sec2KenBurns 18s ease-in-out infinite alternate; will-change: transform; }
         @keyframes sec2KenBurns {
           0%   { transform: scale(1.02) translate(0, 0); }

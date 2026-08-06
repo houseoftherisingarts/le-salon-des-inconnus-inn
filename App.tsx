@@ -1010,7 +1010,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 15: /c/{uid}/{slug} — public read-only call sheet shared by a
+        {/* VIEW 15: /c/{uid}/{slug}: public read-only call sheet shared by a
             member with their crew/figurants. No login required. */}
         {currentView === 'CALLSHEET_PUBLIC' && callsheetParams && (
           <CallSheetPublicView
