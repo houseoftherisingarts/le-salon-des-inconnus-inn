@@ -134,7 +134,7 @@ const AccessDenied: React.FC<{ user: User | null; onNavigate: (view: string) => 
   const [signingIn, setSigningIn] = useState(false);
   const [error, setError] = useState('');
 
-  // Connexion Google sur place — indispensable sur mobile, où « retourne à
+  // Connexion Google sur place : indispensable sur mobile, où « retourne à
   // l'accueil te connecter puis reviens » est une impasse. Popup d'abord,
   // repli redirect (Safari iOS bloque souvent les popups).
   const signIn = async () => {
