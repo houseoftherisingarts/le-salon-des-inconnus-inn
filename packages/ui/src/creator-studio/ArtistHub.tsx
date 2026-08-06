@@ -4457,7 +4457,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                              {/* RIGHT: THE DOSSIER */}
                              <div className="flex-1 relative flex flex-col gap-8">
                                  
-                                 {/* Header Name + verified badge. No "Send Message" button —
+                                 {/* Header Name + verified badge. No "Send Message" button:
                                      this view always renders the user's OWN profile. The
                                      PublicProfilePage carries Send Message for visiting
                                      other artists. */}
