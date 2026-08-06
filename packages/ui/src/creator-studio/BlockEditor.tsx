@@ -131,7 +131,7 @@ const ImageBlock: React.FC<{
                                 onClick={() => setLibraryOpen(true)}
                                 className="text-[#c5a059] hover:text-white text-xs uppercase tracking-widest font-cinzel"
                             >
-                                {t('From your gallery', 'Depuis ma galerie')}
+                                {t('From your gallery', 'Depuis votre galerie')}
                             </button>
                         </>
                     )}

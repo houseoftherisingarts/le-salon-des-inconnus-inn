@@ -114,7 +114,7 @@ const TAB_META: Record<ViewerTab, {
         titleEn: 'The Roster',
         titleFr: 'Le Registre',
         subtitleEn: 'Curated artists across the Salon',
-        subtitleFr: 'Artistes curaté·e·s à travers le Salon',
+        subtitleFr: 'Artistes choisi avec soin·s à travers le Salon',
         fromColor: '#06b6d4',
         toColor: '#8b5cf6',
         glowColor: '#fbbf24',
@@ -402,7 +402,7 @@ const RosterBlock: React.FC<{ language: 'EN' | 'FR'; theme: string }> = ({ langu
             <p className="font-lato text-neutral-300 text-base md:text-lg max-w-prose">
                 {t(
                     'Curated voices across the Salon: visual, audio, digital, sculptural.',
-                    'Voix curatées du Salon: visuel, audio, numérique, sculpture.',
+                    'Voix choisies avec soin du Salon: visuel, audio, numérique, sculpture.',
                 )}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

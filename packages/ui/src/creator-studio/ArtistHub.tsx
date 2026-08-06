@@ -3609,7 +3609,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                         <p className="text-sm text-neutral-300 max-w-2xl font-lato leading-relaxed mb-8">
                             {language === 'EN'
                                 ? "An AI assistant that scans Canadian government grant databases (Canada Council for the Arts, SODEC, Telefilm, CALQ, regional councils) and helps you draft applications. We're building it now; meanwhile, the curated links below get you started."
-                                : "Un assistant IA qui scanne les bases gouvernementales canadiennes (Conseil des arts du Canada, SODEC, Téléfilm, CALQ, conseils régionaux) et vous aide à rédiger les demandes. Nous le construisons en ce moment ; pour l'instant, les liens curatés ci-dessous sont un bon départ."}
+                                : "Un assistant IA qui scanne les bases gouvernementales canadiennes (Conseil des arts du Canada, SODEC, Téléfilm, CALQ, conseils régionaux) et vous aide à rédiger les demandes. Nous le construisons en ce moment ; pour l'instant, les liens choisis avec soin ci-dessous sont un bon départ."}
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
@@ -4147,7 +4147,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">
                                     {language === 'EN'
                                         ? 'Random curated videos. Zap, browse, ignite.'
-                                        : 'Vidéos curatées au hasard. Zappe, parcours, allume.'}
+                                        : 'Vidéos choisies avec soin au hasard. Zappe, parcours, allume.'}
                                 </p>
                             </div>
 
@@ -4466,8 +4466,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                          <span>{regData.name || 'UNKNOWN'}</span>
                                          {isArtist && (
                                              <span
-                                                title={language === 'EN' ? 'Curated artist, verified by the Salon' : 'Artiste curaté·e, vérifié·e par le Salon'}
-                                                aria-label={language === 'EN' ? 'Verified curated artist' : 'Artiste curaté·e vérifié·e'}
+                                                title={language === 'EN' ? 'Curated artist, verified by the Salon' : 'Artiste choisi avec soin, vérifié·e par le Salon'}
+                                                aria-label={language === 'EN' ? 'Verified curated artist' : 'Artiste choisi avec soin vérifié·e'}
                                                 className="inline-flex items-center justify-center w-9 h-9 md:w-12 md:h-12 rounded-full bg-[#c5a059]/15 border border-[#c5a059]/40 shadow-[0_0_18px_rgba(197,160,89,0.35)]"
                                              >
                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c5a059" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-7 md:h-7">

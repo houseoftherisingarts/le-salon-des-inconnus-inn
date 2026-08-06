@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-06",
+        title_fr: "La saison qui tourne",
+        title_en: "The turning season",
+        body_fr: "Début août, les soirées raccourcissent d'une ou deux minutes par jour, et personne ne s'en aperçoit sur le moment. On soupe dehors comme en juillet, puis un soir, sans prévenir, on allume la lampe plus tôt et on comprend que la saison a tourné depuis longtemps. La nature ne fait presque jamais d'annonces; elle change en silence, un degré à la fois, et nous laisse le soin de nous en rendre compte. Nos vies avancent de la même manière : on ne devient pas patient, ou libre, ou vieux en une journée mémorable, mais par mille glissements que personne ne photographie. C'est peut-être pour ça que les grands tournants nous surprennent : ils étaient déjà accomplis quand on leur a donné un nom. Alors j'essaie d'écouter les minutes qui glissent plutôt que d'attendre les grandes heures. Qu'est-ce qui, dans ma vie, a déjà tourné sans que je l'aie encore remarqué?",
+        body_en: "In early August, the evenings shorten by a minute or two each day, and nobody notices it as it happens. We eat outside as we did in July, then one evening, without warning, we light the lamp earlier and understand that the season turned long ago. Nature almost never makes announcements; it changes in silence, one degree at a time, and leaves it to us to catch on. Our lives move the same way: we do not become patient, or free, or old in one memorable day, but through a thousand small shifts that nobody photographs. Maybe that is why the great turning points surprise us: they were already complete by the time we gave them a name. So I try to listen to the minutes as they slip by, rather than waiting for the great hours. What in my life has already turned, without my having noticed yet?",
+    },
+    {
         date: "2026-08-05",
         title_fr: "La brume du matin",
         title_en: "Morning fog",

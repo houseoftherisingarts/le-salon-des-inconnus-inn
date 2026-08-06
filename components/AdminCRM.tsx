@@ -296,7 +296,7 @@ const FeatureRequestsPanel: React.FC<{
                       )}
                       {m?.isArtist && (
                         <p className="text-emerald-400/70 text-[10px] font-lato mt-1">
-                          Déjà marqué·e comme artiste curaté·e
+                          Déjà marqué·e comme artiste choisi avec soin
                         </p>
                       )}
                     </div>
