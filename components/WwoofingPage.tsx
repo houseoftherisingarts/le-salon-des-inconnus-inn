@@ -105,7 +105,7 @@ const APPLY_SECTIONS: {
     id: 'contact', number: '01',
     titleFr: 'Contact', titleEn: 'Contact',
     image: '/media/Financement%20Artistique/centered%20copy.jpg',
-    quoteFr: "Avant d'ouvrir la porte, on aime savoir qui frappe.",
+    quoteFr: "Avant d'ouvrir la porte, nous aimons savoir qui frappe.",
     quoteEn: "Before we open the door, we like to know who's knocking.",
   },
   {
