@@ -293,7 +293,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     const firebaseOwnerUid = currentVideo && currentVideo.source.kind === 'FIREBASE'
         ? currentVideo.source.ownerUid
         : undefined;
-    // Citation text — populated only when the active pick is a CITATION
+    // Citation text: populated only when the active pick is a CITATION
     // entry. Renders as typography in place of the video player.
     const citationText = currentVideo && currentVideo.source.kind === 'CITATION'
         ? currentVideo.source.text

@@ -497,7 +497,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-busshot:hover img { transform: scale(1.05); }
         /* Gentle unifying grade so the colour rooms (warm kitchen, cool dining, green garden) cohere */
         .comm-busshot img { filter: saturate(1.04) contrast(1.02) sepia(0.05); }
-        /* Floating apply button — small brass pill, sits above content */
+        /* Floating apply button: small brass pill, sits above content */
         .comm-fab {
           position: fixed; z-index: 90; right: clamp(1rem, 4vw, 2.5rem);
           bottom: max(clamp(1rem, 4vw, 2.5rem), env(safe-area-inset-bottom, 0px));

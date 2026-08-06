@@ -1968,7 +1968,7 @@ const TeamsChapterBody: React.FC<{
               <p className="font-josefin text-neutral-400 text-xs leading-relaxed">
                 {language === 'EN' ? team.descEn : team.descFr}
               </p>
-              {/* Roster — real registered members on this team */}
+              {/* Roster: real registered members on this team */}
               {members.length > 0 && (
                 <div className="mt-3 flex flex-wrap items-center gap-1.5">
                   {members.slice(0, 8).map((m) => (
