@@ -685,7 +685,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
             {/* Sub-label below the deck */}
             <div className="text-center mt-10 md:mt-14">
               <span className="font-cinzel text-[#c5a059]/70 text-[10px] uppercase tracking-[0.5em] block mb-2">
-                01 — 12
+                01-12
               </span>
               <span className="font-cinzel text-[#f3e5ab] text-[11px] md:text-xs uppercase tracking-[0.4em]">
                 {spacesOpen ? t('Click to collapse', 'Cliquer pour replier') : t('Click to reveal', 'Cliquer pour révéler')}
