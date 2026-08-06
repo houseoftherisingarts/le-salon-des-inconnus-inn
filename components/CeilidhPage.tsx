@@ -1176,7 +1176,7 @@ const CEILIDH_ESSAY: { titleEn: string; titleFr: string; textEn: string; textFr:
   {
     titleEn: 'What is Woofing?',
     titleFr: "C'est quoi le Woofing ?",
-    textEn: 'Traditionally, Woofing is the practice of volunteering on organic farms, or spaces linked to sustainable agriculture, intentional community, or art — in exchange for food and lodging. It is a cultural exchange and sharing experience that lets volunteers (called woofers) discover alternative lifestyles, travel without monetary cost, learn environmentally respectful practices, and participate in a collective project.',
+    textEn: 'Traditionally, Woofing is the practice of volunteering on organic farms, or spaces linked to sustainable agriculture, intentional community, or art, in exchange for food and lodging. It is a cultural exchange and sharing experience that lets volunteers (called woofers) discover alternative lifestyles, travel without monetary cost, learn environmentally respectful practices, and participate in a collective project.',
     textFr: "Traditionnellement, le Woofing est une pratique qui consiste à travailler bénévolement dans des fermes biologiques, ou des lieux liés à l'agriculture durable, à la communauté intentionnelle ou à l'art, en échange du gîte et du couvert. C'est une expérience d'échange culturel et de partage, qui permet aux bénévoles (appelés woofers) de découvrir des modes de vie alternatifs, de voyager sans frais monétaires, d'apprendre des pratiques agricoles respectueuses de l'environnement, et de participer à un projet collectif.",
   },
   {

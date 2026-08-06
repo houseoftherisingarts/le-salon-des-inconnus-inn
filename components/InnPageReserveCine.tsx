@@ -776,7 +776,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   but DO NOT animate this wrapper: animating a parent of 12 preserve-3d
                   children forces a 12-layer composite every frame and tanks idle FPS to ~12.
                   Ambient motion now lives on the front card only (1 layer). */}
-              {/* Stage — when CLOSED the click target is the cover button (below).
+              {/* Stage: when CLOSED the click target is the cover button (below).
                   When OPEN, clicking anywhere on the stage collapses back to cover. */}
               <div
                 className="relative w-full h-full"
