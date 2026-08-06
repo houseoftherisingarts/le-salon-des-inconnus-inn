@@ -51,7 +51,7 @@ export const PuzzleCelebration: React.FC<Props> = ({
     const [phase, setPhase] = useState<Phase>('SHINE');
     const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
 
-    // Resolve the target slot rect — poll on rAF until it shows up.
+    // Resolve the target slot rect: poll on rAF until it shows up.
     useEffect(() => {
         let cancelled = false;
         const start = performance.now();
