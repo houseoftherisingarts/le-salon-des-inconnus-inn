@@ -79,7 +79,7 @@ async function fetchMemberProfile(user: User): Promise<MemberProfile | null> {
     const snap = await getDoc(doc(db, 'members', user.uid));
     return snap.exists() ? (snap.data() as MemberProfile) : null;
   } catch {
-    // Firestore unreachable or rules not yet deployed — treat as new user
+    // Firestore unreachable or rules not yet deployed: treat as new user
     return null;
   }
 }
