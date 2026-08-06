@@ -102,7 +102,7 @@ export function HubOrb() {
       className={`relative min-h-screen w-full overflow-x-hidden transition-opacity duration-500 ${leaving ? 'opacity-0' : 'opacity-100'}`}
       style={{ background: '#0b0908' }}
     >
-      {/* Cinematic background — golden-hour drone shot of the domain */}
+      {/* Cinematic background: golden-hour drone shot of the domain */}
       <div className="fixed inset-0 pointer-events-none" aria-hidden>
         <img
           src="/media/golden%20drone%20copy.jpg"
