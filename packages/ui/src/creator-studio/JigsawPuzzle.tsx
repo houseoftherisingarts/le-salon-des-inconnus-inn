@@ -273,7 +273,7 @@ export const JigsawPuzzle: React.FC<Props> = ({
             className="relative"
             style={{ width: size, aspectRatio: '1 / 1' }}
             role="img"
-            aria-label={(language === 'FR' ? artwork.titleFr : artwork.titleEn) + ` — ${revealed}/${PUZZLE_PIECES_TOTAL}`}
+            aria-label={(language === 'FR' ? artwork.titleFr : artwork.titleEn) + ` (${revealed}/${PUZZLE_PIECES_TOTAL})`}
         >
             <svg
                 viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`}

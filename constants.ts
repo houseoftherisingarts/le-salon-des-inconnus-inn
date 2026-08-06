@@ -533,7 +533,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "La terre",
                 title: "Ferme Agricola",
                 location: "Papineauville",
-                description: "Coopérative de jeunes agriculteurs — légumes bio certifiés, asperges, herbes et fleurs coupées sur 160 acres. Paniers ASC et présence aux marchés fermiers dès le printemps.",
+                description: "Coopérative de jeunes agriculteurs : légumes bio certifiés, asperges, herbes et fleurs coupées sur 160 acres. Paniers ASC et présence aux marchés fermiers dès le printemps.",
                 link: "https://fermeagricola.com/",
                 image: PLACEHOLDER_ROOM
             },
