@@ -253,7 +253,7 @@ export default function RoomAmenities({
   );
 }
 
-/** Compact variant for cards — icons only, no labels, no people chip duplication. */
+/** Compact variant for cards: icons only, no labels, no people chip duplication. */
 export function RoomAmenitiesCompact({
   amenities,
   language,
