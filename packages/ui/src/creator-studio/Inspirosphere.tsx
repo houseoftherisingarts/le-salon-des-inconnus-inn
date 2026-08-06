@@ -394,7 +394,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                 setDuration(0);
             }
         };
-        // We intentionally don't depend on ytId here — we create the player
+        // We intentionally don't depend on ytId here: we create the player
         // once and then swap videos via loadVideoById below.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ytApiReady, !!ytId]);
