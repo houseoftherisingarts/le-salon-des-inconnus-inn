@@ -53,7 +53,7 @@ export function Atmosphere({
   );
 }
 
-// C3 — reveal-on-scroll (fade-up, latch au premier passage)
+// C3 : reveal-on-scroll (fade-up, latch au premier passage)
 export function Reveal({
   children,
   delay = 0,
