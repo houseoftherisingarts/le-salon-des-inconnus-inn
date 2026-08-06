@@ -32,7 +32,7 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
     return (
         <div className="absolute inset-0 pointer-events-none flex items-center">
             {/* The huge type is in a right-anchored column that overflows the
-                left side of the viewport — purely visual; pointer-events none
+                left side of the viewport, purely visual; pointer-events none
                 so the cutout above stays interactive. */}
             <div className="relative w-full pr-[4vw] text-right">
                 {mediumLabel && (
