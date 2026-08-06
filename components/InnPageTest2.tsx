@@ -167,7 +167,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
             </div>
           </button>
 
-          {/* MASSAGE — right portal, rounded outer-right */}
+          {/* MASSAGE: right portal, rounded outer-right */}
           <button
             onClick={() => onNavigate('MASSOTHERAPY')}
             className="services-portal group relative overflow-hidden border border-[#d4af37]/30 hover:border-[#d4af37] transition-all duration-700 rounded-b-[30px] md:rounded-bl-none md:rounded-br-[30px] md:rounded-tr-[30px] cursor-pointer min-h-[420px] md:min-h-[560px] text-left"
