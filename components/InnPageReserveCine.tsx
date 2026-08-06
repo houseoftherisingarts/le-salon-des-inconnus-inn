@@ -58,7 +58,7 @@ interface Props {
 const CINE_FRAME_COUNT = 48;
 
 // Reduce-motion gate for the *extra* motion only: Lenis smooth-scroll and the hero
-// parallax. The cinematic scroll-scrub itself ALWAYS plays (owner's call) — it's the
+// parallax. The cinematic scroll-scrub itself ALWAYS plays (owner's call): it's the
 // signature of the page and, now that it's a light canvas frame-sequence rather than
 // a decoded video, it's gentle enough to keep on for everyone.
 const prefersReducedMotion = () =>
