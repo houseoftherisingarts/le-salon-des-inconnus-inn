@@ -1623,7 +1623,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // Live subscription to this user's profile doc. onSnapshot means any write
     // (from the pill avatar uploader, the dossier, or another tab) reflects
     // back into local state without a manual reload. featureRequest is loaded
-    // once — its status changes are admin-driven and rare.
+    // once: its status changes are admin-driven and rare.
     useEffect(() => {
         if (!currentUser?.uid) {
             setAvatarUrl(null);
