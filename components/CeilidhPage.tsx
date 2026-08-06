@@ -2228,7 +2228,7 @@ const TeamsChapterBody: React.FC<{
         />
       )}
 
-      {/* Kanban for the picked team — real Firestore-backed task board */}
+      {/* Kanban for the picked team: real Firestore-backed task board */}
       {pickedId && (
         <div className="space-y-4">
           <div className="flex items-baseline justify-between">
