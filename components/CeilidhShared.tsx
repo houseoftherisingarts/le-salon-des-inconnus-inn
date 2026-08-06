@@ -2626,7 +2626,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
     return unsub;
   }, []);
 
-  // Load show tickets (public read — tracks remaining spots)
+  // Load show tickets (public read, tracks remaining spots)
   useEffect(() => {
     if (!db) return;
     const unsub = onSnapshot(collection(db, 'events', EVENT_ID, 'showTickets'), snap => {

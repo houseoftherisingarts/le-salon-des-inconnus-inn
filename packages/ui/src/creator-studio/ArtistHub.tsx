@@ -2233,7 +2233,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     type MarketView = 'TIME' | 'RESOURCES' | 'FOIRE';
     const [marketView, setMarketView] = useState<MarketView>('TIME');
 
-    // Resource exchange — physical equipment (cameras, lights, tools, …).
+    // Resource exchange: physical equipment (cameras, lights, tools, …).
     interface MarketResource {
         id: string;
         ownerUid: string;

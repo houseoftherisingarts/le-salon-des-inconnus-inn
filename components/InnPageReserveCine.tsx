@@ -694,7 +694,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           data-l-espace
           className="cv-auto relative bg-[#050505] py-12 md:py-32 border-t border-[#c5a059]/10 overflow-hidden"
         >
-          {/* Atmospheric backdrop — soft gold radial + fog blobs (CSS only, no JS animation).
+          {/* Atmospheric backdrop: soft gold radial + fog blobs (CSS only, no JS animation).
               Fog drift pauses while open so the grid view is fully static (zero idle paint). */}
           <div aria-hidden className={`absolute inset-0 pointer-events-none ${spacesOpen ? 'espace-bg-still' : ''}`}>
             <div
