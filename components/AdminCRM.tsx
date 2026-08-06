@@ -1414,7 +1414,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                   publication du Creator Studio (Lectures, Hot Seat, profil public).
                 </p>
                 <p className="text-neutral-700 text-[10px] font-lato mt-1">
-                  Le drapeau est stocké dans <code className="text-neutral-500">members/{'{uid}'}/admin/flags</code> —
+                  Le drapeau est stocké dans <code className="text-neutral-500">members/{'{uid}'}/admin/flags</code> :
                   les utilisateurs ne peuvent pas se l'attribuer eux-mêmes.
                 </p>
               </div>

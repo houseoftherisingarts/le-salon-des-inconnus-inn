@@ -401,7 +401,7 @@ const App: React.FC = () => {
     setMeta('meta[property="og:image"]', ogImage);
     setMeta('meta[name="twitter:image"]', ogImage);
 
-    // Canonical link — keep one <link rel=canonical> in <head>, sync per route.
+    // Canonical link: keep one <link rel=canonical> in <head>, sync per route.
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');

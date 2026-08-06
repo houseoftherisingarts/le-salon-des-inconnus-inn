@@ -1798,7 +1798,7 @@ const TeamRegistrationModal: React.FC<{
                       </span>
                       {conflictName && isSelected && (
                         <span className="ml-2 text-[10px] text-amber-500/80 font-cinzel">
-                          ⚠ {t('conflict with', 'conflit avec')} {conflictName} — {t('support/backup', 'support/relève')}
+                          ⚠ {t('conflict with', 'conflit avec')} {conflictName} ({t('support/backup', 'support/relève')})
                         </span>
                       )}
                       {conflictName && !isSelected && (
