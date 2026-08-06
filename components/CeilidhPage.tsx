@@ -2925,7 +2925,7 @@ const PracticalChapterBody: React.FC<{
       aFr: "Oui : tout le monde rejoint une équipe. C'est ~6 heures de travail partagé par jour, le cœur du rassemblement." },
     { qEn: 'Can children come?',             qFr: 'Les enfants sont-ils bienvenus ?',
       aEn: "Yes, with a parent or guardian. Reach out so we can plan their bed and meals.",
-      aFr: "Oui, accompagnés d'un parent ou tuteur. Écrivez-nous pour qu'on prévoie lit et repas." },
+      aFr: "Oui, accompagnés d'un parent ou tuteur. Écrivez-nous pour que nous puissions prévoir lit et repas." },
     { qEn: 'What does it cost?',             qFr: '« Combien ça coûte ?»',
       aEn: 'Woofers stay free in exchange for ~6 hours of work per day. Show-only guests: $10 single / $20 weekend pass.',
       aFr: 'Les woofers logent gratuitement en échange de ~6 heures de travail par jour. Spectacle seul : 10 $ par soir, 20 $ pour la fin de semaine.' },
