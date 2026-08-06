@@ -37,7 +37,7 @@ const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').th
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
 const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => ({ default: m.AdminCRM })));
 const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CreatorStudio })));
-// /c/{uid}/{slug} — public read-only call sheet, shared by a member with their
+// /c/{uid}/{slug}: public read-only call sheet, shared by a member with their
 // crew/figurants. No auth required (Firestore rule grants read when shared).
 const CallSheetPublicView = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CallSheetPublicView })));
 // Maestro-tier /{username} portfolio page — dispatched when the URL path is a
