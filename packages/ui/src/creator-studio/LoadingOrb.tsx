@@ -4,7 +4,7 @@ interface LoadingOrbProps {
     /** Caption under the orb (e.g. "STUDIO", "INN", "AUBERGE"). Drives the
      *  per-section feel when this is reused as a between-sections transition. */
     label?: string;
-    /** Logo URL — defaults to the Salon wordmark used in the studio header. */
+    /** Logo URL: defaults to the Salon wordmark used in the studio header. */
     logoUrl?: string;
     /** Total visible duration in ms before onDone fires. Animation is tuned for
      *  ~1400ms; pass shorter for snappier transitions or longer for hero loads. */
