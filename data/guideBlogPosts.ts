@@ -280,7 +280,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'napoleon': {
         _draft: true,
-        intro_fr: "Le Napoléon est le bistro intimiste du chef Antoine Meunier, à Montebello : une adresse pour les soirs où vous avez envie d'un repas qui compte. Tartare de canard, filet de bison, poutine au foie gras : la cuisine joue avec les classiques sans jamais perdre la rigueur du produit.",
+        intro_fr: "Le Napoléon est le bistro intimiste du chef Antoine Meunier, à Montebello : une adresse pour les soirs où on a envie d'un repas qui compte. Tartare de canard, filet de bison, poutine au foie gras : la cuisine joue avec les classiques sans jamais perdre la rigueur du produit.",
         intro_en: "Le Napoléon is chef Antoine Meunier's intimate bistro in Montebello: an address for evenings when you want a meal that matters. Duck tartare, bison fillet, foie-gras poutine: the kitchen plays with classics without ever losing rigour around the product.",
         sections: [
             { title_fr: "La cuisine", title_en: "The cooking",
