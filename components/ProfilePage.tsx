@@ -1162,7 +1162,7 @@ const MyCeilidhPanel: React.FC<{
     }
   };
 
-  // Arrival day + time — captured at signup-or-edit and shown on the public
+  // Arrival day + time: captured at signup-or-edit and shown on the public
   // profile so others know when to expect this person.
   const currentArrivalDate = (registration?.arrivalDate as string | undefined) ?? '';
   const currentArrivalTime = (registration?.arrivalTime as string | undefined) ?? '';
