@@ -5579,7 +5579,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 value={collabFormData.idea}
                                                 onChange={(e) => setCollabFormData({...collabFormData, idea: e.target.value})}
                                                 className={`w-full p-3 ${formStyles.input}`}
-                                                placeholder={language === 'EN' ? 'Tell us about your work, your intent, and what the Salon makes possible…' : "Parle-nous de ton travail, ton intention, et ce que le Salon rend possible…"}
+                                                placeholder={language === 'EN' ? 'Tell us about your work, your intent, and what the Salon makes possible…' : "Parlez-nous de votre travail, votre intention, et ce que le Salon rend possible…"}
                                             />
                                         </section>
 
