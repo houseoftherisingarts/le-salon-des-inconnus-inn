@@ -336,22 +336,22 @@ export const INN_HERO_IMAGES = [
 // INN_HERO_IMAGES above. These are just defaults: the live values are editable
 // by dragging in the focal admin (/?herofocal) and stored in Firestore.
 export const INN_HERO_FOCUS = [
-  0.50, // drone — aerial, centred
-  0.32, // maison — house sits left of centre; bias the crop left to centre it
-  0.50, // salon (centered copy) — orange room, centred
-  0.50, // cuisine — centred
-  0.50, // jardins — centred
-  0.55, // bureau — desk sits centre-right
-  0.50, // bus extérieur — centred
-  0.50, // mini-maison — centred
-  0.58, // ecrivaine — bed centre-right
-  0.66, // musicienne — bed on the right
-  0.34, // cineast — bed on the left
-  0.58, // amphi — bed centre-right
-  0.50, // yourte — centred
+  0.50, // drone: aerial, centred
+  0.32, // maison: house sits left of centre; bias the crop left to centre it
+  0.50, // salon (centered copy): orange room, centred
+  0.50, // cuisine: centred
+  0.50, // jardins: centred
+  0.55, // bureau: desk sits centre-right
+  0.50, // bus extérieur: centred
+  0.50, // mini-maison: centred
+  0.58, // ecrivaine: bed centre-right
+  0.66, // musicienne: bed on the right
+  0.34, // cineast: bed on the left
+  0.58, // amphi: bed centre-right
+  0.50, // yourte: centred
 ];
 
-// WebGL shaders — liquid glass bubble transition (ported from Collectif Sexe+)
+// WebGL shaders: liquid glass bubble transition (ported from Collectif Sexe+)
 const HW_VERT = `varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
 const HW_FRAG = `
   uniform sampler2D uT1, uT2;
