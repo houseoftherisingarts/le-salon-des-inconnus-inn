@@ -551,7 +551,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Les oiseaux",
                 title: "Parc de la Presqu'île",
                 location: "Plaisance",
-                description: "Parc national sur la rivière des Outaouais — refuge de 265+ espèces d'oiseaux avec des migrations printanières de bernaches spectaculaires. Sentiers en milieu humide, kayak et vélo entre îles et marécages.",
+                description: "Parc national sur la rivière des Outaouais : refuge de 265+ espèces d'oiseaux avec des migrations printanières de bernaches spectaculaires. Sentiers en milieu humide, kayak et vélo entre îles et marécages.",
                 link: "https://www.sepaq.com/pq/pla/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2024/05/parc-national-de-plaisance-2.jpg"
             }
