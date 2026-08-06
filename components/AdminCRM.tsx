@@ -1369,7 +1369,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
         {tab === 'wwoofing' && (
           <div>
             <p className="text-neutral-600 text-xs font-lato mb-4">
-              Demandes de wwoofing — toggler le statut du wwoofer, approuver/refuser leurs visites, et discuter avec eux.
+              Demandes de wwoofing : toggler le statut du wwoofer, approuver/refuser leurs visites, et discuter avec eux.
             </p>
             {wwoofers.length === 0 ? (
               <p className="py-12 text-center text-neutral-700 italic">Aucune candidature wwoofer.</p>
