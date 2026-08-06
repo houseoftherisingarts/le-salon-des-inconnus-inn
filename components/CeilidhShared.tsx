@@ -2852,7 +2852,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                         style={{ background: 'linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0,0,0,0.6) 78%, rgba(0,0,0,0.92) 100%)' }}
                       />
 
-                      {/* Content — bottom-anchored over the cycler (same layout pattern as Inn) */}
+                      {/* Content: bottom-anchored over the cycler (same layout pattern as Inn) */}
                       <div className="absolute inset-x-0 bottom-0 z-10 max-w-[1200px] mx-auto px-6 md:px-12 pb-12 md:pb-20 flex flex-col items-center text-center">
 
                         {/* Eyebrow */}
