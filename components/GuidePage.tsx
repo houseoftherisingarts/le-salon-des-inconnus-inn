@@ -336,7 +336,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         </div>
       </div>
 
-      {/* La Petite Monnaie — local currency feature → /petite-monnaie */}
+      {/* La Petite Monnaie: local currency feature → /petite-monnaie */}
       <button
         onClick={() => window.dispatchEvent(new CustomEvent('salon:navigate', { detail: { view: 'PETITE_MONNAIE' } }))}
         className="group block w-full text-left"

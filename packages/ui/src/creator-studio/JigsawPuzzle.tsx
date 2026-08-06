@@ -18,7 +18,7 @@ import {
  *     either flat, tab (convex bulge), or blank (concave dip). Adjacent
  *     pieces have mirrored edges so they nest perfectly.
  *   • Tabs/blanks use cubic Béziers shaped like the classic puzzle "bulb on
- *     a neck" — no straight 90° corners to a square. This is what makes the
+ *     a neck": no straight 90° corners to a square. This is what makes the
  *     pieces read as jigsaw, not tile.
  *   • The whole puzzle is one <svg> with one <image> per revealed piece,
  *     each clipped to its path. Hidden pieces just stroke the outline.
