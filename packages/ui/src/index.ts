@@ -9,7 +9,7 @@ export { CreatorStudio } from './creator-studio/CreatorStudioShell';
 export type { HubPhase } from './creator-studio/CreatorStudioShell';
 
 // Section-change loading orb. Reusable splash for Inn ↔ Studio ↔ Auberge
-// transitions — pass a `label` ("INN", "STUDIO", "AUBERGE") and `onDone`.
+// transitions, pass a `label` ("INN", "STUDIO", "AUBERGE") and `onDone`.
 export { LoadingOrb } from './creator-studio/LoadingOrb';
 
 // Public read-only call-sheet share page, mounted by the app at /c/{uid}/{slug}.
