@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { LocalGuideItem } from '../types';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BlogPostOverlay — opens when a guide card is clicked.
+// BlogPostOverlay: opens when a guide card is clicked.
 //
 // UX:
 //   1. Card flips (3D rotateY) and expands into a near-fullscreen reading panel.
