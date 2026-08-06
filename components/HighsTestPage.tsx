@@ -140,7 +140,7 @@ function CosmicTunnel({ progressRef }: { progressRef: React.MutableRefObject<num
                         }
                         // Tone map
                         vec3 col = tanh(o / 200.0);
-                        // Tint to the Studio's neon palette — bias channels into
+                        // Tint to the Studio's neon palette: bias channels into
                         // fuchsia / cyan / yellow / purple bands without losing
                         // the original luminance structure.
                         float luma = dot(col, vec3(0.299, 0.587, 0.114));
