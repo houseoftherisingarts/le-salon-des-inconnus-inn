@@ -4045,7 +4045,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">Copyright, Royalties, AI Policy & Legal Counsel.</p>
                             </div>
 
-                            {/* Tool 2: Kanban — opens the imported KanbanTool inline.
+                            {/* Tool 2: Kanban: opens the imported KanbanTool inline.
                                 Was previously window.open('…/studio/board') to an external page. */}
                             <div
                                 onClick={() => setActiveTool('KANBAN')}
