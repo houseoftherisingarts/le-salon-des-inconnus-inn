@@ -7470,7 +7470,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     >
                                         <p className="text-[10px] uppercase tracking-[0.3em] text-amber-200/80 mb-1 font-cinzel">{language === 'EN' ? 'Instant sale' : 'Vente instantanée'}</p>
                                         <p className="text-2xl font-serif italic text-amber-100 mb-1">+{SELL_PUZZLE_COINS} {language === 'EN' ? 'coins' : 'pièces'}</p>
-                                        <p className="text-xs text-neutral-400 leading-relaxed">{language === 'EN' ? 'Sell back to the platform now. Coins land in your spendable balance immediately.' : "Revendre à la plateforme tout de suite. Les pièces arrivent dans ton solde dépensable immédiatement."}</p>
+                                        <p className="text-xs text-neutral-400 leading-relaxed">{language === 'EN' ? 'Sell back to the platform now. Coins land in your spendable balance immediately.' : "Revendre à la plateforme tout de suite. Les pièces arrivent dans votre solde dépensable immédiatement."}</p>
                                     </button>
                                     <button
                                         type="button"
