@@ -7977,7 +7977,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <section>
                                     <FormSectionHeader n="04" en="Body" fr="Corps de l'article"
                                         helpEn="Write in blocks. Drop images. Move things around. Markdown for emphasis (**bold**, _italic_)."
-                                        helpFr="Écris en blocs. Déposez des images. Réorganisez. Markdown pour l'emphase (**gras**, _italique_)." />
+                                        helpFr="Écrivez en blocs. Déposez des images. Réorganisez. Markdown pour l'emphase (**gras**, _italique_)." />
                                     <BlockEditor
                                         value={draftArticle.blocks}
                                         onChange={(next) => setDraftArticle(prev => ({ ...prev, blocks: next }))}
