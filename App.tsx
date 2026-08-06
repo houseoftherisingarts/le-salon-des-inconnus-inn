@@ -730,7 +730,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 1d: Inn editorial test 3 — bold rebuild from scratch — /mainpagetest3 */}
+        {/* VIEW 1d: Inn editorial test 3 (bold rebuild from scratch), /mainpagetest3 */}
         {currentView === 'INN_TEST3' && (
           <InnPageTest3
             language={language}
