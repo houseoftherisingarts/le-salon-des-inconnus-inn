@@ -409,7 +409,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                 )}
             </div>
 
-            {/* Step container — keyed by stepIndex so React fully remounts on
+            {/* Step container: keyed by stepIndex so React fully remounts on
                 advance, retriggering the bubble-reveal animation (same
                 rhythm + easing as the inn-hero WebGL bubble transition,
                 approximated with a CSS circular clip-path + halo glow so

@@ -242,7 +242,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'michelle-lemire': {
         _draft: true,
         intro_fr: "Michelle Lemire a fondé l'Atelier Galerie Solart à Ripon en 1999. Depuis, elle y travaille la céramique, le bronze, la pierre et les métaux précieux : une pratique pluridisciplinaire enracinée dans une philosophie où l'eau est l'essence même de la vie.",
-        intro_en: "Michelle Lemire founded the Atelier Galerie Solart in Ripon in 1999. She has worked there ever since with ceramic, bronze, stone, and precious metals — a multidisciplinary practice rooted in a philosophy where water is the very essence of life.",
+        intro_en: "Michelle Lemire founded the Atelier Galerie Solart in Ripon in 1999. She has worked there ever since with ceramic, bronze, stone, and precious metals: a multidisciplinary practice rooted in a philosophy where water is the very essence of life.",
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
               body_fr: "Atelier et galerie sont fondus en un même espace : on peut voir l'artiste à l'œuvre, comprendre les pièces dans leur contexte, et acquérir directement sculptures, urnes, théières et bijoux.",
