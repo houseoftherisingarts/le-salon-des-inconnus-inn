@@ -243,7 +243,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
   const accent = getRoomAccent(room.id);
   const playShimmer = useShimmer();
 
-  // Play the hub's shimmer sound on every room change (skip the initial mount —
+  // Play the hub's shimmer sound on every room change (skip the initial mount:
   // opening the modal is its own moment, the orb-fade animation already
   // signals it).
   const firstRender = useRef(true);
