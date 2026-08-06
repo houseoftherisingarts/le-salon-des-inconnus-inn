@@ -318,7 +318,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
       cineFrameIdxRef.current = Math.round(vp * (n - 1));
       drawCine();
 
-      // Beat 1 — "Entrez dans le Manoir": resolve 0.05–0.20, hold, lift away 0.48–0.62.
+      // Beat 1 ("Entrez dans le Manoir"): resolve 0.05–0.20, hold, lift away 0.48–0.62.
       if (copy) {
         const inP = Math.min(1, Math.max(0, (p - 0.05) / 0.15));
         const outP = Math.min(1, Math.max(0, (p - 0.48) / 0.14));
