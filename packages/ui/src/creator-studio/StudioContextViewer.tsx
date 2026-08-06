@@ -35,7 +35,7 @@ export type ViewerTab =
 
 export interface ViewerContext {
     tab: ViewerTab;
-    /** Snapshot of the artist's profile data — populated when MEMBER. */
+    /** Snapshot of the artist's profile data, populated when MEMBER. */
     regData?: {
         name: string;
         city: string;

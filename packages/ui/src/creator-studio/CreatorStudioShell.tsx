@@ -89,7 +89,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
          if (currentUser) setAsVisitor(false);
      }, [currentUser?.uid]);
 
-     // Loading orb splash — shown on first mount of the Creator Studio so the
+     // Loading orb splash: shown on first mount of the Creator Studio so the
      // section change reads as deliberate (logo in glass orb + neon sweep).
      // Only appears once per page-load; if the parent unmounts and remounts
      // the studio, the splash plays again.
