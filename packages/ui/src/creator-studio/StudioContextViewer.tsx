@@ -61,7 +61,7 @@ interface Props {
     collapsed: boolean;
     setCollapsed: (c: boolean) => void;
     language: 'EN' | 'FR';
-    /** Theme accent — drives the aurora/sweep palette per LoL-style theme. */
+    /** Theme accent, drives the aurora/sweep palette per LoL-style theme. */
     theme: string;
     /** Currently signed-in user's uid. Required for the pill-avatar uploader. */
     uid?: string | null;
