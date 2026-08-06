@@ -960,7 +960,7 @@ const ProgressDock: React.FC<{
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ChapterFullscreen — fullscreen overlay with chapter content
+// ChapterFullscreen: fullscreen overlay with chapter content
 // Only chapter 'event' is fully fleshed out; others show a Preview placeholder.
 // ─────────────────────────────────────────────────────────────────────────────
 

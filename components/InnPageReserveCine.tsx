@@ -642,7 +642,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           <div className="reserve-cine-extent" aria-hidden />
         </div>
 
-        {/* ── 5-15. Test2-flow imports — heavy ones lazy-mounted, others wrapped in
+        {/* ── 5-15. Test2-flow imports: heavy ones lazy-mounted, others wrapped in
               content-visibility:auto so the browser skips rendering them when offscreen ── */}
 
         {/* ════════════════════════════════════════════════════════════════════
