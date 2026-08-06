@@ -19,7 +19,7 @@ interface LoadingOrbProps {
  * ──────────
  * A compact glass orb that sits in the center of a black field and announces
  * a section change. The orb breathes, an aurora drifts behind it, and a neon
- * sweep "lances" across its face — same sweep aesthetic as the StudioContext
+ * sweep "lances" across its face, same sweep aesthetic as the StudioContext
  * tab-change animation, scaled down to a single circular surface.
  *
  * Two intended uses:
