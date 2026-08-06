@@ -527,7 +527,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                         <StepDone language={language} displayName={answers.displayName} />
                     )}
 
-                    {/* Forward/finish button — final step shows "Enter the Salon" */}
+                    {/* Forward/finish button: final step shows "Enter the Salon" */}
                     {currentStep !== 'INTRO' && (
                         <div className="mt-10 flex flex-col items-center">
                             <button
