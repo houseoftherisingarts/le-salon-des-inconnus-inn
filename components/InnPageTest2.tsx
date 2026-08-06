@@ -50,7 +50,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         {t('Real inn', 'Page actuelle')}
       </button>
 
-      {/* ── HERO — original WebGL liquid-glass cycler, HOSTEL vibe (matches live /) ── */}
+      {/* ── HERO: original WebGL liquid-glass cycler, HOSTEL vibe (matches live /) ── */}
       <InnHero
         language={language}
         vibe={'HOSTEL'}

@@ -77,7 +77,7 @@ export const ForfaitsPage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* II — price centerpiece */}
+        {/* II: price centerpiece */}
         <section className="px-4 md:px-14 lg:px-24 py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
