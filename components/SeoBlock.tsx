@@ -125,7 +125,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
         </div>
         <div className="min-w-0">
 
-        {/* Body paragraphs — the substance for AEO */}
+        {/* Body paragraphs: the substance for AEO */}
         <div className="space-y-6 font-lato text-neutral-300 text-[15px] md:text-base leading-[1.85]">
           {content.paragraphs.map((p, i) => (
             <p key={i}>{p}</p>
