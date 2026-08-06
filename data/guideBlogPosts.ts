@@ -455,7 +455,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_en: "Because no other winter activity in the region has this intensity. And because Éric and his team treat the dogs with a respect you can see immediately." },
             { title_fr: "Pratique", title_en: "Practical info",
               body_fr: "Réservation obligatoire via tanwen.qc.ca. Saison : décembre à mars selon la neige. Habillez-vous très chaudement : le vent du traîneau est mordant.",
-              body_en: "Booking required via tanwen.qc.ca. Season: December to March depending on snow. Dress very warmly — the wind on the sled is sharp." },
+              body_en: "Booking required via tanwen.qc.ca. Season: December to March depending on snow. Dress very warmly: the wind on the sled is sharp." },
         ],
         faqs: [
             { q_fr: "Faut-il de l'expérience ?", q_en: "Do I need experience?",
