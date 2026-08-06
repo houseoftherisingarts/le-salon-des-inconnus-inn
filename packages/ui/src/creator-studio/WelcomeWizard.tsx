@@ -904,7 +904,7 @@ interface SocialIconProps {
 export const SocialIcon: React.FC<SocialIconProps> = ({ url, size = 24, color = 'c5a059' }) => {
     const svc = detectSocialService(url);
     if (svc) {
-        // simpleicons.org CDN — single-color PNG/SVG sized + tinted on the
+        // simpleicons.org CDN: single-color PNG/SVG sized + tinted on the
         // server side. Falls back to letter chip on a load error.
         return (
             <span
