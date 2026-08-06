@@ -16,7 +16,7 @@ const ADMIN_EMAILS: ReadonlyArray<string> = [
     'alex@lesalondesinconnus.com',
 ];
 
-/** Minimal user shape — accepts a Firebase Auth User or anything with an
+/** Minimal user shape: accepts a Firebase Auth User or anything with an
  *  email field. Returns false for null/undefined or missing emails. */
 export interface AdminCheckUser {
     email?: string | null;
