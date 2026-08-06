@@ -1037,7 +1037,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
         </div>
       </div>
 
-      {/* Fullscreen photo viewer — opened by tapping the orb. Portalled to the
+      {/* Fullscreen photo viewer, opened by tapping the orb. Portalled to the
           body so it sits above the whole modal; swipe or ‹ › to browse. */}
       {lightbox &&
         createPortal(
