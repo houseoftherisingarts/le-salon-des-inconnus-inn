@@ -5538,7 +5538,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     />
                                                 </div>
 
-                                                {/* Bursary toggle — surfaces only when emerging */}
+                                                {/* Bursary toggle: surfaces only when emerging */}
                                                 {collabFormData.revenueTier === 'emerging' && (
                                                     <label className="mt-3 flex items-start gap-3 cursor-pointer p-4 rounded border-l-4 border-[#d4af37] bg-[#d4af37]/5 hover:bg-[#d4af37]/10 transition-colors">
                                                         <span className={`shrink-0 mt-0.5 w-5 h-5 border-2 rounded flex items-center justify-center transition-all ${collabFormData.needsBursary ? 'bg-[#d4af37] border-[#d4af37]' : 'bg-transparent border-white/30'}`}>

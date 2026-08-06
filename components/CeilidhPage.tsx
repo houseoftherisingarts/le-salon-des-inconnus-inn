@@ -3249,7 +3249,7 @@ const LoginModal: React.FC<{
             </span>
             <div className="h-px flex-1 bg-[#c5a059]/20" />
           </div>
-          {/* Email path falls back to Google for now — magic-link auth not wired yet. */}
+          {/* Email path falls back to Google for now: magic-link auth not wired yet. */}
           <form
             onSubmit={(e) => { e.preventDefault(); handleGoogleSignIn(); }}
             className="space-y-3"
