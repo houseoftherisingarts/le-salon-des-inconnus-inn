@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
 
-// Unlisted page at /invitation — reached only by scanning the QR code on a
+// Unlisted page at /invitation: reached only by scanning the QR code on a
 // handwritten physical invitation. No nav link, no sitemap entry, noindex.
 // Same warm-dark atmosphere as the rest of the site (see PenseesPage), but a
 // more ceremonious, Peaky-Blinders-at-a-Victorian-manor register.
