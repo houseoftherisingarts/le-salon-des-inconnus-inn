@@ -484,7 +484,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      return (
         // Self-managed scroll: the inn's App.tsx wraps every view in a fixed
         // h-screen overflow-hidden container, so any page that's taller than
-        // the viewport (this one — viewer + hub) needs its own scrollable
+        // the viewport (this one: viewer + hub) needs its own scrollable
         // area. h-screen + overflow-y-auto turns this div into the studio's
         // own scroll context.
         <div data-studio-theme={theme} className={`h-screen w-full relative overflow-x-hidden overflow-y-auto transition-colors duration-700 ${themeStyles.bg} ${themeStyles.text}`}>
