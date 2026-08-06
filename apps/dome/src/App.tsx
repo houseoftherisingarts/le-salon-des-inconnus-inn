@@ -270,7 +270,7 @@ const VoiesSection: React.FC = () => (
         className="font-cormorant mt-5 mb-12 md:mb-16"
         style={{ color: 'rgba(255,250,240,0.72)', fontSize: 'clamp(1.15rem, 1.6vw, 1.35rem)', lineHeight: 1.6, fontWeight: 500, maxWidth: '54ch' }}
       >
-        On choisit une voie ou plusieurs, à son rythme, selon ce que les mains ont envie de faire.
+        Vous choisissez une voie ou plusieurs, à votre rythme, selon ce que vos mains ont envie de faire.
       </p>
     </Reveal>
 
