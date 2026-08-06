@@ -246,7 +246,7 @@ const FeatureRequestsPanel: React.FC<{
       <div>
         <p className="text-neutral-600 text-xs font-lato mb-1">
           Demandes des artistes pour être mis·e·s en avant à travers les espaces des Inconnus.
-          Cocher les surfaces souhaitées avant d'approuver — les drapeaux correspondants seront
+          Cocher les surfaces souhaitées avant d'approuver : les drapeaux correspondants seront
           activés dans <code className="text-neutral-500">members/{'{uid}'}/admin/flags</code>.
         </p>
       </div>
