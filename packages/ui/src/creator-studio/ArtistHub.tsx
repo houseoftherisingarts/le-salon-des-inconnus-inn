@@ -7496,7 +7496,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     Asks for the shared password Alex has handed out to the
                     real artists. On success, the claim is recorded in
                     Firestore (rule prevents any further re-claim) and the
-                    user's profile is seeded from the roster entry — but only
+                    user's profile is seeded from the roster entry, but only
                     for fields they haven't already filled themselves. */}
                 {claimingArtistId !== null && (() => {
                     const artist = ARTISTS_ROSTER.find(a => a.id === claimingArtistId);
