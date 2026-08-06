@@ -553,7 +553,7 @@ const App: React.FC = () => {
           setRedirectPendingUser(result.user);
         }
       })
-      .catch(() => { /* ignore — no pending redirect */ });
+      .catch(() => { /* ignore: no pending redirect */ });
   }, []);
 
   const handleUserChange = (user: User | null, profile: MemberProfile | null) => {
