@@ -4391,7 +4391,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                      )}
                                  </div>
 
-                                 {/* Skills — inline editable. Add/remove writes through to
+                                 {/* Skills: inline editable. Add/remove writes through to
                                      Firestore (handleAddSkill/handleRemoveSkill). */}
                                  <div className={`bg-[#0a0a0a] p-6 border ${currentStyles.border} relative`}>
                                      <div className={`flex justify-between items-center mb-4 border-b ${currentStyles.border} pb-2`}>
