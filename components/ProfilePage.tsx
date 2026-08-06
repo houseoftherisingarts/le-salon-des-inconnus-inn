@@ -973,7 +973,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   )}
                 </p>
 
-                {/* Last code panel — copy-ready */}
+                {/* Last code panel: copy-ready */}
                 {lastEntry?.code && (
                   <div className="mt-2">
                     <p className="font-cinzel text-emerald-400 text-[10px] uppercase tracking-[0.4em] mb-2">

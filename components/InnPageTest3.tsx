@@ -743,7 +743,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
               </div>
             </a>
 
-            {/* Massage — right. External link to the practitioner's site
+            {/* Massage: right. External link to the practitioner's site
                 (salonlenvolee.com). The internal /massage page stays as a
                 fallback and is excluded from the sitemap. */}
             <a
