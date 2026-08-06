@@ -248,7 +248,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "Atelier et galerie sont fondus en un même espace : vous pouvez voir l'artiste à l'œuvre, comprendre les pièces dans leur contexte, et acquérir directement sculptures, urnes, théières et bijoux.",
               body_en: "Studio and gallery merge into a single space: you can see the artist at work, understand the pieces in their context, and acquire sculptures, urns, teapots, and jewellery directly." },
             { title_fr: "Pourquoi y aller", title_en: "Why go",
-              body_fr: "Pour rencontrer une artiste qui parle de son travail avec une rare précision. Pour repartir avec une pièce dont on connaît l'origine. Et pour découvrir la facette artisanale, profonde, de la Petite-Nation.",
+              body_fr: "Pour rencontrer une artiste qui parle de son travail avec une rare précision. Pour repartir avec une pièce dont vous connaissez l'origine. Et pour découvrir la facette artisanale, profonde, de la Petite-Nation.",
               body_en: "To meet an artist who speaks about her work with rare precision. To leave with a piece whose origin you know. And to discover the deep, hand-made face of Petite-Nation." },
         ],
         schema: { type: "ArtGallery", address: "Ripon, QC, Canada" },
