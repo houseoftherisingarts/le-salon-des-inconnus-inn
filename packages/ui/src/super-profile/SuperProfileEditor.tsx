@@ -692,7 +692,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                 {error && <span className="text-[11px] text-rose-300 font-lato">{error}</span>}
             </div>
 
-            {/* Bespoke-tier upsell — placeholder for the eventual "Alex
+            {/* Bespoke-tier upsell: placeholder for the eventual "Alex
                 designs your portfolio from a catalog" upgrade. Wired now
                 so the entry point is discoverable; the catalog UI ships in
                 a later phase. */}
