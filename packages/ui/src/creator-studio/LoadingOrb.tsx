@@ -61,7 +61,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
 
             {/* Orb container */}
             <div className="relative orb-pop">
-                {/* Outer glow ring — pulses with the breathe animation. */}
+                {/* Outer glow ring: pulses with the breathe animation. */}
                 <div
                     aria-hidden
                     className="absolute -inset-6 rounded-full pointer-events-none orb-glow-ring"

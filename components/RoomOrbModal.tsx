@@ -459,7 +459,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
         // When the room is not bookable for these dates, fetch two ways forward:
         // another room free for the same dates, and the nearest dates for THIS
-        // room. Degrade silently — a failure just leaves the plain message.
+        // room. Degrade silently: a failure just leaves the plain message.
         const unavailable = !avail.allAvailable || !avail.meetsMinStay;
         if (unavailable) {
           try {
