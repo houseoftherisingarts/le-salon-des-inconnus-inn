@@ -52,7 +52,7 @@ export function validateUsername(raw: string): UsernameValidation {
 
 /**
  * Turn an arbitrary displayName into a candidate slug. Caller still has to
- * run validateUsername and check availability — this is a starting suggestion.
+ * run validateUsername and check availability: this is a starting suggestion.
  */
 export function slugifyDisplayName(name: string | null | undefined): string {
     if (!name) return '';
