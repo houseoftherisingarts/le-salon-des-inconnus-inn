@@ -2840,7 +2840,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
 
                 {panel.id === 'event' && (
                   <div className="mx-3 md:mx-6 lg:mx-10 my-6 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-md shadow-[0_30px_80px_rgba(0,0,0,0.55)] overflow-hidden">
-                    {/* ── 1. HERO — same liquid-glass photo cycler as the Inn page ────── */}
+                    {/* ── 1. HERO: same liquid-glass photo cycler as the Inn page ────── */}
                     <section className="relative min-h-screen overflow-hidden">
                       {/* Photo cycler: cycles through Ceilidh-relevant photos every 5s */}
                       <LiquidGlassCycler images={CEILIDH_HERO_IMAGES} />

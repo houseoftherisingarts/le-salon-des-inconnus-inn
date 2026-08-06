@@ -2676,7 +2676,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    /** Accept a gift — adds puzzle to my displayCase, marks gift accepted. */
+    /** Accept a gift: adds puzzle to my displayCase, marks gift accepted. */
     const acceptPuzzleGift = async (g: PuzzleGift) => {
         if (!currentUser?.uid || g.toUid !== currentUser.uid) return;
         const db = studioFirestore(); if (!db) return;
