@@ -6909,7 +6909,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                             draftAmount < minNextBid
                                                                 ? (language === 'EN' ? `Bid must be at least ${minNextBid}` : `Offre minimale : ${minNextBid}`)
                                                                 : coins < draftAmount
-                                                                    ? (language === 'EN' ? `You only have ${coins} coins` : `Tu n'as que ${coins} pièces`)
+                                                                    ? (language === 'EN' ? `You only have ${coins} coins` : `Vous n'avez que ${coins} pièces`)
                                                                     : ''
                                                         }
                                                         className={`flex-1 py-2 text-[11px] font-cinzel uppercase tracking-widest rounded transition-all ${canBid && bidSubmitting !== listing.id ? formStyles.submitOn : formStyles.submitOff}`}
