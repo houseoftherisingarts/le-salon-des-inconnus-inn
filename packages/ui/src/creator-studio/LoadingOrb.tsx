@@ -142,7 +142,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
             </div>
 
             <style>{`
-                /* Orb entry — scale + soft fade-in. */
+                /* Orb entry: scale + soft fade-in. */
                 .orb-pop {
                     animation: orbPop 700ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
                 }

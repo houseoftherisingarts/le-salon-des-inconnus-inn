@@ -161,7 +161,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
           rot = -side * e * 14;
           op = 1 - smooth(0.08, 0.85, -d);
         } else {
-          // Ahead — fans into view from the alternating screen corner (top-left /
+          // Ahead: fans into view from the alternating screen corner (top-left /
           // top-right) and settles onto its real map position only as the camera
           // reaches the focal centre. Keeps the entrance balanced: the stop right
           // after Le Salon (an odd index) sweeps in from the top-right.
