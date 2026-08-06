@@ -792,7 +792,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     </div>
                 )}
 
-                {/* Source tab strip — Discovered (web seed) · Featured
+                {/* Source tab strip: Discovered (web seed) · Featured
                     (admin uploads) · Voices (approved UGC). Switching the
                     tab swaps the pool the orb draws from; the seed effect
                     above re-zaps so the user lands on a video from the

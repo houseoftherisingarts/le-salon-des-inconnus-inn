@@ -278,7 +278,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le joyau",
                 title: "Parc des Montagnes Noires",
                 location: "Ripon",
-                description: "800 acres de forêt municipale avec 25 km de sentiers — randonnée, fat bike, raquette, ski de fond. Tour d'observation de 12 m à 426 m d'altitude, avec vue à 360° sur toute la vallée. Allez-y la nuit en août : le ciel de la Petite-Nation s'ouvre complètement, loin de tout halo lumineux.",
+                description: "800 acres de forêt municipale avec 25 km de sentiers : randonnée, fat bike, raquette, ski de fond. Tour d'observation de 12 m à 426 m d'altitude, avec vue à 360° sur toute la vallée. Allez-y la nuit en août : le ciel de la Petite-Nation s'ouvre complètement, loin de tout halo lumineux.",
                 link: "https://parcdesmontagnesnoires.ca/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2024/06/247871704-1516380238695333-4418798037750066613-n-1024x683.jpg",
                 isFavorite: true,

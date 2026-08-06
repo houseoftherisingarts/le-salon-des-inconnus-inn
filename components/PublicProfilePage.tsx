@@ -220,7 +220,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
           }
         } catch (_) {}
         // Read the artist's creator-studio profile for their wardrobe choice.
-        // Doesn't matter if it doesn't exist — the page just falls back to default styling.
+        // Doesn't matter if it doesn't exist: the page just falls back to default styling.
         try {
           const artSnap = await getDoc(doc(db!, 'members', targetUid, 'artistProfile', 'profile'));
           if (artSnap.exists()) {
