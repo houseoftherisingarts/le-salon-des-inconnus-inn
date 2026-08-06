@@ -2168,8 +2168,8 @@ const TeamsChapterBody: React.FC<{
                  'Offrir un spectacle payant')}
             </h4>
             <p className="font-josefin text-neutral-400 text-xs leading-relaxed">
-              {t('Propose a fee — we’ll discuss the details.',
-                 'Proposez un cachet — nous en discuterons ensemble.')}
+              {t('Propose a fee: we’ll discuss the details.',
+                 'Proposez un cachet : nous en discuterons ensemble.')}
             </p>
             <span className="inline-block mt-4 font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em] group-hover:text-[#f3e5ab] transition-colors">
               {t('Open the form →', 'Ouvrir le formulaire →')}
