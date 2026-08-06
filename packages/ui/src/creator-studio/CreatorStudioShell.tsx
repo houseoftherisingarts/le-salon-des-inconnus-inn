@@ -620,7 +620,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                 )}
              </div>
 
-             {/* Contextual viewer — replaces the static "CREATOR STUDIO" hero
+             {/* Contextual viewer: replaces the static "CREATOR STUDIO" hero
                  across all themes. Drives off the active tab from ArtistHub.
                  Per-theme hero copy moves into the WELCOME state of the
                  viewer's metadata so the brand still reads loudly on first

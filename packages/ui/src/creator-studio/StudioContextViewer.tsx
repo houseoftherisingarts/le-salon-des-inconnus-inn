@@ -714,7 +714,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 transition: dragging ? 'none' : 'height 280ms cubic-bezier(0.2, 0.7, 0.3, 1)',
             }}
         >
-            {/* Aurora backdrop — slow drifting radial blobs in the tab's accent
+            {/* Aurora backdrop: slow drifting radial blobs in the tab's accent
                 colours. Persists across tab changes for continuity, but the
                 colours animate when the tab key changes. */}
             <div aria-hidden className="absolute inset-0 pointer-events-none">
