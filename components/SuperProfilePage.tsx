@@ -2,7 +2,7 @@
 // /{username}. Resolves the slug to a uid, loads the config doc, dispatches
 // to the medium-specific template.
 //
-// Mounted as a top-level "view" from App.tsx — no SiteHeader, no music
+// Mounted as a top-level "view" from App.tsx, no SiteHeader, no music
 // controls, no cookie chrome below. The page intentionally owns the entire
 // viewport: visiting /{name} should feel like walking into the artist's
 // room, not the Salon with a banner on top.
