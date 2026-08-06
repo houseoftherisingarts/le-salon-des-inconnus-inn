@@ -393,7 +393,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* Decision-point CTA — right where the offer becomes concrete. */}
+      {/* Decision-point CTA: right where the offer becomes concrete. */}
       {!hasApplied && !showForm && (
         <Reveal className="px-6 md:px-12 lg:px-20 pb-2 md:pb-4">
           <div className="max-w-6xl">

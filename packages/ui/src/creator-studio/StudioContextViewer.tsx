@@ -401,8 +401,8 @@ const RosterBlock: React.FC<{ language: 'EN' | 'FR'; theme: string }> = ({ langu
             </h2>
             <p className="font-lato text-neutral-300 text-base md:text-lg max-w-prose">
                 {t(
-                    'Curated voices across the Salon — visual, audio, digital, sculptural.',
-                    'Voix curatées du Salon — visuel, audio, numérique, sculpture.',
+                    'Curated voices across the Salon: visual, audio, digital, sculptural.',
+                    'Voix curatées du Salon: visuel, audio, numérique, sculpture.',
                 )}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
