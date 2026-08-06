@@ -637,7 +637,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
           )}
         </div>
 
-        {/* Ceilidh attendance — arrival day + time + team + lodging.
+        {/* Ceilidh attendance: arrival day + time + team + lodging.
             Visible to everyone so people know when this person arrives. */}
         {targetReg && (
           <div className="border border-[#d4af37]/30 bg-[#d4af37]/5 p-5">
