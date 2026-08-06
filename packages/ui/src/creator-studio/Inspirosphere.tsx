@@ -709,7 +709,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                 background: the orb's aurora lives up in the viewer, and the
                 hub area below already provides the page surface. */}
             <section className="relative z-10">
-                {/* Now-playing title + credit — sits above the control bar
+                {/* Now-playing title + credit, sits above the control bar
                     since the orb itself no longer carries text chrome. */}
                 {currentVideo && (
                     <div className="px-4 md:px-8 pt-5 pb-2 text-center">
