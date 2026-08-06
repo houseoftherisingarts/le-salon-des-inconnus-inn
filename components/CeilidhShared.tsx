@@ -1816,8 +1816,8 @@ const TeamRegistrationModal: React.FC<{
             {conflictDays.length > 0 && (
               <div className="mt-4 p-3 border border-amber-700/40 bg-amber-950/20 text-amber-300/80 text-xs font-lato leading-relaxed">
                 {t(
-                  `Days marked ⚠ will add you as support/backup — you can be called on if the primary team needs a hand or if a spot opens up.`,
-                  `Les jours marqués ⚠ vous ajouteront comme membre de soutien/relève — vous pourrez être sollicité(e) si l'équipe principale a besoin d'aide ou si une place se libère.`,
+                  `Days marked ⚠ will add you as support/backup: you can be called on if the primary team needs a hand or if a spot opens up.`,
+                  `Les jours marqués ⚠ vous ajouteront comme membre de soutien/relève : vous pourrez être sollicité(e) si l'équipe principale a besoin d'aide ou si une place se libère.`,
                 )}
               </div>
             )}
