@@ -279,9 +279,9 @@ export const InnPageReserveCine: React.FC<Props> = ({
   // ── FUSED CINEMATIC ORIGINS: two beats over one scrubbed shot ─────────────
   // The same living room that used to be the static "Les Origines" photo is now
   // the moving backdrop. As the track passes through the viewport (progress 0→1):
-  //   • video.currentTime — the push-in scrubs forward, completing by ~0.62
-  //   • beat 1 ("Entrez dans le Manoir") — resolves 0.05–0.20, holds, lifts 0.48–0.62
-  //   • beat 2 (the real "Bienvenue…" editorial) — resolves 0.56–0.76, then holds
+  //   • video.currentTime: the push-in scrubs forward, completing by ~0.62
+  //   • beat 1 ("Entrez dans le Manoir"): resolves 0.05–0.20, holds, lifts 0.48–0.62
+  //   • beat 2 (the real "Bienvenue…" editorial): resolves 0.56–0.76, then holds
   //     over the settled room behind a left-dark wash. Text is verbatim from the
   //     live HistorySection (Rule 6: enrich, don't replace).
   // The booking section below still renders completely normally, with no video.
