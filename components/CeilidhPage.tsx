@@ -1730,7 +1730,7 @@ const TeamsChapterBody: React.FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickedId]);
 
-  // Browse a team — local state only, no Firestore write.
+  // Browse a team: local state only, no Firestore write.
   const handleViewTeam = (teamId: string) => {
     setPickedId((prev) => (prev === teamId ? null : teamId));
   };

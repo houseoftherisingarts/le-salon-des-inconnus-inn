@@ -3586,7 +3586,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         // in the Main Content Area (replacing the active tab) so the Studio
         // contextual viewer at the top of the shell stays visible.
         if (activeTool === 'GRANTS_CA') {
-            // Canada-only "Aide aux Subventions" — eventual AI-assisted scan
+            // Canada-only "Aide aux Subventions": eventual AI-assisted scan
             // of CCA / SODEC / Telefilm / etc. databases + draft helper.
             // Stubbed for now with the planned scope, links, and a "notify
             // me when ready" capture so we have demand signal before build.
