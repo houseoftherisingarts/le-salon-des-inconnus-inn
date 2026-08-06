@@ -69,7 +69,7 @@ const CITATIONS_AS_ORB: OrbVideo[] = INSPIROSPHERE_CITATIONS.map(c => ({
  * inline rendering when the slot is absent.
  *
  * Two modes:
- *   • ORB     — fullscreen single video inside the orb. "Zap" = pick a new
+ *   • ORB     : fullscreen single video inside the orb. "Zap" = pick a new
  *                 random video (filtered by category if one is active).
  *   • CONSCIOUS — grid of all videos by category; clicking one slots it into
  *                 the orb and returns to ORB mode.
