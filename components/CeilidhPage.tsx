@@ -1188,7 +1188,7 @@ const CEILIDH_ESSAY: { titleEn: string; titleFr: string; textEn: string; textFr:
   {
     titleEn: 'Bringing Back the Working Ceilidh',
     titleFr: 'Ramener le "Ceilidh" Travailleur',
-    textEn: 'Ceilidh (pronounced "kay-lee") is a Gaelic word from the Scottish tradition. While today mainly associated with festive gatherings with music, dance, and stories, it once had a utilitarian dimension. Rural communities organized these gatherings to harvest, build homes and barns, or card wool — followed by celebrations that strengthened community bonds and made the hard work feel worthwhile.',
+    textEn: 'Ceilidh (pronounced "kay-lee") is a Gaelic word from the Scottish tradition. While today mainly associated with festive gatherings with music, dance, and stories, it once had a utilitarian dimension. Rural communities organized these gatherings to harvest, build homes and barns, or card wool, followed by celebrations that strengthened community bonds and made the hard work feel worthwhile.',
     textFr: 'Ceilidh (prononcé "kay-lee") est un mot gaélique qui désigne une tradition Écossaise. Bien que le ceilidh soit aujourd\u2019hui principalement associé à des rassemblements festifs avec de la musique, de la danse et des histoires, il avait autrefois une dimension utilitaire. Les communautés rurales organisaient ces rencontres pour accomplir des tâches collectives — récolter les moissons, construire ou réparer des maisons et des granges, fileter la laine. Ces moments de travail étaient suivis de célébrations, renforçant les liens communautaires et rendant le travail moins pénible.',
   },
   {

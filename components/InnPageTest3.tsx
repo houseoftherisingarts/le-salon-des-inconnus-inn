@@ -939,7 +939,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
             </div>
           </div>
         </section>
-        {/* SEO body section — substantial French copy, internal links, external
+        {/* SEO body section: substantial French copy, internal links, external
             citations, FAQ accordion. Also sources the FAQPage JSON-LD via
             App.tsx route effect. */}
         <SeoBlock viewKey="INN" language={language} onNavigate={onNavigate} />
