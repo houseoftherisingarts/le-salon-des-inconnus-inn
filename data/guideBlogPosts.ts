@@ -284,7 +284,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         intro_en: "Le Napoléon is chef Antoine Meunier's intimate bistro in Montebello: an address for evenings when you want a meal that matters. Duck tartare, bison fillet, foie-gras poutine: the kitchen plays with classics without ever losing rigour around the product.",
         sections: [
             { title_fr: "La cuisine", title_en: "The cooking",
-              body_fr: "Produits locaux et de saison, présentations soignées, service attentif. La carte évolue avec l'année. C'est le genre d'endroit où chaque assiette est pensée, et ça se sent.",
+              body_fr: "Produits locaux et de saison, présentations soignées, service attentif. La carte évolue avec l'année. C'est le genre d'endroit où chaque assiette est pensée, et où on le sent.",
               body_en: "Local, seasonal products, careful presentation, attentive service. The menu shifts with the year. The kind of place where every plate is considered, and you can feel it." },
             { title_fr: "Le cadre", title_en: "The setting",
               body_fr: "Salle chaleureuse, intimiste, parfaite pour un repas en couple ou une petite tablée. Réservation fortement recommandée le week-end.",
