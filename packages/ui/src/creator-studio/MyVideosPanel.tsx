@@ -125,7 +125,7 @@ export const MyVideosPanel: React.FC<Props> = ({
                     const url = await getDownloadURL(storageRef(storage, v.storagePath));
                     additions[v.id] = url;
                 } catch {
-                    /* object deleted out from under us — skip */
+                    /* object deleted out from under us, skip */
                 }
             }
             if (!cancelled && Object.keys(additions).length) {
