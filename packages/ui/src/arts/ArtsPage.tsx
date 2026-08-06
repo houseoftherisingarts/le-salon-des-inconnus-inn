@@ -1962,7 +1962,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
         {/*
           The "Le Créateur" / "I AM AN ARTIST" button sets rootView='ARTIST'.
           That used to render the placeholder <ArtistPortal /> with the
-          "Le Hub des Créateurs" header — now it mounts the imported
+          "Le Hub des Créateurs" header. Now it mounts the imported
           creator-studio (creator-studio-repo-v0.2 (3)). The standalone
           chrome (language toggle, music) lives at the salon app level, so
           we mount only the inner CreatorStudio shell here. When

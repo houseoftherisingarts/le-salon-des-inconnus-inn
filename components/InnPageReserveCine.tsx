@@ -118,7 +118,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
   const cineFramesRef = useRef<HTMLImageElement[]>([]);
   const cineFrameIdxRef = useRef(0);
 
-  // Hero photo framing — defaults from INN_HERO_FOCUS, overridable live via the
+  // Hero photo framing: defaults from INN_HERO_FOCUS, overridable live via the
   // /?herofocal drag editor (stored in Firestore config/innHeroFocus).
   const [heroFocus, setHeroFocus] = useState<number[]>(INN_HERO_FOCUS);
   const [focalAdminOpen, setFocalAdminOpen] = useState(

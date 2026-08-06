@@ -1555,7 +1555,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // ── Profile persistence (Firestore) ──────────────────────────────────────
     // Profile lives at members/{uid}/artistProfile/profile. Owner is the only
     // writer; firestore.rules enforces this. Consumers (the inn app) have
-    // already initialized firebase via getApp() — we just call getFirestore()
+    // already initialized firebase via getApp(): we just call getFirestore()
     // on the same default app.
     const [profileSaving, setProfileSaving] = useState(false);
     const [profileSavedAt, setProfileSavedAt] = useState<number | null>(null);
