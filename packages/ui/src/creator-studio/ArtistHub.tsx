@@ -1837,7 +1837,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Delete a gallery image — removes from the Firestore array and best-effort
+    // Delete a gallery image: removes from the Firestore array and best-effort
     // deletes the underlying Storage object. Storage delete is non-fatal: if
     // the URL doesn't decode to a known path (legacy uploads), the array
     // removal still wins.
