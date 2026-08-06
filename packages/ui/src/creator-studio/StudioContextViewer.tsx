@@ -392,7 +392,7 @@ const ProfileBlock: React.FC<{
 
 const RosterBlock: React.FC<{ language: 'EN' | 'FR'; theme: string }> = ({ language, theme }) => {
     const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
-    // Spotlight a rotating subset of the roster — 4 cards drift gently.
+    // Spotlight a rotating subset of the roster: 4 cards drift gently.
     const spotlight = ARTISTS_ROSTER.slice(0, 4);
     return (
         <div className="flex flex-col gap-6 max-w-6xl">

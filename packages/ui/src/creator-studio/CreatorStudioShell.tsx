@@ -209,7 +209,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      // so the studio's currentUser flips to null on success and the gate
      // re-appears. Wrapped in try/catch since signOut can throw on stale
      // tokens (e.g. when the network is flaky); we surface nothing in that
-     // case because the user has no recourse — they'll retry naturally.
+     // case because the user has no recourse: they'll retry naturally.
      const handleLogout = async () => {
          try { await signOut(getAuth(getApp())); } catch { /* non-fatal */ }
      };
