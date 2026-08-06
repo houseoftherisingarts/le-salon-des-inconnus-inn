@@ -7884,7 +7884,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 titleEn={isEditing ? 'Edit article' : 'New article'}
                                 titleFr={isEditing ? "Éditer l'article" : 'Nouvel article'}
                                 leadEn="Write something worth reading. The Salon publishes pieces that frame intent, name the medium, and trust the reader."
-                                leadFr="Écris quelque chose qui vaut la lecture. Le Salon publie des textes qui cadrent l'intention, nomment le médium, et font confiance au lectorat."
+                                leadFr="Écrivez quelque chose qui vaut la lecture. Le Salon publie des textes qui cadrent l'intention, nomment le médium, et font confiance au lectorat."
                                 n={isEditing && (editingArticle as any)?.id ? `№ ${String((editingArticle as any).id).slice(-4).toUpperCase()}` : undefined}
                             />
 
