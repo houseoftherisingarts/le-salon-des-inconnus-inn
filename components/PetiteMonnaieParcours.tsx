@@ -357,7 +357,7 @@ const Pastille: React.FC<{
         <a href={mapsLink(stop)} target="_blank" rel="noopener noreferrer" title={stop.name}
           className="relative block rounded-full overflow-hidden bg-[#0a120c] group"
           style={{ width: size, height: size, boxShadow: `0 0 0 3px ${ring}, 0 0 0 7px ${BRASS_DEEP}, 0 0 24px 3px ${ring}66, 0 26px 70px rgba(0,0,0,0.6), inset 0 0 0 3px ${ring}, inset 0 0 0 8px rgba(8,14,10,0.5), inset 0 0 0 11px ${BRASS_DEEP}` }}>
-          {/* branded fallback under the photo — a broken/odd image degrades to this,
+          {/* branded fallback under the photo: a broken/odd image degrades to this,
               never to white. Logo stops sit on near-black so the inverted wordmark's
               own backdrop melts into the orb instead of reading as a rectangle. */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none"
