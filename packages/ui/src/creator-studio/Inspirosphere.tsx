@@ -559,7 +559,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                         shell's overflow-hidden + rounded-full. The video fills
                         the circle instead of letterboxing. */}
                     {citationText ? (
-                        // CITATIONS tab — typeset wisdom inside the orb.
+                        // CITATIONS tab: typeset wisdom inside the orb.
                         // No player chrome; the text is the artwork.
                         <div
                             key={`citation-${currentVideoId}-${zapKey}`}
