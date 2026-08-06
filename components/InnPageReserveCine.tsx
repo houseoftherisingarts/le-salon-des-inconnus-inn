@@ -1173,7 +1173,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
         @keyframes hero3FadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes hero3FadeIn { to { opacity: 1; } }
 
-        /* Rooms section header — gentle reveal as you scroll into view.
+        /* Rooms section header: gentle reveal as you scroll into view.
            A short fade-up on the eyebrow + title; a thin gold rule grows from
            a point to 80px; the title gets a slow gold-to-cream gradient sweep. */
         .rooms-eyebrow {
