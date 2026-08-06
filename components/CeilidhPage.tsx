@@ -2889,9 +2889,9 @@ const LodgingChapterBody: React.FC<{
 // ─────────────────────────────────────────────────────────────────────────────
 // ───────────────────────────────────────────────────────────────────────────
 // ──────────────────────────────────────────────────────────────────────────
-// Chapter 05 — Pratique
+// Chapter 05 (Pratique)
 // Real source: address + phone + hours from CeilidhPage. The 'what to bring'
-// list and the FAQ are user-authored placeholders — they'll be tightened.
+// list and the FAQ are user-authored placeholders: they'll be tightened.
 // Live features (NeedsSection, CovoiturageSection, AbundanceSection,
 // ContributionPanel, ShowTicketModal, in-app messaging) are stubbed below.
 // ──────────────────────────────────────────────────────────────────────────
