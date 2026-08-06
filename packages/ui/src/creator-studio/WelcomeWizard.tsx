@@ -200,7 +200,7 @@ export const WelcomeWizard: React.FC<Props> = ({
         });
     };
 
-    // ── Resume — read existing profile + onboarding flag ────────────────
+    // ── Resume: read existing profile + onboarding flag ────────────────
     useEffect(() => {
         let cancelled = false;
         (async () => {
