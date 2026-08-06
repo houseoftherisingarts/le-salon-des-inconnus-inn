@@ -434,7 +434,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       {/* ── BODY 4 (the profile we're after + reciprocity) ───────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-10 md:py-14">
         <div className="max-w-3xl">
-          <div className="mb-6"><Eyebrow>{t('The profile we look for', "Le profil qu'on cherche")}</Eyebrow></div>
+          <div className="mb-6"><Eyebrow>{t('The profile we look for', "Le profil que nous cherchons")}</Eyebrow></div>
           <Para>{t(body[7].en, body[7].fr)}</Para>
           <p className="font-fraunces-it mt-7" style={{ color: T.gold, fontSize: 'clamp(1.15rem, 1.6vw, 1.4rem)', lineHeight: 1.45 }}>
             {t(body[8].en, body[8].fr)}
