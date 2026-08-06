@@ -2787,7 +2787,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
               }}
               onClick={() => !isActive && setActivePanel(panel.id)}
             >
-              {/* Background image — hidden on the active 'event' panel because the
+              {/* Background image: hidden on the active 'event' panel because the
                   LiquidGlassCycler hero handles its own imagery (avoids duplicate photo). */}
               <img
                 src={panel.image}
