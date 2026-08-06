@@ -1921,7 +1921,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           />
         )}
 
-        {/* ── Messages — wwoofer threads only. Member-to-member private
+        {/* ── Messages: wwoofer threads only. Member-to-member private
               conversations are intentionally excluded for privacy. */}
         {tab === 'messages' && (
           <MessagesSection wwoofers={wwoofers} adminUid={user!.uid} adminEmail={user!.email ?? ''} />
