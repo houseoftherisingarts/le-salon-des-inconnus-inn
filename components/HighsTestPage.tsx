@@ -1,4 +1,4 @@
-// HighsTestPage — premium scrollytelling intro to the Creator Studio.
+// HighsTestPage: premium scrollytelling intro to the Creator Studio.
 //
 // "Going into a world." A WebGL cosmic-tunnel shader fills the entire
 // viewport and serves as the always-visible environment (the world). A
