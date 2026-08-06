@@ -270,7 +270,7 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyModalProps> = ({ language
           {/* Close button */}
           <div className="mt-10 pt-6 border-t border-white/5 flex justify-between items-center">
             <p className="text-neutral-700 text-xs font-lato">
-              © 2026 Le Salon des Inconnus — Maison Favier, Namur QC
+              © 2026 Le Salon des Inconnus · Maison Favier, Namur QC
             </p>
             <button
               onClick={onClose}
