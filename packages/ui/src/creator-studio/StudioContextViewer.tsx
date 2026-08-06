@@ -597,7 +597,7 @@ export const StudioContextViewer: React.FC<Props> = ({
 
     // Track whether the user has navigated past the initial WELCOME state.
     // Only show the LoL-style theatrics (sweep + particles + viewer-body fade)
-    // for tab transitions — first arrival keeps the original brand hero pure
+    // for tab transitions: first arrival keeps the original brand hero pure
     // so the neon flash + per-theme signature reads as designed.
     const prevTabRef = useRef<ViewerTab>(ctx.tab);
     const [hasTransitioned, setHasTransitioned] = useState(false);
