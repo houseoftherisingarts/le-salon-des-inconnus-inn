@@ -316,7 +316,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </span>
       </header>
 
-      {/* ── LEAD — the announcement ─────────────────────────────────────── */}
+      {/* ── LEAD: the announcement ─────────────────────────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 pt-20 md:pt-28 pb-2">
         <div className="max-w-4xl">
           <p className="comm-lead font-inter" style={{ color: T.ink, fontSize: 'clamp(1.2rem, 1.7vw, 1.55rem)', lineHeight: 1.62 }}>
