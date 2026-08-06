@@ -170,7 +170,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     }
   };
 
-  // ── COMMUNAUTE coupon — click-to-copy ─────────────────────────────────────
+  // ── COMMUNAUTE coupon: click-to-copy ─────────────────────────────────────
   const [couponCopied, setCouponCopied] = useState(false);
   const copyCoupon = (code: string) => {
     navigator.clipboard?.writeText(code).then(() => {
