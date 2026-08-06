@@ -607,8 +607,8 @@ const StepIntro: React.FC<{ language: 'EN' | 'FR'; onBegin: () => void }> = ({ l
             </h1>
             <p className="text-neutral-300 text-lg font-lato leading-relaxed max-w-xl mx-auto mb-10">
                 {t(
-                    'A few quick questions so we know who you are. Two minutes — and then your room is yours.',
-                    'Quelques questions rapides pour qu\'on sache qui tu es. Deux minutes — puis ta chambre est à toi.',
+                    'A few quick questions so we know who you are. Two minutes, and then your room is yours.',
+                    'Quelques questions rapides pour qu\'on sache qui tu es. Deux minutes, puis ta chambre est à toi.',
                 )}
             </p>
             <button
