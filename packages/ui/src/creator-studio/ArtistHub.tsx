@@ -2109,7 +2109,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
     // Notify the shell when context changes so the top viewer can re-render
     // with matching content + transition. Stays in WELCOME (the original
-    // brand hero) until the user actually clicks a tab — even logged-in
+    // brand hero) until the user actually clicks a tab, even logged-in
     // members see the brand first, then choose where to go.
     useEffect(() => {
         onContextChange?.({
