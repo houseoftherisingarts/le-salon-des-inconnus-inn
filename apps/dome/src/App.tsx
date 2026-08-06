@@ -239,7 +239,7 @@ const Hero: React.FC = () => {
 const VOIES: { titre: string; body: string; icon: React.ReactNode }[] = [
   {
     titre: 'Cultiver la terre',
-    body: "Les jardins et les terres du domaine attendent des mains. On sème, on entretient, on récolte, et la saison rend ce qu'on lui a confié.",
+    body: "Les jardins et les terres du domaine attendent des mains. Vous semez, vous entretenez, vous récoltez, et la saison rend ce que vous lui avez confié.",
     icon: <path d="M12 21V11m0 0c0-3.5-2.5-6-6-6 0 3.5 2.5 6 6 6Zm0-2c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6Z" />,
   },
   {
