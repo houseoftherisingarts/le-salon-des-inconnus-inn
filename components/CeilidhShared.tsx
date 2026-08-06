@@ -1823,7 +1823,7 @@ const TeamRegistrationModal: React.FC<{
             )}
           </div>
 
-          {/* Chef d'équipe — only if there are primary days */}
+          {/* Chef d'équipe: only if there are primary days */}
           {primaryDays.length > 0 && (
             <div className="mb-6">
               <label className="flex items-center gap-3 cursor-pointer group" onClick={() => setIsChefEquipe(!isChefEquipe)}>

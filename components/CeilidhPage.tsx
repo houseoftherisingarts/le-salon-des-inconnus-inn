@@ -821,7 +821,7 @@ const ChapterCard: React.FC<{
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// StatusSeal — small badge in the corner of each chapter card
+// StatusSeal: small badge in the corner of each chapter card
 // ─────────────────────────────────────────────────────────────────────────────
 
 const StatusSeal: React.FC<{ status: ChapterStatus; language: 'EN' | 'FR' }> = ({ status, language }) => {
