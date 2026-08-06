@@ -86,7 +86,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none" aria-hidden />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" aria-hidden />
 
-        {/* Text overlay — left column, vertically centered */}
+        {/* Text overlay: left column, vertically centered */}
         <div className="relative z-10 max-w-7xl mx-auto min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
           <div className="max-w-md reveal-on-load">
             <span className="text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.55em] mb-6 block">
