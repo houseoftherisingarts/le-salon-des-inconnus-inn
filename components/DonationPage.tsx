@@ -78,7 +78,7 @@ export const DonationPage: React.FC<Props> = ({
           />
           <span className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(5,5,5,0.45) 0%, transparent 28%, transparent 58%, rgba(5,5,5,0.92) 100%)' }} />
           <figcaption className="absolute bottom-5 left-6 md:left-12 font-cinzel uppercase" style={{ color: '#f3e5ab', fontSize: '11px', letterSpacing: '0.3em', textShadow: '0 1px 10px rgba(0,0,0,0.75)' }}>
-            {t('The community your gift keeps alive', 'La communauté que ton don fait vivre')}
+            {t('The community your gift keeps alive', 'La communauté que votre don fait vivre')}
           </figcaption>
         </figure>
 
