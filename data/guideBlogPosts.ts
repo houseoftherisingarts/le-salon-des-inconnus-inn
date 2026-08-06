@@ -414,7 +414,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'rodeo': {
         _draft: true,
         intro_fr: "Le Festival Western de Saint-André-Avellin est le seul rodéo professionnel de la région : un événement annuel qui attire plus de 200 cowboys et cowgirls, et qui transforme, chaque juillet, un coin de la Petite-Nation en arène, chapiteau, et piste de danse country.",
-        intro_en: "The Festival Western de Saint-André-Avellin is the only professional rodeo in the region — an annual event drawing more than 200 cowboys and cowgirls, turning a corner of Petite-Nation, every July, into an arena, a big top, and a country dance floor.",
+        intro_en: "The Festival Western de Saint-André-Avellin is the only professional rodeo in the region: an annual event drawing more than 200 cowboys and cowgirls, turning a corner of Petite-Nation, every July, into an arena, a big top, and a country dance floor.",
         sections: [
             { title_fr: "Le rodéo", title_en: "The rodeo",
               body_fr: "Monte de taureau, course aux tonneaux, lasso, monte de chevaux sauvages — toutes les disciplines classiques du rodéo nord-américain, dans un format pro et ouvert au public.",
