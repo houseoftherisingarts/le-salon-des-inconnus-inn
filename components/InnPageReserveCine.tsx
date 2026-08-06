@@ -248,7 +248,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
       // actually changed since last frame.
       if (y > vh * 1.2) {
         if (lastP !== 1) {
-          // Dolly IN on exit (scale > 1) so the photo always overfills — never
+          // Dolly IN on exit (scale > 1) so the photo always overfills, never
           // shrinks below the frame and reveals the dark background as bars.
           photo.style.transform = 'translate3d(0, -40px, 0) scale(1.10)';
           photo.style.opacity = '0.55';
