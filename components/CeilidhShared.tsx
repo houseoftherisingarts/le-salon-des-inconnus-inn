@@ -629,7 +629,7 @@ export const KanbanBoard: React.FC<{
           </div>
         )}
 
-        {/* Add subtask input — members only */}
+        {/* Add subtask input: members only */}
         {(isExpanded || subtasks.length === 0) && user && canInteract && (
           <div className="flex gap-1 mt-2">
             <input
