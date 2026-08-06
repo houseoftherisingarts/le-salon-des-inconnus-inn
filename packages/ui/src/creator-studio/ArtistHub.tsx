@@ -4017,7 +4017,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     grid, it replaces the grid in-place: the orb takes the
                     upper section, the controls + Conscious Mode browser
                     sit in the lower section. The Studio contextual viewer
-                    above stays visible. Scoped to the TOOLS tab only — if
+                    above stays visible. Scoped to the TOOLS tab only, if
                     the user switches tabs, the tool quietly hides. */}
                 {activeTab === 'TOOLS' && activeTool === 'INSPIROSPHERE' && (
                     <Inspirosphere
