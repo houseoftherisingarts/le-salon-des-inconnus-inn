@@ -92,7 +92,7 @@ export const WorkCountChip: React.FC<{ count: number; label?: string }> = ({ cou
 };
 
 /**
- * Shared utility — pseudo-random but deterministic transform so the back-layer
+ * Shared utility: pseudo-random but deterministic transform so the back-layer
  * scatter is stable across renders (no flicker on hover/state).
  */
 export function deterministicTransform(seed: number) {

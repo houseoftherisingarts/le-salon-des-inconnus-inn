@@ -3115,7 +3115,7 @@ const LoginModal: React.FC<{
   // when popups are blocked (mobile Safari, embedded webviews). On success
   // we close ourselves AND mark the parent's local "logged in" flag via
   // onConfirm, so the chapter overlay opens immediately. The signed-in
-  // user is captured in Firebase auth — auth.currentUser populates,
+  // user is captured in Firebase auth: auth.currentUser populates,
   // onAuthStateChanged fires, App.tsx's currentUser updates, downstream
   // Firestore writes succeed.
   const handleGoogleSignIn = async () => {
