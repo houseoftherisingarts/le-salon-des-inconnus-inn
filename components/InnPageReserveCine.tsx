@@ -360,7 +360,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
       data-inn-scroll
     >
       <div>
-        {/* ── 1. HERO — cycler + bottom-aligned editorial overlay ────────── */}
+        {/* ── 1. HERO: cycler + bottom-aligned editorial overlay ────────── */}
         <section className="relative h-screen min-h-[640px] overflow-hidden">
 
           {/* Hero image stack:

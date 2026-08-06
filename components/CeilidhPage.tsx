@@ -753,7 +753,7 @@ const ChapterCard: React.FC<{
         }}
       />
 
-      {/* Editorial stencil chapter number — giant, sits at top-left as a graphic mark.
+      {/* Editorial stencil chapter number: giant, sits at top-left as a graphic mark.
           Pointer-events:none so the underlying button still receives clicks. */}
       <span
         aria-hidden
