@@ -6927,7 +6927,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                         onClick={() => {
                                                             const ok = confirm(language === 'EN'
                                                                 ? `Cancel this listing? The current bidder will be refunded and the item returns to your inventory.`
-                                                                : "Annuler cette annonce ? La personne en tête sera remboursée et l'objet revient dans ton inventaire.");
+                                                                : "Annuler cette annonce ? La personne en tête sera remboursée et l'objet revient dans votre inventaire.");
                                                             if (ok) cancelListing(listing);
                                                         }}
                                                         className="flex-1 py-2 text-[11px] font-cinzel uppercase tracking-widest border border-rose-400/40 text-rose-200 hover:bg-rose-400/10 rounded transition-colors"
