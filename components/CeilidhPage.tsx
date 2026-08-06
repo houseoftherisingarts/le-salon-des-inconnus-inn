@@ -1857,7 +1857,7 @@ const TeamsChapterBody: React.FC<{
         </p>
       </header>
 
-      {/* Blitz Grange — special-event announcement above the team picker.
+      {/* Blitz Grange: special-event announcement above the team picker.
           User-authored prose, kept verbatim per the project's copy rule. */}
       <div
         className="relative rounded-2xl p-6 md:p-7 overflow-hidden"
