@@ -258,7 +258,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'orties': {
         _draft: true,
         intro_fr: "Le Café des Orties, c'est le vrai cœur de la Petite-Nation. Installé dans un ancien presbytère de Ripon, c'est à la fois café, table à manger, galerie d'art, lieu de rencontre et carrefour intellectuel. On y va pour le café, et on y reste pour les conversations.",
-        intro_en: "Le Café des Orties is the real heart of Petite-Nation. Set up in a former presbytery in Ripon, it's at once a café, a dining room, an art gallery, a gathering place, and an intellectual crossroads. You come for the coffee — and you stay for the conversations.",
+        intro_en: "Le Café des Orties is the real heart of Petite-Nation. Set up in a former presbytery in Ripon, it's at once a café, a dining room, an art gallery, a gathering place, and an intellectual crossroads. You come for the coffee, and you stay for the conversations.",
         sections: [
             { title_fr: "La table", title_en: "The food",
               body_fr: "Mets bio de producteurs locaux, vins naturels, cidres artisanaux. La carte change avec les saisons et reflète ce que la région offre à un moment donné. Tout y est cohérent — du café au dessert.",
