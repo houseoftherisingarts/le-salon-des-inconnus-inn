@@ -47,7 +47,7 @@ const IMG = {
   nature: '/wwoof/bw-2.jpg',   // the crew at work (full-bleed band)
 };
 
-// The converted bus — the actual home on offer. Kept in true colour (the warm
+// The converted bus: the actual home on offer. Kept in true colour (the warm
 // wood + golden field already sit in the section's palette) so the visitor sees
 // the real space they'd live in.
 const BUS = {
