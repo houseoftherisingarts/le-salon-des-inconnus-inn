@@ -6776,7 +6776,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             {accessLevel === 'MEMBER' && (
                                 <div className="mb-8 p-5 border border-white/10 bg-black/30 rounded-lg">
                                     <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3 font-cinzel">
-                                        {language === 'EN' ? 'List from your inventory' : 'Vendre depuis ton inventaire'}
+                                        {language === 'EN' ? 'List from your inventory' : 'Vendre depuis votre inventaire'}
                                     </p>
                                     {(displayCase.length === 0 && purchasedSkins.length === 0) ? (
                                         <p className="text-sm text-neutral-500 italic">
