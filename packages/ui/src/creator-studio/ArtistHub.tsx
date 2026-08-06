@@ -1580,7 +1580,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [editingSkills, setEditingSkills] = useState(false);
     const [newSkillInput, setNewSkillInput] = useState('');
 
-    // Inbox — loaded from /conversations where uid is in members.
+    // Inbox: loaded from /conversations where uid is in members.
     interface InboxConversation {
         id: string;
         type: 'dm' | 'group';
