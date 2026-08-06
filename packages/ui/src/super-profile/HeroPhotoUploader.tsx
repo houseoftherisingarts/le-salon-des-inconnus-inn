@@ -61,7 +61,7 @@ async function checkPngAlpha(file: File): Promise<AlphaCheckResult> {
         ctx.drawImage(img, 0, 0);
         const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
         // Walk every 4th byte (alpha channel). Bail as soon as we see a
-        // non-opaque pixel — most cutouts have transparent edges, so the
+        // non-opaque pixel: most cutouts have transparent edges, so the
         // first row often answers the question.
         let hasAlpha = false;
         for (let i = 3; i < data.length; i += 4) {
