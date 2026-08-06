@@ -959,7 +959,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 11: ADMIN CRM — its own scroll container: the app root is
+        {/* VIEW 11: ADMIN CRM, its own scroll container: the app root is
             h-screen overflow-hidden (public-site architecture), but the admin
             relies on document-style scrolling; without this wrapper its content
             is clipped on mobile and cannot scroll. */}
