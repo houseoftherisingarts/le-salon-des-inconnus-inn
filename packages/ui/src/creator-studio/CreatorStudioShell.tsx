@@ -341,7 +341,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
         );
     };
 
-     // Gate — runs AFTER all hooks so the hook count stays stable across
+     // Gate: runs AFTER all hooks so the hook count stays stable across
      // auth flips. Anonymous visitors who haven't opted into "view as
      // visitor" mode see this card; everyone else falls through to the
      // full studio.
