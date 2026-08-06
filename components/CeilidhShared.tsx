@@ -2046,8 +2046,8 @@ export const AbundanceSection: React.FC<{
         </p>
         <p className="text-neutral-500 font-lato text-xs mt-3 max-w-lg mx-auto leading-relaxed">
           {t(
-            'Share publicly what you can offer from your zone of abundance — a boar if you\'re a butcher, a keg of beer if you\'re a bartender, a performance if you\'re an artist, scaffolding and tools if you\'re a builder…',
-            'Partagez publiquement ce que vous pouvez offrir depuis votre zone d\'abondance — un sanglier si vous êtes boucher, un fût de bière si vous êtes barman, un spectacle si vous êtes artiste, de l\'échafaudage ou une nacelle si vous êtes constructeur…',
+            'Share publicly what you can offer from your zone of abundance: a boar if you\'re a butcher, a keg of beer if you\'re a bartender, a performance if you\'re an artist, scaffolding and tools if you\'re a builder…',
+            'Partagez publiquement ce que vous pouvez offrir depuis votre zone d\'abondance : un sanglier si vous êtes boucher, un fût de bière si vous êtes barman, un spectacle si vous êtes artiste, de l\'échafaudage ou une nacelle si vous êtes constructeur…',
           )}
         </p>
       </div>
