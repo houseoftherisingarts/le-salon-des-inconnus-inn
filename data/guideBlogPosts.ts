@@ -83,7 +83,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'tubes': {
         _draft: true,
-        intro_fr: "Descendre la rivière Petite-Nation sur un tube est l'un des rituels d'été les plus discrets (et les plus québécois) de la région. À Duhamel, on s'installe sur un tube gonflable, on lâche prise, et le courant vous porte à travers la forêt pendant une heure ou deux.",
+        intro_fr: "Descendre la rivière Petite-Nation sur un tube est l'un des rituels d'été les plus discrets (et les plus québécois) de la région. À Duhamel, installez-vous sur un tube gonflable, lâchez prise, et le courant vous porte à travers la forêt pendant une heure ou deux.",
         intro_en: "Floating down the Petite-Nation River on a tube is one of the region's quietest (and most quintessentially Quebecois) summer rituals. In Duhamel, you settle into an inflatable tube, let go, and the current carries you through the forest for an hour or two.",
         sections: [
             { title_fr: "L'art du slow floating", title_en: "The art of slow floating",
