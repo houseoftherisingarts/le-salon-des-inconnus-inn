@@ -43,7 +43,7 @@ interface Props {
  * SeoBlock: descriptive editorial section rendered near the bottom of key
  * pages. Contributes to AEO (substantial body text, h1/h2 hierarchy, internal
  * + external links, FAQ accordion + FAQPage JSON-LD). The visible H1 here is
- * sr-only so it does not disrupt existing visual hero treatments — it's still
+ * sr-only so it does not disrupt existing visual hero treatments; it's still
  * picked up by crawlers and screen readers.
  *
  * Visual treatment matches the site palette (font-cinzel + font-prata + the
