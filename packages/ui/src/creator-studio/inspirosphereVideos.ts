@@ -65,7 +65,7 @@ export interface InspirosphereVideo {
 }
 
 // ─── Seed catalog ────────────────────────────────────────────────────────
-// Curated picks — each ID verified live against YouTube's oEmbed endpoint
+// Curated picks: each ID verified live against YouTube's oEmbed endpoint
 // (HTTP 200 = exists + embeddable). Add new picks at the end; order doesn't
 // matter (the orb picks at random).
 export const INSPIROSPHERE_VIDEOS: InspirosphereVideo[] = [
