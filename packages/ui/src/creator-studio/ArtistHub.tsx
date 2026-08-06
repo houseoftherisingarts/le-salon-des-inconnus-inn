@@ -3374,8 +3374,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             if (typeof skin.priceCoins !== 'number') return;
             if (coins < skin.priceCoins) {
                 alert(language === 'EN'
-                    ? `You need ${skin.priceCoins} coins — you have ${coins}.`
-                    : `Il faut ${skin.priceCoins} pièces — vous en avez ${coins}.`);
+                    ? `You need ${skin.priceCoins} coins; you have ${coins}.`
+                    : `Il faut ${skin.priceCoins} pièces ; vous en avez ${coins}.`);
                 return;
             }
         } else if (method === 'usd') {
