@@ -2252,7 +2252,7 @@ const TeamsChapterBody: React.FC<{
         </div>
       )}
 
-      {/* PresenceTimeline — real-time who-comes-when across the 5 days */}
+      {/* PresenceTimeline: real-time who-comes-when across the 5 days */}
       {registrations.length > 0 && (
         <div className="space-y-4 pt-4">
           <SectionEyebrow>{t('Who comes when', 'Qui vient quand')}</SectionEyebrow>
