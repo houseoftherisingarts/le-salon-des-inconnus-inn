@@ -72,7 +72,7 @@ const COMMON = [
 
 const LETTER: { fr: string; en: string }[] = [
   {
-    fr: "Andrée, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. On la laisse partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
+    fr: "Andrée, qui veille sur la maison et tient le ménage depuis un bon bout, s'en va vivre plus près de sa famille. Nous la laissons partir le cœur plein, avec toute notre gratitude. Son départ ouvre une place rare : celle d'habiter ici, dans le noyau qui fait vivre l'auberge au quotidien.",
     en: "Andrée, who has watched over the house and kept it clean for a good while now, is moving on to live closer to her family. We let her go with a full heart and all our gratitude. Her departure opens a rare spot: living here, inside the small core that keeps the inn alive day to day.",
   },
   {
