@@ -610,7 +610,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                         >
                                             <Glyph d="M12 4.5v15m7.5-7.5h-15" size={14} />
                                             {tierGrantsFreeBoards
-                                                ? t('New board (free · your tier)', 'Nouveau tableau (gratuit · ton palier)')
+                                                ? t('New board (free · your tier)', 'Nouveau tableau (gratuit · votre palier)')
                                                 : t('New board (free first)', 'Nouveau tableau (premier gratuit)')}
                                         </button>
                                     ) : (
