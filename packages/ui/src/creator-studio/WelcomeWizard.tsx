@@ -29,7 +29,7 @@ import type { CreatorTheme } from './CreatorStudioShell';
  * SFX
  *   • Pure Web Audio API. Two cues: 'forward' (rising 5th) and 'back'
  *     (falling 5th), plus a single 'complete' chord at finish. Silent when
- *     the user hasn't interacted yet (autoplay policy compliant — the
+ *     the user hasn't interacted yet (autoplay policy compliant: the
  *     first click on 'Begin' counts as user activation).
  */
 

@@ -3391,7 +3391,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                                   </div>
                                   {occupants.length > 0 && (
                                     <div className="mt-2 space-y-1.5">
-                                      {/* Mini timeline — day ticks */}
+                                      {/* Mini timeline: day ticks */}
                                       <div className="flex items-center pl-[20px] gap-0 mb-0.5">
                                         {EVENT_DAYS.map(day => (
                                           <div key={day.id} className="flex-1 text-center text-[8px] font-cinzel text-neutral-700 uppercase">
