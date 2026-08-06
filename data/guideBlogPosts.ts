@@ -418,7 +418,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "Le rodéo", title_en: "The rodeo",
               body_fr: "Monte de taureau, course aux tonneaux, lasso, monte de chevaux sauvages : toutes les disciplines classiques du rodéo nord-américain, dans un format pro et ouvert au public.",
-              body_en: "Bull riding, barrel racing, roping, bronc riding — all the classic disciplines of North American rodeo, in a pro format open to the public." },
+              body_en: "Bull riding, barrel racing, roping, bronc riding: all the classic disciplines of North American rodeo, in a pro format open to the public." },
             { title_fr: "L'ambiance", title_en: "The atmosphere",
               body_fr: "Musique country sous chapiteau, ambiance familiale en journée et plus festive en soirée. C'est une plongée dans une facette du Québec rural qu'on ne soupçonne pas toujours.",
               body_en: "Country music under the big top, family-friendly during the day and more festive in the evenings. A dive into a side of rural Quebec you don't always suspect." },
