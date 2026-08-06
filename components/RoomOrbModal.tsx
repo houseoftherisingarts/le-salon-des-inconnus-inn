@@ -674,7 +674,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             {desc}
           </p>
 
-          {/* Stats — beds / baths */}
+          {/* Stats: beds / baths */}
           <div className="flex justify-center md:justify-start gap-6 text-[10px] font-cinzel uppercase tracking-[0.3em] text-[#f3e5ab]">
             <span>
               {room.beds} <span className="text-[#c5a059]/70">{t('Beds', 'Lits')}</span>
