@@ -3289,7 +3289,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     tags,
                     summary,
                     blocks: draftArticle.blocks,
-                    content: '', // legacy field — empty for block-authored articles
+                    content: '', // legacy field: empty for block-authored articles
                     coverUrl: draftArticle.coverUrl || null,
                     publishStatus: status,
                     ...(alsoRequestPublish ? { publishRequestedAt: serverTimestamp() } : {}),

@@ -1407,7 +1407,7 @@ const DETAIL: ScheduleDay[] = [
         detailFr: 'Les 4 premières heures du vendredi, toutes les équipes se réunissent sur une seule tâche : démonter la grange ensemble. On reprend les équipes ensuite.' },
       { time: '13h',  kind: 'meal', titleEn: 'Lunch outside', titleFr: 'Dîner dehors',
         detailEn: 'Long table on the lawn if weather allows.', detailFr: 'Grande table sur la pelouse si le temps le permet.' },
-      { time: '14h30',kind: 'work', titleEn: 'Teams — afternoon', titleFr: 'Équipes — après-midi',
+      { time: '14h30',kind: 'work', titleEn: 'Teams: afternoon', titleFr: 'Équipes : après-midi',
         detailEn: "Continue the morning's work or rotate.", detailFr: 'Suite du matin ou rotation entre équipes.' },
       { time: '19h',  kind: 'meal', titleEn: 'Communal supper', titleFr: 'Souper communautaire' },
       { time: '20h',  kind: 'art',  titleEn: 'Open mic', titleFr: 'Scène ouverte',
