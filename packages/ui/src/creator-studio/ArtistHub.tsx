@@ -7291,7 +7291,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </div>
                                 </section>
 
-                                {/* 04 — TAGS */}
+                                {/* 04. TAGS */}
                                 <section>
                                     <FormSectionHeader n="04" en="Tags" fr="Étiquettes"
                                         helpEn="Helps the right people find this."
