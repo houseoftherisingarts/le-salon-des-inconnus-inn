@@ -271,7 +271,7 @@ function FlyCard({ card, textures, progressRef }: {
 
     return (
         <group position={[card.x, card.y, card.z]} scale={card.scale}>
-            {/* Neon edge glow plate — sits behind, alpha tied to card alpha. */}
+            {/* Neon edge glow plate: sits behind, alpha tied to card alpha. */}
             <mesh position={[0, 0, -0.04]}>
                 <planeGeometry args={[2.4, 3.0]} />
                 <shaderMaterial
