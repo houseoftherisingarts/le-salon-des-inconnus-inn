@@ -1534,7 +1534,7 @@ const ProgrammeChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language })
         </div>
       </div>
 
-      {/* Detailed schedule — hour by hour. WIP, will tighten. */}
+      {/* Detailed schedule: hour by hour. WIP, will tighten. */}
       <div className="space-y-8">
         <div className="text-center">
           <SectionEyebrow>{t('Hour by hour', 'Heure par heure')}</SectionEyebrow>
