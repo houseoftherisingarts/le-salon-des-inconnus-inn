@@ -221,7 +221,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                     return list[0]?.id ?? null;
                 });
             },
-            () => { /* swallow — empty list handles it */ },
+            () => { /* swallow, empty list handles it */ },
         );
         return () => unsub();
     }, [uid, language, t]);
