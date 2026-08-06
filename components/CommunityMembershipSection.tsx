@@ -27,7 +27,7 @@ interface Props {
   autoOpen?: boolean;
 }
 
-// Site design-system tokens (Le Salon — warm-dark + brass), matching the Inn /
+// Site design-system tokens (Le Salon, warm-dark + brass), matching the Inn /
 // Events / Petite Monnaie pages: ground #050505, brass gold #c5a059, Cinzel +
 // Lato + Cormorant. No foreign ember palette, no unloaded fonts.
 const T = {
