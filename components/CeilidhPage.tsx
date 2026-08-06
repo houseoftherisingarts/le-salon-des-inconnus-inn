@@ -1182,7 +1182,7 @@ const CEILIDH_ESSAY: { titleEn: string; titleFr: string; textEn: string; textFr:
   {
     titleEn: 'A Bit of History',
     titleFr: "Un peu d'histoire",
-    textEn: 'Community work calls have existed for a long time — moments where people unite to help a collective project, share know-how, and strengthen human bonds around a common goal. Many cultures had forms of communal work and mutual aid, because great tasks could not be accomplished alone. People took turns giving each other "big pushes" throughout the year.',
+    textEn: 'Community work calls have existed for a long time. These are moments where people unite to help a collective project, share know-how, and strengthen human bonds around a common goal. Many cultures had forms of communal work and mutual aid, because great tasks could not be accomplished alone. People took turns giving each other "big pushes" throughout the year.',
     textFr: 'Les appels communautaires de corvées existent depuis longtemps. Ce sont des moments où l\u2019on s\u2019unit pour aider un projet collectif, partager des savoir-faire, et renforcer les liens humains autour d\u2019un objectif commun. Plusieurs cultures avaient des formes de travail commun et d\u2019entraide car, les gros travaux ne pouvant s\u2019accomplir seul, les gens se relayaient pour donner des "gros coups" dans l\u2019année.',
   },
   {
