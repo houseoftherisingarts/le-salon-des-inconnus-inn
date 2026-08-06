@@ -59,7 +59,7 @@ const smoothstep = (a: number, b: number, x: number) => {
 };
 
 // ─────────────────────────────────────────────────────────────────────────
-// CosmicTunnel — the world. Fragment shader adapted from a Codrops/X
+// CosmicTunnel: the world. Fragment shader adapted from a Codrops/X
 // reference and ported to GLSL ES 1.0. Produces a continuously-flowing
 // neon caustic field with the appearance of forward motion. Time advances
 // even when scroll is still, so the world breathes; scroll adds extra
