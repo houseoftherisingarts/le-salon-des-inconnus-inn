@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { User } from 'firebase/auth';
 
-// Generic admin shell — fixed left sidebar (collapsible on mobile via
+// Generic admin shell: fixed left sidebar (collapsible on mobile via
 // hamburger), brand block at top, vertical nav with icons, user chip +
 // logout at bottom. Sticky main header carries the current section title
 // + a "Voir le site" link. Modeled on the Krystine + Caroline references,
