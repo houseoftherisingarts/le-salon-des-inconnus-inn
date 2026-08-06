@@ -715,7 +715,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  [data-studio-theme="CHROMATIC"] .font-serif,
                  [data-studio-theme="CHROMATIC"] .font-mono { font-family: 'Inter', system-ui, sans-serif !important; }
 
-                 /* CLASSY — Gilded Age: serif everywhere. */
+                 /* CLASSY, Gilded Age: serif everywhere. */
                  [data-studio-theme="CLASSY"] .font-cinzel,
                  [data-studio-theme="CLASSY"] .font-prata { font-family: 'Cinzel', 'Trajan Pro', serif !important; letter-spacing: 0.06em; }
                  [data-studio-theme="CLASSY"] .font-sans,
