@@ -127,7 +127,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                 width = check.width;
                 height = check.height;
             } else {
-                setStatus('Removing background — this can take 5–15 seconds…');
+                setStatus('Removing background: this can take 5–15 seconds…');
                 outputBlob = await runAutoBackgroundRemoval(file);
                 // Best-effort: measure the result so templates can size proportionally.
                 try {
