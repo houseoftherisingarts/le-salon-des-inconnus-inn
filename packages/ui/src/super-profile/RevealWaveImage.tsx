@@ -1,4 +1,4 @@
-// RevealWaveImage — B&W dithered image with mouse-reveal of the original color.
+// RevealWaveImage: B&W dithered image with mouse-reveal of the original color.
 //
 // Adapted from a snippet the user provided. The component renders a single
 // fullscreen-ish R3F Canvas with a shader plane. Cursor over the image
