@@ -16,7 +16,7 @@ export interface PMStop {
   blurb: string;
   image: string;
   link?: string;
-  isStart?: boolean;        // Le Salon — the entry point
+  isStart?: boolean;        // Le Salon: the entry point
   isBureauDeChange?: boolean;
   logo?: boolean;           // image is a wordmark logo → contain + light it on the dark orb
   perk?: string;            // a highlighted offer shown on this stop's panel
