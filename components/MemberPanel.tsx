@@ -299,7 +299,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
               </button>
             )}
 
-            {/* Join the community — apply to live and work here (opens the form directly) */}
+            {/* Join the community: apply to live and work here (opens the form directly) */}
             {onNavigate && (
               <button
                 onClick={() => { try { sessionStorage.setItem('openCommunityForm', '1'); } catch { /* ignore */ } onNavigate('COMMUNITY'); setIsOpen(false); }}
