@@ -156,7 +156,7 @@ function pieceEdgePath(
     // matched by `+ perp * d` with d=+1. Using `-perp * d` on top/left (as
     // earlier versions of this file did) inverted the bulge direction,
     // causing tab/blank pairs on horizontal/vertical seams to shrink AWAY
-    // from each other instead of interlocking — producing visible "blank"
+    // from each other instead of interlocking, producing visible "blank"
     // gaps in completed pieces.
     const project = (along: number, perp: number): [number, number] => {
         switch (side) {
