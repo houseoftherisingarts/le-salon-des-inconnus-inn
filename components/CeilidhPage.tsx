@@ -2604,7 +2604,7 @@ const TeamMembersPanel: React.FC<{
   );
 };
 
-// ─── RoomOccupants — avatars + arrival→departure mini-bar per lodging card ──
+// ─── RoomOccupants: avatars + arrival→departure mini-bar per lodging card ──
 const EVENT_DAYS_TEST2 = ['2026-05-21', '2026-05-22', '2026-05-23', '2026-05-24', '2026-05-25'];
 
 const RoomOccupants: React.FC<{
