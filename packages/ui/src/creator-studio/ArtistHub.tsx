@@ -7195,7 +7195,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     />
                 )}
 
-                {/* Post Contract Modal — Time Exchange. Two contract types
+                {/* Post Contract Modal: Time Exchange. Two contract types
                     (need help vs have time), with an inline cost preview. */}
                 {isPostModalOpen && (() => {
                     const tokens = parseInt(newContractData.duration) || 0;
