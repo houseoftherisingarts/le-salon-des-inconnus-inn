@@ -758,7 +758,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
                 transition: 'height 1.4s cubic-bezier(0.5, 0, 0.2, 1)',
               }}
             >
-              {/* Cast shadow under the deck — visually grounds it, fades out when expanding */}
+              {/* Cast shadow under the deck, visually grounds it, fades out when expanding */}
               <div
                 aria-hidden
                 className="absolute left-1/2 -translate-x-1/2 pointer-events-none transition-opacity duration-700"

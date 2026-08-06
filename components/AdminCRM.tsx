@@ -1909,7 +1909,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
-        {/* ── Newsletter / Infolettre — audience builder over existing
+        {/* ── Newsletter / Infolettre: audience builder over existing
               member data. No external API; just lets the admin compose a
               recipient list (CSV / clipboard / mailto). */}
         {tab === 'newsletter' && (
