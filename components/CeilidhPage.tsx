@@ -542,7 +542,7 @@ export const CeilidhPage: React.FC<Props> = ({
         );
       })()}
 
-      {/* ── LOGIN GATE — shown for first chapter open + locked taps ─────── */}
+      {/* ── LOGIN GATE: shown for first chapter open + locked taps ─────── */}
       {showLoginModal && (
         <LoginModal
           chapter={CHAPTERS.find((c) => c.id === pendingId) ?? null}
