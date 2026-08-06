@@ -78,7 +78,7 @@ export interface InspirosphereUserVideo {
 
 // ─── Admin-curated videos ────────────────────────────────────────────────
 // Stored at inspirosphereCurated/{videoId}. Admin-write, public-read.
-// Powers the "Featured" tab — Alex's own picks delivered with full
+// Powers the "Featured" tab: Alex's own picks delivered with full
 // editorial control.
 
 export interface InspirosphereCuratedVideo {
