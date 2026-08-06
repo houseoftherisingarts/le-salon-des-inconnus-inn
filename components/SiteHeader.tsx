@@ -567,7 +567,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
           {/* Right cluster */}
           <div className="flex items-center gap-2">
-            {/* Petite Monnaie — bureau de change badge → /petite-monnaie */}
+            {/* Petite Monnaie: bureau de change badge → /petite-monnaie */}
             <button
               onClick={() => handleNavigate('PETITE_MONNAIE')}
               title="Bureau de change Petite Monnaie"

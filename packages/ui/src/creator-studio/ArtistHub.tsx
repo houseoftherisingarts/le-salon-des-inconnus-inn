@@ -1197,7 +1197,7 @@ const LibraryModal: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onC
 
 
 export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase, setPhase, language, currentUser = null, isArtist = false, onRequestSignIn, onExit, onThemeChange, onContextChange }) => {
-    // Default tab is COLLABORATE for everyone — including logged-in users —
+    // Default tab is COLLABORATE for everyone (including logged-in users),
     // so the studio's first impression is always the branded WELCOME hero in
     // the viewer above. The `hasNavigated` flag tracks whether the user has
     // explicitly chosen a tab; flipped at the click sites (not via effect,
