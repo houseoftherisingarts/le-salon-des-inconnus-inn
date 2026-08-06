@@ -129,7 +129,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      const [viewerCollapsed, setViewerCollapsed] = useState<boolean>(false);
 
      // When the Inspirosphere opens, grow the viewer (if it's smaller) so the
-     // orb has room to breathe. We don't shrink it back on close — the user's
+     // orb has room to breathe. We don't shrink it back on close: the user's
      // manual resize after that is theirs to keep. Only kicks in on the
      // false→true edge, so re-opening (or HMR) doesn't repeatedly fight the
      // user's drag.
