@@ -1831,8 +1831,8 @@ const TeamsChapterBody: React.FC<{
                  'Indiquez « Présent·e » sur Facebook')}
             </p>
             <p className="font-josefin text-neutral-400 text-xs leading-relaxed mt-2">
-              {t('Then come back here to pick your team and your room — those still happen on this page.',
-                 'Puis revenez ici pour choisir votre équipe et votre chambre — ces étapes se font encore sur cette page.')}
+              {t('Then come back here to pick your team and your room: those still happen on this page.',
+                 'Puis revenez ici pour choisir votre équipe et votre chambre : ces étapes se font encore sur cette page.')}
             </p>
           </div>
           <span
