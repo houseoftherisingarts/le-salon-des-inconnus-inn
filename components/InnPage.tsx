@@ -1858,7 +1858,7 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
               <WwoofingSection language={language} vibe={currentVibe} onNavigate={onNavigate} />
           </StickySection>
 
-          {/* 14. Footer — full-width map + copyright */}
+          {/* 14. Footer: full-width map + copyright */}
           <MapFooterSection language={language} vibe={currentVibe} />
 
       </main>

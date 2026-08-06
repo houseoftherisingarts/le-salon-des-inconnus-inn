@@ -1592,7 +1592,7 @@ const ProgrammeChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language })
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Chapter 03 — Teams: 9 teams, pick one
+// Chapter 03 (Teams): 9 teams, pick one
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface Team {
