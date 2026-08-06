@@ -8,7 +8,7 @@ import { BLOG_CATEGORIES, BlogCategory, BlogPost, BlogStatus, categoryLabel, for
 import { BlogBody } from '../blog/BlogBody';
 
 /**
- * AdminCRM · Blog section — the approval desk for the chronicles.
+ * AdminCRM · Blog section: the approval desk for the chronicles.
  * Every morning the writer job drops a bilingual draft with status 'pending';
  * NOTHING reaches /blog until Alex publishes it here. Four sub-tabs
  * (pending / published / hidden / all), inline editor with rendered preview,
