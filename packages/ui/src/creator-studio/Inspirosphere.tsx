@@ -814,10 +814,10 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                                     title={tab === 'VOICES'
                                         ? t('Community videos approved for the orb', "Vidéos de la communauté retenues pour l'orbe")
                                         : tab === 'FEATURED'
-                                          ? t('Salon picks — uploaded by the house', 'Choix du Salon — téléversés par la maison')
+                                          ? t('Salon picks, uploaded by the house', 'Choix du Salon, téléversés par la maison')
                                           : tab === 'CITATIONS'
-                                            ? t('Anonymized citations — wisdom without a name', 'Citations anonymisées — la sagesse sans nom')
-                                            : t('Web finds — the original catalog', 'Trouvailles du web — le catalogue original')}
+                                            ? t('Anonymized citations: wisdom without a name', 'Citations anonymisées : la sagesse sans nom')
+                                            : t('Web finds, the original catalog', 'Trouvailles du web, le catalogue original')}
                                 >
                                     <span>{language === 'FR' ? TAB_LABELS[tab].fr : TAB_LABELS[tab].en}</span>
                                     <span className="text-[8px] opacity-60 font-mono tabular-nums">{count}</span>
