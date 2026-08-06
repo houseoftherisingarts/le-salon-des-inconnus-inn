@@ -1,4 +1,4 @@
-// PetiteMonnaieCoin — the interactive hero coin.
+// PetiteMonnaieCoin: the interactive hero coin.
 // The Petite Monnaie emblem struck on a brass coin. As the pointer moves over
 // it, the coin tilts in 3D and a specular highlight tracks the cursor, so the
 // metal catches the light. It floats gently at rest. Built with framer-motion.
