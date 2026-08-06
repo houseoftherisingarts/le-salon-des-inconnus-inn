@@ -245,8 +245,8 @@ export const CommunityMembershipSection: React.FC<Props> = ({
 
   const TERMS = [
     { v: t('The bus', 'Le bus'), l: t('housing on site', 'logement sur place') },
-    { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si tu cuisines') },
-    { v: t('Your time', 'Ton temps'), l: t('time and space for your projects', 'du temps et de l\'espace pour tes projets') },
+    { v: t('Meals', 'Repas'), l: t('fed when you cook', 'nourri·e si vous cuisinez') },
+    { v: t('Your time', 'Votre temps'), l: t('time and space for your projects', 'du temps et de l\'espace pour vos projets') },
     { v: '800-1000 $', l: t('per month · part-time', 'par mois · temps partiel') },
   ];
 
