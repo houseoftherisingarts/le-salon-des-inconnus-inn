@@ -593,7 +593,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
                   onClick={() => setMode('delete-confirm')}
                   className="text-neutral-700 text-xs font-lato hover:text-red-400 transition-colors"
                 >
-                  {t('→ I changed my mind — delete my account', '→ J\'ai changé d\'avis — supprimer mon compte')}
+                  {t('→ I changed my mind: delete my account', '→ J\'ai changé d\'avis : supprimer mon compte')}
                 </button>
               </div>
             </div>
