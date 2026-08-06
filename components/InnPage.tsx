@@ -607,7 +607,7 @@ export const InnHero: React.FC<{
         style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1 }}
       />
 
-      {/* Gradient — only darkens bottom 35% to anchor text, image stays open above */}
+      {/* Gradient: only darkens bottom 35% to anchor text, image stays open above */}
       <div
         aria-hidden
         style={{

@@ -6,7 +6,7 @@ import type { MemberProfile } from './AuthModal';
 import type { CommunityApplication, CommunityApplicationStatus } from '../types';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// "Faire partie de la communauté" — paid resident-member announcement.
+// "Faire partie de la communauté": paid resident-member announcement.
 //
 // Uses the Salon's own design system so it reads as one site, editorial and
 // cinematic, alongside the Inn / Events / Petite Monnaie pages:
