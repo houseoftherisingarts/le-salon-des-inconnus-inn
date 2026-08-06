@@ -1,5 +1,5 @@
 // Cafe-local copy of ArtistProfile. Same shape as packages/ui/src/arts/types.ts
-// (no `skills` field — that's the creator-studio variant). Kept separate so the
+// (no `skills` field: that's the creator-studio variant). Kept separate so the
 // cafe's roster can evolve independently if its needs diverge.
 export interface ArtistProfile {
   id: number;
