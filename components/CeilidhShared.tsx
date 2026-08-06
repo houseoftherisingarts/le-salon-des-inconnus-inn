@@ -3063,7 +3063,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                               <h3 className="font-cinzel text-2xl text-white mb-4">{t('Shows Only', 'Spectacles Seulement')}</h3>
                               <p className="text-neutral-400 font-lato text-sm leading-relaxed mb-6 max-w-sm">
                                 {t(
-                                  'Come only for the festivities — no work required. This helps too!',
+                                  'Come only for the festivities: no work required. This helps too!',
                                   'Il vous est possible de ne venir qu\'aux festivités sans travailler toute la journée. Cela aide aussi\u00a0!',
                                 )}
                               </p>
