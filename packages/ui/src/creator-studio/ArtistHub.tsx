@@ -1563,7 +1563,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
     const [avatarUploading, setAvatarUploading] = useState(false);
     const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
-    // The single "featured" artwork URL — what shows as the user's main piece
+    // The single "featured" artwork URL: what shows as the user's main piece
     // at the top of their profile. Falls back to galleryUrls[0] when unset.
     const [featuredArtworkUrl, setFeaturedArtworkUrl] = useState<string | null>(null);
     // Whether the featured-artwork picker modal is open.
