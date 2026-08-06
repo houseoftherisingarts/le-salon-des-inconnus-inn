@@ -696,7 +696,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       snap => setFeatureRequests(snap.docs.map(d => ({ uid: d.id, ...(d.data() as any) }) as FeatureRequestRow)),
       () => {},
     );
-    // Collab requests inbox — Residency / Event / Project submissions from
+    // Collab requests inbox: Residency / Event / Project submissions from
     // the Creator Studio's COLLABORATE tab. Newest first.
     const unsub9 = onSnapshot(
       query(collection(db, 'collabRequests'), orderBy('createdAt', 'desc')),
