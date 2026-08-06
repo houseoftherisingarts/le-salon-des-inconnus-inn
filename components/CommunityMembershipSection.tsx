@@ -84,7 +84,7 @@ const LETTER: { fr: string; en: string }[] = [
     en: "Right now, the spot opening up is to live in the Magic Bus, with full access to the inn and the land. You're home in your own bus, while being part of the life of the house.",
   },
   {
-    fr: "C'est un vrai travail. La tâche principale, c'est le ménage des chambres et des espaces communs, au cœur de l'expérience de nos invités. C'est répétitif, c'est physique, et c'est précieux. À ça s'ajoutent des moments où tu tiens le fort quand on est partis : accueillir des invités, être là pour les enfants de temps en temps. Et puis il y a les tâches qu'on partage entre membres parce qu'on vit ensemble : arroser le jardin, donner un coup de main à la cuisine, la vie de tous les jours.",
+    fr: "C'est un vrai travail. La tâche principale, c'est le ménage des chambres et des espaces communs, au cœur de l'expérience de nos invités. C'est répétitif, c'est physique, et c'est précieux. À ça s'ajoutent des moments où vous tenez le fort quand nous sommes partis : accueillir des invités, être là pour les enfants de temps en temps. Et puis il y a les tâches partagées entre membres parce que nous vivons ensemble : arroser le jardin, donner un coup de main à la cuisine, la vie de tous les jours.",
     en: "This is real work. The main task is housekeeping the rooms and common spaces, at the heart of our guests' experience. It's repetitive, it's physical, and it matters. On top of that, there are moments where you hold the fort while we're away: welcoming guests, being there for the kids now and then. And there are the tasks members share because we live together: watering the garden, lending a hand in the kitchen, the everyday.",
   },
   {
