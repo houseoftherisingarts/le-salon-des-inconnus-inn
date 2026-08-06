@@ -67,7 +67,7 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
     }, { root, threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     els.forEach((el) => io.observe(el));
 
-    // Safety net — content must never stay invisible. A passive scroll pass reveals
+    // Safety net: content must never stay invisible. A passive scroll pass reveals
     // anything in view that the observer somehow missed (HMR re-mounts, fast scroll),
     // and a timer reveals whatever is already on screen at mount.
     const sweep = () => {

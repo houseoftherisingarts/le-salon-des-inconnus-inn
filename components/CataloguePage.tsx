@@ -270,7 +270,7 @@ export const CataloguePage: React.FC<Props> = ({ onNavigate, language }) => {
       />
 
       <main className="relative">
-        {/* I — pourquoi un catalogue */}
+        {/* I : pourquoi un catalogue */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32">
           <SectionLabel numeral="I" label={t('An inn that represents its artists', 'Une auberge qui représente ses artistes')} />
           <div className="space-y-20 md:space-y-32">
