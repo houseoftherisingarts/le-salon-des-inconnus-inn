@@ -487,7 +487,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
               body_fr: "Glace soignée, éclairage nocturne, banc d'accueil. Pas de service, pas de commerce attenant : c'est ce qui en fait son charme. Apportez tout, repartez avec.",
-              body_en: "Well-kept ice, night lighting, a welcome bench. No services, no shops attached — that's what gives it its charm. Bring everything, take it back with you." },
+              body_en: "Well-kept ice, night lighting, a welcome bench. No services, no shops attached: that's what gives it its charm. Bring everything, take it back with you." },
         ],
         schema: { type: "TouristAttraction", address: "Namur, QC, Canada" },
     },
