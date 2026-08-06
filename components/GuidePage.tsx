@@ -363,7 +363,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         </div>
       </button>
 
-      {/* Sticky category nav — sticky relative to the scrollable container */}
+      {/* Sticky category nav: sticky relative to the scrollable container */}
       <div className="sticky top-14 z-40 bg-[#0a0808]/95 backdrop-blur-md border-b border-white/5">
         <div
           ref={navRef}
