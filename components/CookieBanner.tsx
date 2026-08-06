@@ -113,7 +113,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
                         <span className="text-neutral-300">
                           {t('Strictly necessary', 'Strictement nécessaire')}
                         </span>{' '}
-                        — {t(
+                        : {t(
                           'Firebase Auth session (localStorage). Active only if you create an account. Always on.',
                           'Session Firebase Auth (localStorage). Actif uniquement si vous créez un compte. Toujours actif.',
                         )}
