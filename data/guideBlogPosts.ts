@@ -109,7 +109,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'lac-plages': {
         _draft: true,
-        intro_fr: "Lac-des-Plages porte bien son nom : un long lac bordé de plages discrètes, un village au charme rétro, et cette qualité particulière de lumière qui ne se trouve nulle part ailleurs qu'au creux des Laurentides. C'est un coin que les locaux gardent un peu pour eux.",
+        intro_fr: "Lac-des-Plages porte bien son nom : un long lac bordé de plages discrètes, un village au charme rétro, et cette qualité particulière de lumière qu'on ne trouve qu'au creux des Laurentides. C'est un coin que les locaux gardent un peu pour eux.",
         intro_en: "Lac-des-Plages lives up to its name: a long lake fringed with quiet beaches, a village with a retro charm, and that particular quality of light you only find tucked into the Laurentians. It's a spot the locals keep mostly to themselves.",
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
