@@ -755,7 +755,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 )}
             </div>
 
-            {/* Per-transition theatrics — only after the user has navigated.
+            {/* Per-transition theatrics: only after the user has navigated.
                 The first arrival shows the pure original brand hero without
                 competing flash effects so the neon-text power-up + per-theme
                 signature reads as designed. */}
