@@ -7630,10 +7630,10 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         <p className="text-sm text-neutral-400 italic mb-2">
                                             {language === 'EN'
                                                 ? 'No works in your roster yet.'
-                                                : 'Aucune œuvre dans ton répertoire pour le moment.'}
+                                                : 'Aucune œuvre dans votre répertoire pour le moment.'}
                                         </p>
                                         <p className="text-[10px] uppercase tracking-widest text-neutral-600">
-                                            {language === 'EN' ? 'Upload your first piece below.' : 'Téléverse ta première pièce ci-dessous.'}
+                                            {language === 'EN' ? 'Upload your first piece below.' : 'Téléversez votre première pièce ci-dessous.'}
                                         </p>
                                     </div>
                                 ) : (
