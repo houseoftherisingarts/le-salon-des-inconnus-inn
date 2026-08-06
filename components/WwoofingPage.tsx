@@ -119,7 +119,7 @@ const APPLY_SECTIONS: {
     id: 'health', number: '03',
     titleFr: 'Diète & Santé', titleEn: 'Diet & Health',
     image: '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg',
-    quoteFr: "On cuisine pour vous comme pour nous, avec attention.",
+    quoteFr: "Nous cuisinons pour vous comme pour nous, avec attention.",
     quoteEn: "We cook for you the way we cook for ourselves, with care.",
   },
   {
