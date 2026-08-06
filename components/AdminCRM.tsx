@@ -613,7 +613,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       () => {},
     );
     // Subscribe to each tier's code subcollection. Sorting: unused first
-    // (oldest createdAt), used last — so the "next to draw" sits on top.
+    // (oldest createdAt), used last: so the "next to draw" sits on top.
     const tierUnsubs = D20_TIERS.map((tier) =>
       onSnapshot(
         query(collection(db, 'd20Codes', tier.id, 'codes')),
