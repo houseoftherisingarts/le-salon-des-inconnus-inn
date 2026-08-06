@@ -1095,8 +1095,8 @@ export const InnPageReserveCine: React.FC<Props> = ({
         <div className="cv-auto">
           <HostsSection language={language} vibe={'HOSTEL'} onNavigate={onNavigate} />
         </div>
-        {/* ── DIAGONAL DOORS — Grand Ceilidh × Wwoofing fused ────────────── */}
-        {/* ── Participer — three doors into the project ─────────────────── */}
+        {/* ── DIAGONAL DOORS: Grand Ceilidh × Wwoofing fused ────────────── */}
+        {/* ── Participer: three doors into the project ─────────────────── */}
         <section className="cv-auto relative bg-[#050505] py-20 md:py-28 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-4 mb-10 md:mb-14">

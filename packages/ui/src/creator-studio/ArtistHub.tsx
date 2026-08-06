@@ -3083,7 +3083,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
      * Claim a curated roster artist. Validates the shared password, writes a
      * rosterClaims doc (Firestore rule blocks overwrites, so the first
      * claimant wins atomically), then seeds the user's profile from the
-     * roster entry — but ONLY for fields that are still empty, so a user
+     * roster entry, but ONLY for fields that are still empty, so a user
      * who's already started filling things in doesn't lose their work.
      */
     const SHARED_CLAIM_PASSWORD = 'AlexApproves';
