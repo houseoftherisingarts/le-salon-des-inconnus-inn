@@ -4487,7 +4487,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                      </div>
                                  </div>
 
-                                 {/* Manifesto — click to edit; auto-saves on commit. */}
+                                 {/* Manifesto: click to edit; auto-saves on commit. */}
                                  <div className="relative group">
                                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                      <div className={`relative bg-[#050505] border ${currentStyles.border} p-8 min-h-[150px]`}>

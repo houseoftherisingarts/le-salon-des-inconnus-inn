@@ -368,7 +368,7 @@ function HextechPortal({ progressRef }: { progressRef: React.MutableRefObject<nu
         const p = progressRef.current;
         const portalIn = seg(p, 0.78, 0.96);
         if (groupRef.current) {
-            // Larger overall scale than before — the portal is the finale.
+            // Larger overall scale than before: the portal is the finale.
             groupRef.current.scale.setScalar(0.4 + portalIn * 2.4);
             groupRef.current.position.y = Math.sin(t * 0.7) * 0.05;
             groupRef.current.visible = portalIn > 0.001;
