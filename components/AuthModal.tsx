@@ -414,7 +414,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-      {/* Invisible reCAPTCHA anchor — must be in DOM when phone mode active */}
+      {/* Invisible reCAPTCHA anchor: must be in DOM when phone mode active */}
       <div id="recaptcha-anchor" className="absolute -top-96 -left-96 opacity-0 pointer-events-none" aria-hidden="true"></div>
 
       <div className="relative w-full max-w-md bg-[#0f0f0f] border border-[#d4af37]/30 shadow-2xl max-h-[92vh] overflow-y-auto animate-fadeInModal">

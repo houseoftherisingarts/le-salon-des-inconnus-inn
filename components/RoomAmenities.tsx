@@ -146,14 +146,14 @@ const AMENITIES: Record<AmenityKey, AmenityDef> = {
 
 /** Per-room accent colours used by the modal background gradient. */
 export const ROOM_ACCENTS: Record<string, { from: string; to: string; glow: string }> = {
-  room1: { from: '#b8862c', to: '#3b2410', glow: '#e9c97a' }, // Écrivaine — parchment / ink
-  room2: { from: '#8a1f2c', to: '#2a0d14', glow: '#d6a04f' }, // Musicienne — burgundy / brass
-  room3: { from: '#3a4a78', to: '#0d1428', glow: '#9bb1d8' }, // Cinéaste — silver-screen blue
-  room4: { from: '#a01840', to: '#2c0814', glow: '#e6c25a' }, // Amphithéâtre — moulin rouge
-  manor: { from: '#a87a2c', to: '#1c1408', glow: '#f3d68a' }, // Manor — classic gold
-  yurt:  { from: '#5a6b3a', to: '#1a2410', glow: '#d4a861' }, // Yourte — forest / amber
-  tiny:  { from: '#3d5a4a', to: '#0e1a14', glow: '#a8c4a0' }, // Méditante — moss / mist
-  bus:   { from: '#b25a2a', to: '#1f1208', glow: '#e8a35c' }, // Bus — sunset
+  room1: { from: '#b8862c', to: '#3b2410', glow: '#e9c97a' }, // Écrivaine: parchment / ink
+  room2: { from: '#8a1f2c', to: '#2a0d14', glow: '#d6a04f' }, // Musicienne: burgundy / brass
+  room3: { from: '#3a4a78', to: '#0d1428', glow: '#9bb1d8' }, // Cinéaste: silver-screen blue
+  room4: { from: '#a01840', to: '#2c0814', glow: '#e6c25a' }, // Amphithéâtre: moulin rouge
+  manor: { from: '#a87a2c', to: '#1c1408', glow: '#f3d68a' }, // Manor: classic gold
+  yurt:  { from: '#5a6b3a', to: '#1a2410', glow: '#d4a861' }, // Yourte: forest / amber
+  tiny:  { from: '#3d5a4a', to: '#0e1a14', glow: '#a8c4a0' }, // Méditante: moss / mist
+  bus:   { from: '#b25a2a', to: '#1f1208', glow: '#e8a35c' }, // Bus: sunset
 };
 
 export function getRoomAccent(id: string) {
