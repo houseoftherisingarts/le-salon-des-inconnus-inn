@@ -428,7 +428,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'incontournable",
                 title: "Festival Médiéval de Montpellier",
                 location: "Montpellier",
-                description: "Le 3e plus grand festival médiéval du Québec — joutes équestres, forge en direct, clans vikings, marché médiéval, spectacles équestres et banquets historiques. Pendant trois jours fin septembre, le village de Montpellier plonge dans le Moyen Âge. Un spectacle visuel et sonore hors du commun, à 15 minutes de l'Auberge.",
+                description: "Le 3e plus grand festival médiéval du Québec : joutes équestres, forge en direct, clans vikings, marché médiéval, spectacles équestres et banquets historiques. Pendant trois jours fin septembre, le village de Montpellier plonge dans le Moyen Âge. Un spectacle visuel et sonore hors du commun, à 15 minutes de l'Auberge.",
                 link: "https://www.festivalmedievaldemontpellier.org",
                 image: "https://static.wixstatic.com/media/57b705_49a605c853824c8d8a1d020d605e6aea~mv2.jpg",
                 isFavorite: true,
