@@ -242,7 +242,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
       if (reducedMotion) return;
       const y = root.scrollTop;
       const vh = root.clientHeight;
-      // Early-exit once scrolled past hero — Lenis dispatches scroll on every rAF tick, and
+      // Early-exit once scrolled past hero: Lenis dispatches scroll on every rAF tick, and
       // the previous version wrote 5 inline-style properties every frame even at heroP=1.
       // We only run the writes while the hero is still in/near the viewport AND the value
       // actually changed since last frame.
