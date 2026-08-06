@@ -2068,7 +2068,7 @@ const DashboardTile: React.FC<{
   </button>
 );
 
-// ─── Affiliate row — accept-with-code or refuse ──────────────────────────────
+// ─── Affiliate row: accept-with-code or refuse ──────────────────────────────
 const AffiliateRow: React.FC<{
   aff: {
     uid: string;
