@@ -1993,7 +1993,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Avatar upload — picks a file, pushes to Firebase Storage at
+    // Avatar upload: picks a file, pushes to Firebase Storage at
     // artists/{uid}/avatar.{ext}, and stores the public URL on the profile.
     const handleAvatarUpload = async (file: File) => {
         if (!currentUser?.uid || !file) return;
