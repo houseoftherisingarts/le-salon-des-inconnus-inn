@@ -260,7 +260,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     phone: answers.phone,
                     email: answers.email,
                     artTypes: answers.artTypes,
-                    // New flat string[] — `welcomeLinks` (legacy object)
+                    // New flat string[]: `welcomeLinks` (legacy object)
                     // is left alone for read-only backwards compat; we
                     // never write to it again.
                     links: answers.links.filter(s => s.trim()),
