@@ -789,7 +789,7 @@ export const HighsTestPage: React.FC<HighsTestPageProps> = ({ onEnterStudio, onB
                                 </h2>
                             </HudLine>
 
-                            {/* Final CTA — pinned bottom, becomes clickable at the end. */}
+                            {/* Final CTA: pinned bottom, becomes clickable at the end. */}
                             <div
                                 ref={ctaRef}
                                 className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 z-20 transition-opacity duration-300"

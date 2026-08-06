@@ -220,7 +220,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
   const menuCategories: LocalGuideCategory[] = [coupsDeCoeurCategory, ...LOCAL_GUIDE_DATA];
 
   // The single category that's actually rendered. We never show all of them
-  // at once — switching categories swaps the section in place.
+  // at once: switching categories swaps the section in place.
   const visibleCategory =
     menuCategories.find((c) => c.id === activeCategory) ?? coupsDeCoeurCategory;
 
