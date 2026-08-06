@@ -917,7 +917,7 @@ const ApplyForm: React.FC<{
             <p className="font-lato text-sm text-neutral-400 leading-relaxed mb-6 max-w-xl">
               {t(
                 'We just told you what we ask. Now tell us what you need from us, quiet hours for a personal project, a meal that fits your body, time alone, a skill you want to learn. We listen.',
-                "Nous venons de vous communiquer nos besoins. Dites-nous maintenant ce dont vous avez besoin de nous, des heures calmes pour un projet personnel, un repas qui convient à votre corps, du temps seul·e, une compétence à apprendre. On écoute."
+                "Nous venons de vous communiquer nos besoins. Dites-nous maintenant ce dont vous avez besoin de nous, des heures calmes pour un projet personnel, un repas qui convient à votre corps, du temps seul·e, une compétence à apprendre. Nous écoutons."
               )}
             </p>
             <FieldTextarea
