@@ -322,7 +322,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
           ))}
         </div>
 
-        {/* scroll cue — sits just under the focal pastille, bobbing, so it's clear
+        {/* scroll cue: sits just under the focal pastille, bobbing, so it's clear
             you can scroll. Fades out as soon as the journey starts (driven in tick). */}
         <div ref={hintRef} className="absolute left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2.5 pointer-events-none" style={{ top: '64%' }}>
           <span className="text-[10px] font-cinzel uppercase tracking-[0.4em]" style={{ color: `${BRASS}cc` }}>
