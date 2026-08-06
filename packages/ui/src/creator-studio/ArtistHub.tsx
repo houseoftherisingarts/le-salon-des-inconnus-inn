@@ -5487,7 +5487,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             </div>
                                         )}
 
-                                        {/* 01 — IDENTITY */}
+                                        {/* 01. IDENTITY */}
                                         <section>
                                             <FormSectionHeader n="01" en="Identity" fr="Identité"
                                                 helpEn="How we reach you back."

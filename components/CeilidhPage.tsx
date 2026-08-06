@@ -3176,7 +3176,7 @@ const LoginModal: React.FC<{
       aria-modal="true"
       aria-label={t('Sign in', 'Connexion')}
     >
-      {/* Backdrop — click to dismiss */}
+      {/* Backdrop: click to dismiss */}
       <button
         type="button"
         onClick={onCancel}
