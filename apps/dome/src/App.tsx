@@ -243,7 +243,7 @@ const VOIES: { titre: string; body: string; icon: React.ReactNode }[] = [
     icon: <path d="M12 21V11m0 0c0-3.5-2.5-6-6-6 0 3.5 2.5 6 6 6Zm0-2c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6Z" />,
   },
   {
-    titre: "Vendre ce que l'on crée",
+    titre: "Vendre ce que vous créez",
     body: "Un comptoir pour les récoltes, les savons et l'artisanat, une aile pour les oeuvres. Ce qui sort de vos mains trouve preneur, et vous revient en entier.",
     icon: <path d="M4 9l1.5-4h13L20 9M4 9h16M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M9 13h6" />,
   },
