@@ -21,7 +21,7 @@ import type {
 // The orb consumes one type regardless of source. WEB entries (the static
 // seed catalog) flow through YouTube/Facebook embeds; FIREBASE entries
 // (admin-curated + approved UGC) play via HTML5 <video> from Storage;
-// CITATION entries are typeset text rendered inside the orb — no player.
+// CITATION entries are typeset text rendered inside the orb: no player.
 // The `ownerUid` is only attached to FIREBASE entries from a member's
 // profile (Voices tab) — that's what powers the view-count ping back to
 // members/{ownerUid}/videos/{id}.

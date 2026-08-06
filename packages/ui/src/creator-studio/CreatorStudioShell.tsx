@@ -146,7 +146,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
         insphWasActive.current = active;
      }, [viewerCtx.inspirosphereActive, viewerCollapsed]);
 
-     // First-login wizard — shown when the user has never completed it.
+     // First-login wizard: shown when the user has never completed it.
      // null = we haven't checked yet (treat as 'don't show'); false = doc
      // exists with onboardingV1Completed=true; true = wizard should show.
      // Checked alongside the theme load to save a Firestore round trip.
