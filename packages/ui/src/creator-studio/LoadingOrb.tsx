@@ -51,7 +51,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
             aria-live="polite"
             aria-label={`Loading ${label}`}
         >
-            {/* Aurora drift behind the orb — mirrors the StudioContextViewer
+            {/* Aurora drift behind the orb: mirrors the StudioContextViewer
                 aurora pattern but at smaller radius. */}
             <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="orb-aurora-a absolute" style={{ left: '50%', top: '50%', width: '32rem', height: '32rem', transform: 'translate(-50%, -50%)', background: 'radial-gradient(closest-side, rgba(217,70,239,0.35), transparent 70%)', filter: 'blur(40px)', mixBlendMode: 'screen' }} />

@@ -5026,7 +5026,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                              </div>
                         </div>
 
-                        {/* Inbox + Friends — full-width panels beneath the dossier.
+                        {/* Inbox + Friends: full-width panels beneath the dossier.
                             Inbox lists conversations sourced live from Firestore;
                             clicking one expands an inline thread with a composer.
                             Friends panel shows accepted + pending requests with
