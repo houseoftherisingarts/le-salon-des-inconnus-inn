@@ -394,8 +394,8 @@ export const CeilidhPage: React.FC<Props> = ({
             style={{ letterSpacing: '0.18em', fontSize: 'clamp(0.85rem, 1.1vw, 1.05rem)', textShadow: '0 2px 12px rgba(0,0,0,0.85)' }}
           >
             {t(
-              'Five days of art, work, food, and gathering — open the chapters below to step in.',
-              "Cinq jours d'art, de travail, de cuisine et de rassemblement — ouvrez les chapitres ci-dessous pour entrer.",
+              'Five days of art, work, food, and gathering: open the chapters below to step in.',
+              "Cinq jours d'art, de travail, de cuisine et de rassemblement : ouvrez les chapitres ci-dessous pour entrer.",
             )}
           </p>
           <p

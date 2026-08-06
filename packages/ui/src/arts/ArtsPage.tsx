@@ -117,7 +117,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
   const [portalView, setPortalView] = useState<PortalView>('BLOG');
 
   // Mirror sub-view changes back out to the wrapping app (used to sync the
-  // URL bar). Skip the first run — the URL is already correct on mount,
+  // URL bar). Skip the first run: the URL is already correct on mount,
   // and we don't want to push a duplicate history entry.
   const isFirstNodeChangeRef = useRef(true);
   useEffect(() => {
