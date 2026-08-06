@@ -437,7 +437,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     )}
                     {currentStep === 'REAL_NAME' && (
                         <StepText
-                            label={t('What is your real name?', 'Quel est ton vrai nom ?')}
+                            label={t('What is your real name?', 'Quel est votre vrai nom ?')}
                             sub={t('We use this for any agreements, billing, and legal correspondence. Stays private.', 'Pour les ententes, la facturation et la correspondance officielle. Reste privé.')}
                             value={answers.realName}
                             onChange={v => setAnswers(a => ({ ...a, realName: v }))}
