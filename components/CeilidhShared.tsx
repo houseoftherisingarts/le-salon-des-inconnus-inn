@@ -716,7 +716,7 @@ export const KanbanBoard: React.FC<{
         </button>
       </div>
 
-      {/* Browse-mode banner — shown to non-members. Makes it clear that
+      {/* Browse-mode banner: shown to non-members. Makes it clear that
           viewing the kanban is read-only and that "Choose this team" above
           is the explicit commitment. */}
       {user && !isUserInTeam && !isAdminEmail(user.email) && (
