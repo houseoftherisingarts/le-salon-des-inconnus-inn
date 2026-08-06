@@ -2206,8 +2206,8 @@ const TeamsChapterBody: React.FC<{
           title={pickedId
             ? `${t('Team chat', 'Salon d\u2019équipe')} · ${language === 'EN' ? TEAMS.find((x) => x.id === pickedId)?.nameEn : TEAMS.find((x) => x.id === pickedId)?.nameFr}`
             : t('Team chat', 'Salon d\u2019équipe')}
-          emptyEn="No messages yet — start the conversation."
-          emptyFr="Pas de message — lancez la discussion."
+          emptyEn="No messages yet. Start the conversation."
+          emptyFr="Pas de message. Lancez la discussion."
           language={language}
           user={user}
           onRequireAuth={() => { /* prompt handled at page level */ }}
