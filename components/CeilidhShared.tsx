@@ -2579,7 +2579,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
     return unsub;
   }, [user]);
 
-  // Load all registrations (real-time) — room counts + timeline + names
+  // Load all registrations (real-time): room counts + timeline + names
   useEffect(() => {
     if (!db) return;
     const unsub = onSnapshot(collection(db, 'events', EVENT_ID, 'registrations'), snap => {
