@@ -55,7 +55,7 @@ interface KanbanToolProps {
         submitOn: string; submitOff: string;
         chipActive: string; chipInactive: string; accentText: string;
     };
-    /** Theme-aware page-title class — neon italic on RAINBOW, cinzel on the rest. */
+    /** Theme-aware page-title class: neon italic on RAINBOW, cinzel on the rest. */
     pageTitleClass: string;
 }
 

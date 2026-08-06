@@ -548,7 +548,7 @@ export const WelcomeWizard: React.FC<Props> = ({
             </div>
 
             <style>{`
-                /* Bubble reveal — same rhythm + cubic-bezier as the inn-hero
+                /* Bubble reveal: same rhythm + cubic-bezier as the inn-hero
                    WebGL transition (2.5s power2.inOut on uP). Old layer
                    unmounts (React keys force re-render); new layer animates
                    from a circular clip at the anchor outward to full
