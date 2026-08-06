@@ -1090,8 +1090,8 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                             <section>
                                 <h3 className="font-cinzel text-white text-base mb-2 uppercase tracking-widest">1. {t('Visualize', 'Visualiser')}</h3>
                                 <p>{t(
-                                    'Kanban exists to close the 50 mental tabs you keep open. Dump every idea into The Void — the friction of typing it lets you let go.',
-                                    'Le Kanban ferme les 50 onglets mentaux que tu gardes ouverts. Vide tout dans Le Vide — le geste d\'écrire libère.',
+                                    'Kanban exists to close the 50 mental tabs you keep open. Dump every idea into The Void: the friction of typing it lets you let go.',
+                                    'Le Kanban ferme les 50 onglets mentaux que tu gardes ouverts. Vide tout dans Le Vide : le geste d\'écrire libère.',
                                 )}</p>
                             </section>
                             <section>

@@ -4225,7 +4225,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             }}
                         />
 
-                        {/* Action bar — only meaningful for signed-in members. The
+                        {/* Action bar: only meaningful for signed-in members. The
                             Save button persists name/bio/skills; "Ask to be featured"
                             sends a request the Artistic CRM can approve. */}
                         {accessLevel === 'MEMBER' && currentUser && (

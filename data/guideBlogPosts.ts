@@ -349,7 +349,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         intro_en: "Brasseurs de Montebello is the village's go-to microbrewery: seasonal beers brewed locally, pub-style food, a terrace in season. It's the natural stop before or after Manoir Papineau, and a good base for an afternoon.",
         sections: [
             { title_fr: "La bière", title_en: "The beer",
-              body_fr: "Une carte qui tourne avec les saisons — IPA, lager, stout, et toujours quelques expérimentations en édition limitée. Demandez ce qui sort de la cuve : c'est souvent là que ça devient intéressant.",
+              body_fr: "Une carte qui tourne avec les saisons : IPA, lager, stout, et toujours quelques expérimentations en édition limitée. Demandez ce qui sort de la cuve : c'est souvent là que ça devient intéressant.",
               body_en: "A list that rotates with the seasons — IPA, lager, stout, and always a few limited-edition experiments. Ask what's just coming off — that's often where it gets interesting." },
             { title_fr: "L'ambiance", title_en: "The vibe",
               body_fr: "Pub chaleureux, public mélangé, musique parfois en direct. Un endroit où on entre pour une pinte et où on reste pour deux.",
