@@ -1075,7 +1075,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
 
         <LazySection placeholderHeight="800px">
           <div className="cv-auto">
-            {/* autoRotate now ON — the rAF in DetailsSection already gates on
+            {/* autoRotate now ON: the rAF in DetailsSection already gates on
                 isInView via IntersectionObserver, so it doesn't run when scrolled
                 past. The earlier blanket disable made it look frozen on mobile,
                 where users have no obvious way to rotate manually. */}
