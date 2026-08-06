@@ -1433,7 +1433,7 @@ const DETAIL: ScheduleDay[] = [
         detailEn: 'Wrap up loose ends, leave things tidy.', detailFr: 'Boucler la boucle, laisser les lieux propres.' },
       { time: '19h',   kind: 'meal', titleEn: 'Closing supper', titleFr: 'Souper de clôture' },
       { time: '20h30', kind: 'art',  titleEn: 'Closing show', titleFr: 'Spectacle de clôture',
-        detailEn: 'A second night of performances — quieter, deeper.', detailFr: 'Une seconde soirée de spectacles — plus douce, plus profonde.' },
+        detailEn: 'A second night of performances: quieter, deeper.', detailFr: 'Une seconde soirée de spectacles : plus douce, plus profonde.' },
     ] },
   { date: '2026-05-25', dowEn: 'Monday', dowFr: 'Lundi', shortDateEn: 'May 25', shortDateFr: '25 mai',
     moments: [
