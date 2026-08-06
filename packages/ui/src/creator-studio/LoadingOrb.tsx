@@ -170,7 +170,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
                     100% { opacity: 1;    transform: scale(1.08); }
                 }
 
-                /* Neon sweep — primary white lance + tinted secondary lance.
+                /* Neon sweep: primary white lance + tinted secondary lance.
                    Each sweep takes ~1.6s and repeats every 2.6s. */
                 .orb-sweep {
                     animation: orbSweep 2.6s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;

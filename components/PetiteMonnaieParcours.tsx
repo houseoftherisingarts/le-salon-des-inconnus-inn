@@ -174,7 +174,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
 
         const isActive = i === active;
         // gate non-focal pastilles by the scroll reveal so nothing but Le Salon is
-        // visible at rest. (No CSS blur filter — it was the main GPU cost; depth now
+        // visible at rest. (No CSS blur filter: it was the main GPU cost; depth now
         // reads through scale + opacity + the perspective z alone.)
         const shownOp = isActive ? op : op * reveal;
         const focalPop = isActive ? 1 + (1 - smooth(0, 0.5, Math.abs(d))) * 0.05 : 1;
