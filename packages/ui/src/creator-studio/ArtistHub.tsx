@@ -4466,7 +4466,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                          <span>{regData.name || 'UNKNOWN'}</span>
                                          {isArtist && (
                                              <span
-                                                title={language === 'EN' ? 'Curated artist — verified by the Salon' : 'Artiste curaté·e — vérifié·e par le Salon'}
+                                                title={language === 'EN' ? 'Curated artist, verified by the Salon' : 'Artiste curaté·e, vérifié·e par le Salon'}
                                                 aria-label={language === 'EN' ? 'Verified curated artist' : 'Artiste curaté·e vérifié·e'}
                                                 className="inline-flex items-center justify-center w-9 h-9 md:w-12 md:h-12 rounded-full bg-[#c5a059]/15 border border-[#c5a059]/40 shadow-[0_0_18px_rgba(197,160,89,0.35)]"
                                              >

@@ -385,7 +385,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               a_en: "Tickets are sold through the Zeffy portal, accessible from the official site festivalmedievaldemontpellier.org." },
             { q_fr: "Y a-t-il des activités pour enfants ?", q_en: "Are there activities for children?",
               a_fr: "Oui, un village jeunesse propose des activités adaptées à chaque tranche d'âge tout au long du week-end.",
-              a_en: "Yes — a youth village offers age-appropriate activities throughout the weekend." },
+              a_en: "Yes, a youth village offers age-appropriate activities throughout the weekend." },
             { q_fr: "Peut-on s'y rendre en groupe ?", q_en: "Can groups attend?",
               a_fr: "Des forfaits de groupe sont offerts; contactez admin@festivalmedievaldemontpellier.org pour les détails.",
               a_en: "Group packages are available; contact admin@festivalmedievaldemontpellier.org for details." },

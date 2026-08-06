@@ -2512,7 +2512,7 @@ const TeamMembersPanel: React.FC<{
   onViewProfile?: (uid: string) => void;
 }> = ({ pickedId, language, registrations, onViewProfile }) => {
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
-  // Build the roster scoped to the picked team — primary first, support second.
+  // Build the roster scoped to the picked team: primary first, support second.
   // Each entry carries the days the member is on this team (TeamMembership.days).
   const members = registrations
     .map((reg) => {
