@@ -101,7 +101,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
   // ── Cinematic "Réserver" backdrop: scroll-scrubbed Veo establishing shot ──
   // reserveTrackRef = the tall scroll track that wraps the whole booking section.
   // The backdrop is scrubbed as a canvas frame-sequence (reserveCanvasRef, below)
-  // on every viewport — see the note there.
+  // on every viewport. See the note there.
   // reserveOverlayRef / reserveCopyRef = the establishing title that resolves over
   // the footage before the real half-moon estate card + balloon rooms reveal.
   const reserveTrackRef = useRef<HTMLDivElement>(null);
