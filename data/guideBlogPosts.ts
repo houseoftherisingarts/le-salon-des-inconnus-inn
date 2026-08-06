@@ -615,7 +615,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'centre-de-vie': {
         _draft: true,
-        intro_fr: "Le Centre de Vie, à Ripon, est un centre de retraite bien-être posé sur 108 acres de forêt — yoga, naturopathie, massothérapie, méditation, cures de jus, programmes de jeûne. Lac privé, sentiers en forêt, repas végétariens, sauna, et des espaces de repos avec foyers : c'est un lieu de ressourcement rare, à quelques minutes seulement de l'Auberge.",
+        intro_fr: "Le Centre de Vie, à Ripon, est un centre de retraite bien-être posé sur 108 acres de forêt : yoga, naturopathie, massothérapie, méditation, cures de jus, programmes de jeûne. Lac privé, sentiers en forêt, repas végétariens, sauna, et des espaces de repos avec foyers : c'est un lieu de ressourcement rare, à quelques minutes seulement de l'Auberge.",
         intro_en: "Centre de Vie, in Ripon, is a wellness retreat centre sitting on 108 acres of forest — yoga, naturopathy, massage therapy, meditation, juice cleanses, fasting programs. Private lake, forest trails, vegetarian meals, sauna, and rest spaces with fireplaces. A rare place to recharge, just minutes from the Inn.",
         sections: [
             { title_fr: "Les programmes", title_en: "The programs",
