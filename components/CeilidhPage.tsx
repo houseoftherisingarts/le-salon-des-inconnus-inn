@@ -232,7 +232,7 @@ export const CeilidhPage: React.FC<Props> = ({
 
   // Build a map: teamId → list of registrants on that team (primary or support).
   // Dedupe per (uid + teamId) so a user with both a primary and a support entry
-  // for the same team appears once — primary wins. Without this, React warns about
+  // for the same team appears once (primary wins). Without this, React warns about
   // duplicate keys.
   const teamRoster = useMemo(() => {
     const byTeam = new Map<string, Map<string, { uid: string; name: string; photoURL?: string; role: 'primary' | 'support' }>>();
