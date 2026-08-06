@@ -590,7 +590,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             </button>
           )}
 
-          {/* Artist Mind Palace — when this member is Maestro-tier and
+          {/* Artist Mind Palace: when this member is Maestro-tier and
               has published their /{username} super profile, surface a
               single editorial button that opens it in a new tab. The
               button is the only place we cross-link from the standard
