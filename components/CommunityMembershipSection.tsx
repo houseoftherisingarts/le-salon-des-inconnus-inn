@@ -657,32 +657,32 @@ const CommunityApplyForm: React.FC<{ language: 'EN' | 'FR'; user: User; memberPr
         )}
         <div>
           <div className="font-fraunces text-lg" style={{ color: T.ink }}>{memberProfile.displayName}</div>
-          <div className="text-[11px] font-inter" style={{ color: T.soft }}>{memberProfile.email}<span style={{ color: T.gold }}> · {t('photo from your Google profile', 'photo de ton profil Google')}</span></div>
+          <div className="text-[11px] font-inter" style={{ color: T.soft }}>{memberProfile.email}<span style={{ color: T.gold }}> · {t('photo from your Google profile', 'photo de votre profil Google')}</span></div>
         </div>
       </div>
 
-      <Field label={t('Introduce yourself *', 'Présente-toi *')} hint={t('Who you are, where you are in life right now.', "Qui tu es, où tu en es dans ta vie en ce moment.")}>
-        <Area value={introduction} onChange={setIntroduction} rows={4} placeholder={t('A few words in your own voice', 'Quelques mots dans ta voix')} />
+      <Field label={t('Introduce yourself *', 'Présentez-vous *')} hint={t('Who you are, where you are in life right now.', "Qui vous êtes, où vous en êtes dans votre vie en ce moment.")}>
+        <Area value={introduction} onChange={setIntroduction} rows={4} placeholder={t('A few words in your own voice', 'Quelques mots dans votre voix')} />
       </Field>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
         <Field label={t('Phone *', 'Téléphone *')}><Line value={phone} onChange={setPhone} /></Field>
-        <Field label={t('Where you come from', "D'où tu viens")}><Line value={city} onChange={setCity} /></Field>
+        <Field label={t('Where you come from', "D'où vous venez")}><Line value={city} onChange={setCity} /></Field>
       </div>
       <Field label={t('Why community life, why here? *', 'Pourquoi la vie communautaire, pourquoi ici ? *')} hint={t('This is what matters most to us.', "C'est ce qui compte le plus pour nous.")}>
         <Area value={communityMotivation} onChange={setCommunityMotivation} rows={4} />
       </Field>
-      <Field label={t('Your relationship to housekeeping work', 'Ton rapport au travail de ménage')} hint={t('Honestly, it is the core of the role.', "Honnêtement, c'est le cœur du poste.")}>
+      <Field label={t('Your relationship to housekeeping work', 'Votre rapport au travail de ménage')} hint={t('Honestly, it is the core of the role.', "Honnêtement, c'est le cœur du poste.")}>
         <Area value={cleaningAttitude} onChange={setCleaningAttitude} rows={3} />
       </Field>
-      <Field label={t('Your own projects', 'Tes propres projets')} hint={t('What you would work on with the free time.', "Ce sur quoi tu travaillerais avec le temps libre.")}>
+      <Field label={t('Your own projects', 'Vos propres projets')} hint={t('What you would work on with the free time.', "Ce sur quoi vous travailleriez avec le temps libre.")}>
         <Area value={personalProjects} onChange={setPersonalProjects} rows={3} />
       </Field>
-      <Field label={t('Do you need a space to work? (e.g. the massotherapy room)', "As-tu besoin d'un espace pour travailler ? (ex. la salle de masso)")}>
+      <Field label={t('Do you need a space to work? (e.g. the massotherapy room)', "Avez-vous besoin d'un espace pour travailler ? (ex. la salle de masso)")}>
         <Area value={workspaceNeeds} onChange={setWorkspaceNeeds} rows={2} />
       </Field>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-        <Field label={t('When could you start?', 'Quand pourrais-tu commencer ?')}><Line value={availability} onChange={setAvailability} /></Field>
-        <Field label={t('Anything you need from us', 'Ce dont tu as besoin de nous')}><Line value={needs} onChange={setNeeds} /></Field>
+        <Field label={t('When could you start?', 'Quand pourriez-vous commencer ?')}><Line value={availability} onChange={setAvailability} /></Field>
+        <Field label={t('Anything you need from us', 'Ce dont vous avez besoin de nous')}><Line value={needs} onChange={setNeeds} /></Field>
       </div>
 
       <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${T.line}` }}>
