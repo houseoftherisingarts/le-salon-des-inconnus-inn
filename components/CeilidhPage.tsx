@@ -695,7 +695,7 @@ export const CeilidhPage: React.FC<Props> = ({
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ChapterCard — large landscape cover with title + status seal
+// ChapterCard: large landscape cover with title + status seal
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ChapterCard: React.FC<{

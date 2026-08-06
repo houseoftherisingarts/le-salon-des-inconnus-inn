@@ -325,7 +325,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
         copy.style.opacity = String(inP * (1 - outP));
         copy.style.transform = `translate3d(0, ${(1 - inP) * 24 - outP * 36}px, 0)`;
       }
-      // Beat 2 — the "Bienvenue…" editorial: resolve 0.56–0.76 (slight crossfade with
+      // Beat 2 (the "Bienvenue…" editorial): resolve 0.56–0.76 (slight crossfade with
       // beat 1), then hold to the end of the track.
       if (editorial) {
         const eIn = Math.min(1, Math.max(0, (p - 0.56) / 0.20));
