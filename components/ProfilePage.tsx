@@ -642,7 +642,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   style={{ background: '#050505', border: '1px solid rgba(243,229,171,0.3)' }}
                 >
                   <p className="font-cinzel text-neutral-500 text-[9px] uppercase tracking-[0.45em] mb-2">
-                    {t('Your code — show at the door', "Votre code — à présenter à l'entrée")}
+                    {t('Your code: show it at the door', "Votre code : à présenter à l'entrée")}
                   </p>
                   <p className="font-prata text-[#d4af37] my-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', letterSpacing: '0.3em' }}>
                     {showTicket.ticketCode}
