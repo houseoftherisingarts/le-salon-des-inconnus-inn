@@ -522,7 +522,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le rituel québécois",
                 title: "Érablière chez Ti-Mousse",
                 location: "Papineauville",
-                description: "Authentique cabane à sucre québécoise depuis 1977 — repas traditionnel à volonté, tire sur la neige et balades en traîneau à chevaux. Ouverte de fin février à fin avril. Un passage obligé pour vivre le printemps québécois dans toute sa dimension culturelle et gourmande.",
+                description: "Authentique cabane à sucre québécoise depuis 1977 : repas traditionnel à volonté, tire sur la neige et balades en traîneau à chevaux. Ouverte de fin février à fin avril. Un passage obligé pour vivre le printemps québécois dans toute sa dimension culturelle et gourmande.",
                 link: "https://www.cheztimousse.com/",
                 image: PLACEHOLDER_ROOM,
                 isFavorite: true,
