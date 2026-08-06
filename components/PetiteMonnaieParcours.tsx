@@ -52,7 +52,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
 
   const N = PM_STOPS.length;
 
-  // Kept light on purpose (12, not 30) — particle counts on an always-on CSS
+  // Kept light on purpose (12, not 30): particle counts on an always-on CSS
   // animation are a steady GPU cost even when the user isn't scrolling.
   const embers = useMemo(
     () => Array.from({ length: 12 }, (_, i) => ({
