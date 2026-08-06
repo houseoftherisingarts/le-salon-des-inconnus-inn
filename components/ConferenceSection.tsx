@@ -67,7 +67,7 @@ const STEPS: { time: string; title: [string, string, string]; body: [string, str
   },
   {
     time: '10–20 min',
-    title: ['Why we are here', 'Pourquoi on est là', 'Por qué estamos aquí'],
+    title: ['Why we are here', 'Pourquoi nous sommes là', 'Por qué estamos aquí'],
     body: [
       'A short, standing intro: the true story of a tool born at home for two children, no diagram, no sales pitch.',
       "Court, debout, sans diaporama lourd : l'histoire vraie d'un outil né à la maison, pour deux enfants. Aucune vente.",
