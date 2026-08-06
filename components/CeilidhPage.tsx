@@ -207,7 +207,7 @@ export const CeilidhPage: React.FC<Props> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
 
-  // ── Live data — registrations / carpools / needs all subscribed via onSnapshot.
+  // ── Live data: registrations / carpools / needs all subscribed via onSnapshot.
   // Drives the team rosters (who is in each team), the PresenceTimeline (who comes
   // when), and the carpool/needs panels in Pratique.
   const [registrations, setRegistrations] = useState<CeilidhRegistration[]>([]);
