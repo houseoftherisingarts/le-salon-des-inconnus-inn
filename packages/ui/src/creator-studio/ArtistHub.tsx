@@ -1492,7 +1492,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         </div>
     );
 
-    // Editorial header — consistent kicker + display title + brief used at
+    // Editorial header: consistent kicker + display title + brief used at
     // the top of every revamped form. Pass `n` to render a "№ 047" stamp.
     const FormEditorialHeader: React.FC<{
         kicker: string; titleEn: string; titleFr: string;
