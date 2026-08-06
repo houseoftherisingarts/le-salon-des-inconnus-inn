@@ -644,7 +644,7 @@ export const InnHero: React.FC<{
       {/* ── Option A: floor-anchored layout ── */}
       <div className="absolute bottom-0 left-0 right-0 z-10 flex items-end justify-between gap-6 px-8 md:px-14 pb-10 flex-wrap pointer-events-none">
 
-        {/* Left — badge + title + tagline */}
+        {/* Left: badge + title + tagline */}
         <div className="flex flex-col gap-2 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
           <span
             className={`text-[0.6rem] font-bold uppercase tracking-[0.45em] transition-colors duration-500
