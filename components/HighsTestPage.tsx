@@ -2,7 +2,7 @@
 //
 // "Going into a world." A WebGL cosmic-tunnel shader fills the entire
 // viewport and serves as the always-visible environment (the world). A
-// sparse 3D card flythrough (10 cards along Z) layers above it — camera
+// sparse 3D card flythrough (10 cards along Z) layers above it: camera
 // scroll-driven through the cards (Tympanus-style). Capability copy and
 // hero typography overlay as HTML. The journey ends arriving at a large
 // hextech portal.
