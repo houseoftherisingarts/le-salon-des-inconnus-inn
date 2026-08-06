@@ -167,7 +167,7 @@ export const PuzzleCelebration: React.FC<Props> = ({
                         : 'none',
                 }}
             >
-                {/* Base — the assembled jigsaw with visible seams. */}
+                {/* Base: the assembled jigsaw with visible seams. */}
                 <div
                     style={{
                         position: 'absolute',
