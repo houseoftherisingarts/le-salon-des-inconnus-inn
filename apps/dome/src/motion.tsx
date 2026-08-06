@@ -78,7 +78,7 @@ export function Reveal({
   );
 }
 
-// B3 — eyebrow éditorial : filet or empilé AU-DESSUS, tout au même bord gauche
+// B3, eyebrow éditorial : filet or empilé AU-DESSUS, tout au même bord gauche
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <div>

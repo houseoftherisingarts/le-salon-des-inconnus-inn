@@ -110,7 +110,7 @@ export const MyVideosPanel: React.FC<Props> = ({
         return () => unsub();
     }, [uid]);
 
-    // Resolve download URLs lazily — only for videos we actually show. The
+    // Resolve download URLs lazily: only for videos we actually show. The
     // browser caches getDownloadURL behind the scenes, but we still memoize
     // per id to avoid re-issuing the call on every render.
     useEffect(() => {
