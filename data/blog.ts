@@ -18,7 +18,7 @@ export type BlogStatus = 'pending' | 'published' | 'hidden';
 export interface BlogPost {
   /** Firestore doc id (stable, never shown). */
   id: string;
-  /** URL slug — /blog/{slug}. Editable in the admin; keep unique. */
+  /** URL slug: /blog/{slug}. Editable in the admin; keep unique. */
   slug: string;
   category: BlogCategory;
   title_fr: string;

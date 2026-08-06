@@ -88,7 +88,7 @@ interface RegistrationData {
     skills: string[]; // User entered skills
 }
 
-/** Country dropdown options — alpha-2 codes mapped to display names + flag
+/** Country dropdown options: alpha-2 codes mapped to display names + flag
  *  emoji. Limited to common origins for the inn's residents/audience; users
  *  needing something else can be added later. The flag is computed from the
  *  code via the regional-indicator codepoint trick (no asset shipping). */
