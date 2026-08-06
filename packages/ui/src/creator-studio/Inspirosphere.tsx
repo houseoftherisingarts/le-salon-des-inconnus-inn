@@ -705,7 +705,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                 <span className="hidden sm:inline">{t('Arsenal', 'Arsenal')}</span>
             </button>
 
-            {/* Bottom section — controls + Conscious Mode browser. No
+            {/* Bottom section: controls + Conscious Mode browser. No
                 background: the orb's aurora lives up in the viewer, and the
                 hub area below already provides the page surface. */}
             <section className="relative z-10">
