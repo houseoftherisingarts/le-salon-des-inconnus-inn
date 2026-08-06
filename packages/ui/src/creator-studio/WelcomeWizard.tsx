@@ -997,7 +997,7 @@ const StepTheme: React.FC<StepThemeProps> = ({ language, value, onChange }) => {
                 {t('Pick a wardrobe.', 'Choisis une garde-robe.')}
             </h2>
             <p className="text-neutral-400 text-sm font-lato mb-8 max-w-lg mx-auto">
-                {t('Sets the colours of your studio. You can change it any time from your profile.', 'Donne le ton à ton studio. Modifiable n\'importe quand depuis ton profil.')}
+                {t('Sets the colours of your studio. You can change it any time from your profile.', 'Donnez le ton à votre studio. Modifiable n\'importe quand depuis votre profil.')}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
                 {THEMES.map(th => {
