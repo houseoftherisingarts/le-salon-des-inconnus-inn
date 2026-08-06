@@ -45,7 +45,7 @@ export const EditorialTemplate: React.FC<TemplateProps> = ({ config, fallbackDis
                 ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1208]/40 to-[#050505]" />
                 )}
-                {/* Editorial wash — pulls the back layer back, lets the type
+                {/* Editorial wash: pulls the back layer back, lets the type
                     and cutout breathe. */}
                 <div
                     aria-hidden
