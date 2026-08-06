@@ -396,7 +396,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     <p className="text-neutral-400 text-sm font-lato leading-relaxed mb-5">
                         Your Mind Palace at{' '}
                         <code className="text-[#c5a059]">/{config.username}</code>{' '}
-                        is paused. Your hero photo, works, and writing are kept safely — they'll come right back when you resume.
+                        is paused. Your hero photo, works, and writing are kept safely. They'll come right back when you resume.
                     </p>
                     <a
                         href="mailto:alex@lesalondesinconnus.com?subject=Resume%20Maestro%20subscription"
