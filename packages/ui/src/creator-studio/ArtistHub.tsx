@@ -4907,7 +4907,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                  {/* Content Layout: Portfolio & WRITINGS */}
                                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                      
-                                     {/* Portfolio Grid — sources from galleryUrls. Each tile shows a
+                                     {/* Portfolio Grid: sources from galleryUrls. Each tile shows a
                                          delete affordance on hover; the trailing tile is always the
                                          "add" button so the grid stays at >=6 cells. */}
                                      <div className={`bg-black/20 border ${currentStyles.border} p-6 rounded-xl`}>

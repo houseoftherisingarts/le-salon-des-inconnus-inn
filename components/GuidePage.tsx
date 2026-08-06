@@ -330,8 +330,8 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
           </h1>
           <p className="font-lato text-neutral-300 mt-3 max-w-xl text-sm md:text-base leading-relaxed">
             {language === 'EN'
-              ? 'From Lac Simon to Montebello — our hand-picked places worth discovering.'
-              : 'Du Lac Simon à Montebello — nos lieux choisis qui valent le détour.'}
+              ? 'From Lac Simon to Montebello, our hand-picked places worth discovering.'
+              : 'Du Lac Simon à Montebello, nos lieux choisis qui valent le détour.'}
           </p>
         </div>
       </div>
