@@ -211,7 +211,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
       ].includes(e.code);
 
       if (popupBlocked) {
-        // signInWithRedirect navigates away — no need to reset loading or show error
+        // signInWithRedirect navigates away: no need to reset loading or show error
         try {
           await signInWithRedirect(auth, provider);
         } catch (redirectErr: any) {

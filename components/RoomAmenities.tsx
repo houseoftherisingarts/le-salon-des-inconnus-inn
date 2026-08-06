@@ -6,7 +6,7 @@ type Lang = 'EN' | 'FR';
 type AmenityDef = {
   /** Compact label shown under the icon. Keep ≤ 16 chars per language. */
   label: { EN: string; FR: string };
-  /** Tooltip shown on hover — can be longer. Falls back to label. */
+  /** Tooltip shown on hover: can be longer. Falls back to label. */
   tooltip?: { EN: string; FR: string };
   icon: ReactNode;
 };
