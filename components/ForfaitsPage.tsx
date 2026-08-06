@@ -101,7 +101,7 @@ export const ForfaitsPage: React.FC<Props> = ({ onNavigate, language }) => {
           </motion.div>
         </section>
 
-        {/* III — special request */}
+        {/* III: special request */}
         <section className="px-6 md:px-14 lg:px-24 py-16 md:py-28">
           <SectionLabel numeral="II" label={t('A special request?', 'Une demande particulière ?')} />
           <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-center">

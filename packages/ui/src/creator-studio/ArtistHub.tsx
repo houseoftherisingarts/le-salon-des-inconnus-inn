@@ -5875,7 +5875,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                         )}
                                                     </div>
 
-                                                    {/* Footer status — pulses while incomplete */}
+                                                    {/* Footer status: pulses while incomplete */}
                                                     <div className={`px-5 py-3 border-t ${theme === 'COMIC' ? 'border-black border-t-2' : 'border-white/10'} flex items-center justify-between text-[10px] uppercase tracking-[0.3em]`}>
                                                         <span className={canSubmit ? 'text-emerald-300' : 'text-neutral-500'}>
                                                             <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 align-middle ${canSubmit ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]' : 'bg-neutral-600 hot-seat-pulse'}`} />
