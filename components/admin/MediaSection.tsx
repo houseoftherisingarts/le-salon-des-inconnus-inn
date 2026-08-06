@@ -7,7 +7,7 @@ import {
 
 // Storage-backed media library. Files live under admin/media/* in Firebase
 // Storage. v1: image-first grid, click-to-copy URL, upload, delete. No
-// folders, no rename — those are easy to add later if needed.
+// folders, no rename: those are easy to add later if needed.
 
 interface MediaItem {
     fullPath: string;

@@ -211,7 +211,7 @@ const HOT_SEAT_STAGES: { key: string; en: string; fr: string }[] = [
     { key: 'final',          en: 'Final piece',              fr: 'Œuvre finale' },
 ];
 
-// Each feedback type carries a tiny stroked-vector glyph (NOT an emoji — see
+// Each feedback type carries a tiny stroked-vector glyph (NOT an emoji: see
 // the icon-style design rules) so the chip reads at a glance even with the
 // label hidden by translation. Paths are 24-viewBox, 1.6-stroke; render via
 // the FeedbackGlyph helper below.
