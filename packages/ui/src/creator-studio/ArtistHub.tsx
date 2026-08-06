@@ -6678,7 +6678,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <p className="font-lato text-neutral-400 max-w-2xl mx-auto">
                                         {language === 'EN'
                                             ? "Cameras, lights, instruments, tools: list what you have, borrow what you need. Coordinated through direct contact."
-                                            : "Caméras, éclairage, instruments, outils : liste ce que tu as, emprunte ce qu'il te faut. Le contact se fait en direct."}
+                                            : "Caméras, éclairage, instruments, outils : listez ce que vous avez, empruntez ce qu'il vous faut. Le contact se fait en direct."}
                                     </p>
                                 </div>
                             </div>
