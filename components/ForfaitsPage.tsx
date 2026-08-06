@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ProposalRequestForm } from './ProposalRequestForm';
 import { Atmosphere, TopBar, HeroFramed, SectionLabel, EditorialRow, GoldButton, Glass } from './RetreatShared';
 
-// Unlisted page at /forfaits — B2C packages for inn guests. Art-directed
+// Unlisted page at /forfaits: B2C packages for inn guests. Art-directed
 // (2026-07-21) to the same cinematic language as /entreprises. First package:
 // "Nuit & Table" (room + 3-course dinner on arrival + breakfast), sold as a
 // Hostaway add-on.
