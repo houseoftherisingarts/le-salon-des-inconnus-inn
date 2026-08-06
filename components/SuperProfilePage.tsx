@@ -1,4 +1,4 @@
-// SuperProfilePage — public, fullscreen, borderless artist portfolio at
+// SuperProfilePage: public, fullscreen, borderless artist portfolio at
 // /{username}. Resolves the slug to a uid, loads the config doc, dispatches
 // to the medium-specific template.
 //
