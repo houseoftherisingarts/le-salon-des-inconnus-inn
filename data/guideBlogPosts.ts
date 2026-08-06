@@ -405,7 +405,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "Cuisson lente d'animaux entiers à la broche, longues tablées partagées, bières et vins, musique live, et cette qualité d'ambiance qu'on n'obtient que quand un village entier décide de fêter ensemble.",
               body_en: "Slow-roasted whole animals on the spit, long shared tables, beers and wines, live music, and that quality of atmosphere you only get when an entire village decides to celebrate together." },
             { title_fr: "Pourquoi y aller", title_en: "Why go",
-              body_fr: "C'est une plongée immédiate dans la culture locale. Vous y croiserez agriculteurs, artistes, artisans, retraités, jeunes familles — tout le tissu humain de Montpellier en une après-midi.",
+              body_fr: "C'est une plongée immédiate dans la culture locale. Vous y croiserez agriculteurs, artistes, artisans, retraités, jeunes familles : tout le tissu humain de Montpellier en une après-midi.",
               body_en: "It's an instant dive into local culture. You'll meet farmers, artists, craftspeople, retirees, young families — the entire human fabric of Montpellier in a single afternoon." },
         ],
         schema: { type: "Event", address: "Montpellier, QC, Canada" },
