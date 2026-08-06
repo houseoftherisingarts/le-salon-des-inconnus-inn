@@ -454,7 +454,7 @@ export const KanbanBoard: React.FC<{
 
     return (
       <div className={`relative bg-[#141414] border p-3 group ${isAdminCard ? 'border-[#d4af37]/40' : 'border-white/20'}`}>
-        {/* Admin ribbon — only on tasks created by an admin email */}
+        {/* Admin ribbon: only on tasks created by an admin email */}
         {isAdminCard && (
           <span
             className="absolute -top-2 -right-1 px-2 py-0.5 rounded-sm font-cinzel text-[8px] uppercase tracking-[0.35em] text-[#1a1208]"
