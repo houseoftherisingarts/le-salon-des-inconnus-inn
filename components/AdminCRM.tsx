@@ -475,7 +475,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     createdAt?: any;
     decidedAt?: any;
   }>>([]);
-  // Codes per tier — three live subscriptions
+  // Codes per tier: three live subscriptions
   const [d20Codes, setD20Codes] = useState<Record<D20Tier, D20Code[]>>({ good: [], great: [], nat20: [] });
   // Show offers — kept here just to drive the sidebar badge + dashboard tile.
   // The full list is rendered by ShowOffersSection (which subscribes itself).
