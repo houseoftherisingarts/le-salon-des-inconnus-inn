@@ -722,7 +722,7 @@ export const KanbanBoard: React.FC<{
       {user && !isUserInTeam && !isAdminEmail(user.email) && (
         <div className="mb-4 px-3 py-2 border border-white/10 bg-white/[0.02] text-center">
           <p className="text-[10px] font-cinzel uppercase tracking-widest text-neutral-500">
-            {t('Browse mode — read-only', 'Mode aperçu — lecture seule')}
+            {t('Browse mode: read-only', 'Mode aperçu : lecture seule')}
           </p>
           <p className="text-[10px] font-lato text-neutral-600 mt-0.5">
             {t('Press "Choose this team" above to participate.',

@@ -74,7 +74,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       },
       () => { setRegistrationsLoading(false); },
     );
-    // Show ticket — one-shot is fine (it's terminal state once paid).
+    // Show ticket: one-shot is fine (it's terminal state once paid).
     (async () => {
       try {
         const ticketSnap = await getDoc(doc(db!, 'events', 'ceilidh-mai-2026', 'showTickets', user.uid));
