@@ -618,7 +618,7 @@ export const InnHero: React.FC<{
 
       <SmokeOverlay />
 
-      {/* Vibe toggle hidden — single-identity commitment.
+      {/* Vibe toggle hidden: single-identity commitment.
           Identity stays HOSTEL; all conditional styling preserved.
           Re-enable by removing the `false &&` wrapper to restore the toggle. */}
       {false && (
