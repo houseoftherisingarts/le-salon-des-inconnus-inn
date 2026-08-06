@@ -123,7 +123,7 @@ function seedFromTemplate(key: TemplateKey, language: 'EN' | 'FR'): Partial<Call
     const fr = language === 'FR';
     if (key === 'FILM') {
         return {
-            scenes: [{ id: rid(), time: '08:00', scene: fr ? 'Scène 1 — INT. Jour' : 'Scene 1 — INT. Day', location: '', notes: '' }],
+            scenes: [{ id: rid(), time: '08:00', scene: fr ? 'Scène 1, INT. Jour' : 'Scene 1, INT. Day', location: '', notes: '' }],
             cast:   [{ id: rid(), character: fr ? 'Rôle principal' : 'Lead', performer: '', callTime: '07:30', status: fr ? 'confirmé' : 'confirmed' }],
             crew:   [
                 { id: rid(), role: fr ? 'Réalisateur·rice' : 'Director', name: '', contact: '' },
