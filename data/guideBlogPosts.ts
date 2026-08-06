@@ -268,7 +268,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_en: "The walls are a rotating gallery. Local artists exhibit in turn, and it's often where you discover, ahead of the curve, the voices that matter in the region." },
             { title_fr: "Pourquoi c'est unique", title_en: "Why it's unique",
               body_fr: "Il n'y a pas d'équivalent dans la région. Aucun autre lieu ne combine cette qualité de produit, cet engagement local et cette densité humaine. C'est aussi proche d'un café littéraire parisien que la Petite-Nation peut produire, avec une authenticité que personne ne joue.",
-              body_en: "There's no equivalent in the region. Nowhere else combines this product quality, this local commitment, and this density of people. It's the closest thing to a Parisian literary café that Petite-Nation can produce — with an authenticity nobody is performing." },
+              body_en: "There's no equivalent in the region. Nowhere else combines this product quality, this local commitment, and this density of people. It's the closest thing to a Parisian literary café that Petite-Nation can produce, with an authenticity nobody is performing." },
         ],
         faqs: [
             { q_fr: "Faut-il réserver ?", q_en: "Do I need a reservation?",

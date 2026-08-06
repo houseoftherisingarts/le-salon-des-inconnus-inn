@@ -552,9 +552,9 @@ const WelcomeHero: React.FC<{ theme: string; language: 'EN' | 'FR' }> = ({ theme
         );
     }
 
-    // RAINBOW (default) — neon arcade. STUDIO uses the original neonPowerUp
+    // RAINBOW (default): neon arcade. STUDIO uses the original neonPowerUp
     // animation (defined in CreatorStudioShell's <style>) for the signature
-    // electric-flicker entrance — DON'T add welcome-line here or it'll
+    // electric-flicker entrance: DON'T add welcome-line here or it'll
     // override the neon flash.
     return (
         <div className="flex flex-col items-center justify-center text-center px-6 group cursor-default">
