@@ -125,7 +125,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
                         <span className="text-neutral-300">
                           {t('Third-party (Google)', 'Tiers (Google)')}
                         </span>{' '}
-                        — {t(
+                        : {t(
                           'Google OAuth cookies (Sign in with Google) and reCAPTCHA (phone sign-in). Governed by Google\'s Privacy Policy.',
                           'Cookies OAuth de Google (connexion via Google) et reCAPTCHA (connexion téléphonique). Régis par la politique de confidentialité de Google.',
                         )}
