@@ -7811,7 +7811,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         <p className="text-sm text-neutral-400 italic mb-3">
                                             {language === 'EN'
                                                 ? 'You have no friends to gift to yet.'
-                                                : "Tu n'as encore aucun·e ami·e à qui offrir."}
+                                                : "Vous n'avez encore aucun·e ami·e à qui offrir."}
                                         </p>
                                         <p className="text-[10px] uppercase tracking-widest text-neutral-600">
                                             {language === 'EN'
