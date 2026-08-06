@@ -22,7 +22,7 @@ export { CallSheetPublicView } from './creator-studio/CallSheetPublicView';
 export { SdiCafe } from './sdi-cafe/SdiCafe';
 export type { SdiCafeProps } from './sdi-cafe/SdiCafe';
 
-// Super Profile (Maestro tier) — /{username} fullscreen portfolio pages,
+// Super Profile (Maestro tier): /{username} fullscreen portfolio pages,
 // the editor panel mounted inside the Studio's PROFILE tab, and the public
 // templates dispatched on by medium.
 export * from './super-profile';
