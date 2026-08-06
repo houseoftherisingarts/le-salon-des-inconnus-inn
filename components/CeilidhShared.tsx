@@ -168,7 +168,7 @@ export const TEAMS: CeilidhTeamData[] = [
     description: 'Feed the whole crowd: meal prep, snacks, water, and keeping the space warm and inviting.',
     description_fr: 'Nourrir tout ce beau monde : préparer les repas, apporter eau et collations, garder l\'espace propre et convivial.' },
   { id: 'jardins',    name: 'Garden Team',          name_fr: 'Team Jardins',           emoji: '🌱', maxMembers: 4,
-    description: 'Tilling, weeding, planting, tending the greenhouse — connecting with the land.',
+    description: 'Tilling, weeding, planting, tending the greenhouse: connecting with the land.',
     description_fr: 'Labourer, désherber, planter, profiter du dehors, aider à l\'autosuffisance de l\'espace, préparer la serre.' },
   { id: 'grange',     name: 'Barn Team',            name_fr: 'Team Grange',            emoji: '🏚️', maxMembers: 6,
     description: 'Sort barn wood, remove nails, burn the unusable wood.',
