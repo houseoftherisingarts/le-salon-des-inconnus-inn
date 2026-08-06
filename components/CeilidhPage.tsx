@@ -1011,7 +1011,7 @@ const ChapterFullscreen: React.FC<{
       >
         ✕
       </button>
-      {/* Cover hero — full-bleed photo */}
+      {/* Cover hero: full-bleed photo */}
       <section className="relative h-[60vh] min-h-[460px] overflow-hidden">
         <img
           src={chapter.image}
