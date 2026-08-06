@@ -1271,7 +1271,7 @@ export const NeedsSection: React.FC<{
                     </span>
                   )}
 
-                  {/* Delete — admin OR original creator can remove */}
+                  {/* Delete: admin OR original creator can remove */}
                   {(admin || need.createdBy === user?.uid) && (
                     <button
                       onClick={() => handleDelete(need.id)}
