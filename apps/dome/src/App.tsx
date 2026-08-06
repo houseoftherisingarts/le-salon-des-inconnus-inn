@@ -215,7 +215,7 @@ const Hero: React.FC = () => {
             className="font-cormorant mt-7"
             style={{ color: 'rgba(255,250,240,0.88)', fontSize: 'clamp(1.2rem, 2vw, 1.7rem)', lineHeight: 1.55, maxWidth: '52ch', fontWeight: 500 }}
           >
-            Il y a, au bout des chemins de la Petite-Nation, un domaine où la terre se cultive à plusieurs mains et où l'on peut poser ses racines le temps d'une saison. On y sème et l'on y récolte, on y partage ce que l'on crée, et quand le soir descend, on allume des feux autour desquels naissent les fêtes. La porte vous est grande ouverte.
+            Il y a, au bout des chemins de la Petite-Nation, un domaine où la terre se cultive à plusieurs mains et où chacun peut poser ses racines le temps d'une saison. Nous y semons, nous y récoltons, nous partageons ce que nous créons, et quand le soir descend, nous allumons des feux autour desquels naissent les fêtes. La porte vous est grande ouverte.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <a href="#candidature" className="dome-cta inline-block font-cinzel text-[12px] uppercase tracking-[0.28em] px-9 py-4 rounded-full">
