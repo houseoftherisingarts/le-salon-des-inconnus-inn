@@ -496,7 +496,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     featureCafe?: boolean;
     featureMecene?: boolean;
     featureCreatorStudio?: boolean;
-    /** Maestro tier — unlocks /{username} Super Profile page. Same flag
+    /** Maestro tier: unlocks /{username} Super Profile page. Same flag
      *  pattern as isArtist (admin-only write at members/{uid}/admin/flags). */
     maestroEnabled?: boolean;
   };
