@@ -515,7 +515,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
             <div>
               <span className="font-cinzel text-[11px] uppercase tracking-[0.4em] text-[#c5a059]">{t('Once a year', 'Une fois par an')}</span>
               <h3 className="font-prata text-3xl md:text-4xl text-[#f3e5ab] mt-3 mb-3 tracking-tight">{t('Want to give a big push?', 'Envie de donner un gros coup ?')}</h3>
-              <p className="font-lato text-neutral-300 leading-relaxed max-w-xl">{t('Every early May we hold a ceilidh: five days of shows, banquets and shared work, the culmination of the season.', "Au début de chaque mois de mai, on tient un ceilidh : cinq jours de spectacles, de banquets et de chantiers communs, l'aboutissement de la saison.")}</p>
+              <p className="font-lato text-neutral-300 leading-relaxed max-w-xl">{t('Every early May we hold a ceilidh: five days of shows, banquets and shared work, the culmination of the season.', "Au début de chaque mois de mai, nous tenons un ceilidh : cinq jours de spectacles, de banquets et de chantiers communs, l'aboutissement de la saison.")}</p>
             </div>
             <button onClick={() => onNavigate('CEILIDH')} className="px-8 py-4 border-2 border-[#c5a059] text-[#c5a059] font-cinzel font-bold uppercase tracking-[0.25em] text-xs hover:bg-[#c5a059] hover:text-[#1a1107] transition-all whitespace-nowrap">{t('Discover the Ceilidh', 'Découvrir le Ceilidh')}</button>
           </div>
