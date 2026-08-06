@@ -206,7 +206,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "Le sentier", title_en: "The trail",
               body_fr: "Accessible toute l'année. Comptez 30 à 45 minutes pour une montée tranquille. Un bon choix entre deux étapes de la journée : un café au village avant, une boulangerie après.",
-              body_en: "Accessible year-round. Plan 30 to 45 minutes for an easy climb. A good fit between other stops — a coffee in the village before, a bakery after." },
+              body_en: "Accessible year-round. Plan 30 to 45 minutes for an easy climb. A good fit between other stops: a coffee in the village before, a bakery after." },
         ],
         schema: { type: "TouristAttraction", address: "Chénéville, QC, Canada" },
     },
