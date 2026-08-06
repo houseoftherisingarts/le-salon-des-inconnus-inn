@@ -88,7 +88,7 @@ export const DonationPage: React.FC<Props> = ({
             <p className="font-lato" style={{ color: '#dacfb6', fontSize: '17px', lineHeight: 1.85 }}>
               {t(
                 'Le Salon des Inconnus is a living place, carried by a family and a small community. Your gift helps maintain the house, feed the project, and keep the door open to artists, travellers and the people who pass through.',
-                "Le Salon des Inconnus, c'est un lieu vivant, porté par une famille et une petite communauté. Ton don aide à entretenir la maison, à nourrir le projet, et à garder la porte ouverte aux artistes, aux voyageurs et aux gens de passage."
+                "Le Salon des Inconnus, c'est un lieu vivant, porté par une famille et une petite communauté. Votre don aide à entretenir la maison, à nourrir le projet, et à garder la porte ouverte aux artistes, aux voyageurs et aux gens de passage."
               )}
             </p>
             <p className="font-lato" style={{ color: '#9c8f76', fontSize: '15px', lineHeight: 1.8 }}>
