@@ -267,7 +267,7 @@ export const ChatRoom: React.FC<Props> = ({
                         {!canPost ? (
                             <p className="text-center text-xs text-neutral-500 font-cinzel uppercase tracking-widest py-3">
                                 {accessLevel === 'GUEST'
-                                    ? t('Sign in to join the conversation.', 'Connecte-toi pour rejoindre la conversation.')
+                                    ? t('Sign in to join the conversation.', 'Connectez-vous pour rejoindre la conversation.')
                                     : t('You need a member account to post.', 'Compte membre requis pour publier.')}
                             </p>
                         ) : (
