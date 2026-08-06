@@ -4763,7 +4763,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                  </div>
                                              </div>
 
-                                             {/* Display case — completed puzzles. Each card
+                                             {/* Display case: completed puzzles. Each card
                                                  shows the full artwork and its title. */}
                                              {displayCase.length > 0 && (
                                                  <div className="mt-6 pt-6 border-t border-white/10">
