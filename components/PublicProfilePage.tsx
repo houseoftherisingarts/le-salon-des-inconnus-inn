@@ -228,7 +228,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             const t = d.activeTheme;
             if (typeof t === 'string') setArtistTheme(t);
             // Social links from the Welcome wizard. Legacy shape was an
-            // object { instagram, website, other } — fall back to that if
+            // object { instagram, website, other }: fall back to that if
             // present, otherwise read the new string[] directly.
             if (Array.isArray(d.links)) {
               setSocialLinks(d.links.filter((s: any) => typeof s === 'string' && s.trim()));

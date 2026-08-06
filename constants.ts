@@ -289,7 +289,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'ambiance",
                 title: "Sentier de la rivière Iroquois",
                 location: "Outaouais",
-                description: "Une marche douce sous une lumière filtrée. Le sentier longe l'eau dans une forêt dense — rêvé pour combiner marche méditative et baignade.",
+                description: "Une marche douce sous une lumière filtrée. Le sentier longe l'eau dans une forêt dense, rêvé pour combiner marche méditative et baignade.",
                 link: "https://www.randoquebec.ca/sentiers/sentier-de-la-riviere-iroquois/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2021/09/pierre-martel-sentier-iroquois-chute-scaled-e1633018588891.jpg"
             },
