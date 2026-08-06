@@ -6021,7 +6021,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
                                                 {/* 06. WHAT YOU SEEK */}
                                                 <section>
-                                                    <SectionHeader n="06" en="What you seek" fr="Ce que tu cherches"
+                                                    <SectionHeader n="06" en="What you seek" fr="Ce que vous cherchez"
                                                         helpEn="Critics will lean into the angles you pick."
                                                         helpFr="La critique se concentrera sur les angles choisis." />
                                                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
