@@ -160,7 +160,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     // ─── HIKING ──────────────────────────────────────────────────────────
     'montagnes-noires': {
         _draft: true,
-        intro_fr: "Le Parc des Montagnes Noires de Ripon est le joyau de la randonnée en Petite-Nation — 800 acres de forêt municipale, 25 km de sentiers, et une tour d'observation de 12 mètres perchée à 426 mètres d'altitude qui ouvre une vue à 360° sur toute la vallée.",
+        intro_fr: "Le Parc des Montagnes Noires de Ripon est le joyau de la randonnée en Petite-Nation : 800 acres de forêt municipale, 25 km de sentiers, et une tour d'observation de 12 mètres perchée à 426 mètres d'altitude qui ouvre une vue à 360° sur toute la vallée.",
         intro_en: "The Parc des Montagnes Noires in Ripon is the crown jewel of hiking in Petite-Nation — 800 acres of municipal forest, 25 km of trails, and a 12-metre observation tower perched at 426 metres altitude that opens a 360° view over the entire valley.",
         sections: [
             { title_fr: "Les sentiers", title_en: "The trails",

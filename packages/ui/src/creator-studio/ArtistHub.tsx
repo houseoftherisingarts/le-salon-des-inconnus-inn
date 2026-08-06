@@ -3157,7 +3157,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 if (seeded.featuredArtworkUrl) setFeaturedArtworkUrl(seeded.featuredArtworkUrl);
             }
 
-            // Close the modal — the snapshot subscription will drop the
+            // Close the modal: the snapshot subscription will drop the
             // button on every other client too.
             setClaimingArtistId(null);
             setClaimPassword('');
