@@ -1402,7 +1402,7 @@ const DETAIL: ScheduleDay[] = [
       { time: '7h',   kind: 'rest', titleEn: 'Meditation (optional)', titleFr: 'Méditation (facultative)' },
       { time: '8h',   kind: 'meal', titleEn: 'Breakfast', titleFr: 'Déjeuner',
         detailEn: 'Self-serve, kitchen open until 9h.', detailFr: 'Libre-service, cuisine ouverte jusqu\u2019à 9h.' },
-      { time: '9h',   kind: 'work', titleEn: 'Blitz Grange — everyone on the barn (4h)', titleFr: 'Blitz Grange — toutes les équipes sur la grange (4h)',
+      { time: '9h',   kind: 'work', titleEn: 'Blitz Grange: everyone on the barn (4h)', titleFr: 'Blitz Grange : toutes les équipes sur la grange (4h)',
         detailEn: 'For the first 4 hours of Friday, every team merges onto a single task: dismantling the barn together. Then we resume normal team rotations.',
         detailFr: 'Les 4 premières heures du vendredi, toutes les équipes se réunissent sur une seule tâche : démonter la grange ensemble. On reprend les équipes ensuite.' },
       { time: '13h',  kind: 'meal', titleEn: 'Lunch outside', titleFr: 'Dîner dehors',
