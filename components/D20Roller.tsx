@@ -372,7 +372,7 @@ export const D20Roller: React.FC<D20RollerProps> = ({
                     <color attach="background" args={['#0a0805']} />
                     <Scene />
                     {/* Suspense fallback === null means: if any child suspends
-                        (font load, async asset), nothing renders inside —
+                        (font load, async asset), nothing renders inside,
                         but useFrame on already-mounted siblings keeps running.
                         Belt-and-braces: with the CanvasTexture decals there
                         is nothing async left to suspend on. */}
