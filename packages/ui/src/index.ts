@@ -15,9 +15,9 @@ export { LoadingOrb } from './creator-studio/LoadingOrb';
 // Public read-only call-sheet share page, mounted by the app at /c/{uid}/{slug}.
 export { CallSheetPublicView } from './creator-studio/CallSheetPublicView';
 
-// SDI Cafe — imported but DORMANT. Not mounted to any visible route yet.
+// SDI Cafe: imported but DORMANT. Not mounted to any visible route yet.
 // Future home: under the AUBERGE (aubergedesinconnus.com), as a casual-viewer
-// showcase of productions + represented artists. NOT under the Salon — the
+// showcase of productions + represented artists. NOT under the Salon. The
 // Salon is the deep artist hub for creators/buyers.
 export { SdiCafe } from './sdi-cafe/SdiCafe';
 export type { SdiCafeProps } from './sdi-cafe/SdiCafe';
