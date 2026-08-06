@@ -17,8 +17,8 @@ import {
 } from './InnPage';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// InnPageTest2 — editorial test page.
-//   • Hero: original InnHero (WebGL liquid-glass cycler) — untouched, HOSTEL vibe
+// InnPageTest2: editorial test page.
+//   • Hero: original InnHero (WebGL liquid-glass cycler), untouched, HOSTEL vibe
 //   • Section 2: 50/50 split (text + photo with Ken Burns)
 //   • Section 3: Services half-moon portals (Kitchen + Massage)
 // ─────────────────────────────────────────────────────────────────────────────
