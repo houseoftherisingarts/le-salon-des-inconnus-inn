@@ -792,7 +792,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 </div>
             )}
 
-            {/* Header bar — visible always (even collapsed). Shows the tab name
+            {/* Header bar: visible always (even collapsed). Shows the tab name
                 + collapse/restore toggle. */}
             <div className="absolute top-0 left-0 right-0 flex items-center gap-3 px-5 py-3 z-20">
                 <span
