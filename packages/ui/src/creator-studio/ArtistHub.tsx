@@ -4320,7 +4320,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                      {/* Tape Strip Top */}
                                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 bg-[#e0d0b0] opacity-80 shadow-md rotate-[-2deg]" style={{ clipPath: 'polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%)' }}></div>
 
-                                     {/* The Gallery Carousel — sources from the user's galleryUrls.
+                                     {/* The Gallery Carousel: sources from the user's galleryUrls.
                                          Empty state shows an upload affordance instead of a mock image. */}
                                      <div className="aspect-[3/4] overflow-hidden bg-black relative">
                                          {regData.archetype && galleryImages.length > 0 ? (
