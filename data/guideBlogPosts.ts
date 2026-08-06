@@ -191,7 +191,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "Le sentier", title_en: "The trail",
               body_fr: "Le tracé longe l'eau presque tout le long. Le terrain est facile, sans dénivelé important, ce qui en fait un excellent choix pour une marche méditative ou une sortie familiale. Une chute discrète ponctue le parcours.",
-              body_en: "The route follows the water for most of its length. The terrain is easy, with no significant elevation gain — a great choice for a meditative walk or a family outing. A quiet waterfall punctuates the route." },
+              body_en: "The route follows the water for most of its length. The terrain is easy, with no significant elevation gain, making it a great choice for a meditative walk or a family outing. A quiet waterfall punctuates the route." },
             { title_fr: "L'idée", title_en: "The idea",
               body_fr: "Combinez la marche et un bain rapide dans la rivière l'été. C'est le rythme parfait : marcher, écouter, se rafraîchir, repartir.",
               body_en: "Combine the walk with a quick swim in the river in summer. The rhythm is perfect: walk, listen, cool off, walk on." },

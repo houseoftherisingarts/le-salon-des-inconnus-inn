@@ -1429,7 +1429,7 @@ const DETAIL: ScheduleDay[] = [
     moments: [
       { time: '7h',    kind: 'rest', titleEn: 'Meditation (optional)', titleFr: 'Méditation (facultative)' },
       { time: '9h',    kind: 'meal', titleEn: 'Slow brunch', titleFr: 'Brunch tranquille' },
-      { time: '14h',   kind: 'work', titleEn: 'Light teams', titleFr: 'Équipes — woofing léger',
+      { time: '14h',   kind: 'work', titleEn: 'Light teams', titleFr: 'Équipes : woofing léger',
         detailEn: 'Wrap up loose ends, leave things tidy.', detailFr: 'Boucler la boucle, laisser les lieux propres.' },
       { time: '19h',   kind: 'meal', titleEn: 'Closing supper', titleFr: 'Souper de clôture' },
       { time: '20h30', kind: 'art',  titleEn: 'Closing show', titleFr: 'Spectacle de clôture',

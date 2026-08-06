@@ -3366,8 +3366,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             if (typeof skin.priceTokens !== 'number') return;
             if (userTokens < skin.priceTokens) {
                 alert(language === 'EN'
-                    ? `You need ${skin.priceTokens} time tokens — you have ${userTokens}.`
-                    : `Il faut ${skin.priceTokens} jetons de temps — vous en avez ${userTokens}.`);
+                    ? `You need ${skin.priceTokens} time tokens; you have ${userTokens}.`
+                    : `Il faut ${skin.priceTokens} jetons de temps ; vous en avez ${userTokens}.`);
                 return;
             }
         } else if (method === 'coins') {
