@@ -10,9 +10,9 @@
  * puzzle each user is currently solving.
  */
 export interface PuzzleArtwork {
-    /** Stable identifier — never reuse or change after a user has earned this. */
+    /** Stable identifier: never reuse or change after a user has earned this. */
     id: string;
-    /** Public image URL — should be a high-resolution photograph. */
+    /** Public image URL: should be a high-resolution photograph. */
     src: string;
     /** Display title for the display case. */
     titleEn: string;
