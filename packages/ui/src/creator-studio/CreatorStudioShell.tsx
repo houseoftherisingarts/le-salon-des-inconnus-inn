@@ -491,7 +491,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
 
              {/* First-login wizard. Sits above everything (z-9000) and
                  prevents interaction with the studio chrome until done. The
-                 user can persist progress between sessions — refreshing
+                 user can persist progress between sessions: refreshing
                  keeps them at the same step. */}
              {currentUser && onboardingNeeded && !showLoadingOrb && (
                  <WelcomeWizard
