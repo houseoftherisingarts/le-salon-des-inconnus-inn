@@ -1104,7 +1104,7 @@ const StepDone: React.FC<{ language: 'EN' | 'FR'; displayName: string }> = ({ la
             <p className="relative text-neutral-300 text-lg font-lato leading-relaxed max-w-xl mx-auto">
                 {t(
                     'Your room is set. The studio is yours to wander.',
-                    'Ta chambre est prête. Le studio est à toi.',
+                    'Votre chambre est prête. Le studio est à vous.',
                 )}
             </p>
         </div>
