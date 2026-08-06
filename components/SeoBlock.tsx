@@ -171,7 +171,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
           </div>
         )}
 
-        {/* FAQ accordion — also serialised as FAQPage JSON-LD by App.tsx */}
+        {/* FAQ accordion: also serialised as FAQPage JSON-LD by App.tsx */}
         {content.faq.length > 0 && (
           <div className="mt-14">
             <h3 className="font-cinzel text-[10px] md:text-xs text-[#c5a059] uppercase tracking-[0.4em] mb-6">
