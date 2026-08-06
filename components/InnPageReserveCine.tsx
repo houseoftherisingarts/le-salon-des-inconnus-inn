@@ -988,7 +988,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
         </section>
 
-        {/* ── 4. CUSTOM SERVICES — Kitchen + Massage half-moon portals ──── */}
+        {/* ── 4. CUSTOM SERVICES: Kitchen + Massage half-moon portals ──── */}
         <section className="cv-auto relative bg-[#050505] py-16 md:py-24 px-3 md:px-6 lg:px-10 border-t border-[#c5a059]/10">
           <div className="text-center mb-10 md:mb-14">
             <span className="text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.55em]">

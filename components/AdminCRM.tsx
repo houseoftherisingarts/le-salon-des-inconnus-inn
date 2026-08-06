@@ -2051,7 +2051,7 @@ const D20CodePool: React.FC<{
   );
 };
 
-// ─── Dashboard tile — small clickable stat card ─────────────────────────────
+// ─── Dashboard tile: small clickable stat card ─────────────────────────────
 const DashboardTile: React.FC<{
   label: string;
   value: number | string;
