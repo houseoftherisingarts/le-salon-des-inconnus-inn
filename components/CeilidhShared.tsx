@@ -943,8 +943,8 @@ const PerformanceBoard: React.FC<{ language: 'EN' | 'FR'; user: User | null }> =
 
       <p className="text-neutral-600 text-xs font-lato mb-5 text-center">
         {t(
-          'Each evening right after work — propose your act and choose your night(s).',
-          'Chaque soir juste après le travail — proposez votre numéro et choisissez votre(vos) soirée(s).',
+          'Each evening right after work: propose your act and choose your night(s).',
+          'Chaque soir juste après le travail : proposez votre numéro et choisissez votre(vos) soirée(s).',
         )}
       </p>
 
