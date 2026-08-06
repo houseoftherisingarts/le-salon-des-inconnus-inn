@@ -709,7 +709,7 @@ const App: React.FC = () => {
       {/* All page views, wrapped in a single Suspense boundary so navigation
           shows a brief loader while the next page chunk downloads. */}
       <Suspense fallback={<PageLoader />}>
-        {/* VIEW 1: THE INN (DEFAULT) — the cinematic editorial page: the
+        {/* VIEW 1: THE INN (DEFAULT), the cinematic editorial page: the
             "Les Origines / Bienvenue" section is fused with a scroll-scrubbed
             living-room shot. Uses the REVERSED cut that ends on the full
             living-room frame (the chosen look). InnPageTest3 still ships as the
