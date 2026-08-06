@@ -724,8 +724,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
                 <p className="font-josefin text-neutral-300 text-sm leading-relaxed mb-5">
                   {t(
-                    'For everyone who chooses to stay with us. Use this code on any reservation.',
-                    "Pour toutes celles et ceux qui choisissent de rester chez nous. Utilisez ce code lors d'une réservation.",
+                    'For everyone who chooses to stay with us. Use this code when you book directly with us, here on the site.',
+                    "Pour toutes celles et ceux qui choisissent de rester chez nous. Utilisez ce code en réservant directement avec nous, ici même sur le site.",
                   )}
                 </p>
                 <button
