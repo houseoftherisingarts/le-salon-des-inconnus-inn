@@ -773,7 +773,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
               />
 
               {/* Static stack wrapper. We keep preserve-3d for the per-card depth fan,
-                  but DO NOT animate this wrapper — animating a parent of 12 preserve-3d
+                  but DO NOT animate this wrapper: animating a parent of 12 preserve-3d
                   children forces a 12-layer composite every frame and tanks idle FPS to ~12.
                   Ambient motion now lives on the front card only (1 layer). */}
               {/* Stage — when CLOSED the click target is the cover button (below).

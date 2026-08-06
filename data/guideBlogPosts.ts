@@ -93,7 +93,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "La municipalité de Duhamel publie les points d'accès et les recommandations de sécurité sur son site. Apportez de l'eau, de la crème solaire, des sandales d'eau et un petit sac étanche pour vos clés.",
               body_en: "The Duhamel municipality publishes access points and safety guidelines on its site. Bring water, sunscreen, water sandals, and a small dry bag for your keys." },
             { title_fr: "À proximité", title_en: "Nearby",
-              body_fr: "Combinez la descente avec un passage par la plage du lac Simon ou un souper à l'Auberge — c'est le combo parfait d'une journée d'été en Petite-Nation.",
+              body_fr: "Combinez la descente avec un passage par la plage du lac Simon ou un souper à l'Auberge : c'est le combo parfait d'une journée d'été en Petite-Nation.",
               body_en: "Pair the float with a stop at the Lac Simon beach or a supper at the Inn — that's the perfect summer-day combo in Petite-Nation." },
         ],
         faqs: [
