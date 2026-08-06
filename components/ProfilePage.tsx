@@ -262,7 +262,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     return { days, hours, mins, secs, padded: { hours: pad(hours), mins: pad(mins), secs: pad(secs) } };
   })();
 
-  // ── Time-travel reset — type 'meditate' to clear the cooldown ──────────
+  // ── Time-travel reset: type 'meditate' to clear the cooldown ──────────
   // The passphrase used to be checked here and the reset written straight to
   // Firestore, which meant it was in the shipped bundle for anyone to read
   // and use: clear the cooldown, roll again, repeat until the 20% pool was
