@@ -612,7 +612,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             </div>
           )}
 
-          {/* Social links — collected during the Welcome wizard. Real
+          {/* Social links: collected during the Welcome wizard. Real
               icons via simpleicons.org CDN; unknown services fall back
               to a circled letter chip. */}
           {socialLinks.length > 0 && (
