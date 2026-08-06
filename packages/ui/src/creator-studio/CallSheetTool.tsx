@@ -184,7 +184,7 @@ export function buildPrintHtml(cs: CallSheetDoc, language: 'EN' | 'FR'): string 
         <tbody>${rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 
     return `<!doctype html><html lang="${fr ? 'fr' : 'en'}"><head><meta charset="utf-8">
-    <title>${esc(cs.title)} — Call Sheet</title>
+    <title>${esc(cs.title)} · Call Sheet</title>
     <style>
       @page { margin: 14mm; }
       * { box-sizing: border-box; }

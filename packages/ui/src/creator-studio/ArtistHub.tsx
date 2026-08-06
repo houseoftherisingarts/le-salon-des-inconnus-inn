@@ -4346,7 +4346,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                         </button>
                                                     </>
                                                 )}
-                                                {/* "Change featured" affordance — opens the same picker
+                                                {/* "Change featured" affordance: opens the same picker
                                                     as the empty state so the user can pick from their
                                                     roster or upload a new piece. */}
                                                 {accessLevel === 'MEMBER' && (

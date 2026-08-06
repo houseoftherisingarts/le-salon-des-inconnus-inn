@@ -361,7 +361,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     // ─── EVENTS ──────────────────────────────────────────────────────────
     'medieval': {
         intro_fr: "Du 25 au 27 septembre 2026, le village de Montpellier en Petite-Nation devient un campement médiéval grandeur nature. Le Festival Médiéval de Montpellier (FMM), opéré par une équipe bénévole de Le Salon des Inconnus, réunit marchands, musiciens, cavaliers, forgerons et clans vikings sur trois jours d'immersion totale.",
-        intro_en: "From September 25 to 27, 2026, the village of Montpellier in Petite-Nation becomes a full-scale medieval encampment. The Festival Médiéval de Montpellier (FMM) — operated by a volunteer team from Le Salon des Inconnus — brings together merchants, musicians, riders, blacksmiths, and Viking clans for three days of total immersion.",
+        intro_en: "From September 25 to 27, 2026, the village of Montpellier in Petite-Nation becomes a full-scale medieval encampment. The Festival Médiéval de Montpellier (FMM), operated by a volunteer team from Le Salon des Inconnus, brings together merchants, musicians, riders, blacksmiths, and Viking clans for three days of total immersion.",
         sections: [
             { title_fr: "Ce qui vous attend", title_en: "What awaits you",
               body_fr: "Le festival déploie un marché médiéval avec ses boutiques d'artisans, un village jeunesse aux activités adaptées à chaque âge, des spectacles musicaux en direct, une clinique équestre avec démonstrations chevalines, des ateliers pédagogiques, un village gastronomique, et de grands banquets historiques. C'est un spectacle visuel et sonore hors du commun, conçu pour faire vivre l'époque plutôt que la raconter.",
