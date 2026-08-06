@@ -298,7 +298,7 @@ export const CataloguePage: React.FC<Props> = ({ onNavigate, language }) => {
           )}
         </section>
 
-        {/* III — comment ça se passe */}
+        {/* III : comment ça se passe */}
         <section className="px-6 md:px-14 lg:px-24 py-16 md:py-24">
           <SectionLabel numeral="III" label={t('How it works', 'Comment cela se passe')} />
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
