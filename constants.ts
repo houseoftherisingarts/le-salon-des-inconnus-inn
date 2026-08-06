@@ -580,7 +580,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le spectacle",
                 title: "Chutes de Plaisance",
                 location: "Plaisance",
-                description: "Cascade de 63 mètres sur la rivière Petite-Nation — puissante au printemps, sculpturale en hiver. Un court sentier avec belvédères retrace l'ancien village industriel de North Nation Mills (années 1800).",
+                description: "Cascade de 63 mètres sur la rivière Petite-Nation : puissante au printemps, sculpturale en hiver. Un court sentier avec belvédères retrace l'ancien village industriel de North Nation Mills (années 1800).",
                 link: "https://www.chutesplaisance.ca/",
                 image: "https://b1367470.smushcdn.com/1367470/wp-content/uploads/2021/07/DSC05663-2-1440x960.jpg"
             },

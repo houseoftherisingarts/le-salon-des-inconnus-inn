@@ -898,7 +898,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
           </span>
         </div>
 
-        {/* RIGHT — orb with cycling images. On mobile it leads (order-1); the
+        {/* RIGHT: orb with cycling images. On mobile it leads (order-1); the
             bottom padding gives the image dots room so they don't touch the title. */}
         <div className="order-1 md:order-2 relative flex items-center justify-center pb-10 md:pb-0">
           <div className="relative w-full max-w-[320px] sm:max-w-[420px] md:max-w-[560px] aspect-square">
