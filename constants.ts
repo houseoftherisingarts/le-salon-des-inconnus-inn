@@ -495,7 +495,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le calme",
                 title: "Patinoire de Namur",
                 location: "Namur",
-                description: "La petite patinoire de village, tranquille et peu fréquentée. Un endroit doux pour glisser seul ou avec les enfants, sans la foule, un recoin serein au cœur du village.",
+                description: "La petite patinoire de village, tranquille et peu fréquentée. Un endroit doux pour glisser seul ou avec les enfants, sans la foule. Un recoin serein au cœur du village.",
                 link: "https://namur.qc.ca/",
                 image: PLACEHOLDER_ROOM
             },

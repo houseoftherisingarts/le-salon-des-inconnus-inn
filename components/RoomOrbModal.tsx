@@ -390,7 +390,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
     window.open(url, '_blank', 'noopener,noreferrer');
   }, [room.bookingLink, checkIn, checkOut, guests, availability]);
 
-  // Reset the picker whenever the room changes — prices/availability are
+  // Reset the picker whenever the room changes: prices/availability are
   // per-listing and must not carry over.
   useEffect(() => {
     const carry = carryDatesRef.current;
