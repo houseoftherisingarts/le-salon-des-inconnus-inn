@@ -374,7 +374,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* ── TERMS — game-menu stat panel (bracketed glass, indexed stats) ── */}
+      {/* ── TERMS: game-menu stat panel (bracketed glass, indexed stats) ── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-5 mb-2">

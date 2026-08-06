@@ -42,7 +42,7 @@ interface KanbanToolProps {
     uid: string | null;
     /** Active studio language. Drives every visible string. */
     language: 'EN' | 'FR';
-    /** Member tier — unlocks free extra boards from the first paid tier up. */
+    /** Member tier: unlocks free extra boards from the first paid tier up. */
     membershipTier: string;
     /** Spendable coins — used for the 50-coin extra-board unlock. */
     coins: number;
