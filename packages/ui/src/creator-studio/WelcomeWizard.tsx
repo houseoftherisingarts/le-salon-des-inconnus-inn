@@ -704,7 +704,7 @@ const StepChips: React.FC<StepChipsProps> = ({
                     );
                 })}
 
-                {/* User-added custom chips — clicking removes them. */}
+                {/* User-added custom chips: clicking removes them. */}
                 {customEntries.map(id => {
                     const label = id.startsWith('custom:') ? id.slice(7) : id;
                     return (

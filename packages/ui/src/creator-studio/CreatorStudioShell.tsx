@@ -671,7 +671,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
              </div>
              
              <style>{`
-                 /* Theme fonts — loaded once for the whole studio. Each theme
+                 /* Theme fonts: loaded once for the whole studio. Each theme
                     below repurposes a subset; the @import lives here so we
                     don't ship them on inn pages that never open the studio. */
                  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Anton&family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;700&family=VT323&family=Share+Tech+Mono&family=Bangers&family=Permanent+Marker&display=swap');
