@@ -877,7 +877,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             )}
           </div>
 
-          {/* Direct-booking perk — shown at the decision point, right under the CTA */}
+          {/* Direct-booking perk: shown at the decision point, right under the CTA */}
           <span className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-[#c5a059] mt-3">
             {t('Book direct · always the best price', 'Réservez en direct · toujours le meilleur prix')}
           </span>

@@ -280,7 +280,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         <div className="absolute inset-0 pointer-events-none z-[10]"
           style={{ background: 'linear-gradient(to top right, rgba(5,9,6,0.94) 0%, rgba(5,9,6,0.58) 24%, transparent 50%)' }} />
 
-        {/* active-stop info panel — fixed bottom-left, never clipped. Kept compact
+        {/* active-stop info panel: fixed bottom-left, never clipped. Kept compact
             and sitting low so the "00" row stays below the scroll cue. */}
         <div className="absolute left-4 sm:left-6 md:left-14 bottom-6 md:bottom-9 z-20 w-[min(408px,calc(100vw-2rem))]">
           {PM_STOPS.map((s, i) => (
