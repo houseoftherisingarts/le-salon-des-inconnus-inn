@@ -330,7 +330,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'pommes': {
         _draft: true,
-        intro_fr: "Les Pommes Perdues, à Chénéville, est le projet de Julien Robert et Gilbert Bégin — une quête patiente pour retrouver, fermenter et embouteiller les pommes oubliées du Québec. Leurs cidres sont vifs, sauvages et profondément ancrés dans le terroir local.",
+        intro_fr: "Les Pommes Perdues, à Chénéville, est le projet de Julien Robert et Gilbert Bégin : une quête patiente pour retrouver, fermenter et embouteiller les pommes oubliées du Québec. Leurs cidres sont vifs, sauvages et profondément ancrés dans le terroir local.",
         intro_en: "Les Pommes Perdues, in Chénéville, is the project of Julien Robert and Gilbert Bégin — a patient quest to find, ferment, and bottle Quebec's forgotten apples. Their ciders are sharp, wild, and deeply rooted in the local terroir.",
         sections: [
             { title_fr: "La démarche", title_en: "The approach",
