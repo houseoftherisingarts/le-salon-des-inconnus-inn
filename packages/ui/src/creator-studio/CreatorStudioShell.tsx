@@ -14,7 +14,7 @@ export type HubPhase = 'GATEWAY' | 'CHAMPION_SELECT' | 'LOBBY';
 /**
  * Minimal user shape consumed by the studio. Kept structural (no firebase dep
  * inside @inconnus/ui) so the consuming app passes whatever auth library it
- * uses — Firebase Auth's User satisfies this naturally.
+ * uses: Firebase Auth's User satisfies this naturally.
  */
 export interface CreatorStudioUser {
     uid: string;
