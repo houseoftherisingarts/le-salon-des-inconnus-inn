@@ -4122,7 +4122,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">Timestamp & Register assets on the blockchain.</p>
                             </div>
 
-                            {/* Tool 5: Inspirosphere — orb tool. Always visible.
+                            {/* Tool 5: Inspirosphere: orb tool. Always visible.
                                 Streams a single curated video at random from
                                 the Inspirosphere catalog; "Next" zaps to the
                                 next random pick; "Conscious mode" exposes

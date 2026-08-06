@@ -689,7 +689,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  [data-studio-theme="RAINBOW"] .font-lato { font-family: 'Lato', system-ui, sans-serif !important; }
                  [data-studio-theme="RAINBOW"] .font-serif { font-family: 'Cinzel', serif !important; }
 
-                 /* RED — Riot Protocol: Anton headlines + Inter body. */
+                 /* RED, Riot Protocol: Anton headlines + Inter body. */
                  [data-studio-theme="RED"] .font-cinzel,
                  [data-studio-theme="RED"] .font-prata { font-family: 'Anton', 'Bebas Neue', Impact, sans-serif !important; letter-spacing: 0.03em; font-weight: 400 !important; text-transform: uppercase; }
                  [data-studio-theme="RED"] .font-sans,

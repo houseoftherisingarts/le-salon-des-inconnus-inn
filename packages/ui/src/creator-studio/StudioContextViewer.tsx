@@ -815,7 +815,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 </button>
             </div>
 
-            {/* Drag handle — bottom edge. Visible affordance with a 8px hit
+            {/* Drag handle: bottom edge. Visible affordance with a 8px hit
                 area; hover state for discoverability. */}
             {!collapsed && (
                 <div

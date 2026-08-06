@@ -296,7 +296,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'boulanger': {
         _draft: true,
         intro_fr: "À Montpellier, Mélissa et Julien moulent leur propre farine de grains biologiques et cuisent des miches au levain sur commande. La Fille du Boulanger est ouverte vendredi et samedi, et c'est devenu le rituel sacré de tout un village.",
-        intro_en: "In Montpellier, Mélissa and Julien mill their own flour from organic grains and bake sourdough loaves to order. La Fille du Boulanger is open Fridays and Saturdays — and it's become the sacred ritual of an entire village.",
+        intro_en: "In Montpellier, Mélissa and Julien mill their own flour from organic grains and bake sourdough loaves to order. La Fille du Boulanger is open Fridays and Saturdays, and it's become the sacred ritual of an entire village.",
         sections: [
             { title_fr: "Le pain", title_en: "The bread",
               body_fr: "Levain naturel, farines fraîchement moulues, cuissons au four à bois. Les miches ont une croûte épaisse, une mie alvéolée, une fermentation qu'on sent dès la première bouchée. C'est du pain qui se conserve, qui voyage, et qui transforme un repas.",
