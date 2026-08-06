@@ -22,7 +22,7 @@ export interface InspirosphereCitation {
     id: string;
     /** The citation, in its original language. No attribution. */
     text: string;
-    /** Required category — drives Conscious Mode filtering. */
+    /** Required category: drives Conscious Mode filtering. */
     category: InspirosphereCategory;
 }
 
