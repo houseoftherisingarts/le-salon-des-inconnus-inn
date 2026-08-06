@@ -7253,7 +7253,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </div>
                                 </section>
 
-                                {/* 02 — TITLE */}
+                                {/* 02. TITLE */}
                                 <section>
                                     <FormSectionHeader n="02" en="Title" fr="Titre"
                                         helpEn="One sentence. What is the contract about?"
