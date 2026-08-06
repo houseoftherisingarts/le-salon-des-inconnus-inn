@@ -1245,7 +1245,7 @@ const MyCeilidhPanel: React.FC<{
             className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
             style={{ border: '1px solid rgba(197,160,89,0.3)' }}
           >
-            <option value="">{t('— Choose a bed —', '— Choisir un lit —')}</option>
+            <option value="">{t('Choose a bed', 'Choisir un lit')}</option>
             {LODGING_GROUPS.map((g) => (
               <optgroup key={g.id} label={language === 'FR' ? g.fr : g.en}>
                 {LODGING.filter((l) => l.group === g.id).map((l) => {
