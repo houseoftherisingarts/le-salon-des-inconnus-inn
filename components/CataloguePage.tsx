@@ -329,7 +329,7 @@ export const CataloguePage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* IV — demande */}
+        {/* IV : demande */}
         <section className="px-6 md:px-14 lg:px-24 py-16 md:py-28">
           <SectionLabel numeral="IV" label={t('A question about a piece?', 'Une question sur une pièce ?')} />
           <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-center">
