@@ -1,4 +1,4 @@
-// SuperProfileEditor — the panel mounted inside the Creator Studio's
+// SuperProfileEditor: the panel mounted inside the Creator Studio's
 // PROFILE tab for Maestro-tier users. Lets the artist:
 //   • toggle their Super Profile on/off
 //   • pick (and re-claim) their /{username} slug

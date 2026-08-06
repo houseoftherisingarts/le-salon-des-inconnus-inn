@@ -693,7 +693,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                 ? createPortal(orbVisual, orbSlot)
                 : <section className="relative flex flex-col items-center justify-center pt-12 pb-8 px-4 z-10" style={{ minHeight: 420 }}>{orbVisual}</section>}
 
-            {/* Back-to-Arsenal button — pinned top-right of the controls
+            {/* Back-to-Arsenal button, pinned top-right of the controls
                 section so it's reachable while the orb lives up in the viewer. */}
             <button
                 onClick={onClose}

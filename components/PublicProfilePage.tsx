@@ -177,7 +177,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   // detectSocialService below.
   const [socialLinks, setSocialLinks] = useState<string[]>([]);
   // Inspirosphere user videos uploaded by this member. Visible on the
-  // public profile (the artist's primary showcase) — view counts are NOT
+  // public profile (the artist's primary showcase): view counts are NOT
   // shown here; they're admin-only in AdminCRM.
   interface UserVideoLite {
     id: string;
