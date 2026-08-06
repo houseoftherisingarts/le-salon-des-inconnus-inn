@@ -126,7 +126,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
 
       const dirX = b.coords.x - a.coords.x;
       const dirY = b.coords.y - a.coords.y;
-      // Bank only once the journey is moving — at rest (the hold on Le Salon) the
+      // Bank only once the journey is moving: at rest (the hold on Le Salon) the
       // world stays perfectly upright so the first pastille reads straight & centred,
       // not tilted. The banking eases in as you start descending the valley.
       const bank = smooth(0, 0.12, p);
