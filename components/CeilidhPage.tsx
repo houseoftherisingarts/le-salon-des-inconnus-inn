@@ -2292,7 +2292,7 @@ const TeamsChapterBody: React.FC<{
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Chapter 04 — Lodging: 12 spaces, claim a bed
+// Chapter 04 (Lodging): 12 spaces, claim a bed
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface Lodging {
