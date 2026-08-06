@@ -970,7 +970,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                     {t('NEW TASK', 'NOUVELLE TÂCHE')}
                                 </p>
                                 <h3 className={`text-2xl ${pageTitleClass}`}>
-                                    {t('Declutter your mind', "Vide ton esprit")}
+                                    {t('Declutter your mind', "Videz votre esprit")}
                                 </h3>
                             </div>
                             <button onClick={() => setIsModalOpen(false)} aria-label={t('Close', 'Fermer')} className="w-9 h-9 rounded-full border border-white/15 text-neutral-300 hover:text-white hover:border-white/40 flex items-center justify-center text-base">✕</button>
