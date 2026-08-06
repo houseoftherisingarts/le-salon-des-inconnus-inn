@@ -6420,7 +6420,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 {randomQuote.text}
                                             </p>
                                             <p className="text-xs text-fuchsia-400 font-bold uppercase tracking-widest text-right">
-                                                — {randomQuote.author}
+                                                – {randomQuote.author}
                                             </p>
                                         </div>
                                     </div>
