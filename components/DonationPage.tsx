@@ -67,7 +67,7 @@ export const DonationPage: React.FC<Props> = ({
           </div>
         </section>
 
-        {/* Photo band — the community a gift keeps alive */}
+        {/* Photo band: the community a gift keeps alive */}
         <figure className="relative w-full overflow-hidden" style={{ height: 'clamp(260px, 40vh, 480px)' }}>
           <img
             src="/wwoof/bw-2.jpg"
