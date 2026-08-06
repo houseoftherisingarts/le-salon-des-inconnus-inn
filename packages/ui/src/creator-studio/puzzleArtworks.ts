@@ -6,7 +6,7 @@
  *
  * To add a photo: drop the image somewhere stable (Firebase Storage, your
  * portfolio CDN, imgur if you must) and append a new entry below. The `id`
- * MUST be stable forever — it's stored on member profiles to track which
+ * MUST be stable forever: it's stored on member profiles to track which
  * puzzle each user is currently solving.
  */
 export interface PuzzleArtwork {
