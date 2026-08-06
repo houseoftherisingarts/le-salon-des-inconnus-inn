@@ -589,7 +589,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le sanctuaire",
                 title: "Centre de Vie",
                 location: "Ripon",
-                description: "Centre de retraite bien-être sur 108 acres à Ripon — yoga, naturopathie, massothérapie, méditation, cure de jus et programmes de jeûne. Lac privé, sentiers en forêt, repas végétariens, sauna et espaces de repos avec foyers. Un lieu de ressourcement rare, à quelques minutes de l'Auberge.",
+                description: "Centre de retraite bien-être sur 108 acres à Ripon : yoga, naturopathie, massothérapie, méditation, cure de jus et programmes de jeûne. Lac privé, sentiers en forêt, repas végétariens, sauna et espaces de repos avec foyers. Un lieu de ressourcement rare, à quelques minutes de l'Auberge.",
                 link: "https://www.centredevie.ca/",
                 image: PLACEHOLDER_ROOM,
                 isFavorite: true

@@ -393,7 +393,7 @@ const Pastille: React.FC<{
 const toPath = (pts: XY[], close = false) =>
   pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${(p[0] * 1000).toFixed(1)} ${(p[1] * 1000).toFixed(1)}`).join(' ') + (close ? ' Z' : '');
 
-// Roads are 3-point [start, control, end] arrays — draw them as a smooth quadratic
+// Roads are 3-point [start, control, end] arrays: draw them as a smooth quadratic
 // so they bow gently instead of kinking at the midpoint.
 const roadPath = (pts: XY[]) => {
   const P = (p: XY) => `${(p[0] * 1000).toFixed(1)} ${(p[1] * 1000).toFixed(1)}`;
