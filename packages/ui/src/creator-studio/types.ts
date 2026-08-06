@@ -1,6 +1,6 @@
 // Types lifted from creator-studio-repo-v0.2 (3)/types.ts.
 // Note the ArtistProfile shape here has a `skills: string[]` field that the
-// salon ArtsPage's ArtistProfile (in ../arts/types.ts) does NOT have — that's
+// salon ArtsPage's ArtistProfile (in ../arts/types.ts) does NOT have: that's
 // why the two rosters and types live side-by-side instead of being merged.
 
 export interface ArtistProfile {
