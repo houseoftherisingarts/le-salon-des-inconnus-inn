@@ -5893,7 +5893,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             {/* ─── EDITORIAL FORM SECTIONS ─────────────────── */}
                                             <div className={`p-6 md:p-8 space-y-8 ${formStyles.container}`}>
 
-                                                {/* 01 — TITLE */}
+                                                {/* 01. TITLE */}
                                                 <section>
                                                     <SectionHeader n="01" en="Title" fr="Titre"
                                                         helpEn="The line critics will read first."
