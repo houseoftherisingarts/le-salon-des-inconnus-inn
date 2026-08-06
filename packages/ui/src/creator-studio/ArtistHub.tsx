@@ -1782,7 +1782,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Inline edit handlers — save bio + skills directly to Firestore so the
+    // Inline edit handlers: save bio + skills directly to Firestore so the
     // user doesn't need to remember the page Save button.
     const handleSaveBio = async () => {
         if (!currentUser?.uid) return;
