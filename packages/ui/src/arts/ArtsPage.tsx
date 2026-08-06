@@ -359,7 +359,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
               setPatronTab('CENTER'); // Default tab
            }}
          />
-         {/* Café: EN ATTENTE (décision Alex 2026-07-21) — intégration à définir.
+         {/* Café: EN ATTENTE (décision Alex 2026-07-21). Intégration à définir.
              Tuile visible mais non cliquable, badge « Bientôt ». Le slot
              'PLATFORMS' et <SdiCafe> restent en place pour la réactivation. */}
          <div className="group relative h-64 md:h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-default">
