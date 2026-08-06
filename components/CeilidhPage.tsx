@@ -2931,7 +2931,7 @@ const PracticalChapterBody: React.FC<{
       aFr: 'Les woofers logent gratuitement en échange de ~6 heures de travail par jour. Spectacle seul : 10 $ par soir, 20 $ pour la fin de semaine.' },
     { qEn: 'Are dogs welcome?',              qFr: 'Les chiens sont-ils acceptés ?',
       aEn: 'On a leash, with a humane host. Tell us in advance: there\u2019s a household cat who has feelings.',
-      aFr: "En laisse, avec un humain·e responsable. Prévenez-nous — il y a un chat de la maison qui a des sentiments." },
+      aFr: "En laisse, avec un humain·e responsable. Prévenez-nous : il y a un chat de la maison qui a des sentiments." },
     { qEn: 'Can I just come for a day?',     qFr: 'Je peux venir une seule journée ?',
       aEn: 'Yes: pick any single day that works for you when you register. Arrival and departure are both flexible.',
       aFr: "Oui : choisissez la journée qui vous convient au moment de l'inscription. L'arrivée et le départ sont tous deux flexibles." },
