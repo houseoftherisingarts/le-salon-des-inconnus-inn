@@ -58,7 +58,7 @@ function rotationFromTo(from: THREE.Vector3, to: THREE.Vector3): THREE.Quaternio
 }
 
 // Build a small CanvasTexture with the number painted on it. We use these
-// as flat plane decals laid on each face — synchronous, no font loading,
+// as flat plane decals laid on each face: synchronous, no font loading,
 // no Suspense traps. The decal is barely above the face so depth-fighting
 // is avoided.
 function makeNumberTexture(n: number): THREE.CanvasTexture {

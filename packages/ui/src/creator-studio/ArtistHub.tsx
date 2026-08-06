@@ -1263,7 +1263,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // Gifts where the current user is the recipient and status is 'pending'.
     const [puzzleGiftsInbox, setPuzzleGiftsInbox] = useState<PuzzleGift[]>([]);
     // Gifts the current user sent that came back declined and haven't been
-    // re-added to their display case yet — drives auto-reclaim.
+    // re-added to their display case yet: drives auto-reclaim.
     const [puzzleGiftsToReclaim, setPuzzleGiftsToReclaim] = useState<PuzzleGift[]>([]);
 
     // Roster claim map: rosterArtist.id → { uid, uidName }. Drives the
