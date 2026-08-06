@@ -5851,7 +5851,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                                 </div>
                                                             ) : (
                                                                 <p className="text-[11px] text-neutral-600 italic">
-                                                                    {language === 'EN' ? 'Pick at least one feedback type →' : 'Choisis au moins un type de retour →'}
+                                                                    {language === 'EN' ? 'Pick at least one feedback type →' : 'Choisissez au moins un type de retour →'}
                                                                 </p>
                                                             )}
                                                         </div>
