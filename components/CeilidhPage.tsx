@@ -1899,7 +1899,7 @@ const TeamsChapterBody: React.FC<{
               <p className="font-lato text-neutral-200 text-sm md:text-base leading-relaxed">
                 Have you ever seen 100 Amish move a barn without tools? It's striking. It inspired me: have
                 you ever seen 30 strangers tear down a barn? How long would it take? We plan to run a 4-hour
-                "blitz grange" — every team of the weekend merging onto this single task to dismantle the
+                "blitz grange": every team of the weekend merging onto this single task to dismantle the
                 barn together.
               </p>
             )}
