@@ -607,7 +607,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-4">
                 {t('Show ticket', 'Billet spectacle')}
               </span>
-
               <div
                 className="p-6 md:p-8 rounded-2xl"
                 style={{
