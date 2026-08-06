@@ -13,7 +13,7 @@ interface CallSheetPublicViewProps {
 
 type Load = 'loading' | 'ready' | 'private' | 'missing';
 
-// Public, read-only render of a shared call sheet. No auth required — the
+// Public, read-only render of a shared call sheet. No auth required, the
 // Firestore rule grants read when the doc has shareEnabled === true. Renders
 // the exact clean print layout in a sandboxed iframe so the page matches the
 // in-studio PDF export and the viewer can print / save it as PDF too.
