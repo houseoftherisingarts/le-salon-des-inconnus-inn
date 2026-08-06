@@ -111,7 +111,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
     return (
         <div className="space-y-6">
             <p className="text-neutral-500 text-sm font-lato max-w-2xl">
-                Composez une audience à partir des sources existantes. Aucune intégration externe — utilisez
+                Composez une audience à partir des sources existantes. Aucune intégration externe : utilisez
                 « Copier » pour coller dans le BCC d'un courriel, ou exportez en CSV pour Mailchimp/SendGrid.
             </p>
 
