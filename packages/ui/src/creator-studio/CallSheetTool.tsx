@@ -361,7 +361,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
 
     const enableAndCopyShare = useCallback(async () => {
         if (!active || !uid || active.id === 'local') {
-            flash(t('Sign in to share', 'Connecte-toi pour partager')); return;
+            flash(t('Sign in to share', 'Connectez-vous pour partager')); return;
         }
         if (!active.shareEnabled) patchActive({ shareEnabled: true });
         try {
