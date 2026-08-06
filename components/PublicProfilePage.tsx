@@ -255,7 +255,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
     const unsub = onSnapshot(q, snap => {
       const rows = snap.docs.map(d => d.data() as UserVideoLite);
       setVideos(rows);
-    }, () => { /* swallow — public read can fail for empty subtree */ });
+    }, () => { /* swallow: public read can fail for empty subtree */ });
     return () => unsub();
   }, [targetUid]);
 

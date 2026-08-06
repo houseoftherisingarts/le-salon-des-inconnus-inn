@@ -991,7 +991,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     .inspirosphere-citation-fade { animation: none !important; }
                 }
 
-                /* Custom timeline scrubber — kept slim so it sits beside the
+                /* Custom timeline scrubber, kept slim so it sits beside the
                    transport buttons without looking heavier than them. */
                 .inspirosphere-scrubber {
                     -webkit-appearance: none;
