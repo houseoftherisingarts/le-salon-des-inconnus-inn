@@ -1,4 +1,4 @@
-// EditorialTemplate — writers / musicians / performers / "Other" Mind Palace.
+// EditorialTemplate: writers / musicians / performers / "Other" Mind Palace.
 //
 // Three layers, back-to-front:
 //   1. Works arranged as a clean masonry-ish grid, low opacity, fills the
