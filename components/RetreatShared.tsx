@@ -56,7 +56,7 @@ export const TopBar: React.FC<{ onBack: () => void; title: string; back: string 
 
 /** Cinematic hero as a large rounded image card with a Ken Burns drift, warm
  *  scrim, a glass kicker pill, and an oversized Prata title (gold upright
- *  accent word — never italic). */
+ *  accent word, never italic). */
 export const HeroFramed: React.FC<{
   img: string; kicker: string; lead: string; accent: string; tail?: string; sub: string;
 }> = ({ img, kicker, lead, accent, tail, sub }) => {

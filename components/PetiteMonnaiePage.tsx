@@ -1,4 +1,4 @@
-// PetiteMonnaiePage — landing for La Petite Monnaie.
+// PetiteMonnaiePage: landing for La Petite Monnaie.
 // Top: what it is + how to obtain it (full-width editorial, never a centered
 // narrow column). Bottom: the 3D scroll parcours through the artistic and
 // community merchants of the Petite-Nation, starting at the Salon. Matches the
