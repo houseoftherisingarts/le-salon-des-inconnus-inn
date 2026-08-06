@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { SiteHeader } from './components/SiteHeader';
 import { LoadingScreen } from './components/LoadingScreen';
 
-// Pages — code-split: each ships as its own chunk, fetched on first navigation.
+// Pages, code-split: each ships as its own chunk, fetched on first navigation.
 // Components use named exports, so we adapt with `.then(m => ({ default: m.X }))`.
 const InnPage           = lazy(() => import('./components/InnPage').then(m => ({ default: m.InnPage })));
 const InnPageTest2      = lazy(() => import('./components/InnPageTest2').then(m => ({ default: m.InnPageTest2 })));
