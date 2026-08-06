@@ -888,7 +888,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   </p>
                 )}
 
-                {/* Live cooldown ticker — only shown after a first roll
+                {/* Live cooldown ticker: only shown after a first roll
                     while the 7-day timer is still running. */}
                 {onCooldown && (
                   <div className="mt-5 text-center">
