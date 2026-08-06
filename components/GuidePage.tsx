@@ -480,7 +480,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         .border-white\\/8 { border-color: rgba(255,255,255,0.08); }
       `}</style>
 
-      {/* Blog overlay — mounted once, animates in when activeBlog is set */}
+      {/* Blog overlay: mounted once, animates in when activeBlog is set */}
       <BlogPostOverlay item={activeBlog} language={language} onClose={closeBlog} />
     </div>
   );

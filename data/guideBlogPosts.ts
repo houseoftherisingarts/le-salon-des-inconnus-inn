@@ -494,7 +494,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'chevreuils': {
         _draft: true,
-        intro_fr: "Ce n'est pas vraiment une activité — c'est un moment. Prendre son café le matin en regardant par la fenêtre, voir les chevreuils traverser la propriété dans la neige fraîche, et ne plus bouger. La Petite-Nation offre cela en abondance.",
+        intro_fr: "Ce n'est pas vraiment une activité : c'est un moment. Prendre son café le matin en regardant par la fenêtre, voir les chevreuils traverser la propriété dans la neige fraîche, et ne plus bouger. La Petite-Nation offre cela en abondance.",
         intro_en: "It's not really an activity — it's a moment. Drinking your morning coffee by the window, watching deer cross the property in fresh snow, and not moving. Petite-Nation offers this abundantly.",
         sections: [
             { title_fr: "Où et quand", title_en: "Where and when",
