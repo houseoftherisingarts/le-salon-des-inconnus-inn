@@ -2772,7 +2772,7 @@ const LodgingChapterBody: React.FC<{
               const viewing = viewingId === l.id;
               const joined = joinedRoomId === l.id;
               // Count occupancy live from registrations rather than the static
-              // `l.taken` value — those hardcoded numbers were wrong (Solarium
+              // `l.taken` value: those hardcoded numbers were wrong (Solarium
               // showed full when there were beds left). Source of truth is
               // events/{EVENT_ID}/registrations where each reg has a roomId.
               const matchesRoom = (r: any) =>

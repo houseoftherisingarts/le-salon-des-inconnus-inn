@@ -334,7 +334,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'artiste",
                 title: "Michelle Lemire (Galerie Solart)",
                 location: "Ripon / Saint-André-Avellin",
-                description: "Michelle Lemire a fondé l'Atelier Galerie Solart à Ripon en 1999 — céramique, bronze, pierre et métaux précieux. Ses sculptures, urnes et théières sont façonnées par une philosophie enracinée dans l'eau comme essence de vie.",
+                description: "Michelle Lemire a fondé l'Atelier Galerie Solart à Ripon en 1999 : céramique, bronze, pierre et métaux précieux. Ses sculptures, urnes et théières sont façonnées par une philosophie enracinée dans l'eau comme essence de vie.",
                 link: "https://www.ateliergaleriedartsolart.com/",
                 image: "https://cdn.shopify.com/s/files/1/1545/4709/files/ENTETE_DEMARCHE_MICHELLE.jpg"
             }
