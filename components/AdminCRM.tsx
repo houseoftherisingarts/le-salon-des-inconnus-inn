@@ -1947,7 +1947,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   );
 };
 
-// ─── D20 code pool panel — one per tier ─────────────────────────────────────
+// ─── D20 code pool panel: one per tier ─────────────────────────────────────
 const D20CodePool: React.FC<{
   tier: { id: D20Tier; pct: number; label: string; toneClass: string };
   codes: D20Code[];
