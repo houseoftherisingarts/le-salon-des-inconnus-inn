@@ -83,7 +83,7 @@ async function checkPngAlpha(file: File): Promise<AlphaCheckResult> {
  */
 async function runAutoBackgroundRemoval(file: File): Promise<Blob> {
     const mod = await import('@imgly/background-removal');
-    // The package exports both default and named — handle either shape.
+    // The package exports both default and named: handle either shape.
     const remove = (mod as any).default ?? (mod as any).removeBackground;
     if (typeof remove !== 'function') {
         throw new Error('Background removal entrypoint not found');
