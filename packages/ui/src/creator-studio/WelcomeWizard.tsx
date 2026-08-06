@@ -491,7 +491,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     )}
                     {currentStep === 'FAVE_BOOK' && (
                         <StepFavourite
-                            label={t('A book you keep returning to.', 'Un livre que tu relis.')}
+                            label={t('A book you keep returning to.', 'Un livre que vous relisez.')}
                             sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur votre profil. Basculez ci-dessous.')}
                             language={language}
                             value={answers.favourites.book}
