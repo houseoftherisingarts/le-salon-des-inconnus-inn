@@ -878,7 +878,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   const prevImage = (e: React.MouseEvent) => { e.stopPropagation(); setCurrentImageIdx((prev) => (prev - 1 + item.images.length) % item.images.length); };
 
   if (vibe === 'HOSTEL') {
-      // Hero (L'Auberge Complète) keeps the wide half-moon — that anchors the section.
+      // Hero (L'Auberge Complète) keeps the wide half-moon: that anchors the section.
       // Connected rooms use a full circle so they read as siblings of the orb-modal
       // bubble, giving visual continuity from listing → modal → orb.
       const shapeClass = isHero
