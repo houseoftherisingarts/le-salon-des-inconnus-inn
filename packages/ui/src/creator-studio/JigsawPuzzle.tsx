@@ -11,7 +11,7 @@ import {
  * far show their slice of the photo; un-earned pieces show as faint outlined
  * silhouettes. The interlock pattern (which edges have tabs vs blanks) is
  * derived from a hash of the artwork id, so the same artwork ALWAYS yields
- * the same jigsaw layout — no piece "shifts" between renders or sessions.
+ * the same jigsaw layout: no piece "shifts" between renders or sessions.
  *
  * Implementation notes
  *   • Pieces are SVG <path>s. Each piece has 4 edges; each shared edge is
