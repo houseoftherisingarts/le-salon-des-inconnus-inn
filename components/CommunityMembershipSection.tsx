@@ -253,7 +253,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
   return (
     <section id="communaute" className="comm relative scroll-mt-16" style={{ background: T.paper, color: T.body }}>
 
-      {/* ── MOBILE HERO — full-width group photo (whole community visible), title below ── */}
+      {/* ── MOBILE HERO: full-width group photo (whole community visible), title below ── */}
       <header className="md:hidden relative w-full">
         <div className="relative w-full aspect-[4/3] overflow-hidden">
           <img
