@@ -593,7 +593,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               a_en: "Yes for the main circuit. The vehicle should be in good condition; walking the route isn't permitted." },
             { q_fr: "Convient-il aux enfants ?", q_en: "Is it kid-friendly?",
               a_fr: "Oui, c'est même l'une des activités préférées des familles dans la région.",
-              a_en: "Yes — it's one of the most popular family activities in the region." },
+              a_en: "Yes, it's one of the most popular family activities in the region." },
         ],
         schema: { type: "Zoo", address: "Montebello, QC, Canada" },
     },
