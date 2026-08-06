@@ -23,8 +23,8 @@ const WWOOFING_DOORS_PHOTO = '/media/Artistes/aliel%20campfire.jpg';
 const CEILIDH_DOORS_DATE = new Date('2026-05-21T12:00:00');
 
 // ─────────────────────────────────────────────────────────────────────────────
-// InnPageTest3 — final structure (per user feedback round):
-//   1.  Hero (test3 custom — LiquidGlassCycler + bottom-anchored editorial)
+// InnPageTest3: final structure (per user feedback round):
+//   1.  Hero (test3 custom: LiquidGlassCycler + bottom-anchored editorial)
 //   2.  TrustedPlatforms strip
 //   3.  Custom BÂTIE EN 1898 history (full-bleed, from test2)
 //   4.  Custom Services half-moon (Kitchen + Massage, from test2)
