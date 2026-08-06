@@ -1066,7 +1066,7 @@ const Datum: React.FC<{ label: string; value: string }> = ({ label, value }) => 
 );
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MyCeilidhPanel — embedded picker + chats for registered members.
+// MyCeilidhPanel: embedded picker + chats for registered members.
 //
 // Lets the user change their team and bed without leaving the dashboard, and
 // shows the same general + team-specific chat panes as the Ceilidh page itself.

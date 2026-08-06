@@ -2567,7 +2567,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             const list: PuzzleGift[] = [];
             snap.forEach(d => list.push({ id: d.id, ...(d.data() as any) }));
             setPuzzleGiftsInbox(list);
-        }, () => { /* swallow — empty state handles it */ });
+        }, () => { /* swallow: empty state handles it */ });
         const reclaimQ = query(
             collection(db, 'puzzleGifts'),
             where('fromUid', '==', currentUser.uid),
