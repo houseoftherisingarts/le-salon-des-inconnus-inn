@@ -4151,7 +4151,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 </p>
                             </div>
 
-                            {/* Tool 6: Aide aux Subventions — Canada-only.
+                            {/* Tool 6: Aide aux Subventions: Canada-only.
                                 Surfaces only when the visitor is detected as
                                 being in Canada (profile country, browser
                                 timezone, or navigator language). Tagged with

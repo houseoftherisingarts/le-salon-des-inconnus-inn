@@ -480,7 +480,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     // Keyboard shortcuts: Space/Right = zap, C = conscious toggle, Esc =
     // close, K = play/pause, M = mute toggle, F = fullscreen. Lives below
     // the player handlers so deps (togglePlay/toggleMute/goFullscreen) are
-    // initialized — JS const-in-deps would otherwise hit the temporal dead
+    // initialized. JS const-in-deps would otherwise hit the temporal dead
     // zone on first mount.
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => {
