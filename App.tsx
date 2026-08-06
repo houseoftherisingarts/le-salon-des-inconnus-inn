@@ -361,7 +361,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  // Global navigator — pages without rich onNavigate (KitchenPage, GuidePage,
+  // Global navigator: pages without rich onNavigate (KitchenPage, GuidePage,
   // MassotherapyPage) can still trigger SPA navigation by dispatching
   // `salon:navigate`. Used by <SeoBlock /> for in-body internal links.
   useEffect(() => {
