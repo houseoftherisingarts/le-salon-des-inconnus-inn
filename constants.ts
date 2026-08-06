@@ -393,7 +393,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'escale",
                 title: "Souche-i",
                 location: "Montebello",
-                description: "Restaurant asiatique et microbrasserie dans une maison centenaire de Montebello — sushis, tartares et bières artisanales dans un cadre chaleureux, avec terrasse sur 110 places.",
+                description: "Restaurant asiatique et microbrasserie dans une maison centenaire de Montebello : sushis, tartares et bières artisanales dans un cadre chaleureux, avec terrasse sur 110 places.",
                 link: "https://souche-i.ca/",
                 image: "https://souche-i.ca/wp-content/uploads/2022/03/Image2.jpg"
             },

@@ -730,7 +730,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                             A portfolio handcrafted with you
                         </h3>
                         <p className="text-neutral-400 text-sm font-lato leading-relaxed mb-6">
-                            Pick from a curated catalog of layouts, animations, and components. Alex assembles a Mind Palace built around your work, the way a tailor builds a suit. The catalog isn't open yet — leave us a note and we'll write back when it is.
+                            Pick from a curated catalog of layouts, animations, and components. Alex assembles a Mind Palace built around your work, the way a tailor builds a suit. The catalog isn't open yet: leave us a note and we'll write back when it is.
                         </p>
                         <div className="flex flex-wrap gap-3 justify-center">
                             <a
