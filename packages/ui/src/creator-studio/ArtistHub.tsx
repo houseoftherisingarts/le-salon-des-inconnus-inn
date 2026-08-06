@@ -5908,7 +5908,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     />
                                                 </section>
 
-                                                {/* 02 — DISCIPLINE — visual chip grid (no select) */}
+                                                {/* 02. DISCIPLINE: visual chip grid (no select) */}
                                                 <section>
                                                     <SectionHeader n="02" en="Discipline" fr="Discipline"
                                                         helpEn="Pick the medium that fits best."
