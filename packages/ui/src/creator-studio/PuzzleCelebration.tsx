@@ -29,7 +29,7 @@ interface Props {
     sourceRect: DOMRect;
     /**
      * CSS selector for the destination tile in the display case. We poll for
-     * it on each frame for up to ~700ms — the tile may not be mounted yet at
+     * it on each frame for up to ~700ms: the tile may not be mounted yet at
      * trigger time because React's commit phase hasn't reached the case yet.
      */
     targetSelector: string;
