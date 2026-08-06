@@ -737,7 +737,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
               </p>
             </div>
 
-            {/* Deck stage — perspective wrapper. Inner wrapper takes the ambient sway so the
+            {/* Deck stage: perspective wrapper. Inner wrapper takes the ambient sway so the
                 12 cards animate via a single transform rather than 12 simultaneous rAF loops. */}
             <div
               className="relative mx-auto select-none"
