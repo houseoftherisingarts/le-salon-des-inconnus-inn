@@ -5601,9 +5601,9 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                         : !collabFormData.name
                                                             ? (language === 'EN' ? 'Add your name' : 'Ajoutez votre nom')
                                                             : !collabFormData.email
-                                                                ? (language === 'EN' ? 'Add an email' : 'Ajoute un courriel')
+                                                                ? (language === 'EN' ? 'Add an email' : 'Ajoutez un courriel')
                                                                 : !collabFormData.idea
-                                                                    ? (language === 'EN' ? 'Describe the work' : "Décris le travail")
+                                                                    ? (language === 'EN' ? 'Describe the work' : "Décrivez le travail")
                                                                     : ''
                                                 }
                                                 className={`group w-full flex items-center justify-center gap-3 py-4 text-base rounded transition-all ${(currentUser?.uid && collabFormData.name && collabFormData.email && collabFormData.idea) ? formStyles.submitOn : formStyles.submitOff}`}
