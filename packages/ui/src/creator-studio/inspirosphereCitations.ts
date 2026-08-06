@@ -18,7 +18,7 @@
 import type { InspirosphereCategory } from './inspirosphereVideos';
 
 export interface InspirosphereCitation {
-    /** Stable id — slug or short string. Used as React key + dedupe. */
+    /** Stable id: slug or short string. Used as React key + dedupe. */
     id: string;
     /** The citation, in its original language. No attribution. */
     text: string;
