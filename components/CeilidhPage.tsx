@@ -592,7 +592,7 @@ export const CeilidhPage: React.FC<Props> = ({
           filter: brightness(1.05) saturate(1.08);
         }
 
-        /* CTA pill — arrow slides on hover */
+        /* CTA pill: arrow slides on hover */
         .chapter-card .card-cta { transition: background 0.4s ease, border-color 0.4s ease; }
         .chapter-card:not(.is-locked):hover .card-cta {
           background: rgba(197,160,89,0.85);
