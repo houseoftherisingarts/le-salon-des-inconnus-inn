@@ -48,7 +48,7 @@ const GOLD = '#d9b45c';
 const CREAM = '#f6ead0';
 const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
 
-// Soft rising shimmer on hover/confirm — a small cluster of high sine
+// Soft rising shimmer on hover/confirm: a small cluster of high sine
 // partials that swell and decay. Kept from the original orb as the page's
 // audio signature.
 function playShimmer(ctx: AudioContext, gainScale = 1) {

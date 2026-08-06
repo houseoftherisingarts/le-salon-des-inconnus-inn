@@ -11,7 +11,7 @@
  *      directly into Firebase Storage and lists in the "Featured" tab.
  *      Lives in Firestore at `inspirosphereCurated/{videoId}`.
  *
- *   3. User-generated (`InspirosphereUserVideo`) — every video any creator
+ *   3. User-generated (`InspirosphereUserVideo`): every video any creator
  *      uploads from their profile. Always visible on the creator's public
  *      profile page. Lives in Firestore at `members/{uid}/videos/{videoId}`.
  *      When the creator clicks "Request feature", featureStatus flips to
