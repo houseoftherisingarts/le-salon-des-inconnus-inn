@@ -3078,7 +3078,7 @@ const PracticalChapterBody: React.FC<{
         />
       </div>
 
-      {/* Square donation panel — sliding-scale contribution. Inline, not modal. */}
+      {/* Square donation panel: sliding-scale contribution. Inline, not modal. */}
       <div className="rounded-2xl overflow-hidden p-2 md:p-3" style={cardSurface}>
         <ContributionPanel
           language={language}

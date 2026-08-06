@@ -37,7 +37,7 @@ interface Props {
 }
 
 // ─── Deterministic PRNG (mulberry32) ─────────────────────────────────────────
-// Tiny, fast, and seedable — perfect for "same id → same layout".
+// Tiny, fast, and seedable: perfect for "same id → same layout".
 function mulberry32(seed: number): () => number {
     let a = seed >>> 0;
     return () => {
