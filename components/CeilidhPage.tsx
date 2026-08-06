@@ -1289,7 +1289,7 @@ const EventChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => 
         ))}
       </div>
 
-            {/* The verbatim Ceilidh + Woofing essay — magazine treatment:
+            {/* The verbatim Ceilidh + Woofing essay (magazine treatment):
           centered chapter heading, ornament-flanked block titles, justified
           two-column body with a hairline rule between columns, and a gilded
           drop-cap (enluminure) on the first letter of each block. */}
