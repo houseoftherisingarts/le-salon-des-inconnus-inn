@@ -24,7 +24,7 @@ interface LoadingOrbProps {
  *
  * Two intended uses:
  *   1. Initial splash for the Creator Studio (mounted once on first load).
- *   2. Inter-section announcer — pop on top of the page when navigating
+ *   2. Inter-section announcer: pop on top of the page when navigating
  *      between Inn / Studio / Auberge to telegraph the theme change.
  */
 export const LoadingOrb: React.FC<LoadingOrbProps> = ({
