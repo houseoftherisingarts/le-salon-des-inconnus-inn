@@ -6762,7 +6762,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <p className="font-lato text-neutral-400 max-w-2xl mx-auto mb-6">
                                         {language === 'EN'
                                             ? "Resell your completed puzzles and skins to other members. Bids start at 1 coin. Sellers accept the top bid when ready."
-                                            : "Revends tes casse-têtes complétés et tes skins à d'autres membres. Les enchères démarrent à 1 pièce. Le ou la vendeuse accepte la meilleure offre quand iel veut."}
+                                            : "Revendez vos casse-têtes complétés et vos skins à d'autres membres. Les enchères démarrent à 1 pièce. Le ou la vendeuse accepte la meilleure offre quand iel veut."}
                                     </p>
                                     <div className="flex justify-center gap-6 text-xs font-mono uppercase tracking-widest text-[#c5a059]">
                                         <span>{language === 'EN' ? '1 coin opening bid' : '1 pièce départ'}</span>
