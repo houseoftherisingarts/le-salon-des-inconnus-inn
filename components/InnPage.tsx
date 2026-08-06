@@ -687,7 +687,7 @@ export const InnHero: React.FC<{
           </p>
         </div>
 
-        {/* Right — CTA stack */}
+        {/* Right: CTA stack */}
         <div className="flex flex-col items-end gap-2 animate-fadeIn pointer-events-auto" style={{ animationDelay: '0.6s' }}>
           <button
             onClick={onReserver}
