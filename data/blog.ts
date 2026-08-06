@@ -1,4 +1,4 @@
-// Blog des chroniques — shared model for the public pages (/blog), the admin
+// Blog des chroniques: shared model for the public pages (/blog), the admin
 // approval queue (AdminCRM · Blog) and the morning-writer script
 // (scripts/blog-post.mjs). Posts live in Firestore `blogPosts`; nothing is
 // ever published without Alex flipping status → 'published' in the admin.

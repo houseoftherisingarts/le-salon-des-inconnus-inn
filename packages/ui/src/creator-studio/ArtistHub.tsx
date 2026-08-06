@@ -65,7 +65,7 @@ interface ArtistHubProps {
         avatarUrl: string | null;
         isArtist: boolean;
         membershipTier: string;
-        /** True while the Inspirosphere is open under the TOOLS tab — lets
+        /** True while the Inspirosphere is open under the TOOLS tab: lets
          *  the shell switch the viewer body into the orb portal slot. */
         inspirosphereActive?: boolean;
     }) => void;
