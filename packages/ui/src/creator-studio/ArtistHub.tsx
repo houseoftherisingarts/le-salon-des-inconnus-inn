@@ -1382,7 +1382,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         ? 'font-studio-display font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.6)]'
         : 'font-cinzel text-white';
 
-    // Per-theme form styling — drives the Hot Seat submission form (and any
+    // Per-theme form styling: drives the Hot Seat submission form (and any
     // future form that wants to inflect with the active skin). Each theme
     // gets a coherent bundle: container chrome, input/select chrome, the
     // chip-toggle active/inactive states, the submit button, and label

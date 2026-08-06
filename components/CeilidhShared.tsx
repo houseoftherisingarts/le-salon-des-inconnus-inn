@@ -689,7 +689,7 @@ export const KanbanBoard: React.FC<{
 
   return (
     <div className="mt-4">
-      {/* Weather toggle — flips between the fair-weather and rain-day boards.
+      {/* Weather toggle: flips between the fair-weather and rain-day boards.
           Tasks are filtered by their .weather field; new tasks inherit the
           currently-active weather. Pre-existing tasks without a weather
           field default to 'fair'. */}
