@@ -2341,7 +2341,7 @@ export const LODGING_GROUPS: { id: Lodging['group']; en: string; fr: string }[] 
   { id: 'byo',     en: 'Bring your own',        fr: 'Apportez le vôtre' },
 ];
 
-// ─── ChatRoom — Firestore-backed messages, send-as-you-go ────────────────────
+// ─── ChatRoom: Firestore-backed messages, send-as-you-go ────────────────────
 export const ChatRoom: React.FC<{
   path: string;            // e.g. `events/${EVENT_ID}/chats/general/messages`
   title: string;
