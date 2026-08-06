@@ -7,12 +7,12 @@ import { PUZZLE_PIECES_TOTAL, type PuzzleArtwork } from './puzzleArtworks';
  * ─────────────────
  * Plays the completion choreography for a freshly-completed puzzle. Four
  * beats:
- *   1. SHINE — a diagonal gold sweep glides across the assembled puzzle.
- *   2. FUSE  — the jigsaw seams dissolve as a clean image of the artwork
+ *   1. SHINE: a diagonal gold sweep glides across the assembled puzzle.
+ *   2. FUSE: the jigsaw seams dissolve as a clean image of the artwork
  *              fades in on top. A warm halo blooms.
- *   3. FLY   — the unified artwork arcs from the puzzle slot to the matching
+ *   3. FLY: the unified artwork arcs from the puzzle slot to the matching
  *              tile in the display case, scaling down along the way.
- *   4. SLAM  — a brief scale-bounce on landing.
+ *   4. SLAM: a brief scale-bounce on landing.
  *
  * The overlay is portal-free (just fixed-positioned) and pointer-events-none
  * so the page remains interactive while it plays. `onDone` fires after the
