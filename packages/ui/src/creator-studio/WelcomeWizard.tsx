@@ -932,7 +932,7 @@ export const SocialIcon: React.FC<SocialIconProps> = ({ url, size = 24, color = 
             </span>
         );
     }
-    // Unknown service — render a letter chip.
+    // Unknown service: render a letter chip.
     return (
         <span
             className="inline-flex items-center justify-center rounded-full border border-[#c5a059]/40 font-cinzel font-bold"

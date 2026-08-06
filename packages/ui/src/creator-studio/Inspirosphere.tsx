@@ -457,7 +457,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     }, []);
 
     const goFullscreen = useCallback(() => {
-        // Prefer the YT iframe — fullscreen on the orb wrapper would carry
+        // Prefer the YT iframe: fullscreen on the orb wrapper would carry
         // the rounded-full clip with it on some browsers.
         const p = ytPlayerRef.current;
         const target: any = p?.getIframe?.() ?? orbShellRef.current;
