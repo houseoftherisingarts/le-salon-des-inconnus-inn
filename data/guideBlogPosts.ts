@@ -449,7 +449,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "L'expérience", title_en: "The experience",
               body_fr: "Briefing, harnachement, et c'est parti pour une heure de course en forêt. Les chiens tirent avec une joie pure; le contact humain-animal est immédiat et fort. Pas de spectacle, pas de mise en scène : juste vous, la meute, et la neige.",
-              body_en: "Briefing, harnessing, and off you go for an hour of forest running. The dogs pull with pure joy; the human-animal contact is immediate and strong. No show, no staging — just you, the pack, and the snow." },
+              body_en: "Briefing, harnessing, and off you go for an hour of forest running. The dogs pull with pure joy; the human-animal contact is immediate and strong. No show, no staging: just you, the pack, and the snow." },
             { title_fr: "Pourquoi y aller", title_en: "Why go",
               body_fr: "Parce qu'aucune autre activité hivernale de la région n'a cette intensité. Et parce qu'Éric et son équipe traitent les chiens avec un respect qui se voit immédiatement.",
               body_en: "Because no other winter activity in the region has this intensity. And because Éric and his team treat the dogs with a respect you can see immediately." },

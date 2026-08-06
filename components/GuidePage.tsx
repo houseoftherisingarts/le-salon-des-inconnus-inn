@@ -125,7 +125,7 @@ const GuideItemCard: React.FC<{
   const proxyUrl = getOptimizedUrl(item.image, 600);
   const hasBlog = !!item.blogPost && !!onOpenBlog;
 
-  // Whole card is clickable when there's a blog post — opens the overlay.
+  // Whole card is clickable when there's a blog post: opens the overlay.
   // Otherwise the existing "Visit" footer link still goes external.
   const handleClick = hasBlog ? () => onOpenBlog!(item) : undefined;
 
