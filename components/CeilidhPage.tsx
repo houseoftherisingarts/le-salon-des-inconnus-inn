@@ -2699,7 +2699,7 @@ const LodgingChapterBody: React.FC<{
     setRoomError(null);
     let u: User | null = authUser ?? auth?.currentUser ?? null;
     if (!u) u = await resolveCurrentUser(auth);
-    if (!u) return; // genuinely not signed in — abort silently
+    if (!u) return; // genuinely not signed in, abort silently
 
     try {
       await setDoc(
