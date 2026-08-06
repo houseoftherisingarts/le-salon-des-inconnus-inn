@@ -197,7 +197,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
     const provider = new GoogleAuthProvider();
 
     try {
-      // Attempt popup first — fastest UX when it works
+      // Attempt popup first: fastest UX when it works
       const result = await signInWithPopup(auth, provider);
       await afterAuth(result.user);
       setLoading(false);
