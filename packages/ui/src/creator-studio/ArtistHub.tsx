@@ -5805,7 +5805,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                                 {language === 'EN' ? 'Preview' : 'Aperçu'}
                                                             </span>
                                                         </div>
-                                                        {/* Title block — sits over the gradient */}
+                                                        {/* Title block: sits over the gradient */}
                                                         <div className="absolute inset-x-0 bottom-0 p-5">
                                                             <h3 className={`text-2xl md:text-3xl leading-tight ${pageTitleClass}`} style={{ wordBreak: 'break-word' }}>
                                                                 {previewTitle}
