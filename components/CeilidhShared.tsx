@@ -2809,7 +2809,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
               {/* Right separator */}
               {!isActive && <div className="absolute inset-y-0 right-0 w-px bg-[#d4af37]/12" />}
 
-              {/* Inactive: clickable strip — clear affordance, readable label */}
+              {/* Inactive: clickable strip, clear affordance, readable label */}
               <div
                 className="absolute inset-0 flex flex-col items-center justify-center gap-4 transition-all duration-300 group hover:bg-white/[0.06]"
                 style={{ opacity: isActive ? 0 : 1, pointerEvents: isActive ? 'none' : 'auto' }}
