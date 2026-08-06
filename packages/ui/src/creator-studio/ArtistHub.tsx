@@ -3207,7 +3207,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         void awardCoins(5);
     }, [activeTab, hasNavigated, currentUser?.uid]);
 
-    // Open the editor — empty for new, hydrated for edit.
+    // Open the editor: empty for new, hydrated for edit.
     const openArticleEditor = (existing?: HubArticle) => {
         if (existing) {
             setEditingArticle(existing);
