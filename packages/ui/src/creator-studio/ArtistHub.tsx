@@ -1877,7 +1877,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
      * advances to the next artwork + grants the +10 completion bonus.
      *
      * Pass a positive `amount` for activity rewards. Spending coins should
-     * use `spendCoins` (defined below) — never call this with a negative
+     * use `spendCoins` (defined below), never call this with a negative
      * value, since lifetimeCoins must never decrease.
      */
     const awardCoins = async (amount: number) => {
