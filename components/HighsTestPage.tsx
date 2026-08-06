@@ -159,7 +159,7 @@ function CosmicTunnel({ progressRef }: { progressRef: React.MutableRefObject<num
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// Photo flythrough — 12 cards arranged sparsely along Z, slightly off-axis,
+// Photo flythrough: 12 cards arranged sparsely along Z, slightly off-axis,
 // camera dollies through them as scroll advances. Imperative texture
 // binding so r3f's prop-diff doesn't strand the map property on null.
 // ─────────────────────────────────────────────────────────────────────────
