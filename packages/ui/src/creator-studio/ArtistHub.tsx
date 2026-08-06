@@ -5237,7 +5237,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             </div>
                         )}
 
-                        {/* Super Profile (Maestro tier) — gated. The editor
+                        {/* Super Profile (Maestro tier): gated. The editor
                             self-subscribes to members/{uid}/admin/flags.maestroEnabled
                             and renders nothing while loading, a locked card if
                             not granted, or the full editor otherwise. */}

@@ -299,7 +299,7 @@ export const JigsawPuzzle: React.FC<Props> = ({
                     </radialGradient>
                 </defs>
 
-                {/* Board background — very subtle so empty pieces still read
+                {/* Board background: very subtle so empty pieces still read
                     as a frame, not as a black hole on the profile. */}
                 <rect
                     x={0} y={0} width={totalW} height={totalH}
