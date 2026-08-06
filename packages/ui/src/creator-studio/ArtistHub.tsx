@@ -4161,7 +4161,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     onClick={() => setActiveTool('GRANTS_CA')}
                                     className={`relative bg-gradient-to-br from-red-900/20 via-black/40 to-black/40 border-2 border-red-500/30 p-8 hover:from-red-900/30 hover:border-red-400/60 transition-all group cursor-pointer aspect-square flex flex-col items-center justify-center text-center overflow-hidden`}
                                 >
-                                    {/* Maple leaf badge — top-right corner */}
+                                    {/* Maple leaf badge: top-right corner */}
                                     <span className="absolute top-3 right-3 text-[9px] font-cinzel uppercase tracking-[0.3em] px-2 py-1 border border-red-400/50 text-red-200 bg-red-500/10 rounded backdrop-blur-md flex items-center gap-1">
                                         🍁 CA
                                     </span>

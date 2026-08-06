@@ -2187,7 +2187,7 @@ const TeamsChapterBody: React.FC<{
         onClose={() => setShowOfferType(null)}
       />
 
-      {/* General + team chatrooms — side-by-side on desktop. The team chat is
+      {/* General + team chatrooms: side-by-side on desktop. The team chat is
           locked until the user picks a team; the general chat is open to all
           signed-in members. */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
