@@ -1495,7 +1495,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       checked={!!m.maestroEnabled}
                       onChange={e => toggleFeatureFlag(m.uid, 'maestroEnabled', e.target.checked)}
                       className="accent-amber-400 w-4 h-4 justify-self-center"
-                      title="Maestro tier — unlocks the Super Profile editor + /{username} page"
+                      title="Maestro tier: unlocks the Super Profile editor + /{username} page"
                     />
                   </div>
                 ))}

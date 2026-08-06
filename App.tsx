@@ -446,7 +446,7 @@ const App: React.FC = () => {
             "Festival communautaire de cinq jours à la Maison Favier : musique, danse, banquet, chantiers communs et wwoofing à Namur, en Outaouais.",
           location: {
             '@type': 'Place',
-            name: 'Le Salon des Inconnus — Maison Favier',
+            name: 'Le Salon des Inconnus, Maison Favier',
             address: {
               '@type': 'PostalAddress',
               streetAddress: CONTACT_INFO.address,
