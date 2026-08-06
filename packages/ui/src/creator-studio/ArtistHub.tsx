@@ -1471,7 +1471,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     }, [theme]);
 
-    // Shared editorial section header — used across the Hot Seat submission,
+    // Shared editorial section header: used across the Hot Seat submission,
     // article editor, contract modal, and collab forms so every long form
     // reads as a magazine spread (numbered chapters with helper copy and a
     // hairline rule), not a generic stack of fields.
