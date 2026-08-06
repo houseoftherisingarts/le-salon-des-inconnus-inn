@@ -4012,7 +4012,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             {/* Main Content Area */}
             <div className="w-full max-w-[95%] mx-auto px-4 pb-12 relative min-h-[80vh] -mt-8">
 
-                {/* TOOLS — Inspirosphere variant.
+                {/* TOOLS: Inspirosphere variant.
                     When the user opens the Inspirosphere from the Arsenal
                     grid, it replaces the grid in-place: the orb takes the
                     upper section, the controls + Conscious Mode browser
