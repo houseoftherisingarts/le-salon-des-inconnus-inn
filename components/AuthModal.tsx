@@ -89,7 +89,7 @@ async function createMemberProfile(
   membershipType: MembershipType,
   displayName: string,
 ): Promise<MemberProfile> {
-  // Firestore rejects `undefined` — only include optional fields when they have a value
+  // Firestore rejects `undefined`: only include optional fields when they have a value
   const profile: MemberProfile = {
     uid: user.uid,
     email: user.email || '',

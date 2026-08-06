@@ -1,5 +1,5 @@
 /**
- * Inspirosphere catalog. The Studio surfaces these inside the orb tool — one
+ * Inspirosphere catalog. The Studio surfaces these inside the orb tool: one
  * at random when the user opens the orb, advancing on each "Next zap". Users
  * who want to browse by discipline switch to Conscious Mode, which exposes
  * the categories below as filter chips.

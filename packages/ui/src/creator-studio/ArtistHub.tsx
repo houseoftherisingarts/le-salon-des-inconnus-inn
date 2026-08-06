@@ -5588,8 +5588,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             {!currentUser?.uid && (
                                                 <p className="text-[11px] text-amber-300/80 mb-2 text-center">
                                                     {language === 'EN'
-                                                        ? 'Sign in first — admin replies arrive on your profile.'
-                                                        : "Connecte-toi d'abord — les réponses arrivent sur ton profil."}
+                                                        ? 'Sign in first: admin replies arrive on your profile.'
+                                                        : "Connecte-toi d'abord : les réponses arrivent sur ton profil."}
                                                 </p>
                                             )}
                                             <button
