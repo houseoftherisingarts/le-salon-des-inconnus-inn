@@ -2209,7 +2209,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [ownArticles, setOwnArticles] = useState<HubArticle[]>([]);
     const [editingArticle, setEditingArticle] = useState<HubArticle | null>(null);
     const [articleSaving, setArticleSaving] = useState(false);
-    // Editor draft state — the modal binds to this rather than the original
+    // Editor draft state: the modal binds to this rather than the original
     // simple newArticleData shape.
     const [draftArticle, setDraftArticle] = useState<{
         title: string;

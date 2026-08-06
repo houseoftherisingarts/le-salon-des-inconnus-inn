@@ -687,7 +687,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
         </LazySection>
 
-        {/* L'Espace — atmospheric 3D deck. Closed: featured top card + visible fan of cards behind,
+        {/* L'Espace: atmospheric 3D deck. Closed: featured top card + visible fan of cards behind,
             ambient sway (8s), gold glow + soft fog. Click → cyclone reveal into 4×3 grid.
             All motion uses transform/opacity only; respects prefers-reduced-motion. */}
         <section
