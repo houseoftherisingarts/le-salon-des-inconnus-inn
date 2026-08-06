@@ -279,7 +279,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </header>
 
-      {/* ── HERO (desktop) — warm-duotone fire photo, ember firelight, game-menu title ── */}
+      {/* ── HERO (desktop): warm-duotone fire photo, ember firelight, game-menu title ── */}
       <header className="hidden md:block relative w-full overflow-hidden" style={{ height: 'clamp(580px, 92vh, 1040px)' }}>
         <div className="absolute left-0 right-0 overflow-hidden" data-parallax="0.06" style={{ top: '-6%', height: '112%', willChange: 'transform' }}>
           <img
