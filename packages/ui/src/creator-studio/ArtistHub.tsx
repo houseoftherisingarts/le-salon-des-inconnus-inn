@@ -4731,7 +4731,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                          )}
                                                          {visible >= PUZZLE_PIECES_TOTAL && (
                                                              <p className="text-[10px] text-emerald-300 mt-2 font-cinzel uppercase tracking-widest">
-                                                                 ✓ {language === 'EN' ? 'Puzzle complete — earn 1 more coin to claim it.' : 'Casse-tête complet — gagne 1 pièce de plus pour le réclamer.'}
+                                                                 ✓ {language === 'EN' ? 'Puzzle complete: earn 1 more coin to claim it.' : 'Casse-tête complet : gagne 1 pièce de plus pour le réclamer.'}
                                                              </p>
                                                          )}
                                                      </div>

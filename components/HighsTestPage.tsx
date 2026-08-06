@@ -688,7 +688,7 @@ export const HighsTestPage: React.FC<HighsTestPageProps> = ({ onEnterStudio, onB
                         {/* HUD overlays */}
                         <div className="absolute inset-0 z-10">
 
-                            {/* 1. HERO — appears just after the cold open ends.
+                            {/* 1. HERO: appears just after the cold open ends.
                                 Solid cream type + glow, NO bg-clip gradient. */}
                             <HudLine progressRef={progressRef} start={0.06} peak={0.13} end={0.24}
                                 className="left-6 md:left-12 right-6 md:right-12 bottom-12 md:bottom-16">
