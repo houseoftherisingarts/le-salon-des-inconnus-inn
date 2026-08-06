@@ -57,7 +57,7 @@ const HERO_COPY = {
 
 // Season 2026: the concrete offer, shown as a band right under the hero.
 const SEASON_2026 = {
-  fr: "Cette saison, les chantiers sont clairs : l'aménagement paysager, les jardins, et les finitions autour des mini-maisons et de la tente prospecteur. Les séjours se prennent à la semaine ou au mois, jusqu'à la fin octobre, et on accueille jusqu'à quatre personnes à la fois. On dort dans la tente prospecteur, un dortoir chaleureux au cœur de la communauté.",
+  fr: "Cette saison, les chantiers sont clairs : l'aménagement paysager, les jardins, et les finitions autour des mini-maisons et de la tente prospecteur. Les séjours se prennent à la semaine ou au mois, jusqu'à la fin octobre, et nous accueillons jusqu'à quatre personnes à la fois. Vous dormez dans la tente prospecteur, un dortoir chaleureux au cœur de la communauté.",
   en: "This season the work is clear: landscaping, the gardens, and the finishing touches around the tiny houses and the prospector tent. Stays run by the week or by the month, until the end of October, and we host up to four people at a time. You sleep in the prospector tent, a warm bunkhouse at the heart of the community.",
 };
 
