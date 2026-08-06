@@ -5733,7 +5733,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             <div className="hot-seat-aurora-c absolute -inset-[20%]" style={{ background: 'radial-gradient(35% 35% at 50% 50%, rgba(34,211,238,0.18), transparent 70%)', filter: 'blur(80px)', mixBlendMode: 'screen' }} />
                                         </div>
 
-                                        {/* Editorial header — kicker + huge wordmark + brief.
+                                        {/* Editorial header: kicker + huge wordmark + brief.
                                             "HOT SEAT · ARENA" reads as a magazine masthead; the
                                             rule below it sits inside the page chrome (not a card). */}
                                         <header className="px-4 md:px-8 pt-8 pb-6 mb-2">
