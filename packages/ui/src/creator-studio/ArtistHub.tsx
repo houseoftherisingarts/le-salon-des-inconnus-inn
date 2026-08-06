@@ -125,7 +125,7 @@ export function flagEmoji(countryCode?: string | null): string {
 interface PlatformSkin {
     id: string;
     name: string;
-    /** Legacy display label — kept for back-compat. New cards prefer
+    /** Legacy display label: kept for back-compat. New cards prefer
      *  priceTokens/priceUSD (both optional, mutually inclusive). */
     price: string;
     /** Cost in time tokens. Omit when the skin is level-gated only. */
