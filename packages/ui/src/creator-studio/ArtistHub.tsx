@@ -6088,7 +6088,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     />
                                                 </section>
 
-                                                {/* SUBMIT — full-width, theatrical, with arrow */}
+                                                {/* SUBMIT: full-width, theatrical, with arrow */}
                                                 <div className="pt-4">
                                                     <button
                                                         onClick={handleHotSeatSubmit}

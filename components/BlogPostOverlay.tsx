@@ -284,7 +284,7 @@ export const BlogPostOverlay: React.FC<BlogPostOverlayProps> = ({ item, language
             </section>
           ))}
 
-          {/* FAQ — semantic + GEO-friendly */}
+          {/* FAQ: semantic + GEO-friendly */}
           {post.faqs && post.faqs.length > 0 && (
             <section>
               <h2 className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] mb-4">
