@@ -144,7 +144,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'ile-raisin': {
         _draft: true,
-        intro_fr: "L'Île au Raisin, sur le lac Gagnon, est le genre d'endroit dont on parle à voix basse. Plus sauvage que les plages publiques, accessible en canot ou kayak, c'est l'évasion ultime : eau claire, sable blanc, ciel ouvert et pas un rivage habité en vue.",
+        intro_fr: "L'Île au Raisin, sur le lac Gagnon, est le genre d'endroit qui se raconte à voix basse. Plus sauvage que les plages publiques, accessible en canot ou kayak, c'est l'évasion ultime : eau claire, sable blanc, ciel ouvert et pas un rivage habité en vue.",
         intro_en: "Île au Raisin, on Lac Gagnon, is the kind of place people talk about in low voices. Wilder than the public beaches, reached by canoe or kayak, it's the ultimate escape: clear water, white sand, open sky, and not a single populated shore in sight.",
         sections: [
             { title_fr: "S'y rendre", title_en: "Getting there",
