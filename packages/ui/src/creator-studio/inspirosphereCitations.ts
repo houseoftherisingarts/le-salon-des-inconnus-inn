@@ -1,5 +1,5 @@
 /**
- * Inspirosphere — anonymized citations catalog.
+ * Inspirosphere: anonymized citations catalog.
  *
  * Seed pool for the orb's "Citations" tab. Same role as
  * INSPIROSPHERE_VIDEOS, but the orb renders the `text` as typography
