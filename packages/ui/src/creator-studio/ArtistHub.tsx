@@ -5446,7 +5446,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             const ideaLabels = {
                                 RESIDENCY: { en: 'Project description & letter of intent', fr: "Description du projet & lettre d'intention" },
                                 EVENT:     { en: 'Event concept & expected audience',      fr: 'Concept & public attendu' },
-                                PROJECT:   { en: 'The idea & what you bring',              fr: "L'idée & ce que tu apportes" },
+                                PROJECT:   { en: 'The idea & what you bring',              fr: "L'idée & ce que vous apportez" },
                             } as const;
                             return (
                             <div className={`max-w-3xl mx-auto relative animate-fadeIn shadow-2xl ${formStyles.container}`}>
