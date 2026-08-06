@@ -913,7 +913,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             />
 
             <div className="room-orb relative aspect-square w-full rounded-full overflow-hidden">
-              {/* IMAGE LAYERS — cross-fade */}
+              {/* IMAGE LAYERS: cross-fade */}
               <div
                 className={`room-orb-img absolute inset-0 transition-opacity duration-[1400ms] ease-out ${
                   activeLayer === 'A' ? 'opacity-100 room-orb-img-active' : 'opacity-0'
