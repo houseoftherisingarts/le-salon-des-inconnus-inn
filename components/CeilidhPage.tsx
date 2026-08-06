@@ -434,7 +434,7 @@ export const CeilidhPage: React.FC<Props> = ({
         </div>
       </section>
 
-      {/* ── LIVRET — chapter stack ──────────────────────────────────────── */}
+      {/* ── LIVRET: chapter stack ──────────────────────────────────────── */}
       <section id="livret" className="cv-auto relative bg-[#050505] py-20 md:py-28 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
           {/* Editorial header — restored to the centred full-width treatment.

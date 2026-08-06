@@ -1242,7 +1242,7 @@ export const NeedsSection: React.FC<{
                     </div>
                   )}
 
-                  {/* Admin gold ribbon — when an admin email posted this need */}
+                  {/* Admin gold ribbon: when an admin email posted this need */}
                   {isAdminEmail(need.createdByEmail) && (
                     <span
                       className="absolute -top-2 left-3 px-2 py-0.5 rounded-sm font-cinzel text-[8px] uppercase tracking-[0.35em] text-[#1a1208]"
