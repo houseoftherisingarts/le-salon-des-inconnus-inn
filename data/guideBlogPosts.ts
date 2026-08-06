@@ -346,7 +346,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'brasseur': {
         _draft: true,
         intro_fr: "Les Brasseurs de Montebello sont la microbrasserie de référence du village : bières de saison brassées localement, cuisine de pub, terrasse en saison. C'est l'arrêt naturel avant ou après le Manoir Papineau, et un bon point de chute pour traverser un après-midi.",
-        intro_en: "Brasseurs de Montebello is the village's go-to microbrewery — seasonal beers brewed locally, pub-style food, a terrace in season. It's the natural stop before or after Manoir Papineau, and a good base for an afternoon.",
+        intro_en: "Brasseurs de Montebello is the village's go-to microbrewery: seasonal beers brewed locally, pub-style food, a terrace in season. It's the natural stop before or after Manoir Papineau, and a good base for an afternoon.",
         sections: [
             { title_fr: "La bière", title_en: "The beer",
               body_fr: "Une carte qui tourne avec les saisons — IPA, lager, stout, et toujours quelques expérimentations en édition limitée. Demandez ce qui sort de la cuve : c'est souvent là que ça devient intéressant.",

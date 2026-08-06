@@ -2218,7 +2218,7 @@ const TeamsChapterBody: React.FC<{
         />
       </div>
 
-      {/* Picked-team panels — fellow members with their work-days, then the Kanban. */}
+      {/* Picked-team panels: fellow members with their work-days, then the Kanban. */}
       {pickedId && (
         <TeamMembersPanel
           pickedId={pickedId}
