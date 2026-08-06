@@ -5,7 +5,7 @@ import { Atmosphere, TopBar, HeroFramed, SectionLabel, EditorialRow, GoldButton,
 import { getOptimizedUrl } from '../utils/imageOptimizer';
 import { CATALOGUE, CATALOGUE_BATCH, type Artwork } from '../data/catalogue';
 
-// Page non listée à /catalogue — catalogue de prévente des œuvres accrochées
+// Page non listée à /catalogue : catalogue de prévente des œuvres accrochées
 // dans la maison, envoyé aux invités avant leur arrivée. Même langage cinéma
 // que /entreprises et /forfaits (RetreatShared). CACHÉE tant que les photos
 // des œuvres ne sont pas prises : aucun lien de nav, noindex.

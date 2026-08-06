@@ -222,7 +222,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
 
       {/* ── (Section 3: Services half-moon, already above between manor and gallery; keeping as-is) ── */}
 
-      {/* ── Details — Ressentez l'ambiance (3D objects + video) ── */}
+      {/* ── Details: Ressentez l'ambiance (3D objects + video) ── */}
       <section className="bg-[#050505] border-t border-white/5">
         <DetailsSection language={language} vibe={'HOSTEL'} />
       </section>
