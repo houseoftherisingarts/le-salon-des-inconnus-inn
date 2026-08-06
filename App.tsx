@@ -432,7 +432,7 @@ const App: React.FC = () => {
         });
       }
 
-      // Event — Grand Ceilidh de Mai 2026 on /evenements and /ceilidh.
+      // Event: Grand Ceilidh de Mai 2026 on /evenements and /ceilidh.
       if (currentView === 'EVENTS' || currentView === 'CEILIDH') {
         blocks.push({
           '@context': 'https://schema.org',
