@@ -195,7 +195,7 @@ export const BlogPostOverlay: React.FC<BlogPostOverlayProps> = ({ item, language
         itemScope
         itemType="https://schema.org/Article"
       >
-        {/* Cover image as the article's hero — semantic + visual */}
+        {/* Cover image as the article's hero: semantic + visual */}
         <header className="relative h-[42vh] min-h-[280px] overflow-hidden">
           <img
             src={item.image}

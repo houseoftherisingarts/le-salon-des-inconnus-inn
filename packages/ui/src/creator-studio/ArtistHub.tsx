@@ -6019,7 +6019,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     />
                                                 </section>
 
-                                                {/* 06 — WHAT YOU SEEK */}
+                                                {/* 06. WHAT YOU SEEK */}
                                                 <section>
                                                     <SectionHeader n="06" en="What you seek" fr="Ce que tu cherches"
                                                         helpEn="Critics will lean into the angles you pick."
