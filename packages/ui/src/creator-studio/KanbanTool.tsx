@@ -205,7 +205,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                             doc(db, 'members', uid, 'kanban', seedId),
                             { name: seedDoc.name, isDefault: true, tasks: [], goals: EMPTY_GOALS, createdAt: serverTimestamp(), updatedAt: serverTimestamp() },
                         );
-                    } catch { /* swallow — next snapshot will pick it up */ }
+                    } catch { /* swallow, next snapshot will pick it up */ }
                     list.push(seedDoc);
                 }
                 // Stable order: default first, then by createdAt asc.

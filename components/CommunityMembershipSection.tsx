@@ -489,7 +489,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         }
         /* Warm duotone on the B&W photos: gentle brass tone, not orange */
         .comm-photo { filter: sepia(0.28) saturate(1.05) brightness(0.92) contrast(1.04); }
-        /* The bus — true-colour gallery, thin brass frame, soft lift on hover */
+        /* The bus: true-colour gallery, thin brass frame, soft lift on hover */
         .comm-busfig { border-radius: 6px; box-shadow: inset 0 0 0 1px rgba(197,160,89,0.22); }
         .comm-busfig img, .comm-busshot img { transition: transform 1.1s cubic-bezier(0.16,1,0.3,1); }
         .comm-busfig:hover img { transform: scale(1.03); }

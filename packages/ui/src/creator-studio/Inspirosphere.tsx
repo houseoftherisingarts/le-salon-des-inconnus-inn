@@ -273,7 +273,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     const pickById = useCallback((id: string) => {
         setCurrentVideoId(id);
         setZapKey(k => k + 1);
-        // Stay in Conscious Mode after a pick — the user is browsing the
+        // Stay in Conscious Mode after a pick. The user is browsing the
         // grid and likely wants to keep selecting. They close the panel
         // explicitly via the Conscious-mode toggle when they're done.
     }, []);
