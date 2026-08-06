@@ -767,7 +767,7 @@ const ChapterCard: React.FC<{
       >
         {chapter.num}
       </span>
-      {/* "Chapitre" eyebrow + status seal — top-right corner */}
+      {/* "Chapitre" eyebrow + status seal: top-right corner */}
       <div className="absolute top-5 md:top-7 right-5 md:right-7 z-10 flex items-center gap-3">
         <span className="font-cinzel text-[#f3e5ab]/70 text-[9px] uppercase tracking-[0.5em] hidden md:inline">
           {t('Chapter', 'Chapitre')}
