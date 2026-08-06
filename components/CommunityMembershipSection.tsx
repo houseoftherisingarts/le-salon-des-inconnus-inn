@@ -604,7 +604,7 @@ const AppliedSummary: React.FC<{ application: CommunityApplication; t: (en: stri
       </div>
       <p className="font-inter text-sm leading-relaxed" style={{ color: T.body, maxWidth: '46ch', fontWeight: 300 }}>
         {t("Thank you. We read every application by hand. We'll reach out by email or phone when we've had time to sit with it.",
-           "Merci. On lit chaque candidature à la main. On te reviendra par courriel ou par téléphone une fois qu'on aura pris le temps de s'y asseoir.")}
+           "Merci. Nous lisons chaque candidature à la main. Nous vous reviendrons par courriel ou par téléphone une fois que nous aurons pris le temps de nous y asseoir.")}
       </p>
       {application.introduction && <p className="font-fraunces-it text-lg mt-5 leading-relaxed" style={{ color: T.goldDeep, maxWidth: '50ch' }}>"{application.introduction}"</p>}
     </div>
