@@ -1604,7 +1604,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [messageDraft, setMessageDraft] = useState('');
     const [sendingMessage, setSendingMessage] = useState(false);
 
-    // Friends — friendships docs where uids contains current user; status can
+    // Friends: friendships docs where uids contains current user; status can
     // be 'pending' (incoming/outgoing request) or 'accepted'. Field shape
     // matches what PublicProfilePage writes (requestedBy + optional profiles
     // map for display).
