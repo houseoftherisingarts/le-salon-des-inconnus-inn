@@ -801,7 +801,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         <div className="cv-auto">
           <HostsSection language={language} vibe={'HOSTEL'} onNavigate={onNavigate} />
         </div>
-        {/* ── DIAGONAL DOORS — Grand Ceilidh × Wwoofing fused ────────────── */}
+        {/* ── DIAGONAL DOORS: Grand Ceilidh × Wwoofing fused ────────────── */}
         <section className="cv-auto relative h-screen min-h-[720px] overflow-hidden bg-black select-none">
           {/* Bottom-left triangle — Grand Ceilidh */}
           <button
