@@ -1866,7 +1866,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
-        {/* ── Affiliates tab — review affiliate requests, approve with code ── */}
+        {/* ── Affiliates tab: review affiliate requests, approve with code ── */}
         {tab === 'affiliates' && (
           <div className="space-y-3">
             {affiliates.length === 0 && (

@@ -684,7 +684,7 @@ const App: React.FC = () => {
           />
       )}
 
-      {/* 2. Global site header — INN + editorial test3 (test page parity) */}
+      {/* 2. Global site header: INN + editorial test3 (test page parity) */}
       {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3' || currentView === 'INN_RESERVE_CINE') && (
         <SiteHeader
           language={language}
