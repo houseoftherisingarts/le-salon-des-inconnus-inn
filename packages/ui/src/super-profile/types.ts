@@ -23,8 +23,8 @@ export interface SuperProfileHeroPhoto {
     /** Storage path so the file can be deleted on replace. */
     storagePath: string;
     /**
-     * 'manual-png' — the user uploaded a transparent PNG and we trusted it.
-     * 'auto-removed' — we ran @imgly/background-removal client-side.
+     * 'manual-png': the user uploaded a transparent PNG and we trusted it.
+     * 'auto-removed': we ran @imgly/background-removal client-side.
      */
     source: 'manual-png' | 'auto-removed';
     /** Pixel width/height — used by templates to size the cutout proportionally. */
