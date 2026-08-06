@@ -159,7 +159,7 @@ interface HotSeatSubmission {
     id: string;
     title: string;
     artist: string;
-    /** Discipline/medium — see HOT_SEAT_DISCIPLINES below for canonical keys. */
+    /** Discipline/medium: see HOT_SEAT_DISCIPLINES below for canonical keys. */
     type: string;
     /** Where the work is in its life cycle: sketch, draft, final, etc. */
     stage?: string;
