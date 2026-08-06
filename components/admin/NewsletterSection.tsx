@@ -77,7 +77,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
             await navigator.clipboard.writeText(emailLine);
             setCopied(true);
             setTimeout(() => setCopied(false), 1800);
-        } catch { /* clipboard rejected — silent */ }
+        } catch { /* clipboard rejected, silent */ }
     };
 
     const downloadCsv = () => {
