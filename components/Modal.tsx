@@ -94,7 +94,7 @@ export const Modal: React.FC<ModalProps> = ({ book, onClose, isAdmin, onSaveLink
             
             {book.originalTitle && (
                 <p className="text-sm font-cinzel italic text-[#8b7e6a]">
-                — {book.originalTitle} —
+                · {book.originalTitle} ·
                 </p>
             )}
         </div>
