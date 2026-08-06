@@ -121,7 +121,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         </div>
       </section>
 
-      {/* ── SECTION 3 — Services: Kitchen + Massage half-moon portals ── */}
+      {/* ── SECTION 3, Services: Kitchen + Massage half-moon portals ── */}
       <section className="relative bg-[#050505] py-16 md:py-24 px-3 md:px-6 lg:px-10">
         {/* Eyebrow */}
         <div className="text-center mb-10 md:mb-14">
