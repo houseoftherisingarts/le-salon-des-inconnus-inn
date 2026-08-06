@@ -207,7 +207,7 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
        {/* Global Header */}
       <header className="fixed top-0 w-full z-50 bg-gradient-to-b from-[#050505] to-transparent backdrop-blur-[1px] transition-all duration-500">
         <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-          {/* Brand — matches the global SiteHeader: Maison Favier logo + "Le Salon des Inconnus" */}
+          {/* Brand: matches the global SiteHeader: Maison Favier logo + "Le Salon des Inconnus" */}
           <button
             type="button"
             onClick={() => onNavigate('INN')}
