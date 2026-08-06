@@ -5724,7 +5724,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     const SectionHeader = FormSectionHeader;
                                     return (
                                     <div className="relative max-w-7xl mx-auto">
-                                        {/* Aurora — drifting blobs in the theme's accent palette,
+                                        {/* Aurora: drifting blobs in the theme's accent palette,
                                             sitting behind the form to give it a stage. Hidden under
                                             prefers-reduced-motion via the keyframes below. */}
                                         <div aria-hidden className="hot-seat-aurora absolute inset-0 -z-10 overflow-hidden pointer-events-none rounded-2xl">
