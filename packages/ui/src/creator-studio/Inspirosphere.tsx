@@ -23,7 +23,7 @@ import type {
 // (admin-curated + approved UGC) play via HTML5 <video> from Storage;
 // CITATION entries are typeset text rendered inside the orb: no player.
 // The `ownerUid` is only attached to FIREBASE entries from a member's
-// profile (Voices tab) — that's what powers the view-count ping back to
+// profile (Voices tab). That's what powers the view-count ping back to
 // members/{ownerUid}/videos/{id}.
 type OrbSource =
     | { kind: 'WEB';      url: string }
