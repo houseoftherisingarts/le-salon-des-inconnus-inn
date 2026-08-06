@@ -334,7 +334,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         intro_en: "Les Pommes Perdues, in Chénéville, is the project of Julien Robert and Gilbert Bégin: a patient quest to find, ferment, and bottle Quebec's forgotten apples. Their ciders are sharp, wild, and deeply rooted in the local terroir.",
         sections: [
             { title_fr: "La démarche", title_en: "The approach",
-              body_fr: "Pommes anciennes, levures sauvages, fermentations longues. Chaque cuvée a sa propre signature. C'est une approche qui demande du temps et qui produit des cidres mémorables.",
+              body_fr: "Pommes anciennes, levures sauvages, fermentations longues. Chaque cuvée a sa propre signature. C'est une approche qui demande du temps et qui produit des cidres dont on se souvient.",
               body_en: "Heritage apples, wild yeasts, long fermentations. Each cuvée has its own signature. An approach that takes time and produces ciders you remember." },
             { title_fr: "Sur place", title_en: "On site",
               body_fr: "Dégustations, vente directe, et l'occasion de comprendre ce que devient une pomme oubliée quand quelqu'un prend la peine de la sauver.",
