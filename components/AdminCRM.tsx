@@ -1888,7 +1888,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
-        {/* ── D20 Codes tab — pool management per tier. Used codes are
+        {/* ── D20 Codes tab: pool management per tier. Used codes are
               struck through; "next to draw" is the topmost unused code. */}
         {tab === 'd20codes' && (
           <div className="space-y-6">

@@ -968,8 +968,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                 <p className="font-josefin text-neutral-500 text-[11px] leading-relaxed mb-5">
                   {t(
-                    'One roll per week. Each rebate code is one-time and drawn from a finite pool — first to roll, first served.',
-                    'Un lancer par semaine. Chaque code de rabais est unique et tiré d\'un nombre limité — premier arrivé, premier servi.',
+                    'One roll per week. Each rebate code is one-time and drawn from a finite pool: first to roll, first served.',
+                    'Un lancer par semaine. Chaque code de rabais est unique et tiré d\'un nombre limité : premier arrivé, premier servi.',
                   )}
                 </p>
 
