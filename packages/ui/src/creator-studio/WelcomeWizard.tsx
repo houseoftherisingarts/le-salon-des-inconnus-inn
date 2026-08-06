@@ -445,8 +445,8 @@ export const WelcomeWizard: React.FC<Props> = ({
                     )}
                     {currentStep === 'DISPLAY_NAME' && (
                         <StepText
-                            label={t('How should we call you?', 'Comment on devrait t\'appeler ?')}
-                            sub={t('This is what shows on your public profile and your works.', 'C\'est ce qu\'on affichera sur ton profil public et tes œuvres.')}
+                            label={t('How should we call you?', 'Comment devrions-nous vous appeler ?')}
+                            sub={t('This is what shows on your public profile and your works.', 'C\'est ce que nous afficherons sur votre profil public et vos œuvres.')}
                             value={answers.displayName}
                             onChange={v => setAnswers(a => ({ ...a, displayName: v }))}
                         />
