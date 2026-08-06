@@ -586,7 +586,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               </span>
             </button>
 
-            {/* Réserver — desktop only */}
+            {/* Réserver: desktop only */}
             <button
               onClick={() => handleNavigate('INN')}
               className="hidden md:flex items-center px-5 py-2 rounded-full bg-[#d4af37] text-[#0a0808] font-cinzel font-bold text-[10px] uppercase tracking-[0.25em] transition-all hover:bg-[#e0bc45] hover:scale-105 active:scale-95"
