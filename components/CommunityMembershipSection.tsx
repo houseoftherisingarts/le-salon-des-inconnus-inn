@@ -442,7 +442,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* ── PULLQUOTE — Cormorant, short brass rule above ─────────────────── */}
+      {/* ── PULLQUOTE: Cormorant, short brass rule above ─────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-12">
         <div className="comm-quote max-w-3xl">
           <p data-parallax="-0.045" className="font-fraunces-it" style={{ color: T.ink, fontSize: 'clamp(1.55rem, 2.7vw, 2.3rem)', lineHeight: 1.32, willChange: 'transform' }}>
