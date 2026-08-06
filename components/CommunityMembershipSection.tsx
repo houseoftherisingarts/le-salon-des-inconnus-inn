@@ -104,7 +104,7 @@ const LETTER: { fr: string; en: string }[] = [
     en: "In practice, we're looking for someone who feels good in a clean space and has an eye for detail: nudging the furniture aside before vacuuming, noticing the small thing out of place, that kind of care. Someone solid in communication, able to regulate their nervous system, and who enjoys building systems to make their contribution flow.",
   },
   {
-    fr: "Et tu peux attendre exactement la même chose de notre part : le même soin dans la communication, la même empathie, le même engagement à se parler pour vrai.",
+    fr: "Et vous pouvez attendre exactement la même chose de notre part : le même soin dans la communication, la même empathie, le même engagement à se parler pour vrai.",
     en: "And you can expect exactly the same from us: the same care in communication, the same empathy, the same commitment to talking things through honestly.",
   },
 ];
