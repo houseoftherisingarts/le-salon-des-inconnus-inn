@@ -1624,7 +1624,7 @@ const TeamCard: React.FC<{
             <PerformanceBoard language={language} user={user} />
           )}
 
-          {/* Kanban board — visible to all logged-in members */}
+          {/* Kanban board: visible to all logged-in members */}
           {team.id !== 'arts' && user && (
             <div>
               <div className="flex items-center gap-3 mb-2">

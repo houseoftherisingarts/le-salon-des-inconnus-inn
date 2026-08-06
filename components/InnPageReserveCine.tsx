@@ -276,7 +276,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
     return () => { root.removeEventListener('scroll', onScroll); if (rafTick) cancelAnimationFrame(rafTick); };
   }, []);
 
-  // ── FUSED CINEMATIC ORIGINS — two beats over one scrubbed shot ─────────────
+  // ── FUSED CINEMATIC ORIGINS: two beats over one scrubbed shot ─────────────
   // The same living room that used to be the static "Les Origines" photo is now
   // the moving backdrop. As the track passes through the viewport (progress 0→1):
   //   • video.currentTime — the push-in scrubs forward, completing by ~0.62
