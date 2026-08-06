@@ -445,7 +445,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
                         <tbody>
                             {rows.length === 0 && (
                                 <tr><td colSpan={cols.length + 1} className={tdCls + ' text-center text-xs opacity-50 py-4'}>
-                                    {t('Empty — add a row', 'Vide — ajoute une ligne')}
+                                    {t('Empty, add a row', 'Vide, ajoute une ligne')}
                                 </td></tr>
                             )}
                             {rows.map(r => (
