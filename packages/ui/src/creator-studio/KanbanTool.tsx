@@ -747,7 +747,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                 onChange={(e) => replaceGoals({ ...goals, [currentGoalPeriod]: e.target.value })}
                                 onBlur={() => setIsEditingGoal(false)}
                                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === 'Escape') setIsEditingGoal(false); }}
-                                placeholder={t('Define your purpose…', 'Définis ton intention…')}
+                                placeholder={t('Define your purpose…', 'Définissez votre intention…')}
                                 className={`w-full px-3 py-1.5 text-base font-cinzel ${formStyles.input}`}
                             />
                         ) : (
