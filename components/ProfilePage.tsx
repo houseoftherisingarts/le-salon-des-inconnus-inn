@@ -136,7 +136,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     try { await signOut(auth); onNavigate('INN'); } finally { setSigningOut(false); }
   };
 
-  // ── Affiliate request — live subscribe to the user's own request doc ─────
+  // ── Affiliate request: live subscribe to the user's own request doc ─────
   const [affiliate, setAffiliate] = useState<null | {
     status: 'waiting' | 'accepted' | 'refused';
     code?: string;
