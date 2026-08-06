@@ -989,7 +989,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 13: SUPER PROFILE (/{username}) — fullscreen, borderless,
+        {/* VIEW 13: SUPER PROFILE (/{username}): fullscreen, borderless,
             Maestro-tier-only public portfolio. Resolves the URL slug to a
             Firestore doc; renders one of three layouts (Photo / Visual Art
             / Editorial) keyed off the artist's medium. */}
