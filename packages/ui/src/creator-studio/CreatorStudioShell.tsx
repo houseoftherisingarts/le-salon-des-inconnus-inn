@@ -81,7 +81,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      // "View as visitor": a logged-out user can opt into a limited browse
      // experience (no profile editing, no publish actions). Reset whenever
      // currentUser flips so the gate isn't stuck after sign-out.
-     // ALL HOOKS LIVE AT THE TOP — the gate is rendered as a conditional
+     // ALL HOOKS LIVE AT THE TOP: the gate is rendered as a conditional
      // return at the END of this component so hook count stays stable
      // across auth flips (avoids React's "hooks order changed" error).
      const [asVisitor, setAsVisitor] = useState(false);
