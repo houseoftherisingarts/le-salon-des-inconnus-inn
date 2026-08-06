@@ -540,7 +540,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'vezeau': {
         _draft: true,
-        intro_fr: "Le Domaine Mont-Vézeau, à Ripon, c'est 9 000 pieds de vigne, deux hectares de fraises, des framboises, et — peut-être le meilleur — des pizzas au feu de bois servies sur la terrasse les fins de semaine. Un domaine où le terroir et l'accueil se rencontrent.",
+        intro_fr: "Le Domaine Mont-Vézeau, à Ripon, c'est 9 000 pieds de vigne, deux hectares de fraises, des framboises, et (peut-être le meilleur) des pizzas au feu de bois servies sur la terrasse les fins de semaine. Un domaine où le terroir et l'accueil se rencontrent.",
         intro_en: "Domaine Mont-Vézeau, in Ripon, is 9,000 grape vines, two hectares of strawberries, raspberries, and — maybe best of all — wood-fired pizzas served on the terrace on weekends. A property where terroir meets hospitality.",
         sections: [
             { title_fr: "Le vignoble", title_en: "The vineyard",

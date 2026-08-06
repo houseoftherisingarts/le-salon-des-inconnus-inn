@@ -280,7 +280,7 @@ export const JigsawPuzzle: React.FC<Props> = ({
                 className="w-full h-full overflow-visible"
             >
                 <defs>
-                    {/* One clipPath per piece — each scoped to that piece's
+                    {/* One clipPath per piece: each scoped to that piece's
                         local origin so the underlying <image> can be tiled
                         consistently across all pieces. */}
                     {allPieces.map(p => (
