@@ -421,7 +421,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
         );
     }
 
-    // Never granted (or revoked with no prior config) — invite copy.
+    // Never granted (or revoked with no prior config): invite copy.
     if (!maestroEnabled) {
         return (
             <section className="border border-white/10 bg-black/40 p-6 rounded">
