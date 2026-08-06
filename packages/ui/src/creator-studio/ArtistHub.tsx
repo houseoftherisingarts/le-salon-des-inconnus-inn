@@ -3638,7 +3638,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 {language === 'EN' ? 'Coming next' : 'Prochaines étapes'}
                             </h4>
                             <ul className="space-y-2 text-sm text-neutral-300 font-lato leading-relaxed">
-                                <li className="flex gap-2"><span className="font-mono text-red-300 tabular-nums">01</span><span>{language === 'EN' ? 'Database scanner: surfaces grants matching your discipline + region + deadline.' : 'Scanner de bases : fait remonter les bourses qui collent à ta discipline + région + échéance.'}</span></li>
+                                <li className="flex gap-2"><span className="font-mono text-red-300 tabular-nums">01</span><span>{language === 'EN' ? 'Database scanner: surfaces grants matching your discipline + region + deadline.' : 'Scanner de bases : fait remonter les bourses qui collent à votre discipline + région + échéance.'}</span></li>
                                 <li className="flex gap-2"><span className="font-mono text-red-300 tabular-nums">02</span><span>{language === 'EN' ? 'Application drafter: generates a first pass from your bio + project description.' : 'Brouilleur de demande : génère un premier jet à partir de ta bio + description du projet.'}</span></li>
                                 <li className="flex gap-2"><span className="font-mono text-red-300 tabular-nums">03</span><span>{language === 'EN' ? 'Deadline tracker: pings you 3 weeks before each opportunity closes.' : 'Suivi des échéances : te ping 3 semaines avant la fermeture de chaque appel.'}</span></li>
                             </ul>
