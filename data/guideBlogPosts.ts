@@ -229,7 +229,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'barclay': {
         _draft: true,
-        intro_fr: "L'Expo-Barclay de Plaisance est le rendez-vous annuel des amoureux de la terre et du feu — une réunion de céramistes du Québec qui transforment, le temps d'un week-end, un coin de la Petite-Nation en grand atelier collectif.",
+        intro_fr: "L'Expo-Barclay de Plaisance est le rendez-vous annuel des amoureux de la terre et du feu : une réunion de céramistes du Québec qui transforment, le temps d'un week-end, un coin de la Petite-Nation en grand atelier collectif.",
         intro_en: "Plaisance's Expo-Barclay is the annual meeting point for lovers of clay and fire — a gathering of ceramicists from across Quebec who, for one weekend, turn a corner of Petite-Nation into a great collective workshop.",
         sections: [
             { title_fr: "Ce qui s'y passe", title_en: "What happens",
