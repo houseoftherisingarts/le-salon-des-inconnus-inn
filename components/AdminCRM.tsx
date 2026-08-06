@@ -1932,7 +1932,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           <MediaSection />
         )}
 
-        {/* ── Spectacles — show offers submitted from /ceilidh. */}
+        {/* ── Spectacles: show offers submitted from /ceilidh. */}
         {tab === 'showoffers' && (
           <ShowOffersSection eventId={EVENT_ID} />
         )}
