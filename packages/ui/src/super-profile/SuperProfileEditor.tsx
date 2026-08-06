@@ -119,7 +119,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
     // Per-work upload UI
     const [workUploading, setWorkUploading] = React.useState(false);
     const worksInputRef = React.useRef<HTMLInputElement>(null);
-    // Bespoke-tier "coming soon" modal — wired but the catalog isn't built
+    // Bespoke-tier "coming soon" modal: wired but the catalog isn't built
     // yet, so the modal is purely informational for now.
     const [bespokeOpen, setBespokeOpen] = React.useState(false);
 
