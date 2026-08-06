@@ -36,8 +36,8 @@ const T = {
   ink:     '#f3ecda',  // warm parchment cream: Cinzel headings on dark
   body:    '#d9d7c8',  // warm light body text
   soft:    '#9a9683',  // muted warm-sage captions
-  gold:    '#c5a059',  // BRASS — eyebrows, labels, hairlines, active states
-  goldDeep:'#c5a059',  // BRASS — primary numbers, pullquote, CTA, drop-cap
+  gold:    '#c5a059',  // BRASS: eyebrows, labels, hairlines, active states
+  goldDeep:'#c5a059',  // BRASS: primary numbers, pullquote, CTA, drop-cap
   line:    'rgba(197,160,89,0.30)',  // brass hairline
 };
 
