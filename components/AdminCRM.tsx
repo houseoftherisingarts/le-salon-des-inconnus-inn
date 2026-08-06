@@ -624,7 +624,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
         () => {},
       ),
     );
-    // Show offers — for the badge + dashboard tile only.
+    // Show offers: for the badge + dashboard tile only.
     const unsub5 = onSnapshot(
       query(collection(db, 'events', EVENT_ID, 'showOffers'), orderBy('createdAt', 'desc')),
       snap => setShowOffers(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }) as ShowOffer)),
