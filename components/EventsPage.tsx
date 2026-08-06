@@ -186,7 +186,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onNavigate, language }) 
           <div className="mt-8 w-24 h-px bg-gradient-to-r from-transparent via-[#d4af37]/50 to-transparent mx-auto"></div>
         </div>
 
-        {/* Next Event — Hero Card */}
+        {/* Next Event: Hero Card */}
         {nextEvent && (
           <section className="mb-16">
             <NextEventCard event={nextEvent} language={language} onNavigate={onNavigate} />
