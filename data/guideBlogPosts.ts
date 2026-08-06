@@ -205,7 +205,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         intro_en: "The Montagne de Chénéville is the 'quick and rewarding' option: a short climb behind the village school, and at the top, a fine view of the village, the country roads, and the Laurentian skyline. Ideal for an unplanned outing.",
         sections: [
             { title_fr: "Le sentier", title_en: "The trail",
-              body_fr: "Accessible toute l'année. Comptez 30 à 45 minutes pour une montée tranquille. Un bon choix entre deux étapes de la journée — un café au village avant, une boulangerie après.",
+              body_fr: "Accessible toute l'année. Comptez 30 à 45 minutes pour une montée tranquille. Un bon choix entre deux étapes de la journée : un café au village avant, une boulangerie après.",
               body_en: "Accessible year-round. Plan 30 to 45 minutes for an easy climb. A good fit between other stops — a coffee in the village before, a bakery after." },
         ],
         schema: { type: "TouristAttraction", address: "Chénéville, QC, Canada" },
