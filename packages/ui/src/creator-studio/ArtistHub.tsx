@@ -7987,7 +7987,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     />
                                 </section>
 
-                                {/* Footer actions — status badge + cancel/save/publish.
+                                {/* Footer actions: status badge + cancel/save/publish.
                                     Publish bonus is +10 coins on first approval (handled
                                     server-side via the article snapshot effect). */}
                                 <div className={`flex flex-col sm:flex-row items-center gap-3 pt-5 border-t ${theme === 'COMIC' ? 'border-black border-t-2' : 'border-white/10'}`}>
