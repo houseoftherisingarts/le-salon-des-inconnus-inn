@@ -525,7 +525,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
             <div
                 className="relative inspirosphere-orb-container w-full h-full flex items-center justify-center"
             >
-                {/* Halo glow — single soft cyan→transparent radial, no
+                {/* Halo glow: single soft cyan→transparent radial, no
                     visible ring boundary. */}
                 <div
                     aria-hidden
