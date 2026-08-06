@@ -2845,7 +2845,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                       {/* Photo cycler: cycles through Ceilidh-relevant photos every 5s */}
                       <LiquidGlassCycler images={CEILIDH_HERO_IMAGES} />
 
-                      {/* Bottom gradient anchors the text — image stays open above */}
+                      {/* Bottom gradient anchors the text: image stays open above */}
                       <div
                         aria-hidden
                         className="absolute inset-0 pointer-events-none z-[2]"

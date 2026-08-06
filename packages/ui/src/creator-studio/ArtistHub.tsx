@@ -2872,7 +2872,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             );
             // Refund the previous bidder (if any). They own their profile doc;
             // a malicious actor could skip this, so the rule layer trusts the
-            // bidder to do the right thing — acceptable for a small community.
+            // bidder to do the right thing, acceptable for a small community.
             if (listing.currentBidderUid && listing.currentBidderUid !== currentUser.uid) {
                 try {
                     // Read the previous bidder's profile to add the refund.
