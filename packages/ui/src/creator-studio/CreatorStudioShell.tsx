@@ -186,7 +186,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  { activeTheme: next, updatedAt: serverTimestamp() },
                  { merge: true },
              );
-         } catch { /* non-fatal — local state still updates */ }
+         } catch { /* non-fatal: local state still updates */ }
      };
 
      const cycleTheme = () => {

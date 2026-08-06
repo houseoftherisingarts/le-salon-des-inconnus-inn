@@ -38,7 +38,7 @@ interface BoardDoc {
 interface KanbanToolProps {
     onClose?: () => void;
     themeStyles: any;
-    /** Owner uid — required to enable Firestore persistence + multi-board. */
+    /** Owner uid: required to enable Firestore persistence + multi-board. */
     uid: string | null;
     /** Active studio language. Drives every visible string. */
     language: 'EN' | 'FR';
