@@ -526,7 +526,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'agricola': {
         _draft: true,
         intro_fr: "La Ferme Agricola, à Papineauville, est une coopérative de jeunes agriculteurs qui cultive 160 acres en bio certifié : légumes, asperges, herbes et fleurs coupées. Du printemps à l'automne, c'est l'une des principales sources de produits frais de la région.",
-        intro_en: "Ferme Agricola, in Papineauville, is a young-farmer cooperative growing 160 acres in certified organic — vegetables, asparagus, herbs, and cut flowers. From spring to autumn, it's one of the region's main sources of fresh produce.",
+        intro_en: "Ferme Agricola, in Papineauville, is a young-farmer cooperative growing 160 acres in certified organic: vegetables, asparagus, herbs, and cut flowers. From spring to autumn, it's one of the region's main sources of fresh produce.",
         sections: [
             { title_fr: "L'ASC", title_en: "The CSA",
               body_fr: "Paniers hebdomadaires de saison, possibilité de récupération sur place ou dans plusieurs points de chute. Le format idéal pour manger local toute la saison.",
