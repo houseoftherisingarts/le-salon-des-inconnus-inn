@@ -514,7 +514,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     });
 
     // ── Orb visual (portaled into the viewer when the slot is mounted) ──
-    // Stripped of redundant chrome — the viewer header already labels this as
+    // Stripped of redundant chrome: the viewer header already labels this as
     // INSPIROSPHÈRE, and the YouTube iframe carries its own title. The title +
     // credit get repeated in the controls section below for accessibility.
     const orbVisual = (
