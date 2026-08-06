@@ -81,7 +81,7 @@ export const INSPIROSPHERE_VIDEOS: InspirosphereVideo[] = [
     { id: 'cassavetes-acting',    url: 'https://www.youtube.com/watch?v=0HikZrxF_p4', title: 'The man who invented independent filmmaking',              credit: 'John Cassavetes',    category: 'ACTING' },
     { id: 'hill-anatomy',         url: 'https://www.youtube.com/watch?v=31dBpwsYbG8', title: 'The creature and portrait sculptures of Mike Hill',        credit: 'Mike Hill',          category: 'CRAFT' },
     { id: 'sarah-kane-lyric',     url: 'https://www.youtube.com/watch?v=FcTVc2iGdmA', title: 'The work of Sarah Kane (National Theatre)',                credit: 'Sarah Kane',         category: 'PERFORMANCE' },
-    { id: 'cartier-bresson',      url: 'https://www.youtube.com/watch?v=14ih3WgeOLs', title: 'Cartier-Bresson — the decisive moment (1973)',             credit: 'HCB',                category: 'PHOTOGRAPHY' },
+    { id: 'cartier-bresson',      url: 'https://www.youtube.com/watch?v=14ih3WgeOLs', title: 'Cartier-Bresson: the decisive moment (1973)',             credit: 'HCB',                category: 'PHOTOGRAPHY' },
     { id: 'disney-principles',    url: 'https://www.youtube.com/watch?v=uXHnudwQde0', title: 'Disney\'s 12 principles of animation',                     credit: 'Disney',             category: 'ANIMATION' },
     { id: 'lynch-meditation',     url: 'https://www.youtube.com/watch?v=S2RFMCmfRmc', title: 'David Lynch on ideas',                                     credit: 'David Lynch',        category: 'MINDSET' },
 ];
