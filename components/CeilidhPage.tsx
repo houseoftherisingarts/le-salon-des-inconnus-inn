@@ -1797,7 +1797,7 @@ const TeamsChapterBody: React.FC<{
 
   return (
     <div className="space-y-10">
-      {/* Facebook RSVP callout — lets people mark themselves "present" on
+      {/* Facebook RSVP callout: lets people mark themselves "present" on
           the FB event, but reminds them the real team + room selection
           happens here. The link opens a new tab so the on-page selection
           flow isn't lost. */}
