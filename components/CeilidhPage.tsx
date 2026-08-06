@@ -496,7 +496,7 @@ export const CeilidhPage: React.FC<Props> = ({
         </div>
       </section>
 
-      {/* SEO body section — substantial FR copy + FAQ + internal/external links.
+      {/* SEO body section: substantial FR copy + FAQ + internal/external links.
           Sources the FAQPage + Event JSON-LD via App.tsx route effect. */}
       <SeoBlock viewKey="CEILIDH" language={language} onNavigate={onNavigate} />
 
