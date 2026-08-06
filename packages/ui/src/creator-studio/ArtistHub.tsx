@@ -2074,7 +2074,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // "Ask to be featured" — submits a request to the Artistic CRM. Doc id
+    // "Ask to be featured": submits a request to the Artistic CRM. Doc id
     // is the user's uid so it's idempotent (one pending request per user).
     const handleAskToBeFeatured = async () => {
         if (!currentUser?.uid) return;

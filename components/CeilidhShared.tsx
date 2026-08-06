@@ -2510,7 +2510,7 @@ export const PresenceTimeline: React.FC<{
                   </span>
                 </div>
 
-                {/* Track — one cell per event day, filled iff the user is
+                {/* Track: one cell per event day, filled iff the user is
                     present that day. This handles non-contiguous days
                     (e.g. Fri + Sun, skipping Sat) and multi-team users
                     correctly. */}
