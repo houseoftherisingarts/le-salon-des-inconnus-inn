@@ -1365,7 +1365,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // Skin State
     const [purchasedSkins, setPurchasedSkins] = useState<string[]>([]);
     const [activeSkinId, setActiveSkinId] = useState<string | null>(null);
-    // Store preview — applied while browsing the STORE tab, reverts when the
+    // Store preview: applied while browsing the STORE tab, reverts when the
     // user navigates away (effect cleared further below).
     const [previewSkinId, setPreviewSkinId] = useState<string | null>(null);
 

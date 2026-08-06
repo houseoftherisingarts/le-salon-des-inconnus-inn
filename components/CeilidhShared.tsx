@@ -653,7 +653,7 @@ export const KanbanBoard: React.FC<{
 
         {/* Move + delete controls */}
         <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          {/* Up/down priority reorder — only for members */}
+          {/* Up/down priority reorder: only for members */}
           {canInteract && (
             <>
               <button
