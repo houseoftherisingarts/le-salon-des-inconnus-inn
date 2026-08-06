@@ -4293,7 +4293,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                  {/* Image Container with "Tape" effect */}
                                  <div className="relative bg-[#1a1a1a] p-2 rotate-1 shadow-xl group cursor-pointer border border-white/5">
                                      {/* Upload Overlay Button */}
-                                     {/* Add image — pushes onto galleryUrls. */}
+                                     {/* Add image: pushes onto galleryUrls. */}
                                      <button
                                         onClick={(e) => { e.stopPropagation(); galleryInputRef.current?.click(); }}
                                         className="absolute top-4 right-4 z-40 bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-fuchsia-600"
