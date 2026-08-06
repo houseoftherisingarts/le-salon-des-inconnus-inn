@@ -60,7 +60,7 @@ const BUS = {
   ],
 };
 
-// The shared common spaces of the inn — what you share when you live here.
+// The shared common spaces of the inn: what you share when you live here.
 // "Le salon" is the signature orange room (centered copy.jpg), the inn's
 // principal photo (also the Petite Monnaie pastille).
 const COMMON = [
