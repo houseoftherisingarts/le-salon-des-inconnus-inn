@@ -1386,7 +1386,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
         {tab === 'community' && (
           <div>
             <p className="text-neutral-600 text-xs font-lato mb-4">
-              Candidatures « Faire partie de la communauté » — la place rémunérée de membre résident (Andrée).
+              Candidatures « Faire partie de la communauté » : la place rémunérée de membre résident (Andrée).
               Approuver / refuser, et lire le mot de présentation, le contact et les réponses.
             </p>
             {communityApps.length === 0 ? (

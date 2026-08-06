@@ -396,7 +396,7 @@ const App: React.FC = () => {
     setMeta('meta[name="twitter:title"]', meta.title);
     setMeta('meta[name="twitter:description"]', meta.description);
 
-    // Share image — absolute URL, per route (crawlers + AI need absolute).
+    // Share image: absolute URL, per route (crawlers + AI need absolute).
     const ogImage = (OG_IMAGES as Record<string, string>)[currentView] ?? DEFAULT_OG_IMAGE;
     setMeta('meta[property="og:image"]', ogImage);
     setMeta('meta[name="twitter:image"]', ogImage);
