@@ -163,7 +163,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     } as OrbVideo;
                 }));
             },
-            () => { /* swallow — empty collection is fine */ },
+            () => { /* swallow: empty collection is fine */ },
         );
         const unsub2 = onSnapshot(
             query(collection(db, 'inspirosphereFeatured'), orderBy('featuredAt', 'desc')),

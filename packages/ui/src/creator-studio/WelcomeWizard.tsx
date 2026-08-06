@@ -569,7 +569,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                 .welcome-bubble-fwd  { animation: welcomeBubbleFwd 1.8s cubic-bezier(0.65, 0, 0.35, 1) both; }
                 .welcome-bubble-back { animation: welcomeBubbleBack 1.55s cubic-bezier(0.65, 0, 0.35, 1) both; }
 
-                /* Halo bloom — pulses outward from the bubble's anchor as
+                /* Halo bloom: pulses outward from the bubble's anchor as
                    the wipe begins, then fades. Matches the inn shader's
                    rim-glow timing. */
                 @keyframes welcomeBubbleGlow {
