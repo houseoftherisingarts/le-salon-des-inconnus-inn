@@ -165,7 +165,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "Les sentiers", title_en: "The trails",
               body_fr: "Le réseau accueille randonneurs en été, fat-bikers et raquetteurs en hiver, et skieurs de fond toute la saison froide. Plusieurs boucles sont possibles, du parcours familial d'une heure à la longue traversée d'une demi-journée.",
-              body_en: "The network welcomes hikers in summer, fat-bikers and snowshoers in winter, and cross-country skiers all cold season. Multiple loops exist — from a one-hour family route to a half-day traverse." },
+              body_en: "The network welcomes hikers in summer, fat-bikers and snowshoers in winter, and cross-country skiers all cold season. Multiple loops exist, from a one-hour family route to a half-day traverse." },
             { title_fr: "La tour et le ciel", title_en: "The tower and the sky",
               body_fr: "Allez-y la nuit en août. La région est suffisamment éloignée des halos urbains pour que la Voie lactée se découpe nettement. La tour offre une plateforme idéale pour observer le ciel sans obstacle.",
               body_en: "Go at night in August. The region is far enough from urban light halos that the Milky Way appears clearly. The tower is an ideal platform for unobstructed sky watching." },

@@ -1216,7 +1216,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           100% { transform: scale(1.09) translate3d(-1%, -0.6%, 0); }
         }
 
-        /* L'Espace — keyline grows from 0 to ~120px on hover (closed state); always visible when open */
+        /* L'Espace: keyline grows from 0 to ~120px on hover (closed state); always visible when open */
         .lespace-mark:hover .lespace-keyline { width: 120px; }
         .lespace-mark[aria-expanded="true"] .lespace-keyline { width: 100% !important; }
 

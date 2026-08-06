@@ -3188,7 +3188,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // First-visit coin reward — +5 the first time the user lands on each
+    // First-visit coin reward: +5 the first time the user lands on each
     // tab. Re-visiting a known tab does nothing. The profile keeps the
     // visited list so the bonus is once-per-user per section, forever.
     useEffect(() => {
