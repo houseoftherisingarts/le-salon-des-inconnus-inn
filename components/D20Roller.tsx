@@ -196,7 +196,7 @@ const Dice: React.FC<{
 
         if (phaseRef.current === 'landing') {
             const t = Math.min(1, (now - startTimeRef.current) / ROLL_DURATION_SEC);
-            // easeOutQuart — fast tumble at start, settling at end
+            // easeOutQuart: fast tumble at start, settling at end
             const eased = 1 - Math.pow(1 - t, 4);
 
             // Tumble component: spins around random axis, decaying with eased.
