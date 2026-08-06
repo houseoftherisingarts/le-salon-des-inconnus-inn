@@ -1708,7 +1708,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             const list: InboxConversation[] = [];
             snap.forEach(d => list.push({ id: d.id, ...(d.data() as any) }));
             setConversations(list);
-        }, () => { /* swallow — empty state handles it */ });
+        }, () => { /* swallow: empty state handles it */ });
 
         const friendQ = query(
             collection(db, 'friendships'),
