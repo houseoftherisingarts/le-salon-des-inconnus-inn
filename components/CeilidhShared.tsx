@@ -564,7 +564,7 @@ export const KanbanBoard: React.FC<{
             </div>
           )}
 
-          {/* Claim / unclaim — only for members of this team (or admin) */}
+          {/* Claim / unclaim: only for members of this team (or admin) */}
           {user && canInteract && (
             <button
               onClick={() => toggleClaim(task)}
