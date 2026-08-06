@@ -64,7 +64,7 @@ function studioDb(): Firestore | null {
 
 const rid = () => `${Date.now().toString(36)}-${Math.floor(performance.now() * 1000).toString(36)}`;
 
-// ─── Weather (Open-Meteo — no key, CORS OK, free) ───────────────────────────────
+// ─── Weather (Open-Meteo, no key, CORS OK, free) ───────────────────────────────
 const WMO: Record<number, { en: string; fr: string }> = {
     0:  { en: 'clear sky', fr: 'ciel dégagé' }, 1: { en: 'mostly clear', fr: 'principalement clair' },
     2:  { en: 'partly cloudy', fr: 'partiellement nuageux' }, 3: { en: 'overcast', fr: 'couvert' },
