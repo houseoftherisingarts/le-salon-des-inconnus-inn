@@ -646,7 +646,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
               content-visibility:auto so the browser skips rendering them when offscreen ── */}
 
         {/* ════════════════════════════════════════════════════════════════════
-            REAL "RÉSERVEZ…" SECTION — rendered EXACTLY as on the live site.
+            REAL "RÉSERVEZ…" SECTION: rendered EXACTLY as on the live site.
             NO video behind it, NO overlay, NO overlap. Verbatim from InnPageTest3:
             decorative header → half-moon "L'Auberge Complète" estate card
             (ManorRoomsSection) → round balloon room cards (IndependentStaysSection).

@@ -995,7 +995,7 @@ const ChapterFullscreen: React.FC<{
       aria-modal="true"
       aria-label={`${chapter.num} · ${language === 'EN' ? chapter.titleEn : chapter.titleFr}`}
     >
-      {/* Fixed close — pinned to the viewport, NOT to the scrollable content,
+      {/* Fixed close: pinned to the viewport, NOT to the scrollable content,
           so it's always reachable no matter how far down the user scrolls inside the chapter. */}
       <button
         onClick={onClose}
