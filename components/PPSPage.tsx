@@ -149,7 +149,7 @@ export const PPSPage: React.FC<PPSPageProps> = ({ onNavigate, language }) => {
             <p className="font-lato text-neutral-300 leading-relaxed max-w-2xl mx-auto mb-10">
               {t(
                 "Rooms, shared spaces and grounds for a corporate retreat, combined with a PPS Canada concept chosen for your group. We build the proposal together.",
-                "Chambres, espaces communs et terrain pour une retraite d'entreprise, combinés à un concept PPS Canada choisi pour votre groupe. On construit la proposition ensemble.",
+                "Chambres, espaces communs et terrain pour une retraite d'entreprise, combinés à un concept PPS Canada choisi pour votre groupe. Nous construisons la proposition ensemble.",
               )}
             </p>
             <a
