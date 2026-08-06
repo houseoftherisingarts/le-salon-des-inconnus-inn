@@ -429,7 +429,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     Super Profile · Maestro tier
                 </h3>
                 <p className="text-neutral-400 text-sm font-lato leading-relaxed">
-                    Maestro unlocks your <em>Artist Mind Palace</em> at <code>/your-name</code> — a standalone fullscreen portfolio page on our site, designed around your medium. Reach out if you'd like access.
+                    Maestro unlocks your <em>Artist Mind Palace</em> at <code>/your-name</code>: a standalone fullscreen portfolio page on our site, designed around your medium. Reach out if you'd like access.
                 </p>
             </section>
         );
