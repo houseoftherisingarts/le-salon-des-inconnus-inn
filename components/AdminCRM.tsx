@@ -630,7 +630,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       snap => setShowOffers(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }) as ShowOffer)),
       () => {},
     );
-    // Members directory — full membership roster + their per-member admin flags
+    // Members directory: full membership roster + their per-member admin flags
     // doc (members/{uid}/admin/flags). The flags doc is fetched lazily via a
     // second snapshot per row would be expensive; instead, store flags in a
     // map and merge at render time.
