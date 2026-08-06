@@ -5976,7 +5976,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     </div>
                                                 </section>
 
-                                                {/* 04 — VISUALS */}
+                                                {/* 04. VISUALS */}
                                                 <section>
                                                     <SectionHeader n="04" en="Visuals" fr="Visuels"
                                                         helpEn="A cover image and an optional public link to the work."
