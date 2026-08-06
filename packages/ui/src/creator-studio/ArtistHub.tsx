@@ -2960,7 +2960,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             { merge: true },
                         );
                     }
-                } catch { /* permission may deny — accept */ }
+                } catch { /* permission may deny: accept */ }
             }
             // Return the item to seller's inventory.
             const myPatch: any = { updatedAt: serverTimestamp() };

@@ -887,7 +887,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   aria-label={t('Reveal the space', "Révéler l'espace")}
                   className="absolute deck-cover overflow-hidden cursor-pointer text-left"
                   style={{
-                    // Card is the focal element of the section now — bigger so it dominates.
+                    // Card is the focal element of the section now, bigger so it dominates.
                     width: '82%',
                     height: '92%',
                     left: '50%',
