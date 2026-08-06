@@ -421,7 +421,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
             >
               {t('A sanctuary for travelers, artists, and dreamers.', 'Un sanctuaire pour voyageurs, artistes et rêveurs.')}
             </p>
-            {/* CITQ classification — Gîte touristique classé 4 soleils. Small on-brand
+            {/* CITQ classification: Gîte touristique classé 4 soleils. Small on-brand
                 plaque: four gold suns + label, in the warm-dark hero palette. */}
             <div className="hero3-soleils mb-8 md:mb-10 mx-auto md:mx-0 w-fit">
               <div
