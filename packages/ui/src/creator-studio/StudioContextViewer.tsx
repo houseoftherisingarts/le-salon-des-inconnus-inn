@@ -831,7 +831,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 </div>
             )}
 
-            {/* Local styles — animations + per-element entry timings. */}
+            {/* Local styles: animations + per-element entry timings. */}
             <style>{`
                 .viewer-body {
                     animation: viewerEnter 1100ms cubic-bezier(0.2, 0.7, 0.3, 1) both;

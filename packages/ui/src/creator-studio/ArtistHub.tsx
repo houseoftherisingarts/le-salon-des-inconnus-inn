@@ -4131,7 +4131,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 onClick={() => setActiveTool('INSPIROSPHERE')}
                                 className={`relative bg-gradient-to-br from-fuchsia-900/15 via-cyan-900/10 to-black/40 border ${currentStyles.border} p-8 hover:from-fuchsia-900/25 hover:to-cyan-900/15 transition-all group cursor-pointer aspect-square flex flex-col items-center justify-center text-center overflow-hidden`}
                             >
-                                {/* A tiny orb glyph behind the icon — visual hint */}
+                                {/* A tiny orb glyph behind the icon: visual hint */}
                                 <div aria-hidden className="absolute -top-8 -right-8 w-32 h-32 rounded-full opacity-30 group-hover:opacity-60 transition-opacity"
                                      style={{ background: 'radial-gradient(circle at 35% 30%, rgba(34,211,238,0.55), rgba(217,70,239,0.30) 50%, transparent 75%)', filter: 'blur(12px)' }} />
                                 <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/60 text-neutral-400 group-hover:text-white relative`}
