@@ -6,7 +6,7 @@ import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedi
 // restore if needed. This avoids a noisy "click your account again" popup
 // when the Firebase SDK simply hasn't finished hydrating yet.
 //
-// We do NOT trigger a fresh sign-in here on purpose — the user already
+// We do NOT trigger a fresh sign-in here on purpose: the user already
 // authenticated via the LoginGate before the chapter opened, and asking
 // them again would be a double-prompt.
 async function resolveCurrentUser(a: Auth | null): Promise<User | null> {
