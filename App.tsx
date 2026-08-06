@@ -914,7 +914,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 7i: CATALOGUE (unlisted, noindex — artwork pre-sale catalogue) */}
+        {/* VIEW 7i: CATALOGUE (unlisted, noindex: artwork pre-sale catalogue) */}
         {currentView === 'CATALOGUE' && (
           <CataloguePage
             onNavigate={(view) => handleNavigation(view as ViewState)}
