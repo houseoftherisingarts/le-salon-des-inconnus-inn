@@ -3418,7 +3418,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Clear store preview when the user navigates away from the STORE tab —
+    // Clear store preview when the user navigates away from the STORE tab,
     // the saved activeSkinId takes over again.
     useEffect(() => {
         if (activeTab !== 'STORE') setPreviewSkinId(null);

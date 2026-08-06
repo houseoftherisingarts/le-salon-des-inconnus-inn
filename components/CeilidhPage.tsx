@@ -1470,7 +1470,7 @@ const ProgrammeChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language })
         </h3>
       </header>
 
-      {/* Coarse 5-card spine — verbatim from CeilidhPage source */}
+      {/* Coarse 5-card spine: verbatim from CeilidhPage source */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
         {SCHEDULE.map((day) => (
           <div
