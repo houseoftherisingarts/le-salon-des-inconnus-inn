@@ -459,7 +459,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         ],
         faqs: [
             { q_fr: "Faut-il de l'expérience ?", q_en: "Do I need experience?",
-              a_fr: "Non — un briefing complet est donné avant le départ, et les chiens connaissent les sentiers.",
+              a_fr: "Non, un briefing complet est donné avant le départ, et les chiens connaissent les sentiers.",
               a_en: "No — a full briefing is given before departure, and the dogs know the trails." },
         ],
         schema: { type: "TouristAttraction", address: "Montpellier, QC, Canada" },

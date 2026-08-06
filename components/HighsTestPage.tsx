@@ -813,7 +813,7 @@ export const HighsTestPage: React.FC<HighsTestPageProps> = ({ onEnterStudio, onB
                                 </button>
                             </div>
 
-                            {/* Scroll cue — fades on first scroll */}
+                            {/* Scroll cue: fades on first scroll */}
                             <div
                                 className="absolute bottom-[6vh] left-1/2 -translate-x-1/2 font-cinzel text-neutral-500 text-[9px] uppercase tracking-[0.5em] hs-bob"
                                 ref={(el) => {
