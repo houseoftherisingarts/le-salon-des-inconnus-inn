@@ -799,7 +799,7 @@ const StepLinks: React.FC<StepLinksProps> = ({ language, values, onChange }) => 
                             type="url"
                             placeholder={t(
                                 i === 0 ? 'instagram.com/…' : i === 1 ? 'your website' : 'another link',
-                                i === 0 ? 'instagram.com/…' : i === 1 ? 'ton site web' : 'un autre lien',
+                                i === 0 ? 'instagram.com/…' : i === 1 ? 'votre site web' : 'un autre lien',
                             )}
                             value={url}
                             onChange={e => setAt(i, e.target.value)}
