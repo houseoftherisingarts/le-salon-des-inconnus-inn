@@ -7589,8 +7589,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 {/* ─── Featured artwork picker ─────────────────────────────
                     Opens from the "Ajouter une œuvre" / "Change" buttons in
                     the profile's featured slot. Shows the user's uploaded
-                    roster as thumbnails — clicking one promotes it to the
-                    featured slot — plus an upload-new affordance. */}
+                    roster as thumbnails: clicking one promotes it to the
+                    featured slot, plus an upload-new affordance. */}
                 {isFeaturedPickerOpen && (
                     <div
                         className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn"
