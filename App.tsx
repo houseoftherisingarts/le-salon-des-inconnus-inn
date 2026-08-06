@@ -1037,7 +1037,7 @@ const App: React.FC = () => {
         </button>
       )}
 
-      {/* GLOBAL: Cookie / Privacy Consent Banner — suppressed on fullscreen
+      {/* GLOBAL: Cookie / Privacy Consent Banner, suppressed on fullscreen
           immersive routes (HIGHS_TEST, SUPER_PROFILE) where the banner would
           eat the CTA + crop the cinematic frame. The banner is still shown
           on the rest of the site (where consent matters for analytics). */}
