@@ -106,8 +106,8 @@ export const InnPageReserveCine: React.FC<Props> = ({
   // the footage before the real half-moon estate card + balloon rooms reveal.
   const reserveTrackRef = useRef<HTMLDivElement>(null);
   const reserveOverlayRef = useRef<HTMLDivElement>(null);
-  const reserveCopyRef = useRef<HTMLDivElement>(null);       // beat 1 — "Entrez dans le Manoir"
-  const reserveEditorialRef = useRef<HTMLDivElement>(null);  // beat 2 — "Bienvenue…" editorial
+  const reserveCopyRef = useRef<HTMLDivElement>(null);       // beat 1: "Entrez dans le Manoir"
+  const reserveEditorialRef = useRef<HTMLDivElement>(null);  // beat 2: "Bienvenue…" editorial
 
   // ── Cinematic backdrop: canvas frame-sequence (all viewports) ──────────────
   // The backdrop is a <canvas> driven by pre-extracted frame images, scrubbed by
