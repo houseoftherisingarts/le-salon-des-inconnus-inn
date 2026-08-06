@@ -52,7 +52,7 @@ export interface InspirosphereUserVideo {
     ownerUid: string;
     /** Display name shown on the card. */
     title: string;
-    /** One of INSPIROSPHERE_CATEGORIES — drives Conscious-mode filtering
+    /** One of INSPIROSPHERE_CATEGORIES, drives Conscious-mode filtering
      *  in the Voices tab once featured. */
     category: InspirosphereCategory;
     /** Path inside the default Storage bucket. NOT a download URL — we
