@@ -80,7 +80,7 @@ const LETTER: { fr: string; en: string }[] = [
     en: "Le Salon des Inconnus is a small, growing community rooted in a family inn. There are permanent members who live on site, and comet members who pass through, leave their mark, then move on. The inn is the business that makes our living; and in return, the community takes care of the inn, brings it to life, and gives it a soul.",
   },
   {
-    fr: "En ce moment, la place qui se libère, c'est vivre dans le Magic Bus, avec accès complet à l'auberge et au terrain. Tu es chez toi dans ton bus, tout en faisant partie de la vie de la maison.",
+    fr: "En ce moment, la place qui se libère, c'est vivre dans le Magic Bus, avec accès complet à l'auberge et au terrain. Vous êtes chez vous dans votre bus, tout en faisant partie de la vie de la maison.",
     en: "Right now, the spot opening up is to live in the Magic Bus, with full access to the inn and the land. You're home in your own bus, while being part of the life of the house.",
   },
   {
