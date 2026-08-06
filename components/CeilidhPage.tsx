@@ -3219,7 +3219,7 @@ const LoginModal: React.FC<{
             {titleLine}
           </p>
         </div>
-        {/* Body — Google button, divider, email */}
+        {/* Body: Google button, divider, email */}
         <div className="px-7 pt-6 pb-7 space-y-3">
           <button
             type="button"
