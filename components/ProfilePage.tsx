@@ -183,7 +183,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   // The roll happens in the rollWeeklyD20 Cloud Function: it draws the number,
   // enforces the 7-day cooldown, claims one code from the Firestore pool at
   // /d20Codes/{tier}/codes/*, and returns the result. This page never reads
-  // the pool — those are real Hostaway coupons, and the collection is
+  // the pool: those are real Hostaway coupons, and the collection is
   // admin-only in firestore.rules. We keep the cooldown maths here purely to
   // render the countdown; the server is the one that enforces it.
   const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;

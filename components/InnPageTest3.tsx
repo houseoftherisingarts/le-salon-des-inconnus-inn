@@ -352,7 +352,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
           </div>
         </section>
 
-        {/* ── 5-15. Test2-flow imports — heavy ones lazy-mounted, others wrapped in
+        {/* ── 5-15. Test2-flow imports: heavy ones lazy-mounted, others wrapped in
               content-visibility:auto so the browser skips rendering them when offscreen ── */}
 
         {/* Decorative animated header introducing the half-moon booking grid.

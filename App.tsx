@@ -271,7 +271,7 @@ const App: React.FC = () => {
   // App Loading State
   const [isLoading, setIsLoading] = useState(true);
 
-  // View State — initialise from current URL
+  // View State: initialise from current URL
   const [currentView, setCurrentView] = useState<ViewState>(() =>
     pathToView(window.location.pathname)
   );
