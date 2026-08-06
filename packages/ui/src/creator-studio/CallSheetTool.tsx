@@ -563,7 +563,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
                         <div className={(clean ? 'bg-[#f0ede6] border-neutral-300 text-neutral-700' : 'bg-white/5 border-white/10 text-neutral-300') + ' border px-4 py-3 mb-6 text-xs space-y-1'}>
                             {active.weather.map(w => {
                                 const wd = new Date(w.date + 'T12:00:00').toLocaleDateString(language === 'FR' ? 'fr-CA' : 'en-CA', { weekday: 'long' });
-                                return <div key={w.date}>🌤 <strong className="capitalize">{wd}</strong> — {w.summary}</div>;
+                                return <div key={w.date}>🌤 <strong className="capitalize">{wd}</strong>: {w.summary}</div>;
                             })}
                         </div>
                     )}
