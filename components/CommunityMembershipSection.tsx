@@ -337,7 +337,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
       <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-5 mb-6">
-            <Eyebrow>{t('Your home', 'Ton chez-toi')}</Eyebrow>
+            <Eyebrow>{t('Your home', 'Chez vous')}</Eyebrow>
             <span className="h-px flex-1" style={{ background: T.line }} />
           </div>
           <figure className="comm-busfig relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
