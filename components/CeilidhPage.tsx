@@ -1300,7 +1300,7 @@ const EventChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => 
             className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em]"
             style={{ fontSize: 'clamp(1.7rem, 3.6vw, 2.7rem)' }}
           >
-            {t('The Ceilidh, the Woofing — what is it?', 'Le Ceilidh, le Woofing — quoi que c’est que ceci ?')}
+            {t('The Ceilidh, the Woofing: what is it?', 'Le Ceilidh, le Woofing : quoi que c’est que ceci ?')}
           </h4>
           <div className="essay-rule mx-auto mt-6" aria-hidden />
         </div>
