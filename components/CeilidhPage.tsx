@@ -1712,7 +1712,7 @@ const TeamsChapterBody: React.FC<{
   // with code paths that only handle a single team (legend, "You're on…").
   const joinedTeamId: string | null = myTeams[0]?.teamId ?? null;
 
-  // Day picker state — per-team selections live as long as the card is
+  // Day picker state: per-team selections live as long as the card is
   // viewed, then commit on confirm. Resetting only when pickedId changes
   // means the user's edits aren't clobbered by Firestore stream updates.
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
