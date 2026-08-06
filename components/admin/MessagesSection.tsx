@@ -35,7 +35,7 @@ export const MessagesSection: React.FC<MessagesSectionProps> = ({ wwoofers, admi
     const [sending, setSending] = useState(false);
 
     // Subscribe to every wwoofer's messages subcollection. We only set up
-    // listeners when the wwoofer list changes — otherwise the same wwoofer
+    // listeners when the wwoofer list changes, otherwise the same wwoofer
     // gets dozens of listeners as state updates churn.
     useEffect(() => {
         if (!db) return;
