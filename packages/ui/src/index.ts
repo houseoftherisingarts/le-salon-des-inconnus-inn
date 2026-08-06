@@ -3,7 +3,7 @@
 export { ArtsPage } from './arts/ArtsPage';
 export type { ArtsPageProps } from './arts/ArtsPage';
 
-// Creator Studio — currently mounted from inside ArtsPage when rootView === 'ARTIST'.
+// Creator Studio: currently mounted from inside ArtsPage when rootView === 'ARTIST'.
 // Eventually houseoftherisingarts.com will mount this directly at `/`.
 export { CreatorStudio } from './creator-studio/CreatorStudioShell';
 export type { HubPhase } from './creator-studio/CreatorStudioShell';
