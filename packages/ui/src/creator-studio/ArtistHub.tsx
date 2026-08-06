@@ -3609,7 +3609,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                         <p className="text-sm text-neutral-300 max-w-2xl font-lato leading-relaxed mb-8">
                             {language === 'EN'
                                 ? "An AI assistant that scans Canadian government grant databases (Canada Council for the Arts, SODEC, Telefilm, CALQ, regional councils) and helps you draft applications. We're building it now; meanwhile, the curated links below get you started."
-                                : "Un assistant IA qui scanne les bases gouvernementales canadiennes (Conseil des arts du Canada, SODEC, Téléfilm, CALQ, conseils régionaux) et t'aide à rédiger les demandes. On le construit en ce moment ; pour l'instant, les liens curatés ci-dessous sont un bon départ."}
+                                : "Un assistant IA qui scanne les bases gouvernementales canadiennes (Conseil des arts du Canada, SODEC, Téléfilm, CALQ, conseils régionaux) et vous aide à rédiger les demandes. Nous le construisons en ce moment ; pour l'instant, les liens curatés ci-dessous sont un bon départ."}
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
