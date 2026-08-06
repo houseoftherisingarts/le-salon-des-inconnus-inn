@@ -236,7 +236,7 @@ const HOT_SEAT_FEEDBACK_TYPES: {
       icon: 'M21 12a8 8 0 0 1-12.8 6.4L3 20l1.6-5.2A8 8 0 1 1 21 12Z' },
 ];
 
-/** Base themes available to every member — same set as the top-right
+/** Base themes available to every member: same set as the top-right
  *  theme cycler, but listed in the Wardrobe as ordinary picks so the
  *  artist can lock in their preferred aesthetic and broadcast it on their
  *  public profile. Each entry's swatch is a representative color (or
