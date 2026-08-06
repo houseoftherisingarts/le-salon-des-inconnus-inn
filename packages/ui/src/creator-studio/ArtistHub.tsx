@@ -7484,7 +7484,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     >
                                         <p className="text-[10px] uppercase tracking-[0.3em] text-fuchsia-200/80 mb-1 font-cinzel">{language === 'EN' ? 'Foire (auction)' : 'Foire (enchère)'}</p>
                                         <p className="text-2xl font-serif italic text-fuchsia-100 mb-1">{language === 'EN' ? 'starts at 1 coin' : "départ : 1 pièce"}</p>
-                                        <p className="text-xs text-neutral-400 leading-relaxed">{language === 'EN' ? 'Members bid up. Accept the top bid whenever you like, or cancel to take it back.' : "Les membres enchérissent. Tu acceptes la meilleure offre quand tu veux, ou tu annules pour le récupérer."}</p>
+                                        <p className="text-xs text-neutral-400 leading-relaxed">{language === 'EN' ? 'Members bid up. Accept the top bid whenever you like, or cancel to take it back.' : "Les membres enchérissent. Vous acceptez la meilleure offre quand vous voulez, ou vous annulez pour le récupérer."}</p>
                                     </button>
                                 </div>
                             </div>
