@@ -52,7 +52,7 @@ const MASSAGE_PHOTO = '/media/massage/massage%20andre.jpg';
 const ESPACE_COVER_PHOTO = '/media/Auberge%20photos/jardins%20auberge.jpg';
 
 // 12 spaces shown in the L'Espace 3D deck.
-// FR text restored verbatim from the original SpacesGrid in InnPage.tsx — never paraphrase or
+// FR text restored verbatim from the original SpacesGrid in InnPage.tsx: never paraphrase or
 // re-translate from EN, the FR was the canonical copy and is what visitors will read most.
 const SPACES_DATA: Array<{ titleEn: string; titleFr: string; itemsEn: string[]; itemsFr: string[] }> = [
   { titleEn: 'Ger (Yurt)',     titleFr: 'Ger (Yourte)',    itemsEn: ['Room for 5', 'Wood stove'],                       itemsFr: ['Chambre pour 5', 'Foyer au Bois'] },
