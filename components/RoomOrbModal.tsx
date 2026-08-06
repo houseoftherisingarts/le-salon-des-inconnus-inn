@@ -637,7 +637,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-[1400px] m-auto grid md:grid-cols-[1fr_1.1fr] gap-6 md:gap-16 items-center"
       >
-        {/* LEFT — description + actions. On mobile it sits BELOW the orb (order-2)
+        {/* LEFT: description + actions. On mobile it sits BELOW the orb (order-2)
             and is trimmed to amenities → price → buttons. */}
         <div className="order-2 md:order-1 flex flex-col gap-5 md:gap-8 max-w-xl mx-auto md:mx-0 text-center md:text-left">
           <span className="hidden md:block font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em]">
