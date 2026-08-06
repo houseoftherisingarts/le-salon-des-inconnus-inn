@@ -104,7 +104,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
       className={`relative bg-[#050505] border-t border-[#c5a059]/15 px-6 md:px-12 lg:px-24 py-20 md:py-28 ${className}`}
       aria-labelledby={`seo-h1-${viewKey}`}
     >
-      {/* Visually hidden descriptive H1 — helps crawlers understand what the
+      {/* Visually hidden descriptive H1: helps crawlers understand what the
           page IS without disturbing the existing visual hero. */}
       <h1 id={`seo-h1-${viewKey}`} className="sr-only">
         {content.h1}
