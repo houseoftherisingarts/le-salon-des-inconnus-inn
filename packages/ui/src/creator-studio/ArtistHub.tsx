@@ -5011,7 +5011,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                  );
                                              }) : (
                                                  <div className="flex items-center justify-center h-full text-neutral-600 text-xs italic min-h-[120px]">
-                                                     {language === 'EN' ? 'No writings yet — start your first article.' : 'Aucun écrit pour l’instant — commencer votre premier article.'}
+                                                     {language === 'EN' ? 'No writings yet: start your first article.' : 'Aucun écrit pour l’instant : commencer votre premier article.'}
                                                  </div>
                                              )}
                                          </div>

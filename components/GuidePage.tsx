@@ -419,7 +419,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
                 </div>
               </div>
 
-              {/* VIP featured card — full width */}
+              {/* VIP featured card: full width */}
               {vipItem && <VipCard item={vipItem} language={language} onOpenBlog={openBlog} />}
 
               {/* Regular cards grid */}
