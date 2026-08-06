@@ -262,7 +262,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "La table", title_en: "The food",
               body_fr: "Mets bio de producteurs locaux, vins naturels, cidres artisanaux. La carte change avec les saisons et reflète ce que la région offre à un moment donné. Tout y est cohérent : du café au dessert.",
-              body_en: "Organic dishes from local producers, natural wines, artisanal ciders. The menu shifts with the seasons and mirrors what the region offers at any given moment. Everything is coherent — from the coffee to dessert." },
+              body_en: "Organic dishes from local producers, natural wines, artisanal ciders. The menu shifts with the seasons and mirrors what the region offers at any given moment. Everything is coherent: from the coffee to dessert." },
             { title_fr: "Les murs", title_en: "The walls",
               body_fr: "Les murs sont une galerie tournante. Les artistes locaux y exposent à tour de rôle, et c'est souvent là qu'on découvre, en avance, les voix qui comptent dans la région.",
               body_en: "The walls are a rotating gallery. Local artists exhibit in turn — and it's often where you discover, ahead of the curve, the voices that matter in the region." },
