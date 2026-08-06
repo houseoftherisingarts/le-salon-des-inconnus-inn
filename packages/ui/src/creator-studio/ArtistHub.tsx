@@ -7893,7 +7893,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <section>
                                     <FormSectionHeader n="01" en="Cover" fr="Couverture"
                                         helpEn="Sets the tone before the first sentence."
-                                        helpFr="Donne le ton avant la première phrase." />
+                                        helpFr="Donnez le ton avant la première phrase." />
                                     <div className={`relative h-48 rounded-lg overflow-hidden flex items-center justify-center bg-black/40 border-2 border-dashed ${theme === 'COMIC' ? 'border-black' : 'border-white/15'}`}>
                                         {draftArticle.coverUrl && (
                                             <img src={draftArticle.coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover opacity-90" />
