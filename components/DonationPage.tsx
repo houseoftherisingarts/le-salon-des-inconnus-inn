@@ -121,7 +121,7 @@ export const DonationPage: React.FC<Props> = ({
               title={t('Support the mission', 'Soutenir la mission')}
               blurb={t(
                 'Want to support the project? You can make a gift to the mission.',
-                "Envie de soutenir le projet ? Tu peux faire un don à la mission."
+                "Envie de soutenir le projet ? Vous pouvez faire un don à la mission."
               )}
               successMsg={t(
                 'Thank you for your gift to the mission. It matters more than you know.',
