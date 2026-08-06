@@ -2194,8 +2194,8 @@ const TeamsChapterBody: React.FC<{
         <ChatRoom
           path={`events/${EVENT_ID}/chats/general/messages`}
           title={t('General chat', 'Salon général')}
-          emptyEn="No messages yet — say hi."
-          emptyFr="Pas de message — dites bonjour."
+          emptyEn="No messages yet. Say hi."
+          emptyFr="Pas de message. Dites bonjour."
           language={language}
           user={user}
           onRequireAuth={() => { /* prompt handled at page level */ }}
