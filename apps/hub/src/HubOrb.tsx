@@ -165,7 +165,7 @@ export function HubOrb() {
           ))}
         </nav>
 
-        {/* Who we are — a short explainer under the selection. */}
+        {/* Who we are: a short explainer under the selection. */}
         <section className="hub-rise-late w-full max-w-3xl">
           <div
             className="mx-auto rounded-[20px] px-6 py-7 md:px-10 md:py-8 backdrop-blur-md text-center"

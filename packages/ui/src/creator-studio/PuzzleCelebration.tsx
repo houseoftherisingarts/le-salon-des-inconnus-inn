@@ -206,7 +206,7 @@ export const PuzzleCelebration: React.FC<Props> = ({
                     }}
                 />
 
-                {/* Diagonal shine sweep — uses a CSS animation so it kicks off
+                {/* Diagonal shine sweep: uses a CSS animation so it kicks off
                     cleanly the moment the overlay mounts. */}
                 <div
                     aria-hidden
