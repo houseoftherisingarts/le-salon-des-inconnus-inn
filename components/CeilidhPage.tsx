@@ -1028,7 +1028,7 @@ const ChapterFullscreen: React.FC<{
               'linear-gradient(180deg, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.2) 30%, rgba(5,5,5,0.7) 80%, #050505 100%)',
           }}
         />
-        {/* (X close moved out of the cover section — see fixed close button below the body) */}
+        {/* (X close moved out of the cover section: see fixed close button below the body) */}
         {/* Title block */}
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 h-full flex flex-col justify-end pb-12 md:pb-16">
           <div className="flex items-baseline gap-4 mb-4">
