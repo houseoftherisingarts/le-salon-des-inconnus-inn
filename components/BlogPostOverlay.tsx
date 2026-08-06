@@ -175,7 +175,7 @@ export const BlogPostOverlay: React.FC<BlogPostOverlayProps> = ({ item, language
       aria-modal="true"
       aria-label={item.title}
     >
-      {/* Backdrop — clicking dismisses */}
+      {/* Backdrop: clicking dismisses */}
       <button
         type="button"
         aria-label={t('Close', 'Fermer')}
