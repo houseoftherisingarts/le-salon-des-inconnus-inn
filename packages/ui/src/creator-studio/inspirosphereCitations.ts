@@ -8,7 +8,7 @@
  *
  * Adding a citation
  * ─────────────────
- * 1. Append a new entry at the end of the array. Order doesn't matter —
+ * 1. Append a new entry at the end of the array. Order doesn't matter:
  *    the orb picks at random.
  * 2. `text` is the citation as it should be displayed (keep punctuation,
  *    typographic quotes, line breaks if needed).
