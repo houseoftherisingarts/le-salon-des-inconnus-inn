@@ -135,7 +135,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
   const photoURL = memberProfile.photoURL || user.photoURL;
   const isAdmin = memberProfile.isAdmin;
 
-  // When logged in, the chip jumps straight to the dashboard (/profil) — the
+  // When logged in, the chip jumps straight to the dashboard (/profil): the
   // old dropdown's items now live inside the dashboard itself.
   const goToDashboard = () => onNavigate?.('MY_PROFILE');
 

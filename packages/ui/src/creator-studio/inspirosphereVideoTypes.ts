@@ -60,7 +60,7 @@ export interface InspirosphereUserVideo {
     storagePath: string;
     /** Optional poster image, also a Storage path. */
     posterPath?: string;
-    /** Approximate clip length (seconds). Best-effort — captured on upload
+    /** Approximate clip length (seconds). Best-effort, captured on upload
      *  if the browser exposes it via the loadedmetadata event. */
     durationSec?: number;
     /** Feature-request state. Default 'none' on upload. */
