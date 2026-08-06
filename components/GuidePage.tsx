@@ -200,7 +200,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
   // Default landing view = "coups de coeur". Other categories appear only
   // after the user clicks one in the menu.
   const [activeCategory, setActiveCategory] = useState<string>(COUPS_DE_COEUR_ID);
-  // The scrollable container ref — all scroll operations target this element
+  // The scrollable container ref, all scroll operations target this element
   const containerRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});

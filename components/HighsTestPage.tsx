@@ -766,7 +766,7 @@ export const HighsTestPage: React.FC<HighsTestPageProps> = ({ onEnterStudio, onB
                                 </p>
                             </HudLine>
 
-                            {/* 5. Portal title — fades in with the portal. */}
+                            {/* 5. Portal title: fades in with the portal. */}
                             <HudLine progressRef={progressRef} start={0.80} peak={0.90} end={1.05}
                                 className="top-[12%] left-1/2 -translate-x-1/2 text-center w-full max-w-2xl px-6">
                                 <p className="font-cinzel uppercase mb-3"
