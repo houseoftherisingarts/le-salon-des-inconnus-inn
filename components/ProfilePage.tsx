@@ -52,7 +52,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   const [registrations, setRegistrations] = useState<any[]>([]);
   const [registrationsLoading, setRegistrationsLoading] = useState(true);
   const [showTicket, setShowTicket] = useState<any>(null);
-  // ALL registrations across the event — needed by Mon Ceilidh dropdowns to
+  // ALL registrations across the event: needed by Mon Ceilidh dropdowns to
   // grey out full rooms / teams. Public read per Firestore rules.
   const [allRegistrations, setAllRegistrations] = useState<any[]>([]);
 
