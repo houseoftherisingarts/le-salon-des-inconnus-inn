@@ -195,7 +195,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
 
   const isSelf = user?.uid === targetUid;
 
-  // Artist Mind Palace (Super Profile) — surface a link to /{username} when
+  // Artist Mind Palace (Super Profile): surface a link to /{username} when
   // the viewed member has one published. Loaded alongside the rest of the
   // profile data; null when none exists.
   const [mindPalaceUsername, setMindPalaceUsername] = useState<string | null>(null);
