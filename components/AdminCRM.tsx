@@ -1108,7 +1108,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       onSignOut={handleSignOut}
       subtitle={audienceLabel}
     >
-      {/* ── Audience switcher — glass pill tabs. One dashboard, one lens at a
+      {/* ── Audience switcher: glass pill tabs. One dashboard, one lens at a
           time; replaces the former two-space chooser. The chosen audience is
           derived from the active section, so cross-links stay consistent. ── */}
       <div className="mb-8 flex flex-wrap gap-2">
