@@ -6112,8 +6112,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                             aria-live="polite"
                                                         >
                                                             {!newSubmission.title
-                                                                ? (language === 'EN' ? 'Add a title before stepping into the arena.' : "Ajoute un titre avant d'entrer dans l'arène.")
-                                                                : (language === 'EN' ? 'Pick at least one type of feedback to seek.' : 'Choisis au moins un type de retour souhaité.')}
+                                                                ? (language === 'EN' ? 'Add a title before stepping into the arena.' : "Ajoutez un titre avant d'entrer dans l'arène.")
+                                                                : (language === 'EN' ? 'Pick at least one type of feedback to seek.' : 'Choisissez au moins un type de retour souhaité.')}
                                                         </p>
                                                     )}
                                                 </div>
