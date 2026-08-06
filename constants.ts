@@ -542,7 +542,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Les fruits",
                 title: "Domaine Mont-Vézeau",
                 location: "Ripon",
-                description: "Vignoble et fraisière à Ripon — 9 000 pieds de vigne, framboises, deux hectares de fraises. Dégustations, autocueillette et pizzas au feu de bois sur la terrasse les fins de semaine.",
+                description: "Vignoble et fraisière à Ripon : 9 000 pieds de vigne, framboises, deux hectares de fraises. Dégustations, autocueillette et pizzas au feu de bois sur la terrasse les fins de semaine.",
                 link: "https://www.domainemontvezeau.com/",
                 image: "https://admin.tourismeoutaouais.com/api/photos/file/domaine-mont-vezeau-raisins-domaine-mont-vezeau-620x620.webp"
             },
