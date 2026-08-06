@@ -189,7 +189,7 @@ export const ChatRoom: React.FC<Props> = ({
                     })}
                 </aside>
 
-                {/* Active room — header + messages + composer */}
+                {/* Active room: header + messages + composer */}
                 <section className={`bg-black/40 border ${themeStyles.border} rounded-lg flex flex-col`}>
                     {/* Room header */}
                     <header className={`px-5 py-4 border-b ${themeStyles.border} flex items-center gap-4`}>
