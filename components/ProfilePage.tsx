@@ -1112,7 +1112,7 @@ const MyCeilidhPanel: React.FC<{
   const [savingTeam, setSavingTeam] = useState(false);
   const [savingRoom, setSavingRoom] = useState(false);
 
-  // Default work-days when joining a team — full Fri–Mon arc.
+  // Default work-days when joining a team: full Fri–Mon arc.
   const ALL_WORK_DAYS = ['2026-05-22', '2026-05-23', '2026-05-24', '2026-05-25'];
 
   const setTeam = async (teamId: string) => {
