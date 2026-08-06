@@ -5765,7 +5765,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             {/* ─── LIVE PREVIEW LEDGER ───────────────────────── */}
                                             <aside className="lg:sticky lg:top-4 self-start">
                                                 <div className={`relative overflow-hidden ${formStyles.container}`}>
-                                                    {/* Cover — falls back to a moody placeholder
+                                                    {/* Cover: falls back to a moody placeholder
                                                         with the discipline written across it so
                                                         the card never looks broken when empty. */}
                                                     <div className="relative aspect-[4/5] bg-black overflow-hidden">

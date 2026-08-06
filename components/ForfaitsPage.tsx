@@ -67,7 +67,7 @@ export const ForfaitsPage: React.FC<Props> = ({ onNavigate, language }) => {
       />
 
       <main className="relative">
-        {/* I — what the package adds */}
+        {/* I: what the package adds */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32">
           <SectionLabel numeral="I" label={t('What the package adds', 'Ce que le forfait ajoute')} />
           <div className="space-y-20 md:space-y-32">
