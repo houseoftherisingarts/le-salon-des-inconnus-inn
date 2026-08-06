@@ -58,7 +58,7 @@ export const PUZZLE_ARTWORKS: ReadonlyArray<PuzzleArtwork> = [
     },
 ];
 
-// Puzzle math — kept here so the UI and the completion check share a single
+// Puzzle math: kept here so the UI and the completion check share a single
 // source of truth. Adjust these if you re-tune the economy.
 export const PUZZLE_PIECES_TOTAL = 16;        // 4×4 grid
 export const PUZZLE_PIECES_PRE_REVEALED = 8;  // every new puzzle starts half done
