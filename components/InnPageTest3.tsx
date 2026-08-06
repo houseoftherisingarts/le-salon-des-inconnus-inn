@@ -1025,7 +1025,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         .lespace-mark:hover .lespace-keyline { width: 120px; }
         .lespace-mark[aria-expanded="true"] .lespace-keyline { width: 100% !important; }
 
-        /* L'Espace — atmospheric fog drift + ambient deck sway.
+        /* L'Espace: atmospheric fog drift + ambient deck sway.
            Sway is a single transform on the wrapper, not 12 per-card animations,
            so the GPU only composites one layer for the idle motion. */
         .espace-fog {
