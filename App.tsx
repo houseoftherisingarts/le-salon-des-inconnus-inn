@@ -738,7 +738,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 1e: Inn — CINEMATIC experiment (/reserve-cine). Same page as INN,
+        {/* VIEW 1e: Inn, CINEMATIC experiment (/reserve-cine). Same page as INN,
             but the cinematic clip is the REVERSED cut that ends on the full
             living-room shot, so it can be compared against the live forward cut. */}
         {currentView === 'INN_RESERVE_CINE' && (
