@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-// WebGL shaders — liquid glass bubble transition (extracted from InnPage hero).
+// WebGL shaders: liquid glass bubble transition (extracted from InnPage hero).
 // Same visual as the Inn page's hero. Pass an array of image URLs; the component
 // renders a full-bleed canvas that cycles through them every `intervalMs`.
 
