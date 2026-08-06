@@ -176,8 +176,8 @@ const TAB_META: Record<ViewerTab, {
     CHAT: {
         titleEn: 'Chat',
         titleFr: 'Discussion',
-        subtitleEn: 'Coming soon — direct messages between artists',
-        subtitleFr: 'Bientôt — messages directs entre artistes',
+        subtitleEn: 'Coming soon, direct messages between artists',
+        subtitleFr: 'Bientôt, messages directs entre artistes',
         fromColor: '#475569',
         toColor: '#1e293b',
         glowColor: '#94a3b8',
