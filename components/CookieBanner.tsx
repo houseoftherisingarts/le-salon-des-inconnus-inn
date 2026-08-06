@@ -137,7 +137,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
                         <span className="text-neutral-300">
                           {t('Analytics', 'Analytique')}
                         </span>{' '}
-                        — {t('Currently disabled. Not collected.', 'Désactivé actuellement. Non collecté.')}
+                        : {t('Currently disabled. Not collected.', 'Désactivé actuellement. Non collecté.')}
                       </div>
                     </div>
                   </div>
