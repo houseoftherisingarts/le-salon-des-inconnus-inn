@@ -43,7 +43,7 @@ type SuggestionsResult = {
   closestDates: { checkIn: string; checkOut: string } | null;
 };
 
-// Shimmer SFX — same synth recipe as the main hub orb (apps/hub/src/HubOrb.tsx).
+// Shimmer SFX: same synth recipe as the main hub orb (apps/hub/src/HubOrb.tsx).
 // Stacked sine partials in A major glide upward and bloom in over ~0.3s, with
 // a faint high-passed noise wash for sparkle. Kept inline so this module
 // stays a drop-in import for the inn page.
