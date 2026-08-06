@@ -599,7 +599,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                 <div className="border-t border-white/10 p-2">
                                     {!uid ? (
                                         <p className="text-[10px] text-neutral-500 px-2 py-1.5 italic">
-                                            {t('Sign in to save your board.', 'Connecte-toi pour sauvegarder.')}
+                                            {t('Sign in to save your board.', 'Connectez-vous pour sauvegarder.')}
                                         </p>
                                     ) : canCreateBoardFree ? (
                                         <button
