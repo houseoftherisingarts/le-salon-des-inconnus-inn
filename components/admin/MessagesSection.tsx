@@ -8,7 +8,7 @@ import type { WwooferProfile, WwooferMessage } from '../../types';
 // Admin inbox for wwoofer ↔ admin threads only. The Firestore rule for
 // /wwoofers/{uid}/messages allows the admin and the wwoofer to read; admin
 // writes have fromAdmin:true. Member-to-member /conversations are
-// intentionally excluded — admins shouldn't snoop on private DMs.
+// intentionally excluded: admins shouldn't snoop on private DMs.
 
 interface MessagesSectionProps {
     wwoofers: WwooferProfile[];
