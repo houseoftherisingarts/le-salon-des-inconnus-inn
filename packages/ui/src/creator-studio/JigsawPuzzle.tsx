@@ -129,7 +129,7 @@ function pieceEdgePath(
 
     // Edge length we're traversing
     const L = (side === 'top' || side === 'bottom') ? W : H;
-    // Bulb depth (perpendicular to the edge) — ~22% of the edge length.
+    // Bulb depth (perpendicular to the edge): ~22% of the edge length.
     const D = L * 0.22;
 
     // The bulb sits at the midpoint of the edge; necks are 35–65% along.
