@@ -210,7 +210,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                 if (cancelled || !snap.exists()) return;
                 const d = snap.data() as any;
                 // Migrate legacy `{ instagram, website, other }` shape if
-                // present — collect non-empty values into the new flat
+                // present: collect non-empty values into the new flat
                 // array. New writes go to `links: string[]`.
                 setAnswers(prev => {
                     let nextLinks: string[] = prev.links;
