@@ -44,7 +44,7 @@ const CallSheetPublicView = lazy(() => import('@inconnus/ui').then(m => ({ defau
 // slug that doesn't match any reserved route. Loaded lazily so we don't
 // pull three.js / @react-three onto every other page.
 const SuperProfilePage  = lazy(() => import('./components/SuperProfilePage').then(m => ({ default: m.SuperProfilePage })));
-// /highstest — premium cinematic intro to the Creator Studio. Test bed for
+// /highstest: premium cinematic intro to the Creator Studio. Test bed for
 // the "in your face $10k website" feel. Lazy-loaded; pulls three.js + Lenis.
 const HighsTestPage     = lazy(() => import('./components/HighsTestPage').then(m => ({ default: m.HighsTestPage })));
 
