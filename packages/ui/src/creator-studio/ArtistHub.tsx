@@ -4740,7 +4740,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                      <p className="text-[10px] text-neutral-500 leading-relaxed">
                                                          {language === 'EN'
                                                              ? `Every ${COINS_PER_PIECE} coins of activity reveals 1 piece. Each puzzle starts ${PUZZLE_PIECES_PRE_REVEALED}/${PUZZLE_PIECES_TOTAL} done; you earn the other ${PUZZLE_PIECES_TO_EARN}. Completing a puzzle adds it to your display case and grants a +${COINS_PER_COMPLETION_BONUS}-coin bonus to your spendable balance.`
-                                                             : `Toutes les ${COINS_PER_PIECE} pièces gagnées révèlent 1 morceau. Chaque casse-tête démarre à ${PUZZLE_PIECES_PRE_REVEALED}/${PUZZLE_PIECES_TOTAL} ; tu gagnes les ${PUZZLE_PIECES_TO_EARN} autres. Le compléter l'ajoute à ta vitrine et ajoute +${COINS_PER_COMPLETION_BONUS} pièces à ton solde.`}
+                                                             : `Toutes les ${COINS_PER_PIECE} pièces gagnées révèlent 1 morceau. Chaque casse-tête démarre à ${PUZZLE_PIECES_PRE_REVEALED}/${PUZZLE_PIECES_TOTAL} ; vous gagnez les ${PUZZLE_PIECES_TO_EARN} autres. Le compléter l'ajoute à votre vitrine et ajoute +${COINS_PER_COMPLETION_BONUS} pièces à votre solde.`}
                                                      </p>
 
                                                      {/* Admin-only test grant */}
