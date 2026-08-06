@@ -519,7 +519,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
     // credit get repeated in the controls section below for accessibility.
     const orbVisual = (
         <div className="relative w-full h-full flex items-center justify-center px-2 py-2">
-            {/* The orb itself — fills the viewer body's available height
+            {/* The orb itself, fills the viewer body's available height
                 with an aspect-ratio square so it stays circular as the
                 user resizes the viewer. */}
             <div
