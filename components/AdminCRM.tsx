@@ -558,7 +558,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     respondedByEmail?: string;
   };
   const [collabRequests, setCollabRequests] = useState<CollabRequestRow[]>([]);
-  // Per-row reply draft (keyed by collabRequest id) — lets the admin compose
+  // Per-row reply draft (keyed by collabRequest id): lets the admin compose
   // a response without losing what they typed when switching between rows.
   const [collabReplyDrafts, setCollabReplyDrafts] = useState<Record<string, string>>({});
 
