@@ -1,4 +1,4 @@
-// La Petite Monnaie — content + curated parcours data.
+// La Petite Monnaie: content + curated parcours data.
 // Single source of truth for the /petite-monnaie page: the intro copy, the
 // four ways to obtain pm, and the geographic route of merchants rendered as
 // 3D "pastilles" (same round gold orbs as the room cards).

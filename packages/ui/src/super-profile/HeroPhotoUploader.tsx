@@ -1,4 +1,4 @@
-// HeroPhotoUploader — uploads the artist's centerpiece cutout for the
+// HeroPhotoUploader: uploads the artist's centerpiece cutout for the
 // Super Profile page. Two modes:
 //
 //   1. Trust mode (default): the user uploads a PNG they've already removed

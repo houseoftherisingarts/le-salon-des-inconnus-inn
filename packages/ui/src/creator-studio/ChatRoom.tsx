@@ -20,7 +20,7 @@ export const CHAT_ROOMS: ReadonlyArray<{
 }> = [
     { id: 'general',     en: 'General',         fr: 'Général',           icon: '◆', blurbEn: 'Anything goes, say hi.',                           blurbFr: 'Tout est permis, dis bonjour.' },
     { id: 'studio',      en: 'Studio talk',     fr: 'Atelier',           icon: '✎', blurbEn: 'Work-in-progress, technique, gear.',                 blurbFr: 'Travaux en cours, technique, matériel.' },
-    { id: 'collabs',     en: 'Collaborations',  fr: 'Collaborations',    icon: '⊕', blurbEn: 'Looking to team up — or offering a hand.',           blurbFr: 'Envie de collaborer — ou prêt·e à donner un coup de main.' },
+    { id: 'collabs',     en: 'Collaborations',  fr: 'Collaborations',    icon: '⊕', blurbEn: 'Looking to team up, or offering a hand.',            blurbFr: 'Envie de collaborer, ou prêt·e à donner un coup de main.' },
     { id: 'critique',    en: 'Critique corner', fr: 'Coin critique',     icon: '♢', blurbEn: 'Soft feedback. Lighter than the Hot Seat.',          blurbFr: 'Retours doux. Moins intense que le Hot Seat.' },
     { id: 'resources',   en: 'Resources',       fr: 'Ressources',        icon: '※', blurbEn: 'Tools, books, grants, open calls.',                  blurbFr: 'Outils, livres, bourses, appels.' },
     { id: 'events',      en: 'Events & shows',  fr: 'Événements',        icon: '☆', blurbEn: 'What is coming up.',                                 blurbFr: 'Ce qui s\'en vient.' },
