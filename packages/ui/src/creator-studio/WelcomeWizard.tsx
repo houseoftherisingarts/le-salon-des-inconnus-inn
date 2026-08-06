@@ -786,7 +786,7 @@ const StepLinks: React.FC<StepLinksProps> = ({ language, values, onChange }) => 
             <p className="text-neutral-400 text-sm font-lato mb-8 max-w-lg mx-auto">
                 {t(
                     'All optional. They appear as social icons on your public profile.',
-                    'Tous optionnels. Ils apparaîtront en icônes sur ton profil public.',
+                    'Tous optionnels. Ils apparaîtront en icônes sur votre profil public.',
                 )}
             </p>
             <div className="space-y-3 max-w-md mx-auto text-left">
