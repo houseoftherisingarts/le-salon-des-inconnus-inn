@@ -707,7 +707,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  [data-studio-theme="BLUE_PUNK"] h1,
                  [data-studio-theme="BLUE_PUNK"] h2 { text-shadow: 0 0 12px rgba(34, 211, 238, 0.45); }
 
-                 /* CHROMATIC — Prism Flow: modern grotesk + clean sans. */
+                 /* CHROMATIC, Prism Flow: modern grotesk + clean sans. */
                  [data-studio-theme="CHROMATIC"] .font-cinzel,
                  [data-studio-theme="CHROMATIC"] .font-prata { font-family: 'Space Grotesk', system-ui, sans-serif !important; letter-spacing: -0.015em; font-weight: 600 !important; text-transform: none; }
                  [data-studio-theme="CHROMATIC"] .font-sans,
