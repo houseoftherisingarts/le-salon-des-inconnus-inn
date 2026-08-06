@@ -353,7 +353,7 @@ export const WelcomeWizard: React.FC<Props> = ({
             role="dialog"
             aria-modal="true"
         >
-            {/* Studio backdrop — mirrors the per-theme overlay rendered by
+            {/* Studio backdrop: mirrors the per-theme overlay rendered by
                 CreatorStudioShell so the wizard reads as the 'first room'
                 of the studio, not a separate aesthetic. The overlay reacts
                 live to answers.theme, so picking a theme on Step 10 gives
