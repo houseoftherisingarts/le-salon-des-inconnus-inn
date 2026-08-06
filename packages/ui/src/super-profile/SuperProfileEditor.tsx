@@ -112,7 +112,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
     const [saving, setSaving] = React.useState(false);
     const [savedAt, setSavedAt] = React.useState<number | null>(null);
     const [error, setError] = React.useState<string | null>(null);
-    // Username availability state — updated on debounced input.
+    // Username availability state: updated on debounced input.
     const [slugCheck, setSlugCheck] = React.useState<{ slug: string; status: 'idle' | 'checking' | 'ok' | 'taken' | 'invalid' | 'reserved' }>({
         slug: '', status: 'idle',
     });
