@@ -252,7 +252,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab, activeCategory]);
 
-    // Look up the current video across ALL pools, not just the active one —
+    // Look up the current video across ALL pools, not just the active one:
     // a Voices video selected in Conscious Mode should still resolve after
     // the user switches tabs (though the orb may then re-zap to the new
     // pool via the effect above).

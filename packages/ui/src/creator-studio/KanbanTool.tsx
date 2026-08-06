@@ -190,7 +190,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                     });
                 });
                 // Ensure exactly one default board exists. If the collection
-                // is empty, auto-create one — this is the user's "free" board.
+                // is empty, auto-create one: this is the user's "free" board.
                 if (list.length === 0) {
                     const seedId = 'default';
                     const seedDoc: BoardDoc = {
