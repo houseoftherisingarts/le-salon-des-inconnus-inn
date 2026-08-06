@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 
-// lesinconnus.com — the family selection page. One cinematic background (the
+// lesinconnus.com: the family selection page. One cinematic background (the
 // golden-hour drone shot of the domain), a welcome title, and three glass
 // image cards side by side on desktop. Click = go. Redesigned 2026-07-21 per
 // Alex: no orb, no blurb box, no confirm step; AI Studio bar (glass, rounded,
