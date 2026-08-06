@@ -27,7 +27,7 @@ export interface SuperProfileHeroPhoto {
      * 'auto-removed': we ran @imgly/background-removal client-side.
      */
     source: 'manual-png' | 'auto-removed';
-    /** Pixel width/height — used by templates to size the cutout proportionally. */
+    /** Pixel width/height: used by templates to size the cutout proportionally. */
     width?: number;
     height?: number;
 }
