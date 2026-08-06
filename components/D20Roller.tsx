@@ -317,7 +317,7 @@ interface D20RollerProps {
     outcomeNonce: number;
     /** Bump when the request failed, to stop the tumble. */
     errorNonce: number;
-    /** Pressed the button — the parent calls rollWeeklyD20. */
+    /** Pressed the button: the parent calls rollWeeklyD20. */
     onRequestRoll: () => void;
 }
 
