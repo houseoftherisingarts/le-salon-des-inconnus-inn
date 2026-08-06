@@ -1224,7 +1224,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [filterSubject, setFilterSubject] = useState("ALL");
     const [userTokens, setUserTokens] = useState(10);
 
-    // Coins / puzzle progression — independent from Time Tokens (which are
+    // Coins / puzzle progression: independent from Time Tokens (which are
     // hours-of-skill currency for the Exchange). Coins are awarded for site
     // activity; lifetimeCoins drives puzzle progression and never decreases.
     // Spending coins on skins reduces `coins` but leaves `lifetimeCoins`

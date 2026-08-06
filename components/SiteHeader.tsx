@@ -627,7 +627,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               onRedirectUserHandled={onRedirectUserHandled}
             />
 
-            {/* Hamburger — mobile only */}
+            {/* Hamburger: mobile only */}
             <button
               onClick={() => setMobileOpen(o => !o)}
               className="md:hidden flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-black/40 text-white/80 hover:text-white transition-colors"
