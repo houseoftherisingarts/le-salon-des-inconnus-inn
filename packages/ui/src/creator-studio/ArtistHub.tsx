@@ -7959,11 +7959,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </div>
                                 </section>
 
-                                {/* 03 — TAGS */}
+                                {/* 03. TAGS */}
                                 <section>
                                     <FormSectionHeader n="03" en="Tags" fr="Étiquettes"
-                                        helpEn="A few — for discovery, not SEO bait."
-                                        helpFr="Quelques-unes — pour la découverte, pas pour le SEO." />
+                                        helpEn="A few, for discovery, not SEO bait."
+                                        helpFr="Quelques-unes, pour la découverte, pas pour le SEO." />
                                     <input
                                         type="text"
                                         value={draftArticle.tags}

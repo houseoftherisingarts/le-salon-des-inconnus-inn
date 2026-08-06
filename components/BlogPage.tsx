@@ -322,7 +322,7 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
             </section>
           )}
 
-          {/* Empty state — before the first approved chronicle */}
+          {/* Empty state: before the first approved chronicle */}
           {posts !== null && (posts ?? []).length === 0 && (
             <section className="px-6 md:px-12 lg:px-20 py-16 border-t border-[#c5a059]/15">
               <p className="font-prata text-[#f3e5ab]" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', lineHeight: 1.2, maxWidth: '28ch' }}>
