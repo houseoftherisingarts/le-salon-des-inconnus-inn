@@ -215,7 +215,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'papineau': {
         _draft: true,
         intro_fr: "Le Manoir Papineau, à Montebello, est l'un des sites historiques les plus chargés du Québec : la résidence seigneuriale du 19e siècle de Louis-Joseph Papineau, leader des Patriotes, flanquée de quatre tours et entourée de jardins formels qui descendent vers l'Outaouais.",
-        intro_en: "The Manoir Papineau in Montebello is one of Quebec's most storied historical sites — the 19th-century seigneurial residence of Louis-Joseph Papineau, leader of the Patriotes, flanked by four towers and surrounded by formal gardens descending toward the Ottawa River.",
+        intro_en: "The Manoir Papineau in Montebello is one of Quebec's most storied historical sites: the 19th-century seigneurial residence of Louis-Joseph Papineau, leader of the Patriotes, flanked by four towers and surrounded by formal gardens descending toward the Ottawa River.",
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
               body_fr: "Lieu historique national administré par Parcs Canada, le manoir abrite des pièces d'époque, des collections, et raconte l'histoire d'une famille au cœur des bouleversements politiques du Bas-Canada.",
