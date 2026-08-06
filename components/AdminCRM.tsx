@@ -742,7 +742,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       },
       () => {},
     );
-    // Public roster presence — drives the promote/retirer toggle state.
+    // Public roster presence: drives the promote/retirer toggle state.
     const unsub11 = onSnapshot(
       query(collection(db, 'publicRoster')),
       snap => setPublicRosterUids(new Set(snap.docs.map(d => d.id))),
