@@ -3033,7 +3033,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 });
                 setRosterClaims(next);
             },
-            () => { /* swallow — empty state handles it */ },
+            () => { /* swallow: empty state handles it */ },
         );
         return () => unsub();
     }, []);
