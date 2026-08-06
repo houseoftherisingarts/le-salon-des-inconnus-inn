@@ -569,7 +569,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le safari québécois",
                 title: "Parc Omega",
                 location: "Montebello",
-                description: "Sanctuaire animalier de 2 200 acres — safari de 12 km parmi élans, bisons, loups, cerfs et ours noirs. En soirée, ONIRO propose un parcours piétonnier nocturne et immersif dans la forêt illuminée. Un lieu qui ne ressemble à aucun autre en Amérique du Nord.",
+                description: "Sanctuaire animalier de 2 200 acres : safari de 12 km parmi élans, bisons, loups, cerfs et ours noirs. En soirée, ONIRO propose un parcours piétonnier nocturne et immersif dans la forêt illuminée. Un lieu qui ne ressemble à aucun autre en Amérique du Nord.",
                 link: "https://www.parcomega.ca/",
                 image: "https://www.parcomega.ca/wp-content/uploads/2026/03/VE250623-0345-scaled.jpg",
                 isFavorite: true,

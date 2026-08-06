@@ -222,7 +222,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
                     100% { transform: translate(-50%, -52%) scale(1.10); opacity: 0.7; }
                 }
 
-                /* Honor reduced-motion preferences — keep the orb visible but
+                /* Honor reduced-motion preferences: keep the orb visible but
                    freeze the lancing sweep so it doesn't strobe. */
                 @media (prefers-reduced-motion: reduce) {
                     .orb-pop, .orb-breathe, .orb-glow-ring,

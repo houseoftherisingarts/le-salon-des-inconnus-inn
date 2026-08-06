@@ -5287,7 +5287,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 {artist.category}
                                             </span>
                                         </div>
-                                        {/* Claim status — pinned top-right of the image. */}
+                                        {/* Claim status: pinned top-right of the image. */}
                                         {claim && (
                                             <div className="absolute top-3 right-3">
                                                 <span className={`text-[9px] font-cinzel uppercase tracking-[0.3em] px-2 py-1 rounded backdrop-blur-md border ${isClaimedByMe ? 'bg-emerald-500/20 border-emerald-400/50 text-emerald-100' : 'bg-black/50 border-white/20 text-white/80'}`}>

@@ -1920,7 +1920,7 @@ const TeamsChapterBody: React.FC<{
           const projected = members.length;
           const full = projected >= team.maxMembers && !joined;
           // The card is the view-toggle. Only the explicit Join button
-          // commits a registration write — clicking the card no longer
+          // commits a registration write: clicking the card no longer
           // changes team membership.
           return (
             <div
