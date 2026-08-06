@@ -7803,7 +7803,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
                                     {language === 'EN'
                                         ? 'Pick a friend below. They\'ll receive a pending offer; if they decline, the puzzle returns to you automatically.'
-                                        : "Choisis un·e ami·e ci-dessous. Il·elle recevra une offre ; si refusée, le casse-tête te revient automatiquement."}
+                                        : "Choisissez un·e ami·e ci-dessous. Il·elle recevra une offre ; si refusée, le casse-tête vous revient automatiquement."}
                                 </p>
 
                                 {acceptedFriends.length === 0 ? (
