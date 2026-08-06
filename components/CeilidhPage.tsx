@@ -403,8 +403,8 @@ export const CeilidhPage: React.FC<Props> = ({
             style={{ letterSpacing: '0.08em', fontSize: 'clamp(0.85rem, 1.05vw, 1rem)', textShadow: '0 2px 12px rgba(0,0,0,0.85)' }}
           >
             {t(
-              'Come for one day or all five — arrival and departure are entirely flexible. You don’t have to stay the whole week.',
-              "Venez pour une journée ou pour les cinq — l’arrivée et le départ sont entièrement flexibles. Pas besoin de rester toute la semaine.",
+              'Come for one day or all five: arrival and departure are entirely flexible. You don’t have to stay the whole week.',
+              "Venez pour une journée ou pour les cinq : l’arrivée et le départ sont entièrement flexibles. Pas besoin de rester toute la semaine.",
             )}
           </p>
           <CeilidhCountdown language={language} />
