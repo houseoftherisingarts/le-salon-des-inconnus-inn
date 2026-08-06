@@ -99,7 +99,7 @@ export const DonationPage: React.FC<Props> = ({
             </p>
           </div>
 
-          {/* Where the gift goes — short editorial ledger */}
+          {/* Where the gift goes: short editorial ledger */}
           <dl className="max-w-4xl mt-12 grid grid-cols-1 sm:grid-cols-3 gap-px" style={{ background: 'rgba(197,160,89,0.18)', border: '1px solid rgba(197,160,89,0.18)', borderRadius: '15px', overflow: 'hidden' }}>
             {[
               { k: t('The house', 'La maison'), v: t('Upkeep of the manor and the grounds.', "L'entretien du manoir et du terrain.") },
