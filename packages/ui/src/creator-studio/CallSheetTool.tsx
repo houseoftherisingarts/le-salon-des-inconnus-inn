@@ -368,7 +368,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
             await navigator.clipboard.writeText(shareLink());
             flash(t('Link copied, sharing on', 'Lien copié, partage activé'));
         } catch {
-            flash(t('Sharing on — copy from address bar', 'Partage activé — copie le lien'));
+            flash(t('Sharing on, copy from address bar', 'Partage activé, copie le lien'));
         }
     }, [active, uid, patchActive, shareLink, flash, t]);
 
