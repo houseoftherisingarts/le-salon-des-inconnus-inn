@@ -77,7 +77,7 @@ export const BottomDock: React.FC<{ config: SuperProfileConfig }> = ({ config })
 );
 
 /**
- * Bottom-right dock — work counter / hint. Encourages the viewer to look at
+ * Bottom-right dock: work counter / hint. Encourages the viewer to look at
  * the back layer when the template has scrollable / browsable works.
  */
 export const WorkCountChip: React.FC<{ count: number; label?: string }> = ({ count, label = 'works' }) => {

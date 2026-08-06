@@ -3096,7 +3096,7 @@ const PracticalChapterBody: React.FC<{
 // click a locked chapter while signed out. Wires the "Continuer avec Google"
 // button to a real Firebase signInWithPopup flow (with redirect fallback)
 // so chapters that touch Firestore (team picker, room picker, kanban) can
-// actually authenticate the user. Email path is still aspirational — for
+// actually authenticate the user. Email path is still aspirational: for
 // now it falls back to the same Google flow.
 // ─────────────────────────────────────────────────────────────────────────────
 

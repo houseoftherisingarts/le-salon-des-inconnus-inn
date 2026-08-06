@@ -323,7 +323,7 @@ export const JigsawPuzzle: React.FC<Props> = ({
                     );
                 })}
 
-                {/* Hidden pieces — faint outline silhouettes so the user can
+                {/* Hidden pieces: faint outline silhouettes so the user can
                     see the shape of what they're working toward. */}
                 {allPieces.map(p => {
                     const isRevealed = revealedSet.has(p.idx);
