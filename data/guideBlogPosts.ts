@@ -575,7 +575,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'omega': {
         _draft: true,
         intro_fr: "Le Parc Omega, à Montebello, n'est pas un zoo : c'est un sanctuaire animalier de 2 200 acres traversé par un parcours de 12 kilomètres en voiture, où vous croisez élans, bisons, loups, cerfs et ours noirs dans un environnement qui ressemble à leur habitat naturel. C'est, sans exagération, un des lieux les plus singuliers d'Amérique du Nord.",
-        intro_en: "Parc Omega in Montebello isn't a zoo — it's a 2,200-acre animal sanctuary crossed by a 12-kilometre drive-through circuit where you encounter elk, bison, wolves, deer, and black bears in an environment that resembles their natural habitat. Without exaggeration, one of the most singular places in North America.",
+        intro_en: "Parc Omega in Montebello isn't a zoo: it's a 2,200-acre animal sanctuary crossed by a 12-kilometre drive-through circuit where you encounter elk, bison, wolves, deer, and black bears in an environment that resembles their natural habitat. Without exaggeration, one of the most singular places in North America.",
         sections: [
             { title_fr: "Le parcours en voiture", title_en: "The drive-through",
               body_fr: "Vous restez dans votre voiture, et les animaux viennent à vous. Élans qui s'approchent à hauteur de fenêtre, bisons qui traversent la route, loups visibles depuis des plateformes sécurisées. Le parcours dure environ 2 heures.",

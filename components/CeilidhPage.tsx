@@ -3138,7 +3138,7 @@ const LoginModal: React.FC<{
       if (popupBlocked) {
         try {
           await signInWithRedirect(auth, provider);
-          // signInWithRedirect navigates away — we won't reach this line.
+          // signInWithRedirect navigates away: we won't reach this line.
           return;
         } catch (re: any) {
           setError(re?.message ?? t('Sign-in error', 'Erreur de connexion'));

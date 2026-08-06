@@ -5429,7 +5429,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             </div>
                         )}
 
-                        {/* Collab forms — Residency / Event / Project share the
+                        {/* Collab forms: Residency / Event / Project share the
                             same skeleton with type-specific sections. Editorial
                             header per type so the form announces what it is. */}
                         {collabForm && (() => {
