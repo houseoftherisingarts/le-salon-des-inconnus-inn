@@ -1234,7 +1234,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     const [puzzlesCompleted, setPuzzlesCompleted] = useState(0);
     const [currentPuzzleId, setCurrentPuzzleId] = useState<string | null>(null);
     const [displayCase, setDisplayCase] = useState<string[]>([]);
-    // Live puzzle DOM wrapper — used to snapshot the source rect at the moment
+    // Live puzzle DOM wrapper: used to snapshot the source rect at the moment
     // a puzzle completes, so the celebration overlay can fly from here to the
     // matching display-case tile.
     const puzzleSlotRef = useRef<HTMLDivElement | null>(null);

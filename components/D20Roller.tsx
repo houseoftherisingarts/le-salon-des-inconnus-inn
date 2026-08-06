@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 // Tabletop-feel D20 roller. Uses Three.js / R3F for the 3D scene. No physics
-// engine — just a tumble-and-slerp toward a target rotation, which is enough
+// engine: just a tumble-and-slerp toward a target rotation, which is enough
 // to feel like a real dice and keeps the bundle modest.
 //
 // The number is NOT drawn here. The rollWeeklyD20 Cloud Function decides it,
