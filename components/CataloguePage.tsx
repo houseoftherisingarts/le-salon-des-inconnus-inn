@@ -280,7 +280,7 @@ export const CataloguePage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* II — la grille */}
+        {/* II : la grille */}
         <section className="px-6 md:px-14 lg:px-24 py-16 md:py-24">
           <SectionLabel numeral="II" label={t('The works', 'Les œuvres')} />
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
