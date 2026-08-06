@@ -89,7 +89,7 @@ interface InspirosphereProps {
 // ─── Embed helpers ────────────────────────────────────────────────────────
 /** Convert a source URL into a safe embed URL. Returns null if unrecognized. */
 function getEmbedUrl(url: string): string | null {
-    // YouTube — watch / shorts / youtu.be / embed
+    // YouTube: watch / shorts / youtu.be / embed
     let m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([\w-]+)/);
     if (m) {
         return `https://www.youtube.com/embed/${m[1]}?autoplay=1&mute=1&controls=1&playsinline=1&rel=0&modestbranding=1`;
