@@ -4818,7 +4818,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                      );
                                  })()}
 
-                                 {/* Wardrobe — base themes (always available) + purchased
+                                 {/* Wardrobe: base themes (always available) + purchased
                                      cosmetic skins. Selecting a base theme persists
                                      activeTheme on the user's profile so visiting
                                      members see it on the public profile. The cosmetic
