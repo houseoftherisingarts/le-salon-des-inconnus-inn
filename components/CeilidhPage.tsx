@@ -437,7 +437,7 @@ export const CeilidhPage: React.FC<Props> = ({
       {/* ── LIVRET: chapter stack ──────────────────────────────────────── */}
       <section id="livret" className="cv-auto relative bg-[#050505] py-20 md:py-28 px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
-          {/* Editorial header — restored to the centred full-width treatment.
+          {/* Editorial header: restored to the centred full-width treatment.
               Progress lives in the persistent bottom dock so the title doesn't have to share. */}
           <div className="text-center mb-12 md:mb-20">
             <span className="font-cinzel text-[#c5a059] text-[10px] md:text-xs uppercase tracking-[0.55em] block mb-4">
