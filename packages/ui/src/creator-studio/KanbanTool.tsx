@@ -730,7 +730,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                     )}
                 </div>
 
-                {/* Goal bar — slimmer, less visually heavy */}
+                {/* Goal bar: slimmer, less visually heavy */}
                 <div className="px-5 py-3 border-t border-white/5 flex items-center gap-4">
                     <div className="flex items-center gap-1.5">
                         <button onClick={() => cyclePeriod('prev')} className="w-7 h-7 flex items-center justify-center rounded-full border border-white/10 hover:border-white/40 text-neutral-400 hover:text-white transition-colors text-xs">‹</button>
