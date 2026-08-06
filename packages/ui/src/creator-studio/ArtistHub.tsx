@@ -5477,7 +5477,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 <ul className="space-y-3 text-sm text-neutral-300 font-lato leading-relaxed">
                                                     <li className="flex gap-3">
                                                         <span className="font-mono text-[#d4af37] tabular-nums">01</span>
-                                                        <span><strong className="text-white">{language === 'EN' ? 'Letter of intent:' : "Lettre d'intention :"}</strong> {language === 'EN' ? 'a clear statement of what you intend to create or explore.' : "un énoncé clair de ce que tu comptes créer ou explorer."}</span>
+                                                        <span><strong className="text-white">{language === 'EN' ? 'Letter of intent:' : "Lettre d'intention :"}</strong> {language === 'EN' ? 'a clear statement of what you intend to create or explore.' : "un énoncé clair de ce que vous comptez créer ou explorer."}</span>
                                                     </li>
                                                     <li className="flex gap-3">
                                                         <span className="font-mono text-[#d4af37] tabular-nums">02</span>
