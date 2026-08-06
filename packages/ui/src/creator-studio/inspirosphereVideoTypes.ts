@@ -89,7 +89,7 @@ export interface InspirosphereCuratedVideo {
     storagePath: string;
     posterPath?: string;
     durationSec?: number;
-    /** Admin email that uploaded — auditing. */
+    /** Admin email that uploaded, for auditing. */
     uploadedBy: string;
     publishedAt: any;
     /** Lets the admin reorder Featured without re-uploading; the orb

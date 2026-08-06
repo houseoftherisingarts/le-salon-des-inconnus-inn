@@ -7220,7 +7220,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             />
 
                             <div className="space-y-7">
-                                {/* 01 — TYPE — visual cards */}
+                                {/* 01. TYPE: visual cards */}
                                 <section>
                                     <FormSectionHeader n="01" en="Contract type" fr="Type de contrat"
                                         helpEn="Are you the one asking, or the one offering?"
