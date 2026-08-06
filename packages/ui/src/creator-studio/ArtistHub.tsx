@@ -7614,7 +7614,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     {language === 'EN' ? 'Featured artwork' : 'Œuvre en vedette'}
                                 </p>
                                 <h3 className={`text-2xl ${pageTitleClass}`}>
-                                    {language === 'EN' ? 'Pick from your roster' : 'Choisis dans ton répertoire'}
+                                    {language === 'EN' ? 'Pick from your roster' : 'Choisissez dans votre répertoire'}
                                 </h3>
                                 <p className="text-xs text-neutral-400 mt-2 max-w-md">
                                     {language === 'EN'
