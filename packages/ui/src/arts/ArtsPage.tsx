@@ -28,7 +28,7 @@ export interface ArtsPageProps {
   // Fires whenever the active sub-view (Hub / Buyer / Creator / etc.) changes.
   // The wrapping app uses this to mirror sub-views to the URL bar so
   // links like /cafe deep-link straight into a section. Does not fire on
-  // initial mount — the URL is the source of truth there.
+  // initial mount: the URL is the source of truth there.
   onNodeChange?: (nodeId: string) => void;
 }
 

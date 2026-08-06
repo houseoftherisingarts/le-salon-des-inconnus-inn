@@ -278,7 +278,7 @@ export const CeilidhPage: React.FC<Props> = ({
   // Click intent from a chapter card OR a dock dot. Centralises the auth gate.
   const handleChapterIntent = (id: string) => {
     if (!isLoggedIn) {
-      // Any intent — including locked — triggers login the first time.
+      // Any intent, including locked, triggers login the first time.
       setPendingId(id);
       return;
     }
