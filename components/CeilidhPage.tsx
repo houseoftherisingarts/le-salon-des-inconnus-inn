@@ -2672,7 +2672,7 @@ const LodgingChapterBody: React.FC<{
 }> = ({ language, registrations, onViewProfile }) => {
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
   // viewingId = the room the user is currently inspecting (local state).
-  // Confirmed bed lives in Firestore on their registration doc — derived
+  // Confirmed bed lives in Firestore on their registration doc: derived
   // below as `joinedRoomId`. Same view-vs-commit split as the team picker.
   const [viewingId, setViewingId] = useState<string | null>(null);
 
