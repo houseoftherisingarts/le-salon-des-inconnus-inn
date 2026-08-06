@@ -2276,7 +2276,7 @@ const TeamsChapterBody: React.FC<{
                 `You're on the ${TEAMS.find((x) => x.id === pickedId)?.nameEn} team.`,
                 `Vous êtes dans la ${TEAMS.find((x) => x.id === pickedId)?.nameFr}.`,
               )
-            : t('No team picked yet — tap one above.', 'Aucune équipe choisie — touchez-en une ci-dessus.')}
+            : t('No team picked yet. Tap one above.', 'Aucune équipe choisie. Touchez-en une ci-dessus.')}
         </p>
         {pickedId && (
           <button

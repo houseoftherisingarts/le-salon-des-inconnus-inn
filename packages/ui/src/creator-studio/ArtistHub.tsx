@@ -4304,7 +4304,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                          </svg>
                                      </button>
 
-                                     {/* Delete current image — only when one is shown. */}
+                                     {/* Delete current image: only when one is shown. */}
                                      {galleryImages.length > 0 && (
                                          <button
                                             onClick={(e) => { e.stopPropagation(); handleDeleteGalleryImage(galleryImages[currentArtIndex]); }}
