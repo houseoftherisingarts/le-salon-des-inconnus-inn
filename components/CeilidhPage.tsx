@@ -2497,7 +2497,7 @@ export const ChatRoom: React.FC<{
   );
 };
 
-// ─── TeamMembersPanel — fellow registered teammates + their work-days ──────
+// ─── TeamMembersPanel: fellow registered teammates + their work-days ──────
 const WORK_DAYS_TEST2 = [
   { id: '2026-05-22', en: 'Fri', fr: 'Ven' },
   { id: '2026-05-23', en: 'Sat', fr: 'Sam' },
