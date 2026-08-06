@@ -311,7 +311,7 @@ export const KanbanBoard: React.FC<{
         order: tasks.length,
         createdBy: user.uid,
         createdByEmail: user.email ?? '',
-        // Stamp the author's identity on the task — we can render a real avatar
+        // Stamp the author's identity on the task: we can render a real avatar
         // on the card without needing a separate users-by-uid lookup at read time.
         createdByName:  user.displayName ?? '',
         createdByPhoto: user.photoURL ?? '',
