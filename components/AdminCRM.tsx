@@ -1436,7 +1436,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                 <span className="text-center" title="Featured in the Café">Café</span>
                 <span className="text-center" title="Featured in 'Nos Artistes' (Mécène)">Mécène</span>
                 <span className="text-center" title="Featured in Creator Studio">Studio</span>
-                <span className="text-center" title="Maestro tier — unlocks /{username} Super Profile page">Maestro</span>
+                <span className="text-center" title="Maestro tier: unlocks /{username} Super Profile page">Maestro</span>
               </div>
               {members
                 .filter(m => {
