@@ -63,7 +63,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         onWwoofing={() => onNavigate('WWOOFING')}
       />
 
-      {/* ── SECTION 2 — full-bleed photo with dark gradient overlay (text on left) ── */}
+      {/* ── SECTION 2: full-bleed photo with dark gradient overlay (text on left) ── */}
       <section className="relative min-h-screen overflow-hidden bg-[#050505]">
         {/* Full-bleed photo bleeds across the entire viewport, no hard column edge */}
         <img
