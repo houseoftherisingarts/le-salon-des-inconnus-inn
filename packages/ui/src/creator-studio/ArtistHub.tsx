@@ -3821,7 +3821,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             />
                         </div>
 
-                        {/* City + Country — country code drives the flag emoji
+                        {/* City + Country: country code drives the flag emoji
                             shown on the public profile + contextual viewer. */}
                         <div className="grid grid-cols-2 gap-3">
                             <input
