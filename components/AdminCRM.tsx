@@ -1176,7 +1176,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           </div>
         )}
 
-        {/* ── Tableau de bord — overview tiles ── */}
+        {/* ── Tableau de bord : overview tiles ── */}
         {tab === 'dashboard' && (
           <div className="space-y-8">
             <p className="text-neutral-500 text-sm font-lato max-w-2xl">
