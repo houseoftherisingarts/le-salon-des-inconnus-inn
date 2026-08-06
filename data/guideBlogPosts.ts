@@ -113,7 +113,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         intro_en: "Lac-des-Plages lives up to its name: a long lake fringed with quiet beaches, a village with a retro charm, and that particular quality of light you only find tucked into the Laurentians. It's a spot the locals keep mostly to themselves.",
         sections: [
             { title_fr: "Le lieu", title_en: "The place",
-              body_fr: "Cherchez les accès plus discrets — quelques rampes de mise à l'eau, des plages publiques moins fréquentées, et des sentiers qui longent l'eau. Le village offre dépanneur, restaurant et ce sentiment rare d'être hors du temps.",
+              body_fr: "Cherchez les accès plus discrets : quelques rampes de mise à l'eau, des plages publiques moins fréquentées, et des sentiers qui longent l'eau. Le village offre dépanneur, restaurant et ce sentiment rare d'être hors du temps.",
               body_en: "Look for the quieter access points — a few boat ramps, lesser-known public beaches, and paths along the water. The village offers a corner store, a restaurant, and that rare feeling of being outside of time." },
             { title_fr: "Quoi y faire", title_en: "What to do there",
               body_fr: "Baignade, pêche, kayak, pique-nique. C'est aussi un excellent point de chute pour des balades à vélo dans les rangs environnants. L'hiver, le lac gèle solidement et accueille pêcheurs et patineurs.",

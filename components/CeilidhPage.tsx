@@ -1271,7 +1271,7 @@ const EventChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => 
         {[
           { en: 'Live Together',  fr: 'Vivre Ensemble',    body_en: 'Five days of meals, music, and quiet evenings around the fire.', body_fr: "Cinq jours de repas, de musique et de soirées tranquilles autour du feu." },
           { en: 'Make Together',  fr: 'Créer Ensemble',    body_en: 'Eight teams care for the land, the kitchen, the art.',         body_fr: "Huit équipes prennent soin de la terre, de la cuisine, de l'art." },
-          { en: 'Show Together',  fr: 'Partager Ensemble', body_en: 'Performances each night — open mic, theatre, music.',          body_fr: 'Spectacles chaque soir — scène ouverte, théâtre, musique.' },
+          { en: 'Show Together',  fr: 'Partager Ensemble', body_en: 'Performances each night: open mic, theatre, music.',          body_fr: 'Spectacles chaque soir : scène ouverte, théâtre, musique.' },
         ].map((p, i) => (
           <div
             key={i}

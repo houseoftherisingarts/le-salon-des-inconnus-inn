@@ -2885,7 +2885,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             { merge: true },
                         );
                     }
-                } catch { /* permission denied if rules forbid — accept and move on */ }
+                } catch { /* permission denied if rules forbid: accept and move on */ }
             }
             await updateDoc(doc(db, 'marketListings', listing.id), {
                 currentBid: amount,
