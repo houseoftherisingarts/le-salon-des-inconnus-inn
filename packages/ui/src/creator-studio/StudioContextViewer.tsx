@@ -279,7 +279,7 @@ const ProfileBlock: React.FC<{
                 }}
             />
 
-            {/* Tall-oval avatar — narrow vertical capsule (aspect ~5:9).
+            {/* Tall-oval avatar: narrow vertical capsule (aspect ~5:9).
                 rounded-full on a non-square element draws an ellipse. Click
                 to upload a new picture (members only). */}
             <div className="relative w-36 h-64 md:w-40 md:h-72 shrink-0">

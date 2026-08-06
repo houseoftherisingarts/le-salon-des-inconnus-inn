@@ -205,7 +205,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
          }
      };
 
-     // Sign out — firebase Auth instance is shared with the rest of the app
+     // Sign out: firebase Auth instance is shared with the rest of the app
      // so the studio's currentUser flips to null on success and the gate
      // re-appears. Wrapped in try/catch since signOut can throw on stale
      // tokens (e.g. when the network is flaky); we surface nothing in that
