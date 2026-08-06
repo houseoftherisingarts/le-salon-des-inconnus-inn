@@ -1091,7 +1091,7 @@ const ChapterFullscreen: React.FC<{
             onNavigate={onNavigate}
           />
         )}
-        {/* End-of-chapter nav — primary "continue" button drives flow through the
+        {/* End-of-chapter nav: primary "continue" button drives flow through the
             booklet; secondary "close" returns to the stack. On the last chapter
             the next button is hidden and only close remains. */}
         <div className="mt-20 md:mt-24 flex flex-col items-center gap-6">
