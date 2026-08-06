@@ -1,4 +1,4 @@
-// PhotoTemplate — photographer's Mind Palace.
+// PhotoTemplate: photographer's Mind Palace.
 //
 // Three layers, back-to-front:
 //   1. Works mosaic, full-bleed, with the RevealWaveImage shader playing
