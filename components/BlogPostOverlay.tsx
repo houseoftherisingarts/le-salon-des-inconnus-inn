@@ -246,7 +246,7 @@ export const BlogPostOverlay: React.FC<BlogPostOverlayProps> = ({ item, language
           </div>
         </header>
 
-        {/* Top CTA — visit the external site */}
+        {/* Top CTA: visit the external site */}
         {item.link && (
           <div className="px-6 md:px-10 pt-6 pb-2">
             <a

@@ -6072,7 +6072,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     />
                                                 </section>
 
-                                                {/* 08 — CONTENT NOTE */}
+                                                {/* 08. CONTENT NOTE */}
                                                 <section>
                                                     <SectionHeader n="08" en="Content note" fr="Avertissement"
                                                         helpEn="Optional flag for heavy themes, nudity, language."
