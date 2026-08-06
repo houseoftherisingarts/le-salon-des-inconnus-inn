@@ -6487,7 +6487,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     </div>
                 )}
 
-                {/* MARKET — three sub-views: Time / Resources / Foire */}
+                {/* MARKET (three sub-views: Time / Resources / Foire) */}
                 {activeTab === 'MARKET' && (
                     <div className="max-w-7xl mx-auto">
                         {/* Sub-view switcher — sits at the top of the Marché.
