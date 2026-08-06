@@ -1,4 +1,4 @@
-// PetiteMonnaieParcours — cinematic scroll-driven 3D flythrough of the Petite-Nation.
+// PetiteMonnaieParcours: cinematic scroll-driven 3D flythrough of the Petite-Nation.
 //
 // A tall section holds a sticky full-screen viewport. GSAP ScrollTrigger scrubs a
 // 0→1 progress into progressRef; an rAF loop turns that into a virtual camera that
