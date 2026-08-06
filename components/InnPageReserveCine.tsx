@@ -158,7 +158,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
   }, []);
 
   // Preload the cinematic frames once; redraw the current frame as each image
-  // arrives so there's no blank flash. Frames are ~115KB each (5.6MB total) —
+  // arrives so there's no blank flash. Frames are ~115KB each (5.6MB total),
   // lighter than the old 10MB clip, and they drive the scrub on every viewport.
   useEffect(() => {
     const imgs: HTMLImageElement[] = [];
