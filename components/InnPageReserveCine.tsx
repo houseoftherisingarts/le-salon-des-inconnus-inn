@@ -1208,7 +1208,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
         }
         @keyframes roomsRuleGrow { to { width: 80px; } }
 
-        /* Hero — slow Ken Burns zoom on the cycler. Lives on an inner wrapper so it composes
+        /* Hero: slow Ken Burns zoom on the cycler. Lives on an inner wrapper so it composes
            with the scroll-driven transform on heroPhotoRef without overwriting it. */
         .hero3-kenburns { animation: hero3KenBurns 22s ease-in-out infinite alternate; }
         @keyframes hero3KenBurns {

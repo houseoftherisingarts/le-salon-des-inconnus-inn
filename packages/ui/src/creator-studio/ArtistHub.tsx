@@ -3174,7 +3174,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    /** Decline a gift — sender will see this and auto-reclaim. */
+    /** Decline a gift: sender will see this and auto-reclaim. */
     const declinePuzzleGift = async (g: PuzzleGift) => {
         if (!currentUser?.uid || g.toUid !== currentUser.uid) return;
         const db = studioFirestore(); if (!db) return;
