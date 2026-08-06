@@ -521,7 +521,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
             {/* All viewports: frame-image scrub on a canvas. Reliable on every
                 browser (no video.currentTime decode-on-seek, no Safari black
                 first frame), and far lighter than streaming + seeking a 10MB
-                clip — so it never thrashes the GPU/compositor the way the old
+                clip, so it never thrashes the GPU/compositor the way the old
                 video scrub did. The poster behind covers any pre-load flash. */}
             <canvas
               ref={reserveCanvasRef}

@@ -894,7 +894,7 @@ const StatusSeal: React.FC<{ status: ChapterStatus; language: 'EN' | 'FR' }> = (
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ProgressDock — persistent bottom strip with 5 seals
+// ProgressDock: persistent bottom strip with 5 seals
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ProgressDock: React.FC<{
