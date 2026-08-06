@@ -60,7 +60,7 @@ export interface InspirosphereVideo {
     title: string;
     /** Optional credit (creator, channel). */
     credit?: string;
-    /** Required category — drives Conscious Mode filtering. */
+    /** Required category: drives Conscious Mode filtering. */
     category: InspirosphereCategory;
 }
 
