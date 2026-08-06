@@ -7247,7 +7247,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="mb-2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                                             <div className="font-cinzel uppercase tracking-widest text-sm mb-1">{language === 'EN' ? 'I have time' : "J'ai du temps"}</div>
                                             <p className="text-[11px] opacity-70 font-lato leading-snug normal-case tracking-normal">
-                                                {language === 'EN' ? 'Offer your skill in exchange for tokens.' : "Offre ta compétence en échange de jetons."}
+                                                {language === 'EN' ? 'Offer your skill in exchange for tokens.' : "Offrez votre compétence en échange de jetons."}
                                             </p>
                                         </button>
                                     </div>
