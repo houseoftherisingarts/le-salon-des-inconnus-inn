@@ -1672,7 +1672,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             },
             (e) => setProfileError(String((e as any)?.message ?? e)),
         );
-        // Feature-request: one-time read is fine — admin decisions are rare.
+        // Feature-request: one-time read is fine, admin decisions are rare.
         (async () => {
             try {
                 const reqSnap = await getDoc(doc(db, 'featureRequests', currentUser.uid));
