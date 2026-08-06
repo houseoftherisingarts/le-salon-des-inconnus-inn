@@ -7,7 +7,7 @@
  *   • storage.rules   → function isAdmin()
  *
  * When we eventually move admin to a custom claim (set via Cloud Function),
- * `isAdmin()` here is the only TypeScript line that needs to flip — every
+ * `isAdmin()` here is the only TypeScript line that needs to flip: every
  * caller already routes through this helper.
  */
 
