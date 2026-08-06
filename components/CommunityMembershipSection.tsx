@@ -540,7 +540,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         @keyframes commCue { 0%,100% { opacity: 0.5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(4px); } }
         .comm-develop { background: #050505; animation: commDevelop 1.4s cubic-bezier(0.16,1,0.3,1) forwards; }
         @keyframes commDevelop { from { opacity: 1; } to { opacity: 0; } }
-        /* TERMS — game-menu stat panel with bracket corners */
+        /* TERMS: game-menu stat panel with bracket corners */
         .comm-statpanel { position: relative; border: 1px solid rgba(197,160,89,0.20); background: ${T.panel};
           backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 14px;
           padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.6rem) clamp(0.6rem, 1.5vw, 1rem); }
