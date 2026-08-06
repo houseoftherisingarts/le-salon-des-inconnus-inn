@@ -152,7 +152,7 @@ export const PetiteMonnaieParcours: React.FC<ParcoursProps> = ({ language, scrol
         let op: number;
 
         if (d < 0) {
-          // Behind the lens — leave in the OPPOSITE direction it arrived from:
+          // Behind the lens: leave in the OPPOSITE direction it arrived from:
           // it descended from the top, so it now swoops DOWN and to the opposite side.
           const e = clamp01(-d / 0.95);
           px += -side * easeIn(e) * exitXMax;
