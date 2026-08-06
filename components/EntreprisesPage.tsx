@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ProposalRequestForm } from './ProposalRequestForm';
 import { Atmosphere, TopBar, HeroFramed, SectionLabel, EditorialRow, Glass } from './RetreatShared';
 
-// Unlisted page at /entreprises — B2B pitch for exclusive corporate retreats.
+// Unlisted page at /entreprises: B2B pitch for exclusive corporate retreats.
 // Art-directed (2026-07-21): cinematic framed hero, editorial rows on real
 // estate imagery, oversized price treatment, working lead form.
 
