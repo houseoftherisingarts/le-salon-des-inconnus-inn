@@ -697,7 +697,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  [data-studio-theme="RED"] .font-serif,
                  [data-studio-theme="RED"] .font-mono { font-family: 'Inter', system-ui, sans-serif !important; letter-spacing: 0.01em; }
 
-                 /* BLUE_PUNK — System Failure: terminal everywhere. */
+                 /* BLUE_PUNK, System Failure: terminal everywhere. */
                  [data-studio-theme="BLUE_PUNK"] .font-cinzel,
                  [data-studio-theme="BLUE_PUNK"] .font-prata,
                  [data-studio-theme="BLUE_PUNK"] .font-sans,
