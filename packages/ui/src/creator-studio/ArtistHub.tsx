@@ -5597,9 +5597,9 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 disabled={collabSubmitting || !currentUser?.uid || !collabFormData.name || !collabFormData.email || !collabFormData.idea}
                                                 title={
                                                     !currentUser?.uid
-                                                        ? (language === 'EN' ? 'Sign in to submit' : 'Connecte-toi pour envoyer')
+                                                        ? (language === 'EN' ? 'Sign in to submit' : 'Connectez-vous pour envoyer')
                                                         : !collabFormData.name
-                                                            ? (language === 'EN' ? 'Add your name' : 'Ajoute ton nom')
+                                                            ? (language === 'EN' ? 'Add your name' : 'Ajoutez votre nom')
                                                             : !collabFormData.email
                                                                 ? (language === 'EN' ? 'Add an email' : 'Ajoute un courriel')
                                                                 : !collabFormData.idea
