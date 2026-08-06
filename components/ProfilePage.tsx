@@ -600,7 +600,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         </section>
 
-        {/* ── SHOW TICKET — only when paid ─────────────────────────────────── */}
+        {/* ── SHOW TICKET: only when paid ─────────────────────────────────── */}
         {showTicket && (
           <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
             <div className="max-w-3xl mx-auto">

@@ -417,7 +417,7 @@ const App: React.FC = () => {
     if (routeScript) {
       const blocks: object[] = [];
 
-      // FAQPage — when the route is registered in SEO_CONTENT.
+      // FAQPage: when the route is registered in SEO_CONTENT.
       const seoKey = currentView as SeoViewKey;
       const seoEntry = SEO_CONTENT[seoKey]?.[language];
       if (seoEntry && seoEntry.faq.length > 0) {
