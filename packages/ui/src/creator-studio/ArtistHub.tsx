@@ -2377,7 +2377,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         if (!currentUser?.uid) {
             alert(language === 'EN'
                 ? 'Sign in to submit a collab request: admins reply through your profile.'
-                : "Connecte-toi pour envoyer une demande : les réponses arrivent sur ton profil.");
+                : "Connectez-vous pour envoyer une demande : les réponses arrivent sur votre profil.");
             return;
         }
         const db = studioFirestore();
