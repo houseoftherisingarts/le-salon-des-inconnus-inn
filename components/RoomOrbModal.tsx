@@ -584,7 +584,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
       onClick={onClose}
       className="room-orb-root fixed inset-0 z-[120] flex bg-black/85 backdrop-blur-md text-neutral-100 font-lato animate-roomFadeIn px-4 pt-16 pb-12 md:py-8 overflow-y-auto"
     >
-      {/* Per-room animated gradient — sits behind everything, ~50% transparency,
+      {/* Per-room animated gradient, sits behind everything, ~50% transparency,
           drifting "lights" use the room's accent palette. The key forces a
           fresh fade-in on every room change. */}
       <div
