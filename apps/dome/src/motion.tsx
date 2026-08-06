@@ -7,7 +7,7 @@ export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const GRAIN_URI =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")";
 
-// D4 — Atmosphere : section sombre = matière éclairée, jamais un panneau plat.
+// D4, Atmosphere : section sombre = matière éclairée, jamais un panneau plat.
 // Quatre couches CSS pures : key light or, lueur de plancher, vignette, grain.
 export function Atmosphere({
   light = '70% 18%',
