@@ -600,7 +600,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                     </span>
                 </div>
 
-                {/* Logout — sibling of language/theme. Only rendered when the
+                {/* Logout: sibling of language/theme. Only rendered when the
                     user is actually signed in (the gate handles the
                     !currentUser case earlier in the component). */}
                 {currentUser && (
