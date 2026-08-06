@@ -923,7 +923,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
             </div>
           </button>
 
-          {/* Centered diagonal line + badge — fades during exit */}
+          {/* Centered diagonal line + badge, fades during exit */}
           <div
             className="absolute inset-0 pointer-events-none transition-opacity duration-500"
             style={{ opacity: doorsExiting ? 0 : 1 }}
