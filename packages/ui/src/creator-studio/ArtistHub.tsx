@@ -7619,7 +7619,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-xs text-neutral-400 mt-2 max-w-md">
                                     {language === 'EN'
                                         ? 'The piece you pick becomes the main artwork on your profile. Upload a new image to add it to the roster and feature it instantly.'
-                                        : "La pièce choisie devient l'œuvre principale sur ton profil. Téléverse une nouvelle image pour l'ajouter au répertoire et la mettre en vedette."}
+                                        : "La pièce choisie devient l'œuvre principale sur votre profil. Téléversez une nouvelle image pour l'ajouter au répertoire et la mettre en vedette."}
                                 </p>
                             </div>
 
