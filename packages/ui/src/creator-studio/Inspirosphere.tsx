@@ -62,7 +62,7 @@ const CITATIONS_AS_ORB: OrbVideo[] = INSPIROSPHERE_CITATIONS.map(c => ({
  * ─────────────
  * The orb (top half) streams a single video at random; the controls (bottom
  * half) hold Zap, Conscious Mode, the category filter, and the by-category
- * browser. Same top/bottom split as the other Creator Studio elements —
+ * browser. Same top/bottom split as the other Creator Studio elements:
  * the orb portals into the StudioContextViewer's TOOLS body via the
  * `#inspirosphere-orb-slot` mount point, so the viewer chrome (header,
  * resize handle, aurora) stays consistent with other tabs. Falls back to
