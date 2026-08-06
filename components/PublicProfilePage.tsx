@@ -43,7 +43,7 @@ function dmId(uid1: string, uid2: string): string {
 // ─── Social link helpers ─────────────────────────────────────────────────
 // Same detection map as the Welcome wizard's StepLinks. Kept here as well
 // because root inn app cannot cleanly import from @inconnus/ui without
-// a workspace dep — duplicated intentionally, kept small.
+// a workspace dep: duplicated intentionally, kept small.
 
 const SOCIAL_MAP: Record<string, { slug: string; name: string }> = {
   'instagram.com':    { slug: 'instagram',  name: 'Instagram' },
