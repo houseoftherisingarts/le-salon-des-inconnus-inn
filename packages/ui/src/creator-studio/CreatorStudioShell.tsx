@@ -78,7 +78,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
          })();
      }, [currentUser?.uid]);
      const isArtist = isArtistProp || isArtistInternal;
-     // "View as visitor" — a logged-out user can opt into a limited browse
+     // "View as visitor": a logged-out user can opt into a limited browse
      // experience (no profile editing, no publish actions). Reset whenever
      // currentUser flips so the gate isn't stuck after sign-out.
      // ALL HOOKS LIVE AT THE TOP — the gate is rendered as a conditional

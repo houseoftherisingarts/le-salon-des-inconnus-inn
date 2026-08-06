@@ -1699,7 +1699,7 @@ export const InnPage: React.FC<InnPageProps> = ({ onNavigate, language }) => {
       {/* Main Content Area - STICKY STACK ARCHITECTURE */}
       <main className="pt-0 relative z-10">
           
-          {/* 1. Hero (sequential — no longer sticky after stack refactor) */}
+          {/* 1. Hero (sequential, no longer sticky after stack refactor) */}
           <div className="relative">
              <InnHero
                 language={language}
