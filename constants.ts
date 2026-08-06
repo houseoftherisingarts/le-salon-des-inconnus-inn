@@ -316,7 +316,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'histoire",
                 title: "Manoir Papineau",
                 location: "Montebello",
-                description: "Site historique national — le grand manoir seigneurial du 19e siècle de Louis-Joseph Papineau, flanqué de quatre tours et entouré de jardins formels. Une plongée dans l'histoire politique et architecturale du Québec.",
+                description: "Site historique national : le grand manoir seigneurial du 19e siècle de Louis-Joseph Papineau, flanqué de quatre tours et entouré de jardins formels. Une plongée dans l'histoire politique et architecturale du Québec.",
                 link: "https://parcs.canada.ca/lhn-nhs/qc/manoirpapineau",
                 image: "https://pcweb2.azureedge.net/-/media/lhn-nhs/qc/papineau/images/2022-CANADA-CA/homepage/Lieu-historique-national-Manoir-Papineau-National-Historic-Site_1920x480.jpg",
                 isVip: true

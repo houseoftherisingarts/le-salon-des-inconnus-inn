@@ -244,7 +244,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
     load();
   }, [targetUid]);
 
-  // Live videos list. Anything this member has uploaded shows up here —
+  // Live videos list. Anything this member has uploaded shows up here:
   // public profile is the canonical 'visit them to see their work' surface.
   useEffect(() => {
     if (!db || !targetUid) return;
