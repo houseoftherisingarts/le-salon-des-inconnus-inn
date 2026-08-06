@@ -500,7 +500,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     )}
                     {currentStep === 'FAVE_SHOW' && (
                         <StepFavourite
-                            label={t('A film or show that taught you something.', 'Un film ou une série qui t\'a appris quelque chose.')}
+                            label={t('A film or show that taught you something.', 'Un film ou une série qui vous a appris quelque chose.')}
                             sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur votre profil. Basculez ci-dessous.')}
                             language={language}
                             value={answers.favourites.show}
