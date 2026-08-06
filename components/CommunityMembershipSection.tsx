@@ -359,7 +359,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
               </figure>
             ))}
           </div>
-          {/* shared common spaces — salon · salle à manger · cuisine · jardin */}
+          {/* shared common spaces: salon · salle à manger · cuisine · jardin */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mt-2 md:mt-3">
             {COMMON.map((p, i) => (
               <figure key={i} className="comm-busshot relative overflow-hidden" style={{ aspectRatio: '4 / 3' }}>
