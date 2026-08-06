@@ -682,7 +682,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                     as a distinct visual language end-to-end, not just a
                     color shift. ── */
 
-                 /* RAINBOW (default) — keeps Cinzel display + Lato body. */
+                 /* RAINBOW (default): keeps Cinzel display + Lato body. */
                  [data-studio-theme="RAINBOW"] .font-cinzel,
                  [data-studio-theme="RAINBOW"] .font-prata { font-family: 'Cinzel', 'Times New Roman', serif !important; letter-spacing: 0.04em; }
                  [data-studio-theme="RAINBOW"] .font-sans,
