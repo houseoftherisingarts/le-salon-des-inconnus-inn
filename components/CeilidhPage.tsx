@@ -1691,7 +1691,7 @@ const TeamsChapterBody: React.FC<{
   }, [scrollAnchor, onScrollHandled]);
 
   // Work days. Each Ceilidh registration is a list of (team, days) tuples,
-  // so a member can be on Cuisine Friday and Arts Saturday — the data
+  // so a member can be on Cuisine Friday and Arts Saturday: the data
   // model has always supported this; the picker UI now exposes it.
   const ALL_WORK_DAYS = ['2026-05-22', '2026-05-23', '2026-05-24', '2026-05-25'];
   const WORK_DAYS_INFO = [
