@@ -418,7 +418,7 @@ export const WwoofingPage: React.FC<WwoofingPageProps> = ({
                   <p className="font-cormorant italic text-xl text-[#c5a059] leading-snug">
                     {t(
                       "What we ask: 4 focused hours a day. The rest, we share.",
-                      "Ce qu'on demande : 4 heures de travail concentré par jour. Le reste, on le partage."
+                      "Ce que nous demandons : 4 heures de travail concentré par jour. Le reste, nous le partageons."
                     )}
                   </p>
                 </div>
