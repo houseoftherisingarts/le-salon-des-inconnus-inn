@@ -166,7 +166,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   const [friendStatus, setFriendStatus] = useState<FriendStatus>('none');
   const [friendLoading, setFriendLoading] = useState(false);
   const [commonEvents, setCommonEvents] = useState<string[]>([]);
-  // Target's Ceilidh registration — used to surface arrival day + time, team, lodging.
+  // Target's Ceilidh registration: used to surface arrival day + time, team, lodging.
   const [targetReg, setTargetReg] = useState<any | null>(null);
   // Target's chosen Wardrobe (creator-studio activeTheme). Drives a subtle
   // accent bar at the top of the profile so visiting members can tell the
