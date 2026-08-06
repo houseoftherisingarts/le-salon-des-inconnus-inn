@@ -699,7 +699,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </section>
         )}
 
-        {/* ── COMMUNITY PERKS — coupon + affiliate program ────────────────── */}
+        {/* ── COMMUNITY PERKS: coupon + affiliate program ────────────────── */}
         <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
           <div className="max-w-[1400px] mx-auto">
             <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-5">

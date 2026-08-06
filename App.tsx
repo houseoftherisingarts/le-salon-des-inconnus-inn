@@ -544,7 +544,7 @@ const App: React.FC = () => {
         if (!result?.user) return;
         const snap = await getDoc(doc(db, 'members', result.user.uid));
         if (snap.exists()) {
-          // Returning member — profile already loaded by onAuthStateChanged, just ensure it's set
+          // Returning member: profile already loaded by onAuthStateChanged, just ensure it's set
           setCurrentUser(result.user);
           setMemberProfile(snap.data() as MemberProfile);
         } else {
