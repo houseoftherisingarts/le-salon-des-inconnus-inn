@@ -215,7 +215,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         </LazySection>
       </section>
 
-      {/* ── L'Espace — 12-card amenity grid ── */}
+      {/* ── L'Espace: 12-card amenity grid ── */}
       <section className="bg-[#050505] border-t border-white/5">
         <SpacesGrid language={language} vibe={'HOSTEL'} />
       </section>
