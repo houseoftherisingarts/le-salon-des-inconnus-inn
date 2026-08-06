@@ -1738,7 +1738,7 @@ const TeamsChapterBody: React.FC<{
   // Write-failure message surfaced under the commit CTA.
   const [joinError, setJoinError] = useState<string | null>(null);
 
-  // Commit — merge the picked team + selected days into the user's
+  // Commit: merge the picked team + selected days into the user's
   // teams[] array. Days picked here are *removed* from any other primary
   // team they had for those days (so picking Sam 23 for Arts moves Sam 23
   // off Cuisine if it was there). Support memberships are left untouched.
