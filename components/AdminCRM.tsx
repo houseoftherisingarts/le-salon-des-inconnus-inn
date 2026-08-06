@@ -824,7 +824,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   }, []);
 
   // Toggle one of the three feature surfaces (Café / Mécène / Creator Studio).
-  // Same admin-only path. Independent of isArtist — admin can choose any
+  // Same admin-only path. Independent of isArtist: admin can choose any
   // combination, e.g. "feature in Café only" or "approve as artist but don't
   // surface yet anywhere."
   type FeatureSurface = 'featureCafe' | 'featureMecene' | 'featureCreatorStudio' | 'maestroEnabled';
