@@ -19,7 +19,7 @@ interface MessagesSectionProps {
 interface ThreadMeta {
     wwoofer: WwooferProfile;
     messages: WwooferMessage[];
-    lastAt: number;          // ms — for sort
+    lastAt: number;          // ms, for sort
     lastPreview: string;     // last message body, truncated
     lastFromAdmin: boolean;
     unreadFromWwoofer: boolean; // last is from the wwoofer (admin needs to reply)
