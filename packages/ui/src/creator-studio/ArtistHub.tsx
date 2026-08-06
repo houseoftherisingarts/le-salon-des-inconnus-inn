@@ -5572,7 +5572,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 en={ideaLabels[collabForm].en}
                                                 fr={ideaLabels[collabForm].fr}
                                                 helpEn="Be specific. Vague pitches go in the slow pile."
-                                                helpFr="Sois précis·e. Les pitchs flous vont dans la pile lente."
+                                                helpFr="Soyez précis·e. Les pitchs flous vont dans la pile lente."
                                             />
                                             <textarea
                                                 rows={7}
