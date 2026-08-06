@@ -102,7 +102,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               a_en: "Several local operators rent tubes and run shuttles. Check with the Duhamel municipality for details before your visit." },
             { q_fr: "Convient-il aux enfants ?", q_en: "Is it kid-friendly?",
               a_fr: "Oui, le courant est généralement doux. Une veste de flottaison reste recommandée pour les jeunes enfants.",
-              a_en: "Yes — the current is generally gentle. A flotation vest is still recommended for younger children." },
+              a_en: "Yes, the current is generally gentle. A flotation vest is still recommended for younger children." },
         ],
         schema: { type: "TouristAttraction", address: "Duhamel, QC, Canada" },
     },

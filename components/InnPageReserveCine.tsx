@@ -811,7 +811,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   const heightPct = rowSpan - 1.5;
                   const gridX = col * colSpan + 1.5;
                   const gridY = row * rowSpan + 0.75;
-                  // All cards uniform when closed — the cover overlay sits on top.
+                  // All cards uniform when closed: the cover overlay sits on top.
                   // Slight opacity falloff keeps the deeper cards quieter.
                   const closedOpacity = Math.max(0.5, 1 - depth * 0.05);
 
