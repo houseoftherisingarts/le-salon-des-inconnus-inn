@@ -5,7 +5,7 @@ import type { WwooferProfile } from '../../types';
 // the parent (no extra Firestore subscription). The admin picks which
 // member sources to include, and the component dedupes + exposes the
 // recipient list as: copy-to-clipboard (BCC paste), CSV download, or a
-// mailto link (small audiences only — most clients reject very long
+// mailto link (small audiences only: most clients reject very long
 // mailto URLs, so we cap that path).
 
 interface Reg     { uid: string; email?: string; displayName?: string }
