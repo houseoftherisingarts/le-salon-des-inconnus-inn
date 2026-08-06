@@ -192,7 +192,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
     }
   }, []);
 
-  // Cinematic parallax — hero photo + text move at different speeds. Works in
+  // Cinematic parallax: hero photo + text move at different speeds. Works in
   // the page's nested scroll container.
   useEffect(() => {
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
