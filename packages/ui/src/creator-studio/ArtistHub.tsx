@@ -1905,7 +1905,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             const finalLifetime = newLifetime + (completed ? COINS_PER_COMPLETION_BONUS : 0);
 
             // If this award completes the puzzle, snapshot the live puzzle's
-            // DOM rect BEFORE we flip state — the next render swaps to the
+            // DOM rect BEFORE we flip state: the next render swaps to the
             // fresh (empty) puzzle, so we'd lose the source frame otherwise.
             // The celebration overlay flies from this rect to the display-case
             // tile at the end of the new displayCase array.
