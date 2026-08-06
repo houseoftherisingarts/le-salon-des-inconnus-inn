@@ -572,7 +572,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
 
              {/* GLOBAL THEME + LANGUAGE SWITCHERS (Fixed Position) */}
              <div className="fixed top-24 right-6 md:right-12 z-50 flex flex-col items-end gap-3">
-                {/* Language toggle — sits above the theme cycle so both feel
+                {/* Language toggle: sits above the theme cycle so both feel
                     like sibling chrome controls. Persists per-user via
                     localStorage so the choice survives reloads. */}
                 <button
