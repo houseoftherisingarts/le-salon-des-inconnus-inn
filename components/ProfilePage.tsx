@@ -288,7 +288,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     }
   };
 
-  // Most recent code/result — surfaced under the dice for easy copy.
+  // Most recent code/result: surfaced under the dice for easy copy.
   const lastEntry: D20Entry | null = (d20Doc?.history && d20Doc.history.length)
     ? d20Doc.history[d20Doc.history.length - 1] as D20Entry
     : null;

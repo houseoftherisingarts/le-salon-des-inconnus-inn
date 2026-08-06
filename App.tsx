@@ -308,7 +308,7 @@ const App: React.FC = () => {
     extractSlug(window.location.pathname.replace(/\/$/, '') || '/')
   );
 
-  // Public call-sheet share params — populated from a /c/{uid}/{slug} URL.
+  // Public call-sheet share params: populated from a /c/{uid}/{slug} URL.
   const [callsheetParams, setCallsheetParams] = useState<{ uid: string; slug: string } | null>(() =>
     extractCallsheet(window.location.pathname)
   );
