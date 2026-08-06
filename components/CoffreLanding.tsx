@@ -651,7 +651,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
               <p className="text-[#e8d5a3] font-semibold leading-relaxed mb-5">
                 {t(
                   '"You will own nothing and you will be happy." That sentence was written for you, about you, and it was meant kindly. We answer no.',
-                  "« Vous ne posséderez rien et vous serez heureux. » Cette phrase a été écrite pour vous, à votre sujet, et elle vous a été présentée comme une bonne nouvelle. Nous répondons non.",
+                  "« Vous ne posséderez rien et vous serez heureux. » Cette phrase a été écrite pour vous, à votre sujet, et on vous l'a présentée comme une bonne nouvelle. Nous répondons non.",
                   '«No poseerá nada y será feliz». Esa frase fue escrita para usted, sobre usted, y se la presentaron como una buena noticia. Nosotros respondemos que no.',
                 )}
               </p>
