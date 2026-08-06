@@ -333,7 +333,7 @@ const App: React.FC = () => {
 
   // --- 1. NAVIGATION HELPER ---
   const handleNavigation = (destination: ViewState) => {
-    // SUPER_PROFILE is reached by entering its slug URL directly — never
+    // SUPER_PROFILE is reached by entering its slug URL directly. It's never
     // navigated to from in-app, so we don't push a path for it.
     if (destination === 'SUPER_PROFILE') {
       setCurrentView(destination);
