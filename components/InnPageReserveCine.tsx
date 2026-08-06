@@ -183,7 +183,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
   const [spacesOpen, setSpacesOpen] = useState(false);
-  // L'Espace expanded grid — column count tracks viewport width so the
+  // L'Espace expanded grid: column count tracks viewport width so the
   // 12 cards stack 1 / 2 / 4 across small / medium / large screens.
   // Without this, mobile saw 4 narrow columns of unreadable text.
   const [espaceCols, setEspaceCols] = useState<1 | 2 | 4>(4);
