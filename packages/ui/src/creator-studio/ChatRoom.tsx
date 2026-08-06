@@ -8,7 +8,7 @@ import type { CreatorStudioUser } from './CreatorStudioShell';
 
 // Top-level Studio chat rooms. The ID is the Firestore subcollection segment;
 // labels are the visible text. Order here is the order in the sidebar.
-// Rename/reorder freely — Firestore creates room subcollections lazily on the
+// Rename/reorder freely: Firestore creates room subcollections lazily on the
 // first message, so renaming a key only loses prior messages for that key.
 export const CHAT_ROOMS: ReadonlyArray<{
     id: string;
