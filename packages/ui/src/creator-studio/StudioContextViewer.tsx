@@ -643,7 +643,7 @@ export const StudioContextViewer: React.FC<Props> = ({
             case 'ROSTER':
                 return <RosterBlock language={language} theme={theme} />;
             case 'TOOLS':
-                // Inspirosphere takes over the viewer body when active —
+                // Inspirosphere takes over the viewer body when active:
                 // Inspirosphere.tsx portals the orb into this slot div so the
                 // sphere lives in the top half while the controls render below
                 // in the hub. Other tools keep the L'Arsenal preview grid.
