@@ -42,7 +42,7 @@ import {
 // CeilidhPage (Avenue B): "Le Livret du Ceilidh"
 // Cinematic chapter cards. 5 large landscape covers stack vertically; click
 // expands a chapter to fullscreen with its dense interactive content. A bottom
-// dock shows the 5 chapter seals — gold-filled when complete, hollow when not.
+// dock shows the 5 chapter seals: gold-filled when complete, hollow when not.
 //
 // This is a DESIGN PREVIEW: only chapter 01 (L'Événement) is fully fleshed out;
 // the other four show a tasteful "Preview" panel so the mechanism reads.
