@@ -366,7 +366,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
         if (!active.shareEnabled) patchActive({ shareEnabled: true });
         try {
             await navigator.clipboard.writeText(shareLink());
-            flash(t('Link copied — sharing on', 'Lien copié — partage activé'));
+            flash(t('Link copied, sharing on', 'Lien copié, partage activé'));
         } catch {
             flash(t('Sharing on — copy from address bar', 'Partage activé — copie le lien'));
         }
