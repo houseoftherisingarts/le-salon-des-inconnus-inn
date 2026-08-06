@@ -40,7 +40,7 @@ export default function App() {
 
   const onNodeChange = useCallback((node: string) => {
     const slug = NODE_TO_SLUG[node];
-    if (!slug) return; // node not in our slug table — leave URL alone
+    if (!slug) return; // node not in our slug table: leave URL alone
     if (normalize(window.location.pathname) === slug) return;
     window.history.pushState({}, '', slug);
   }, []);
