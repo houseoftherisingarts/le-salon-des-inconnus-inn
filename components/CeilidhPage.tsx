@@ -2930,7 +2930,7 @@ const PracticalChapterBody: React.FC<{
       aEn: 'Woofers stay free in exchange for ~6 hours of work per day. Show-only guests: $10 single / $20 weekend pass.',
       aFr: 'Les woofers logent gratuitement en échange de ~6 heures de travail par jour. Spectacle seul : 10 $ par soir, 20 $ pour la fin de semaine.' },
     { qEn: 'Are dogs welcome?',              qFr: 'Les chiens sont-ils acceptés ?',
-      aEn: 'On a leash, with a humane host. Tell us in advance — there\u2019s a household cat who has feelings.',
+      aEn: 'On a leash, with a humane host. Tell us in advance: there\u2019s a household cat who has feelings.',
       aFr: "En laisse, avec un humain·e responsable. Prévenez-nous — il y a un chat de la maison qui a des sentiments." },
     { qEn: 'Can I just come for a day?',     qFr: 'Je peux venir une seule journée ?',
       aEn: 'Yes: pick any single day that works for you when you register. Arrival and departure are both flexible.',
