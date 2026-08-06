@@ -295,7 +295,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
       style={{ background: 'radial-gradient(48% 38% at 50% 12%, rgba(197,160,89,0.07), transparent 70%), radial-gradient(120% 90% at 50% 0%, #14100c 0%, #0a0808 55%, #060505 100%)' }}
     >
 
-      {/* Fixed header — position:fixed is relative to viewport, sits above the container */}
+      {/* Fixed header: position:fixed is relative to viewport, sits above the container */}
       <header className="fixed top-0 w-full z-[60] bg-[#0a0808]/92 backdrop-blur-md border-b border-[#c5a059]/15">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between">
           <button
