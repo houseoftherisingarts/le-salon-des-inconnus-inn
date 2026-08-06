@@ -279,7 +279,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
         try {
             await setDoc(doc(db, 'members', uid, 'callsheets', id),
                 { ...patch, updatedAt: serverTimestamp() }, { merge: true });
-        } catch { /* swallow — local state is source of truth */ }
+        } catch { /* swallow: local state is source of truth */ }
     }, [uid]);
 
     // Debounced patch of the active sheet (local optimistic + Firestore).
