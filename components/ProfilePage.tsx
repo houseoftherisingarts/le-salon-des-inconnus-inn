@@ -1262,7 +1262,7 @@ const MyCeilidhPanel: React.FC<{
         </div>
       </div>
 
-      {/* Arrival day + time — visible on your public profile so others know
+      {/* Arrival day + time: visible on your public profile so others know
           when to expect you. Saved on the registration doc. */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-5 md:p-6" style={fieldStyle}>
