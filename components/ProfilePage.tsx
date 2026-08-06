@@ -1101,7 +1101,7 @@ const MyCeilidhPanel: React.FC<{
   otherRegs.forEach((r) => {
     if (r.roomId) roomCounts.set(r.roomId, (roomCounts.get(r.roomId) || 0) + 1);
     else if (r.roomName) {
-      // Legacy regs may use roomName instead of roomId — map back where possible.
+      // Legacy regs may use roomName instead of roomId: map back where possible.
       const m = LODGING.find((l) => l.nameEn === r.roomName || l.nameFr === r.roomName);
       if (m) roomCounts.set(m.id, (roomCounts.get(m.id) || 0) + 1);
     }
