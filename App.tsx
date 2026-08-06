@@ -302,7 +302,7 @@ const App: React.FC = () => {
   });
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
 
-  // Super Profile slug — populated from the URL when on a /{username} path.
+  // Super Profile slug: populated from the URL when on a /{username} path.
   // The SuperProfilePage uses it to look up the artist's doc.
   const [superProfileSlug, setSuperProfileSlug] = useState<string | null>(() =>
     extractSlug(window.location.pathname.replace(/\/$/, '') || '/')
