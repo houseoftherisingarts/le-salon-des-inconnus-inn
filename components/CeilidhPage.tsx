@@ -645,7 +645,7 @@ export const CeilidhPage: React.FC<Props> = ({
         @media (min-width: 768px) {
           .essay-spread .essay-body { column-count: 2; font-size: 1rem; }
         }
-        /* Drop cap (enluminure) — floated so the body wraps; Cormorant Garamond
+        /* Drop cap (enluminure): floated so the body wraps; Cormorant Garamond
            Bold Italic in gold with a soft glow, like an old folio. */
         .essay-spread .essay-dropcap {
           float: left;
