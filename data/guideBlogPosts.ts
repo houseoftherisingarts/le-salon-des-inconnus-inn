@@ -467,7 +467,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'patin': {
         _draft: true,
-        intro_fr: "Quand le lac Simon gèle à cœur, il devient un terrain de jeu immense. Sentier de patin balisé sur des kilomètres, glissades naturelles dans les talus enneigés, grands espaces blancs où le vent siffle — c'est la version locale du paradis hivernal.",
+        intro_fr: "Quand le lac Simon gèle à cœur, il devient un terrain de jeu immense. Sentier de patin balisé sur des kilomètres, glissades naturelles dans les talus enneigés, grands espaces blancs où le vent siffle : c'est la version locale du paradis hivernal.",
         intro_en: "When Lac Simon freezes through, it becomes a huge playground. A marked skating trail running for kilometres, natural sliding hills in the snowy banks, vast white expanses where the wind whistles — the local version of winter paradise.",
         sections: [
             { title_fr: "Le sentier de patin", title_en: "The skating trail",
