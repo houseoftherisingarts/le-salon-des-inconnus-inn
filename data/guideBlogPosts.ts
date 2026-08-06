@@ -176,7 +176,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         faqs: [
             { q_fr: "Le parc est-il ouvert toute l'année ?", q_en: "Is the park open year-round?",
               a_fr: "Oui, l'usage change selon la saison (rando en été, ski/raquette/fat-bike en hiver), mais le parc est ouvert toute l'année.",
-              a_en: "Yes — uses change with the season (hiking in summer, ski/snowshoe/fat-bike in winter), but the park stays open year-round." },
+              a_en: "Yes, uses change with the season (hiking in summer, ski/snowshoe/fat-bike in winter), but the park stays open year-round." },
             { q_fr: "Peut-on y aller avec des enfants ?", q_en: "Is it kid-friendly?",
               a_fr: "Oui, plusieurs sentiers courts et faciles sont parfaits pour les familles.",
               a_en: "Yes — several short, easy trails are perfect for families." },

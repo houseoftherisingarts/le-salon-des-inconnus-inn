@@ -3225,7 +3225,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         setIsWritingModalOpen(true);
     };
 
-    // Cover upload — separate endpoint per article. Articles get their own
+    // Cover upload: separate endpoint per article. Articles get their own
     // folder so cleanup of an article cleans its cover too.
     const uploadArticleCover = async (file: File): Promise<string | null> => {
         if (!currentUser?.uid || !file) return null;
