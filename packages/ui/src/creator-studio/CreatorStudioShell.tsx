@@ -116,7 +116,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      // Lifted state for Navigation control - Default to LOBBY for Member Mode
      const [hubPhase, setHubPhase] = useState<HubPhase>('LOBBY');
 
-     // Contextual viewer (top half) — receives the active tab + a profile
+     // Contextual viewer (top half): receives the active tab + a profile
      // snapshot from ArtistHub via onContextChange. Default WELCOME state
      // shows brand chrome until the user picks a tab. Height defaults to
      // 60% of the viewport so the original brand hero has breathing room.
