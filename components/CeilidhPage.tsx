@@ -611,7 +611,7 @@ export const CeilidhPage: React.FC<Props> = ({
         }
         @keyframes c2FadeIn { to { opacity: 1; } }
 
-        /* Magazine essay — Ceilidh / Woofing block.
+        /* Magazine essay: Ceilidh / Woofing block.
            Two-column justified body, ornament-flanked titles, gilded drop cap. */
         .essay-spread .essay-rule {
           width: 80px; height: 1px;
