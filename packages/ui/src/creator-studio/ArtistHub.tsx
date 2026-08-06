@@ -5912,7 +5912,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 <section>
                                                     <SectionHeader n="02" en="Discipline" fr="Discipline"
                                                         helpEn="Pick the medium that fits best."
-                                                        helpFr="Choisis le médium qui correspond." />
+                                                        helpFr="Choisissez le médium qui correspond." />
                                                     <div className="flex flex-wrap gap-1.5">
                                                         {HOT_SEAT_DISCIPLINES.map(d => {
                                                             const active = newSubmission.type === d.key;
