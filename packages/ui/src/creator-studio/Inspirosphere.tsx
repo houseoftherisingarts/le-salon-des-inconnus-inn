@@ -864,7 +864,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     </span>
                 </div>
 
-                {/* Conscious Mode panel — categories + grid of thumbnails.
+                {/* Conscious Mode panel: categories + grid of thumbnails.
                     No inner scroll: the page itself handles overflow so the
                     user never has nested scroll regions. */}
                 {mode === 'CONSCIOUS' && (
