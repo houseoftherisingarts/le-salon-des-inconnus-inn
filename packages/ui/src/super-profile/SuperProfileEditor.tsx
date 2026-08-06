@@ -124,7 +124,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
     const [bespokeOpen, setBespokeOpen] = React.useState(false);
 
     // Subscribe to the config doc. We load it whether Maestro is enabled
-    // or not — when it's revoked but the user has a prior config, we need
+    // or not: when it's revoked but the user has a prior config, we need
     // to render the "Resume your subscription" overlay with their previous
     // username so the lockout reads as a paywall, not as "you never had it".
     React.useEffect(() => {
