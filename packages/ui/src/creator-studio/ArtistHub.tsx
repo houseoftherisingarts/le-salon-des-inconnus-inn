@@ -7224,7 +7224,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <section>
                                     <FormSectionHeader n="01" en="Contract type" fr="Type de contrat"
                                         helpEn="Are you the one asking, or the one offering?"
-                                        helpFr="Tu demandes, ou tu offres ?" />
+                                        helpFr="Vous demandez, ou vous offrez ?" />
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         <button
                                             type="button"
