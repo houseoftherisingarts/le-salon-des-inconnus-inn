@@ -10,7 +10,7 @@
 // Stack
 //   • GSAP ScrollTrigger scrubs progressRef from 0 → 1.
 //   • react-three-fiber: shader plane, 3D card flythrough, hextech portal.
-//   • All HTML overlays are sparse — one moment visible at a time, big
+//   • All HTML overlays are sparse: one moment visible at a time, big
 //     breathing room. The world (shader + flythrough) is the constant.
 //
 // Reference shader adapted from the tunnel-flow GLSL ES 3.0 sample, ported
