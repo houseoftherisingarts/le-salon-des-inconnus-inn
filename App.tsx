@@ -722,7 +722,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 1c: Inn editorial test 2 (Bespoke pattern, hero only) — /mainpagetest2 */}
+        {/* VIEW 1c: Inn editorial test 2 (Bespoke pattern, hero only), /mainpagetest2 */}
         {currentView === 'INN_TEST2' && (
           <InnPageTest2
             language={language}
