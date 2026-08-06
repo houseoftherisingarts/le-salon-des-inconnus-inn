@@ -101,7 +101,7 @@ export const LoadingOrb: React.FC<LoadingOrbProps> = ({
                         }}
                     />
 
-                    {/* Neon sweep — diagonal light lancing across the orb,
+                    {/* Neon sweep: diagonal light lancing across the orb,
                         same easing as the StudioContextViewer tab-change sweep. */}
                     <div
                         aria-hidden
