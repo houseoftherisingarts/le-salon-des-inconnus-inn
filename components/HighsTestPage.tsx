@@ -111,7 +111,7 @@ function CosmicTunnel({ progressRef }: { progressRef: React.MutableRefObject<num
                     uniform vec3 uPurple;
                     varying vec2 vUv;
 
-                    // Tunnel-flow caustic field — adapted from a Codrops sample.
+                    // Tunnel-flow caustic field: adapted from a Codrops sample.
                     // Iterates a 3D ray, accumulates a colored "haze" along the
                     // path, then tone-maps. Time bias and a small scroll-driven
                     // forward shift give the impression of flying forward.
