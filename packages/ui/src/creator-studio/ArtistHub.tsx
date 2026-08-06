@@ -7537,7 +7537,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
                                     {language === 'EN'
                                         ? 'Enter the password Alex shared with you. On success, this profile becomes yours: your name, bio, skills, photo, and gallery will be seeded from the curated roster (only for fields you haven\'t already filled in).'
-                                        : "Saisis le mot de passe partagé par Alex. En cas de succès, ce profil devient le tien : ton nom, ta bio, tes compétences, ta photo et ta galerie seront repris du répertoire (seulement pour les champs encore vides)."}
+                                        : "Saisissez le mot de passe partagé par Alex. En cas de succès, ce profil devient le vôtre : votre nom, votre bio, vos compétences, votre photo et votre galerie seront repris du répertoire (seulement pour les champs encore vides)."}
                                 </p>
 
                                 <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-500 mb-2">
