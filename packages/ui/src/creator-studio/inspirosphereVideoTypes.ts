@@ -17,7 +17,7 @@
  *      When the creator clicks "Request feature", featureStatus flips to
  *      'pending' and the doc surfaces in AdminCRM's review queue. On
  *      approval, an `InspirosphereFeaturedVideo` is written to the flat
- *      `inspirosphereFeatured/{videoId}` collection — that's what powers
+ *      `inspirosphereFeatured/{videoId}` collection. That's what powers
  *      the public "Voices" tab without needing a collectionGroup query.
  *
  * The flattened featured/curated collections cost two writes per approval
