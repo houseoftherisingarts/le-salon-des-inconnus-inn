@@ -4861,7 +4861,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                          </button>
                                      </div>
                                      <div className="flex gap-4 overflow-x-auto pb-2">
-                                         {/* Default — clears any cosmetic overlay back to the base theme. */}
+                                         {/* Default: clears any cosmetic overlay back to the base theme. */}
                                          <div className="flex flex-col items-center gap-2 min-w-[84px]">
                                              <button
                                                 onClick={() => selectActiveSkin(null)}
