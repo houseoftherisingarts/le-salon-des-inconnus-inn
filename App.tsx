@@ -882,7 +882,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 7e-bis: BLOG (chronicles — index + /blog/{slug} articles) */}
+        {/* VIEW 7e-bis: BLOG (chronicles: index + /blog/{slug} articles) */}
         {currentView === 'BLOG' && (
           <BlogPage
             onNavigate={(view) => handleNavigation(view as ViewState)}
