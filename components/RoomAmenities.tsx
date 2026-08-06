@@ -167,7 +167,7 @@ type AmenityIconsProps = {
   maxGuests?: number | string;
   /** Standard guest count, displayed alongside max if both supplied. */
   guests?: number | string;
-  /** Visual size — 'sm' for cards, 'md' for the modal. */
+  /** Visual size: 'sm' for cards, 'md' for the modal. */
   size?: 'sm' | 'md';
   className?: string;
 };
