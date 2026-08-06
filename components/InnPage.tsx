@@ -158,7 +158,7 @@ export const LazySection: React.FC<{ children: React.ReactNode; placeholderHeigh
 };
 
 // --- SECTION WRAPPER (sequential, normal-flow) ---
-// Was previously a sticky-layered stack — refactored to sequential sections
+// Was previously a sticky-layered stack, refactored to sequential sections
 // because the sticky pattern caused later sections (Events/Wwoofing) to overlap
 // the bottom of earlier sections (Hosts/Events title+CTA hidden behind Wwoofing).
 // `zIndex` prop kept for backward compatibility with existing call sites; unused.
