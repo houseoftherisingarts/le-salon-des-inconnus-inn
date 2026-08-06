@@ -7477,7 +7477,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         onClick={() => {
                                             const ok = confirm(language === 'EN'
                                                 ? 'List on the Foire with a 1-coin opening bid? Other members can bid; you accept the top bid when you\'re ready.'
-                                                : 'Mettre en vente à la Foire à partir de 1 pièce ? Les autres membres peuvent enchérir ; tu acceptes la meilleure offre quand tu veux.');
+                                                : 'Mettre en vente à la Foire à partir de 1 pièce ? Les autres membres peuvent enchérir ; vous acceptez la meilleure offre quand vous voulez.');
                                             if (ok) listPuzzleToFoire(idx);
                                         }}
                                         className="p-5 border-2 border-fuchsia-400/40 bg-fuchsia-500/5 hover:bg-fuchsia-500/10 hover:border-fuchsia-300 rounded text-left transition-all"
