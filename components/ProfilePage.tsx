@@ -430,7 +430,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         </section>
 
-        {/* ── EDIT PROFILE + EVENTS — two columns on desktop, stacked on mobile ─ */}
+        {/* ── EDIT PROFILE + EVENTS: two columns on desktop, stacked on mobile ─ */}
         <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
           <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-6 md:gap-8">
 
