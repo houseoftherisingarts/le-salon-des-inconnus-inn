@@ -624,7 +624,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
             </div>
           )}
 
-          {/* Footer — privacy link */}
+          {/* Footer: privacy link */}
           {(mode === 'login' || mode === 'signup' || mode === 'phone') && (
             <p className="mt-5 text-center text-neutral-700 text-[10px] font-lato">
               <button onClick={onShowPrivacy} className="hover:text-[#d4af37] transition-colors">
