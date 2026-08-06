@@ -529,7 +529,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-ken { animation: commKen 30s ease-in-out infinite alternate; will-change: transform; transform-origin: 50% 45%; }
         @keyframes commKen { from { transform: scale(1.0); } to { transform: scale(1.05); } }
         .comm-ken-slow { animation: commKen 34s ease-in-out infinite alternate; will-change: transform; }
-        /* Hero copy — staggered cinematic entrance */
+        /* Hero copy: staggered cinematic entrance */
         .comm-hero-in > * { opacity: 0; transform: translateY(22px); animation: commRise 1.1s cubic-bezier(0.16,1,0.3,1) forwards; }
         .comm-hero-in > *:nth-child(1) { animation-delay: 0.20s; }
         .comm-hero-in > *:nth-child(2) { animation-delay: 0.40s; }
