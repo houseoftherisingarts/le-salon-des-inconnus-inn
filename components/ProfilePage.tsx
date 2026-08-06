@@ -300,7 +300,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-[#050505] text-white overflow-y-auto custom-scrollbar selection:bg-[#c5a059] selection:text-black">
       <div>
-        {/* ── HERO BAND — editorial intro with avatar + identity ──────────── */}
+        {/* ── HERO BAND: editorial intro with avatar + identity ──────────── */}
         <section className="relative bg-[#050505] pt-24 md:pt-32 pb-12 md:pb-16 px-6 md:px-12 lg:px-20 overflow-hidden border-b border-[#c5a059]/10">
           {/* Soft gold radial backdrop */}
           <div
