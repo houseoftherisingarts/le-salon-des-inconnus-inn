@@ -626,7 +626,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_en: "108 acres of nature, a private lake, outdoor fire pits, meditation rooms. The setting does half the work: you relax almost in spite of yourself." },
             { title_fr: "Combiner avec l'Auberge", title_en: "Combine with the Inn",
               body_fr: "Plusieurs visiteurs alternent : nuits à l'Auberge, journées au Centre. C'est une combinaison qui marche : l'un nourrit le corps social, l'autre le corps profond.",
-              body_en: "Many visitors alternate: nights at the Inn, days at the Centre. It's a combination that works — one feeds the social body, the other the deeper one." },
+              body_en: "Many visitors alternate: nights at the Inn, days at the Centre. It's a combination that works: one feeds the social body, the other the deeper one." },
         ],
         schema: { type: "HealthAndBeautyBusiness", address: "Ripon, QC, Canada" },
     },

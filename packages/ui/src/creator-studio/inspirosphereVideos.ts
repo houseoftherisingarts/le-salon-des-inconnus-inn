@@ -52,7 +52,7 @@ export const CATEGORY_LABELS: Record<InspirosphereCategory, { en: string; fr: st
 };
 
 export interface InspirosphereVideo {
-    /** Stable id — use a slug or short string. Used as React key + dedupe. */
+    /** Stable id: use a slug or short string. Used as React key + dedupe. */
     id: string;
     /** Source URL (YouTube watch/shorts/embed or Facebook). */
     url: string;

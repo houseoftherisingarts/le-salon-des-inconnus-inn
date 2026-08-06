@@ -154,7 +154,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
           </div>
         )}
 
-        {/* External citations — at least 2 credible references */}
+        {/* External citations: at least 2 credible references */}
         {content.externalLinks.length > 0 && (
           <div className="mt-10">
             <h3 className="font-cinzel text-[10px] md:text-xs text-[#c5a059] uppercase tracking-[0.4em] mb-4">
