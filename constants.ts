@@ -374,7 +374,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "La sortie",
                 title: "Le Napoléon",
                 location: "Montebello",
-                description: "Le bistro intimiste du chef Antoine Meunier — tartare de canard, filet de bison, poutine au foie gras. Produits locaux et de saison dans un cadre raffiné et chaleureux.",
+                description: "Le bistro intimiste du chef Antoine Meunier : tartare de canard, filet de bison, poutine au foie gras. Produits locaux et de saison dans un cadre raffiné et chaleureux.",
                 link: "https://www.lenapoleon.ca/",
                 image: "https://static.wixstatic.com/media/b90ba8_df144be50aa54d639d2629f6c12eb4bf~mv2.jpg"
             },
