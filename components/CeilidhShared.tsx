@@ -1509,7 +1509,7 @@ const TeamCard: React.FC<{
             </button>
           )}
 
-          {/* Logged in — primary member of this team */}
+          {/* Logged in: primary member of this team */}
           {user && isUserPrimary && (
             <div className="flex gap-3 mb-4">
               <button
