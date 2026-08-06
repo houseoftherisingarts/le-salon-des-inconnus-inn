@@ -163,7 +163,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
 
           </div>
 
-          {/* Law reference — plein écran seulement; sur mobile la place est comptée */}
+          {/* Law reference : plein écran seulement; sur mobile la place est comptée */}
           <p className="hidden sm:block text-neutral-700 text-[10px] font-lato mt-3 text-right">
             {t(
               'Compliant with Quebec Law 25 (L.Q. 2021, c. 25) and PIPEDA.',
