@@ -3,7 +3,7 @@
  *
  * Three video kinds coexist:
  *
- *   1. Static seed (`InspirosphereVideo` in inspirosphereVideos.ts) — the
+ *   1. Static seed (`InspirosphereVideo` in inspirosphereVideos.ts): the
  *      original curated catalog of web links (YouTube / FB). Lives in code,
  *      reads from `inspirosphereVideos.ts`. Powers the "Discovered" tab.
  *
