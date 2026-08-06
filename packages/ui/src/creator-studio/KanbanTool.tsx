@@ -44,7 +44,7 @@ interface KanbanToolProps {
     language: 'EN' | 'FR';
     /** Member tier: unlocks free extra boards from the first paid tier up. */
     membershipTier: string;
-    /** Spendable coins — used for the 50-coin extra-board unlock. */
+    /** Spendable coins: used for the 50-coin extra-board unlock. */
     coins: number;
     /** Callback that deducts coins from the spendable balance. Returns
      *  true on success, false on insufficient funds. */
