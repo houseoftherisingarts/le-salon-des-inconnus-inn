@@ -1545,7 +1545,7 @@ const TeamCard: React.FC<{
             </div>
           )}
 
-          {/* Logged in — not in this team: choose-to-commit CTA. Browsing
+          {/* Logged in: not in this team, choose-to-commit CTA. Browsing
               the kanban below is read-only until this button is pressed. */}
           {user && !isUserInTeam && (
             <button
