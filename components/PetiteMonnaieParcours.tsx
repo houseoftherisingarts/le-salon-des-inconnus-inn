@@ -437,7 +437,7 @@ const RealMap: React.FC = () => {
         </g>
       ))}
 
-      {/* Rivière de la Petite Nation — glowing gold ink */}
+      {/* Rivière de la Petite Nation: glowing gold ink */}
       <path d={toPath(PN_RIVER)} fill="none" stroke="#f0c870" strokeOpacity={0.3} strokeWidth={11} strokeLinecap="round" />
       <path d={toPath(PN_RIVER)} fill="none" stroke={BRASS} strokeWidth={3.5} strokeLinecap="round" />
       <path d={toPath(PN_RIVER)} fill="none" stroke="#fff6d8" strokeOpacity={0.3} strokeWidth={1} strokeDasharray="2 12" strokeLinecap="round" />

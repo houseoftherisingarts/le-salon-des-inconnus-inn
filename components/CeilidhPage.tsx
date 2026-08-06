@@ -3317,7 +3317,7 @@ const GoogleGlyph: React.FC = () => (
   </svg>
 );
 
-// ─── ShowTicketSlot — live spot counter + modal trigger ─────────────────────
+// ─── ShowTicketSlot: live spot counter + modal trigger ─────────────────────
 const ShowTicketSlot: React.FC<{
   language: 'EN' | 'FR';
   user: User | null;
