@@ -75,7 +75,7 @@ const VipCard: React.FC<{
       {...tagProps}
       className="group relative w-full rounded-2xl overflow-hidden flex flex-col md:flex-row bg-[#14130f] border border-[#c5a059]/25 hover:border-[#c5a059]/60 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(197,160,89,0.12)] mb-8 min-h-[240px] md:min-h-[300px] text-left"
     >
-      {/* Image — full left side on desktop, top on mobile */}
+      {/* Image: full left side on desktop, top on mobile */}
       <div className="relative w-full md:w-[55%] h-56 md:h-auto flex-shrink-0 overflow-hidden">
         {!imgError ? (
           <img
