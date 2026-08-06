@@ -481,7 +481,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   // The full list is rendered by ShowOffersSection (which subscribes itself).
   const [showOffers, setShowOffers] = useState<ShowOffer[]>([]);
 
-  // Members directory — admin-only view of every signed-up member, with the
+  // Members directory: admin-only view of every signed-up member, with the
   // curated-artist toggle. The flag lives at members/{uid}/admin/flags.isArtist
   // so users cannot self-promote (rules block writes there for non-admins).
   type MemberRow = {
