@@ -709,7 +709,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
       snap => setConferenceRequests(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }) as ConferenceRequestRow)),
       () => {},
     );
-    // Artist profiles — collection-group over `artistProfile` (same proven
+    // Artist profiles: collection-group over `artistProfile` (same proven
     // pattern as the `admin` flags query above). We keep only the canonical
     // `profile` doc the Creator Studio reads/writes; the parent member's uid is
     // the grandparent segment. This is what the Annuaire tab lists.
