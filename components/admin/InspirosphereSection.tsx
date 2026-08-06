@@ -13,18 +13,18 @@ import type { User } from 'firebase/auth';
  * AdminCRM · Inspirosphere section
  * ────────────────────────────────
  * Four sub-tabs:
- *   • Pending  — collectionGroup('videos') where featureStatus == 'pending'.
+ *   • Pending:   collectionGroup('videos') where featureStatus == 'pending'.
  *                Approve writes a denormalized doc to inspirosphereFeatured
  *                and flips the source's featureStatus → 'featured'. Reject
  *                flips status only.
- *   • Featured — list of currently-approved UGC (the Voices feed). Unfeature
+ *   • Featured:  list of currently-approved UGC (the Voices feed). Unfeature
  *                removes the featured doc + flips source back to 'none'.
- *   • All UGC  — every member video in the system, regardless of status.
+ *   • All UGC:   every member video in the system, regardless of status.
  *                Useful for moderation + auditing view counts.
- *   • Curated  — admin uploads for the Featured tab in the orb. Drag/drop
+ *   • Curated:   admin uploads for the Featured tab in the orb. Drag/drop
  *                a video, give it a category, publish.
  *
- * The component subscribes to its own data — the parent only passes the
+ * The component subscribes to its own data: the parent only passes the
  * authenticated user. The `onPendingCountChange` callback bubbles the
  * pending queue length up to the sidebar badge.
  */
