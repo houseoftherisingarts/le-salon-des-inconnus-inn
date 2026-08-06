@@ -69,7 +69,7 @@ export interface InspirosphereVideo {
 // (HTTP 200 = exists + embeddable). Add new picks at the end; order doesn't
 // matter (the orb picks at random).
 export const INSPIROSPHERE_VIDEOS: InspirosphereVideo[] = [
-    { id: 'tarkovsky-sculpting',  url: 'https://www.youtube.com/watch?v=4VJe-cQu9FU', title: 'Sculpting in Time — Tarkovsky\'s philosophy on filmmaking', credit: 'Andrei Tarkovsky',   category: 'CINEMATOGRAPHY' },
+    { id: 'tarkovsky-sculpting',  url: 'https://www.youtube.com/watch?v=4VJe-cQu9FU', title: 'Sculpting in Time: Tarkovsky\'s philosophy on filmmaking', credit: 'Andrei Tarkovsky',   category: 'CINEMATOGRAPHY' },
     { id: 'mckee-substance',      url: 'https://www.youtube.com/watch?v=ITSu9IbCr9Q', title: 'The art of story, dialogue and character',                 credit: 'Robert McKee',       category: 'SCREENWRITING' },
     { id: 'rilke-letters',        url: 'https://www.youtube.com/watch?v=x73IZiaFF9E', title: 'Letters to a Young Poet — full audiobook',                 credit: 'Rainer M. Rilke',    category: 'WRITING' },
     { id: 'gibson-on-cyberpunk',  url: 'https://www.youtube.com/watch?v=nTjz6ueHhEw', title: 'Cyberpunk and cigarettes — Gibson interview (1990)',       credit: 'William Gibson',     category: 'WRITING' },
