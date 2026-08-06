@@ -553,7 +553,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         .comm-stat-v { color: ${T.goldDeep}; font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1; letter-spacing: -0.01em; text-shadow: 0 0 30px rgba(197,160,89,0.18); }
         .comm-stat-l { color: ${T.soft}; margin-top: 0.7rem; font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
         @media (min-width: 1024px) { .comm-stat + .comm-stat::before { content: ''; position: absolute; left: -0.7rem; top: 0.2rem; bottom: 1.4rem; width: 1px; background: rgba(197,160,89,0.18); } }
-        /* Pullquote — short brass rule above, no side stripe */
+        /* Pullquote: short brass rule above, no side stripe */
         .comm-quote { padding-left: 0; }
         .comm-quote::before { content: ''; display: block; width: 54px; height: 2px; background: ${T.gold}; margin-bottom: clamp(1.2rem, 2.4vw, 1.7rem); }
         /* CTA — sun pill with ember glow (TLOU primary) */

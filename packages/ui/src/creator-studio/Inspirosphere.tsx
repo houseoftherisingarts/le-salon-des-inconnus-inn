@@ -430,7 +430,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
         return () => clearInterval(id);
     }, [playerReady]);
 
-    // Control handlers — all guard for player presence + try/catch since the
+    // Control handlers, all guard for player presence + try/catch since the
     // YT API throws when the iframe is between mount states.
     const togglePlay = useCallback(() => {
         const p = ytPlayerRef.current;

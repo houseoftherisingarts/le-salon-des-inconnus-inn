@@ -771,7 +771,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                     )}
                 </div>
 
-                {/* Decorative accent strip — colour follows the active filter */}
+                {/* Decorative accent strip: colour follows the active filter */}
                 <div className={`h-px w-full transition-colors duration-500 ${
                     activeView === 'STUDIO' ? 'bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent' :
                     activeView === 'RESPONSIBILITIES' ? 'bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent' :
