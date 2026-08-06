@@ -5565,7 +5565,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             </section>
                                         )}
 
-                                        {/* (NUMBERED) — DESCRIPTION */}
+                                        {/* (NUMBERED): DESCRIPTION */}
                                         <section>
                                             <FormSectionHeader
                                                 n={collabForm === 'RESIDENCY' ? '03' : '02'}

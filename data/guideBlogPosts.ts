@@ -601,7 +601,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'chutes': {
         _draft: true,
         intro_fr: "Les Chutes de Plaisance sont une cascade de 63 mètres sur la rivière Petite-Nation : puissante au printemps quand la rivière est gonflée, sculpturale en hiver quand elle gèle en formations cristallines. Le sentier qui mène aux belvédères raconte aussi l'histoire d'un village industriel disparu.",
-        intro_en: "The Chutes de Plaisance are a 63-metre waterfall on the Petite-Nation River — powerful in spring when the river runs full, sculptural in winter when it freezes into crystalline formations. The trail leading to the lookouts also tells the story of a vanished industrial village.",
+        intro_en: "The Chutes de Plaisance are a 63-metre waterfall on the Petite-Nation River: powerful in spring when the river runs full, sculptural in winter when it freezes into crystalline formations. The trail leading to the lookouts also tells the story of a vanished industrial village.",
         sections: [
             { title_fr: "Les chutes", title_en: "The falls",
               body_fr: "Plusieurs belvédères offrent des angles différents. Le bruit est impressionnant au printemps; les couleurs en automne sont parmi les plus belles de la région.",
