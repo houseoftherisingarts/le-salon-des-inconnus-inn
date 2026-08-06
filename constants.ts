@@ -448,7 +448,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'arène",
                 title: "Rodéo de Saint-André-Avellin",
                 location: "St-André-Avellin",
-                description: "Le Festival Western de Saint-André-Avellin — le seul rodéo professionnel de la région. 200+ cowboys et cowgirls, monte-taureau, course aux tonneaux et musique country sous chapiteau. Chaque juillet.",
+                description: "Le Festival Western de Saint-André-Avellin : le seul rodéo professionnel de la région. 200+ cowboys et cowgirls, monte-taureau, course aux tonneaux et musique country sous chapiteau. Chaque juillet.",
                 link: "https://rodeoavellin.com/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2024/06/fwstaa2022-1152x648-fr-61f69974.png"
             },
