@@ -4,7 +4,7 @@ import { MobileInstallPanel } from './MobileInstallPanel';
 import { SponsorBand } from './SponsorBand';
 import { ConferenceSection } from './ConferenceSection';
 
-// Route /coffre — page de vente du Coffre des Inconnus, insérée entre /tools
+// Route /coffre: page de vente du Coffre des Inconnus, insérée entre /tools
 // et la vraie démo web. Même atmosphère que DownloadPage : noir chaud, or
 // discret, brume et grain. Structure Tony Robbins : douleur, gestes simples,
 // preuve sociale, projection future, objections, CTA final.
