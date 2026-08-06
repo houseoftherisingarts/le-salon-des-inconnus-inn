@@ -3,8 +3,8 @@ import { ArtsPage } from '@inconnus/ui';
 
 // Route model:
 //   '/' & '/centre' → arts hub (the Patron/Creator choice)
-//   '/createur'     → Le Créateur — opens CreatorStudio
-//   '/mecene'       → Le Mécène — buyer menu
+//   '/createur'     → Le Créateur: opens CreatorStudio
+//   '/mecene'       → Le Mécène: buyer menu
 //   '/cafe'         → Café (platforms node)
 // The old '/' Splitter (artist centre vs inn) was removed 2026-07-21:
 // the family hub already separates Auberge / Salon / Dôme upstream.

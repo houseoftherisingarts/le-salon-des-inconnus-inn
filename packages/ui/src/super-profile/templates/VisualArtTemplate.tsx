@@ -1,4 +1,4 @@
-// VisualArtTemplate — painter / illustrator / sculptor Mind Palace.
+// VisualArtTemplate: painter / illustrator / sculptor Mind Palace.
 //
 // Three layers, back-to-front:
 //   1. Works scattered as a "wall of sketches", each rotated and offset
