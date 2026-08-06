@@ -125,7 +125,7 @@ export const DonationPage: React.FC<Props> = ({
               )}
               successMsg={t(
                 'Thank you for your gift to the mission. It matters more than you know.',
-                "Merci pour ton don à la mission. Ça compte plus que tu penses."
+                "Merci pour votre don à la mission. Ça compte plus que vous ne le pensez."
               )}
               paymentNote="Don à la mission · Le Salon des Inconnus"
             />

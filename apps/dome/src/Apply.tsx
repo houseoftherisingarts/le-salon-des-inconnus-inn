@@ -170,7 +170,7 @@ export default function Apply() {
 
         {step === 'auth' && (
           <motion.div key="auth" {...stepMotion} className={`${glass} p-6 md:p-10`}>
-            <Eyebrow>Étape 1 · Ton profil</Eyebrow>
+            <Eyebrow>Étape 1 · Votre profil</Eyebrow>
             <h3 className="font-prata text-2xl md:text-3xl text-[#f3e5ab] mt-4 mb-2">
               Entrez par la grande porte
             </h3>
