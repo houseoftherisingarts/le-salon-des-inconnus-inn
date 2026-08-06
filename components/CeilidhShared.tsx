@@ -1527,7 +1527,7 @@ const TeamCard: React.FC<{
             </div>
           )}
 
-          {/* Logged in — support member only */}
+          {/* Logged in: support member only */}
           {user && !isUserPrimary && isUserSupport && (
             <div className="flex gap-3 mb-4">
               <button
