@@ -3293,7 +3293,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                       </div>
                     </section>
 
-                    {/* ── 6b. PRESENCE TIMELINE — wrapped in glass card so the timeline stays
+                    {/* ── 6b. PRESENCE TIMELINE: wrapped in glass card so the timeline stays
                             readable against any background image bleed-through */}
                     {allRegistrations.length > 0 && (
                       <section className="pb-16 px-6 md:px-12 lg:px-20">
