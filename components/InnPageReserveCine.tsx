@@ -1003,7 +1003,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-3 max-w-[1500px] mx-auto">
-            {/* Kitchen — left. Now an external link to the chef's own site
+            {/* Kitchen, left. Now an external link to the chef's own site
                 (mapchef.ca). The internal /cuisine page still exists as an
                 emergency fallback but is excluded from the sitemap. */}
             <a
