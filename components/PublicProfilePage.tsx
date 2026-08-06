@@ -172,7 +172,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
   // accent bar at the top of the profile so visiting members can tell the
   // artist's preferred aesthetic at a glance.
   const [artistTheme, setArtistTheme] = useState<string | null>(null);
-  // Social links — collected during the Welcome wizard. Plain string[]:
+  // Social links: collected during the Welcome wizard. Plain string[]:
   // each entry is a URL; the service is detected at render time via
   // detectSocialService below.
   const [socialLinks, setSocialLinks] = useState<string[]>([]);
