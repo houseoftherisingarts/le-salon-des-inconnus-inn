@@ -779,7 +779,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 </div>
             )}
 
-            {/* Body — keyed so React remounts and the entry animation fires.
+            {/* Body: keyed so React remounts and the entry animation fires.
                 viewer-body fade only runs after the first navigation; the
                 initial WELCOME render stays static so the inner brand can
                 animate uninterrupted. */}
