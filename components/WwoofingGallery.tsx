@@ -4,7 +4,7 @@ import React from 'react';
 // Wwoofing gallery: a quiet documentary wall of the community's black-and-white
 // photoshoot. Editorial masonry (CSS columns), so every photo keeps its natural
 // ratio (no crop, no squish). Site dark ground #050505, muted gold #c5a059,
-// home-style slow hover-zoom. Balanced selection: women, crews, hands, fire —
+// home-style slow hover-zoom. Balanced selection: women, crews, hands, fire,
 // not only the same person.
 // ─────────────────────────────────────────────────────────────────────────────
 
