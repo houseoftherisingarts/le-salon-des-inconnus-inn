@@ -124,7 +124,7 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* III — inquiry */}
+        {/* III: inquiry */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
           <SectionLabel numeral="III" label={t('Request a proposal', 'Demander une soumission')} />
           <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-center">
