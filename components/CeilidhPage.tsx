@@ -3092,7 +3092,7 @@ const PracticalChapterBody: React.FC<{
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// LoginModal — shown the first time a user clicks any chapter, OR whenever they
+// LoginModal: shown the first time a user clicks any chapter, OR whenever they
 // click a locked chapter while signed out. Wires the "Continuer avec Google"
 // button to a real Firebase signInWithPopup flow (with redirect fallback)
 // so chapters that touch Firestore (team picker, room picker, kanban) can
