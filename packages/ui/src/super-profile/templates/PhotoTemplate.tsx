@@ -16,7 +16,7 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, fallbackDisplay
     const works = config.works ?? [];
     const displayName = config.displayName || fallbackDisplayName || config.username;
 
-    // Tile count for the mosaic — repeat the user's works if they only have
+    // Tile count for the mosaic, repeat the user's works if they only have
     // a few, so the wall reads as full rather than thin. Cap at 12 tiles.
     const tileCount = Math.min(12, Math.max(works.length, works.length > 0 ? 6 : 0));
     const tiles = Array.from({ length: tileCount }, (_, i) => works[i % works.length]).filter(Boolean);
