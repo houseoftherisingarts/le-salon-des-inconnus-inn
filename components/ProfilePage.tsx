@@ -1308,7 +1308,7 @@ const MyCeilidhPanel: React.FC<{
         </div>
       </div>
 
-      {/* Chat rooms — general + team. Mirror the Ceilidh page chats so the
+      {/* Chat rooms: general + team. Mirror the Ceilidh page chats so the
           conversation lives wherever the member is. */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ChatRoom
