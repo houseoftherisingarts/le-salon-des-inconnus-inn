@@ -129,7 +129,7 @@ export const PetiteMonnaiePage: React.FC<PetiteMonnaiePageProps> = ({ onNavigate
         </div>
       </header>
 
-      {/* facts — full-bleed band, left-aligned */}
+      {/* facts: full-bleed band, left-aligned */}
       <div className="pm-reveal grid grid-cols-2 md:grid-cols-4 border-y border-[#dcb055]/15">
         {PM_INTRO.facts.map((f, i) => (
           <div key={f.label}
