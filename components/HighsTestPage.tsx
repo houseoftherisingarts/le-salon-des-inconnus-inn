@@ -330,7 +330,7 @@ function PhotoFlythrough({ progressRef }: { progressRef: React.MutableRefObject<
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// Hextech portal — large, dramatic. Hidden until scroll reaches 0.82.
+// Hextech portal: large, dramatic. Hidden until scroll reaches 0.82.
 // Gold rim, brass rune ticks, cyan crystal core with hex distance falloff.
 // ─────────────────────────────────────────────────────────────────────────
 function HextechPortal({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
