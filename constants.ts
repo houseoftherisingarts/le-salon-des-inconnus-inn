@@ -43,7 +43,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     title_fr: "L'Écrivaine",
     type: "Themed Room",
     type_fr: "Chambre Thématique",
-    description: "A literary selection, a writing desk, and craft papers — this room is decorated with a typewriter and writing artifacts.",
+    description: "This room is decorated with a typewriter and writing artifacts: a literary selection, a writing desk, and craft papers.",
     description_fr: "Une sélection litéraire, un pupitre d'écriture et des papiers d'artisanat, cette chambre est décorée avec une machine à écrire et des artefacts d'écriture.",
     guests: 2,
     maxGuests: 3,
