@@ -471,7 +471,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* Floating apply — lets the visitor act from anywhere on this long page. */}
+      {/* Floating apply: lets the visitor act from anywhere on this long page. */}
       {scrolled && !hasApplied && !showForm && (
         <button onClick={handleCta} className="comm-fab font-inter uppercase" aria-label={t('Apply for the place', 'Postuler pour la place')}>
           {t('Apply', 'Postuler')}
