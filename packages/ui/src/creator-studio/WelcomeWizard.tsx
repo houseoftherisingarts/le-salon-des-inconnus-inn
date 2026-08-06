@@ -1086,7 +1086,7 @@ const StepDone: React.FC<{ language: 'EN' | 'FR'; displayName: string }> = ({ la
     const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
     return (
         <div className="text-center relative">
-            {/* Final flourish — a soft expanding halo behind the headline */}
+            {/* Final flourish: a soft expanding halo behind the headline */}
             <div
                 aria-hidden
                 className="absolute inset-0 pointer-events-none"
