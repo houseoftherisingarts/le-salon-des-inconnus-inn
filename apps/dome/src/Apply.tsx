@@ -272,7 +272,7 @@ export default function Apply() {
 
         {step === 'form' && (
           <motion.div key="form" {...stepMotion} className={`${glass} p-6 md:p-10`}>
-            <Eyebrow>Étape 3 · Ta candidature</Eyebrow>
+            <Eyebrow>Étape 3 · Votre candidature</Eyebrow>
             <h3 className="font-prata text-2xl md:text-3xl text-[#f3e5ab] mt-4 mb-8">
               Ce que vos mains veulent faire
             </h3>
