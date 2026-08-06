@@ -418,7 +418,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                 key={`${stepIndex}-${direction}`}
                 className={`relative z-10 w-full h-full flex items-center justify-center px-6 ${direction === 'FWD' ? 'welcome-bubble-fwd' : 'welcome-bubble-back'}`}
             >
-                {/* Halo bloom — pulses outward from the bubble's anchor at
+                {/* Halo bloom: pulses outward from the bubble's anchor at
                     the start of the reveal. Gives the wipe its 'liquid
                     glass' warmth without needing a shader. */}
                 <div
