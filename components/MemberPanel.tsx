@@ -142,7 +142,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
   return (
     <div ref={dropdownRef} className="relative">
 
-      {/* ── Avatar chip — click goes straight to the dashboard ── */}
+      {/* ── Avatar chip: click goes straight to the dashboard ── */}
       <button
         onClick={goToDashboard}
         className="flex items-center gap-2 bg-black/40 backdrop-blur-md border rounded-full px-2 py-1 transition-all duration-200 border-white/10 hover:border-[#d4af37]/40"
