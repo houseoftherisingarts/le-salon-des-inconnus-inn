@@ -2921,8 +2921,8 @@ const PracticalChapterBody: React.FC<{
 
   const faqs = [
     { qEn: 'Do I need to be on a team?',     qFr: "Dois-je faire partie d'une équipe ?",
-      aEn: "Yes — every participant joins one team. It's ~6 hours of shared work per day, the heart of the gathering.",
-      aFr: "Oui — tout le monde rejoint une équipe. C'est ~6 heures de travail partagé par jour, le cœur du rassemblement." },
+      aEn: "Yes: every participant joins one team. It's ~6 hours of shared work per day, the heart of the gathering.",
+      aFr: "Oui : tout le monde rejoint une équipe. C'est ~6 heures de travail partagé par jour, le cœur du rassemblement." },
     { qEn: 'Can children come?',             qFr: 'Les enfants sont-ils bienvenus ?',
       aEn: "Yes, with a parent or guardian. Reach out so we can plan their bed and meals.",
       aFr: "Oui, accompagnés d'un parent ou tuteur. Écrivez-nous pour qu'on prévoie lit et repas." },
