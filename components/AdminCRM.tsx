@@ -1927,7 +1927,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           <MessagesSection wwoofers={wwoofers} adminUid={user!.uid} adminEmail={user!.email ?? ''} />
         )}
 
-        {/* ── Médiathèque — Firebase Storage browser under admin/media/. */}
+        {/* ── Médiathèque: Firebase Storage browser under admin/media/. */}
         {tab === 'media' && (
           <MediaSection />
         )}
