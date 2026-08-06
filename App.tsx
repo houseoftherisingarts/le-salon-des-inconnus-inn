@@ -40,7 +40,7 @@ const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default
 // /c/{uid}/{slug}: public read-only call sheet, shared by a member with their
 // crew/figurants. No auth required (Firestore rule grants read when shared).
 const CallSheetPublicView = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CallSheetPublicView })));
-// Maestro-tier /{username} portfolio page — dispatched when the URL path is a
+// Maestro-tier /{username} portfolio page: dispatched when the URL path is a
 // slug that doesn't match any reserved route. Loaded lazily so we don't
 // pull three.js / @react-three onto every other page.
 const SuperProfilePage  = lazy(() => import('./components/SuperProfilePage').then(m => ({ default: m.SuperProfilePage })));
