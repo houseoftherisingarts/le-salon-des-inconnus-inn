@@ -5513,7 +5513,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             </div>
                                         </section>
 
-                                        {/* 02 — RESIDENCY-specific: tier + dates */}
+                                        {/* 02. RESIDENCY-specific: tier + dates */}
                                         {collabForm === 'RESIDENCY' && (
                                             <section>
                                                 <FormSectionHeader n="02" en="Stay & tier" fr="Séjour & palier"

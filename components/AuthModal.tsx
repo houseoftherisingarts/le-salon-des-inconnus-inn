@@ -35,7 +35,7 @@ export interface MemberProfile {
   membershipType: MembershipType;
   isAdmin: boolean;
   createdAt: any;
-  consentDate: string;  // ISO date — Law 25 audit trail
+  consentDate: string;  // ISO date, Law 25 audit trail
   consentVersion: string;
 }
 
