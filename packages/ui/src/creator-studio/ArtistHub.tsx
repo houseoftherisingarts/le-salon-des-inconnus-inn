@@ -1208,7 +1208,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // Access level derives from real auth: signed-in user → MEMBER; anonymous
     // → GUEST. The local toggle (line ~1749) still lets users preview the
     // GUEST experience even when authed. When auth state changes from outside
-    // (login / logout), only flip the access level — never override the
+    // (login / logout), only flip the access level, never override the
     // active tab, so the WELCOME viewer hero stays put.
     const [accessLevel, setAccessLevel] = useState<AccessLevel>(currentUser ? 'MEMBER' : 'GUEST');
     useEffect(() => {
