@@ -7869,7 +7869,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     return (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fadeIn">
                         <div className={`w-full max-w-4xl relative shadow-2xl max-h-[92vh] flex flex-col ${formStyles.container}`}>
-                            {/* Pinned close — sits outside the scrollable body so it's
+                            {/* Pinned close: sits outside the scrollable body so it's
                                 always reachable, even when the article is long. */}
                             <button
                                 onClick={() => setIsWritingModalOpen(false)}
