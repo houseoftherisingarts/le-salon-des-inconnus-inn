@@ -1812,7 +1812,7 @@ const TeamsChapterBody: React.FC<{
         }}
       >
         <div className="flex items-center gap-4">
-          {/* Facebook glyph — discreet, gold-tinted */}
+          {/* Facebook glyph: discreet, gold-tinted */}
           <span
             aria-hidden
             className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center"
