@@ -1393,7 +1393,7 @@ const DETAIL: ScheduleDay[] = [
       { time: '15h', kind: 'arrival', titleEn: 'Optional early arrival', titleFr: 'Arrivée anticipée (facultative)',
         detailEn: 'Settle into your space at your own pace.', detailFr: 'Installez-vous tranquillement dans votre espace.' },
       { time: '19h', kind: 'meal', titleEn: 'Welcome supper', titleFr: "Souper d'accueil",
-        detailEn: 'A simple shared meal — for those who arrive Thursday.', detailFr: 'Un repas partagé — pour celles et ceux qui arrivent jeudi.' },
+        detailEn: 'A simple shared meal, for those who arrive Thursday.', detailFr: 'Un repas partagé, pour celles et ceux qui arrivent jeudi.' },
       { time: '21h', kind: 'rest', titleEn: 'Fire', titleFr: 'Feu',
         detailEn: 'Around the fire pit. Bring a blanket.', detailFr: 'Autour du feu. Apportez une couverture.' },
     ] },

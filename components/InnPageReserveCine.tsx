@@ -1242,7 +1242,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           50%  { transform: rotateY(0.4deg)  rotateX(0.6deg); }
           100% { transform: rotateY(2.6deg)  rotateX(-1deg); }
         }
-        /* Cover-only ambient float — one animated layer instead of animating the 12-card stack.
+        /* Cover-only ambient float: one animated layer instead of animating the 12-card stack.
            Pauses when hovered (stable click target) and when the deck is open (handled by
            Tailwind opacity:0 on the cover, plus the inline transform also takes over). */
         .deck-cover {
