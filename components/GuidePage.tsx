@@ -313,7 +313,7 @@ export const GuidePage: React.FC<GuidePageProps> = ({ onNavigate, language }) =>
         </div>
       </header>
 
-      {/* Hero — push below the fixed header */}
+      {/* Hero: push below the fixed header */}
       <div className="relative h-[45vh] min-h-[300px] mt-14 flex items-end overflow-hidden">
         <img
           src={getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1400)}
