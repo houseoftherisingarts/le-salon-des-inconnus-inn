@@ -6056,11 +6056,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     </p>
                                                 </section>
 
-                                                {/* 07 — SPECIFIC QUESTIONS */}
+                                                {/* 07. SPECIFIC QUESTIONS */}
                                                 <section>
                                                     <SectionHeader n="07" en="Specific questions" fr="Questions précises"
-                                                        helpEn="Optional — but the more pointed, the more useful."
-                                                        helpFr="Optionnel — mais plus c'est précis, plus c'est utile." />
+                                                        helpEn="Optional, but the more pointed, the more useful."
+                                                        helpFr="Optionnel, mais plus c'est précis, plus c'est utile." />
                                                     <textarea
                                                         rows={3}
                                                         value={newSubmission.specificQuestions}

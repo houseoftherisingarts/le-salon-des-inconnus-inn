@@ -211,7 +211,7 @@ export const BlogPostOverlay: React.FC<BlogPostOverlayProps> = ({ item, language
                 'linear-gradient(180deg, rgba(8,6,4,0.45) 0%, rgba(8,6,4,0.15) 30%, rgba(8,6,4,0.7) 78%, #0a0807 100%)',
             }}
           />
-          {/* Close button — fixed-position so always reachable */}
+          {/* Close button: fixed-position so always reachable */}
           <button
             type="button"
             onClick={onClose}
