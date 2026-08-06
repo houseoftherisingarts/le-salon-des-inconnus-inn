@@ -134,7 +134,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         sections: [
             { title_fr: "L'expérience", title_en: "What to expect",
               body_fr: "Baignade dans une eau fraîche, pique-nique sur la rive, cueillette sauvage de bleuets en juillet. Pas d'équipement, pas de stationnement officiel : apportez ce qu'il vous faut et repartez avec.",
-              body_en: "Swimming in cool water, a picnic on the bank, wild blueberry foraging in July. No facilities, no official parking — bring what you need and take it back out." },
+              body_en: "Swimming in cool water, a picnic on the bank, wild blueberry foraging in July. No facilities, no official parking: bring what you need and take it back out." },
             { title_fr: "Esprit du lieu", title_en: "Spirit of the place",
               body_fr: "Ici, le silence est roi. C'est un endroit pour fuir le bruit, lire, méditer, ou simplement écouter le vent dans les arbres. Respectez la nature : pas de feu, pas de déchets.",
               body_en: "Here, silence rules. It's a place to escape noise, read, meditate, or simply listen to the wind in the trees. Respect the land: no fires, no trash left behind." },
