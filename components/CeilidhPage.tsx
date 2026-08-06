@@ -2015,7 +2015,7 @@ const TeamsChapterBody: React.FC<{
                   this card. Pre-fills with the days they already had on
                   this team (if any) or with the days not yet on any team
                   (otherwise). Days picked here are reassigned away from
-                  any other primary team — this is how a member can be on
+                  any other primary team: this is how a member can be on
                   Cuisine Friday and Arts Saturday. */}
               {viewing && !full && (() => {
                 const myThisTeam = myTeams.find((m) => m.teamId === team.id);
