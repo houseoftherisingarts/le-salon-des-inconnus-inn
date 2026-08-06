@@ -1420,7 +1420,7 @@ const DETAIL: ScheduleDay[] = [
       { time: '8h',    kind: 'meal', titleEn: 'Breakfast', titleFr: 'Déjeuner' },
       { time: '9h',    kind: 'work', titleEn: 'Beginning of woofing', titleFr: 'Début du woofing',
         detailEn: 'The whole crowd starts together.', detailFr: 'Tout le monde commence ensemble.' },
-      { time: '13h',   kind: 'meal', titleEn: 'Lunch — picnic baskets', titleFr: 'Dîner — paniers à pique-nique' },
+      { time: '13h',   kind: 'meal', titleEn: 'Lunch: picnic baskets', titleFr: 'Dîner : paniers à pique-nique' },
       { time: '19h',   kind: 'meal', titleEn: 'Festive supper', titleFr: 'Souper festif' },
       { time: '21h',   kind: 'art',  titleEn: 'The Grand Ceilidh', titleFr: 'Le Grand Ceilidh',
         detailEn: 'Music, dance, theatre. The big night.', detailFr: 'Musique, danse, théâtre. La grande soirée.' },

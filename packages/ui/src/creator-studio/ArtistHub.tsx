@@ -3324,7 +3324,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Delete — removes the Firestore doc only. Cover cleanup is best-effort
+    // Delete: removes the Firestore doc only. Cover cleanup is best-effort
     // omitted; admin can sweep storage later.
     const handleDeleteArticle = async (article: HubArticle) => {
         if (!currentUser?.uid || !article.id) return;

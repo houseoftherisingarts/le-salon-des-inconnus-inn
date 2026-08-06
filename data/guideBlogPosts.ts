@@ -187,7 +187,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'iroquois': {
         _draft: true,
         intro_fr: "Le sentier de la rivière Iroquois est une promenade discrète mais marquante : une marche douce sous une lumière filtrée, le long d'une rivière qui chante entre les pierres, dans une forêt dense qui absorbe les bruits du monde.",
-        intro_en: "The Rivière Iroquois trail is a quiet but memorable walk — a gentle hike under filtered light, along a river that sings between stones, through dense forest that absorbs the noise of the world.",
+        intro_en: "The Rivière Iroquois trail is a quiet but memorable walk: a gentle hike under filtered light, along a river that sings between stones, through dense forest that absorbs the noise of the world.",
         sections: [
             { title_fr: "Le sentier", title_en: "The trail",
               body_fr: "Le tracé longe l'eau presque tout le long. Le terrain est facile, sans dénivelé important, ce qui en fait un excellent choix pour une marche méditative ou une sortie familiale. Une chute discrète ponctue le parcours.",
