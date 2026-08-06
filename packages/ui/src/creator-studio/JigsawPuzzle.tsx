@@ -28,7 +28,7 @@ interface Props {
     artwork: PuzzleArtwork;
     /** How many pieces to show as filled (0..PUZZLE_PIECES_TOTAL). */
     revealed: number;
-    /** Reveal order — which piece index gets shown at each step. Stable per
+    /** Reveal order: which piece index gets shown at each step. Stable per
      *  artwork so the same coin earns the same next visible piece. */
     revealOrderHint?: number[];
     /** CSS size of the rendered puzzle. Default 320px square. */

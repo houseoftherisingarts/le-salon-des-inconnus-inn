@@ -3046,7 +3046,7 @@ const PracticalChapterBody: React.FC<{
         })}
       </div>
 
-      {/* Real interactive features — wired to the same Firestore collections as
+      {/* Real interactive features: wired to the same Firestore collections as
           /ceilidh proper. Clicking any action while signed out prompts the
           parent's auth gate (same modal as the chapter cards). */}
       <div className="rounded-2xl overflow-hidden p-2 md:p-3" style={cardSurface}>
