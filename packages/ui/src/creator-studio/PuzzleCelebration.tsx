@@ -184,7 +184,7 @@ export const PuzzleCelebration: React.FC<Props> = ({
                     />
                 </div>
 
-                {/* Clean artwork — fades in at FUSE, takes over for the flight. */}
+                {/* Clean artwork: fades in at FUSE, takes over for the flight. */}
                 <img
                     src={artwork.src}
                     alt=""
