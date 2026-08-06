@@ -7,7 +7,7 @@
 // Used by PhotoTemplate as the centerpiece behind the artist's cutout.
 //
 // Notes vs the source snippet:
-//   • No Next.js "use client" — Vite project, top-level component.
+//   • No Next.js "use client": Vite project, top-level component.
 //   • SSR-safe: aspect ratio is loaded via Image() in an effect, Canvas is
 //     only mounted after dimensions resolve, so React's hydration doesn't
 //     run any browser-only code at import time.
