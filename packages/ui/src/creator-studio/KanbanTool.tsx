@@ -1098,7 +1098,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                 <h3 className="font-cinzel text-white text-base mb-2 uppercase tracking-widest">2. {t('Limit WIP', 'Limiter le WIP')}</h3>
                                 <p>{t(
                                     'No more than 3 cards in Flow at once. If you try to do everything, you finish nothing. The board enforces this with a red warning.',
-                                    'Pas plus de 3 cartes en Flow à la fois. Si tu essaies tout, tu termines rien. Le tableau te le rappelle en rouge.',
+                                    'Pas plus de 3 cartes en Flow à la fois. À vouloir tout faire, vous ne finissez rien. Le tableau vous le rappelle en rouge.',
                                 )}</p>
                             </section>
                             <section>
