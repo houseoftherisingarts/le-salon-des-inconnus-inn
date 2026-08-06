@@ -177,7 +177,7 @@ export const WelcomeWizard: React.FC<Props> = ({
         const now = ctx.currentTime;
         // Two-tone glide: rising 5th for forward, falling 5th for back,
         // bright triad chord for done. Detuned slightly so it doesn't sound
-        // synthetic — closer to a tuned bell than a square beep.
+        // synthetic: closer to a tuned bell than a square beep.
         const notes = kind === 'DONE'
             ? [523, 659, 784]                  // C5 + E5 + G5
             : kind === 'FWD'

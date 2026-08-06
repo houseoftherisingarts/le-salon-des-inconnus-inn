@@ -1535,7 +1535,7 @@ export const ManorRoomsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode
                     </span>
                 </div>
                 <div className={`h-8 w-px ${vibe === 'HOSTEL' ? 'bg-[#c5a059]/50' : vibe === 'SHIRE' ? 'bg-[#dcb055]/50' : 'bg-white/20'}`}></div>
-                {/* Branch fan — DESKTOP: 5 drop-lines over the 5-across card row. */}
+                {/* Branch fan, DESKTOP: 5 drop-lines over the 5-across card row. */}
                 <div className={`hidden md:block w-[82%] h-px relative ${branchColor}`}>
                     <div className={`absolute top-0 left-0 w-px h-8 ${branchColor}`}></div>
                     <div className={`absolute top-0 left-1/4 w-px h-8 ${branchColor}`}></div>

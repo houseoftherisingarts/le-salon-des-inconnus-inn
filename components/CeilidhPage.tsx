@@ -1466,7 +1466,7 @@ const ProgrammeChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language })
           className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em] mb-4"
           style={{ fontSize: 'clamp(1.7rem, 3.4vw, 2.6rem)' }}
         >
-          {t('21 — 25 May, day by day', '21 — 25 mai, jour par jour')}
+          {t('21–25 May, day by day', '21–25 mai, jour par jour')}
         </h3>
       </header>
 

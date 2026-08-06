@@ -151,7 +151,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "Mise à l'eau au lac Gagnon (Duhamel), puis 15-30 minutes de pagaie selon votre point de départ. La traversée est généralement calme; vérifiez le vent avant de partir.",
               body_en: "Launch from Lac Gagnon (Duhamel), then 15-30 minutes of paddling depending on your starting point. The crossing is usually calm; check the wind before you head out." },
             { title_fr: "Sur place", title_en: "Once there",
-              body_fr: "Lisez face à l'immensité, baignez-vous dans une eau limpide, faites une sieste au soleil. Aucun service — apportez tout, repartez avec tout.",
+              body_fr: "Lisez face à l'immensité, baignez-vous dans une eau limpide, faites une sieste au soleil. Aucun service : apportez tout, repartez avec tout.",
               body_en: "Read facing the open lake, swim in clear water, nap in the sun. No services — pack in, pack out." },
         ],
         schema: { type: "TouristAttraction", address: "Lac Gagnon, Duhamel, QC, Canada" },
