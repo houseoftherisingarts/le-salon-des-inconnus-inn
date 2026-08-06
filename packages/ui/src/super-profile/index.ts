@@ -1,4 +1,4 @@
-// Super Profile barrel — public surface of the feature.
+// Super Profile barrel: public surface of the feature.
 
 export type {
     SuperProfileConfig,
