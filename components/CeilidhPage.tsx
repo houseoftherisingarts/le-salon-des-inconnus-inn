@@ -2576,7 +2576,7 @@ const TeamMembersPanel: React.FC<{
                     <span className="font-cinzel text-neutral-500 text-[8px] uppercase tracking-[0.3em]">{t('support', 'soutien')}</span>
                   )}
                 </div>
-                {/* Day pills — Fri / Sat / Sun / Mon, gold when this person is in */}
+                {/* Day pills: Fri / Sat / Sun / Mon, gold when this person is in */}
                 <div className="flex items-center gap-1.5 mt-1.5">
                   {WORK_DAYS_TEST2.map((d) => {
                     const on = m.days.includes(d.id);

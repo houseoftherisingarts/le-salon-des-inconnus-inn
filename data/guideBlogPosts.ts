@@ -398,7 +398,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
 
     'mechoui': {
         _draft: true,
-        intro_fr: "Le Méchoui de Montpellier est un événement légendaire — une fête populaire bruyante, festive, pleine de fumée et de musique. Chaque été, tout le village s'arrête pour cet agape collectif. C'est une expérience culturelle intense, authentiquement québécoise, qui ne ressemble à aucune autre.",
+        intro_fr: "Le Méchoui de Montpellier est un événement légendaire : une fête populaire bruyante, festive, pleine de fumée et de musique. Chaque été, tout le village s'arrête pour cet agape collectif. C'est une expérience culturelle intense, authentiquement québécoise, qui ne ressemble à aucune autre.",
         intro_en: "The Méchoui de Montpellier is a legendary event — a noisy, festive, smoke-and-music popular feast. Every summer, the entire village comes to a halt for this collective gathering. It's an intense, authentically Quebecois cultural experience that resembles nothing else.",
         sections: [
             { title_fr: "L'événement", title_en: "The event",
