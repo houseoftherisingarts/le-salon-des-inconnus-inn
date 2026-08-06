@@ -1331,8 +1331,8 @@ const MyCeilidhPanel: React.FC<{
                 }`
               : t('Team chat', 'Salon d’équipe')
           }
-          emptyEn="No messages yet — start the conversation."
-          emptyFr="Pas de message — lancez la discussion."
+          emptyEn="No messages yet. Start the conversation."
+          emptyFr="Pas de message. Lancez la discussion."
           language={language}
           user={user}
           onRequireAuth={() => {}}
