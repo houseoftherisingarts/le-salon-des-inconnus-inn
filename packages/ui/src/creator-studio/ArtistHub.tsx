@@ -4058,7 +4058,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 <p className="text-neutral-500 text-xs mt-3 px-4">Personal Scrum Board for managing artistic chaos.</p>
                             </div>
 
-                            {/* Tool: Call Sheets — per-user shoot planner. Build call
+                            {/* Tool: Call Sheets: per-user shoot planner. Build call
                                 sheets, shot lists & crew calls, export to PDF, share
                                 with the team. Studio or clean skin per sheet. */}
                             <div

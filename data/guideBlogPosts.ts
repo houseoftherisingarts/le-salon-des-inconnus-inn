@@ -288,7 +288,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_en: "Local, seasonal products, careful presentation, attentive service. The menu shifts with the year. The kind of place where every plate is considered, and you can feel it." },
             { title_fr: "Le cadre", title_en: "The setting",
               body_fr: "Salle chaleureuse, intimiste, parfaite pour un repas en couple ou une petite tablée. Réservation fortement recommandée le week-end.",
-              body_en: "A warm, intimate room — perfect for a couple or a small table. Reservation strongly recommended on weekends." },
+              body_en: "A warm, intimate room, perfect for a couple or a small table. Reservation strongly recommended on weekends." },
         ],
         schema: { type: "Restaurant", address: "Montebello, QC, Canada" },
     },
