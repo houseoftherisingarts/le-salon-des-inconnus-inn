@@ -838,7 +838,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
                         borderRadius: '14px',
                         boxShadow: '0 16px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)',
                         zIndex: spacesOpen ? 1 : SPACES_DATA.length - depth,
-                        // Hide the per-card content when closed to save paint cost — the cover
+                        // Hide the per-card content when closed to save paint cost: the cover
                         // hides the whole stack visually anyway. Visibility flips with a delay so
                         // the open transition reveals content as cards spread.
                         pointerEvents: spacesOpen ? 'auto' : 'none',
