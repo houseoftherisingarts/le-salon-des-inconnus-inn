@@ -2985,7 +2985,7 @@ const PracticalChapterBody: React.FC<{
             { en: 'Carpool board — share rides with other participants',         fr: 'Tableau de covoiturage — partagez avec d\u2019autres' },
             { en: 'Train to Montebello, then a 30-min drive',                     fr: "Train jusqu'à Montebello, puis 30 min en voiture" },
             { en: 'Bus to Mont-Tremblant, then a regional connection',            fr: 'Bus jusqu\u2019à Mont-Tremblant, puis une correspondance régionale' },
-            { en: "Drive — there's plenty of parking on the property",            fr: 'Voiture — beaucoup de stationnement sur place' },
+            { en: "Drive: there's plenty of parking on the property",            fr: 'Voiture : beaucoup de stationnement sur place' },
           ].map((row, i) => (
             <li key={i} className="flex items-start gap-3">
               <span className="text-[#c5a059] shrink-0 mt-0.5" aria-hidden>—</span>

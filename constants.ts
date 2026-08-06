@@ -475,7 +475,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'aventure pure",
                 title: "Meute Tanwen",
                 location: "Montpellier",
-                description: "La meute d'huskies sibériens d'Éric Pichette — balades de traîneau d'une heure où vous pilotez vous-même 4 chiens à travers des sentiers forestiers vallonnés de Montpellier. Le contact avec les chiens est intense, chaleureux, inoubliable. Une expérience hivernale comme nulle part ailleurs en région.",
+                description: "La meute d'huskies sibériens d'Éric Pichette : balades de traîneau d'une heure où vous pilotez vous-même 4 chiens à travers des sentiers forestiers vallonnés de Montpellier. Le contact avec les chiens est intense, chaleureux, inoubliable. Une expérience hivernale comme nulle part ailleurs en région.",
                 link: "https://www.tanwen.qc.ca/en",
                 image: "/media/guide/meute-tanwen.jpg",
                 isFavorite: true,
