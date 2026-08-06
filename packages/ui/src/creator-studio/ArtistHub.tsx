@@ -2599,7 +2599,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 }
                 try {
                     await updateDoc(doc(db, 'puzzleGifts', g.id), { reclaimed: true });
-                } catch { /* ignore — will retry on next render */ }
+                } catch { /* ignore: will retry on next render */ }
             }
             if (changed) {
                 setDisplayCase(nextDisplayCase);

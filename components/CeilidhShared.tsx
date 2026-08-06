@@ -2825,7 +2825,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                 >
                   {language === 'FR' ? panel.fr : panel.en}
                 </span>
-                {/* Click hint — small pulsing dot, gold, draws the eye */}
+                {/* Click hint: small pulsing dot, gold, draws the eye */}
                 <span
                   aria-hidden
                   className="block w-1.5 h-1.5 rounded-full bg-[#d4af37] animate-pulse group-hover:scale-150 transition-transform duration-300"
