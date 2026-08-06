@@ -3909,7 +3909,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 <div className={`fixed inset-0 z-[-10] ${currentStyles.bg} transition-colors duration-500`}></div>
             )}
 
-            {/* Puzzle completion overlay — fixed, pointer-events-none.
+            {/* Puzzle completion overlay: fixed, pointer-events-none.
                 Lives at the document level so it floats above the puzzle
                 section's clip/overflow while flying to the display case. */}
             {puzzleCelebration && (
