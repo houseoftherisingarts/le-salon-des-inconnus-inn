@@ -2079,10 +2079,10 @@ const TeamsChapterBody: React.FC<{
                       {totalSelected === 0
                         ? t('Pick at least one day', 'Choisissez au moins un jour')
                         : isUpdate
-                          ? t(`Update — ${totalSelected} day${totalSelected > 1 ? 's' : ''}`,
-                              `Mettre à jour — ${totalSelected} jour${totalSelected > 1 ? 's' : ''}`)
-                          : t(`Choose this team — ${totalSelected} day${totalSelected > 1 ? 's' : ''}`,
-                              `Choisir cette équipe — ${totalSelected} jour${totalSelected > 1 ? 's' : ''}`)}
+                          ? t(`Update (${totalSelected} day${totalSelected > 1 ? 's' : ''})`,
+                              `Mettre à jour (${totalSelected} jour${totalSelected > 1 ? 's' : ''})`)
+                          : t(`Choose this team (${totalSelected} day${totalSelected > 1 ? 's' : ''})`,
+                              `Choisir cette équipe (${totalSelected} jour${totalSelected > 1 ? 's' : ''})`)}
                     </button>
                     {joinError && (
                       <p className="mt-2 font-josefin text-[11px] text-red-400/90 text-center">{joinError}</p>
