@@ -5931,7 +5931,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     </div>
                                                 </section>
 
-                                                {/* 03 — STAGE — horizontal stepper */}
+                                                {/* 03. STAGE: horizontal stepper */}
                                                 <section>
                                                     <SectionHeader n="03" en="Stage" fr="Étape"
                                                         helpEn="Where in its life cycle is the piece?"
