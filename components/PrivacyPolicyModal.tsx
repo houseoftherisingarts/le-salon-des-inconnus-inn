@@ -82,7 +82,7 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyModalProps> = ({ language
                 <p>Le responsable de la protection des renseignements personnels est :</p>
                 <div className="mt-2 pl-4 border-l border-[#d4af37]/30">
                   <p className="text-white">{PRIVACY_OFFICER}</p>
-                  <p>Le Salon des Inconnus — Maison Favier</p>
+                  <p>Le Salon des Inconnus · Maison Favier</p>
                   <p>{ADDRESS}</p>
                   <p>{CONTACT_EMAIL} · {CONTACT_PHONE}</p>
                   <p className="text-neutral-600 text-xs mt-1">Disponible entre 10h et 19h</p>
@@ -180,7 +180,7 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyModalProps> = ({ language
                 <p>Our privacy officer is:</p>
                 <div className="mt-2 pl-4 border-l border-[#d4af37]/30">
                   <p className="text-white">{PRIVACY_OFFICER}</p>
-                  <p>Le Salon des Inconnus — Maison Favier</p>
+                  <p>Le Salon des Inconnus · Maison Favier</p>
                   <p>{ADDRESS}</p>
                   <p>{CONTACT_EMAIL} · {CONTACT_PHONE}</p>
                   <p className="text-neutral-600 text-xs mt-1">Available between 10 AM and 7 PM</p>
