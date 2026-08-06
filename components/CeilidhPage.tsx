@@ -39,7 +39,7 @@ import {
 } from './CeilidhShared';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CeilidhPage — Avenue B: "Le Livret du Ceilidh"
+// CeilidhPage (Avenue B): "Le Livret du Ceilidh"
 // Cinematic chapter cards. 5 large landscape covers stack vertically; click
 // expands a chapter to fullscreen with its dense interactive content. A bottom
 // dock shows the 5 chapter seals — gold-filled when complete, hollow when not.
