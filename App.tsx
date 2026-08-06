@@ -548,7 +548,7 @@ const App: React.FC = () => {
           setCurrentUser(result.user);
           setMemberProfile(snap.data() as MemberProfile);
         } else {
-          // New user via redirect — need membership selection
+          // New user via redirect: need membership selection
           setCurrentUser(result.user);
           setRedirectPendingUser(result.user);
         }
