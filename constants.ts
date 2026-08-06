@@ -223,7 +223,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'incontournable",
                 title: "Plage du lac Simon",
                 location: "Duhamel / Chénéville",
-                description: "La plage publique du lac Simon — un lac de 74 km de circonférence et 45 m de profondeur, avec baignade familiale, quai municipal gratuit et sentiers forestiers autour de Duhamel. L'eau est d'une clarté remarquable; c'est le cœur de l'été dans la région.",
+                description: "La plage publique du lac Simon : un lac de 74 km de circonférence et 45 m de profondeur, avec baignade familiale, quai municipal gratuit et sentiers forestiers autour de Duhamel. L'eau est d'une clarté remarquable; c'est le cœur de l'été dans la région.",
                 link: "https://www.sepaq.com/pq/sim/",
                 image: "https://lac-simon.net/wp-content/uploads/2024/04/lac-simon-plage.jpeg",
                 isVip: true
