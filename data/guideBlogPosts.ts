@@ -562,7 +562,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
         intro_en: "Parc national de Plaisance, on the Ottawa River, is a bird sanctuary: 265 recorded species, spectacular spring goose migrations, and wetland trails offering a rare window onto the valley's ecosystem.",
         sections: [
             { title_fr: "Les migrations", title_en: "The migrations",
-              body_fr: "Au printemps, des milliers de bernaches font escale dans les marais du parc. Le spectacle est sonore autant que visuel — un événement à vivre au moins une fois.",
+              body_fr: "Au printemps, des milliers de bernaches font escale dans les marais du parc. Le spectacle est sonore autant que visuel : un événement à vivre au moins une fois.",
               body_en: "In spring, thousands of Canada geese stop in the park's marshes. The spectacle is as auditory as it is visual — an event to experience at least once." },
             { title_fr: "Sur place", title_en: "On site",
               body_fr: "Sentiers piétons et cyclables, location de kayaks et canots, observatoires d'oiseaux. Comptez une demi-journée pour bien profiter du parc.",

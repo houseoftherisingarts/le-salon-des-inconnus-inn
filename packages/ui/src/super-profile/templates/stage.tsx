@@ -62,7 +62,7 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
 };
 
 /**
- * Bottom-left dock — bio paragraph + social links + small chrome. Stays out
+ * Bottom-left dock: bio paragraph + social links + small chrome. Stays out
  * of the cutout's silhouette so it doesn't fight the focal point.
  */
 export const BottomDock: React.FC<{ config: SuperProfileConfig }> = ({ config }) => (

@@ -307,7 +307,7 @@ export const JigsawPuzzle: React.FC<Props> = ({
                     rx={2} ry={2}
                 />
 
-                {/* Revealed pieces — image clipped to each piece's path */}
+                {/* Revealed pieces: image clipped to each piece's path */}
                 {allPieces.map(p => {
                     const isRevealed = revealedSet.has(p.idx);
                     if (!isRevealed) return null;
