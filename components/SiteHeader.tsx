@@ -48,7 +48,7 @@ const ETRE: NavItem[] = [
 ];
 
 // The chronicles entry only appears once at least one post has been approved
-// and published in AdminCRM · Blog — before that, the blog stays unlisted.
+// and published in AdminCRM · Blog. Before that, the blog stays unlisted.
 const BLOG_NAV: NavItem = {
   view: 'BLOG', label_fr: 'Chroniques', label_en: 'Chronicles',
   desc_fr: 'Le carnet de l\'auberge', desc_en: 'The inn\'s notebook', icon: '📜',
