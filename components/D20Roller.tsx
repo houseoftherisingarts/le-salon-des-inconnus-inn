@@ -245,7 +245,7 @@ const Dice: React.FC<{
             <lineSegments geometry={edges}>
                 <lineBasicMaterial color="#c5a059" />
             </lineSegments>
-            {/* Number decals — one transparent plane per face, sitting just
+            {/* Number decals: one transparent plane per face, sitting just
                 above the surface and oriented outward. CanvasTexture means
                 the numbers paint synchronously, no font loading, no async. */}
             {faces.map((face, i) => {
