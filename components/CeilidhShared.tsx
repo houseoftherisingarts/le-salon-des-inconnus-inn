@@ -174,7 +174,7 @@ export const TEAMS: CeilidhTeamData[] = [
     description: 'Sort barn wood, remove nails, burn the unusable wood.',
     description_fr: 'Trier le bois de grange, retirer des clous, brûler le bois pu bon.' },
   { id: 'dehors',     name: 'Outdoors Team',        name_fr: 'Team Dehors',            emoji: '🪵', maxMembers: 4,
-    description: 'Build benches, fire pits, relaxation areas, wood storage, footbridges — outdoor crafting.',
+    description: 'Build benches, fire pits, relaxation areas, wood storage, footbridges: outdoor crafting.',
     description_fr: 'Créer des bancs, aménager les ronds de feu, des espaces de relaxation, construire des abris à bûches, fabriquer des ponceaux.' },
   { id: 'arts',       name: 'Performing Arts Team', name_fr: 'Team Arts de la Scène',  emoji: '🎵',
     description: 'Animate the community: music, murals, performance. Can be combined with other teams.',
