@@ -55,7 +55,7 @@ export interface InspirosphereUserVideo {
     /** One of INSPIROSPHERE_CATEGORIES, drives Conscious-mode filtering
      *  in the Voices tab once featured. */
     category: InspirosphereCategory;
-    /** Path inside the default Storage bucket. NOT a download URL — we
+    /** Path inside the default Storage bucket. NOT a download URL: we
      *  call getDownloadURL() at render time so the URL token is fresh. */
     storagePath: string;
     /** Optional poster image, also a Storage path. */
