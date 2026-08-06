@@ -697,7 +697,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
           </div>
         )}
 
-        {/* Videos — uploaded works from the Creator Studio. Always visible on
+        {/* Videos: uploaded works from the Creator Studio. Always visible on
             the public profile; view counts are deliberately omitted (admin
             sees them in the CRM). */}
         {videos.length > 0 && (
