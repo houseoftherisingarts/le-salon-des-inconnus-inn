@@ -260,7 +260,7 @@ const ProfileBlock: React.FC<{
                 { merge: true },
             );
         } catch {
-            // Non-fatal — error surfaces in the dossier's profileError state.
+            // Non-fatal: error surfaces in the dossier's profileError state.
         } finally {
             setUploading(false);
         }
