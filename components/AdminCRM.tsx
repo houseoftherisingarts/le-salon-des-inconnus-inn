@@ -755,8 +755,8 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     };
   }, [authed]);
 
-  // Toggle a member's curated-artist status. Writes members/{uid}/admin/flags
-  // — gated to admins by firestore.rules so users cannot self-promote.
+  // Toggle a member's curated-artist status. Writes members/{uid}/admin/flags,
+  // gated to admins by firestore.rules so users cannot self-promote.
   const toggleArtist = useCallback(async (uid: string, next: boolean) => {
     if (!db) return;
     try {

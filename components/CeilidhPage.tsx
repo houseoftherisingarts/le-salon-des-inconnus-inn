@@ -425,7 +425,7 @@ export const CeilidhPage: React.FC<Props> = ({
           </div>
         </div>
 
-        {/* Scroll cue — bottom-centered, fades in last */}
+        {/* Scroll cue: bottom-centered, fades in last */}
         <div className="ceilidh2-scroll absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10" aria-hidden>
           <span className="text-[#f3e5ab]/60 font-cinzel text-[9px] uppercase tracking-[0.5em]">
             {t('Scroll', 'Défiler')}
