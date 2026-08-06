@@ -333,7 +333,7 @@ export const CommunityMembershipSection: React.FC<Props> = ({
         </div>
       </Reveal>
 
-      {/* ── LE BUS — the home on offer (true colour) ─────────────────────── */}
+      {/* ── LE BUS: the home on offer (true colour) ─────────────────────── */}
       <Reveal className="px-6 md:px-12 lg:px-20 py-8 md:py-12">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-5 mb-6">
