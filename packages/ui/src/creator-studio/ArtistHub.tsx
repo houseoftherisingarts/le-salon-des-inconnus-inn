@@ -4546,7 +4546,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                      </div>
                                  </div>
                                  
-                                 {/* My collab requests — submissions to the COLLABORATE
+                                 {/* My collab requests: submissions to the COLLABORATE
                                      tab. Admins triage in the CRM; their reply lands
                                      here in real time via `adminResponse` + `status`. */}
                                  {myCollabRequests.length > 0 && (

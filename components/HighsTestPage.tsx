@@ -494,7 +494,7 @@ function CameraRig({ progressRef }: { progressRef: React.MutableRefObject<number
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// Arcane-style cold open (unchanged — landed well).
+// Arcane-style cold open (unchanged, landed well).
 // ─────────────────────────────────────────────────────────────────────────
 const ArcaneIntro: React.FC<{
     progressRef: React.MutableRefObject<number>;
