@@ -897,7 +897,7 @@ export function socialFallbackLetter(url: string): string {
 interface SocialIconProps {
     url: string;
     size?: number;
-    /** Hex without # — used to colorize the simpleicons CDN response.
+    /** Hex without #, used to colorize the simpleicons CDN response.
      *  Defaults to the salon gold. */
     color?: string;
 }
