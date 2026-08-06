@@ -490,7 +490,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
             {sheets.length === 0 ? (
                 <div className="border border-white/10 bg-black/30 p-12 text-center">
                     <p className="text-neutral-400 mb-1">{t('No call sheets yet.', 'Aucune feuille de service.')}</p>
-                    <p className="text-neutral-600 text-sm">{t('Create one to plan a shoot, share it with your team.', 'Crées-en une pour planifier un tournage et la partager à ton équipe.')}</p>
+                    <p className="text-neutral-600 text-sm">{t('Create one to plan a shoot, share it with your team.', 'Créez-en une pour planifier un tournage et la partager à votre équipe.')}</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
