@@ -8,7 +8,7 @@
 //   • preview their /{username} page in a new tab
 //
 // State flow:
-//   • Subscribes to members/{uid}/superProfile/config via onSnapshot — any
+//   • Subscribes to members/{uid}/superProfile/config via onSnapshot: any
 //     write from anywhere reflects back here.
 //   • Local draft state mirrors the doc; saves are explicit (Save button)
 //     for everything except hero/work uploads (those write immediately so
