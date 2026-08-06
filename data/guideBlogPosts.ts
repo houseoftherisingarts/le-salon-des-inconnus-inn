@@ -58,7 +58,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'plage-simon': {
         _draft: true,
         intro_fr: "Posé à mi-chemin entre Duhamel et Chénéville, le lac Simon est l'un des plus grands plans d'eau de la Petite-Nation : 74 kilomètres de tour, 45 mètres de profondeur au creux, et une eau si limpide qu'on voit le sable défiler sous le canot. La plage publique en est la porte d'entrée.",
-        intro_en: "Sitting between Duhamel and Chénéville, Lac Simon is one of the largest lakes in the Petite-Nation region — 74 km around, 45 m deep at its lowest, and water so clear you can watch sand drift below the canoe. The public beach is the front door.",
+        intro_en: "Sitting between Duhamel and Chénéville, Lac Simon is one of the largest lakes in the Petite-Nation region: 74 km around, 45 m deep at its lowest, and water so clear you can watch sand drift below the canoe. The public beach is the front door.",
         sections: [
             { title_fr: "L'expérience", title_en: "What to expect",
               body_fr: "La plage publique est de sable, surveillée pendant la haute saison, et idéale pour la baignade familiale. L'eau se tempère à partir de la mi-juin et reste agréable jusqu'en septembre. Le quai municipal, gratuit, accueille les petites embarcations — kayaks, canots, paddleboards. Plusieurs sentiers forestiers autour de Duhamel partent à quelques minutes à pied.",

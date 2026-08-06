@@ -2038,7 +2038,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Gallery image upload — appends to the user's gallery. Each upload goes
+    // Gallery image upload: appends to the user's gallery. Each upload goes
     // to artists/{uid}/gallery/{timestamp}.{ext}. The first upload also seeds
     // featuredArtworkUrl so the user instantly has a main piece on display.
     const handleGalleryUpload = async (file: File) => {
