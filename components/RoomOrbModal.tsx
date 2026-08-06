@@ -112,7 +112,7 @@ function useShimmer() {
       noise.start(now);
       noise.stop(now + duration);
     } catch {
-      /* private mode etc. — silently no-op */
+      /* private mode etc., silently no-op */
     }
   };
 }
