@@ -23,7 +23,7 @@ const PLACEHOLDER_YURT = "/media/inn/yourte.jpg";
 const PLACEHOLDER_BUS = "/media/inn/us%20copy.jpg";
 const PLACEHOLDER_TINY = "/media/inn/For%20site%20temp%20mini%20(1).jpg";
 
-// Shared spaces of the manor/auberge, common to every stay — appended to each unit's own gallery
+// Shared spaces of the manor/auberge, common to every stay: appended to each unit's own gallery
 const COMMON_PHOTOS = [
   "/media/Auberge%20photos/IMG_0864.jpg",         // salon / living room
   "/media/Auberge%20photos/cuisine%20grande.jpg", // kitchen
