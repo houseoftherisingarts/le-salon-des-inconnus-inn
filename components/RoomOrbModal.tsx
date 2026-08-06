@@ -995,7 +995,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
               </div>
             </div>
 
-            {/* Photo browse arrows — let guests step through the gallery by hand,
+            {/* Photo browse arrows, let guests step through the gallery by hand,
                 in addition to the auto-cycle and the dots below. */}
             {room.images.length > 1 && (
               <>
