@@ -2832,7 +2832,7 @@ const LodgingChapterBody: React.FC<{
                       {t('Full', 'Complet')}
                     </p>
                   )}
-                  {/* Occupants — see who's already in this room and when */}
+                  {/* Occupants: see who's already in this room and when */}
                   <RoomOccupants
                     roomId={l.id}
                     roomNames={[l.nameEn, l.nameFr]}
