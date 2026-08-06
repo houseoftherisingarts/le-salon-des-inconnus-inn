@@ -139,7 +139,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         {/* Two half-moon portals */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-3 max-w-[1500px] mx-auto">
 
-          {/* KITCHEN — left portal, rounded outer-left */}
+          {/* KITCHEN: left portal, rounded outer-left */}
           <button
             onClick={() => onNavigate('KITCHEN')}
             className="services-portal group relative overflow-hidden border border-[#d4af37]/30 hover:border-[#d4af37] transition-all duration-700 rounded-t-[30px] md:rounded-tr-none md:rounded-bl-[30px] md:rounded-tl-[30px] cursor-pointer min-h-[420px] md:min-h-[560px] text-left"
