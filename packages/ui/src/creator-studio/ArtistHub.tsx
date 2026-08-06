@@ -6097,7 +6097,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                             !newSubmission.title
                                                                 ? (language === 'EN' ? 'A title is required' : 'Le titre est requis')
                                                                 : newSubmission.feedbackSought.length === 0
-                                                                    ? (language === 'EN' ? 'Select at least one type of feedback you seek' : 'Choisis au moins un type de retour souhaité')
+                                                                    ? (language === 'EN' ? 'Select at least one type of feedback you seek' : 'Choisissez au moins un type de retour souhaité')
                                                                     : ''
                                                         }
                                                         className={`group w-full flex items-center justify-center gap-3 py-5 text-base rounded transition-all ${canSubmit ? formStyles.submitOn : formStyles.submitOff}`}
