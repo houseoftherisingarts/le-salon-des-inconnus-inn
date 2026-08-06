@@ -62,7 +62,7 @@ export interface SuperProfileConfig {
 
 export interface UsernameClaim {
     uid: string;
-    /** Lowercase slug — mirrored from the doc id for convenience in client code. */
+    /** Lowercase slug: mirrored from the doc id for convenience in client code. */
     slug: string;
     claimedAt?: any;
 }
