@@ -483,7 +483,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     {currentStep === 'FAVE_MUSIC' && (
                         <StepFavourite
                             label={t('A song or artist that holds you up.', 'Une chanson ou un·e artiste qui te porte.')}
-                            sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur ton profil. Bascule ci-dessous.')}
+                            sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur votre profil. Basculez ci-dessous.')}
                             language={language}
                             value={answers.favourites.music}
                             onChange={v => setAnswers(a => ({ ...a, favourites: { ...a.favourites, music: v } }))}
@@ -492,7 +492,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     {currentStep === 'FAVE_BOOK' && (
                         <StepFavourite
                             label={t('A book you keep returning to.', 'Un livre que tu relis.')}
-                            sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur ton profil. Bascule ci-dessous.')}
+                            sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur votre profil. Basculez ci-dessous.')}
                             language={language}
                             value={answers.favourites.book}
                             onChange={v => setAnswers(a => ({ ...a, favourites: { ...a.favourites, book: v } }))}
@@ -501,7 +501,7 @@ export const WelcomeWizard: React.FC<Props> = ({
                     {currentStep === 'FAVE_SHOW' && (
                         <StepFavourite
                             label={t('A film or show that taught you something.', 'Un film ou une série qui t\'a appris quelque chose.')}
-                            sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur ton profil. Bascule ci-dessous.')}
+                            sub={t('Optional. Can be shown on your profile. Toggle below.', 'Optionnel. Peut être visible sur votre profil. Basculez ci-dessous.')}
                             language={language}
                             value={answers.favourites.show}
                             onChange={v => setAnswers(a => ({ ...a, favourites: { ...a.favourites, show: v } }))}
