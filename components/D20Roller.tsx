@@ -241,7 +241,7 @@ const Dice: React.FC<{
                     emissiveIntensity={0.08}
                 />
             </mesh>
-            {/* Gold edges — gives the d20 the leather-bound book vibe */}
+            {/* Gold edges: gives the d20 the leather-bound book vibe */}
             <lineSegments geometry={edges}>
                 <lineBasicMaterial color="#c5a059" />
             </lineSegments>
