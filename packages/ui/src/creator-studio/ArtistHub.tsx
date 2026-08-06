@@ -2252,7 +2252,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         title: '', description: '', category: 'CAMERA', condition: 'GOOD',
     });
 
-    // Foire — peer-to-peer auction marketplace for completed puzzles & owned skins.
+    // Foire: peer-to-peer auction marketplace for completed puzzles & owned skins.
     interface MarketListing {
         id: string;
         sellerUid: string;

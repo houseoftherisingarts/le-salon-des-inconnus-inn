@@ -722,7 +722,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
 
           <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-            {/* Editorial header — slimmer now that the cover card carries the
+            {/* Editorial header: slimmer now that the cover card carries the
                 title. We keep the section heading + tagline for editorial
                 rhythm, but drop the redundant "L'Inventaire" eyebrow. */}
             <div className="text-center mb-8 md:mb-12">

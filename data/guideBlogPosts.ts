@@ -67,7 +67,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               body_fr: "Accessible directement depuis le centre du village de Duhamel (environ 1h30 de Gatineau et 2h de Montréal). Stationnement gratuit pour les résidents, payant pour les visiteurs en haute saison.",
               body_en: "Accessible from the centre of Duhamel village (about 1h30 from Gatineau, 2h from Montreal). Parking is free for residents and paid for visitors in peak season." },
             { title_fr: "À proximité", title_en: "Nearby",
-              body_fr: "Le Salon des Inconnus est à quelques minutes en voiture. Une journée à la plage, puis un retour pour un souper traiteur ou une soirée musicale — c'est le rythme parfait d'un séjour en Petite-Nation.",
+              body_fr: "Le Salon des Inconnus est à quelques minutes en voiture. Une journée à la plage, puis un retour pour un souper traiteur ou une soirée musicale : c'est le rythme parfait d'un séjour en Petite-Nation.",
               body_en: "Le Salon des Inconnus is a few minutes away by car. A day at the beach, then back for a catered supper or a musical evening — the ideal rhythm for a Petite-Nation stay." },
         ],
         faqs: [
