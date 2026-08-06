@@ -7973,7 +7973,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     />
                                 </section>
 
-                                {/* 04 — BODY */}
+                                {/* 04. BODY */}
                                 <section>
                                     <FormSectionHeader n="04" en="Body" fr="Corps de l'article"
                                         helpEn="Write in blocks. Drop images. Move things around. Markdown for emphasis (**bold**, _italic_)."
