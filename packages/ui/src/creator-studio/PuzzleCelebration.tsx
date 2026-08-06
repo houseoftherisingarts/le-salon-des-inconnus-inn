@@ -143,7 +143,7 @@ export const PuzzleCelebration: React.FC<Props> = ({
                 willChange: 'transform',
             }}
         >
-            {/* Halo glow — warmest at FUSE, trails through the flight. */}
+            {/* Halo glow: warmest at FUSE, trails through the flight. */}
             <div
                 aria-hidden
                 style={{
