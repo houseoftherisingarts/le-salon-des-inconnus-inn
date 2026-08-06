@@ -49,7 +49,7 @@ export interface ViewerContext {
     membershipTier?: string;
     accessLevel?: 'GUEST' | 'MEMBER';
     /** When true on the TOOLS tab, the viewer body becomes the Inspirosphere
-     *  orb portal target — Inspirosphere renders the sphere up here while its
+     *  orb portal target: Inspirosphere renders the sphere up here while its
      *  controls live in the hub area below. */
     inspirosphereActive?: boolean;
 }
