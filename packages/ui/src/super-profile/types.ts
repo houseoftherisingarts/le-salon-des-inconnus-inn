@@ -1,8 +1,8 @@
-// Super Profile — Maestro-tier-only standalone portfolio page.
+// Super Profile: Maestro-tier-only standalone portfolio page.
 //
 // Data lives in two places:
-//   • members/{uid}/superProfile/config — owner-editable settings doc
-//   • usernames/{slug} — uniqueness lookup; doc id is the slug, body is { uid }
+//   • members/{uid}/superProfile/config: owner-editable settings doc
+//   • usernames/{slug}: uniqueness lookup; doc id is the slug, body is { uid }
 //
 // Maestro tier itself is gated by members/{uid}/admin/flags.maestroEnabled
 // (admin-controlled, mirrors the existing isArtist pattern). Until billing
