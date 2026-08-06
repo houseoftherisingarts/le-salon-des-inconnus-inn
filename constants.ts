@@ -402,7 +402,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le terroir",
                 title: "Les Pommes Perdues",
                 location: "Chénéville",
-                description: "Julien Robert et Gilbert Bégin documentent la quête des pommes à cidre du Québec — des cidres sauvages, vifs et ancrés dans le terroir de Chénéville. À emporter ou à déguster sur place.",
+                description: "Julien Robert et Gilbert Bégin documentent la quête des pommes à cidre du Québec : des cidres sauvages, vifs et ancrés dans le terroir de Chénéville. À emporter ou à déguster sur place.",
                 link: "https://lespommesperdues.com/",
                 image: "https://img1.wsimg.com/isteam/ip/c0ba14cf-db19-4940-a39c-5ca3c9238b66/pommesperdue-banner.jpg"
             },
