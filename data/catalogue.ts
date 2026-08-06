@@ -1,4 +1,4 @@
-// Catalogue de prévente des œuvres — /catalogue (page non listée, noindex).
+// Catalogue de prévente des œuvres : /catalogue (page non listée, noindex).
 //
 // Les œuvres seront tirées des artistes déjà présents sur la plateforme
 // (Creator Studio) et du site. Tant que `img` est null, la grille affiche un
