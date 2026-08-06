@@ -1530,7 +1530,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         skills: ['Creativity', 'Observation']
     });
 
-    // Detect whether the visitor is in Canada — unlocks the "Aide aux
+    // Detect whether the visitor is in Canada: unlocks the "Aide aux
     // Subventions" tool. Priority: explicit profile country, then browser
     // timezone (Canadian zones), then navigator.language ("en-CA"/"fr-CA").
     // Re-runs when regData updates so a profile country change instantly
