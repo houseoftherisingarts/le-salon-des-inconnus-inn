@@ -1000,7 +1000,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 14: /highstest — premium cinematic intro to the Creator
+        {/* VIEW 14: /highstest: premium cinematic intro to the Creator
             Studio. Test bed for the "in your face" $10k-website feel,
             using brand palette + 3D particle field + scroll-driven panels. */}
         {currentView === 'HIGHS_TEST' && (
