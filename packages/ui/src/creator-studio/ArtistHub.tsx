@@ -4383,7 +4383,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                          )}
                                      </div>
 
-                                     {/* Scribble Overlay — only when archetype set + image present. */}
+                                     {/* Scribble Overlay: only when archetype set + image present. */}
                                      {regData.archetype && galleryImages.length > 0 && (
                                          <div className="absolute top-4 -right-4 bg-fuchsia-600 text-white px-3 py-1 font-bold font-sans text-xs rotate-6 shadow-lg border-2 border-white transform skew-x-[-10deg]" style={{ fontFamily: '"Permanent Marker", cursive' }}>
                                              {artTitles[currentArtIndex] || (language === 'EN' ? 'FEATURED' : 'EN VEDETTE')}
