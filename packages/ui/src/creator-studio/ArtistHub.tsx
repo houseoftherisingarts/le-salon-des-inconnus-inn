@@ -5083,7 +5083,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         <div className="flex-1 max-h-[260px] overflow-y-auto custom-scrollbar pr-1 space-y-2 mb-3">
                                             {convMessages.length === 0 ? (
                                                 <p className="text-xs text-neutral-600 italic text-center py-6">
-                                                    {language === 'EN' ? 'No messages yet — say hello.' : 'Aucun message — dites bonjour.'}
+                                                    {language === 'EN' ? 'No messages yet: say hello.' : 'Aucun message : dites bonjour.'}
                                                 </p>
                                             ) : convMessages.map(m => {
                                                 const mine = m.uid === currentUser?.uid;

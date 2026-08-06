@@ -495,7 +495,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
     'chevreuils': {
         _draft: true,
         intro_fr: "Ce n'est pas vraiment une activité : c'est un moment. Prendre son café le matin en regardant par la fenêtre, voir les chevreuils traverser la propriété dans la neige fraîche, et ne plus bouger. La Petite-Nation offre cela en abondance.",
-        intro_en: "It's not really an activity — it's a moment. Drinking your morning coffee by the window, watching deer cross the property in fresh snow, and not moving. Petite-Nation offers this abundantly.",
+        intro_en: "It's not really an activity: it's a moment. Drinking your morning coffee by the window, watching deer cross the property in fresh snow, and not moving. Petite-Nation offers this abundantly.",
         sections: [
             { title_fr: "Où et quand", title_en: "Where and when",
               body_fr: "Tout au long de l'hiver, les chevreuils circulent à travers les propriétés forestières de Duhamel et des villages alentours. Tôt le matin et en fin de journée sont les meilleurs moments. Restez à l'intérieur, soyez patient, et le moment vient.",

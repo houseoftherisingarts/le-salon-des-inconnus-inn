@@ -504,7 +504,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'observation",
                 title: "Déjeuner avec les chevreuils",
                 location: "Duhamel",
-                description: "Prenez votre café le matin en regardant par la fenêtre. Dans la neige fraîche, les chevreuils passent souvent à travers les propriétés forestières de la région — un moment de grâce silencieuse.",
+                description: "Prenez votre café le matin en regardant par la fenêtre. Dans la neige fraîche, les chevreuils passent souvent à travers les propriétés forestières de la région, un moment de grâce silencieuse.",
                 link: "https://municipalite.duhamel.qc.ca/",
                 image: PLACEHOLDER_ROOM
             }
