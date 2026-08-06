@@ -799,7 +799,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 7: CEILIDH — chapter-card layout. Shared internals
+        {/* VIEW 7: CEILIDH, chapter-card layout. Shared internals
             (KanbanBoard, NeedsSection, CovoiturageSection, AbundanceSection,
             PresenceTimeline) live in components/CeilidhShared.tsx. */}
         {currentView === 'CEILIDH' && (
