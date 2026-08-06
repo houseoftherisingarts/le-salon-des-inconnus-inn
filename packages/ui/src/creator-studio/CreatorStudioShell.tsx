@@ -723,7 +723,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                  [data-studio-theme="CLASSY"] .font-serif { font-family: 'Cormorant Garamond', serif !important; }
                  [data-studio-theme="CLASSY"] .font-mono { font-family: 'Cormorant Garamond', serif !important; font-style: italic; }
 
-                 /* COMIC — Knockout: comic-book displays + handwritten body. */
+                 /* COMIC, Knockout: comic-book displays + handwritten body. */
                  [data-studio-theme="COMIC"] .font-cinzel,
                  [data-studio-theme="COMIC"] .font-prata { font-family: 'Bangers', 'Anton', Impact, sans-serif !important; letter-spacing: 0.05em; font-weight: 400 !important; }
                  [data-studio-theme="COMIC"] .font-sans,
