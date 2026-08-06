@@ -7176,7 +7176,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     </div>
                 )}
 
-                {/* CHAT — themed multi-room chat. Sidebar of 10 rooms (defined
+                {/* CHAT: themed multi-room chat. Sidebar of 10 rooms (defined
                     in ChatRoom.tsx), Firestore-backed per-room subscriptions,
                     auth-gated posting, and theme-aware accents. */}
                 {activeTab === 'CHAT' && (
