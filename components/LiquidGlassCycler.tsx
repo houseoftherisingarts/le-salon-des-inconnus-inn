@@ -200,7 +200,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       });
       scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
 
-      // Render loop — pauses when canvas is offscreen so the WebGL draw doesn't
+      // Render loop: pauses when canvas is offscreen so the WebGL draw doesn't
       // contend for main-thread time with the rest of the page (caused ~12fps idle
       // on sections far below the hero).
       let visible = true;
