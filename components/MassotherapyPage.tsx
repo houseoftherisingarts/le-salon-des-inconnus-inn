@@ -418,7 +418,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
                                        <h2 className="font-cinzel text-lg md:text-5xl mb-2 md:mb-6 relative z-10 text-white leading-tight">Andrée Dancause</h2>
                                        <p className="font-lato text-neutral-300 text-[9px] md:text-base leading-relaxed md:leading-loose mb-3 md:mb-8 relative z-10 font-light line-clamp-4 md:line-clamp-none">
                                             {language === 'EN' 
-                                                ? "Certified therapist for over 10 years. Her practice is rooted in personalization and listening—not just to words, but to the subtle language of muscles." 
+                                                ? "Certified therapist for over 10 years. Her practice is rooted in personalization and listening, attentive to words and to the subtle language of muscles alike."
                                                 : "Thérapeute certifiée depuis plus de 10 ans. Sa pratique est ancrée dans la personnalisation et l'écoute du langage subtil des muscles."}
                                        </p>
                                        <div className="flex flex-wrap gap-2 md:gap-3 relative z-10">
