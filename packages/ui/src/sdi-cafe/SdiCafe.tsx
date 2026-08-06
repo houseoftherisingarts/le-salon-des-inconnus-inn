@@ -3,11 +3,11 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { ARTISTS_ROSTER } from './roster';
 import { ArtistProfile } from './types';
 
-// Imported from sdi-artist-caferepo. NOT mounted anywhere yet — this lives
+// Imported from sdi-artist-caferepo. NOT mounted anywhere yet. This lives
 // dormant in the package. It will eventually mount under the AUBERGE
 // (aubergedesinconnus.com → /cafe or similar), as a casual-viewer showcase
 // of "productions we've made" + "artists we represent". It is NOT a salon
-// surface — the Salon (lesalondesinconnus.com) is the Artist Hub for deep
+// surface: the Salon (lesalondesinconnus.com) is the Artist Hub for deep
 // users (artists managing profiles, buyers buying art).
 // Future data wire: the artist roster shown here should be a live read from
 // the Artist Hub on the salon side, so adding an artist there auto-updates
