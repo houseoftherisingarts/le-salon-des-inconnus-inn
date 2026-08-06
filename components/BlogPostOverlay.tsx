@@ -184,7 +184,7 @@ export const BlogPostOverlay: React.FC<BlogPostOverlayProps> = ({ item, language
         style={{ background: 'rgba(2,2,2,0.78)', backdropFilter: 'blur(8px)' }}
       />
 
-      {/* Article surface — flips in from card, then settles */}
+      {/* Article surface: flips in from card, then settles */}
       <article
         className="blogpost-article relative w-full max-w-3xl mx-auto bg-[#0a0807] text-white overflow-y-auto"
         style={{

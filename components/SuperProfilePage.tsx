@@ -19,7 +19,7 @@ import {
 } from '@inconnus/ui';
 
 interface SuperProfilePageProps {
-    /** The slug from the URL — already normalized to lowercase by App.tsx. */
+    /** The slug from the URL, already normalized to lowercase by App.tsx. */
     slug: string;
     /** Click-to-go-home handler (back to the Inn). */
     onNavigateHome: () => void;
