@@ -1617,7 +1617,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     }
     const [friendships, setFriendships] = useState<Friendship[]>([]);
 
-    // Cosmetics — locally tracked but persisted to Firestore so purchases
+    // Cosmetics: locally tracked but persisted to Firestore so purchases
     // survive reload. Loaded inside the same effect that loads the profile.
 
     // Live subscription to this user's profile doc. onSnapshot means any write
