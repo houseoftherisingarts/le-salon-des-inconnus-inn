@@ -7268,7 +7268,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     />
                                 </section>
 
-                                {/* 03 — DURATION + COST */}
+                                {/* 03. DURATION + COST */}
                                 <section>
                                     <FormSectionHeader n="03" en="Duration" fr="Durée"
                                         helpEn="One token = one hour. The cost preview updates live."
