@@ -27,7 +27,7 @@ import {
 } from './puzzleArtworks';
 import { getApp } from 'firebase/app';
 
-// Safe firebase accessors — return null when no app is initialized (e.g. when
+// Safe firebase accessors: return null when no app is initialized (e.g. when
 // the studio is mounted in a context that hasn't set up Firebase yet, like
 // the standalone salon scaffold). Prevents the gate from rendering as a
 // blank page on apps that haven't wired auth.

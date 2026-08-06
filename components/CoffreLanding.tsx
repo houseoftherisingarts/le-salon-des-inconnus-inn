@@ -267,7 +267,7 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
   );
   const microReassurance = (
     <p className="text-xs text-neutral-500">
-      {t('Free · No account · Everything stays on your device', 'Gratuit · Sans compte · Tout reste sur votre appareil', 'Gratis · Sin cuenta · Todo permanece en su dispositivo')}
+      {t('Free · Your data stays on your device', 'Gratuit · Vos données restent sur votre appareil', 'Gratis · Sus datos permanecen en su dispositivo')}
     </p>
   );
 
