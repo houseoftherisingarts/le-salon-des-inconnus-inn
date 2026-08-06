@@ -85,7 +85,7 @@ export const EntreprisesPage: React.FC<Props> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        {/* II — two tiers, price as centerpiece */}
+        {/* II: two tiers, price as centerpiece */}
         <section className="px-6 md:px-14 lg:px-24 py-24 md:py-32 border-t" style={{ borderColor: 'rgba(197,160,89,0.15)' }}>
           <SectionLabel numeral="II" label={t('Two ways to gather', 'Deux façons de vous réunir')} />
           <div className="grid md:grid-cols-2 gap-7">
