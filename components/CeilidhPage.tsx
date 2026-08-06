@@ -827,7 +827,7 @@ const ChapterCard: React.FC<{
 const StatusSeal: React.FC<{ status: ChapterStatus; language: 'EN' | 'FR' }> = ({ status, language }) => {
   const meta = STATUS_COPY[status];
 
-  // "Done" = a real gold seal — circular, filled, with a check. Feels rewarding,
+  // "Done" = a real gold seal: circular, filled, with a check. Feels rewarding,
   // visually distinct from in-progress / locked which share a dot+pill pattern.
   if (status === 'done') {
     return (

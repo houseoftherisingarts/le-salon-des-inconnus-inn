@@ -489,7 +489,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Scroll cue — kept fixed at the bottom of the section, narrower
+          {/* Scroll cue: kept fixed at the bottom of the section, narrower
               spacing on mobile so it doesn't crowd the cookie banner area. */}
           <div className="hero3-scroll absolute bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 md:gap-2 z-10" aria-hidden>
             <span className="text-[#f3e5ab]/70 font-cinzel text-[8px] md:text-[9px] uppercase tracking-[0.4em] md:tracking-[0.5em]">
