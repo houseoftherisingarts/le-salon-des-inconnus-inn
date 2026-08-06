@@ -328,7 +328,7 @@ export const InnPageTest2: React.FC<InnPageTest2Props> = ({ language, onNavigate
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* Section 2 — gentle parallax-like Ken Burns on the photo */
+        /* Section 2: gentle parallax-like Ken Burns on the photo */
         .sec2-img { animation: kenBurns 18s ease-in-out infinite alternate; }
         @keyframes kenBurns {
           0%   { transform: scale(1.02) translate(0, 0); }
