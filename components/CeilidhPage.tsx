@@ -1260,7 +1260,7 @@ const EventChapterBody: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => 
             <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-2">
               {t('Dates', 'Dates')}
             </span>
-            <p className="font-prata text-[#f3e5ab] text-lg md:text-xl">21 — 25 {t('May 2026', 'mai 2026')}</p>
+            <p className="font-prata text-[#f3e5ab] text-lg md:text-xl">21–25 {t('May 2026', 'mai 2026')}</p>
             <p className="font-josefin text-neutral-400 text-xs uppercase tracking-[0.3em] mt-1">{t('Maison Favier · Namur, QC', 'Maison Favier · Namur, QC')}</p>
           </div>
         </div>

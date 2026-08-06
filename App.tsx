@@ -866,7 +866,7 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 7e-ter: DOWNLOAD (les outils du Salon — Petite Banque et compagnie) */}
+        {/* VIEW 7e-ter: DOWNLOAD (les outils du Salon, Petite Banque et compagnie) */}
         {currentView === 'DOWNLOAD' && (
           <DownloadPage
             onNavigate={(view) => handleNavigation(view as ViewState)}

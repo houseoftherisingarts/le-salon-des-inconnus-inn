@@ -1937,7 +1937,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
           <ShowOffersSection eventId={EVENT_ID} />
         )}
 
-        {/* ── Échelle de produits — grille prix/statut + compteur collaborateurs. */}
+        {/* ── Échelle de produits: grille prix/statut + compteur collaborateurs. */}
         {tab === 'product-ladder' && (
           <ProductLadderSection />
         )}
