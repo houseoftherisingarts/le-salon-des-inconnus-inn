@@ -286,7 +286,7 @@ export const InnPageTest3: React.FC<Props> = ({ language, onNavigate }) => {
         {/* ── 2. TrustedPlatforms strip ─────────────────────────────────── */}
         <TrustedPlatforms language={language} vibe={'HOSTEL'} />
 
-        {/* ── 3. CUSTOM HISTORY — BÂTIE EN 1898 (full-bleed) ────────────── */}
+        {/* ── 3. CUSTOM HISTORY: BÂTIE EN 1898 (full-bleed) ────────────── */}
         {/* cv-auto: skip rendering + animation work when scrolled past. Without this, the
             full-bleed photo + sec2KenBurns animation continued painting offscreen and
             contributed to scroll-time GPU stalls. */}

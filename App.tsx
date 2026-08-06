@@ -187,7 +187,7 @@ type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSO
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
-// Note: SUPER_PROFILE intentionally has no fixed path — its path is the
+// Note: SUPER_PROFILE intentionally has no fixed path. Its path is the
 // dynamic slug. We list it here for completeness but handleNavigation never
 // uses VIEW_PATHS['SUPER_PROFILE']; the slug is passed explicitly.
 const VIEW_PATHS: Record<ViewState, string> = {
