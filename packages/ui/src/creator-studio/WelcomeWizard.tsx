@@ -1038,7 +1038,7 @@ const StepFirstWork: React.FC<StepFirstWorkProps> = ({ language, url, progress, 
                 {t('Drop in your first work?', 'Téléverse une première œuvre ?')}
             </h2>
             <p className="text-neutral-400 text-sm font-lato mb-8 max-w-lg mx-auto">
-                {t('Optional. An image, a sketch, anything. You can do this later.', 'Optionnel. Une image, un croquis, n\'importe quoi. À faire plus tard si tu veux.')}
+                {t('Optional. An image, a sketch, anything. You can do this later.', 'Optionnel. Une image, un croquis, n\'importe quoi. Vous pourrez le faire plus tard.')}
             </p>
             <input
                 ref={inputRef}
