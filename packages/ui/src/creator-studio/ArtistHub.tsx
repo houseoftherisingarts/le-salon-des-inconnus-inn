@@ -4072,7 +4072,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </svg>
                                 </div>
                                 <h3 className="font-cinzel text-white uppercase font-bold text-xl">{language === 'EN' ? "Call Sheets" : "Feuilles de Service"}</h3>
-                                <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? "Plan shoots: cast, crew, shot list, weather. Export PDF." : "Planifie tes tournages : cast, équipe, shot list, météo. Export PDF."}</p>
+                                <p className="text-neutral-500 text-xs mt-3 px-4">{language === 'EN' ? "Plan shoots: cast, crew, shot list, weather. Export PDF." : "Planifiez vos tournages : cast, équipe, shot list, météo. Export PDF."}</p>
                             </div>
 
                             {/* Tool: Le Coffre des Inconnus: l'app familiale d'éducation financière.
