@@ -646,7 +646,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
                                 <button onClick={() => patchActive({ skin: 'clean' })}
                                     className={`px-3 py-1.5 ${active.skin === 'clean' ? 'bg-white text-black' : 'text-neutral-400 hover:text-white'}`}>{t('Clean', 'Épuré')}</button>
                             </div>
-                            {/* Share — copies a public read-only link. Hidden for
+                            {/* Share: copies a public read-only link. Hidden for
                                 ephemeral (not-signed-in) sheets. */}
                             {uid && active.id !== 'local' && (
                                 <button onClick={enableAndCopyShare}

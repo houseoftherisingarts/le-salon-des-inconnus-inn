@@ -314,7 +314,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
         }
         setSaving(true);
         try {
-            // Claim slug first — if it fails we don't write the config so
+            // Claim slug first: if it fails we don't write the config so
             // the username field reflects whatever's still in Firestore.
             if (!config || slug !== config.username) {
                 if (slugCheck.status === 'taken') {
