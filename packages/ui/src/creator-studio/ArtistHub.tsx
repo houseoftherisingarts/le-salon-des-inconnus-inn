@@ -3013,7 +3013,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             // Newest first, by createdAt seconds (handles missing timestamps).
             list.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
             setMyCollabRequests(list);
-        }, () => { /* swallow — empty state handles it */ });
+        }, () => { /* swallow: empty state handles it */ });
         return () => unsub();
     }, [currentUser?.uid]);
 
