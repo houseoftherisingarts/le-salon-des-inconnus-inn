@@ -7403,8 +7403,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 </div>
                                 <p className="text-xs text-neutral-400 leading-relaxed mb-5">
                                     {language === 'EN'
-                                        ? 'Listing this skin opens an auction starting at 1 coin. The skin leaves your wardrobe until the listing closes — accept the top bid to seal the sale, or cancel to take it back.'
-                                        : "Mettre ce skin en vente ouvre une enchère à partir de 1 pièce. Le skin quitte ta garde-robe jusqu'à la clôture — accepte la meilleure offre pour conclure, ou annule pour le récupérer."}
+                                        ? 'Listing this skin opens an auction starting at 1 coin. The skin leaves your wardrobe until the listing closes: accept the top bid to seal the sale, or cancel to take it back.'
+                                        : "Mettre ce skin en vente ouvre une enchère à partir de 1 pièce. Le skin quitte ta garde-robe jusqu'à la clôture : accepte la meilleure offre pour conclure, ou annule pour le récupérer."}
                                 </p>
                                 <div className="flex justify-end gap-2">
                                     <button onClick={() => setListingSkinId(null)} className="px-4 py-2.5 border border-white/15 text-neutral-300 text-[10px] uppercase tracking-widest hover:bg-white/5 rounded">
