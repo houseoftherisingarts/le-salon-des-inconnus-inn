@@ -127,7 +127,7 @@ const Dice: React.FC<{
     const edges    = useMemo(() => new THREE.EdgesGeometry(geometry), [geometry]);
     const faces    = useMemo(() => getIcosahedronFaces(geometry), [geometry]);
     // One CanvasTexture per face value. Painted at module-load time,
-    // synchronously — no font fetch, no Suspense surprises.
+    // synchronously: no font fetch, no Suspense surprises.
     const numberTextures = useMemo(
         () => Array.from({ length: 20 }, (_, i) => makeNumberTexture(i + 1)),
         [],
