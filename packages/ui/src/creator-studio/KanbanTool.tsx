@@ -944,7 +944,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                             );
                                         })}
 
-                                        {/* Empty state — drop affordance */}
+                                        {/* Empty state: drop affordance */}
                                         {columnTasks.length === 0 && (
                                             <div className={`h-24 flex items-center justify-center text-xs italic font-lato border-2 border-dashed rounded-lg m-1 transition-all ${
                                                 isDragOver ? 'border-white/40 text-white/60 bg-white/[0.03]' : 'border-white/8 text-neutral-700'
