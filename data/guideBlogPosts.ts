@@ -179,7 +179,7 @@ export const GUIDE_BLOG_POSTS: Record<string, BlogPost> = {
               a_en: "Yes, uses change with the season (hiking in summer, ski/snowshoe/fat-bike in winter), but the park stays open year-round." },
             { q_fr: "Peut-on y aller avec des enfants ?", q_en: "Is it kid-friendly?",
               a_fr: "Oui, plusieurs sentiers courts et faciles sont parfaits pour les familles.",
-              a_en: "Yes — several short, easy trails are perfect for families." },
+              a_en: "Yes, several short, easy trails are perfect for families." },
         ],
         schema: { type: "TouristAttraction", address: "Ripon, QC, Canada", openingHours: "Mo-Su 09:00-17:00" },
     },

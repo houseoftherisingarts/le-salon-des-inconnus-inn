@@ -3263,7 +3263,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         }
     };
 
-    // Save draft — creates or updates a Firestore article. Status defaults to
+    // Save draft: creates or updates a Firestore article. Status defaults to
     // 'draft' on first save and is preserved on subsequent edits.
     const handleSaveArticleDraft = async (alsoRequestPublish: boolean = false) => {
         if (!currentUser?.uid) return;

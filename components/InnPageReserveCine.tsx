@@ -1267,7 +1267,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
         .reserve-cine-track { isolation: isolate; }
         .reserve-cine-extent { height: 240vh; }
 
-        /* The scrub extent stays full height for everyone — the scroll-scrub plays
+        /* The scrub extent stays full height for everyone: the scroll-scrub plays
            regardless of the OS reduce-motion setting (owner's call), so there is no
            dead scroll to collapse. Only the hero entrance animations below are
            reduced for prefers-reduced-motion. */
