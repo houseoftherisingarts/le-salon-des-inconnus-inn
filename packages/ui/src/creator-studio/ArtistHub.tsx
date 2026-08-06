@@ -6005,9 +6005,9 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
                                                 {/* 05. DESCRIBE */}
                                                 <section>
-                                                    <SectionHeader n="05" en="Describe the work" fr="Décris l'œuvre"
+                                                    <SectionHeader n="05" en="Describe the work" fr="Décrivez l'œuvre"
                                                         helpEn="Set the table. Constraints, intention, anything the critic should know."
-                                                        helpFr="Mets la table. Contraintes, intention, ce que la critique doit savoir." />
+                                                        helpFr="Mettez la table. Contraintes, intention, ce que la critique doit savoir." />
                                                     <textarea
                                                         rows={5}
                                                         value={newSubmission.description}
