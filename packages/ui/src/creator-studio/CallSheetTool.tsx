@@ -335,7 +335,7 @@ export const CallSheetTool: React.FC<CallSheetToolProps> = ({
     const locateAndForecast = useCallback(async () => {
         if (!active) return;
         const query = active.address.trim() || active.locationName.trim();
-        if (!query) { flash(t('Enter an address first', 'Entre une adresse d\'abord')); return; }
+        if (!query) { flash(t('Enter an address first', 'Entrez une adresse d\'abord')); return; }
         setGeoBusy(true);
         try {
             const g = await geocode(query);
