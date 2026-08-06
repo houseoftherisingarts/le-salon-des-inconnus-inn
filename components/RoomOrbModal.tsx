@@ -882,7 +882,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             {t('Book direct · always the best price', 'Réservez en direct · toujours le meilleur prix')}
           </span>
 
-          {/* Cancellation policy — visible right before the booking hand-off */}
+          {/* Cancellation policy: visible right before the booking hand-off */}
           <a
             href="/politique-annulation.html"
             target="_blank"
