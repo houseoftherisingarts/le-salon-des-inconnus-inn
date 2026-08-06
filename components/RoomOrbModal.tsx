@@ -258,7 +258,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
 
   // Auto-cycle through the room's photos every 4s, with cross-fade.
   const [imgIdx, setImgIdx] = useState(0);
-  // Fullscreen photo viewer — tap the orb to open the current photo full-bleed
+  // Fullscreen photo viewer: tap the orb to open the current photo full-bleed
   // (asked for especially on mobile, where the orb is small).
   const [lightbox, setLightbox] = useState(false);
   useEffect(() => { setImgIdx(0); setLightbox(false); }, [room.id]);
