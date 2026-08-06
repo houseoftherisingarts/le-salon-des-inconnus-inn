@@ -7889,7 +7889,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             />
 
                             <div className="space-y-8">
-                                {/* 01 — COVER */}
+                                {/* 01. COVER */}
                                 <section>
                                     <FormSectionHeader n="01" en="Cover" fr="Couverture"
                                         helpEn="Sets the tone before the first sentence."

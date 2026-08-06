@@ -139,7 +139,7 @@ export const BlogPage: React.FC<Props> = ({ onNavigate, language }) => {
 
   return (
     <div className="fixed inset-0 z-50 w-full h-full overflow-y-auto text-neutral-200" style={{ background: '#0a0808' }}>
-      {/* Atmosphere: warm near-black, drifting gold haze, grain: the house recipe. */}
+      {/* Atmosphere: warm near-black, drifting gold haze, grain, the house recipe. */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }} aria-hidden>
         <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 50% 0%, #14100c 0%, #0a0808 55%, #060505 100%)' }} />
         <div
