@@ -94,7 +94,7 @@ export const SdiCafe: React.FC<SdiCafeProps> = ({ language }) => {
           </div>
           <div className="mt-2 text-center">
               <h3 className="font-cinzel text-lg text-[#2C1A1D] leading-tight">{vid.title}</h3>
-              <p className="text-xs text-[#8a7a6a] uppercase tracking-wider">{vid.type} — {vid.artist}</p>
+              <p className="text-xs text-[#8a7a6a] uppercase tracking-wider">{vid.type} · {vid.artist}</p>
           </div>
       </a>
   );
