@@ -816,7 +816,7 @@ export const KanbanTool: React.FC<KanbanToolProps> = ({
                                         </div>
                                         {isOverLimit && (
                                             <p className="text-[10px] text-red-300 mt-1 font-cinzel uppercase tracking-widest">
-                                                ⚠ {t('Over capacity — finish before starting more', 'Trop chargé — termine avant de commencer')}
+                                                ⚠ {t('Over capacity: finish before starting more', 'Trop chargé : termine avant de commencer')}
                                             </p>
                                         )}
                                     </div>
