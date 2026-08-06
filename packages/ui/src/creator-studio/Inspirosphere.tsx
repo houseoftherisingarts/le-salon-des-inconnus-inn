@@ -730,7 +730,7 @@ export const Inspirosphere: React.FC<InspirosphereProps> = ({
                     </div>
                 )}
 
-                {/* Video transport — play/pause, timeline, time, mute,
+                {/* Video transport: play/pause, timeline, time, mute,
                     fullscreen. Only renders for YouTube sources (where the
                     IFrame API gives us programmatic control). */}
                 {ytId && (

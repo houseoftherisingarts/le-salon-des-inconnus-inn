@@ -209,7 +209,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
         // Pull their Ceilidh registration too: public-read per Firestore rules.
         const regSnap = await getDoc(doc(db!, 'events', 'ceilidh-mai-2026', 'registrations', targetUid));
         if (regSnap.exists()) setTargetReg(regSnap.data());
-        // Look up their Super Profile config — if enabled, we'll show a
+        // Look up their Super Profile config: if enabled, we'll show a
         // "Mind Palace" button. Public read per firestore.rules so this
         // works for signed-out visitors too.
         try {
