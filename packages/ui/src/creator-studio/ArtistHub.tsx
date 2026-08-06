@@ -222,7 +222,7 @@ const HOT_SEAT_FEEDBACK_TYPES: {
       icon: 'M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7.4-3.5a7.5 7.5 0 0 0-.1-1.3l2-1.5-2-3.5-2.4.8a7.5 7.5 0 0 0-2.2-1.3L14.5 3h-5l-.2 2.2a7.5 7.5 0 0 0-2.2 1.3l-2.4-.8-2 3.5 2 1.5a7.5 7.5 0 0 0 0 2.6l-2 1.5 2 3.5 2.4-.8a7.5 7.5 0 0 0 2.2 1.3L9.5 21h5l.2-2.2a7.5 7.5 0 0 0 2.2-1.3l2.4.8 2-3.5-2-1.5c.1-.4.1-.8.1-1.3Z' },
     { key: 'emotional',  en: 'Emotional',         fr: 'Émotionnel',        blurbEn: 'How does it make people feel?',                  blurbFr: 'Quelle émotion ça déclenche ?',
       icon: 'M12 20s-7-4.35-7-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 19 10c0 5.65-7 10-7 10Z' },
-    { key: 'conceptual', en: 'Conceptual',        fr: 'Conceptuel',        blurbEn: 'The idea — does it land?',                       blurbFr: "L'idée — est-ce qu'elle passe ?",
+    { key: 'conceptual', en: 'Conceptual',        fr: 'Conceptuel',        blurbEn: 'The idea: does it land?',                       blurbFr: "L'idée : est-ce qu'elle passe ?",
       icon: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3 11.2c.6.5 1 1.2 1 2v.3h4v-.3c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z' },
     { key: 'structural', en: 'Structural',        fr: 'Structurel',        blurbEn: 'Composition, pacing, layout, flow.',             blurbFr: 'Composition, rythme, mise en page.',
       icon: 'M3 4h7v7H3zM14 4h7v4h-7zM14 11h7v9h-7zM3 14h7v6H3z' },

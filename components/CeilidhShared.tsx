@@ -215,7 +215,7 @@ const DEPARTURE_DATES = [
   { id: '2026-05-22', label: 'Vendredi 22 Mai (Soir)', label_en: 'Friday May 22 (Evening)' },
   { id: '2026-05-23', label: 'Samedi 23 Mai (Soir)', label_en: 'Saturday May 23 (Evening)' },
   { id: '2026-05-24', label: 'Dimanche 24 Mai (Soir)', label_en: 'Sunday May 24 (Evening)' },
-  { id: '2026-05-25', label: 'Lundi 25 Mai — avant 11h (Départ Final)', label_en: 'Monday May 25 — by 11am (Final Departure)' },
+  { id: '2026-05-25', label: 'Lundi 25 Mai, avant 11h (Départ Final)', label_en: 'Monday May 25, by 11am (Final Departure)' },
 ];
 
 export const EVENT_DAYS = [
