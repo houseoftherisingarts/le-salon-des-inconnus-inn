@@ -202,7 +202,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
         return () => clearTimeout(handle);
     }, [draft?.username, uid, config?.username]);
 
-    // ── Hero photo writes — separate save path so uploads land immediately. ──
+    // ── Hero photo writes: separate save path so uploads land immediately. ──
     const persistConfigPatch = React.useCallback(
         async (patch: Partial<SuperProfileConfig>) => {
             const db = getFirestore(getApp());
