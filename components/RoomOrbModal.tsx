@@ -685,7 +685,7 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             </span>
           </div>
 
-          {/* Amenity icons — max guests + per-room amenities */}
+          {/* Amenity icons: max guests + per-room amenities */}
           <RoomAmenities
             amenities={room.amenities}
             guests={room.guests}
