@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-07",
+        title_fr: "Le nom des oiseaux",
+        title_en: "The names of birds",
+        body_fr: "J'ai longtemps traversé la forêt comme on traverse une foule : un fond vert, agréable et anonyme. Puis quelqu'un m'a appris à reconnaître quelques chants d'oiseaux, et le bois s'est mis à se peupler, un chant à la fois. Les mêmes arbres, les mêmes heures, mais ici une grive, là un bruant, chacun occupé à sa propre vie. Apprendre un nom ne transforme pas la chose nommée; il transforme celui qui regarde, comme une politesse faite au monde, et le monde répond en devenant plus habité. Je soupçonne que les gens obéissent à la même loi : un voisin, un client, un passant restent des silhouettes jusqu'au jour où un prénom, une histoire, en font quelqu'un. Les vieilles langues le savaient, elles qui donnaient un nom à chaque colline et à chaque ruisseau, comme on salue ce qu'on refuse de traverser distraitement. Combien de choses autour de moi attendent encore que je prenne la peine d'apprendre leur nom?",
+        body_en: "For a long time I moved through the forest the way one moves through a crowd: a green backdrop, pleasant and anonymous. Then someone taught me to recognize a few bird songs, and the woods began to fill, one song at a time. The same trees, the same hours, but here a thrush, there a sparrow, each busy with a life of its own. Learning a name does not transform the thing named; it transforms the one who looks, like a courtesy paid to the world, and the world answers by becoming more inhabited. I suspect people obey the same law: a neighbour, a client, a passerby remain silhouettes until the day a first name, a story, turns them into someone. The old languages knew this, they who gave a name to every hill and every stream, the way you greet what you refuse to walk past absent-mindedly. How many things around me are still waiting for me to take the trouble to learn their name?",
+    },
+    {
         date: "2026-08-06",
         title_fr: "La saison qui tourne",
         title_en: "The turning season",
