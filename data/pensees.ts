@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-08",
+        title_fr: "La mémoire des mains",
+        title_en: "The memory of hands",
+        body_fr: "On m'a montré enfant à faire des nœuds, et mes doigts s'en souviennent encore mieux que moi. Si on me demande d'expliquer le geste, je m'embrouille; si on me tend une corde, il se fait presque tout seul. Les mains apprennent lentement, sans prendre de notes, et ce qu'elles savent ne s'oublie presque jamais : pétrir une pâte, tenir un archet, caler une bûche dans le feu exactement où il faut. Les livres m'ont donné des idées, mais ce sont les gestes répétés qui m'ont donné des certitudes. Je me demande parfois combien de savoirs dorment ainsi dans le corps des gens qu'on croise, invisibles jusqu'au moment où on leur met le bon outil entre les mains. Un charpentier à la retraite redevient charpentier chaque fois qu'il ramasse un marteau. Et moi, qu'est-ce que mes mains savent que je n'ai jamais pris la peine d'écouter?",
+        body_en: "As a child I was shown how to tie knots, and my fingers still remember them better than I do. Ask me to explain the gesture and I get tangled; hand me a rope and it almost ties itself. Hands learn slowly, without taking notes, and what they know is almost never forgotten: kneading dough, holding a bow, settling a log in the fire exactly where it belongs. Books gave me ideas, but repeated gestures gave me certainties. I sometimes wonder how much knowledge sleeps like that in the bodies of the people we meet, invisible until the right tool is placed in their hands. A retired carpenter becomes a carpenter again every time he picks up a hammer. And what do my hands know that I have never taken the trouble to listen to?",
+    },
+    {
         date: "2026-08-07",
         title_fr: "Le nom des oiseaux",
         title_en: "The names of birds",
