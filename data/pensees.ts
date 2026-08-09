@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-09",
+        title_fr: "La corde de bois",
+        title_en: "The woodpile",
+        body_fr: "Le mois d'août a cette drôle de tâche : préparer du feu en pleine chaleur. On corde le bois sous le soleil, les bras nus, pour des soirées qu'on n'arrive même pas encore à imaginer. Chaque bûche rangée aujourd'hui est un cadeau posé d'avance pour celui que je serai en janvier, un inconnu de moi-même qui aura froid et qui trouvera la réserve pleine. J'aime penser qu'une corde de bois est une lettre écrite à quelqu'un qu'on n'a jamais rencontré : soi-même, dans six mois. Beaucoup de nos gestes les plus généreux fonctionnent ainsi; ils ne se récoltent pas dans la saison où on les pose. Planter, épargner, apprendre, pardonner : autant de bûches cordées pour des hivers dont on ignore encore la date. Qu'est-ce que je corde aujourd'hui pour celui que je ne connais pas encore?",
+        body_en: "August comes with an odd task: preparing fire in the middle of the heat. We stack the wood under the sun, bare-armed, for evenings we cannot yet begin to imagine. Every log put away today is a gift set out in advance for the person I will be in January, a stranger to myself who will be cold and will find the woodshed full. I like to think of a cord of wood as a letter written to someone we have never met: ourselves, six months from now. Many of our most generous gestures work this way; they are not harvested in the season we perform them. Planting, saving, learning, forgiving: so many logs stacked for winters whose date we do not yet know. What am I stacking today for the person I have not yet met?",
+    },
+    {
         date: "2026-08-08",
         title_fr: "La mémoire des mains",
         title_en: "The memory of hands",
