@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-10",
+        title_fr: "L'averse d'août",
+        title_en: "The August downpour",
+        body_fr: "Un orage d'août ne demande la permission à personne. Le ciel se charge en quelques minutes, la première goutte frappe la poussière, et tous les plans de l'après-midi se rangent d'eux-mêmes. Ce qu'on appelle un contretemps est souvent la seule pause qu'on n'aurait jamais osé se donner : la pluie décide à notre place, et quelque chose en nous la remercie en secret. On s'assoit, on regarde tomber l'eau, et des inconnus qui couraient chacun vers leur journée se retrouvent à attendre ensemble, ce qui ressemble déjà à une conversation. Les jardins, eux, n'ont jamais considéré la pluie comme une interruption; pour eux, c'est l'événement principal. Peut-être que la différence entre subir un orage et le recevoir tient à une seule chose, la vitesse à laquelle on renonce à ce qu'on avait prévu. Qu'est-ce que je défendrai encore, aujourd'hui, contre une pluie qui voulait seulement me faire asseoir?",
+        body_en: "An August storm asks no one's permission. The sky loads up in a matter of minutes, the first drop strikes the dust, and all the afternoon's plans put themselves away. What we call a setback is often the only pause we would never have dared to grant ourselves: the rain decides in our place, and something in us secretly thanks it. We sit down, we watch the water fall, and strangers who were each running toward their own day find themselves waiting together, which already looks a great deal like a conversation. Gardens, for their part, have never considered rain an interruption; for them, it is the main event. Maybe the difference between enduring a storm and receiving one comes down to a single thing, the speed at which we let go of what we had planned. What will I keep defending today against a rain that only wanted to make me sit down?",
+    },
+    {
         date: "2026-08-09",
         title_fr: "La corde de bois",
         title_en: "The woodpile",
