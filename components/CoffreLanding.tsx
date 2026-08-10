@@ -459,10 +459,18 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
             </motion.div>
           </div>
           <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }} className="relative">
+            {/* Mobile : le tableau de bord desktop devient illisible sous 400 px,
+                donc la capture téléphone prend sa place. */}
+            <GlassFrame
+              src={`${M}mobile.webp`}
+              alt={t('The Coffre on a phone screen.', "Le Coffre sur un écran de téléphone.", 'Le Coffre en la pantalla de un teléfono.')}
+              eager
+              className="md:hidden w-[230px] mx-auto"
+            />
             <GlassFrame
               src={`${M}dash-desktop.webp`}
               alt={t('The Coffre des Inconnus dashboard, showing a child account with its jars and treasure.', "Le tableau de bord du Coffre des Inconnus, avec un compte enfant, ses pots et son trésor.", 'El tablero de Le Coffre des Inconnus, con una cuenta infantil, sus frascos y su tesoro.')}
-              eager
+              className="hidden md:block"
             />
             <div className="hidden md:block absolute md:-bottom-10 md:-left-10 w-[180px]">
               <GlassFrame
