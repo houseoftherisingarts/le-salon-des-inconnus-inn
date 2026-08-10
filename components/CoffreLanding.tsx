@@ -401,15 +401,16 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
       </div>
 
       <header className="fixed top-0 w-full z-[100] border-b border-[#c5a059]/15 bg-[#0a0808]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <button onClick={() => onNavigate('INN')} className="flex items-center gap-3 group">
-            <img src="/media/logo-icon.png" alt="" className="w-9 h-9 opacity-90" />
-            <span className="font-cinzel tracking-[0.2em] text-sm text-[#c5a059] group-hover:text-[#e8d5a3] transition-colors">
-              LE SALON DES INCONNUS
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center gap-3">
+          <button onClick={() => onNavigate('INN')} className="flex items-center gap-2 sm:gap-3 group shrink-0">
+            <img src="/media/logo-icon.png" alt="" className="w-7 h-7 sm:w-9 sm:h-9 opacity-90" />
+            <span className="font-cinzel tracking-[0.14em] sm:tracking-[0.2em] text-[10px] sm:text-sm text-[#c5a059] group-hover:text-[#e8d5a3] transition-colors whitespace-nowrap">
+              <span className="sm:hidden">LE SALON</span>
+              <span className="hidden sm:inline">LE SALON DES INCONNUS</span>
             </span>
           </button>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-[11px] tracking-[0.18em]">
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] tracking-[0.12em] sm:tracking-[0.18em]">
               {(['FR', 'EN', 'ES'] as Lang[]).map((l) => (
                 <button key={l} onClick={() => pick(l)}
                   className={lang === l ? 'text-[#c5a059] border-b border-[#c5a059] pb-0.5' : 'text-neutral-500 hover:text-[#e8d5a3] transition-colors pb-0.5'}>
@@ -417,8 +418,9 @@ export const CoffreLanding: React.FC<Props> = ({ onNavigate, language }) => {
                 </button>
               ))}
             </div>
-            <button onClick={() => onNavigate('DOWNLOAD')} className="text-xs tracking-[0.18em] uppercase text-neutral-400 hover:text-[#c5a059] transition-colors">
-              {t('Back to tools', 'Retour aux outils', 'Volver a las herramientas')}
+            <button onClick={() => onNavigate('DOWNLOAD')} className="text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.18em] uppercase text-neutral-400 hover:text-[#c5a059] transition-colors whitespace-nowrap">
+              <span className="sm:hidden">{t('Tools', 'Outils', 'Herramientas')}</span>
+              <span className="hidden sm:inline">{t('Back to tools', 'Retour aux outils', 'Volver a las herramientas')}</span>
             </button>
           </div>
         </div>
