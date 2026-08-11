@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-11",
+        title_fr: "Le jardin qui déborde",
+        title_en: "The overflowing garden",
+        body_fr: "Août est le mois où les jardins perdent toute retenue : les tomates mûrissent plus vite qu'on ne peut les manger, les courgettes doublent de taille dès qu'on a le dos tourné. Alors on remplit des paniers et on se met à donner, aux voisins, aux passants, à quiconque veut bien tendre les mains. Personne n'appelle ça un sacrifice; le surplus demande lui-même à circuler, et le garder serait la seule façon de le perdre. J'aime cette générosité qui ne coûte rien parce qu'elle vient du débordement, comme un rire qu'on ne réussit pas à retenir. Peut-être que toute vraie abondance fonctionne ainsi : elle se reconnaît au moment où elle cherche des mains vers qui aller. Les personnes les plus généreuses que je connais donnent avec cette même légèreté, comme si elles laissaient simplement passer ce qui déborde. Qu'est-ce qui mûrit en moi, ces jours-ci, qui demande seulement à être donné?",
+        body_en: "August is the month when gardens lose all restraint: the tomatoes ripen faster than anyone can eat them, and the zucchini double in size the moment your back is turned. So we fill baskets and start giving, to neighbours, to passersby, to anyone willing to hold out their hands. Nobody calls it a sacrifice; the surplus itself asks to circulate, and keeping it would be the only way to lose it. I love this generosity that costs nothing because it comes from overflow, like a laugh that cannot be held back. Maybe all true abundance works this way: you recognize it the moment it starts looking for hands to go to. The most generous people I know give with that same lightness, as if they were simply letting through what overflows. What is ripening in me these days that is only asking to be given?",
+    },
+    {
         date: "2026-08-10",
         title_fr: "L'averse d'août",
         title_en: "The August downpour",
