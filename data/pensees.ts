@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-12",
+        title_fr: "La deuxième arrivée",
+        title_en: "The second arrival",
+        body_fr: "Il existe deux façons d'arriver quelque part : la première fois, où tout est découverte, et la deuxième, où quelque chose nous reconnaît. J'aime les premières visites pour leur vertige, mais je crois que c'est la deuxième arrivée qui fait d'un lieu un port d'attache. Le voyageur qui revient franchit la porte autrement; il sait où poser son manteau, il retrouve sa chaise comme on retrouve une phrase laissée en suspens. Entre ces deux visites, un mystère s'est accompli en silence : un inconnu est devenu un habitué, sans qu'on puisse dire à quel moment précis la bascule a eu lieu. Les amitiés naissent de la même manière, jamais pendant la rencontre elle-même, mais dans le geste de revenir. Revenir, c'est voter avec ses pas pour ce qui compte. Vers quoi, vers qui, est-ce que je reviens sans même y penser?",
+        body_en: "There are two ways of arriving somewhere: the first time, when everything is discovery, and the second, when something recognizes us. I love first visits for their thrill, but I believe it is the second arrival that turns a place into a harbour. Travellers who return cross the threshold differently; they know where to lay their coat, they find their chair again the way one picks up a sentence left hanging. Between those two visits, a quiet mystery has taken place: a stranger has become a regular, and nobody can say at what precise moment the shift occurred. Friendships are born the same way, never during the meeting itself, but in the act of coming back. To return is to vote with your steps for what matters. What, and who, do I keep coming back to without even thinking about it?",
+    },
+    {
         date: "2026-08-11",
         title_fr: "Le jardin qui déborde",
         title_en: "The overflowing garden",
