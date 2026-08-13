@@ -38,3 +38,17 @@ scripts/seed-roster-data.json
 *.njsproj
 *.sln
 *.sw?
+
+dev-debug.log
+# Dependency directories
+node_modules/
+# Environment variables
+.vscode
+# OS specific
+
+# Task files
+# tasks.json
+# tasks/ 
+
+# Graphe de connaissance local (graphify), reconstruit à la demande
+graphify-out/

@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-13",
+        title_fr: "Accorder les instruments",
+        title_en: "Tuning the instruments",
+        body_fr: "Avant un concert, il y a ce moment étrange où l'orchestre s'accorde. Chacun joue dans son coin, un fouillis de notes monte de la scène, puis le hautbois donne son la et le désordre se rassemble autour d'un seul son. Personne n'applaudit cet instant, il ne figure sur aucun programme, et pourtant rien de beau n'arriverait sans lui. J'y pense quand des inconnus s'assoient à la même table : les premières minutes sont un accordage, on cherche le ton, on s'ajuste, on tend l'oreille plus qu'on ne parle. Les conversations qui comptent commencent souvent par ce léger désordre qu'il faut accepter de traverser sans le fuir. Et s'accorder demande peu de chose : une hauteur commune, un instant d'écoute, puis chaque voix reste libre de faire sa propre musique. Sur quel la est-ce que je m'accorde, ce matin, avant d'entrer dans ma journée?",
+        body_en: "Before a concert, there is that strange moment when the orchestra tunes. Each musician plays in their own corner, a jumble of notes rises from the stage, then the oboe gives its A and the disorder gathers around a single sound. Nobody applauds that instant, it appears on no program, and yet nothing beautiful would happen without it. I think of it when strangers sit down at the same table: the first minutes are a tuning, we search for the tone, we adjust, we listen more than we speak. The conversations that matter often begin with that slight disorder we must agree to pass through without fleeing it. And tuning asks for very little: a shared pitch, a moment of listening, then every voice remains free to make its own music. What A am I tuning to this morning, before stepping into my day?",
+    },
+    {
         date: "2026-08-12",
         title_fr: "La deuxième arrivée",
         title_en: "The second arrival",
