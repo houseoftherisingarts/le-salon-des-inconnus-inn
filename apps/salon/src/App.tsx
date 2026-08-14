@@ -62,6 +62,14 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
+  useEffect(() => {
+    const meta = NODE_META[target] ?? NODE_META.hub;
+    document.title = meta.title;
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute('content', meta.description);
+  }, [target]);
+
   const onNodeChange = useCallback((node: string) => {
     const slug = NODE_TO_SLUG[node];
     if (!slug) return; // node not in our slug table: leave URL alone
