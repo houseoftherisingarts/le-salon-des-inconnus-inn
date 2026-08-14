@@ -64,6 +64,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
      const [authMode, setAuthMode] = useState<'signup' | 'signin'>('signup');
      const [authBusy, setAuthBusy] = useState(false);
      const [authError, setAuthError] = useState('');
+     const [showLegal, setShowLegal] = useState(false);
 
      // Vetted flag ("curated artist") from members/{uid}/admin/flags.isArtist.
      const [isArtistInternal, setIsArtistInternal] = useState(false);
