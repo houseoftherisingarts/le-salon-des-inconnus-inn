@@ -1,0 +1,23 @@
+# PRD : Creator Studio, bêta publique professionnelle (2026-08-14)
+
+## Contexte
+Creator Studio est live sur https://inconnus-salon.web.app/createur (redéployé frais le 14 août, code du 6 août). Le contenu est réel (roster de 27 artistes, 16 vidéos Inspirosphère curées), le bilingue FR/EN est complet, Collaborate est branché sur Firestore. Audit lecture seule du 14 août : les exigences ci-dessous en sortent, rien d'autre n'est en périmètre.
+
+## Objectif (une phrase)
+Qu'un inconnu qui crée un compte vive une bêta stable, honnête, mesurée et légalement propre, sans pouvoir tricher ni casser quoi que ce soit.
+
+## Exigences (source : audit 2026-08-14)
+1. SÉCURITÉ, coins forgeables : ArtistHub écrit coins/lifetimeCoins directement sur members/{uid}/artistProfile/profile et firestore.rules (lignes ~67-70) n'impose ni type ni plafond; tout membre connecté peut s'écrire {coins: 999999} via la console. Verrouiller comme déjà fait pour marketListings/d20Rolls : validation stricte dans les règles (types, deltas plafonnés) ou écriture via fonction serveur.
+2. LÉGAL, comptes réels : création de comptes Google + courriel/mdp active, mais aucune politique de confidentialité, aucunes conditions d'utilisation, aucun chemin de suppression de compte dans tout packages/ui. Ajouter les trois (pages sobres + liens depuis le SignInGate et le Profil).
+3. MODE VISITEUR digne : « View as visitor » fonctionne mais les lectures Firestore échouent en permission-denied et ChatRoom affiche l'erreur SDK brute. Remplacer par des messages conviviaux FR/EN (« Créez un compte pour participer ») partout où le visiteur frappe une porte.
+4. IDENTITÉ/SEO de /createur : title et meta servis sont ceux, génériques, du Salon; aucune balise og; aucun favicon réel (le /favicon.ico rend le fallback SPA). Donner au Creator Studio son title, sa description, ses og et un vrai favicon.
+5. MESURE : zéro analytics et zéro monitoring d'erreurs dans apps/salon et packages/ui. Installer un analytics léger + une capture d'erreurs client (choix d'outil final : Alex), sinon la bêta est aveugle.
+6. BOUTON TTS mort : la clé Gemini est absente du bundle (voulu), mais le bouton d'écoute d'article reste visible et échoue en silence. Cacher le bouton quand la clé est absente.
+7. CHAT sans modération : règles d'écriture correctes (auteur seulement) et suppression admin existante, mais aucun signalement. Ajouter un bouton « signaler » minimal qui écrit dans une collection lue par l'admin.
+8. PLACEHOLDERS visibles : puzzleArtworks.ts contient 5 images Unsplash marquées placeholders. Les remplacer par de vraies œuvres/photos du Salon (assets à fournir par Alex).
+9. STRIPE, achats USD des skins : actuellement simulés avec un confirm honnête. Brancher le vrai checkout Stripe. DÉCISION D'ALEX sur le moment (pendant ou après la bêta).
+
+## Hors périmètre
+- Market, Hot Seat, Community Reads, Copyrighter : gelés « Bientôt » par design, on n'y touche pas pour la bêta.
+- Toute retouche de design du shell (règle « jamais détruire le premium »).
+- Les collections hors Creator Studio (production-docs, dossiers) notées en écriture publique : à traiter dans le chantier Salon général, pas ici.
