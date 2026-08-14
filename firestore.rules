@@ -64,9 +64,32 @@ service cloud.firestore {
       // Owner is the only writer; any authenticated visitor can read for the
       // public artist page. Public reads (anonymous) are gated for now until
       // Phase 1 confirms the safe-fields shape.
+      // Économie (coins/lifetimeCoins/puzzlesCompleted) : le client écrit ses
+      // propres soldes, donc on borne ce qu'une écriture peut changer pour
+      // bloquer le {coins: 999999} tapé dans la console. lifetimeCoins pilote
+      // la progression des puzzles : monotone, +50 max par écriture.
+      // Le vrai verrou serveur (Cloud Function d'autorité) reste à faire si
+      // l'économie prend de la valeur.
+      function validEconomy(after, before) {
+        return (!('coins' in after) || (
+                 after.coins is number && after.coins >= 0
+                 && after.coins - before.get('coins', 0) <= 500))
+            && (!('lifetimeCoins' in after) || (
+                 after.lifetimeCoins is number
+                 && after.lifetimeCoins >= before.get('lifetimeCoins', 0)
+                 && after.lifetimeCoins - before.get('lifetimeCoins', 0) <= 50))
+            && (!('puzzlesCompleted' in after) || (
+                 after.puzzlesCompleted is number
+                 && after.puzzlesCompleted >= before.get('puzzlesCompleted', 0)
+                 && after.puzzlesCompleted - before.get('puzzlesCompleted', 0) <= 3));
+      }
       match /artistProfile/{docId} {
-        allow read:  if request.auth != null;
-        allow write: if request.auth != null && request.auth.uid == userId;
+        allow read:   if request.auth != null;
+        allow create: if request.auth != null && request.auth.uid == userId
+                      && validEconomy(request.resource.data, {});
+        allow update: if request.auth != null && request.auth.uid == userId
+                      && validEconomy(request.resource.data, resource.data);
+        allow delete: if request.auth != null && request.auth.uid == userId;
       }
 
       // Super Profile (Maestro tier) — owner-editable config doc for the
