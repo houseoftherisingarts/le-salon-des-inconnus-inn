@@ -118,7 +118,7 @@ export const ChatRoom: React.FC<Props> = ({
             const next: ChatMessage[] = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
             setMessages(next);
         }, err => {
-            setError(String(err?.message ?? err));
+            setError(friendlyError(err));
         });
         return () => unsub();
     }, [activeRoom]);
@@ -148,9 +148,30 @@ export const ChatRoom: React.FC<Props> = ({
             });
             setDraft('');
         } catch (e) {
-            setError(String((e as any)?.message ?? e));
+            setError(friendlyError(e));
         } finally {
             setSending(false);
+        }
+    };
+
+    // Signalement minimal : une écriture dans chatReports, lue par l'admin.
+    const [reportedIds, setReportedIds] = useState<Set<string>>(new Set());
+    const reportMessage = async (msg: ChatMessage) => {
+        if (!currentUser?.uid || reportedIds.has(msg.id)) return;
+        const db = studioDb(); if (!db) return;
+        try {
+            await addDoc(collection(db, 'chatReports'), {
+                room: activeRoom,
+                messageId: msg.id,
+                messageText: msg.text,
+                reportedUid: msg.uid,
+                reportedName: msg.name,
+                reporterUid: currentUser.uid,
+                createdAt: serverTimestamp(),
+            });
+            setReportedIds(prev => new Set(prev).add(msg.id));
+        } catch (e) {
+            setError(friendlyError(e));
         }
     };
 
@@ -162,7 +183,7 @@ export const ChatRoom: React.FC<Props> = ({
         try {
             await deleteDoc(doc(db, 'studioChats', activeRoom, 'messages', msg.id));
         } catch (e) {
-            setError(String((e as any)?.message ?? e));
+            setError(friendlyError(e));
         }
     };
 
