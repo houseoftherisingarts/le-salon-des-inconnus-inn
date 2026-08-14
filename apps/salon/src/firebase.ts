@@ -30,4 +30,12 @@ export const db = app ? getFirestore(app) : null;
 export const auth = app ? getAuth(app) : null;
 export const storage = app ? getStorage(app) : null;
 
+// Mesure d'audience : ne s'active que si le measurementId est configuré au
+// build ET que l'environnement le supporte. Sinon, no-op silencieux.
+if (app && firebaseConfig.measurementId) {
+  import('firebase/analytics').then(({ getAnalytics, isSupported }) =>
+    isSupported().then((ok) => { if (ok) getAnalytics(app); }).catch(() => {}),
+  ).catch(() => {});
+}
+
 export { isFirebaseConfigured };
