@@ -73,7 +73,11 @@ export default function App() {
   const onNodeChange = useCallback((node: string) => {
     const slug = NODE_TO_SLUG[node];
     if (!slug) return; // node not in our slug table: leave URL alone
-    setTarget(node); // keep the tab title in sync (see NODE_META effect)
+    // Sans passer par setTarget : changer initialTargetNode rejouerait la
+    // navigation dans ArtsPage. On met le head à jour directement.
+    const meta = NODE_META[node] ?? NODE_META.hub;
+    document.title = meta.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
     if (normalize(window.location.pathname) === slug) return;
     window.history.pushState({}, '', slug);
   }, []);
