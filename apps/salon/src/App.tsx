@@ -18,6 +18,30 @@ const NODE_TO_SLUG = Object.fromEntries(
   Object.entries(SLUG_TO_NODE).map(([slug, node]) => [node, slug]),
 ) as Record<string, string>;
 
+// Title + description par section, pour que l'onglet et les partages nomment
+// la bonne chose (le head statique ne connaît que le hub).
+const NODE_META: Record<string, { title: string; description: string }> = {
+  hub: {
+    title: "Le Salon des Inconnus · Centre d'art contemporain · Outaouais",
+    description:
+      "Centre d'art à Namur, QC. Galerie, ateliers d'artistes, fiscalité de l'art (DPA), patronage et plateformes pour acheteurs et créateurs.",
+  },
+  artist_hub: {
+    title: 'Creator Studio · Le Salon des Inconnus',
+    description:
+      "Le studio des créateurs du Salon des Inconnus : profil d'artiste, collaborations, outils de production, lectures et clavardage.",
+  },
+  patron_hub: {
+    title: 'Le Mécène · Le Salon des Inconnus',
+    description:
+      "Acheter et soutenir l'art autrement : patronage, fiscalité de l'art (DPA) et œuvres du Salon des Inconnus.",
+  },
+  platforms: {
+    title: 'Le Café · Le Salon des Inconnus',
+    description: 'Les plateformes et projets numériques du Salon des Inconnus.',
+  },
+};
+
 function normalize(pathname: string): string {
   return pathname.replace(/\/$/, '') || '/';
 }
