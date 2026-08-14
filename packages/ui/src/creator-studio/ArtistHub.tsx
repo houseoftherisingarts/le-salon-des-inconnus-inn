@@ -6333,9 +6333,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     {/* Article Content */}
                                     <div className="p-8 md:p-16 text-lg text-neutral-300 font-serif leading-relaxed space-y-8">
                                         
-                                        {/* Actions: TTS */}
+                                        {/* Actions: TTS — caché quand la clé Gemini est absente du build,
+                                            sinon le bouton échoue en silence. */}
+                                        {!!import.meta.env.VITE_GEMINI_API_KEY && (
                                         <div className="flex items-center gap-4 border-b border-white/10 pb-8 mb-8">
-                                            <button 
+                                            <button
                                                 onClick={() => handleSpeak(selectedArticle.content)}
                                                 className={`flex items-center gap-2 px-4 py-2 border rounded transition-all ${isPlayingAudio ? 'bg-fuchsia-900/50 border-fuchsia-500 text-white' : 'border-white/20 text-neutral-400 hover:text-white'}`}
                                             >
