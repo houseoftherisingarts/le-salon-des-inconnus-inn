@@ -6352,6 +6352,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 )}
                                             </button>
                                         </div>
+                                        )}
 
                                         <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-white first-letter:mr-3 first-letter:float-left whitespace-pre-wrap">
                                             {selectedArticle.content}
