@@ -469,6 +469,36 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          )}
                      </p>
 
+                     <button
+                         onClick={() => setShowLegal(v => !v)}
+                         className="mt-6 w-full text-center text-[10px] text-neutral-600 hover:text-neutral-400 font-lato underline underline-offset-2 transition-colors"
+                     >
+                         {t('Privacy & terms', 'Confidentialité et conditions')}
+                     </button>
+                     {showLegal && (
+                         <div className="mt-4 text-left text-[11px] text-neutral-500 font-lato leading-relaxed space-y-3 border border-white/10 rounded-[15px] bg-black/40 p-4">
+                             <p>
+                                 {t(
+                                     'Your account stores only what you give it: name, email, and what you create in the studio (profile, articles, messages). Nothing is sold or shared; the data lives on Firebase (Google) and is used only to run the studio.',
+                                     "Votre compte ne conserve que ce que vous lui donnez : nom, courriel, et ce que vous créez dans le studio (profil, articles, messages). Rien n'est vendu ni partagé; les données vivent sur Firebase (Google) et ne servent qu'à faire tourner le studio.",
+                                 )}
+                             </p>
+                             <p>
+                                 {t(
+                                     'Be decent in shared spaces; the Salon may remove content or accounts that harm others. This is a beta: features may change.',
+                                     "Restez correct dans les espaces partagés; le Salon peut retirer un contenu ou un compte qui nuit aux autres. Ceci est une bêta : les fonctions peuvent changer.",
+                                 )}
+                             </p>
+                             <p>
+                                 {t('To delete your account and data, write to ', 'Pour supprimer votre compte et vos données, écrivez à ')}
+                                 <a className="underline hover:text-neutral-300" href="mailto:alex@lesalondesinconnus.com?subject=Suppression%20de%20compte%20Creator%20Studio">
+                                     alex@lesalondesinconnus.com
+                                 </a>
+                                 .
+                             </p>
+                         </div>
+                     )}
+
                      {onExit && (
                          <button
                              onClick={onExit}
