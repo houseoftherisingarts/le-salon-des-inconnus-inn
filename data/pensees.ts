@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-14",
+        title_fr: "Le sentier",
+        title_en: "The footpath",
+        body_fr: "Un sentier en forêt n'a jamais été construit par personne, et pourtant il existe. Chaque marcheur qui l'emprunte le dessine un peu plus, sans le vouloir, simplement en posant ses pas là où d'autres ont posé les leurs. Des inconnus qui ne se rencontreront jamais collaborent ainsi à travers les années : celui qui passe en mai travaille pour celle qui passera en octobre. J'y pense souvent quand je marche : je suis à la fois l'héritier de tous ceux qui sont passés avant moi et le bienfaiteur de tous ceux qui viendront. Nos coutumes, nos langues, nos recettes fonctionnent de la même manière, tracées par des milliers de passages dont personne n'a signé l'œuvre. Il y a quelque chose d'apaisant à contribuer à une chose qui ne portera jamais notre nom. Sur quels sentiers est-ce que je marche aujourd'hui, et lesquels suis-je en train d'ouvrir sans le savoir?",
+        body_en: "A forest path was never built by anyone, and yet it exists. Every walker who takes it draws it a little more, without meaning to, simply by placing their steps where others placed theirs. Strangers who will never meet collaborate this way across the years: the one who passes in May works for the one who will pass in October. I often think of it while walking: I am at once the heir of everyone who came before me and the benefactor of everyone still to come. Our customs, our languages, our recipes work the same way, traced by thousands of passings that nobody ever signed. There is something soothing about contributing to a thing that will never bear our name. Which paths am I walking today, and which ones am I opening without knowing it?",
+    },
+    {
         date: "2026-08-13",
         title_fr: "Accorder les instruments",
         title_en: "Tuning the instruments",
