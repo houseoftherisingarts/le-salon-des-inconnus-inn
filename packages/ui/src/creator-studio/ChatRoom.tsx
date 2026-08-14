@@ -68,6 +68,24 @@ export const ChatRoom: React.FC<Props> = ({
     accessLevel, theme, themeStyles, isAdmin,
 }) => {
     const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+    // Erreurs SDK traduites en langage humain : le cas dominant est le
+    // visiteur sans compte qui frappe permission-denied.
+    const friendlyError = (err: unknown): string => {
+        const raw = String((err as any)?.message ?? err);
+        if (!currentUser?.uid) {
+            return t(
+                'Create an account to read and join the chat.',
+                'Créez un compte pour lire et participer au clavardage.',
+            );
+        }
+        if (raw.includes('permission') || raw.includes('insufficient')) {
+            return t(
+                "You don't have access to this room yet.",
+                "Vous n'avez pas encore accès à cette salle.",
+            );
+        }
+        return raw;
+    };
     const [activeRoom, setActiveRoom] = useState<string>(() => {
         if (typeof window === 'undefined') return 'general';
         return localStorage.getItem('studioChatActiveRoom') || 'general';
