@@ -508,6 +508,14 @@ service cloud.firestore {
       allow update: if isAdmin();
     }
 
+    // Signalements du chat : tout membre connecté peut signaler un message
+    // (son propre uid stampé), seul l'admin lit et fait le ménage.
+    match /chatReports/{reportId} {
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.reporterUid;
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Show offers ──────────────────────────────────────────────────────────
     // Artists submit a performance offer (donation or paid). Anyone
     // authenticated may create one — the offer is non-destructive and
