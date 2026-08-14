@@ -286,6 +286,17 @@ export const ChatRoom: React.FC<Props> = ({
                                                         ✕
                                                     </button>
                                                 )}
+                                                {!isOwn && canPost && (
+                                                    <button
+                                                        onClick={() => reportMessage(msg)}
+                                                        className="opacity-0 group-hover:opacity-100 text-neutral-500 hover:text-amber-400 transition-opacity"
+                                                        title={reportedIds.has(msg.id)
+                                                            ? t('Reported', 'Signalé')
+                                                            : t('Report', 'Signaler')}
+                                                    >
+                                                        {reportedIds.has(msg.id) ? '⚑' : '⚐'}
+                                                    </button>
+                                                )}
                                             </div>
                                             <div className={`px-4 py-2 rounded-2xl text-sm font-lato leading-relaxed whitespace-pre-wrap break-words ${
                                                 isOwn
