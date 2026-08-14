@@ -73,6 +73,7 @@ export default function App() {
   const onNodeChange = useCallback((node: string) => {
     const slug = NODE_TO_SLUG[node];
     if (!slug) return; // node not in our slug table: leave URL alone
+    setTarget(node); // keep the tab title in sync (see NODE_META effect)
     if (normalize(window.location.pathname) === slug) return;
     window.history.pushState({}, '', slug);
   }, []);
