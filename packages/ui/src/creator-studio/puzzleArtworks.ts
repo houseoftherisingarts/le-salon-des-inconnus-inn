@@ -22,37 +22,39 @@ export interface PuzzleArtwork {
 }
 
 export const PUZZLE_ARTWORKS: ReadonlyArray<PuzzleArtwork> = [
-    // ── Seed entries ─────────────────────────────────────────────────────────
-    // These are placeholders sourced from Unsplash so the system has something
-    // to render before you swap them for your own photographs. Replace `src`
-    // with your photo URLs and adjust titles to match. The `id`s can stay.
+    // ── Illustrations maison (2026-08-16) ────────────────────────────────────
+    // Les cinq Unsplash de départ sont remplacées par des illustrations
+    // générées, style planche de carte à jouer fantasy, servies depuis
+    // /creator/puzzles/. Ce sont des placeholders assumés : elles tiennent la
+    // place jusqu'à ce qu'Alex fournisse ses propres photographies. Les `id`
+    // n'ont pas bougé, donc aucun profil de membre ne perd sa progression.
     {
         id: 'lantern-window',
-        src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1200&q=80',
+        src: '/creator/puzzles/lantern-window.webp',
         titleEn: 'Lantern Window',
         titleFr: 'Fenêtre à la lanterne',
     },
     {
         id: 'autumn-grove',
-        src: 'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=1200&q=80',
+        src: '/creator/puzzles/autumn-grove.webp',
         titleEn: 'Autumn Grove',
         titleFr: 'Bosquet d\'automne',
     },
     {
         id: 'old-stone-path',
-        src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&q=80',
+        src: '/creator/puzzles/old-stone-path.webp',
         titleEn: 'The Old Stone Path',
         titleFr: 'Le vieux sentier de pierre',
     },
     {
         id: 'kitchen-morning',
-        src: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80',
+        src: '/creator/puzzles/kitchen-morning.webp',
         titleEn: 'Kitchen at Morning',
         titleFr: 'Cuisine au matin',
     },
     {
         id: 'forest-edge',
-        src: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80',
+        src: '/creator/puzzles/forest-edge.webp',
         titleEn: 'Edge of the Forest',
         titleFr: 'Lisière de la forêt',
     },

@@ -2,109 +2,122 @@
   "master": {
     "tasks": [
       {
-        "id": 1,
+        "id": "1",
         "title": "Secure Coin System Against Forgery",
         "description": "Lock down coins/lifetimeCoins writes in Firestore to prevent direct manipulation by authenticated users",
         "details": "Currently ArtistHub writes directly to members/{uid}/artistProfile/profile with no type/bounds validation in firestore.rules (lines ~67-70). Users can forge unlimited coins via browser console.\n\nImplementation:\n1. Add strict validation rules at firestore.rules for artistProfile subcollection:\n   - Enforce numeric types for coins and lifetimeCoins\n   - Restrict deltas to reasonable caps (e.g., +50 coins max per write)\n   - OR migrate coin writes to Cloud Function with admin SDK (preferred for tamper-proofing)\n2. Follow existing pattern from marketListings/d20Rolls rules (lines 341-373, 525-534) which already enforce type checks and delta limits\n3. If using Cloud Function approach: create functions/awardCoins.ts that validates action source (puzzle piece earned, article published, etc.) before incrementing\n4. Update ArtistHub.tsx to call the Cloud Function instead of direct Firestore write\n\nPseudo-code (Cloud Function approach):\n```typescript\nexport const awardCoins = onCall(async (request) => {\n  const { uid, amount, reason } = request.data;\n  if (!request.auth || request.auth.uid !== uid) throw new Error('Unauthorized');\n  if (amount > 50 || amount < 0) throw new Error('Invalid amount');\n  \n  const profileRef = db.doc(`members/${uid}/artistProfile/profile`);\n  await profileRef.update({\n    coins: FieldValue.increment(amount),\n    lifetimeCoins: FieldValue.increment(amount),\n    lastCoinEvent: { reason, amount, at: FieldValue.serverTimestamp() }\n  });\n});\n```",
         "testStrategy": "1. Manual forgery test: attempt to write {coins: 999999} via browser console → should be rejected\n2. Legitimate coin earn: complete a puzzle piece → coins increment correctly\n3. Edge case: attempt negative delta or oversized delta → rejected\n4. Admin SDK bypass still works for admin operations",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:44.369Z"
       },
       {
-        "id": 2,
+        "id": "2",
         "title": "Add Privacy Policy, Terms of Service, and Account Deletion",
         "description": "Create legal compliance pages (Privacy Policy, ToS) and implement account deletion flow",
         "details": "Currently accepting real Google + email/password accounts with no privacy policy, terms, or deletion path violates GDPR/PIPEDA.\n\nImplementation:\n1. Create three new routes in apps/salon:\n   - /createur/confidentialite (FR) + /creator/privacy (EN)\n   - /createur/conditions (FR) + /creator/terms (EN)  \n   - /createur/supprimer-compte (FR) + /creator/delete-account (EN)\n2. Write sober, honest legal copy covering:\n   - Privacy: what data is collected (Firebase Auth email/photo, Firestore profile), how it's used, not sold\n   - Terms: acceptable use, no illegal content, moderation rights, service availability\n   - Deletion: user-initiated permanent account deletion via authenticated action\n3. Link from SignInGate (during sign-up) and from user Profile settings page\n4. Account deletion flow:\n   - UI: confirmation dialog with \"type DELETE to confirm\" input\n   - Backend: Cloud Function deleteAccount that:\n     a) Deletes auth user (admin.auth().deleteUser(uid))\n     b) Deletes all subcollections under members/{uid}\n     c) Anonymizes or deletes user messages in studioChats (option: keep messages but replace uid with 'deleted-user')\n5. Style pages with existing Creator Studio glassmorphism aesthetic (rounded-[15px], bg-black/40, backdrop-blur-md)\n\nPseudo-code (deletion function):\n```typescript\nexport const deleteAccount = onCall(async (request) => {\n  const uid = request.auth?.uid;\n  if (!uid) throw new Error('Not authenticated');\n  \n  // Delete Firestore data\n  const batch = db.batch();\n  const memberDoc = db.doc(`members/${uid}`);\n  const subcollections = ['artistProfile', 'admin', 'articles', 'videos', 'kanban'];\n  for (const sub of subcollections) {\n    const docs = await db.collection(`members/${uid}/${sub}`).get();\n    docs.forEach(doc => batch.delete(doc.ref));\n  }\n  batch.delete(memberDoc);\n  await batch.commit();\n  \n  // Delete auth user\n  await admin.auth().deleteUser(uid);\n});\n```",
         "testStrategy": "1. Visual: Privacy/Terms pages render correctly in FR + EN, accessible from sign-in and profile\n2. Functional: authenticated user completes deletion flow → auth account deleted + Firestore data removed\n3. Edge case: unauthenticated user cannot access deletion endpoint\n4. Legal review: pages meet basic GDPR/PIPEDA disclosure requirements (Alex to approve copy)",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:44.394Z"
       },
       {
-        "id": 3,
+        "id": "3",
         "title": "Improve Visitor Mode Error Handling",
         "description": "Replace raw permission-denied SDK errors with friendly bilingual messages when visitors hit authenticated-only features",
         "details": "\"View as visitor\" mode works but Firestore reads fail with raw SDK errors (permission-denied) visible in ChatRoom and elsewhere.\n\nImplementation:\n1. Identify all Firestore read paths in Creator Studio that require auth:\n   - ChatRoom.tsx (studioChats reads, line 99-106)\n   - ArtistHub.tsx (profile reads)\n   - Any other components fetching from authenticated collections\n2. Wrap onSnapshot/getDocs calls with try-catch\n3. On permission-denied error (code === 'permission-denied'), show bilingual fallback UI:\n   - FR: \"Créez un compte pour participer\"\n   - EN: \"Create an account to join\"\n4. Add a sign-in CTA button in the error state\n5. Log non-permission errors to console for debugging but don't expose raw SDK messages to users\n\nPseudo-code (ChatRoom.tsx):\n```typescript\nconst unsub = onSnapshot(q, snap => {\n  setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));\n}, err => {\n  if (err.code === 'permission-denied') {\n    setError(null); // Don't show raw error\n    setVisitorPrompt(language === 'FR' \n      ? 'Créez un compte pour participer' \n      : 'Create an account to join');\n  } else {\n    console.error('ChatRoom error:', err);\n    setError('Une erreur est survenue');\n  }\n});\n```",
         "testStrategy": "1. View as visitor → navigate to ChatRoom → see friendly prompt instead of SDK error\n2. View as visitor → try to read artist profiles → graceful fallback\n3. Sign in as member → all reads work normally\n4. Network error (simulate offline) → different error handling, not conflated with permission-denied",
         "priority": "medium",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:44.400Z"
       },
       {
-        "id": 4,
+        "id": "4",
         "title": "Add Creator Studio Meta Tags and Favicon",
         "description": "Give /createur its own title, description, Open Graph tags, and real favicon (currently inherits generic Salon meta)",
         "details": "Creator Studio serves generic Salon meta tags and no og:image. No real favicon (serves SPA fallback).\n\nImplementation:\n1. Create new favicon specifically for Creator Studio:\n   - Design: stylized paint palette or artist studio icon in gold (#c5a059) on black\n   - Generate favicon.ico, apple-touch-icon.png, favicon-32x32.png, favicon-16x16.png\n   - Place in public/creator-studio/ directory\n2. Update apps/salon/index.html OR use react-helmet/react-helmet-async to set meta dynamically on /createur route:\n   - title: \"Creator Studio · Le Salon des Inconnus\" (FR) / \"Creator Studio · House of the Rising Arts\" (EN)\n   - description FR: \"Plateforme créative pour artistes : galerie, portfolios, résidences, communauté.\"\n   - description EN: \"Creative platform for artists: gallery, portfolios, residencies, community.\"\n3. Add Open Graph tags:\n   - og:title, og:description (bilingual)\n   - og:image: create or use existing Creator Studio hero image (public/salon-creator-studio.png exists at apps/hub/public/)\n   - og:url: https://inconnus-salon.web.app/createur (or final production URL)\n   - twitter:card: summary_large_image\n4. Inject meta tags conditionally when route is /createur using react-helmet-async\n\nPseudo-code (App.tsx or CreatorStudioShell.tsx):\n```typescript\nimport { Helmet } from 'react-helmet-async';\n\n<Helmet>\n  <title>Creator Studio · Le Salon des Inconnus</title>\n  <meta name=\"description\" content={language === 'FR' \n    ? 'Plateforme créative pour artistes : galerie, portfolios, résidences, communauté.'\n    : 'Creative platform for artists: gallery, portfolios, residencies, community.'} />\n  <meta property=\"og:title\" content=\"Creator Studio\" />\n  <meta property=\"og:image\" content=\"https://inconnus-salon.web.app/salon-creator-studio.png\" />\n  <link rel=\"icon\" href=\"/creator-studio/favicon.ico\" />\n</Helmet>\n```",
         "testStrategy": "1. Share /createur link on Slack/Twitter → correct title, description, and og:image preview\n2. Browser tab shows Creator Studio favicon, not generic Salon icon\n3. View page source → meta tags present and correct for both FR/EN\n4. Lighthouse SEO audit passes with proper meta tags",
         "priority": "medium",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:44.415Z"
       },
       {
-        "id": 5,
+        "id": "5",
         "title": "Integrate Analytics and Error Monitoring",
         "description": "Install lightweight analytics (e.g., Plausible, umami) and client error capture (e.g., Sentry) for beta observability",
         "details": "No analytics or error monitoring currently deployed. Beta will be blind to usage and runtime errors.\n\nImplementation:\n1. Choose analytics tool (Alex to decide):\n   - Option A: Plausible (privacy-first, GDPR-compliant, lightweight script)\n   - Option B: umami (self-hosted alternative)\n   - Option C: Firebase Analytics (already in deps, more invasive)\n2. Add analytics script to apps/salon/index.html OR via Firebase SDK:\n   - Track pageviews, /createur route visits\n   - Track key events: account creation, article publish, puzzle completion\n   - Do NOT track PII or message content\n3. Choose error monitoring tool (Alex to decide):\n   - Option A: Sentry (industry standard, generous free tier)\n   - Option B: LogRocket (session replay + errors)\n   - Option C: Custom Firestore error logging (minimal)\n4. Integrate Sentry (recommended):\n   - Install @sentry/react @sentry/vite-plugin\n   - Initialize in src/main.tsx with DSN from Sentry project\n   - Wrap app with Sentry.ErrorBoundary\n   - Filter out permission-denied errors (expected for visitors)\n5. Environment-gate both: only active in production, not dev\n\nPseudo-code (main.tsx with Sentry):\n```typescript\nimport * as Sentry from '@sentry/react';\n\nif (import.meta.env.PROD) {\n  Sentry.init({\n    dsn: import.meta.env.VITE_SENTRY_DSN,\n    environment: 'production',\n    beforeSend(event, hint) {\n      // Filter expected permission errors from visitors\n      if (hint.originalException?.code === 'permission-denied') return null;\n      return event;\n    },\n  });\n}\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <Sentry.ErrorBoundary fallback={<ErrorFallback />}>\n    <App />\n  </Sentry.ErrorBoundary>\n);\n```",
         "testStrategy": "1. Deploy to production → analytics dashboard shows /createur pageviews\n2. Trigger intentional error (e.g., divide by zero) → captured in Sentry dashboard\n3. Visitor permission-denied error → NOT sent to Sentry (filtered)\n4. Verify no PII or sensitive data leaked in error reports\n5. Dev environment → no analytics or Sentry calls fired",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "review",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:57.697Z"
       },
       {
-        "id": 6,
+        "id": "6",
         "title": "Hide or Disable TTS Button When Gemini Key Absent",
         "description": "Conditionally hide article text-to-speech button when Gemini API key is not configured",
         "details": "TTS button visible in article reader but fails silently when Gemini key absent from bundle (intentional for security).\n\nImplementation:\n1. Locate TTS button in ArtsPage.tsx or article reader component (grep found ArtsPage.tsx contains TTS references)\n2. Add environment variable check:\n   - Read import.meta.env.VITE_GEMINI_API_KEY\n   - If undefined/empty, set hasTTS = false\n3. Conditionally render TTS button only when hasTTS is true\n4. Alternative: show disabled button with tooltip \"Feature unavailable\" if design requires placeholder\n5. Ensure no console errors when key absent\n\nPseudo-code (ArtsPage.tsx or article component):\n```typescript\nconst hasTTS = !!import.meta.env.VITE_GEMINI_API_KEY;\n\n{hasTTS && (\n  <button onClick={playTTS} className=\"...\">\n    {language === 'FR' ? 'Écouter' : 'Listen'}\n  </button>\n)}\n```",
         "testStrategy": "1. Build without VITE_GEMINI_API_KEY set → TTS button hidden\n2. Build with key present → TTS button visible and functional\n3. No console errors in either configuration\n4. UI gracefully handles missing feature (no broken layout)",
         "priority": "low",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:44.422Z"
       },
       {
-        "id": 7,
+        "id": "7",
         "title": "Add Message Reporting to Studio Chats",
         "description": "Implement minimal report button for chat messages that writes to admin-reviewed collection",
         "details": "Chat has owner-delete and admin-delete but no user-initiated reporting for abuse. Moderation is reactive only.\n\nImplementation:\n1. Add \"Report\" button to each message in ChatRoom.tsx (show on hover, alongside existing delete button)\n2. Button visible to all authenticated users (not just message owner)\n3. On click, write to new Firestore collection /chatReports/{reportId}:\n   - Fields: { reporterUid, reporterName, messageId, messageText, messageAuthorUid, room, reportedAt, status: 'pending' }\n4. Add Firestore rule for /chatReports:\n   - allow create: if request.auth != null && request.resource.data.status == 'pending'\n   - allow read, update: if isAdmin()\n5. Admin CRM: add \"Reports\" tab to read and triage reports (mark as reviewed/actioned/dismissed)\n6. UI feedback: show toast \"Message reported\" after successful write\n7. Rate-limit: client-side check prevents same user reporting same message twice (store in localStorage)\n\nPseudo-code (ChatRoom.tsx):\n```typescript\nconst reportMessage = async (msg: ChatMessage) => {\n  if (!currentUser) return;\n  const reportKey = `reported-${msg.id}`;\n  if (localStorage.getItem(reportKey)) {\n    alert(t('Already reported', 'Déjà signalé'));\n    return;\n  }\n  \n  const db = studioDb();\n  if (!db) return;\n  \n  await addDoc(collection(db, 'chatReports'), {\n    reporterUid: currentUser.uid,\n    reporterName: displayName || currentUser.displayName,\n    messageId: msg.id,\n    messageText: msg.text,\n    messageAuthorUid: msg.uid,\n    room: activeRoom,\n    reportedAt: serverTimestamp(),\n    status: 'pending',\n  });\n  \n  localStorage.setItem(reportKey, 'true');\n  showToast(t('Message reported', 'Message signalé'));\n};\n```\n\nFirestore rules addition:\n```\nmatch /chatReports/{reportId} {\n  allow create: if request.auth != null\n                && request.resource.data.status == 'pending'\n                && request.resource.data.reporterUid == request.auth.uid;\n  allow read, update, delete: if isAdmin();\n}\n```",
         "testStrategy": "1. Authenticated user clicks Report on a message → doc created in /chatReports\n2. Same user tries to report same message again → prevented by localStorage check\n3. Admin views Reports tab in CRM → sees pending reports with message context\n4. Admin marks report as reviewed → status updated\n5. Firestore rules: non-admin cannot read /chatReports → permission-denied",
         "priority": "medium",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:29:44.427Z"
       },
       {
-        "id": 8,
+        "id": "8",
         "title": "Replace Placeholder Puzzle Artworks with Real Assets",
         "description": "Swap 5 Unsplash placeholder images in puzzleArtworks.ts with real Salon photographs",
         "details": "puzzleArtworks.ts contains 5 Unsplash placeholders (lines 30-58). Replace with authentic Le Salon des Inconnus photos.\n\nImplementation:\n1. Alex provides 5 high-res photos (1200px+ width) representing the Salon:\n   - Suggested themes: inn exterior, garden, forest path, kitchen, artist workspace, event night\n2. Upload images to Firebase Storage /puzzle-artworks/ OR use existing public/ CDN\n3. Update puzzleArtworks.ts:\n   - Replace each `src` URL with new image path\n   - Update titleEn/titleFr to match actual photos\n   - Add credit field if photos are by specific artist: `credit: 'Photo by [Name]'`\n4. Keep existing `id` values stable (users may have these puzzles in progress)\n5. Test puzzle rendering with new images (ensure adequate contrast for jigsaw cuts)\n\nPseudo-code (puzzleArtworks.ts):\n```typescript\nexport const PUZZLE_ARTWORKS: ReadonlyArray<PuzzleArtwork> = [\n  {\n    id: 'lantern-window',\n    src: 'https://firebasestorage.googleapis.com/.../salon-lantern-window.jpg',\n    titleEn: 'Lantern Window at Dusk',\n    titleFr: 'Fenêtre à la lanterne au crépuscule',\n    credit: 'Photo by Alex Piché',\n  },\n  // ... 4 more real photos\n];\n```",
         "testStrategy": "1. Visual: load puzzle on member profile → real Salon photo displays, not Unsplash generic\n2. Jigsaw puzzle completion → pieces fit and reveal coherent image\n3. Display case → completed puzzle shows correct title and credit\n4. No broken image links (all URLs resolve)\n5. Alex approval: photos represent the Salon authentically",
         "priority": "low",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "deferred",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:30:15.324Z"
       },
       {
-        "id": 9,
+        "id": "9",
         "title": "Integrate Stripe Checkout for Skin Purchases (Decision Pending)",
         "description": "Replace simulated skin purchases with real Stripe checkout flow for USD transactions",
         "details": "Skin purchases currently simulated with honest confirm dialog. Real Stripe integration is an ALEX DECISION (during or after beta).\n\nImplementation (if approved):\n1. Install @stripe/stripe-js and Stripe backend SDK\n2. Create Cloud Function createCheckoutSession:\n   - Input: { skinId, priceUSD, uid }\n   - Creates Stripe checkout session with line item for skin\n   - Returns session URL\n3. Update skin purchase UI (likely in ArtistHub or skins marketplace):\n   - On \"Buy Skin\" click, call createCheckoutSession\n   - Redirect user to Stripe-hosted checkout (session.url)\n4. Create webhook handler fulfillCheckout:\n   - Listens for checkout.session.completed event from Stripe\n   - Writes purchased skin to members/{uid}/artistProfile/purchasedSkins\n   - Deducts coins from user balance if using hybrid coin+USD model\n5. Add Stripe publishable key to environment (VITE_STRIPE_PUBLISHABLE_KEY)\n6. Firestore rules: ensure purchasedSkins can only be written by Cloud Function (admin SDK)\n7. Test mode: use Stripe test keys and test card 4242 4242 4242 4242\n\nPseudo-code (Cloud Function):\n```typescript\nimport Stripe from 'stripe';\nconst stripe = new Stripe(process.env.STRIPE_SECRET_KEY);\n\nexport const createCheckoutSession = onCall(async (request) => {\n  const { skinId, priceUSD } = request.data;\n  const uid = request.auth?.uid;\n  if (!uid) throw new Error('Not authenticated');\n  \n  const session = await stripe.checkout.sessions.create({\n    payment_method_types: ['card'],\n    line_items: [{\n      price_data: {\n        currency: 'usd',\n        product_data: { name: `Skin: ${skinId}` },\n        unit_amount: priceUSD * 100, // cents\n      },\n      quantity: 1,\n    }],\n    mode: 'payment',\n    success_url: `https://inconnus-salon.web.app/createur?purchase=success`,\n    cancel_url: `https://inconnus-salon.web.app/createur?purchase=cancel`,\n    metadata: { uid, skinId },\n  });\n  \n  return { url: session.url };\n});\n\nexport const fulfillCheckout = onRequest(async (req, res) => {\n  const sig = req.headers['stripe-signature'];\n  const event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);\n  \n  if (event.type === 'checkout.session.completed') {\n    const session = event.data.object;\n    const { uid, skinId } = session.metadata;\n    \n    await db.doc(`members/${uid}/artistProfile/purchasedSkins`).set(\n      { [skinId]: { purchasedAt: FieldValue.serverTimestamp(), priceUSD: session.amount_total / 100 } },\n      { merge: true }\n    );\n  }\n  \n  res.json({ received: true });\n});\n```",
         "testStrategy": "1. User clicks Buy Skin → redirected to Stripe checkout page\n2. Complete purchase with test card → redirected to success URL\n3. Firestore: purchasedSkins updated with new skin\n4. User profile: purchased skin appears in inventory\n5. Webhook: Stripe sends event → function processes correctly\n6. Edge case: user cancels checkout → no charge, no skin added\n7. Security: non-admin cannot write to purchasedSkins directly",
         "priority": "low",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "status": "deferred",
+        "subtasks": [],
+        "updatedAt": "2026-08-14T19:30:15.335Z"
       }
     ],
     "metadata": {
-      "created": "2026-08-14T18:33:22.385Z",
-      "updated": "2026-08-14T18:33:22.385Z",
-      "description": "Tasks for master context"
+      "version": "1.0.0",
+      "lastModified": "2026-08-14T19:30:15.335Z",
+      "taskCount": 9,
+      "completedCount": 6,
+      "tags": [
+        "master"
+      ]
     }
   }
 }

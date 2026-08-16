@@ -135,6 +135,11 @@ interface PlatformSkin {
     /** Cost in coins (the activity-based internal currency). The current
      *  flat rate per the economy spec is 100 coins per skin. */
     priceCoins?: number;
+    /** Stripe Payment Link for the cash purchase. When absent, the USD path
+     *  stays honestly disabled instead of pretending to charge a card.
+     *  Create one link per skin in the Stripe dashboard, set its post-payment
+     *  redirect to /createur?skin=<id>&paid=1, and paste the URL here. */
+    stripeUrl?: string;
     description: string;
     minLevel: number; // Gamification
     style: {
@@ -3353,7 +3358,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     //  - 'tokens'  → deducts userTokens (must be >= priceTokens)
     //  - 'coins'   → deducts spendable coins (must be >= priceCoins). Lifetime
     //                 coins are NOT touched, so puzzle progression survives.
-    //  - 'usd'     → simulated checkout (TODO: wire Stripe). Confirms then unlocks.
+    //  - 'usd'     → Stripe Payment Link. Sends the user to Stripe and stops
+    //                 there: the unlock happens on return, never on click.
     //  - 'level'   → free claim once user reaches the skin's minLevel.
     // The unlock writes through to Firestore so the skin survives reload.
     const handlePurchaseSkin = async (skinId: string, method: 'tokens' | 'coins' | 'usd' | 'level' = 'tokens') => {
@@ -3380,11 +3386,19 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             }
         } else if (method === 'usd') {
             if (typeof skin.priceUSD !== 'number') return;
-            // TODO: wire Stripe. For now simulate a successful checkout via confirm.
-            const ok = confirm(language === 'EN'
-                ? `Pay $${skin.priceUSD.toFixed(2)} for ${skin.name}? (Simulated checkout: no card charged yet.)`
-                : `Payer $${skin.priceUSD.toFixed(2)} pour ${skin.name} ? (Achat simulé : aucune carte débitée pour l'instant.)`);
-            if (!ok) return;
+            // Aucun paiement simule. Sans lien Stripe configure, l'achat en
+            // argent n'existe pas, et on le dit au lieu de faire semblant.
+            if (!skin.stripeUrl) {
+                alert(language === 'EN'
+                    ? 'Cash purchase is not open yet for this skin. It unlocks with coins or by level in the meantime.'
+                    : "L'achat en argent n'est pas encore ouvert pour ce thème. Il se debloque avec des pieces ou par niveau entretemps.");
+                return;
+            }
+            // On envoie vers Stripe et on s'arrete la. Le deblocage se fait au
+            // retour de Stripe, jamais au clic : sinon le theme serait gratuit
+            // pour quiconque ferme l'onglet de paiement.
+            window.location.assign(skin.stripeUrl);
+            return;
         } else if (method === 'level') {
             if (skin.minLevel > userLevel) {
                 alert(language === 'EN' ? `Level ${skin.minLevel} required.` : `Niveau ${skin.minLevel} requis.`);
