@@ -516,6 +516,17 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // Erreurs client : la page ecrit son rapport de plantage, personne ne le
+    // relit sauf l'admin. Creation seule, champs bornes, aucun contenu de
+    // formulaire ni jeton n'est accepte ici.
+    match /clientErrors/{errorId} {
+      allow create: if request.resource.data.message is string
+                    && request.resource.data.message.size() <= 500
+                    && request.resource.data.url is string
+                    && request.resource.data.url.size() <= 300;
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Show offers ──────────────────────────────────────────────────────────
     // Artists submit a performance offer (donation or paid). Anyone
     // authenticated may create one — the offer is non-destructive and
