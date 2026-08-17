@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-17",
+        title_fr: "Savoir recevoir",
+        title_en: "Knowing how to receive",
+        body_fr: "Recevoir aussi est un art. On m'a beaucoup appris à donner : partager, offrir, rendre service, tendre la main le premier. Personne ne m'a montré comment recevoir, et j'ai mis des années à comprendre que c'était l'autre moitié du même geste. Devant un cadeau, un compliment ou un coup de main, quelque chose en nous se dépêche de rembourser, comme si rester en dette une seule soirée était insupportable. Pourtant, accepter pleinement, sans minimiser ni rendre la pareille sur-le-champ, c'est laisser à l'autre la joie entière de son geste. Je le vois à la table de l'auberge : les invités qui savent recevoir font des hôtes heureux, et la soirée se met à circuler toute seule. Peut-être que toute hospitalité repose sur ce consentement discret, se laisser donner quelque chose. Qu'est-ce qu'on m'offre, ces jours-ci, que je n'ai pas encore vraiment accepté?",
+        body_en: "Receiving is an art too. I was taught a great deal about giving: sharing, offering, lending a hand, being the first to reach out. Nobody showed me how to receive, and it took me years to understand that it was the other half of the same gesture. Faced with a gift, a compliment or some help, something in us hurries to repay, as if staying in debt for a single evening were unbearable. Yet accepting fully, without minimizing it or returning the favour on the spot, leaves the other person the whole joy of their gesture. I see it at the inn's table: guests who know how to receive make for happy hosts, and the evening begins to flow on its own. Maybe all hospitality rests on that quiet consent, letting ourselves be given something. What is being offered to me these days that I have not yet truly accepted?",
+    },
+    {
         date: "2026-08-14",
         title_fr: "Le sentier",
         title_en: "The footpath",
