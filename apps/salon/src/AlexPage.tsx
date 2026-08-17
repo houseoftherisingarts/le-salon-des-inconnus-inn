@@ -697,7 +697,7 @@ export default function AlexPage() {
               <div
                 className="absolute inset-0"
                 style={{
-                  background: `linear-gradient(to bottom, ${NOIR} 0%, transparent 26%, transparent 62%, ${NOIR} 100%)`,
+                  background: `linear-gradient(to bottom, ${NOIR} 0%, rgba(10,8,8,0.88) 10%, transparent 40%, transparent 58%, rgba(10,8,8,0.9) 90%, ${NOIR} 100%)`,
                 }}
               />
             </div>
