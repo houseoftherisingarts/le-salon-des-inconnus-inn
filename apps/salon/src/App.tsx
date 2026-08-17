@@ -82,6 +82,11 @@ export default function App() {
     window.history.pushState({}, '', slug);
   }, []);
 
+  // Page d'artiste d'Alex : une page pleine, hors du graphe d'ArtsPage.
+  if (normalize(window.location.pathname) === '/alex') {
+    return <AlexPage />;
+  }
+
   return (
     <ArtsPage
       language="FR"
