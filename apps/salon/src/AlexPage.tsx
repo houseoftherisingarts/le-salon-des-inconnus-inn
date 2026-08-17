@@ -229,7 +229,7 @@ function Hero() {
         <div
           className="absolute inset-0 lg:hidden"
           style={{
-            background: `linear-gradient(to bottom, rgba(10,8,8,0.55) 0%, rgba(10,8,8,0.5) 36%, rgba(10,8,8,0.9) 72%, ${NOIR} 100%)`,
+            background: `linear-gradient(to bottom, rgba(10,8,8,0.62) 0%, rgba(10,8,8,0.68) 40%, rgba(10,8,8,0.93) 74%, ${NOIR} 100%)`,
           }}
         />
         {/* Lueur doree au bord de la silhouette */}
