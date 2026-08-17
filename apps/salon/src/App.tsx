@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { ArtsPage } from '@inconnus/ui';
+import AlexPage from './AlexPage';
 
 // Route model:
 //   '/' & '/centre' → arts hub (the Patron/Creator choice)
