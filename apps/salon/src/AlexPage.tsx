@@ -680,6 +680,11 @@ export default function AlexPage() {
             <div
               aria-hidden
               className="absolute inset-y-0 right-[-10%] w-[76%] overflow-hidden lg:right-0 lg:w-[50%]"
+              style={{
+                // Aucun bord net : la silhouette se dissout de tous les cotes.
+                maskImage: 'radial-gradient(118% 76% at 60% 50%, black 40%, transparent 100%)',
+                WebkitMaskImage: 'radial-gradient(118% 76% at 60% 50%, black 40%, transparent 100%)',
+              }}
             >
               <img
                 src={ALEX.portrait}
