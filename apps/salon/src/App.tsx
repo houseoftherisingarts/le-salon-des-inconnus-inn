@@ -64,6 +64,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    // La page d'artiste pose son propre titre : ne pas l'ecraser.
+    if (normalize(window.location.pathname) === '/alex') return;
     const meta = NODE_META[target] ?? NODE_META.hub;
     document.title = meta.title;
     document
