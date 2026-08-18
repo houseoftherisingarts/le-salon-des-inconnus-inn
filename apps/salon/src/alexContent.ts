@@ -13,17 +13,19 @@
 
 export const ALEX = {
   name: 'Alex T. St-Laurent',
-  role: 'Cinéaste, entrepreneur culturel, comédien',
+  role: 'Cinéaste · Comédien · Bâtisseur de lieux',
   portrait: '/media/Alex/alex-portrait.jpg',
   portraitSmall: '/media/Alex/alex-portrait-720.jpg',
   email: 'alex@lesalondesinconnus.com',
-  eyebrow: 'Cinéaste et directeur artistique',
+  eyebrow: "Portrait d'artiste",
   /* Le titre du hero : le mot accent est porte par la couleur, jamais l'italique. */
   heroTitle: 'Je bâtis des lieux, des images et des systèmes qui laissent les inconnus créer.',
   heroSub:
-    'Formation en production cinématographique à Concordia, prix du jury au Concordia Film Festival, sélection Cannes Short Corner. Aujourd’hui fondateur et directeur artistique du Salon des Inconnus, une auberge d’artistes sur cinq acres dans la Petite-Nation, et du studio web Vexel.',
-  manifesto:
-    "L'art libre demande deux choses : un lieu qui tient debout, et quelqu'un qui tient la porte ouverte. Je passe mes années à fabriquer les deux, une discipline à la fois.",
+    'Formé en production cinématographique à Concordia. Prix du jury au Concordia Film Festival, sélection Cannes Short Corner. Fondateur du Salon des Inconnus et du studio Vexel.',
+  // REGLE ABSOLUE : deux lignes maximum au rendu. Le reste descend dans le corps.
+  manifesto: "Un lieu qui tient debout.",
+  manifestoBody:
+    "L'art libre demande ça, et quelqu'un qui tient la porte ouverte. Je passe mes années à fabriquer les deux, une discipline à la fois.",
 };
 
 /** Ce que je fais. Quatre pratiques, toutes adossees au CV. */

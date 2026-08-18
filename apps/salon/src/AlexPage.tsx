@@ -16,11 +16,14 @@ import {
 /**
  * Page d'artiste d'Alex T. St-Laurent, dans la section art du Salon.
  *
- * Charte du Salon, mesuree sur l'accueil (InnPage) : noir CHAUD #0a0808,
- * or antique #c5a059, creme #f3e5ab, Prata pour le display, Cinzel espace
- * pour les etiquettes, Lato 300 pour le corps. Brume qui derive, grain,
- * braises : la meme atmosphere que la maison. Jamais d'italique, jamais le
- * jaune vif #d4af37 en dominante, jamais de noir plat.
+ * Canon MESURE dans le code de la section art (packages/ui/src/arts/ArtsPage) :
+ * TOUS les titres en Cinzel avec tracking large, surtitres Cinzel majuscules
+ * espacees, corps en Lato. Prata appartient a l'accueil de l'auberge, PAS a la
+ * section art. Fond noir CHAUD #0a0808, or antique #c5a059, creme #f3e5ab,
+ * brume, grain, braises. Jamais d'italique, jamais de noir plat.
+ *
+ * REGLE ABSOLUE : aucun titre ne depasse DEUX lignes au rendu. Le hero porte
+ * le nom, le role vient en sous-titre, le reste descend dans le corps.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -166,8 +169,8 @@ function TitreAnime({ text, accentFrom }: { text: string; accentFrom: number }) 
   const words = text.split(' ');
   return (
     <h1
-      className="font-prata max-w-[15ch] text-[clamp(2.3rem,5.2vw,4.6rem)] leading-[1.08]"
-      style={{ color: CREME, letterSpacing: '-0.015em' }}
+      className="font-cinzel max-w-[13ch] text-[clamp(2.7rem,6.6vw,5.8rem)] leading-[1.06]"
+      style={{ color: CREME, letterSpacing: '0.06em' }}
     >
       {words.map((word, i) => (
         <span key={i} className="inline-block overflow-hidden pb-[0.09em] align-bottom">
@@ -255,21 +258,23 @@ function Hero() {
           <Etiquette>{ALEX.eyebrow}</Etiquette>
         </motion.div>
 
+        <div className="mt-5">
+          <TitreAnime text={ALEX.name} accentFrom={99} />
+        </div>
+
         <motion.p
-          className="font-cinzel mb-6 mt-4 text-[clamp(0.95rem,1.5vw,1.2rem)] uppercase tracking-[0.3em]"
-          style={{ color: 'rgba(243,229,171,0.72)' }}
+          className="font-cinzel mt-5 text-[clamp(0.8rem,1.3vw,1.05rem)] uppercase tracking-[0.3em]"
+          style={{ color: OR }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.35, ease: EASE }}
+          transition={{ duration: 1.2, delay: 1.05, ease: EASE }}
         >
-          {ALEX.name}
+          {ALEX.role}
         </motion.p>
 
-        <TitreAnime text={ALEX.heroTitle} accentFrom={7} />
-
-        <div className="mt-9 grid max-w-[60ch] gap-8 lg:max-w-[46ch]">
+        <div className="mt-9 grid gap-8">
           <motion.p
-            className="font-lato text-[1.05rem] font-light leading-relaxed"
+            className="font-lato max-w-[46ch] text-[1.05rem] font-light leading-relaxed"
             style={{ color: 'rgba(243,229,171,0.66)' }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -343,7 +348,7 @@ function AnneeCard({ annee }: { annee: Annee }) {
           />
         )}
         <p
-          className={`font-prata absolute bottom-2 left-6 leading-none ${
+          className={`font-cinzel absolute bottom-2 left-6 leading-none ${
             annee.age
               ? 'text-[clamp(3.6rem,6.4vw,5.8rem)]'
               : 'font-cinzel text-[clamp(1.05rem,1.7vw,1.35rem)] tracking-[0.2em]'
@@ -364,7 +369,7 @@ function AnneeCard({ annee }: { annee: Annee }) {
           </span>
           <span className="h-px flex-1" style={{ background: 'rgba(197,160,89,0.25)' }} />
         </div>
-        <h3 className="font-prata text-2xl" style={{ color: CREME }}>
+        <h3 className="font-cinzel text-2xl" style={{ color: CREME }}>
           {annee.titre}
         </h3>
         <p className="font-lato text-sm font-light" style={{ color: 'rgba(243,229,171,0.6)' }}>
@@ -444,7 +449,7 @@ function TitreSection({ etiquette, titre }: { etiquette: string; titre: string }
     <Reveal>
       <Etiquette>{etiquette}</Etiquette>
       <h2
-        className="font-prata mt-4 max-w-[20ch] text-[clamp(1.8rem,3.8vw,3.1rem)] leading-[1.14]"
+        className="font-cinzel mt-4 max-w-[20ch] text-[clamp(1.8rem,3.8vw,3.1rem)] leading-[1.14]"
         style={{ color: CREME, letterSpacing: '-0.015em' }}
       >
         {titre}
@@ -469,11 +474,18 @@ export default function AlexPage() {
         {/* Manifeste */}
         <section className={`${CONTENEUR} py-24 md:py-32`}>
           <Reveal>
+            {/* Deux lignes au maximum : le reste vit dans le corps de texte. */}
             <p
-              className="font-prata max-w-[24ch] text-[clamp(1.6rem,3.3vw,2.8rem)] leading-[1.22]"
-              style={{ color: CREME, letterSpacing: '-0.015em' }}
+              className="font-cinzel max-w-[20ch] text-[clamp(1.7rem,3.6vw,3rem)] leading-[1.2]"
+              style={{ color: CREME, letterSpacing: '0.03em' }}
             >
               {ALEX.manifesto}
+            </p>
+            <p
+              className="font-lato mt-7 max-w-[52ch] text-[1.05rem] font-light leading-relaxed"
+              style={{ color: 'rgba(243,229,171,0.62)' }}
+            >
+              {ALEX.manifestoBody}
             </p>
           </Reveal>
         </section>
@@ -491,7 +503,7 @@ export default function AlexPage() {
                 <p className="font-cinzel text-sm" style={{ color: OR }}>
                   0{i + 1}
                 </p>
-                <h3 className="font-prata mt-3 text-xl" style={{ color: CREME }}>
+                <h3 className="font-cinzel mt-3 text-xl" style={{ color: CREME }}>
                   {pratique.title}
                 </h3>
                 <p
@@ -523,7 +535,7 @@ export default function AlexPage() {
                       className="border-b py-5"
                       style={{ borderColor: 'rgba(197,160,89,0.18)' }}
                     >
-                      <p className="font-prata text-lg" style={{ color: CREME }}>
+                      <p className="font-cinzel text-lg" style={{ color: CREME }}>
                         {item.title}
                       </p>
                       <p
@@ -567,7 +579,7 @@ export default function AlexPage() {
                     <p className="font-cinzel text-xs uppercase tracking-[0.24em]" style={{ color: OR }}>
                       {prix.year}
                     </p>
-                    <h3 className="font-prata mt-3 text-xl" style={{ color: CREME }}>
+                    <h3 className="font-cinzel mt-3 text-xl" style={{ color: CREME }}>
                       {prix.award}
                     </h3>
                     <p className="font-lato mt-2 text-sm font-light" style={{ color: 'rgba(243,229,171,0.62)' }}>
@@ -604,7 +616,7 @@ export default function AlexPage() {
                     {item.year}
                   </span>
                   <div>
-                    <h3 className="font-prata text-2xl" style={{ color: CREME }}>
+                    <h3 className="font-cinzel text-2xl" style={{ color: CREME }}>
                       {item.title}
                     </h3>
                     <p className="font-lato mt-2 text-sm font-light" style={{ color: 'rgba(243,229,171,0.55)' }}>
@@ -633,7 +645,7 @@ export default function AlexPage() {
           <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {FORMATION.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.05}>
-                <p className="font-prata text-lg" style={{ color: CREME }}>
+                <p className="font-cinzel text-lg" style={{ color: CREME }}>
                   {item.title}
                 </p>
                 <p className="font-lato mt-1 text-sm font-light" style={{ color: 'rgba(243,229,171,0.55)' }}>
@@ -656,7 +668,7 @@ export default function AlexPage() {
                   className="h-full rounded-[15px] border p-8 backdrop-blur-md transition-colors"
                   style={{ background: 'rgba(10,8,8,0.5)', borderColor: 'rgba(243,229,171,0.14)' }}
                 >
-                  <h3 className="font-prata text-xl" style={{ color: CREME }}>
+                  <h3 className="font-cinzel text-xl" style={{ color: CREME }}>
                     {chantier.title}
                   </h3>
                   <p
@@ -711,13 +723,13 @@ export default function AlexPage() {
               <Reveal>
                 <Etiquette>Le calendrier des années</Etiquette>
                 <p
-                  className="font-prata mt-6 leading-[0.82] text-[clamp(7rem,21vw,19rem)]"
+                  className="font-cinzel mt-6 leading-[0.82] text-[clamp(7rem,21vw,19rem)]"
                   style={{ color: OR, textShadow: '0 0 90px rgba(197,160,89,0.35)' }}
                 >
                   33
                 </p>
                 <h2
-                  className="font-prata mt-5 text-[clamp(1.9rem,4.6vw,3.6rem)]"
+                  className="font-cinzel mt-5 text-[clamp(1.9rem,4.6vw,3.6rem)]"
                   style={{ color: CREME, letterSpacing: '-0.015em' }}
                 >
                   Année de la Structure.
@@ -741,7 +753,7 @@ export default function AlexPage() {
           <Reveal>
             <Etiquette>{CTA.eyebrow}</Etiquette>
             <h2
-              className="font-prata mt-4 max-w-[18ch] text-[clamp(1.9rem,4.4vw,3.4rem)]"
+              className="font-cinzel mt-4 max-w-[18ch] text-[clamp(1.9rem,4.4vw,3.4rem)]"
               style={{ color: CREME, letterSpacing: '-0.015em' }}
             >
               {CTA.title}
