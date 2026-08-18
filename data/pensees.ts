@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-18",
+        title_fr: "Voyager léger",
+        title_en: "Travelling light",
+        body_fr: "À l'auberge, j'ai remarqué que les voyageurs les plus heureux sont souvent ceux qui arrivent avec presque rien. Un petit sac, deux livres, et cette aisance de ceux qui ont accepté d'avance de manquer de quelque chose. Voyager léger demande un drôle de courage : chaque objet laissé derrière est un pari que le monde fournira ce qu'il faut, ou qu'on saura s'en passer. Les bagages lourds racontent souvent une peur, celle d'avoir besoin d'une chose précise à un moment précis et de ne pas l'avoir. La route enseigne pourtant le contraire : on se souvient des rencontres, jamais du chandail de rechange. Je crois qu'on porte nos vies comme nos valises, remplies de précautions dont la seule utilité était de nous rassurer au moment de les remplir. Qu'est-ce que je traîne encore aujourd'hui qui ne sert qu'à peser?",
+        body_en: "At the inn, I have noticed that the happiest travellers are often the ones who arrive with almost nothing. A small bag, two books, and that ease of people who have accepted in advance that something will be missing. Travelling light takes an odd kind of courage: every object left behind is a wager that the world will provide what is needed, or that we will learn to do without it. Heavy luggage often tells of a fear, the fear of needing one precise thing at one precise moment and not having it. Yet the road teaches the opposite: we remember the encounters, never the spare sweater. I believe we carry our lives the way we carry our suitcases, filled with precautions whose only real use was to reassure us while we packed. What am I still hauling around today that serves no purpose but its weight?",
+    },
+    {
         date: "2026-08-17",
         title_fr: "Savoir recevoir",
         title_en: "Knowing how to receive",
