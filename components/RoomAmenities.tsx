@@ -128,6 +128,24 @@ const AMENITIES: Record<AmenityKey, AmenityDef> = {
       </svg>
     ),
   },
+  'extra-bed': {
+    label: { EN: 'Extra bed', FR: "Lit d'appoint" },
+    tooltip: {
+      EN: 'Extra bed available on request for one more guest',
+      FR: "Lit d'appoint disponible sur demande pour une personne de plus",
+    },
+    icon: (
+      <svg viewBox="0 0 24 24" {...stroke} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 18v-6a2 2 0 0 1 2-2h9a4 4 0 0 1 4 4v4" />
+        <path d="M3 18h15" />
+        <path d="M3 20v-2" />
+        <path d="M18 20v-2" />
+        <path d="M6 10V8" />
+        <path d="M20 5v6" />
+        <path d="M17 8h6" />
+      </svg>
+    ),
+  },
   'off-grid': {
     label: { EN: 'Off-grid', FR: 'Hors-réseau' },
     tooltip: { EN: 'Off-grid (battery provided)', FR: 'Hors-réseau (batterie fournie)' },
