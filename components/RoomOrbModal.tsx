@@ -694,6 +694,15 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
             size="md"
           />
 
+          {room.amenities?.includes('extra-bed') && (
+            <p className="text-sm font-lato text-[#e0c08a] leading-relaxed text-left max-w-md">
+              {t(
+                'An extra bed can be added for one more guest: pick your guest count when you book and we prepare the rest.',
+                "Un lit d'appoint peut être ajouté pour une personne de plus : indiquez votre nombre de personnes en réservant et nous préparons le reste.",
+              )}
+            </p>
+          )}
+
           {/* HostAway live availability + price (Phase 1). Booking still hands
               off to the HostAway page via the Choose button below. */}
           {SHOW_LIVE_AVAILABILITY && room.status !== 'COMING_SOON' && listingId && (
