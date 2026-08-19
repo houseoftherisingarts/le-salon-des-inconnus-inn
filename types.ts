@@ -28,7 +28,8 @@ export type AmenityKey =
   | 'fireplace'
   | 'private-bath'
   | 'electricity'
-  | 'off-grid';
+  | 'off-grid'
+  | 'extra-bed';
 
 export interface Accommodation {
   id: string;
