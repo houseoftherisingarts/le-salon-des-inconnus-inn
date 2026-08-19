@@ -865,6 +865,10 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
   const displayedTitle = (language === 'FR' && item.title_fr) ? item.title_fr : item.title;
   const displayedType = language === 'FR' && item.type_fr ? item.type_fr : item.type;
   const displayedDescription = language === 'FR' && item.description_fr ? item.description_fr : item.description;
+  // "2-3" when an extra bed stretches capacity past the standard count.
+  const guestLabel = typeof item.guests === 'number' && typeof item.maxGuests === 'number' && item.maxGuests > item.guests
+    ? `${item.guests}-${item.maxGuests}`
+    : item.guests;
 
   const { openRoomOrb } = useRoomOrb();
   // Click on a room card → open the orb-preview modal instead of jumping
