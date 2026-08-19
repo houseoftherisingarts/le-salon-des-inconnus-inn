@@ -914,7 +914,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
                 <h3 className="font-prata text-2xl text-[#f3e5ab] mb-2">{displayedTitle}</h3>
                 <p className={`font-josefin text-xs text-neutral-400 uppercase tracking-wider leading-relaxed mb-4 ${isHero ? 'max-w-2xl mx-auto' : 'line-clamp-3'}`}>{displayedDescription}</p>
                 <div className="flex justify-center gap-4 text-[10px] font-bold text-[#f3e5ab] uppercase tracking-widest mb-4">
-                    <span>{item.guests} {language === 'EN' ? "Guests" : "Inv."}</span><span className="text-[#c5a059]">/</span><span>{item.beds} {language === 'EN' ? "Beds" : "Lits"}</span>
+                    <span>{guestLabel} {language === 'EN' ? "Guests" : "Inv."}</span><span className="text-[#c5a059]">/</span><span>{item.beds} {language === 'EN' ? "Beds" : "Lits"}</span>
                 </div>
             </div>
         </VictorianCard>
@@ -943,7 +943,7 @@ const ListingCard: React.FC<{ item: Accommodation; language: 'EN' | 'FR'; isHero
                 <p className={`font-medieval text-sm text-[#faeecd]/80 leading-relaxed mb-6 ${isHero ? 'max-w-3xl mx-auto' : 'line-clamp-4'}`}>{displayedDescription}</p>
                 <div className="mt-auto pt-4 border-t border-[#dcb055]/30 flex justify-between items-center">
                     <div className="flex gap-3 font-medieval text-xs text-[#faeecd]/70">
-                         <span className="bg-[#161915]/50 px-2 py-1 rounded-full">{item.guests} {language === 'EN' ? "Guests" : "Inv."}</span>
+                         <span className="bg-[#161915]/50 px-2 py-1 rounded-full">{guestLabel} {language === 'EN' ? "Guests" : "Inv."}</span>
                          <span className="bg-[#161915]/50 px-2 py-1 rounded-full">{item.beds} {language === 'EN' ? "Beds" : "Lits"}</span>
                     </div>
                     <button className="px-5 py-2 bg-[#dcb055] text-[#161915] font-medieval text-sm rounded-full hover:bg-[#f0c870] transition-all shadow-md hover:scale-105 active:scale-95">{ctaText}</button>
