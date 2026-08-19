@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-19",
+        title_fr: "Le brouillon",
+        title_en: "The rough draft",
+        body_fr: "Dans les musées, on accroche les toiles finales, mais les peintres ont passé leur vie dans les esquisses. Pour une œuvre encadrée, des centaines de feuilles griffonnées, raturées, abandonnées à mi-geste, et c'est là que la main a tout appris. Nous rêvons d'exister comme des chefs-d'œuvre, alors que nos journées ressemblent bien plus à des brouillons : des essais, des reprises, des lignes qu'on efface le lendemain. J'ai longtemps cru qu'un brouillon était une version ratée de la chose à venir. Je pense maintenant qu'il en est la partie vivante : le tableau fini se tait, tandis que l'esquisse cherche encore. Les conversations d'un soir autour d'une table sont pleines de ces phrases inachevées qui valent mieux que les discours polis. Peut-être que se donner le droit au brouillon, c'est simplement se donner le droit de continuer. Quelle partie de ma vie est-ce que je retarde parce que j'attends d'en connaître la version finale?",
+        body_en: "Museums hang the finished canvases, but painters spent their lives in the sketches. For every framed work, hundreds of pages scribbled, crossed out, abandoned mid-gesture, and that is where the hand learned everything. We dream of existing like masterpieces, while our days look far more like drafts: attempts, revisions, lines erased the next morning. For a long time I believed a draft was a failed version of the thing to come. I now think it is the living part of it: the finished painting has fallen silent, while the sketch is still searching. Evening conversations around a table are full of those unfinished sentences that are worth more than polished speeches. Maybe giving ourselves the right to a draft is simply giving ourselves the right to keep going. Which part of my life am I postponing because I am waiting to know its final version?",
+    },
+    {
         date: "2026-08-18",
         title_fr: "Voyager léger",
         title_en: "Travelling light",
