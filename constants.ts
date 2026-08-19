@@ -49,7 +49,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 3,
     beds: 1,
     baths: 2,
-    amenities: COMMON_AMENITIES,
+    amenities: [...COMMON_AMENITIES!, 'extra-bed'],
     images: gallery(["/media/inn/ecrivaine%20banana.jpg"], 345789),
     bookingLink: "https://salon.holidayfuture.com/listings/345789"
   },
@@ -65,7 +65,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 3,
     beds: 1,
     baths: 2,
-    amenities: COMMON_AMENITIES,
+    amenities: [...COMMON_AMENITIES!, 'extra-bed'],
     images: gallery(["/media/inn/musicienne%20banana%202.jpg"], 345790),
     bookingLink: "https://salon.holidayfuture.com/listings/345790"
   },
@@ -81,7 +81,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 3,
     beds: 1,
     baths: 2,
-    amenities: COMMON_AMENITIES,
+    amenities: [...COMMON_AMENITIES!, 'extra-bed'],
     images: gallery(["/media/inn/cineast%20banana%202.jpg"], 345792),
     bookingLink: "https://salon.holidayfuture.com/listings/345792"
   },
@@ -97,7 +97,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 3,
     beds: 1,
     baths: 3,
-    amenities: [...COMMON_AMENITIES!, 'private-bath'],
+    amenities: [...COMMON_AMENITIES!, 'private-bath', 'extra-bed'],
     images: gallery(["/media/inn/amphiteatre%20banana.jpg"], 345787),
     bookingLink: "https://salon.holidayfuture.com/listings/345787"
   },
@@ -129,7 +129,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 5,
     beds: "4-5",
     baths: "0 + 3",
-    amenities: [...COMMON_AMENITIES!, 'fireplace', 'electricity'],
+    amenities: [...COMMON_AMENITIES!, 'fireplace', 'electricity', 'extra-bed'],
     images: gallery([PLACEHOLDER_YURT], 345786),
     bookingLink: "https://salon.holidayfuture.com/listings/345786"
   },
@@ -145,7 +145,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 6,
     beds: 1,
     baths: "0.5 + 3",
-    amenities: ['parking', 'no-wifi', 'off-grid', 'hot-tub', 'terrasse', 'projector', 'boardgames'],
+    amenities: ['parking', 'no-wifi', 'off-grid', 'hot-tub', 'terrasse', 'projector', 'boardgames', 'extra-bed'],
     images: [
       "/media/inn/meditante-1.jpeg",
       "/media/inn/meditante-2.jpeg",
@@ -191,7 +191,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     maxGuests: 5,
     beds: 2,
     baths: "0.5 + 3",
-    amenities: [...COMMON_AMENITIES!, 'fireplace', 'electricity'],
+    amenities: [...COMMON_AMENITIES!, 'fireplace', 'electricity', 'extra-bed'],
     images: gallery([PLACEHOLDER_BUS], 345788),
     bookingLink: "https://salon.holidayfuture.com/listings/345788"
   },

@@ -734,6 +734,15 @@ function RoomOrbModal({ rooms, index, setIndex, onClose, language }: ModalProps)
                 </label>
               </div>
 
+              {room.amenities?.includes('extra-bed') && (
+                <p className="text-xs font-lato text-[#e0c08a] leading-relaxed">
+                  {t(
+                    'An extra bed can be added for one more guest: pick your guest count above and we prepare the rest.',
+                    "Un lit d'appoint peut être ajouté pour une personne de plus : indiquez votre nombre de personnes ci-dessus et nous préparons le reste.",
+                  )}
+                </p>
+              )}
+
               {/* Live result line */}
               <div className="min-h-[2.5rem] text-sm font-lato" aria-live="polite">
                 {loading && (
