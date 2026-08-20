@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-20",
+        title_fr: "La fenêtre éclairée",
+        title_en: "The lit window",
+        body_fr: "Marcher dehors à la tombée du jour réserve un petit spectacle que personne n'a mis en scène : les fenêtres s'allument une à une, chacune à son heure. De la route, une fenêtre éclairée dit très peu et promet beaucoup; on devine une table, une lampe, quelqu'un qui rentre tout juste ou qui attend. Les voyageurs de tous les siècles ont connu ce soulagement, apercevoir au loin une lumière et sentir le pas devenir plus léger. J'y pense le soir en allumant les lampes de l'auberge : une fenêtre éclairée est peut-être la plus vieille invitation du monde, comprise avant toutes les langues. Elle ne nomme personne et s'adresse pourtant à chacun, comme un feu laissé visible exprès. Nous portons tous quelques fenêtres de ce genre, des attentions discrètes qui disent aux autres qu'il y a de la place. Laquelle des miennes est restée éteinte trop longtemps?",
+        body_en: "Walking outside at dusk offers a small spectacle nobody ever staged: the windows light up one by one, each at its own hour. From the road, a lit window says very little and promises a great deal; you picture a table, a lamp, someone just home or someone waiting. Travellers of every century have known that relief, catching sight of a light in the distance and feeling their step grow lighter. I think of it in the evening while turning on the inn's lamps: a lit window may be the oldest invitation in the world, understood before any language. It names no one and yet speaks to everyone, like a fire left visible on purpose. We all carry a few windows of this kind, quiet gestures that tell others there is room. Which of mine has stayed dark too long?",
+    },
+    {
         date: "2026-08-19",
         title_fr: "Le brouillon",
         title_en: "The rough draft",
