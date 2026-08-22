@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-22",
+        title_fr: "Les yeux du visiteur",
+        title_en: "The visitor's eyes",
+        body_fr: "On ne voit plus vraiment les lieux qu'on habite. Le regard s'use à force de passer cent fois devant la même fenêtre, et la beauté finit par se confondre avec le décor. Puis un voyageur franchit la porte, s'arrête un instant, lève les yeux vers la lumière du soir posée sur la table, et tout redevient neuf d'un coup. Je tiens cela pour l'un des cadeaux les plus discrets de l'hospitalité : chaque invité me rend ma propre maison, lavée de l'habitude. Les peintres connaissent ce truc depuis toujours, ils retournent la toile ou la regardent dans un miroir pour la revoir avec des yeux d'étranger. Peut-être que l'émerveillement ne se perd jamais vraiment; il attend seulement des yeux qui n'ont pas encore appris à ne plus voir. Qu'est-ce que je remarquerais dans ma journée, ce matin, si je la visitais pour la première fois?",
+        body_en: "We stop truly seeing the places we live in. The eye wears down from passing the same window a hundred times, and beauty ends up blending into the scenery. Then a traveller steps through the door, pauses for a moment, looks up at the evening light resting on the table, and everything is new again all at once. I count this among the quietest gifts of hospitality: every guest hands me back my own house, washed clean of habit. Painters have known this trick forever; they turn the canvas around or look at it in a mirror to see it again with a stranger's eyes. Maybe wonder is never really lost; it is only waiting for eyes that have not yet learned to stop seeing. What would I notice in my day this morning if I were visiting it for the first time?",
+    },
+    {
         date: "2026-08-20",
         title_fr: "La fenêtre éclairée",
         title_en: "The lit window",
