@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-23",
+        title_fr: "Le jeu partagé",
+        title_en: "The shared game",
+        body_fr: "Il y a une drôle de porte entre les gens, et elle s'ouvre plus vite autour d'un jeu qu'autour d'une conversation. Deux inconnus qui s'assoient face à face pour parler doivent d'abord se trouver un sujet, tandis que deux inconnus qui posent des dés entre eux ont déjà tout ce qu'il faut. Le jeu fournit les règles et le rythme, il donne une raison de rester assis, et le reste arrive tout seul dans les silences entre les coups. J'ai vu des gens se raconter leur vie entière au-dessus d'un damier sans presque jamais lever les yeux, parce que regarder ailleurs rend l'aveu plus facile. Les tavernes du Moyen Âge avaient compris cela bien avant nous en gardant toujours un plateau près du feu. Un bon jeu est peut-être un prétexte honnête, une façon de dire à quelqu'un que nous avons du temps pour lui sans jamais avoir à le formuler. À qui est-ce que je pourrais offrir une heure de cette sorte, cette semaine?",
+        body_en: "There is a strange door between people, and it opens faster over a game than over a conversation. Two strangers who sit down face to face to talk must first find a subject, while two strangers who set dice between them already have everything they need. The game supplies the rules and the rhythm, it gives a reason to stay seated, and the rest arrives on its own in the silences between moves. I have watched people tell each other their whole lives over a game board while hardly ever looking up, because looking elsewhere makes the telling easier. Medieval taverns understood this long before we did, always keeping a board near the fire. A good game may be an honest pretext, a way of telling someone that we have time for them without ever having to say it. Who could I offer an hour of that kind this week?",
+    },
+    {
         date: "2026-08-22",
         title_fr: "Les yeux du visiteur",
         title_en: "The visitor's eyes",
