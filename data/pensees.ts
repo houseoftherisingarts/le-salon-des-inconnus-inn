@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-24",
+        title_fr: "Le pain qui lève",
+        title_en: "Bread rising",
+        body_fr: "Celui qui fait du pain apprend vite que la moitié du travail ne lui appartient pas. On pétrit de son mieux, on façonne la boule, puis vient le moment de la couvrir d'un linge et de s'en aller. Le levain travaille mieux quand personne ne le regarde, et soulever le linge aux cinq minutes ne fait que ralentir ce qu'on espérait presser. J'ai mis des années à accepter que les amitiés et les idées obéissent à la même loi : tout ce qui vit a besoin d'heures où on le laisse tranquille. Notre époque voudrait mesurer la levée minute par minute, mais la pâte ne négocie pas et prend le temps qu'elle prend. Faire confiance, c'est peut-être cela au fond : préparer de son mieux, puis consentir à ne plus surveiller. Qu'est-ce que je devrais couvrir d'un linge aujourd'hui et laisser lever en paix?",
+        body_en: "Anyone who bakes bread soon learns that half the work does not belong to them. You knead as well as you can, you shape the loaf, and then comes the moment to cover it with a cloth and walk away. The leaven works best when nobody is watching, and lifting the cloth every five minutes only slows down what you hoped to hurry. It took me years to accept that friendships and ideas obey the same law: everything alive needs hours in which it is left alone. Our era would like to measure the rising minute by minute, but the dough does not negotiate and takes the time it takes. Perhaps that is what trusting really is: preparing as well as you can, then consenting to stop watching. What should I cover with a cloth today and leave to rise in peace?",
+    },
+    {
         date: "2026-08-23",
         title_fr: "Le jeu partagé",
         title_en: "The shared game",
