@@ -40,6 +40,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://lesalondesinconnus.com/pensees/2026-08-25</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://lesalondesinconnus.com/pensees/2026-08-22</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>never</changefreq>
@@ -79,7 +85,7 @@
        chaque matin par le job com.alex.pensee-du-jour -->
   <url>
     <loc>https://lesalondesinconnus.com/pensees</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
