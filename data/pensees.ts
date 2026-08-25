@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-25",
+        title_fr: "La chaise de plus",
+        title_en: "The extra chair",
+        body_fr: "Dans bien des maisons d'autrefois, on dressait un couvert de plus que le nombre de convives attendus. Personne ne savait qui viendrait s'y asseoir, et c'était justement le sens du geste : la place existait avant la personne. J'aime cette idée qu'une chaise vide puisse être une forme d'attention plutôt qu'un manque. Elle dit à celui qui frappera tard que la maison l'avait prévu sans le connaître, et elle rappelle à ceux qui sont déjà assis que le cercle n'est jamais fermé. Nous faisons souvent l'inverse : nous remplissons nos tables, nos horaires et nos têtes jusqu'au bord, puis nous nous étonnons que rien de neuf n'y trouve place. Garder une chaise libre demande un peu de foi, celle de croire que quelqu'un vaudra le dérangement. Où est-ce que je pourrais laisser une place vide aujourd'hui, au cas où l'inconnu passerait?",
+        body_en: "In many houses of old, one more place was set at the table than the number of guests expected. Nobody knew who would come to sit there, and that was precisely the meaning of the gesture: the place existed before the person. I like the idea that an empty chair can be a form of attention rather than a lack. It tells whoever knocks late that the house had planned for them without knowing them, and it reminds those already seated that the circle is never closed. We often do the opposite: we fill our tables, our schedules and our heads to the brim, then wonder why nothing new can find room there. Keeping a chair free asks for a little faith, the faith that someone will be worth the disturbance. Where could I leave an empty place today, in case a stranger comes by?",
+    },
+    {
         date: "2026-08-24",
         title_fr: "Le pain qui lève",
         title_en: "Bread rising",
