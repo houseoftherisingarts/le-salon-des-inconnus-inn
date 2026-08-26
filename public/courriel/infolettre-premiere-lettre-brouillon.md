@@ -1,5 +1,5 @@
 ---
-statut: brouillon, en attente d'approbation d'Alex — rien n'est envoyé
+statut: brouillon, en attente d'approbation d'Alex (rien n'est envoyé)
 sujet_suggere: "La porte s'ouvre"
 ---
 
