@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-26",
+        title_fr: "Le blanc des cartes",
+        title_en: "The blank on the map",
+        body_fr: "Les cartes anciennes avaient une honnêteté que les nôtres ont perdue : elles laissaient du blanc là où le monde restait inconnu. Le cartographe dessinait la côte jusqu'où les navires l'avaient vue, puis il posait sa plume et laissait la page vide, parfois avec une note qui avouait qu'on ne savait pas. Aujourd'hui nos écrans remplissent tout, chaque rue a son nom et chaque chemin son temps de parcours, et il ne reste plus de place pour l'aveu. J'y pense quand un voyageur pousse la porte de l'auberge : chaque personne qui arrive est une carte dont je n'ai vu que la côte. Je pourrais deviner le reste à partir d'un accent ou d'un manteau, mais deviner et connaître sont deux choses, et le blanc mérite mieux qu'une invention. Peut-être que l'inconnu se tient mieux comme un espace laissé ouvert, le temps que la personne le dessine elle-même. Quelle partie de ma carte est-ce que j'ai remplie trop vite, cette semaine?",
+        body_en: "Old maps had an honesty ours have lost: they left blank space wherever the world remained unknown. The cartographer drew the coast as far as the ships had seen it, then set down his pen and left the page empty, sometimes with a note that admitted nobody knew. Today our screens fill everything in, every street has its name and every road its travel time, and there is no room left for the admission. I think of it when a traveller pushes open the inn's door: every person who arrives is a map of which I have only seen the coastline. I could guess the rest from an accent or a coat, but guessing and knowing are two different things, and the blank deserves better than an invention. Perhaps the unknown is best held as a space kept open, for as long as it takes the person to draw it themselves. Which part of my map did I fill in too quickly this week?",
+    },
+    {
         date: "2026-08-25",
         title_fr: "La chaise de plus",
         title_en: "The extra chair",
