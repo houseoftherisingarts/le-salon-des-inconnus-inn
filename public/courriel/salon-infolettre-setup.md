@@ -36,7 +36,7 @@ Une fois Campaigns activé :
 ## c. La liste de contacts du Salon
 
 **Source réelle trouvée dans le code du site**, pas à inventer : le repo
-Salon a déjà un constructeur d'audience infolettre dans l'admin —
+Salon a déjà un constructeur d'audience infolettre dans l'admin, dans
 `components/admin/NewsletterSection.tsx`. Il combine, dédoublonne et
 exporte les courriels de quatre sources Firestore :
 
@@ -77,8 +77,8 @@ prêtes dans l'admin.
    avec `listkey` + `emailids` en liste séparée par des virgules (pas de
    JSON, Zoho le refuse). Puis, dans l'interface, **Contacts → Import
    Contacts → Skip duplicates + Add to Topic = <le sujet de la
-   campagne>** — sans ce rattachement au sujet, les contacts importés
-   par API sont exclus de l'envoi (« Contacts not associated with the
+   campagne>** (sans ce rattachement au sujet, les contacts importés
+   par API sont exclus de l'envoi, « Contacts not associated with the
    topic »).
 2. **Contenu.** `createCampaign` refuse l'import de contenu sur un
    compte d'essai. Passer par l'interface : Create Email Campaign →
