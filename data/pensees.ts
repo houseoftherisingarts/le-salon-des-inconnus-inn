@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-27",
+        title_fr: "La braise couverte",
+        title_en: "The banked fire",
+        body_fr: "Autrefois, avant de monter se coucher, celui qui tenait le foyer ne laissait pas le feu mourir. Il rassemblait les braises au centre de l'âtre et les couvrait de cendre, assez pour qu'elles dorment sans s'éteindre, et au matin un souffle suffisait à relancer la flamme. Le geste s'appelait couvrir le feu, et il en dit long sur une certaine manière d'habiter. Je crois que les lieux d'accueil vivent de la même patience : entre deux visiteurs, quelque chose doit rester chaud sous la cendre, sinon chaque arrivée redevient un départ à froid. Cette chaleur gardée ne se voit pas. Elle tient dans une table déjà mise dans la tête, dans une histoire que l'aubergiste a envie de raconter à la prochaine personne qui poussera la porte. Qu'est-ce que nous laissons dormir sous la cendre, le soir, pour que demain reparte d'un souffle?",
+        body_en: "Long ago, before going up to bed, whoever kept the hearth would keep the fire from dying. He gathered the embers in the middle of the fireplace and covered them with ash, enough for them to sleep without going out, and in the morning a single breath was all it took to bring back the flame. The gesture was called banking the fire, and it says a great deal about a certain way of dwelling. I believe places of welcome live on the same patience: between two visitors, something has to stay warm beneath the ash, or every arrival becomes a cold start all over again. That kept warmth cannot be seen. It lives in a table already set in the mind, in a story the innkeeper is eager to tell the next person who pushes open the door. What do we leave sleeping under the ash at night, so that tomorrow can start again from a single breath?",
+    },
+    {
         date: "2026-08-26",
         title_fr: "Le blanc des cartes",
         title_en: "The blank on the map",
