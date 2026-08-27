@@ -57,15 +57,15 @@ const HERO_COPY = {
 
 // Season 2026: the concrete offer, shown as a band right under the hero.
 const SEASON_2026 = {
-  fr: "Cette saison, les chantiers sont clairs : l'aménagement paysager, les jardins, et les finitions autour des mini-maisons et de la tente prospecteur. Les séjours se prennent à la semaine ou au mois, jusqu'à la fin octobre, et nous accueillons jusqu'à quatre personnes à la fois. Vous dormez dans la tente prospecteur, un dortoir chaleureux au cœur de la communauté.",
-  en: "This season the work is clear: landscaping, the gardens, and the finishing touches around the tiny houses and the prospector tent. Stays run by the week or by the month, until the end of October, and we host up to four people at a time. You sleep in the prospector tent, a warm bunkhouse at the heart of the community.",
+  fr: "Cette saison, les chantiers sont clairs : l'aménagement paysager, les jardins, et les finitions autour des mini-maisons et de la tente prospecteur. Les séjours se prennent à la semaine ou au mois, jusqu'à la fin octobre, et nous accueillons jusqu'à quatre personnes à la fois. Vous dormez dans la tente prospecteur, un dortoir chaleureux au milieu du terrain.",
+  en: "This season the work is clear: landscaping, the gardens, and the finishing touches around the tiny houses and the prospector tent. Stays run by the week or by the month, until the end of October, and we host up to four people at a time. You sleep in the prospector tent, a warm bunkhouse in the middle of the grounds.",
 };
 
 // Definitions. The Wwoofing block stays; the Ceilidh block contextualises the
 // secondary CTA ("Voir le Ceilidh") so visitors understand what they'd see.
 const WWOOFING_DEFINITION = {
-  fr: "WWOOF (World Wide Opportunities on Organic Farms) est un réseau mondial qui met en lien des hôtes et des bénévoles. Le principe est simple : quatre heures de travail concentré par jour aux jardins, sur le terrain ou autour du lieu, en échange du gîte, du couvert, et du temps passé ensemble. Ici, l'esprit est celui d'un manoir vivant, bien loin d'une ferme classique : potagers, arts, saisons.",
-  en: "WWOOF (World Wide Opportunities on Organic Farms) is a worldwide network connecting hosts with volunteers. The arrangement is simple: four focused hours of work a day in the gardens, on the land or around the property, in exchange for room, board, and the time spent together. We're not a classic farm, we're a living manor: kitchen gardens, arts, seasons.",
+  fr: "WWOOF (World Wide Opportunities on Organic Farms) est un réseau mondial qui met en lien des hôtes et des bénévoles. Quatre heures de travail concentré par jour aux jardins, sur le terrain ou autour du lieu, en échange du gîte, du couvert, et du temps passé ensemble. Ici, c'est un manoir vivant plus qu'une ferme : des potagers, des arts et les saisons.",
+  en: "WWOOF (World Wide Opportunities on Organic Farms) is a worldwide network connecting hosts with volunteers. Four focused hours of work a day in the gardens, on the land or around the property, in exchange for room, board, and the time spent together. The place is a living manor more than a farm: kitchen gardens, arts, and the seasons.",
 };
 
 const CEILIDH_DEFINITION = {

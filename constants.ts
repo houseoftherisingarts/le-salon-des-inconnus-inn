@@ -223,7 +223,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'incontournable",
                 title: "Plage du lac Simon",
                 location: "Duhamel / Chénéville",
-                description: "La plage publique du lac Simon : un lac de 74 km de circonférence et 45 m de profondeur, avec baignade familiale, quai municipal gratuit et sentiers forestiers autour de Duhamel. L'eau est d'une clarté remarquable; c'est le cœur de l'été dans la région.",
+                description: "La plage publique du lac Simon : un lac de 74 km de circonférence et 45 m de profondeur, avec baignade familiale, quai municipal gratuit et sentiers forestiers autour de Duhamel. L'eau est d'une clarté remarquable.",
                 link: "https://www.sepaq.com/pq/sim/",
                 image: "https://lac-simon.net/wp-content/uploads/2024/04/lac-simon-plage.jpeg",
                 isVip: true
@@ -233,7 +233,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le rituel",
                 title: "Rivière et Tubes",
                 location: "Duhamel",
-                description: "L'art du 'slow floating'. Accédez à la rivière, installez-vous sur un tube et laissez le courant vous porter à travers la forêt. Sauvage, silencieux, et profondément relaxant.",
+                description: "L'art du 'slow floating'. Accédez à la rivière, installez-vous sur un tube et laissez le courant vous porter à travers la forêt. C'est silencieux et ça repose.",
                 link: "https://municipalite.duhamel.qc.ca/loisirs-et-culture/activites-de-plein-air/descente-de-la-riviere-petite-nation/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2020/01/remy-ogez-camp-air-eau-bois-425x.jpg",
                 isFavorite: true
@@ -252,7 +252,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le secret",
                 title: "Lac Croche",
                 location: "Montpellier",
-                description: "Un petit lac en forêt pour ceux qui fuient le bruit. Baignade, pique-nique et cueillette sauvage. Ici, le silence est roi.",
+                description: "Un petit lac en forêt pour ceux qui fuient le bruit. Baignade, pique-nique et cueillette sauvage. Le bruit le plus fort est celui d'un huard.",
                 image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=800"
             },
             {
@@ -260,7 +260,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'évasion",
                 title: "Île au Raisin (Lac Gagnon)",
                 location: "Duhamel",
-                description: "Plus sauvage que les plages officielles. On y va pour lire face à l'immensité et se baigner dans une eau limpide, loin du monde.",
+                description: "Plus sauvage que les plages officielles. On y va pour lire et se baigner dans une eau limpide, sans un chalet en vue.",
                 link: "https://www.sepaq.com/rim/papineau-labelle/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2022/05/reserve-faunique-de-papineau-labelle-canot.jpg"
             }
@@ -270,8 +270,8 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'hiking',
         title_fr: "Randos & Ciel Étoilé",
         title_en: "Hiking & Starry Skies",
-        description_fr: "Le temps s'étire et la nature dicte le rythme.",
-        description_en: "Time stretches out and nature dictates the rhythm.",
+        description_fr: "Les sentiers le jour et le ciel la nuit.",
+        description_en: "Trails by day and the sky at night.",
         items: [
             {
                 id: 'montagnes-noires',
@@ -289,7 +289,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'ambiance",
                 title: "Sentier de la rivière Iroquois",
                 location: "Outaouais",
-                description: "Une marche douce sous une lumière filtrée. Le sentier longe l'eau dans une forêt dense, rêvé pour combiner marche méditative et baignade.",
+                description: "Le sentier longe l'eau dans une forêt dense, sans dénivelé, avec une baignade possible l'été.",
                 link: "https://www.randoquebec.ca/sentiers/sentier-de-la-riviere-iroquois/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2021/09/pierre-martel-sentier-iroquois-chute-scaled-e1633018588891.jpg"
             },
@@ -298,7 +298,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le rapide",
                 title: "Montagne de Chénéville",
                 location: "Chénéville",
-                description: "Accessible derrière l'école. Une montée courte et gratifiante. Parfait pour une sortie improvisée avec une belle vue sur le village.",
+                description: "Accessible derrière l'école. Une montée courte, 30 à 45 minutes, avec une belle vue sur le village au sommet.",
                 link: "https://municipalite.cheneville.qc.ca/loisirs-et-culture/parcs-et-espaces-verts",
                 image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800"
             }
@@ -308,15 +308,15 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'culture',
         title_fr: "Culture, Histoire & Matière",
         title_en: "Culture, History & Material",
-        description_fr: "L'âme de la région, façonnée par le temps et les mains.",
-        description_en: "The soul of the region, shaped by time and hands.",
+        description_fr: "Ce que la région a bâti et ce qu'elle fabrique encore.",
+        description_en: "What the region built and what it still makes.",
         items: [
             {
                 id: 'papineau',
                 tag: "L'histoire",
                 title: "Manoir Papineau",
                 location: "Montebello",
-                description: "Site historique national : le grand manoir seigneurial du 19e siècle de Louis-Joseph Papineau, flanqué de quatre tours et entouré de jardins formels. Une plongée dans l'histoire politique et architecturale du Québec.",
+                description: "Site historique national : le grand manoir seigneurial du 19e siècle de Louis-Joseph Papineau, flanqué de quatre tours et entouré de jardins formels. Lieu historique national administré par Parcs Canada.",
                 link: "https://parcs.canada.ca/lhn-nhs/qc/manoirpapineau",
                 image: "https://pcweb2.azureedge.net/-/media/lhn-nhs/qc/papineau/images/2022-CANADA-CA/homepage/Lieu-historique-national-Manoir-Papineau-National-Historic-Site_1920x480.jpg",
                 isVip: true
@@ -334,7 +334,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'artiste",
                 title: "Michelle Lemire (Galerie Solart)",
                 location: "Ripon / Saint-André-Avellin",
-                description: "Michelle Lemire a fondé l'Atelier Galerie Solart à Ripon en 1999 : céramique, bronze, pierre et métaux précieux. Ses sculptures, urnes et théières sont façonnées par une philosophie enracinée dans l'eau comme essence de vie.",
+                description: "Michelle Lemire a fondé l'Atelier Galerie Solart à Ripon en 1999 : céramique, bronze, pierre et métaux précieux. Ses sculptures, urnes et théières suivent une philosophie où l'eau est l'essence de la vie.",
                 link: "https://www.ateliergaleriedartsolart.com/",
                 image: "https://cdn.shopify.com/s/files/1/1545/4709/files/ENTETE_DEMARCHE_MICHELLE.jpg"
             }
@@ -344,8 +344,8 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'food',
         title_fr: "Bouffe & Vie Locale",
         title_en: "Food & Local Life",
-        description_fr: "Manger vrai, boire local et rencontrer l'autre.",
-        description_en: "Eat real, drink local, and meet people.",
+        description_fr: "Manger et boire ce qui se fait ici.",
+        description_en: "Eat and drink what is made here.",
         items: [
             {
                 id: 'petite-monnaie',
@@ -363,7 +363,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le cœur de la région",
                 title: "Le Café des Orties",
                 location: "Ripon",
-                description: "Café communautaire installé dans un ancien presbytère de Ripon : mets biologiques de producteurs locaux, vins naturels, cidres artisanaux. Les murs font office de galerie tournante : c'est le vrai cœur de la vie artistique et intellectuelle de la Petite-Nation. Un lieu unique, vivant, sans équivalent.",
+                description: "Café communautaire installé dans un ancien presbytère de Ripon : mets biologiques de producteurs locaux, vins naturels, cidres artisanaux. Les murs servent de galerie tournante aux artistes de la région. Il n'y a pas d'équivalent dans la vallée.",
                 link: "https://www.facebook.com/cafedesorties/",
                 image: "https://www.petitenationoutaouais.com/wp-content/uploads/2022/09/4-e1665581827187.jpg",
                 isFavorite: true,
@@ -374,7 +374,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "La sortie",
                 title: "Le Napoléon",
                 location: "Montebello",
-                description: "Le bistro intimiste du chef Antoine Meunier : tartare de canard, filet de bison, poutine au foie gras. Produits locaux et de saison dans un cadre raffiné et chaleureux.",
+                description: "Le bistro intimiste du chef Antoine Meunier : tartare de canard, filet de bison, poutine au foie gras. Produits locaux et de saison, dans une petite salle chaleureuse.",
                 link: "https://www.lenapoleon.ca/",
                 image: "https://static.wixstatic.com/media/b90ba8_df144be50aa54d639d2629f6c12eb4bf~mv2.jpg"
             },
@@ -402,7 +402,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le terroir",
                 title: "Les Pommes Perdues",
                 location: "Chénéville",
-                description: "Julien Robert et Gilbert Bégin documentent la quête des pommes à cidre du Québec : des cidres sauvages, vifs et ancrés dans le terroir de Chénéville. À emporter ou à déguster sur place.",
+                description: "Julien Robert et Gilbert Bégin documentent la quête des pommes à cidre du Québec : des cidres sauvages et vifs, faits à Chénéville. À emporter ou à déguster sur place.",
                 link: "https://lespommesperdues.com/",
                 image: "https://img1.wsimg.com/isteam/ip/c0ba14cf-db19-4940-a39c-5ca3c9238b66/pommesperdue-banner.jpg"
             },
@@ -411,7 +411,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "La bière",
                 title: "Brasseurs de Montebello",
                 location: "Montebello",
-                description: "Microbrasserie artisanale au cœur de Montebello. Bières de saison brassées localement, cuisine de pub et terrasse. Un arrêt naturel avant ou après le Manoir Papineau.",
+                description: "Microbrasserie au centre du village de Montebello. Bières de saison brassées localement, cuisine de pub et terrasse. Un arrêt naturel avant ou après le Manoir Papineau.",
                 image: "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?auto=format&fit=crop&q=80&w=800"
             }
         ]
@@ -420,15 +420,15 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'events',
         title_fr: "Événements & Festivités",
         title_en: "Events & Festivities",
-        description_fr: "L'énergie brute de la Petite-Nation.",
-        description_en: "Raw energy of the Petite-Nation.",
+        description_fr: "Les jours où le village au complet sort dehors.",
+        description_en: "The days the whole village comes outside.",
         items: [
             {
                 id: 'medieval',
                 tag: "L'incontournable",
                 title: "Festival Médiéval de Montpellier",
                 location: "Montpellier",
-                description: "Le 3e plus grand festival médiéval du Québec : joutes équestres, forge en direct, clans vikings, marché médiéval, spectacles équestres et banquets historiques. Pendant trois jours fin septembre, le village de Montpellier plonge dans le Moyen Âge. Un spectacle visuel et sonore hors du commun, à 15 minutes de l'Auberge.",
+                description: "Le 3e plus grand festival médiéval du Québec : joutes équestres, forge en direct, clans vikings, marché médiéval, spectacles équestres et banquets historiques. Pendant trois jours fin septembre, le village de Montpellier vit au Moyen Âge, à 15 minutes de l'Auberge.",
                 link: "https://www.festivalmedievaldemontpellier.org",
                 image: "https://static.wixstatic.com/media/57b705_49a605c853824c8d8a1d020d605e6aea~mv2.jpg",
                 isFavorite: true,
@@ -439,7 +439,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "La fête populaire",
                 title: "Méchoui de Montpellier",
                 location: "Montpellier",
-                description: "Un événement légendaire. Bruyant, festif, fumée et musique. Chaque été, tout le village s'arrête pour cet agape collectif. Une expérience culturelle intense, authentiquement québécoise.",
+                description: "Une fête populaire bruyante, pleine de fumée et de musique. Chaque été, tout le village s'arrête pour ce repas collectif.",
                 link: "https://www.montpellier.ca/",
                 image: PLACEHOLDER_ROOM
             },
@@ -457,7 +457,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'hiver vivant",
                 title: "Tournoi de Pêche Blanche",
                 location: "Lac-Simon",
-                description: "En février, le lac gelé se couvre de cabanes de pêche. Le tournoi de pêche blanche de Lac-Simon rassemble pêcheurs locaux et visiteurs dans une atmosphère festive et conviviale, entre deux percées dans la glace.",
+                description: "En février, le lac gelé se couvre de cabanes de pêche. Le tournoi de pêche blanche de Lac-Simon rassemble pêcheurs locaux et visiteurs sur la glace pour un week-end.",
                 link: "https://lac-simon.net/",
                 image: "https://lac-simon.net/wp-content/uploads/2024/04/lac-simon-01.jpeg"
             }
@@ -467,15 +467,15 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'winter',
         title_fr: "Automne & Hiver",
         title_en: "Autumn & Winter",
-        description_fr: "Le silence blanc, le feu de foyer et la glace.",
-        description_en: "White silence, fireplace, and ice.",
+        description_fr: "Le lac gelé, les chiens de traîneau et le feu de foyer au retour.",
+        description_en: "The frozen lake, the sled dogs, and the fire when you get back.",
         items: [
             {
                 id: 'meute',
                 tag: "L'aventure pure",
                 title: "Meute Tanwen",
                 location: "Montpellier",
-                description: "La meute d'huskies sibériens d'Éric Pichette : balades de traîneau d'une heure où vous pilotez vous-même 4 chiens à travers des sentiers forestiers vallonnés de Montpellier. Le contact avec les chiens est intense, chaleureux, inoubliable. Une expérience hivernale comme nulle part ailleurs en région.",
+                description: "La meute d'huskies sibériens d'Éric Pichette : balades de traîneau d'une heure où vous pilotez vous-même 4 chiens à travers des sentiers forestiers vallonnés de Montpellier. Le contact avec les chiens est immédiat, et rien n'est mis en scène.",
                 link: "https://www.tanwen.qc.ca/en",
                 image: "/media/guide/meute-tanwen.jpg",
                 isFavorite: true,
@@ -486,7 +486,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le jeu",
                 title: "Glissade et Patin (Lac Simon)",
                 location: "Lac Simon",
-                description: "Le lac gelé devient un terrain de jeu immense. Sentier de patin balisé, glissades naturelles et grands espaces blancs. Gratuit, sauvage et magique.",
+                description: "Le lac gelé devient un terrain de jeu immense. Sentier de patin balisé, glissades naturelles et grands espaces blancs. Gratuit, entretenu par les bénévoles du village.",
                 link: "https://lac-simon.net/",
                 image: "https://lac-simon.net/wp-content/uploads/2024/04/lac-simon-01.jpeg"
             },
@@ -495,7 +495,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le calme",
                 title: "Patinoire de Namur",
                 location: "Namur",
-                description: "La petite patinoire de village, tranquille et peu fréquentée. Un endroit doux pour glisser seul ou avec les enfants, sans la foule. Un recoin serein au cœur du village.",
+                description: "La petite patinoire de village, tranquille et peu fréquentée. On y patine seul ou avec les enfants, sans foule.",
                 link: "https://namur.qc.ca/",
                 image: PLACEHOLDER_ROOM
             },
@@ -504,7 +504,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "L'observation",
                 title: "Déjeuner avec les chevreuils",
                 location: "Duhamel",
-                description: "Prenez votre café le matin en regardant par la fenêtre. Dans la neige fraîche, les chevreuils passent souvent à travers les propriétés forestières de la région, un moment de grâce silencieuse.",
+                description: "Prenez votre café le matin en regardant par la fenêtre. Dans la neige fraîche, les chevreuils passent souvent à travers les propriétés forestières de la région.",
                 link: "https://municipalite.duhamel.qc.ca/",
                 image: PLACEHOLDER_ROOM
             }
@@ -514,15 +514,15 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'spring',
         title_fr: "Printemps",
         title_en: "Spring",
-        description_fr: "Le réveil de la terre, l'eau qui coule et la sève.",
-        description_en: "Earth awakening, flowing water, and sap.",
+        description_fr: "La sève qui coule et les premiers légumes.",
+        description_en: "Sap running and the first vegetables.",
         items: [
             {
                 id: 'ti-mousse',
                 tag: "Le rituel québécois",
                 title: "Érablière chez Ti-Mousse",
                 location: "Papineauville",
-                description: "Authentique cabane à sucre québécoise depuis 1977 : repas traditionnel à volonté, tire sur la neige et balades en traîneau à chevaux. Ouverte de fin février à fin avril. Un passage obligé pour vivre le printemps québécois dans toute sa dimension culturelle et gourmande.",
+                description: "Authentique cabane à sucre québécoise depuis 1977 : repas traditionnel à volonté, tire sur la neige et balades en traîneau à chevaux. Ouverte de fin février à fin avril.",
                 link: "https://www.cheztimousse.com/",
                 image: PLACEHOLDER_ROOM,
                 isFavorite: true,
@@ -561,15 +561,15 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
         id: 'must',
         title_fr: "Incontournables",
         title_en: "Must-Sees",
-        description_fr: "Toutes saisons. Les classiques indémodables.",
-        description_en: "All seasons. Timeless classics.",
+        description_fr: "Ouverts toute l'année.",
+        description_en: "Open all year.",
         items: [
             {
                 id: 'omega',
                 tag: "Le safari québécois",
                 title: "Parc Omega",
                 location: "Montebello",
-                description: "Sanctuaire animalier de 2 200 acres : safari de 12 km parmi élans, bisons, loups, cerfs et ours noirs. En soirée, ONIRO propose un parcours piétonnier nocturne et immersif dans la forêt illuminée. Un lieu qui ne ressemble à aucun autre en Amérique du Nord.",
+                description: "Sanctuaire animalier de 2 200 acres : safari de 12 km parmi élans, bisons, loups, cerfs et ours noirs. En soirée, ONIRO propose un parcours piétonnier nocturne et immersif dans la forêt illuminée.",
                 link: "https://www.parcomega.ca/",
                 image: "https://www.parcomega.ca/wp-content/uploads/2026/03/VE250623-0345-scaled.jpg",
                 isFavorite: true,
@@ -589,7 +589,7 @@ export const LOCAL_GUIDE_DATA: LocalGuideCategory[] = [
                 tag: "Le sanctuaire",
                 title: "Centre de Vie",
                 location: "Ripon",
-                description: "Centre de retraite bien-être sur 108 acres à Ripon : yoga, naturopathie, massothérapie, méditation, cure de jus et programmes de jeûne. Lac privé, sentiers en forêt, repas végétariens, sauna et espaces de repos avec foyers. Un lieu de ressourcement rare, à quelques minutes de l'Auberge.",
+                description: "Centre de retraite bien-être sur 108 acres à Ripon : yoga, naturopathie, massothérapie, méditation, cure de jus et programmes de jeûne. Lac privé, sentiers en forêt, repas végétariens, sauna et espaces de repos avec foyers. À quelques minutes de l'Auberge.",
                 link: "https://www.centredevie.ca/",
                 image: PLACEHOLDER_ROOM,
                 isFavorite: true

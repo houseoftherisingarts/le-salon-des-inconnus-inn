@@ -87,8 +87,8 @@ export const DonationPage: React.FC<Props> = ({
           <div className="max-w-3xl space-y-6">
             <p className="font-lato" style={{ color: '#dacfb6', fontSize: '17px', lineHeight: 1.85 }}>
               {t(
-                'Le Salon des Inconnus is a living place, carried by a family and a small community. Your gift helps maintain the house, feed the project, and keep the door open to artists, travellers and the people who pass through.',
-                "Le Salon des Inconnus, c'est un lieu vivant, porté par une famille et une petite communauté. Votre don aide à entretenir la maison, à nourrir le projet, et à garder la porte ouverte aux artistes, aux voyageurs et aux gens de passage."
+                'Le Salon des Inconnus is a living place, carried by a family and a small community. Your gift helps maintain the house and keep the door open to the artists and travellers who pass through.',
+                "Le Salon des Inconnus, c'est un lieu vivant, porté par une famille et une petite communauté. Votre don aide à entretenir la maison et à garder la porte ouverte aux artistes et aux voyageurs qui passent."
               )}
             </p>
             <p className="font-lato" style={{ color: '#9c8f76', fontSize: '15px', lineHeight: 1.8 }}>
@@ -103,7 +103,7 @@ export const DonationPage: React.FC<Props> = ({
           <dl className="max-w-4xl mt-12 grid grid-cols-1 sm:grid-cols-3 gap-px" style={{ background: 'rgba(197,160,89,0.18)', border: '1px solid rgba(197,160,89,0.18)', borderRadius: '15px', overflow: 'hidden' }}>
             {[
               { k: t('The house', 'La maison'), v: t('Upkeep of the manor and the grounds.', "L'entretien du manoir et du terrain.") },
-              { k: t('The project', 'Le projet'), v: t('Food, tools, and the everyday of the place.', "La nourriture, les outils, le quotidien du lieu.") },
+              { k: t('The project', 'Le projet'), v: t('Food and the tools of everyday life.', "La nourriture et les outils du quotidien.") },
               { k: t('The open door', 'La porte ouverte'), v: t('Welcoming artists, travellers and members.', "Accueillir artistes, voyageurs et membres.") },
             ].map((it, i) => (
               <div key={i} className="bg-[#050505] p-6">

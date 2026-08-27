@@ -826,8 +826,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 </motion.h2>
                 <p className="max-w-2xl mx-auto text-neutral-400 mb-8 font-light text-lg">
                     {language === 'EN' 
-                     ? "Support the cultural heartbeat of Petite Nation. Choose to empower a specific creator, fund a project, or sustain the center itself."
-                     : "Soutenez le cœur culturel de la Petite Nation. Choisissez d'habiliter un créateur, de financer un projet ou de soutenir le centre lui-même."}
+                     ? "Support the artists of Petite Nation. Give to one creator, to a project, or to the centre itself."
+                     : "Soutenez les artistes de la Petite Nation. Donnez à un créateur, à un projet ou au centre lui-même."}
                 </p>
                 <button 
                   onClick={() => setBuyerView('TAXES')}
@@ -1028,7 +1028,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                 </div>
                                 <h3 className="font-cinzel text-2xl text-white mb-4">Host An Artist</h3>
                                 <p className="text-neutral-400 mb-8 leading-relaxed">
-                                    Have a spare room, cottage, or studio space? Offer a rent-free residency to a visiting creator. In exchange, receive art and the joy of enabling creation.
+                                    Have a spare room, cottage, or studio space? Offer a rent-free residency to a visiting creator. In exchange, you receive art, and a creator gets a place to work.
                                 </p>
                                 <button className="text-emerald-400 text-xs font-bold uppercase tracking-widest border-b border-emerald-500/50 pb-1 hover:text-emerald-300">
                                     Offer Space
@@ -1044,7 +1044,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                 </div>
                                 <h3 className="font-cinzel text-2xl text-white mb-4">Material Patron</h3>
                                 <p className="text-neutral-400 mb-8 leading-relaxed">
-                                    Donate equipment (kilns, cameras, instruments) or supplies. Your unused gear could launch the next masterpiece.
+                                    Donate equipment (kilns, cameras, instruments) or supplies. Gear sitting in a closet gets a second life in an artist's hands.
                                 </p>
                                 <button className="text-rose-400 text-xs font-bold uppercase tracking-widest border-b border-rose-500/50 pb-1 hover:text-rose-300">
                                     Donate Gear
@@ -1152,7 +1152,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                  </div>
                  <h2 className="font-cinzel text-5xl text-white mb-6 tracking-widest">The Digital Artifacts</h2>
                  <p className="font-lato text-neutral-400 max-w-2xl mx-auto text-lg font-light">
-                     We craft bespoke digital experiences that merge art with functionality. Explore our recent creations before building your own.
+                     We build custom websites and digital tools that put art first. Look at recent work before you commission yours.
                  </p>
              </div>
 
@@ -1372,7 +1372,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                         Accessible ET Avantageux
                     </h2>
                     <p className="font-lato text-lg md:text-xl text-neutral-200 leading-relaxed mb-12 max-w-2xl mx-auto text-shadow-lg">
-                        L'Art peut s’intégrer à tous les budgets et ambitions. Que vous soyez en entreprise ou en finance à la recherche d’avantages fiscaux ou sur un budget, vivant un amour apparemment impossible avec l'Art, souhaitant découvrir nos solutions de financement qui démocratisent l'Art et rendent les oeuvres accessibles, cette page vous guide vers la formule qui vous convient. Choisissez l’approche qui correspond à votre réalité et laissez l’art enrichir votre espace! Financement artistique disponible via Credee.
+                        L'art peut entrer dans tous les budgets. Une entreprise qui cherche un avantage fiscal, un particulier au budget serré, quelqu'un qui aime l'art sans croire pouvoir se l'offrir : cette page mène chacun à la formule qui lui convient. Financement artistique disponible via Credee.
                     </p>
                     <div className="flex flex-col md:flex-row gap-6 justify-center">
                         <button 
@@ -1412,7 +1412,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                         <div className="space-y-6 text-neutral-300 font-lato text-lg leading-relaxed">
                             <p>
                                 <strong className="text-white">Buy Art, Save Taxes.</strong><br/>
-                                Transformez vos murs en levier fiscal. Au-delà de l'esthétique, l'acquisition d'art canadien est un investissement intelligent qui offre un triple avantage à votre entreprise :
+                                Vos murs peuvent devenir un levier fiscal. L'acquisition d'art canadien donne trois avantages à votre entreprise :
                             </p>
                             <ul className="space-y-2 list-disc pl-5">
                                 <li><strong className="text-white">Levier Fiscal :</strong> Réduisez votre revenu imposable (DPA Catégorie 8).</li>
@@ -1421,7 +1421,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                             </ul>
                             <p className="pt-8 border-t border-white/10">
                                 <strong className="text-white">Une culture d'entreprise distinctive.</strong><br/>
-                                En plus des avantages financiers, l'art soutient l'économie locale et enrichit l'environnement de travail, renforçant votre marque employeur.
+                                Et l'argent reste chez des artistes d'ici, ce qui se voit aussi sur vos murs.
                             </p>
                         </div>
                     </div>
@@ -1777,8 +1777,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                      <h3 className="font-cinzel text-2xl text-white mb-4">{language === 'EN' ? "Apply for Representation" : "Postuler pour Représentation"}</h3>
                      <p className="text-neutral-400 font-lato mb-8 leading-relaxed">
                          {language === 'EN' 
-                           ? "The Salon des Inconnus is always looking for new voices. If your work speaks the language of the arcane, the bold, or the visionary, we want to see it."
-                           : "Le Salon des Inconnus est toujours à la recherche de nouvelles voix. Si votre travail parle le langage de l'arcanes, de l'audace ou du visionnaire, nous voulons le voir."}
+                           ? "The Salon des Inconnus is always looking for new voices. If your work steps outside the frame, we want to see it."
+                           : "Le Salon des Inconnus est toujours à la recherche de nouvelles voix. Si votre travail sort du cadre, nous voulons le voir."}
                      </p>
                      <button className="px-8 py-3 bg-white text-black font-cinzel font-bold text-sm uppercase tracking-widest rounded hover:bg-neutral-200 transition-colors shadow-lg">
                          {language === 'EN' ? "Submit Portfolio" : "Soumettre Portfolio"}

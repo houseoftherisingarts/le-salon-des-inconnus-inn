@@ -32,7 +32,7 @@ export const PM_INTRO = {
   title: 'La Petite Monnaie',
   lede:
     "Une monnaie locale et communautaire qui circule dans la MRC de Papineau. " +
-    "Une petite-monnaie vaut un dollar canadien, tout simplement. Chaque billet " +
+    "Une petite-monnaie vaut un dollar canadien. Chaque billet " +
     "dépensé reste dans la région, chez les artisans, les fermes et les cafés qui " +
     "font vivre la Petite-Nation.",
   facts: [
@@ -151,7 +151,7 @@ export const PM_STOPS: PMStop[] = [
     category: 'Galerie · céramique & sculpture',
     blurb:
       "Dans une ancienne forge du hameau du lac Grosleau, Michelle Lemire crée et " +
-      "expose céramiques, sculptures et bijoux depuis 1999. Le cœur des arts visuels de la Petite-Nation.",
+      "expose céramiques, sculptures et bijoux depuis 1999.",
     image: 'https://www.ateliergaleriedartsolart.com/cdn/shop/files/SOLART_LOGO_WEB_2022_modifie-1_400x200.jpg?v=1651070679',
     logo: true,
     link: 'https://www.ateliergaleriedartsolart.com/',
@@ -165,7 +165,7 @@ export const PM_STOPS: PMStop[] = [
     category: 'Café communautaire & galerie',
     blurb:
       "Installé dans un ancien presbytère, mets biologiques, vins naturels et cidres " +
-      "artisanaux. Les murs font galerie tournante : le vrai cœur de la vie artistique de la Petite-Nation.",
+      "artisanaux. Les murs servent de galerie tournante aux artistes de la région.",
     image: `${PM_IMG}/Cafe-des-orties.jpg`,
     link: 'https://www.facebook.com/cafedesorties/',
     address: '46, rue Principale, Ripon',
@@ -217,8 +217,8 @@ export const PM_STOPS: PMStop[] = [
     village: 'Saint-Sixte',
     category: 'Ferme maraîchère',
     blurb:
-      "Une ferme à dimension humaine où l'on cultive des légumes de saison et l'art " +
-      "des circuits courts. De la terre à votre assiette, sans détour.",
+      "Une ferme à dimension humaine qui cultive des légumes de saison et les vend " +
+      "en circuit court.",
     image: `${PM_IMG}/Colibri.jpg`,
     isBureauDeChange: true,
     address: 'Saint-Sixte',

@@ -100,7 +100,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     skills: ["Molecular Gastronomy", "Plating", "Fermentation", "Menu Design"],
     currentExpos: "Labo culinaire",
     stats: { creativity: 96, technique: 98, vision: 92 },
-    bio: "Artiste culinaire redéfinissant les frontières du goût. Marc Alexis Pepin transforme chaque plat en une œuvre d'art éphémère, fusionnant techniques modernes et saveurs ancestrales dans son laboratoire culinaire.",
+    bio: "Traiteur moléculaire et bistronomie portugaise. Marc Alexis Pepin travaille les techniques modernes avec des saveurs anciennes, et cuisine en chef privé pour les événements.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -115,7 +115,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Melody", "Rhythm"],
     skills: ["Vocals", "Guitar", "Songwriting"],
     stats: { creativity: 90, technique: 88, vision: 90 },
-    bio: "Musicienne passionnée, Tania Martin tisse des mélodies qui résonnent avec l'âme. Son art traverse les genres pour créer une expérience auditive unique.",
+    bio: "Auteure-compositrice-interprète. Tania Martin chante Fille des Bois, Ici pour de Bon et TDAH, et ses chansons passent d'un genre à l'autre sans demander la permission.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -130,7 +130,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Classical", "Modern", "Strings"],
     skills: ["Violin", "Composition", "Teaching"],
     stats: { creativity: 92, technique: 97, vision: 89 },
-    bio: "Maître du violon, Sebastien Leblanc fait chanter les cordes avec une précision émouvante. Ses performances sont une ode à la musique classique revisitée.",
+    bio: "Violoniste. Sebastien Leblanc revisite le répertoire classique, avec une précision qui émeut.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -145,7 +145,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Composition", "Theater", "Performance"],
     skills: ["Stage Direction", "Composition", "Acting"],
     stats: { creativity: 98, technique: 92, vision: 95 },
-    bio: "Artiste multidisciplinaire, Louis-Julien Durso ne se contente pas de jouer de la musique; il la met en scène. Auteur, compositeur et interprète, il crée des univers complets.",
+    bio: "Auteur, compositeur et interprète, Louis-Julien Durso met sa musique en scène et bâtit un univers complet autour de chaque spectacle.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -160,7 +160,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Pop", "Rock", "Energy"],
     skills: ["Performance", "Drumming", "Vocals", "Acting"],
     stats: { creativity: 94, technique: 90, vision: 96 },
-    bio: "Force de la nature sur scène, La Bronze allie poésie percutante et rythmes entraînants. Une énergie contagieuse qui ne laisse personne indifférent.",
+    bio: "Sur scène, La Bronze mêle une poésie qui frappe et des rythmes qui font bouger la salle.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -175,7 +175,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Mysterion"],
     skills: ["Vocals", "Piano", "Atmosphere"],
     stats: { creativity: 89, technique: 87, vision: 90 },
-    bio: "Une voix qui semble venir d'ailleurs. Leslie explore les facettes mystérieuses de la musique, invitant l'auditeur dans un voyage introspectif.",
+    bio: "Une voix qui semble venir d'ailleurs. La musique de Leslie est mystérieuse et s'écoute vers l'intérieur.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -190,7 +190,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Funk", "Soul", "Groove"],
     skills: ["Bass", "Rhythm", "Band Leading"],
     stats: { creativity: 93, technique: 91, vision: 94 },
-    bio: "Le capitaine du groove. Captain Generous navigue sur les ondes sonores avec une générosité rythmique qui fait bouger les foules.",
+    bio: "Le capitaine du groove. Captain Generous fait danser les salles, et son nom dit le reste.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -205,7 +205,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Ambient", "Electronic", "Space"],
     skills: ["Synthesis", "Sound Design", "Performance"],
     stats: { creativity: 97, technique: 95, vision: 99 },
-    bio: "Exploration sonore aux confins de la perception. Magnetosphere crée des paysages auditifs expérimentaux qui défient les conventions.",
+    bio: "Musique expérimentale. Magnetosphere construit des paysages sonores qui s'écoutent plus qu'ils ne se dansent.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -220,7 +220,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Words", "Emotion", "Performance"],
     skills: ["Poetry", "Spoken Word", "Writing"],
     stats: { creativity: 92, technique: 90, vision: 94 },
-    bio: "Poète de l'instant et de l'émotion brute. Charles-Antoine Goulet sculpte les mots pour en extraire l'essence de l'expérience humaine.",
+    bio: "Poète. Charles-Antoine Goulet écrit sur l'instant et sur l'émotion brute, avec des mots qui ne tournent pas autour du pot.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -235,7 +235,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Urban", "Color", "Street Art"],
     skills: ["Graffiti", "Murals", "Design"],
     stats: { creativity: 95, technique: 88, vision: 93 },
-    bio: "Duo dynamique transformant les murs gris en toiles vibrantes. Max & Nora apportent la couleur et l'énergie du street art au cœur de la nature.",
+    bio: "Graffiti. Max & Nora peignent des murs gris en couleur et amènent le street art jusqu'en campagne.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -265,7 +265,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Composition", "Rhythm"],
     skills: ["Composition", "Production", "Multi-instrumentalist"],
     stats: { creativity: 91, technique: 89, vision: 90 },
-    bio: "Kyle Murray, alias Kmurrs, crée des univers sonores immersifs. Sa musique est un voyage constant entre tradition et modernité.",
+    bio: "Kyle Murray, alias Kmurrs, compose une musique qui emprunte à la tradition autant qu'au présent.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -280,7 +280,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Moon", "Writing", "Mystic"],
     skills: ["Writing", "Event Hosting", "Rituals"],
     stats: { creativity: 94, technique: 90, vision: 96 },
-    bio: "Gardienne des mots et des cycles lunaires. Charlotte l'Orage organise des événements célestes et écrit avec la puissance des éléments.",
+    bio: "Charlotte l'Orage écrit et organise des événements qui suivent les cycles de la lune.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -295,7 +295,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Painting", "Abstraction"],
     skills: ["Painting", "Visual Arts", "History"],
     stats: { creativity: 93, technique: 95, vision: 92 },
-    bio: "Un maître des arts visuels dont l'œuvre traverse le temps. Claude Philippe Nolin capture l'invisible pour le rendre visible.",
+    bio: "Artiste visuel. Claude Philippe Nolin travaille à rendre visible ce qui ne l'est pas.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -310,7 +310,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Film", "Direction", "Storytelling"],
     skills: ["Directing", "Screenwriting", "Editing"],
     stats: { creativity: 97, technique: 94, vision: 98 },
-    bio: "Cinéaste au regard perçant. Mariel Sharp réalise des œuvres cinématographiques qui défient les attentes et explorent la condition humaine.",
+    bio: "Cinéaste. Mariel Sharp réalise des films qui ne vont pas où le public les attend.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -325,7 +325,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Installation", "Space", "Matter"],
     skills: ["Sculpture", "Installation", "Painting"],
     stats: { creativity: 96, technique: 93, vision: 97 },
-    bio: "Artiste multidisciplinaire par excellence. Kamy Rheault façonne la matière et l'espace à travers la peinture, la sculpture et des installations immersives.",
+    bio: "Kamy Rheault travaille la peinture, la sculpture et l'installation, et occupe l'espace autant que la toile.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -340,7 +340,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Fiction", "Prose", "Narrative"],
     skills: ["Creative Writing", "Storytelling", "Editing"],
     stats: { creativity: 93, technique: 96, vision: 91 },
-    bio: "Une plume affûtée et une imagination débordante. Alice Renard tisse des histoires captivantes qui transportent le lecteur dans d'autres mondes.",
+    bio: "Écrivaine. Alice Renard écrit des histoires qui se passent dans d'autres mondes, avec une plume affûtée.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -355,7 +355,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Cyberpunk", "Future", "Digital"],
     skills: ["Digital Art", "3D Design", "VR"],
     stats: { creativity: 98, technique: 99, vision: 95 },
-    bio: "Architecte de réalités virtuelles. Jean-Guilhem Barguès crée des mondes numériques complexes et fascinants, repoussant les limites de l'art digital.",
+    bio: "Arts numériques. Jean-Guilhem Barguès construit des mondes virtuels complexes, pièce par pièce.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -370,7 +370,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Tattoo", "Music", "Painting"],
     skills: ["Tattoo", "Violin", "Oil Painting", "Set Design"],
     stats: { creativity: 95, technique: 94, vision: 92 },
-    bio: "Une artiste aux multiples talents. Zora Katsner manie l'aiguille de tatouage, le pinceau et l'archet de violon avec la même virtuosité.",
+    bio: "Zora Kastner tatoue, peint à l'huile, joue du violon et fabrique des décors, avec la même main sûre.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -385,7 +385,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Mixing", "Sound", "Production"],
     skills: ["Audio Engineering", "Mixing", "Mastering"],
     stats: { creativity: 90, technique: 100, vision: 92 },
-    bio: "L'oreille absolue du studio. Antony Lepage sculpte le son pour donner vie aux visions musicales des artistes, alliant technique et sensibilité.",
+    bio: "Mixage sonore. Antony Lepage donne au son des artistes la forme qu'ils entendaient dans leur tête.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -400,7 +400,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Harmony", "Tradition", "Vocal"],
     skills: ["Polyphony", "Vocals", "Performance"],
     stats: { creativity: 92, technique: 95, vision: 90 },
-    bio: "Un ensemble vocal envoûtant. Les Bobettes explorent les harmonies des chants polyphoniques, créant une texture sonore riche et traditionnelle.",
+    bio: "Ensemble vocal. Les Bobettes chantent des polyphonies traditionnelles, à plusieurs voix et sans micro.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -415,7 +415,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Onirique", "Absurde", "Macabre"],
     skills: ["Mixed Media", "Illustration", "Surrealism"],
     stats: { creativity: 97, technique: 91, vision: 96 },
-    bio: "Exploratrice de l'onirique et de l'absurde. Alice Traverse crée des œuvres figuratives qui mêlent le macabre au normal dans un style unique.",
+    bio: "Médiums mixtes. Alice Traverse fait des œuvres figuratives où le macabre se glisse dans l'ordinaire, entre le rêve et l'absurde.",
     links: { buy: "#", website: "#", support: "#" }
   },
   {
@@ -430,7 +430,7 @@ export const ARTISTS_ROSTER: ArtistProfile[] = [
     subjects: ["Light", "Moment", "Perspective"],
     skills: ["Photography", "Lighting", "Portrait"],
     stats: { creativity: 94, technique: 96, vision: 93 },
-    bio: "Photographe de l'instant décisif. Alex Alisich capture la lumière et l'émotion, révélant la beauté cachée dans le quotidien.",
+    bio: "Photographe. Alex Alisich photographie la lumière ordinaire, celle qu'on ne remarque plus.",
     links: { buy: "#", website: "#", support: "#" }
   }
 ];

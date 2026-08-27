@@ -143,7 +143,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
     {
       id: 0,
       title: language === 'EN' ? "Relaxation & Swedish" : "Massage de Détente",
-      desc: language === 'EN' ? "Classic relaxation. Long, gliding strokes to improve circulation and reduce stress. A gentle introduction to wellness." : "Relaxation classique. Mouvements longs et fluides pour améliorer la circulation et réduire le stress.",
+      desc: language === 'EN' ? "Classic relaxation. Long, gliding strokes to improve circulation and reduce stress." : "Relaxation classique. Mouvements longs et fluides pour améliorer la circulation et réduire le stress.",
       delay: '0s',
       icon: <Icons.Leaf />
     },
@@ -164,7 +164,7 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
     {
       id: 3,
       title: language === 'EN' ? "Reiki Energy Care" : "Soins Énergétiques Reiki",
-      desc: language === 'EN' ? "A gentle laying on of hands to channel energy, reduce stress, and promote emotional healing." : "Une imposition douce des mains pour canaliser l'énergie, réduire le stress et favoriser la guérison émotionnelle.",
+      desc: language === 'EN' ? "A gentle laying on of hands to channel energy and ease stress." : "Une imposition douce des mains pour canaliser l'énergie et apaiser le stress.",
       specialPrice: language === 'EN' ? "From $60" : "À partir de 60$",
       delay: '300ms',
       icon: <Icons.Sparkles />
@@ -249,8 +249,8 @@ export const MassotherapyPage: React.FC<MassotherapyPageProps> = ({ onNavigate, 
                    </h2>
                    <p className="font-lato text-neutral-400 text-lg leading-relaxed">
                        {language === 'EN' 
-                        ? "In the heart of nature, we offer a sanctuary where time slows down. Using natural oils and intuitive techniques, we help you reconnect with your inner calm." 
-                        : "Au cœur de la nature, nous offrons un sanctuaire où le temps ralentit. En utilisant des huiles naturelles et des techniques intuitives, nous vous aidons à renouer avec votre calme intérieur."}
+                        ? "Here, surrounded by forest, time slows down. With natural oils and intuitive techniques, we help you find your calm again." 
+                        : "Ici, entouré de forêt, le temps ralentit. Avec des huiles naturelles et des techniques intuitives, nous vous aidons à retrouver votre calme."}
                    </p>
                </RevealOnScroll>
 

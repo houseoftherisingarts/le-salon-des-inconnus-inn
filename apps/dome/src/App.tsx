@@ -197,7 +197,7 @@ const Hero: React.FC = () => {
           className="relative px-6 md:px-14 lg:px-20 pb-16 md:pb-20 w-full"
         >
           <Pill className="mb-7 px-5 py-2" style={{ color: GOLD }}>
-            Au coeur de la Petite-Nation
+            Dans la Petite-Nation, en Outaouais
           </Pill>
           <h1
             className="font-prata"
@@ -215,7 +215,7 @@ const Hero: React.FC = () => {
             className="font-cormorant mt-7"
             style={{ color: 'rgba(255,250,240,0.88)', fontSize: 'clamp(1.2rem, 2vw, 1.7rem)', lineHeight: 1.55, maxWidth: '52ch', fontWeight: 500 }}
           >
-            Il y a, au bout des chemins de la Petite-Nation, un domaine où la terre se cultive à plusieurs mains et où chacun peut poser ses racines le temps d'une saison. Nous y semons, nous y récoltons, nous partageons ce que nous créons, et quand le soir descend, nous allumons des feux autour desquels naissent les fêtes. La porte vous est grande ouverte.
+            Il y a, au bout des chemins de la Petite-Nation, un domaine où la terre se cultive à plusieurs mains et où chacun peut poser ses racines le temps d'une saison. Nous y semons et nous y récoltons, nous partageons ce que nous créons, et quand le soir descend, nous allumons des feux autour desquels naissent les fêtes. La porte vous est grande ouverte.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <a href="#candidature" className="dome-cta inline-block font-cinzel text-[12px] uppercase tracking-[0.28em] px-9 py-4 rounded-full">
@@ -239,7 +239,7 @@ const Hero: React.FC = () => {
 const VOIES: { titre: string; body: string; icon: React.ReactNode }[] = [
   {
     titre: 'Cultiver la terre',
-    body: "Les jardins et les terres du domaine attendent des mains. Vous semez, vous entretenez, vous récoltez, et la saison rend ce que vous lui avez confié.",
+    body: "Les jardins et les terres du domaine attendent des mains. Vous semez et vous récoltez, et la saison rend ce que vous lui avez confié.",
     icon: <path d="M12 21V11m0 0c0-3.5-2.5-6-6-6 0 3.5 2.5 6 6 6Zm0-2c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6Z" />,
   },
   {
@@ -249,7 +249,7 @@ const VOIES: { titre: string; body: string; icon: React.ReactNode }[] = [
   },
   {
     titre: 'Tenir le café',
-    body: "Des heures derrière le comptoir du café, un revenu, un rythme, et le pouls du lieu qui passe entre vos mains.",
+    body: "Des heures derrière le comptoir du café vous donnent un revenu et un rythme, et le pouls du lieu passe entre vos mains.",
     icon: <path d="M4 8h12v6a5 5 0 01-5 5H9a5 5 0 01-5-5V8Zm12 1h2.5a2 2 0 010 4H16M7 4.5c.6-.8.6-1.4 0-2m4 2c.6-.8.6-1.4 0-2" />,
   },
   {

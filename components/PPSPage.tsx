@@ -9,23 +9,23 @@ interface PPSPageProps {
 const CONCEPTS = [
   {
     titleFr: 'Beach Party', titleEn: 'Beach Party',
-    descFr: "Un 5@7 estival : mur de plage réaliste, ambiance du Sud, olympiades combo. Idéal en extérieur, sur le terrain.",
-    descEn: "A summer 5@7: realistic beach wall, southern vibe, combo olympics. Ideal outdoors, on the grounds.",
+    descFr: "Un 5@7 estival avec un mur de plage réaliste et des olympiades combo, idéal dehors, sur le terrain.",
+    descEn: "A summer 5@7 with a realistic beach wall and combo olympics, best outdoors on the grounds.",
   },
   {
     titleFr: 'La Cabane à Jo', titleEn: 'The Cabane à Jo',
-    descFr: "Animation hivernale, univers chaleureux et authentique de bûcheron. Le passé rencontre le présent.",
-    descEn: "Winter animation, warm and authentic lumberjack world. The past meets the present.",
+    descFr: "Une animation hivernale dans l'univers du bûcheron d'autrefois.",
+    descEn: "A winter animation set in the world of the old-time lumberjack.",
   },
   {
     titleFr: 'Tournoi Happy Gilmore', titleEn: 'Happy Gilmore Tournament',
-    descFr: "Soirée thématique golf, mémorable pour un party de bureau, de Noël ou un mariage.",
-    descEn: "Golf-themed evening, memorable for an office party, holiday event or wedding.",
+    descFr: "Une soirée thématique golf, pour un party de bureau, de Noël ou un mariage.",
+    descEn: "A golf-themed evening for an office party, a holiday event or a wedding.",
   },
   {
     titleFr: 'Kermesse Fête Foraine', titleEn: 'Kermesse Fête Foraine',
-    descFr: "Programmation pétillante façon fêtes foraines new-yorkaises d'époque : kiosques, accueil, jeux.",
-    descEn: "Sparkling programming in the style of old New York fairgrounds: booths, welcome, games.",
+    descFr: "Une programmation façon fêtes foraines new-yorkaises d'époque, avec kiosques et jeux.",
+    descEn: "Programming in the style of old New York fairgrounds, with booths and games.",
   },
   {
     titleFr: 'Musique live', titleEn: 'Live music',
@@ -44,8 +44,8 @@ const CONCEPTS = [
   },
   {
     titleFr: 'Conférences', titleEn: 'Conferences',
-    descFr: "Motivation, dépassement de soi, résilience : des témoignages captivants pour les groupes d'entreprise.",
-    descEn: "Motivation, self-improvement, resilience: captivating talks for corporate groups.",
+    descFr: "Des témoignages sur la motivation et la résilience, pour les groupes d'entreprise.",
+    descEn: "Talks on motivation and resilience, for corporate groups.",
   },
 ];
 
@@ -97,8 +97,8 @@ export const PPSPage: React.FC<PPSPageProps> = ({ onNavigate, language }) => {
 
               <p className="text-base md:text-lg text-neutral-300 leading-relaxed font-lato mb-10 max-w-md">
                 {t(
-                  "The Manor lends its rooms and its grounds; PPS Canada brings the concept, the crew and the production. Together, a corporate retreat or a team evening becomes a full experience, not just a rented room.",
-                  "Le Manoir prête ses salles et son terrain; PPS Canada apporte le concept, l'équipe et la production. Ensemble, une retraite d'entreprise ou une soirée d'équipe devient une expérience complète, pas juste une salle louée.",
+                  "The Manor lends its rooms and its grounds; PPS Canada brings the concept, the crew and the production. Together, a corporate retreat or a team evening becomes a full experience.",
+                  "Le Manoir prête ses salles et son terrain; PPS Canada apporte le concept, l'équipe et la production. Ensemble, une retraite d'entreprise ou une soirée d'équipe devient une expérience complète.",
                 )}
               </p>
 
