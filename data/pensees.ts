@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-29",
+        title_fr: "Le prénom",
+        title_en: "The first name",
+        body_fr: "Il y a un moment précis où un inconnu commence à cesser d'en être un, et c'est celui où j'apprends son prénom. La veille, j'accueillais un voyageur parmi d'autres; le lendemain, je prépare le déjeuner de quelqu'un, et le même geste ne pèse plus pareil. Les anciens croyaient que connaître le nom d'une chose donnait du pouvoir sur elle. Il me semble que c'est l'inverse pour les personnes : leur prénom leur donne du pouvoir sur nous, celui d'exister dans notre tête une fois qu'elles sont parties. Un prénom retenu est une petite promesse, celle de reconnaître la personne le jour où elle reviendra pousser la porte. Voilà sans doute pourquoi un nom oublié nous gêne autant : nous sentons que nous avons échappé quelque chose qui nous avait été confié. Quel prénom ai-je entendu cette semaine sans vraiment le recevoir?",
+        body_en: "There is a precise moment when a stranger begins to stop being one, and it is the moment I learn their first name. The day before, I was welcoming one traveller among others; the day after, I am making breakfast for someone, and the same gesture no longer weighs the same. The ancients believed that knowing the name of a thing gave power over it. With people, it seems to me to work the other way around: their name gives them power over us, the power to exist in our minds once they have gone. A remembered name is a small promise, the promise of recognizing the person the day they come back and push open the door. That is surely why a forgotten name troubles us so much: we can feel we have dropped something that had been entrusted to us. Which first name did I hear this week without truly receiving it?",
+    },
+    {
         date: "2026-08-27",
         title_fr: "La braise couverte",
         title_en: "The banked fire",
