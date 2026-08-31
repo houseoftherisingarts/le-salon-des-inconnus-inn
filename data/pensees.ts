@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-08-31",
+        title_fr: "L'art de partir",
+        title_en: "The art of leaving",
+        body_fr: "L'art d'accueillir s'enseigne partout, tandis que celui de laisser partir ne s'enseigne presque nulle part. Pourtant chaque séjour se termine par une valise posée près de la porte, et ce moment-là donne sa couleur à tout le souvenir. Au théâtre, les comédiens travaillent leurs sorties autant que leurs entrées, parce qu'une scène quittée maladroitement abîme tout ce qui s'y est joué. Les adieux réussis sont courts et pleins, comme une phrase qui s'arrête au bon mot au lieu de chercher à durer. J'essaie d'y mettre le même soin qu'à une arrivée : accompagner la personne jusqu'au seuil et lui souhaiter la route belle. Les aubergistes finissent tous par découvrir le même secret : bien laisser partir quelqu'un est la façon la plus sûre de le voir revenir. Avec quel soin est-ce que je quitte les gens, les lieux et les journées qui m'ont été bons?",
+        body_en: "The art of welcoming is taught everywhere, while the art of letting people go is taught almost nowhere. Yet every stay ends with a suitcase set down near the door, and that moment gives its colour to the whole memory. In the theatre, actors work their exits as much as their entrances, because a scene left clumsily spoils everything that was played in it. Successful farewells are short and full, like a sentence that stops at the right word instead of trying to last. I try to give them the same care as an arrival: walking the person to the threshold and wishing them a beautiful road. Every innkeeper ends up discovering the same secret: letting someone leave well is the surest way to see them return. With how much care do I leave the people, the places and the days that have been good to me?",
+    },
+    {
         date: "2026-08-29",
         title_fr: "Le prénom",
         title_en: "The first name",
