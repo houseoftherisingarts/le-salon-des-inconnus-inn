@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-01",
+        title_fr: "La lumière de septembre",
+        title_en: "September light",
+        body_fr: "On dit que l'année commence en janvier, mais quiconque a déjà tenu un cahier d'école sent bien qu'elle recommence en septembre. La lumière elle-même semble le savoir : elle arrive de plus bas et dore les choses au lieu de les écraser, comme si le monde baissait la voix. Personne n'a jamais vu le moment exact où l'été devient l'automne. La forêt ne fait pas d'annonce; elle glisse d'une saison à l'autre, une feuille à la fois, et un matin l'air a changé de goût sans qu'on puisse dire quand. J'aimerais apprendre à changer de cette manière-là. Nous attendons souvent une grande date ou une grande décision pour devenir quelqu'un d'autre, alors que les vraies bascules se font comme les saisons, par mille gestes trop petits pour être remarqués. Quel changement est déjà en train de s'accomplir en moi, une feuille à la fois?",
+        body_en: "They say the year begins in January, but anyone who has ever kept a school notebook can feel that it starts over in September. The light itself seems to know: it comes in lower and gilds things instead of flattening them, as if the world were lowering its voice. Nobody has ever seen the exact moment when summer becomes autumn. The forest makes no announcement; it slides from one season into the next, one leaf at a time, and one morning the air tastes different without anyone being able to say when it changed. I would like to learn to change that way. We often wait for a great date or a great decision to become someone else, while the real turnings happen the way seasons do, through a thousand gestures too small to be noticed. What change is already taking place in me, one leaf at a time?",
+    },
+    {
         date: "2026-08-31",
         title_fr: "L'art de partir",
         title_en: "The art of leaving",
