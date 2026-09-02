@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-02",
+        title_fr: "La clé confiée",
+        title_en: "The entrusted key",
+        body_fr: "Confier une clé à quelqu'un qu'on a rencontré une heure plus tôt est un geste étrange, à bien y penser. Le métal ne pèse presque rien et pourtant il contient toute la maison, avec le sommeil de ceux qui y dorment déjà. Les aubergistes font ce pari depuis des siècles : accorder la confiance avant qu'elle soit méritée, parce qu'attendre qu'elle le soit reviendrait à ne jamais la donner. Ce qui m'étonne le plus, c'est la réponse. La personne qui reçoit la clé se met presque toujours à en être digne, comme si l'objet transformait celui qui le porte. Nous devenons souvent ce qu'on nous confie. Peut-être que la confiance se donne d'abord et se mérite ensuite, et que le don lui-même fabrique la personne fiable. À qui est-ce que je pourrais tendre une clé, cette semaine?",
+        body_en: "Handing a key to someone you met an hour earlier is a strange gesture, when you really think about it. The metal weighs almost nothing and yet it holds the whole house, along with the sleep of those already dreaming inside. Innkeepers have been making this wager for centuries: granting trust before it is earned, because waiting for it to be earned would mean never giving it at all. What astonishes me most is the answer. The person who receives the key almost always begins to be worthy of it, as if the object transformed whoever carries it. We often become what is entrusted to us. Perhaps trust is given first and earned afterwards, and the giving itself is what makes a person trustworthy. Who could I hand a key to this week?",
+    },
+    {
         date: "2026-09-01",
         title_fr: "La lumière de septembre",
         title_en: "September light",
