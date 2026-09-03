@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-03",
+        title_fr: "Le sentier",
+        title_en: "The footpath",
+        body_fr: "Personne n'a jamais décidé qu'un sentier existerait. Quelqu'un a traversé le bois un jour par là parce que c'était le passage le plus doux, un autre a suivi ses traces, et au bout de quelques saisons la forêt garde la marque de tous ces pas sans qu'aucun n'ait pesé bien lourd. J'aime que les plus vieux chemins du monde soient nés ainsi, sans plan et sans permission, de la simple répétition d'un pied posé au même endroit. Les liens entre les gens se tracent de la même manière. Nous revenons nous asseoir à la même table, nous reposons la même question à la même personne, et un jour nous nous apercevons qu'un chemin existe entre elle et nous, assez battu pour se retrouver dans le noir. Les grandes décisions font du bruit, mais ce sont les passages répétés qui dessinent une vie. Vers qui mes pas reviennent-ils sans que je le leur demande?",
+        body_en: "Nobody ever decided that a footpath would exist. Someone crossed the woods that way one day because it was the gentlest passage, someone else followed their traces, and after a few seasons the forest keeps the mark of all those steps, though none of them weighed very much on its own. I love that the oldest roads in the world were born this way, without a plan and without permission, from the simple repetition of a foot set down in the same place. Bonds between people are traced the same way. We come back to sit at the same table, we ask the same person the same question again, and one day we notice that a path exists between them and us, well trodden enough to be found in the dark. Great decisions make noise, but it is the repeated crossings that draw a life. Toward whom do my steps keep returning, without my ever asking them to?",
+    },
+    {
         date: "2026-09-02",
         title_fr: "La clé confiée",
         title_en: "The entrusted key",
