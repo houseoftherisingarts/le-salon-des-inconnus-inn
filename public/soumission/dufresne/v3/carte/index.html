@@ -74,14 +74,24 @@ button,input,a{ font-family:inherit }
 .pt-in.paysage .pt-por{ width:52%; height:100%; right:-3%; }
 .pt-in.paysage .pt-marque{ max-width:56%; }
 .pt-in.paysage .pt-f{ padding:26px 24px; }
-.pt-in.paysage .pt-dos{ display:grid; grid-template-columns:1fr 1px 0.82fr; gap:0 26px; align-content:center; padding:30px 28px; }
-.pt-in.paysage .pt-dos .nom{ grid-column:1; margin:0; font-size:25px; }
-.pt-in.paysage .pt-dos .rl{ grid-column:1; }
-.pt-in.paysage .pt-dos .pt-liens{ grid-column:1; max-width:none; margin-top:18px; }
-.pt-in.paysage .pt-dos::after{ content:""; grid-column:2; grid-row:1 / -1; background:linear-gradient(180deg, transparent, rgba(255,255,255,.16) 22%, rgba(255,255,255,.16) 78%, transparent); }
-.pt-in.paysage .pt-mini{ grid-column:3; grid-row:1 / -1; margin:0; padding:0; border-top:0; display:flex; flex-direction:column; justify-content:center; }
-.pt-in.paysage .pt-mini .v{ font-size:40px; }
-.pt-in.paysage .pt-mini .k{ font-size:11px; letter-spacing:.18em; }
+.pt-in.paysage .pt-dos{ display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto minmax(0,1fr) auto auto;
+  gap:0 30px; align-content:stretch; padding:32px 34px 30px; }
+.pt-in.paysage .pt-dos .nom{ grid-column:1; grid-row:1; margin:0; font-size:29px; }
+.pt-in.paysage .pt-dos .rl{ grid-column:1; grid-row:2; margin:5px 0 0; align-self:start; font-size:14px; }
+.pt-in.paysage .pt-dos .pt-liens{ grid-column:2; grid-row:1 / span 2; max-width:none; margin:2px 0 0; gap:11px; align-self:start; }
+.pt-in.paysage .pt-dos .pt-devise{ grid-column:1 / -1; grid-row:3; align-self:center; font-size:27px; }
+.pt-in.paysage .pt-dos .pt-tourner{ grid-column:2; grid-row:4; align-self:end; justify-self:end; margin:0 0 14px; }
+/* le calculateur prend toute la largeur : le montant a gauche, les deux reglages a droite */
+.pt-in.paysage .pt-mini{ grid-column:1 / -1; grid-row:5; margin:0; padding:20px 0 0;
+  border-top:1px solid rgba(255,255,255,.16);
+  display:grid; grid-template-columns:auto minmax(0,1fr) minmax(0,1fr); grid-template-rows:auto auto; gap:4px 28px; align-items:center; }
+.pt-in.paysage .pt-mini .k{ grid-column:1; grid-row:1; font-size:10.5px; letter-spacing:.18em; align-self:end; }
+.pt-in.paysage .pt-mini .row{ grid-column:1; grid-row:2; margin:2px 0 0; }
+.pt-in.paysage .pt-mini .v{ font-size:42px; }
+.pt-in.paysage .pt-mini label[for=ptCap]{ grid-column:2; grid-row:1; margin:0; align-self:end; }
+.pt-in.paysage .pt-mini #ptCap{ grid-column:2; grid-row:2; margin:0; align-self:center; }
+.pt-in.paysage .pt-mini label[for=ptTx]{ grid-column:3; grid-row:1; margin:0; align-self:end; }
+.pt-in.paysage .pt-mini #ptTx{ grid-column:3; grid-row:2; margin:0; align-self:center; }
 .pt-bascule{ display:inline-flex; gap:6px; padding:5px; border-radius:99px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
 .pt-bascule button{ padding:7px 14px; border-radius:99px; border:0; background:transparent; color:rgba(247,248,251,.6);
   font:inherit; font-size:12.5px; cursor:pointer; }
@@ -95,7 +105,15 @@ button,input,a{ font-family:inherit }
 .pt-in:not(.paysage) .pt-tourner{ margin-top:16px; font-size:11px; }
 .pt-in:not(.paysage) .pt-dos{ padding-top:28px; }
 .pt-in:not(.paysage) .pt-mini{ padding-top:14px; }
+.pt-in:not(.paysage) .pt-dos .pt-tourner{ margin:16px 0 0; }
+.pt-in:not(.paysage) .pt-dos .pt-devise{ margin:22px 0 auto; font-size:24px; }
+.pt-in:not(.paysage) .pt-dos .pt-liens{ margin-top:22px; }
+.pt-in:not(.paysage) .pt-mini{ margin-top:18px; }
 .pt-marque p{ margin:9px 0 0; font-size:14px; line-height:1.6; color:var(--blanc-2); }
+.pt-devise{ margin:0; font-family:var(--display); font-weight:700; font-size:19px; line-height:1.24; letter-spacing:-.02em;
+  color:var(--blanc); text-wrap:balance; }
+.pt-devise span{ color:var(--or); }
+.pt-in:not(.paysage) .pt-dos .pt-devise{ margin-top:20px; }
 .pt-tourner{ margin-top:20px; display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(247,248,251,.5); }
 .pt-tourner svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.7; }
 .pt-photo{ width:74px; height:74px; border-radius:50%; overflow:hidden; border:2px solid rgba(255,203,12,.55); flex:none; }
@@ -113,6 +131,24 @@ button,input,a{ font-family:inherit }
 .pt-mini small{ font-size:11px; color:rgba(247,248,251,.5); }
 .pt-mini input[type=range]{ width:100%; margin-top:10px; accent-color:var(--or); }
 .pt-mini label{ display:flex; justify-content:space-between; font-size:11.5px; color:rgba(247,248,251,.62); margin-top:12px; }
+/* sur un telephone, une carte au ratio 1.62 est trop plate pour porter tout ca :
+   le format paysage garde son recto large et empile son verso comme le portrait */
+@media (max-width:700px){
+  .pt-in.paysage .pt-scene{ aspect-ratio:1.04; }
+  .pt-in.paysage .pt-f{ padding:22px 20px; }
+  .pt-in.paysage .pt-por{ width:46%; right:-4%; }
+  .pt-in.paysage .pt-marque{ max-width:64%; }
+  .pt-in.paysage .pt-dos{ display:flex; flex-direction:column; padding:22px 20px 24px; }
+  .pt-in.paysage .pt-dos .nom{ font-size:21px; }
+  .pt-in.paysage .pt-dos .rl{ margin:4px 0 0; font-size:12.5px; }
+  .pt-in.paysage .pt-dos .pt-devise{ display:none; }
+  .pt-in.paysage .pt-dos .pt-liens{ margin:16px 0 auto; gap:8px; }
+  .pt-in.paysage .pt-dos .pt-liens a{ font-size:12.5px; }
+  .pt-in.paysage .pt-dos .pt-tourner{ margin:12px 0 0; justify-self:auto; align-self:flex-start; font-size:10.5px; }
+  .pt-in.paysage .pt-mini{ display:block; margin:14px 0 0; padding-top:14px; }
+  .pt-in.paysage .pt-mini .v{ font-size:30px; }
+  .pt-in:not(.paysage) .pt-dos .pt-devise{ font-size:20px; }
+}
 .pt-actions{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 .pt-lien{ width:100%; display:flex; gap:8px; }
 .pt-lien input{ flex:1; min-width:0; padding:11px 13px; border-radius:10px; border:1px solid rgba(255,255,255,.16);
@@ -133,16 +169,18 @@ button,input,a{ font-family:inherit }
           <h3>Philippe<br>Dufresne</h3>
           <p>Quand la banque dit non, il reste des portes. Montréal et Chambly, permis de l'Autorité des marchés financiers.</p>
         </div>
-        <span class="pt-tourner"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Tourner la carte</span>
+        <span class="pt-tourner"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Cliquez pour tourner</span>
       </div>
       <div class="pt-f pt-dos">
         <h3 class="nom">Philippe Dufresne</h3>
         <p class="rl">Courtier hypothécaire · Groupe Orbis</p>
+        <p class="pt-devise"><span>Quand la banque dit non,</span><br>il reste des portes.</p>
         <div class="pt-liens">
           <a href="tel:+14384991555"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.2 2 2 0 0 1 5 3z"/></svg>438 499-1555</a>
           <a href="mailto:philippe@groupeorbis.com"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>philippe@groupeorbis.com</a>
           <a href="https://gohypotheque.com/philippe" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>Parler à Philippe</a>
         </div>
+        <span class="pt-tourner"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Cliquez pour tourner</span>
         <div class="pt-mini">
           <span class="k">Votre paiement, vite fait</span>
           <div class="row"><span class="v" id="ptV">1 994 $</span><small>par mois</small></div>
