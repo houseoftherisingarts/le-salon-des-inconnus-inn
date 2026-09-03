@@ -498,6 +498,257 @@ button,input,a{ font-family:inherit }
     ecrire(d); return d.reglages;
   };
 
+
+  /* ---------------------------------------------------------------------
+     L'infolettre. Philippe écrit dans le back-office, la lettre se monte
+     en blocs, et l'envoi se simule ici : rien ne quitte le navigateur tant
+     qu'un vrai service de courriel n'est pas branché. Les abonnés arrivent
+     du pied de page du site public et de l'import d'un fichier CSV.
+     --------------------------------------------------------------------- */
+  PD.BLOCS = [
+    { t: "titre",      lib: "Un titre",        d: { txt: "Le mot du mois", niv: "h2", align: "left" } },
+    { t: "texte",      lib: "Un paragraphe",   d: { txt: "Écrivez ici. Une idée par paragraphe, et le lecteur suit jusqu'au bout." } },
+    { t: "image",      lib: "Une image",       d: { url: "", alt: "", legende: "" } },
+    { t: "bouton",     lib: "Un bouton",       d: { txt: "Prendre rendez-vous", url: "tel:+14384991555" } },
+    { t: "citation",   lib: "Une citation",    d: { txt: "Un courtier qui répond à ses appels.", qui: "Philippe Dufresne" } },
+    { t: "taux",       lib: "Le taux du jour", d: { note: "Taux directeur de la Banque du Canada au moment de l'envoi." } },
+    { t: "separateur", lib: "Un filet",        d: {} },
+    { t: "espace",     lib: "Un blanc",        d: { h: 24 } }
+  ];
+  PD.AUDIENCES = [
+    { id: "tous",    t: "Tout le monde" },
+    { id: "clients", t: "Les clients avec un dossier ouvert" },
+    { id: "fermes",  t: "Les dossiers terminés" },
+    { id: "site",    t: "Les inscrits du site public" }
+  ];
+
+  function bacInfo() {
+    var d = lire();
+    if (!d.info) d.info = { abonnes: [], camps: [] };
+    /* le pied de page écrivait une simple liste d'adresses : elle rejoint le registre */
+    try {
+      var vieux = JSON.parse(localStorage.getItem("pd.infolettre") || "[]");
+      if (vieux.length) {
+        vieux.forEach(function (m) {
+          if (!d.info.abonnes.some(function (a) { return a.courriel === m; })) {
+            d.info.abonnes.push({ courriel: m, nom: "", source: "site", etat: "actif", depuis: Date.now(), jeton: jeton() });
+          }
+        });
+        localStorage.removeItem("pd.infolettre");
+        ecrire(d);
+      }
+    } catch (e) {}
+    return d;
+  }
+  function jeton() {
+    var s = "";
+    for (var i = 0; i < 18; i++) s += "0123456789abcdef".charAt(Math.floor(Math.random() * 16));
+    return s;
+  }
+
+  PD.abonnes = function () { return bacInfo().info.abonnes.slice(); };
+  PD.abonner = function (courriel, o) {
+    courriel = String(courriel || "").trim().toLowerCase();
+    if (courriel.indexOf("@") < 1) return { err: "Cette adresse n'a pas l'air d'une adresse." };
+    var d = bacInfo(), ex = null;
+    d.info.abonnes.forEach(function (a) { if (a.courriel === courriel) ex = a; });
+    if (ex) {
+      if (ex.etat === "desabonne") { ex.etat = "actif"; ex.depuis = Date.now(); ecrire(d); return { ok: ex, revenu: true }; }
+      return { err: "Cette adresse est déjà inscrite." };
+    }
+    o = o || {};
+    var a = { courriel: courriel, nom: o.nom || "", source: o.source || "admin", etat: "actif", depuis: Date.now(), jeton: jeton() };
+    d.info.abonnes.push(a); ecrire(d); return { ok: a };
+  };
+  PD.desabonner = function (courriel) {
+    var d = bacInfo();
+    d.info.abonnes.forEach(function (a) { if (a.courriel === courriel) { a.etat = "desabonne"; a.sorti = Date.now(); } });
+    ecrire(d);
+  };
+  PD.retirerAbonne = function (courriel) {
+    var d = bacInfo();
+    d.info.abonnes = d.info.abonnes.filter(function (a) { return a.courriel !== courriel; });
+    ecrire(d);
+  };
+  PD.importerAbonnes = function (texte) {
+    var lignes = String(texte || "").split(/\r?\n/), n = 0, deja = 0;
+    lignes.forEach(function (l) {
+      if (!l.trim()) return;
+      var col = l.split(/[;,\t]/).map(function (c) { return c.trim().replace(/^"|"$/g, ""); });
+      var mail = null, nom = "";
+      col.forEach(function (c) { if (!mail && c.indexOf("@") > 0) mail = c; else if (!nom && c && c.indexOf("@") < 0) nom = c; });
+      if (!mail) return;
+      if (/courriel|email|adresse/i.test(mail)) return;
+      var r = PD.abonner(mail, { nom: nom, source: "import" });
+      if (r.ok) n++; else deja++;
+    });
+    return { ajoutes: n, deja: deja };
+  };
+
+  /* qui reçoit quoi : les audiences se lisent dans les dossiers déjà ouverts */
+  PD.destinatairesInfo = function (aud) {
+    var abos = PD.abonnes().filter(function (a) { return a.etat === "actif"; });
+    if (aud === "site") return abos.filter(function (a) { return a.source === "site"; });
+    if (aud === "tous") {
+      var vus = {}, out = [];
+      abos.forEach(function (a) { vus[a.courriel] = 1; out.push(a); });
+      PD.dossiers().forEach(function (c) {
+        if (!vus[c.courriel]) { vus[c.courriel] = 1; out.push({ courriel: c.courriel, nom: c.nom, source: "dossier", etat: "actif" }); }
+      });
+      return out;
+    }
+    var ferme = (aud === "fermes");
+    return PD.dossiers().filter(function (c) {
+      var fini = PD.avancement(c).pct === 100;
+      return ferme ? fini : !fini;
+    }).map(function (c) { return { courriel: c.courriel, nom: c.nom, source: "dossier", etat: "actif" }; });
+  };
+
+  PD.campagnes = function () {
+    return bacInfo().info.camps.slice().sort(function (a, b) { return b.maj - a.maj; });
+  };
+  PD.campagne = function (id) {
+    var t = null;
+    bacInfo().info.camps.forEach(function (c) { if (c.id === id) t = c; });
+    return t;
+  };
+  PD.nouvelleCampagne = function () {
+    var d = bacInfo();
+    var c = {
+      id: "c" + Date.now().toString(36), titre: "Sans titre", sujet: "", entete: "",
+      de: "Philippe Dufresne", audience: "tous", etat: "brouillon", quand: null,
+      cree: Date.now(), maj: Date.now(), stats: null,
+      blocs: [
+        { t: "titre", d: { txt: "Le mot du mois", niv: "h2", align: "left" } },
+        { t: "texte", d: { txt: "Bonjour, voici les nouvelles du marché et ce que ça change pour vous." } },
+        { t: "taux", d: { note: "Taux directeur de la Banque du Canada au moment de l'envoi." } },
+        { t: "bouton", d: { txt: "Appeler Philippe", url: "tel:+14384991555" } }
+      ]
+    };
+    d.info.camps.push(c); ecrire(d); return c;
+  };
+  PD.majCampagne = function (id, patch) {
+    var d = bacInfo(), t = null;
+    d.info.camps.forEach(function (c) { if (c.id === id) t = c; });
+    if (!t) return null;
+    Object.keys(patch).forEach(function (k) { t[k] = patch[k]; });
+    t.maj = Date.now(); ecrire(d); return t;
+  };
+  PD.supprimerCampagne = function (id) {
+    var d = bacInfo();
+    d.info.camps = d.info.camps.filter(function (c) { return c.id !== id; });
+    ecrire(d);
+  };
+
+  /* Le rendu du courriel. Un seul moteur : ce que l'aperçu montre est ce
+     qui partirait. Tables et styles en ligne, parce que les logiciels de
+     courriel ne lisent pas une feuille de style. */
+  var COUL = { fond: "#eef1f6", carte: "#ffffff", encre: "#0b1f3f", texte: "#2b3648", doux: "#6c7889", or: "#c9a227", nuit: "#0b1f3f" };
+  function esc(s) { return PD.echap(s); }
+  function blocHtml(b, ctx) {
+    var d = b.d || {};
+    if (b.t === "titre") {
+      var taille = d.niv === "h1" ? 28 : (d.niv === "h3" ? 18 : 22);
+      return '<tr><td style="padding:6px 32px 10px;text-align:' + (d.align || "left") + '">' +
+        '<div style="margin:0;font-family:Georgia,\'Times New Roman\',serif;font-size:' + taille + 'px;line-height:1.25;font-weight:700;color:' + COUL.encre + '">' + esc(d.txt) + '</div></td></tr>';
+    }
+    if (b.t === "texte") {
+      var paras = String(d.txt || "").split(/\n{2,}/).map(function (p) {
+        return '<p style="margin:0 0 14px;font-size:16px;line-height:1.62;color:' + COUL.texte + '">' + esc(p).replace(/\n/g, "<br>") + "</p>";
+      }).join("");
+      return '<tr><td style="padding:4px 32px 8px">' + paras + "</td></tr>";
+    }
+    if (b.t === "image") {
+      if (!d.url) return '<tr><td style="padding:8px 32px"><div style="border:1px dashed #c3ccd9;border-radius:10px;padding:26px;text-align:center;font-size:13px;color:' + COUL.doux + '">Aucune image choisie</div></td></tr>';
+      return '<tr><td style="padding:8px 32px">' +
+        '<img src="' + esc(d.url) + '" alt="' + esc(d.alt) + '" width="536" style="display:block;width:100%;max-width:536px;border-radius:12px">' +
+        (d.legende ? '<div style="margin-top:8px;font-size:13px;color:' + COUL.doux + '">' + esc(d.legende) + "</div>" : "") +
+        "</td></tr>";
+    }
+    if (b.t === "bouton") {
+      return '<tr><td style="padding:14px 32px 18px">' +
+        '<a href="' + esc(d.url || "#") + '" style="display:inline-block;background:' + COUL.or + ';color:' + COUL.nuit + ';text-decoration:none;font-weight:700;font-size:15px;padding:14px 26px;border-radius:999px">' + esc(d.txt) + "</a></td></tr>";
+    }
+    if (b.t === "citation") {
+      return '<tr><td style="padding:10px 32px">' +
+        '<div style="border-left:3px solid ' + COUL.or + ';padding:4px 0 4px 16px">' +
+        '<div style="font-family:Georgia,serif;font-size:18px;line-height:1.5;color:' + COUL.encre + '">' + esc(d.txt) + "</div>" +
+        (d.qui ? '<div style="margin-top:6px;font-size:13px;color:' + COUL.doux + '">' + esc(d.qui) + "</div>" : "") +
+        "</div></td></tr>";
+    }
+    if (b.t === "taux") {
+      var t = ctx && ctx.taux;
+      var dir = t ? t.directeur.toFixed(2).replace(".", ",") + " %" : "à venir";
+      var pre = t ? t.prefere.toFixed(2).replace(".", ",") + " %" : "à venir";
+      return '<tr><td style="padding:10px 32px">' +
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + COUL.nuit + ';border-radius:14px"><tr>' +
+        '<td style="padding:18px 22px;color:#fff">' +
+        '<div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#ffcb0c">Le taux, aujourd\'hui</div>' +
+        '<div style="margin-top:8px;font-size:15px;line-height:1.6;color:rgba(255,255,255,.86)">Taux directeur <b style="color:#fff">' + dir + "</b> · taux préférentiel <b style=\"color:#fff\">" + pre + "</b></div>" +
+        (d.note ? '<div style="margin-top:8px;font-size:12.5px;color:rgba(255,255,255,.55)">' + esc(d.note) + "</div>" : "") +
+        "</td></tr></table></td></tr>";
+    }
+    if (b.t === "separateur") {
+      return '<tr><td style="padding:12px 32px"><div style="height:1px;background:#dde3ec"></div></td></tr>';
+    }
+    if (b.t === "espace") {
+      return '<tr><td style="line-height:0;font-size:0;height:' + (Number(d.h) || 24) + 'px">&nbsp;</td></tr>';
+    }
+    return "";
+  }
+  PD.rendreCourriel = function (camp, ctx) {
+    ctx = ctx || {};
+    var corps = (camp.blocs || []).map(function (b) { return blocHtml(b, ctx); }).join("");
+    var lien = ctx.lienDesabo || "#desabonnement";
+    var logo = ctx.logo
+      ? '<img src="' + ctx.logo + '" alt="Philippe Dufresne" width="150" style="display:block;width:150px;height:auto;margin:0 auto 4px">'
+      : '<div style="font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:19px;letter-spacing:.02em;color:#ffcb0c">PHILIPPE DUFRESNE</div>';
+    return '<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">' +
+      "<title>" + esc(camp.sujet || camp.titre) + "</title></head>" +
+      '<body style="margin:0;padding:0;background:' + COUL.fond + '">' +
+      '<div style="display:none;max-height:0;overflow:hidden;opacity:0">' + esc(camp.entete) + "</div>" +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + COUL.fond + ';padding:28px 12px">' +
+      '<tr><td align="center">' +
+      '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:' + COUL.carte + ';border-radius:18px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Helvetica,Arial,sans-serif">' +
+      '<tr><td style="background:' + COUL.nuit + ';padding:22px 32px;text-align:center">' + logo +
+      '<div style="margin-top:6px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.6)">Courtier hypothécaire · Groupe Orbis</div></td></tr>' +
+      '<tr><td style="height:3px;line-height:0;font-size:0;background:' + COUL.or + '">&nbsp;</td></tr>' +
+      '<tr><td style="height:14px;line-height:0;font-size:0">&nbsp;</td></tr>' +
+      corps +
+      '<tr><td style="height:10px;line-height:0;font-size:0">&nbsp;</td></tr>' +
+      '<tr><td style="background:#f4f6fa;padding:22px 32px;font-size:12.5px;line-height:1.7;color:' + COUL.doux + '">' +
+      "<div>Philippe Dufresne, courtier hypothécaire · Groupe Orbis</div>" +
+      "<div>1000 rue de la Gauchetière Ouest, Montréal (Québec) · 438 499-1555</div>" +
+      '<div style="margin-top:10px"><a href="' + esc(lien) + '" style="color:' + COUL.doux + '">Me retirer de la liste</a></div>' +
+      "</td></tr></table></td></tr></table></body></html>";
+  };
+  PD.texteCourriel = function (camp) {
+    return (camp.blocs || []).map(function (b) {
+      var d = b.d || {};
+      if (b.t === "titre" || b.t === "texte") return d.txt;
+      if (b.t === "citation") return "« " + d.txt + " »" + (d.qui ? " " + d.qui : "");
+      if (b.t === "bouton") return d.txt + " : " + d.url;
+      if (b.t === "taux") return "Le taux directeur et le taux préférentiel du jour.";
+      return "";
+    }).filter(Boolean).join("\n\n");
+  };
+
+  /* L'envoi. Rien ne part vraiment : la démonstration montre le parcours
+     complet, et l'endroit exact où un service de courriel se brancherait. */
+  PD.envoyerCampagne = function (id) {
+    var c = PD.campagne(id);
+    if (!c) return { err: "Cette infolettre n'existe plus." };
+    if (!c.sujet) return { err: "Il manque le sujet du courriel." };
+    var gens = PD.destinatairesInfo(c.audience);
+    if (!gens.length) return { err: "Personne ne correspond à cette audience." };
+    var stats = { destinataires: gens.length, remis: gens.length, ouvertures: 0, envoye: Date.now() };
+    PD.majCampagne(id, { etat: "envoye", stats: stats, quand: Date.now() });
+    return { ok: stats };
+  };
+  PD.programmerCampagne = function (id, quand) {
+    return PD.majCampagne(id, { etat: "planifie", quand: quand });
+  };
+
   /* ---------------------------------------------------------------------
      Le paiement hypothécaire. Au Canada l'intérêt se compose deux fois par
      année, alors le taux de la période se tire de (1 + i/2)^(2/f) - 1 et
