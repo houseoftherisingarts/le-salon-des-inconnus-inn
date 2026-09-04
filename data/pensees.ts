@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-04",
+        title_fr: "La note commune",
+        title_en: "The shared note",
+        body_fr: "Avant un concert, il se passe un petit moment que j'aime autant que la musique elle-même. Le hautbois donne un la, et pendant une minute chaque musicien tire sur ses cordes ou ajuste son souffle pour rejoindre cette note unique. Le désordre de tous ces sons qui se cherchent finit par se poser, et l'orchestre entier respire depuis le même point de départ. Personne ne demande aux instruments de jouer la même chose toute la soirée; il leur suffit de partir d'une note entendue ensemble. Les conversations entre inconnus commencent de la même manière, il me semble. Nous tâtonnons un peu du côté de la météo ou de la route parcourue, jusqu'à ce qu'une phrase résonne des deux côtés de la table, et à partir de cette note-là chacun peut jouer sa propre partition sans perdre l'autre. Le plus bel accord laisse chaque instrument garder son timbre. Quelle note est-ce que j'offre aux gens pour qu'ils puissent s'accorder à moi?",
+        body_en: "Before a concert, there is a small moment I love as much as the music itself. The oboe sounds an A, and for a minute every musician pulls at their strings or adjusts their breath to reach that single note. The disorder of all those searching sounds finally settles, and the whole orchestra breathes from the same starting point. Nobody asks the instruments to play the same thing all evening; it is enough that they begin from one note heard together. Conversations between strangers begin in much the same way, it seems to me. We fumble a little with the weather or the road just travelled, until one sentence rings true on both sides of the table, and from that note onward each person can play their own part without losing the other. The finest chord lets every instrument keep its own voice. What note do I offer people, so that they can tune themselves to me?",
+    },
+    {
         date: "2026-09-03",
         title_fr: "Le sentier",
         title_en: "The footpath",

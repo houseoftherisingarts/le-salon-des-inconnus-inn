@@ -993,6 +993,229 @@ button,input,a{ font-family:inherit }
 
 
   /* ---------------------------------------------------------------------
+     Les prospects. Le diagnostic du site public pose cinq questions, puis
+     recueille un nom, un numero et le meilleur moment pour rappeler. Sans
+     cette liste, la demande dormait dans le navigateur du visiteur. Elle
+     arrive maintenant dans le back-office, la plus pressee en premier, avec
+     les reponses et une ouverture d'appel deja ecrite.
+     --------------------------------------------------------------------- */
+  /* le questionnaire vit ici : la page publique le pose, le back-office le relit */
+  PD.DIAG = [
+    { c: "emploi", t: "Comment vos revenus entrent-ils ?", o: [
+      { v: "salarie", t: "Salaire, avec des talons de paie" },
+      { v: "autonome", t: "Travailleur autonome ou à mon compte" },
+      { v: "mixte", t: "Un peu des deux, ou des revenus variables" },
+      { v: "autre", t: "Retraite, rente ou autre source" } ] },
+    { c: "blocage", t: "Qu'est-ce qui bloque en ce moment ?", o: [
+      { v: "refus", t: "Une banque m'a dit non" },
+      { v: "credit", t: "Mon crédit a été abîmé" },
+      { v: "dettes", t: "Mes paiements mensuels m'étouffent" },
+      { v: "preuve", t: "Mes revenus sont durs à prouver" },
+      { v: "rien", t: "Rien de précis, je veux voir mes options" } ] },
+    { c: "proprio", t: "Êtes-vous propriétaire de votre logement ?", o: [
+      { v: "oui", t: "Oui, avec une hypothèque en cours" },
+      { v: "oui-libre", t: "Oui, et elle est payée ou presque" },
+      { v: "non", t: "Non, pas encore" } ] },
+    { c: "but", t: "Qu'est-ce que vous cherchez à faire ?", o: [
+      { v: "consolider", t: "Regrouper mes dettes en un seul paiement" },
+      { v: "refi", t: "Refinancer pour dégager de l'argent" },
+      { v: "achat", t: "Acheter une propriété" },
+      { v: "renouv", t: "Renouveler mon terme qui s'en vient" },
+      { v: "commercial", t: "Financer un immeuble ou un local commercial" } ] },
+    { c: "quand", t: "C'est pour quand ?", o: [
+      { v: "vite", t: "Le plus vite possible" },
+      { v: "mois", t: "Dans les prochains mois" },
+      { v: "voir", t: "Je regarde, sans échéance" } ] }
+  ];
+  PD.SUITES = [
+    { id: "nouveau", t: "À rappeler" },
+    { id: "joint",   t: "Rejoint" },
+    { id: "rdv",     t: "Rendez-vous pris" },
+    { id: "dossier", t: "Dossier ouvert" },
+    { id: "perdu",   t: "Sans suite" }
+  ];
+  /* le libelle d'une reponse, pour que la fiche se lise en francais */
+  PD.diagLib = function (champ, valeur) {
+    var out = valeur || "";
+    PD.DIAG.forEach(function (q) {
+      if (q.c !== champ) return;
+      q.o.forEach(function (o) { if (o.v === valeur) out = o.t; });
+    });
+    return out;
+  };
+  PD.diagQuestion = function (champ) {
+    var out = champ;
+    PD.DIAG.forEach(function (q) { if (q.c === champ) out = q.t; });
+    return out;
+  };
+
+  function prNormaliser(o) {
+    o = o || {};
+    return {
+      id: o.id || jeton(),
+      quand: o.quand || Date.now(),
+      nom: String(o.nom || "").trim(),
+      courriel: String(o.courriel || "").trim().toLowerCase(),
+      tel: String(o.tel || "").trim(),
+      moment: String(o.moment || "").trim(),
+      source: o.source || "diagnostic",
+      lecture: o.lecture || "",
+      reponses: o.reponses || {},
+      etat: o.etat || "nouveau",
+      notes: o.notes || [],
+      maj: o.maj || o.quand || Date.now()
+    };
+  }
+  function bacProsp() {
+    var d = lire();
+    if (!d.prospects) d.prospects = [];
+    /* la premiere version du diagnostic ecrivait sa propre cle : elle rejoint la liste */
+    try {
+      var vieux = JSON.parse(localStorage.getItem("pd.diagnostics") || "[]");
+      if (vieux.length) {
+        vieux.forEach(function (o) { d.prospects.push(prNormaliser(o)); });
+        localStorage.removeItem("pd.diagnostics");
+        ecrire(d);
+      }
+    } catch (e) {}
+    return d;
+  }
+  /* la chaleur : ce qui presse se rappelle aujourd'hui, le reste cette semaine */
+  PD.chaleur = function (p) {
+    var r = p.reponses || {};
+    if (r.quand === "vite" || r.blocage === "refus" || r.blocage === "dettes") return { id: "chaud", t: "Ça presse" };
+    if (r.quand === "mois") return { id: "tiede", t: "Dans les mois qui viennent" };
+    return { id: "froid", t: "Sans échéance" };
+  };
+  var PR_ORDRE = { chaud: 0, tiede: 1, froid: 2 };
+  PD.prospects = function () {
+    return bacProsp().prospects.map(prNormaliser).sort(function (a, b) {
+      var av = a.etat === "nouveau" ? 0 : 1, bv = b.etat === "nouveau" ? 0 : 1;
+      if (av !== bv) return av - bv;
+      var ac = PR_ORDRE[PD.chaleur(a).id], bc = PR_ORDRE[PD.chaleur(b).id];
+      if (ac !== bc) return ac - bc;
+      return b.quand - a.quand;
+    });
+  };
+  PD.prospect = function (id) {
+    var out = null;
+    PD.prospects().forEach(function (p) { if (p.id === id) out = p; });
+    return out;
+  };
+  PD.ajouterProspect = function (o) {
+    var d = bacProsp(), p = prNormaliser(o), deja = null;
+    if (p.courriel) {
+      d.prospects.forEach(function (x) { if (x.courriel === p.courriel && x.etat === "nouveau") deja = x; });
+    }
+    if (deja) {
+      /* la meme personne refait le diagnostic : la demande se remplace, elle ne se double pas */
+      deja.quand = p.quand; deja.maj = p.quand; deja.nom = p.nom || deja.nom;
+      deja.tel = p.tel || deja.tel; deja.moment = p.moment || deja.moment;
+      deja.reponses = p.reponses; deja.lecture = p.lecture;
+      ecrire(d); return { ok: deja, repris: true };
+    }
+    d.prospects.push(p); ecrire(d); return { ok: p };
+  };
+  PD.majProspect = function (id, patch) {
+    var d = bacProsp(), t = null;
+    d.prospects.forEach(function (p) {
+      if (p.id !== id) return;
+      Object.keys(patch).forEach(function (k) { p[k] = patch[k]; });
+      p.maj = Date.now(); t = p;
+    });
+    ecrire(d); return t;
+  };
+  PD.noterProspect = function (id, txt, qui) {
+    txt = String(txt || "").trim(); if (!txt) return null;
+    var d = bacProsp(), t = null;
+    d.prospects.forEach(function (p) {
+      if (p.id !== id) return;
+      (p.notes = p.notes || []).push({ quand: Date.now(), qui: qui || "", txt: txt });
+      p.maj = Date.now(); t = p;
+    });
+    ecrire(d); return t;
+  };
+  PD.retirerProspect = function (id) {
+    var d = bacProsp();
+    d.prospects = d.prospects.filter(function (p) { return p.id !== id; });
+    ecrire(d);
+  };
+  /* l'ouverture d'appel : la premiere phrase depend de ce qui bloque, pas d'un script unique */
+  PD.scriptProspect = function (p) {
+    var r = p.reponses || {}, pre = p.nom ? p.nom.split(" ")[0] : "";
+    var bonjour = "Bonjour " + (pre || "") + ", Philippe Dufresne, courtier hypothécaire. ";
+    var ouvre = "Vous avez rempli le diagnostic sur mon site, alors je vous rappelle comme promis.";
+    if (r.blocage === "refus")
+      ouvre = "Vous avez rempli le diagnostic et vous m'écrivez qu'une banque vous a dit non. C'est justement le genre de dossier que je monte tous les jours.";
+    else if (r.blocage === "dettes")
+      ouvre = "Vous avez rempli le diagnostic et vos paiements mensuels vous étouffent. Regardons ensemble ce que votre propriété permet de regrouper.";
+    else if (r.blocage === "preuve" || r.emploi === "autonome")
+      ouvre = "Vous avez rempli le diagnostic et vos revenus sont durs à prouver. La façon de présenter le dossier change souvent la réponse.";
+    else if (r.but === "renouv")
+      ouvre = "Vous avez rempli le diagnostic et votre terme arrive à échéance. Comparer avant de signer prend un appel.";
+    var q = ["Racontez-moi ce qui vous amène, dans vos mots."];
+    if (r.proprio !== "non") q.push("Quel est le solde de votre hypothèque, et depuis quand êtes-vous propriétaire ?");
+    else q.push("Avez-vous déjà une mise de fonds de côté, et de quelle provenance ?");
+    if (r.but === "consolider") q.push("Quelles dettes voulez-vous regrouper, et quel est le paiement mensuel de chacune ?");
+    if (r.but === "commercial") q.push("De quel type d'immeuble parle-t-on, et quels revenus génère-t-il ?");
+    q.push("Qu'est-ce qui doit arriver pour que vous soyez content dans trois mois ?");
+    return { ouverture: bonjour + ouvre, questions: q };
+  };
+  /* le prospect devient un dossier : le compte s'ouvre, les reponses passent en note */
+  PD.convertirProspect = function (id) {
+    var p = PD.prospect(id);
+    if (!p) return { err: "Ce prospect n'existe plus." };
+    if (!p.courriel) return { err: "Il manque le courriel." };
+    var avant = lire().session;
+    var r = PD.creerCompte(p.courriel, p.nom, p.tel, "diagnostic");
+    var d2 = lire(); d2.session = avant; ecrire(d2);
+    if (r.err && !d2.comptes[p.courriel]) return { err: r.err };
+    var resume = ["Diagnostic du site, " + PD.jour(p.quand) + " : " + (p.lecture || "tour d'horizon") + "."];
+    PD.DIAG.forEach(function (q) {
+      if (p.reponses[q.c]) resume.push(q.t + " " + PD.diagLib(q.c, p.reponses[q.c]) + ".");
+    });
+    if (p.moment) resume.push("Meilleur moment pour le joindre : " + p.moment.toLowerCase() + ".");
+    PD.majCompte(p.courriel, function (c) {
+      c.dossier.notes.push({ quand: Date.now(), txt: resume.join(" ") });
+      if (!c.type) c.type = p.lecture || "";
+      if (!c.tel && p.tel) c.tel = p.tel;
+    });
+    PD.majProspect(id, { etat: "dossier" });
+    return { ok: p.courriel };
+  };
+  /* la fiche du prospect en Markdown, taillee pour etre collee a un assistant */
+  PD.markdownProspect = function (p) {
+    var s = PD.scriptProspect(p), L = [];
+    L.push("# " + (p.nom || p.courriel) + " · prospect du diagnostic");
+    L.push("");
+    L.push("- Reçu le " + PD.jour(p.quand));
+    L.push("- Lecture : " + (p.lecture || "tour d'horizon"));
+    L.push("- Urgence : " + PD.chaleur(p).t);
+    if (p.tel) L.push("- Téléphone : " + p.tel);
+    if (p.courriel) L.push("- Courriel : " + p.courriel);
+    if (p.moment) L.push("- Meilleur moment : " + p.moment.toLowerCase());
+    L.push("");
+    L.push("## Ses réponses");
+    L.push("");
+    PD.DIAG.forEach(function (q) {
+      if (p.reponses[q.c]) L.push("- " + q.t + " " + PD.diagLib(q.c, p.reponses[q.c]));
+    });
+    L.push("");
+    L.push("## L'appel");
+    L.push("");
+    L.push(s.ouverture);
+    L.push("");
+    s.questions.forEach(function (x) { L.push("- " + x); });
+    if (p.notes && p.notes.length) {
+      L.push(""); L.push("## Les notes"); L.push("");
+      p.notes.forEach(function (n) { L.push("- " + PD.jour(n.quand) + " : " + n.txt); });
+    }
+    L.push("");
+    L.push("Philippe Dufresne, courtier hypothécaire · Groupe Orbis · 438 499-1555 · philippe@groupeorbis.com");
+    return L.join("\n");
+  };
+
+  /* ---------------------------------------------------------------------
      L'atelier de marque. Une seule charte, une couleur par personne : les
      visuels de l'equipe se ressemblent sans etre identiques. Tout se dessine
      dans un canvas, avec les polices deja chargees par la page, alors rien
@@ -1089,6 +1312,9 @@ button,input,a{ font-family:inherit }
     var M = PD.MARQUE, mx = Math.round(W * 0.085), petit = Math.min(W, H);
     ctx.clearRect(0, 0, W, H);
     mqFond(ctx, W, H, a);
+    var court = (H / W) < 0.9;                  /* carte et signature sont larges et basses */
+    var bande = court ? mx * 0.9 : mx * 1.9;    /* la hauteur reservee au pied de marque */
+    var solPied = H - bande;                    /* aucun texte ne descend sous cette ligne */
     ctx.textBaseline = "alphabetic";
 
     var disp = function (px, poids) { ctx.font = (poids || 800) + " " + Math.round(px) + "px " + M.display + ", Georgia, serif"; };
@@ -1102,8 +1328,8 @@ button,input,a{ font-family:inherit }
       ctx.fillText(String(o.chiffre || "0"), mx, H * 0.45);
       disp(petit * 0.062, 700); ctx.fillStyle = M.blanc;
       var yb = mqTexte(ctx, o.titre || "", mx, H * 0.58, W - mx * 2, petit * 0.076);
-      corps(petit * 0.032); ctx.fillStyle = "rgba(255,255,255,.66)";
-      mqTexte(ctx, o.pied || "", mx, yb + petit * 0.03, W - mx * 2, petit * 0.044);
+      corps(petit * 0.030); ctx.fillStyle = "rgba(255,255,255,.66)";
+      mqTexte(ctx, o.pied || "", mx, Math.max(yb + petit * 0.03, solPied - petit * 0.10), W - mx * 2, petit * 0.042);
     } else if (o.gabarit === "conseil") {
       disp(petit * 0.20, 800); ctx.fillStyle = a.c + "2e"; ctx.textAlign = "right";
       ctx.fillText(String(o.num || "01"), W - mx, H * 0.26); ctx.textAlign = "left";
@@ -1114,7 +1340,7 @@ button,input,a{ font-family:inherit }
       var yc = mqTexte(ctx, o.titre || "", mx, H * 0.36, W - mx * 2, petit * 0.086);
       mqFilet(ctx, mx, yc + petit * 0.022, petit * 0.16, a);
       corps(petit * 0.034, 400); ctx.fillStyle = "rgba(255,255,255,.76)";
-      mqTexte(ctx, o.texte || "", mx, yc + petit * 0.086, W - mx * 2, petit * 0.048);
+      mqTexte(ctx, o.texte || "", mx, Math.min(yc + petit * 0.086, solPied - petit * 0.14), W - mx * 2, petit * 0.048);
     } else if (o.gabarit === "carte") {
       disp(petit * 0.098, 800); ctx.fillStyle = M.blanc;
       ctx.fillText(String(o.nom || "Prénom Nom"), mx, H * 0.40);
@@ -1146,14 +1372,20 @@ button,input,a{ font-family:inherit }
       var yq = mqTexte(ctx, o.titre || "Quand la banque dit non, il reste des portes.",
                       mx, H * 0.44, W - mx * 2, petit * 0.100);
       mqFilet(ctx, mx, yq + petit * 0.030, petit * 0.18, a);
-      corps(petit * 0.032, 400); ctx.fillStyle = "rgba(255,255,255,.68)";
-      mqTexte(ctx, o.pied || "", mx, yq + petit * 0.095, W - mx * 2, petit * 0.044);
+      corps(petit * 0.030, 400); ctx.fillStyle = "rgba(255,255,255,.68)";
+      mqTexte(ctx, o.pied || "", mx, Math.max(yq + petit * 0.095, solPied - petit * 0.10), W - mx * 2, petit * 0.042);
     }
 
     /* la signature de la maison, sur tous les visuels sans exception */
-    poserLogo(ctx, o.logo, mx, H - mx * 0.72, petit * 0.20, H);
-    corps(petit * 0.024, 500); ctx.fillStyle = "rgba(255,255,255,.42)"; ctx.textAlign = "right";
-    ctx.fillText(o.marque || "gohypotheque.com", W - mx, H - mx * 0.78);
+    if (court) {
+      poserLogo(ctx, o.logo, W - mx - petit * 0.30, mx * 0.34 + petit * 0.13, petit * 0.30, H);
+      corps(petit * 0.030, 500); ctx.fillStyle = "rgba(255,255,255,.42)"; ctx.textAlign = "right";
+      ctx.fillText(o.marque || "gohypotheque.com", W - mx, H - mx * 0.52);
+    } else {
+      poserLogo(ctx, o.logo, mx, H - mx * 0.70, petit * 0.20, H);
+      corps(petit * 0.024, 500); ctx.fillStyle = "rgba(255,255,255,.42)"; ctx.textAlign = "right";
+      ctx.fillText(o.marque || "gohypotheque.com", W - mx, H - mx * 0.76);
+    }
     ctx.textAlign = "left";
     return cv;
   };
