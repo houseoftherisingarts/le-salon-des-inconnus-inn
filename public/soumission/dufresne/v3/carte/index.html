@@ -258,10 +258,15 @@ button,input,a{ font-family:inherit }
      PD.ouvrirCourtier change, le reste du fichier ne bouge pas.
      --------------------------------------------------------------------- */
   PD.MDP_DEMO = "orbis";
+  /* chacun porte sa couleur dans la palette de la maison, comme un uniforme
+     d'equipe : meme coupe, teinte differente */
   PD.EQUIPE = [
-    { id: "philippe", nom: "Philippe Dufresne", role: "Courtier hypothécaire", ini: "PD" },
-    { id: "kelvin",   nom: "Kelvin Valverde-Hernandez", role: "Courtier hypothécaire", ini: "KV" },
-    { id: "josee",    nom: "Josée-Claude Paradis", role: "Adjointe", ini: "JC" }
+    { id: "philippe", nom: "Philippe Dufresne", role: "Courtier hypothécaire", ini: "PD",
+      accent: "or", tel: "438 499-1555", courriel: "philippe@groupeorbis.com" },
+    { id: "kelvin",   nom: "Kelvin Valverde-Hernandez", role: "Courtier hypothécaire", ini: "KV",
+      accent: "azur", tel: "438 499-1555", courriel: "philippe@groupeorbis.com" },
+    { id: "josee",    nom: "Josée-Claude Paradis", role: "Adjointe", ini: "JC",
+      accent: "jade", tel: "438 499-1555", courriel: "philippe@groupeorbis.com" }
   ];
   PD.membre = function (id) {
     return PD.EQUIPE.filter(function (m) { return m.id === id; })[0] || null;
@@ -477,9 +482,17 @@ button,input,a{ font-family:inherit }
      au chargement : les deux vivent sur la même origine.
      --------------------------------------------------------------------- */
   PD.REGLAGES_DEFAUT = {
-    babillard: true, format: "mur", video: true, tauxDir: true,
+    babillard: true, format: "mur", video: true, tauxDir: true, capsules: true,
     videoUrl: "", videoTitre: "Philippe, en une minute",
     instagram: "", facebook: "https://www.facebook.com/philippedufresnecourtierhypothecaire/", linkedin: "",
+    /* les sujets viennent de ses vrais services et de sa propre foire aux questions */
+    capsulesListe: [
+      { id: "k1", cat: "Consolidation", titre: "Consolider ses dettes sans vendre sa maison", duree: "1:10", url: "" },
+      { id: "k2", cat: "Financement",   titre: "Ce que la banque regarde avant de dire non", duree: "0:55", url: "" },
+      { id: "k3", cat: "Prêteurs",      titre: "Prêteur alternatif ou prêteur privé, la différence", duree: "1:20", url: "" },
+      { id: "k4", cat: "Crédit",        titre: "Votre cote pendant un magasinage d'hypothèque", duree: "1:05", url: "" },
+      { id: "k5", cat: "Renouvellement",titre: "Quand commencer à magasiner son renouvellement", duree: "0:48", url: "" }
+    ],
     nouvelles: [
       { id: "n1", quand: Date.now() - 86400000 * 2, titre: "Les taux ont bougé cette semaine",
         txt: "Les prêteurs alternatifs ont ajusté leurs grilles lundi. Si votre renouvellement arrive avant le printemps, ça vaut un appel maintenant plutôt qu'en février.", coeurs: 12 },
@@ -976,6 +989,192 @@ button,input,a{ font-family:inherit }
     var u = URL.createObjectURL(b), a = document.createElement("a");
     a.href = u; a.download = nomFichier; document.body.appendChild(a); a.click();
     document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(u); }, 1500);
+  };
+
+
+  /* ---------------------------------------------------------------------
+     L'atelier de marque. Une seule charte, une couleur par personne : les
+     visuels de l'equipe se ressemblent sans etre identiques. Tout se dessine
+     dans un canvas, avec les polices deja chargees par la page, alors rien
+     ne sort du navigateur et rien ne depend d'un service tiers.
+     --------------------------------------------------------------------- */
+  PD.MARQUE = { nuit: "#0b1f3f", nuit2: "#06152e", blanc: "#f7f8fb",
+                display: "Montserrat", corps: "Inter" };
+  /* la palette d'equipe : meme costume, couleur differente */
+  PD.ACCENTS = [
+    { id: "or",     nom: "Or",     c: "#ffcb0c", fond: "#0b1f3f" },
+    { id: "azur",   nom: "Azur",   c: "#4da3ff", fond: "#07182f" },
+    { id: "jade",   nom: "Jade",   c: "#3ecf8e", fond: "#06201c" },
+    { id: "cuivre", nom: "Cuivre", c: "#f08a4b", fond: "#1f1207" },
+    { id: "lilas",  nom: "Lilas",  c: "#b48cff", fond: "#160f2e" },
+    { id: "rubis",  nom: "Rubis",  c: "#ff6b7d", fond: "#230b13" }
+  ];
+  PD.FORMATS = [
+    { id: "carre",  nom: "Carré",              w: 1080, h: 1080 },
+    { id: "story",  nom: "Story",              w: 1080, h: 1920 },
+    { id: "fil",    nom: "Fil",                w: 1080, h: 1350 },
+    { id: "pays",   nom: "Paysage",            w: 1920, h: 1080 },
+    { id: "carte",  nom: "Carte d'affaires",   w: 1050, h: 600 },
+    { id: "signat", nom: "Signature courriel", w: 1200, h: 400 }
+  ];
+  PD.GABARITS = [
+    { id: "citation", nom: "Une phrase forte",     champs: ["titre", "pied"] },
+    { id: "chiffre",  nom: "Un chiffre en gros",   champs: ["chiffre", "titre", "pied"] },
+    { id: "conseil",  nom: "Un conseil numéroté",  champs: ["num", "titre", "texte"] },
+    { id: "carte",    nom: "La carte de la personne", champs: ["nom", "role", "tel", "courriel"] },
+    { id: "annonce",  nom: "Une annonce",          champs: ["surtitre", "titre", "bouton"] }
+  ];
+
+  function mqAccent(id) {
+    var a = PD.ACCENTS[0];
+    PD.ACCENTS.forEach(function (x) { if (x.id === id) a = x; });
+    return a;
+  }
+  PD.accent = mqAccent;
+  function mqFmt(id) {
+    var f = PD.FORMATS[0];
+    PD.FORMATS.forEach(function (x) { if (x.id === id) f = x; });
+    return f;
+  }
+  PD.format = mqFmt;
+
+  /* le texte se coupe aux mots et rend le nombre de lignes qu'il a pris */
+  function mqLignes(ctx, txt, large) {
+    var mots = String(txt || "").split(/\s+/), out = [], cur = "";
+    mots.forEach(function (m) {
+      var essai = cur ? cur + " " + m : m;
+      if (ctx.measureText(essai).width > large && cur) { out.push(cur); cur = m; }
+      else cur = essai;
+    });
+    if (cur) out.push(cur);
+    return out;
+  }
+  function mqTexte(ctx, txt, x, y, large, inter, align) {
+    var ls = mqLignes(ctx, txt, large);
+    ctx.textAlign = align || "left";
+    ls.forEach(function (l, i) { ctx.fillText(l, x, y + i * inter); });
+    return y + ls.length * inter;
+  }
+
+  /* le fond commun : nuit teintee de la couleur de la personne, plus un halo */
+  function mqFond(ctx, W, H, a) {
+    ctx.fillStyle = a.fond; ctx.fillRect(0, 0, W, H);
+    var g = ctx.createRadialGradient(W * 0.5, H * 0.16, 0, W * 0.5, H * 0.16, Math.max(W, H) * 0.78);
+    g.addColorStop(0, a.c + "38"); g.addColorStop(0.55, a.c + "12"); g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    var g2 = ctx.createLinearGradient(0, H * 0.45, 0, H);
+    g2.addColorStop(0, "rgba(0,0,0,0)"); g2.addColorStop(1, "rgba(0,0,0,.42)");
+    ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+  }
+  function mqFilet(ctx, x, y, l, a) {
+    var g = ctx.createLinearGradient(x, y, x + l, y);
+    g.addColorStop(0, a.c); g.addColorStop(1, a.c + "00");
+    ctx.fillStyle = g; ctx.fillRect(x, y, l, 3);
+  }
+  /* le logo est verrouille : il est toujours la, toujours a la meme place */
+  function poserLogo(ctx, img, x, y, larg, H) {
+    if (!img || !img.width) return;
+    var h = larg * (img.height / img.width);
+    ctx.drawImage(img, x, y - h, larg, h);
+  }
+
+  /* Le dessin. Un gabarit, un format, une couleur, et des champs.
+     Aucune position libre : les compositions sont fixes, c'est ce qui garde
+     l'equipe cohérente d'une personne a l'autre. */
+  PD.dessinerVisuel = function (cv, o) {
+    o = o || {};
+    var f = mqFmt(o.format), a = mqAccent(o.accent), W = f.w, H = f.h;
+    cv.width = W; cv.height = H;
+    var ctx = cv.getContext("2d");
+    var M = PD.MARQUE, mx = Math.round(W * 0.085), petit = Math.min(W, H);
+    ctx.clearRect(0, 0, W, H);
+    mqFond(ctx, W, H, a);
+    ctx.textBaseline = "alphabetic";
+
+    var disp = function (px, poids) { ctx.font = (poids || 800) + " " + Math.round(px) + "px " + M.display + ", Georgia, serif"; };
+    var corps = function (px, poids) { ctx.font = (poids || 400) + " " + Math.round(px) + "px " + M.corps + ", Helvetica, Arial, sans-serif"; };
+
+    if (o.gabarit === "chiffre") {
+      corps(petit * 0.030, 600); ctx.fillStyle = a.c; ctx.letterSpacing = "0.2em";
+      ctx.fillText(String(o.surtitre || "Le chiffre du jour").toUpperCase(), mx, H * 0.20);
+      ctx.letterSpacing = "0px";
+      disp(petit * 0.24, 800); ctx.fillStyle = a.c;
+      ctx.fillText(String(o.chiffre || "0"), mx, H * 0.45);
+      disp(petit * 0.062, 700); ctx.fillStyle = M.blanc;
+      var yb = mqTexte(ctx, o.titre || "", mx, H * 0.58, W - mx * 2, petit * 0.076);
+      corps(petit * 0.032); ctx.fillStyle = "rgba(255,255,255,.66)";
+      mqTexte(ctx, o.pied || "", mx, yb + petit * 0.03, W - mx * 2, petit * 0.044);
+    } else if (o.gabarit === "conseil") {
+      disp(petit * 0.20, 800); ctx.fillStyle = a.c + "2e"; ctx.textAlign = "right";
+      ctx.fillText(String(o.num || "01"), W - mx, H * 0.26); ctx.textAlign = "left";
+      corps(petit * 0.028, 600); ctx.fillStyle = a.c; ctx.letterSpacing = "0.2em";
+      ctx.fillText(String(o.surtitre || "Conseil").toUpperCase(), mx, H * 0.20);
+      ctx.letterSpacing = "0px";
+      disp(petit * 0.070, 700); ctx.fillStyle = M.blanc;
+      var yc = mqTexte(ctx, o.titre || "", mx, H * 0.36, W - mx * 2, petit * 0.086);
+      mqFilet(ctx, mx, yc + petit * 0.022, petit * 0.16, a);
+      corps(petit * 0.034, 400); ctx.fillStyle = "rgba(255,255,255,.76)";
+      mqTexte(ctx, o.texte || "", mx, yc + petit * 0.086, W - mx * 2, petit * 0.048);
+    } else if (o.gabarit === "carte") {
+      disp(petit * 0.098, 800); ctx.fillStyle = M.blanc;
+      ctx.fillText(String(o.nom || "Prénom Nom"), mx, H * 0.40);
+      corps(petit * 0.040, 400); ctx.fillStyle = a.c;
+      ctx.fillText(String(o.role || "Courtier hypothécaire"), mx, H * 0.50);
+      mqFilet(ctx, mx, H * 0.565, petit * 0.20, a);
+      corps(petit * 0.038, 400); ctx.fillStyle = "rgba(255,255,255,.82)";
+      ctx.fillText(String(o.tel || ""), mx, H * 0.70);
+      ctx.fillText(String(o.courriel || ""), mx, H * 0.79);
+    } else if (o.gabarit === "annonce") {
+      corps(petit * 0.028, 600); ctx.fillStyle = a.c; ctx.letterSpacing = "0.2em";
+      ctx.fillText(String(o.surtitre || "Nouveau").toUpperCase(), mx, H * 0.22);
+      ctx.letterSpacing = "0px";
+      disp(petit * 0.086, 800); ctx.fillStyle = M.blanc;
+      var ya = mqTexte(ctx, o.titre || "", mx, H * 0.38, W - mx * 2, petit * 0.104);
+      var bt = String(o.bouton || "Parler à Philippe");
+      corps(petit * 0.034, 700); var bw = ctx.measureText(bt).width + petit * 0.09;
+      var bh = petit * 0.085, by = Math.min(ya + petit * 0.06, H - mx - bh);
+      ctx.fillStyle = a.c;
+      if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(mx, by, bw, bh, bh / 2); ctx.fill(); }
+      else ctx.fillRect(mx, by, bw, bh);
+      ctx.fillStyle = a.fond; ctx.textAlign = "center";
+      ctx.fillText(bt, mx + bw / 2, by + bh * 0.64); ctx.textAlign = "left";
+    } else {
+      /* citation, le gabarit par defaut */
+      disp(petit * 0.30, 800); ctx.fillStyle = a.c + "26";
+      ctx.fillText("“", mx - petit * 0.012, H * 0.30);
+      disp(petit * 0.082, 700); ctx.fillStyle = M.blanc;
+      var yq = mqTexte(ctx, o.titre || "Quand la banque dit non, il reste des portes.",
+                      mx, H * 0.44, W - mx * 2, petit * 0.100);
+      mqFilet(ctx, mx, yq + petit * 0.030, petit * 0.18, a);
+      corps(petit * 0.032, 400); ctx.fillStyle = "rgba(255,255,255,.68)";
+      mqTexte(ctx, o.pied || "", mx, yq + petit * 0.095, W - mx * 2, petit * 0.044);
+    }
+
+    /* la signature de la maison, sur tous les visuels sans exception */
+    poserLogo(ctx, o.logo, mx, H - mx * 0.72, petit * 0.20, H);
+    corps(petit * 0.024, 500); ctx.fillStyle = "rgba(255,255,255,.42)"; ctx.textAlign = "right";
+    ctx.fillText(o.marque || "gohypotheque.com", W - mx, H - mx * 0.78);
+    ctx.textAlign = "left";
+    return cv;
+  };
+
+  /* les polices doivent etre pretes avant le premier trait, sinon le canvas
+     dessine avec la police de secours et le visuel sort hors charte */
+  PD.policesPretes = function () {
+    if (!document.fonts || !document.fonts.load) return Promise.resolve();
+    return Promise.all([
+      document.fonts.load('800 64px ' + PD.MARQUE.display),
+      document.fonts.load('700 64px ' + PD.MARQUE.display),
+      document.fonts.load('400 32px ' + PD.MARQUE.corps),
+      document.fonts.load('600 32px ' + PD.MARQUE.corps)
+    ]).catch(function () {});
+  };
+  PD.telechargerCanvas = function (cv, nom) {
+    cv.toBlob(function (b) {
+      var u = URL.createObjectURL(b), a = document.createElement("a");
+      a.href = u; a.download = nom; document.body.appendChild(a); a.click();
+      document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(u); }, 1500);
+    }, "image/png", 1);
   };
 
   /* ---------------------------------------------------------------------
