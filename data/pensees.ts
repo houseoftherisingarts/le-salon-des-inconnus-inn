@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-06",
+        title_fr: "Les outardes",
+        title_en: "The wild geese",
+        body_fr: "Les premières outardes ont commencé à traverser le ciel de septembre, et leur passage arrête encore tout le monde au milieu d'un geste. Elles volent en pointe de flèche, et cette forme n'a rien d'un caprice : chaque oiseau s'appuie sur le remous d'air laissé par celui qui le précède, si bien que le groupe entier va plus loin que n'irait le plus fort d'entre eux tout seul. Quand celle de tête se fatigue, elle glisse vers l'arrière sans cérémonie et une autre prend le vent de face. Personne ne garde la première place, et c'est justement pour cela qu'elles arrivent toutes. J'y pense en regardant les gens qui portent leurs projets à bout de bras, persuadés que céder la tête du vol reviendrait à abandonner. Les outardes savent depuis toujours que mener est un tour de rôle. Dans quelle traversée est-ce que je m'obstine à voler devant, alors que quelqu'un derrière moi est prêt à prendre le vent?",
+        body_en: "The first wild geese have begun crossing the September sky, and their passing still stops everyone in the middle of a gesture. They fly in an arrowhead, and the shape is no whim: each bird leans on the swirl of air left by the one ahead, so the whole group travels farther than the strongest of them would alone. When the leader tires, she slides toward the back without ceremony and another takes the headwind. Nobody keeps the front position, and that is exactly why they all arrive. I think of it when I watch people carrying their projects at arm's length, convinced that giving up the lead would amount to giving up. Wild geese have always known that leading is a turn you take. In which crossing am I stubbornly flying out front, while someone behind me is ready to take the wind?",
+    },
+    {
         date: "2026-09-04",
         title_fr: "La note commune",
         title_en: "The shared note",
