@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-07",
+        title_fr: "La voix du violon",
+        title_en: "The violin's voice",
+        body_fr: "Les luthiers racontent qu'un violon laissé trop longtemps dans sa boîte perd lentement sa voix. Le bois se referme quand personne n'en joue, et l'instrument le plus précieux finit par sonner sourd, tandis qu'un violon modeste joué chaque jour s'ouvre et s'embellit d'année en année. La musique le traverse et le transforme; il garde en lui quelque chose de toutes les mains qui l'ont fait vibrer. Je crois que les maisons obéissent à la même loi. Une maison sans visite se tait peu à peu, si belle soit-elle, alors qu'une maison traversée de voix et de pas prend une chaleur qu'aucun rénovateur ne sait poser. Nous protégeons parfois si bien ce qui nous est cher que nous l'empêchons de vivre. Qu'est-ce que je garde dans sa boîte, ces temps-ci, qui ne demande qu'à être joué?",
+        body_en: "Luthiers say that a violin left too long in its case slowly loses its voice. The wood closes up when nobody plays it, and the most precious instrument ends up sounding muffled, while a modest violin played every day opens and grows more beautiful year after year. The music passes through it and changes it; it keeps within itself something of every hand that has made it sing. I believe houses obey the same law. A house without visitors falls silent little by little, however lovely it may be, while a house crossed by voices and footsteps gathers a warmth no renovator knows how to install. We sometimes protect what is dear to us so well that we keep it from living. Which part of my life is waiting in its case these days, asking to be played?",
+    },
+    {
         date: "2026-09-06",
         title_fr: "Les outardes",
         title_en: "The wild geese",
