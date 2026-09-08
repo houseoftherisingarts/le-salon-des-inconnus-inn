@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-08",
+        title_fr: "Le tour du potier",
+        title_en: "The potter's wheel",
+        body_fr: "Un potier m'a expliqué un jour que tout se joue avant même de monter le vase. L'argile posée sur le tour tourne d'abord de travers, et tant qu'elle n'a pas été ramenée au centre, aucune force au monde n'en tirera une forme droite. Le geste qui la centre est presque immobile : les mains se posent avec calme et laissent la terre venir se ranger contre elles, sans jamais la brusquer. Les débutants s'épuisent à corriger le vase pendant qu'il monte, alors que le défaut se cachait dès le départ dans un centre jamais trouvé. J'y repense les matins où la journée s'annonce pleine. Nous voulons monter la forme tout de suite, alors qu'un moment de mains posées aurait mis le reste d'aplomb. Autour de quel centre est-ce que je laisse ma journée se ranger, ce matin?",
+        body_en: "A potter once explained to me that everything is decided before the vase even begins to rise. The clay set on the wheel spins off-centre at first, and until it has been brought back to the middle, no force in the world will draw a straight form out of it. The gesture that centres it is almost motionless: the hands settle calmly and let the earth come to rest against them, without ever forcing it. Beginners wear themselves out correcting the vase as it rises, when the flaw was hiding from the start in a centre never found. I think of this on mornings when the day promises to be full. We want to raise the form right away, when a moment of settled hands would have set everything else true. Around what centre am I letting my day gather itself this morning?",
+    },
+    {
         date: "2026-09-07",
         title_fr: "La voix du violon",
         title_en: "The violin's voice",
