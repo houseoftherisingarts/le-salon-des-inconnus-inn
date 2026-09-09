@@ -34,8 +34,11 @@ const CAMPING = {
   fermeture: '2026-09-27T23:59:59-04:00',
 };
 
-/** Repli si le document Firestore n'a pas encore reçu le lien. */
-const LIEN_STRIPE_SECOURS = '';
+/** Le lien de paiement du compte Stripe du Salon (produit prod_VEKnvBB5HwhA1L,
+ *  prix price_1UDs8SKKPSkaQESfbjDOCRU6, limité à quatre paiements). L'adresse
+ *  d'un lien de paiement est publique par nature, donc elle vit dans le dépôt.
+ *  Firestore la remplace si Alex en pose une autre. */
+const LIEN_STRIPE_SECOURS = 'https://buy.stripe.com/9B6fZidfgfDX3Si4Oc4sE00';
 
 const GOLD = '#d9b45c';
 const CREAM = '#f6ead0';
@@ -50,6 +53,20 @@ interface Props {
 }
 
 type Etat = 'chargement' | 'ouvert' | 'complet' | 'ferme';
+
+/** Stripe choisit la langue de sa page de paiement d'après le navigateur, ce qui
+ *  envoie un visiteur québécois sur un formulaire anglais dès que son Chrome est
+ *  en anglais. Le paramètre `locale` tranche à notre place. */
+const lienDansLaLangue = (lien: string, fr: boolean): string => {
+  if (!lien) return lien;
+  try {
+    const u = new URL(lien);
+    u.searchParams.set('locale', fr ? 'fr-CA' : 'en');
+    return u.toString();
+  } catch {
+    return lien;
+  }
+};
 
 /** Les quatre emplacements, en clair : celui qui reste libre porte son chiffre
  *  en or, celui qui est pris s'éteint. C'est la seule rupture visuelle de la
@@ -263,7 +280,7 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
                     </p>
                     <div className="flex flex-wrap items-center gap-6">
                       {lienStripe ? (
-                        <GoldButton href={lienStripe}>
+                        <GoldButton href={lienDansLaLangue(lienStripe, fr)}>
                           {t('Book my pitch', 'Réserver mon emplacement')}
                         </GoldButton>
                       ) : (

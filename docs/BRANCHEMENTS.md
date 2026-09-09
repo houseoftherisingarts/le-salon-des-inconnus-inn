@@ -7,40 +7,53 @@ vivent dans Firebase Secret Manager ou dans `.env.local`, jamais dans le dépôt
 ## Camping du festival (`/camping`)
 
 Quatre emplacements vendus 115 $ pour la fin de semaine du Festival médiéval de
-Montpellier. L'argent entre dans le compte Stripe du Salon des Inconnus.
+Montpellier. Tout est branché depuis le 9 septembre 2026 et l'argent entre dans
+le compte Stripe du Salon, `acct_1QblkjKKPSkaQESf`.
 
-| Quoi | Où | État |
-|---|---|---|
-| Lien de paiement Stripe (115,00 CAD, limite de 4 paiements) | Firestore → `config/camping.lienStripe` | à créer |
-| Secret de signature du webhook Stripe | Secret Manager → `STRIPE_WEBHOOK_SECRET` | à créer |
-| Compteur des emplacements vendus | Firestore → `config/camping.vendus` | écrit par la fonction |
-| Réservations encaissées | Firestore → `events/camping-fmm-2026/reservations/{sessionId}` | écrit par la fonction |
-| Avis par courriel à chaque vente | Secret Manager → `ZOHO_USER`, `ZOHO_PASS` | déjà en place |
+| Quoi | Identifiant ou emplacement |
+|---|---|
+| Produit Stripe | `prod_VEKnvBB5HwhA1L` |
+| Prix, 115,00 CAD | `price_1UDs8SKKPSkaQESfbjDOCRU6` |
+| Lien de paiement, limité à 4 | `plink_1UDs8bKKPSkaQESfJSFbZnbZ` |
+| Adresse du lien | https://buy.stripe.com/9B6fZidfgfDX3Si4Oc4sE00 |
+| Endpoint webhook | `we_1UDs93KKPSkaQESfUt7jh2WX` |
+| Secret de signature | Secret Manager → `STRIPE_WEBHOOK_SECRET`, version 1 |
+| Compteur des emplacements vendus | Firestore → `config/camping.vendus` |
+| Réservations encaissées | Firestore → `events/camping-fmm-2026/reservations/{sessionId}` |
+| Avis par courriel à chaque vente | Secret Manager → `ZOHO_USER`, `ZOHO_PASS` |
 
-Adresse du webhook, fixe et connue d'avance :
+Le webhook répond à cette adresse, et elle est fixe :
 
 ```
 https://us-central1-le-salon-des-inconnus.cloudfunctions.net/stripeCampingWebhook
 ```
 
-Mise en place, dans cet ordre :
+Deux choses méritent d'être retenues avant d'y toucher.
 
-1. Stripe → **Payment links** → nouveau lien à 115,00 CAD, et dans les options
-   avancées, **Limit the number of payments** réglé à **4**. C'est ce réglage
-   qui empêche une cinquième vente même si tout le reste tombe.
-2. Stripe → **Developers → Webhooks** → nouvel endpoint sur l'adresse ci-dessus,
-   événement `checkout.session.completed`. Stripe donne alors un secret de
-   signature qui commence par `whsec_`.
-3. ```bash
-   firebase functions:secrets:set STRIPE_WEBHOOK_SECRET
-   firebase deploy --only functions:stripeCampingWebhook
-   ```
-4. Firestore → collection `config` → document `camping` → champ `lienStripe`
-   (chaîne) avec l'adresse du lien de paiement. La page l'attrape en direct,
-   sans redéploiement.
+Le compte Stripe du Salon sert aussi Vexel et Montpellois, et Stripe envoie
+chaque `checkout.session.completed` à tous les endpoints du compte. La fonction
+filtre donc sur `session.payment_link`, et cette constante vit dans
+`functions/src/index.ts` sous le nom `CAMPING_PAYMENT_LINK`. Un nouveau lien de
+paiement demande de changer cette constante en même temps.
 
-Pour la prochaine édition, tout ce qui change vit dans le bloc `CAMPING` en haut
-de `components/CampingPage.tsx` : les dates, le nombre de places et le prix.
+Le garde-fou contre une cinquième vente n'est pas le compteur mais le réglage
+`restrictions[completed_sessions][limit]` du lien lui-même, réglé à quatre.
+Même si la fonction tombait, Stripe refuserait la cinquième transaction.
+
+Le banc d'essai du webhook tourne contre l'émulateur Firestore, sans toucher à
+la production. Il couvre la signature, la fenêtre de rejeu, le filtre par lien,
+l'écriture de la réservation, le rejeu d'un même paiement et le plafond de
+quatre :
+
+```bash
+export JAVA_HOME=/usr/local/opt/openjdk@21
+export PATH="$JAVA_HOME/bin:$PATH"
+cd functions && npm run build && npm run test:camping
+```
+
+Pour la prochaine édition, les dates, le nombre de places et le prix vivent dans
+le bloc `CAMPING` en haut de `components/CampingPage.tsx`, et un nouveau lien de
+paiement se colle dans Firestore `config/camping.lienStripe` sans redéploiement.
 
 ## Le reste du site
 

@@ -904,6 +904,13 @@ const CAMPING_PLACES = 4;
 const CAMPING_DOC = 'camping';
 const CAMPING_EVENT = 'camping-fmm-2026';
 
+// Le compte Stripe du Salon sert aussi Vexel et Montpellois, et Stripe envoie
+// chaque `checkout.session.completed` à TOUS les endpoints du compte. Sans ce
+// filtre, un abonnement Vexel ferait monter le compteur du camping. La session
+// porte l'identifiant du lien de paiement qui l'a créée : c'est le seul
+// discriminant fiable.
+const CAMPING_PAYMENT_LINK = 'plink_1UDs8bKKPSkaQESfJSFbZnbZ';
+
 /** Vérifie l'en-tête `stripe-signature`. Retourne false sur le moindre doute :
  *  format inattendu, horodatage trop vieux, ou signature qui ne correspond pas. */
 function verifierSignatureStripe(rawBody: Buffer, header: string, secret: string): boolean {
@@ -975,6 +982,11 @@ export const stripeCampingWebhook = onRequest(
     }
 
     const session = event.data?.object ?? {};
+    if (session.payment_link !== CAMPING_PAYMENT_LINK) {
+      res.status(200).send('Not the camping link');
+      return;
+    }
+
     const sessionId: string = String(session.id ?? event.id ?? '');
     if (!sessionId) {
       res.status(200).send('Ignored');
@@ -993,6 +1005,7 @@ export const stripeCampingWebhook = onRequest(
 
     const nom: string = String(session.customer_details?.name ?? '').slice(0, 120);
     const courriel: string = String(session.customer_details?.email ?? '').slice(0, 200);
+    const telephone: string = String(session.customer_details?.phone ?? '').slice(0, 40);
     const montantCents: number = Number(session.amount_total ?? 0);
 
     // Transaction : l'écriture de la réservation et l'incrément du compteur
@@ -1008,6 +1021,7 @@ export const stripeCampingWebhook = onRequest(
         sessionId,
         nom,
         courriel,
+        telephone,
         montantCents,
         devise: String(session.currency ?? 'cad'),
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -1025,6 +1039,7 @@ export const stripeCampingWebhook = onRequest(
         'Camping du festival : un emplacement de réservé',
         line('Nom', nom) +
         line('Courriel', courriel) +
+        line('Téléphone', telephone) +
         line('Montant', `${(montantCents / 100).toFixed(2)} $`) +
         line('Session Stripe', sessionId),
       );

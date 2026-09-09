@@ -5,7 +5,8 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
-    "deploy": "firebase deploy --only functions"
+    "deploy": "firebase deploy --only functions",
+    "test:camping": "firebase emulators:exec --only firestore --project demo-camping \"node test-webhook.mjs\""
   },
   "engines": {
     "node": "22"

@@ -26,10 +26,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.stripeCampingWebhook = exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
+const crypto = __importStar(require("crypto"));
 const params_1 = require("firebase-functions/params");
 const nodemailer_1 = __importDefault(require("nodemailer"));
 admin.initializeApp();
@@ -335,8 +336,8 @@ exports.onProposalRequest = functions
         `\nÀ traiter directement par courriel.`;
     await notifyAlex(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
 });
-// 8. Conference request — school/library/organization asking for one of the
-// six free family evenings (Le Coffre des Inconnus × La Petite Monnaie, page
+// 8. Conference request: school/library/organization asking for one of the
+// six free family evenings (Le Coffre des Inconnus x La Petite Monnaie, page
 // /coffre). Lands in its own Firestore collection, kept separate from the
 // other request inboxes above.
 exports.onConferenceRequest = functions
@@ -344,7 +345,7 @@ exports.onConferenceRequest = functions
     .firestore.document('conferenceRequests/{id}')
     .onCreate(async (snap) => {
     const r = snap.data() ?? {};
-    const body = `Nouvelle demande de conférence — page /coffre.\n\n` +
+    const body = `Nouvelle demande de conférence, page /coffre.\n\n` +
         line('Établissement', r.establishmentName) +
         line('Type', r.establishmentType) +
         line('Municipalité', r.municipality) +
@@ -355,7 +356,7 @@ exports.onConferenceRequest = functions
         line('Dates envisagées', r.desiredDates) +
         (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
         `\nÀ traiter dans le CRM admin (audience Maison, onglet Conférences).`;
-    await notifyAlex(`Nouvelle demande de conférence — ${r.establishmentName ?? 'Inconnu'}`, body);
+    await notifyAlex(`Nouvelle demande de conférence : ${r.establishmentName ?? 'Inconnu'}`, body);
 });
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
 // Read-only: real availability + an authoritative live price quote. These are
@@ -744,5 +745,152 @@ exports.resetD20Cooldown = (0, https_1.onCall)({ cors: true }, async (request) =
     }
     await admin.firestore().collection('d20Rolls').doc(request.auth.uid).set({ lastRollAt: admin.firestore.FieldValue.delete() }, { merge: true });
     return { ok: true };
+});
+// ─── stripeCampingWebhook ─────────────────────────────────────────────────────
+// Encaisse les paiements du camping du festival (/camping) et tient le compteur
+// que la page lit en direct. L'argent arrive dans le compte Stripe du Salon des
+// Inconnus : le lien de paiement est créé dans SON tableau de bord, donc rien
+// d'autre n'a à être configuré côté versement.
+//
+// Pourquoi pas le SDK `stripe` : il pèse lourd au chargement du module, exactement
+// le problème déjà documenté plus haut pour Square. La vérification d'une
+// signature Stripe est un HMAC-SHA256 sur `${timestamp}.${corps brut}` avec le
+// secret de signature du webhook, donc `crypto` suffit et aucune clé d'API
+// secrète n'a besoin de vivre ici.
+//
+// Mise en place, une seule fois :
+//   1. Stripe → Payment links → nouveau lien, 115,00 CAD, « Limit the number of
+//      payments » = 4 (le vrai garde-fou contre une cinquième vente).
+//   2. Coller l'adresse du lien dans Firestore → config/camping.lienStripe
+//   3. Stripe → Developers → Webhooks → endpoint sur l'URL de cette fonction,
+//      événement `checkout.session.completed`, puis :
+//        firebase functions:secrets:set STRIPE_WEBHOOK_SECRET
+//        firebase deploy --only functions:stripeCampingWebhook
+//
+// Le compteur est plafonné à CAMPING_PLACES : même une rejouée ne peut pas le
+// faire dépasser quatre, et l'identifiant de session sert de clé d'idempotence.
+const STRIPE_WEBHOOK_SECRET = (0, params_1.defineSecret)('STRIPE_WEBHOOK_SECRET');
+const CAMPING_PLACES = 4;
+const CAMPING_DOC = 'camping';
+const CAMPING_EVENT = 'camping-fmm-2026';
+// Le compte Stripe du Salon sert aussi Vexel et Montpellois, et Stripe envoie
+// chaque `checkout.session.completed` à TOUS les endpoints du compte. Sans ce
+// filtre, un abonnement Vexel ferait monter le compteur du camping. La session
+// porte l'identifiant du lien de paiement qui l'a créée : c'est le seul
+// discriminant fiable.
+const CAMPING_PAYMENT_LINK = 'plink_1UDs8bKKPSkaQESfJSFbZnbZ';
+/** Vérifie l'en-tête `stripe-signature`. Retourne false sur le moindre doute :
+ *  format inattendu, horodatage trop vieux, ou signature qui ne correspond pas. */
+function verifierSignatureStripe(rawBody, header, secret) {
+    const parts = header.split(',').reduce((acc, kv) => {
+        const idx = kv.indexOf('=');
+        if (idx === -1)
+            return acc;
+        const k = kv.slice(0, idx).trim();
+        const v = kv.slice(idx + 1).trim();
+        (acc[k] = acc[k] ?? []).push(v);
+        return acc;
+    }, {});
+    const timestamp = parts.t?.[0];
+    const signatures = parts.v1 ?? [];
+    if (!timestamp || signatures.length === 0)
+        return false;
+    // Fenêtre de rejeu : cinq minutes, la tolérance recommandée par Stripe.
+    const age = Math.abs(Date.now() / 1000 - Number(timestamp));
+    if (!Number.isFinite(age) || age > 300)
+        return false;
+    const expected = crypto
+        .createHmac('sha256', secret)
+        .update(`${timestamp}.${rawBody.toString('utf8')}`, 'utf8')
+        .digest('hex');
+    const expectedBuf = Buffer.from(expected, 'utf8');
+    return signatures.some((sig) => {
+        const sigBuf = Buffer.from(sig, 'utf8');
+        return sigBuf.length === expectedBuf.length && crypto.timingSafeEqual(sigBuf, expectedBuf);
+    });
+}
+exports.stripeCampingWebhook = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK_SECRET, 'ZOHO_USER', 'ZOHO_PASS'], cors: false }, async (req, res) => {
+    if (req.method !== 'POST') {
+        res.status(405).send('Method not allowed');
+        return;
+    }
+    const secret = process.env.STRIPE_WEBHOOK_SECRET;
+    const header = req.get('stripe-signature');
+    const rawBody = req.rawBody;
+    if (!secret || !header || !rawBody) {
+        console.error('stripeCampingWebhook: signature ou corps brut manquant.');
+        res.status(400).send('Bad request');
+        return;
+    }
+    if (!verifierSignatureStripe(rawBody, header, secret)) {
+        console.error('stripeCampingWebhook: signature refusée.');
+        res.status(400).send('Invalid signature');
+        return;
+    }
+    let event;
+    try {
+        event = JSON.parse(rawBody.toString('utf8'));
+    }
+    catch {
+        res.status(400).send('Invalid payload');
+        return;
+    }
+    // Stripe réessaie tant qu'il n'a pas un 2xx, donc tout ce qui n'est pas le
+    // paiement du camping repart en succès plutôt qu'en erreur.
+    if (event.type !== 'checkout.session.completed') {
+        res.status(200).send('Ignored');
+        return;
+    }
+    const session = event.data?.object ?? {};
+    if (session.payment_link !== CAMPING_PAYMENT_LINK) {
+        res.status(200).send('Not the camping link');
+        return;
+    }
+    const sessionId = String(session.id ?? event.id ?? '');
+    if (!sessionId) {
+        res.status(200).send('Ignored');
+        return;
+    }
+    if (session.payment_status && session.payment_status !== 'paid') {
+        res.status(200).send('Unpaid');
+        return;
+    }
+    const db = admin.firestore();
+    const reservationRef = db
+        .collection('events').doc(CAMPING_EVENT)
+        .collection('reservations').doc(sessionId);
+    const compteurRef = db.collection('config').doc(CAMPING_DOC);
+    const nom = String(session.customer_details?.name ?? '').slice(0, 120);
+    const courriel = String(session.customer_details?.email ?? '').slice(0, 200);
+    const telephone = String(session.customer_details?.phone ?? '').slice(0, 40);
+    const montantCents = Number(session.amount_total ?? 0);
+    // Transaction : l'écriture de la réservation et l'incrément du compteur
+    // tiennent ensemble, et une rejouée du même identifiant ne compte qu'une fois.
+    const nouveau = await db.runTransaction(async (tx) => {
+        const dejaVu = await tx.get(reservationRef);
+        if (dejaVu.exists)
+            return false;
+        const compteur = await tx.get(compteurRef);
+        const vendus = Number(compteur.data()?.vendus ?? 0);
+        tx.set(reservationRef, {
+            sessionId,
+            nom,
+            courriel,
+            telephone,
+            montantCents,
+            devise: String(session.currency ?? 'cad'),
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        tx.set(compteurRef, { vendus: Math.min(CAMPING_PLACES, vendus + 1), updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        return true;
+    });
+    if (nouveau) {
+        await notifyAlex('Camping du festival : un emplacement de réservé', line('Nom', nom) +
+            line('Courriel', courriel) +
+            line('Téléphone', telephone) +
+            line('Montant', `${(montantCents / 100).toFixed(2)} $`) +
+            line('Session Stripe', sessionId));
+    }
+    res.status(200).send('OK');
 });
 //# sourceMappingURL=index.js.map
