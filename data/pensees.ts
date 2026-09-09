@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-09",
+        title_fr: "L'envers de l'ouvrage",
+        title_en: "The back of the weave",
+        body_fr: "Les tisserands d'autrefois travaillaient souvent par l'envers de leur ouvrage. Pendant des mois, ils ne voyaient que des nœuds et des fils coupés, tandis que le motif se composait de l'autre côté du métier, hors de leur regard. Il leur fallait une confiance étrange pour nouer chaque fil à sa place en sachant que la beauté du travail resterait cachée jusqu'à ce que l'ouvrage soit retourné. Je crois que nos journées se tissent de la même manière. Nous n'en voyons que l'envers, avec ses efforts inachevés et ses gestes dont nous doutons, alors que le dessin se forme sur une face que nous ne pouvons pas regarder. Il arrive qu'un visiteur nous décrive le motif bien avant que nous l'ayons deviné, parce qu'il se tient du bon côté de la trame. Quel fil suis-je en train de nouer aujourd'hui, sans voir encore ce qu'il dessine?",
+        body_en: "Weavers of old often worked from the back of their piece. For months they saw only knots and cut threads, while the pattern took shape on the far side of the loom, beyond their sight. It took a strange kind of trust to tie each thread in its place, knowing the beauty of the work would stay hidden until the piece was turned around. I believe our days are woven the same way. We see only the reverse of them, with its unfinished efforts and its gestures we doubt, while the design forms on a face we cannot look at. Sometimes a visitor describes the pattern to us long before we have guessed it, because they stand on the right side of the weave. What thread am I tying today, without yet seeing what it draws?",
+    },
+    {
         date: "2026-09-08",
         title_fr: "Le tour du potier",
         title_en: "The potter's wheel",
