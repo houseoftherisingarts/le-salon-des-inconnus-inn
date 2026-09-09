@@ -23,6 +23,11 @@ const CAMPING = {
   /** Document Firestore et clé du webhook Stripe. */
   id: 'camping-fmm-2026',
   places: 4,
+  /** Emplacements partis hors ligne, au téléphone, qui ne passeront jamais par
+   *  Stripe. Ils s'ajoutent aux ventes du webhook pour donner le vrai restant,
+   *  et la limite de paiements du lien Stripe est descendue d'autant. Deux
+   *  loués le 9 septembre 2026. */
+  dejaPris: 2,
   prixAvantTaxes: 100,
   prixToutCompris: 115,
   /** Le séjour couvre les nuits du vendredi et du samedi du festival. */
@@ -66,6 +71,51 @@ const lienDansLaLangue = (lien: string, fr: boolean): string => {
   } catch {
     return lien;
   }
+};
+
+/** Les nombres s'ecrivent en toutes lettres dans la copie du site. */
+const MOTS_FR = ['aucun', 'un seul', 'deux', 'trois', 'quatre'];
+const MOTS_EN = ['no', 'a single', 'two', 'three', 'four'];
+
+/** Bandeau d'arrivée. La plupart des visiteurs débarquent ici depuis la page
+ *  Hébergement du Festival médiéval de Montpellier, en cherchant une chambre.
+ *  La première ligne qu'ils lisent doit leur dire pourquoi ils sont sur une
+ *  page de camping, et combien il en reste. */
+const BandeauArrivee: React.FC<{ restants: number; fr: boolean }> = ({ restants, fr }) => {
+  const complet = restants === 0;
+  const texte = complet
+    ? (fr
+        ? "L'auberge et le camping sont complets pour la fin de semaine du festival."
+        : 'The inn and the camping are both full for the festival weekend.')
+    : (fr
+        ? `L'auberge est complète pour la fin de semaine du festival, et il reste ${MOTS_FR[restants]} ${restants === 1 ? 'emplacement' : 'emplacements'} de camping.`
+        : `The inn is full for the festival weekend, and ${MOTS_EN[restants]} camping ${restants === 1 ? 'pitch is' : 'pitches are'} left.`);
+
+  return (
+    <div className="px-3 md:px-6 pt-20 md:pt-24">
+      <Glass className="flex items-start gap-4 px-5 md:px-8 py-4 md:py-5" style={{ borderColor: 'rgba(217,180,92,0.34)' }}>
+        <span
+          className={`shrink-0 rounded-full mt-[0.55em] ${complet ? '' : 'cp-braise'}`}
+          style={{ width: '9px', height: '9px', background: complet ? 'rgba(255,250,240,0.3)' : GOLD }}
+          aria-hidden
+        />
+        <p
+          className="font-cormorant"
+          style={{ color: CREAM, fontSize: 'clamp(1.02rem, 1.35vw, 1.22rem)', lineHeight: 1.45, fontWeight: 500 }}
+        >
+          {texte}
+        </p>
+      </Glass>
+      <style>{`
+        .cp-braise { animation: cpBraise 2.8s ease-in-out infinite; }
+        @keyframes cpBraise {
+          0%, 100% { opacity: .45; box-shadow: 0 0 0 0 rgba(217,180,92,0); }
+          50%      { opacity: 1;   box-shadow: 0 0 14px 3px rgba(217,180,92,0.45); }
+        }
+        @media (prefers-reduced-motion: reduce) { .cp-braise { animation: none; opacity: 1; } }
+      `}</style>
+    </div>
+  );
 };
 
 /** Les quatre emplacements, en clair : celui qui reste libre porte son chiffre
@@ -123,7 +173,7 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
   const fr = language === 'FR';
   const t = (en: string, frTxt: string) => (fr ? frTxt : en);
 
-  const [vendus, setVendus] = useState(0);
+  const [vendus, setVendus] = useState(CAMPING.dejaPris);
   const [lienStripe, setLienStripe] = useState(LIEN_STRIPE_SECOURS);
   const [pret, setPret] = useState(false);
 
@@ -136,7 +186,8 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
       doc(db, 'config', 'camping'),
       (snap) => {
         const data = snap.data() as { vendus?: number; lienStripe?: string } | undefined;
-        setVendus(Math.max(0, Math.min(CAMPING.places, data?.vendus ?? 0)));
+        const enLigne = Math.max(0, Number(data?.vendus ?? 0));
+        setVendus(Math.min(CAMPING.places, CAMPING.dejaPris + enLigne));
         if (data?.lienStripe) setLienStripe(data.lienStripe);
         setPret(true);
       },
@@ -168,16 +219,20 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
         back={t('Back', 'Retour')}
       />
 
-      <HeroFramed
-        img={HERO}
+      {etat !== 'ferme' && <BandeauArrivee restants={restants} fr={fr} />}
+
+      <div className={etat !== 'ferme' ? 'pt-4 md:pt-5 [&>section]:pt-0' : undefined}>
+        <HeroFramed
+          img={HERO}
         kicker={t('Montpellier Medieval Festival', 'Festival médiéval de Montpellier')}
         lead={t('The festival', 'Le camp')}
         accent={t('camp', 'du festival')}
         sub={t(
           'Four pitches on the twelve wooded acres of Maison Favier, in Namur, from September 25 to 27. You put up your tent on the Friday, you leave on the Sunday, and the forest takes care of the rest.',
           "Quatre emplacements sur les douze acres boisés de la Maison Favier, à Namur, du 25 au 27 septembre. Vous plantez votre tente le vendredi, vous repartez le dimanche, et la forêt s'occupe du reste.",
-        )}
-      />
+          )}
+        />
+      </div>
 
       <main className="px-5 md:px-10 lg:px-16 py-24 md:py-32 max-w-[1500px] mx-auto">
         {/* I · Ce que vous réservez */}

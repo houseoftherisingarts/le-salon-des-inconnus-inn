@@ -14,7 +14,7 @@ le compte Stripe du Salon, `acct_1QblkjKKPSkaQESf`.
 |---|---|
 | Produit Stripe | `prod_VEKnvBB5HwhA1L` |
 | Prix, 115,00 CAD | `price_1UDs8SKKPSkaQESfbjDOCRU6` |
-| Lien de paiement, limité à 4 | `plink_1UDs8bKKPSkaQESfJSFbZnbZ` |
+| Lien de paiement, limité à 2 | `plink_1UDs8bKKPSkaQESfJSFbZnbZ` |
 | Adresse du lien | https://buy.stripe.com/9B6fZidfgfDX3Si4Oc4sE00 |
 | Endpoint webhook | `we_1UDs93KKPSkaQESfUt7jh2WX` |
 | Secret de signature | Secret Manager → `STRIPE_WEBHOOK_SECRET`, version 1 |
@@ -36,9 +36,22 @@ filtre donc sur `session.payment_link`, et cette constante vit dans
 `functions/src/index.ts` sous le nom `CAMPING_PAYMENT_LINK`. Un nouveau lien de
 paiement demande de changer cette constante en même temps.
 
-Le garde-fou contre une cinquième vente n'est pas le compteur mais le réglage
-`restrictions[completed_sessions][limit]` du lien lui-même, réglé à quatre.
-Même si la fonction tombait, Stripe refuserait la cinquième transaction.
+Le garde-fou contre une vente de trop n'est pas le compteur mais le réglage
+`restrictions[completed_sessions][limit]` du lien lui-même. Deux emplacements
+sont partis au téléphone le 9 septembre 2026, donc la limite est descendue de
+quatre à deux, et la constante `dejaPris` du bloc `CAMPING` porte le même
+chiffre côté page. Ces deux nombres bougent ensemble : une place vendue hors
+ligne monte `dejaPris` de un et fait descendre la limite Stripe d'autant.
+
+```bash
+curl -s https://api.stripe.com/v1/payment_links/plink_1UDs8bKKPSkaQESfJSFbZnbZ \
+  -u "$STRIPE_SECRET_KEY:" -d "restrictions[completed_sessions][limit]=2"
+```
+
+La fiche du Salon sur la page Hébergement du site du festival mène droit à
+`/camping` et annonce le nombre d'emplacements restants. Ce nombre y est écrit
+en dur (`src/pages/HebergementPage.tsx`, `LODGINGS[0]`), parce que le site du
+festival ne lit pas le Firestore du Salon.
 
 Le banc d'essai du webhook tourne contre l'émulateur Firestore, sans toucher à
 la production. Il couvre la signature, la fenêtre de rejeu, le filtre par lien,
