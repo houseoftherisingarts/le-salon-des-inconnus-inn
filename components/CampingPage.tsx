@@ -133,12 +133,17 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
 
   const etat: Etat = !pret ? 'chargement' : passe ? 'ferme' : restants === 0 ? 'complet' : 'ouvert';
 
+  const scrollRef = React.useRef<HTMLDivElement>(null);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollRef.current?.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden" style={{ background: '#060403' }}>
+    <div
+      ref={scrollRef}
+      className="fixed inset-0 z-50 w-full h-full overflow-y-auto overflow-x-hidden overscroll-contain [-webkit-overflow-scrolling:touch]"
+      style={{ background: '#060403' }}
+    >
       <Atmosphere />
       <TopBar
         onBack={() => onNavigate('INN')}
@@ -148,15 +153,12 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
 
       <HeroFramed
         img={HERO}
-        kicker={t(
-          'Montpellier Medieval Festival · September 25 to 27',
-          'Festival médiéval de Montpellier · 25 au 27 septembre',
-        )}
-        lead={t('Your base camp', 'Le camp de base')}
-        accent={t('for the festival', 'du festival')}
+        kicker={t('Montpellier Medieval Festival', 'Festival médiéval de Montpellier')}
+        lead={t('The festival', 'Le camp')}
+        accent={t('camp', 'du festival')}
         sub={t(
-          'Four pitches on the twelve wooded acres of Maison Favier, in Namur, for the festival weekend. You put up your tent on the Friday, you leave on the Sunday, and the forest takes care of the rest.',
-          "Quatre emplacements sur les douze acres boisés de la Maison Favier, à Namur, pour la fin de semaine du festival. Vous plantez votre tente le vendredi, vous repartez le dimanche, et la forêt s'occupe du reste.",
+          'Four pitches on the twelve wooded acres of Maison Favier, in Namur, from September 25 to 27. You put up your tent on the Friday, you leave on the Sunday, and the forest takes care of the rest.',
+          "Quatre emplacements sur les douze acres boisés de la Maison Favier, à Namur, du 25 au 27 septembre. Vous plantez votre tente le vendredi, vous repartez le dimanche, et la forêt s'occupe du reste.",
         )}
       />
 
@@ -178,16 +180,20 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
         {/* II · Les quatre emplacements — LA rupture visuelle de la page */}
         <section className="mb-28 md:mb-40">
           <SectionLabel numeral="II" label={t('Four pitches, no more', 'Quatre emplacements, pas un de plus')} />
-          <p
-            className="font-cormorant mb-12 md:mb-16"
-            style={{ color: 'rgba(255,250,240,0.74)', fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)', lineHeight: 1.6, maxWidth: '60ch', fontWeight: 500 }}
-          >
-            {t(
-              'We are opening four for that weekend, because twelve acres fill up faster than you would think and nobody wants to camp pressed against their neighbour. Once the four are taken, the page closes on its own.',
-              "Nous en ouvrons quatre pour cette fin de semaine-là, parce que douze acres se remplissent plus vite qu'on ne le croit et que personne n'a envie de camper collé sur son voisin. Quand les quatre sont pris, la page se ferme d'elle-même.",
-            )}
-          </p>
-          <Emplacements vendus={vendus} fr={fr} />
+          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-center">
+            <p
+              className="md:col-span-4 font-cormorant"
+              style={{ color: 'rgba(255,250,240,0.74)', fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)', lineHeight: 1.6, fontWeight: 500 }}
+            >
+              {t(
+                'We are opening four for that weekend, because twelve acres fill up faster than you would think and nobody wants to camp pressed against their neighbour. Once the four are taken, the page closes on its own.',
+                "Nous en ouvrons quatre pour cette fin de semaine-là, parce que douze acres se remplissent plus vite qu'on ne le croit et que personne n'a envie de camper collé sur son voisin. Quand les quatre sont pris, la page se ferme d'elle-même.",
+              )}
+            </p>
+            <div className="md:col-span-8">
+              <Emplacements vendus={vendus} fr={fr} />
+            </div>
+          </div>
         </section>
 
         {/* III · Le terrain */}
@@ -262,7 +268,7 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
                         </GoldButton>
                       ) : (
                         <GoldButton disabled>
-                          {t('Booking opens shortly', 'Billetterie ouverte sous peu')}
+                          {t('Booking to come', 'Réservation à venir')}
                         </GoldButton>
                       )}
                       <span className="font-cinzel uppercase" style={{ fontSize: '10px', letterSpacing: '0.26em', color: 'rgba(255,250,240,0.55)' }}>

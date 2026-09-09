@@ -174,6 +174,18 @@ export const PAGE_META = {
   CATALOGUE: {
     EN: { title: "Artwork Catalogue | Le Salon des Inconnus", description: "The works hanging in the manor, by the artists we represent, available to the guests who stay with us.", keywords: "" },
     FR: { title: "Catalogue d'œuvres | Le Salon des Inconnus", description: "Les œuvres accrochées au manoir, par les artistes que nous représentons, offertes aux invités qui séjournent chez nous.", keywords: "" }
+  },
+  CAMPING: {
+    EN: {
+      title: "Festival Camping in Namur | Le Salon des Inconnus",
+      description: "Four camping pitches on twelve wooded acres in Namur, for the weekend of the Montpellier Medieval Festival, September 25 to 27. 115 $ all in, fire pits and parking on site.",
+      keywords: "camping Festival médiéval Montpellier, camping Namur Outaouais, camping Petite-Nation, festival camping Quebec"
+    },
+    FR: {
+      title: "Camping du festival à Namur | Le Salon des Inconnus",
+      description: "Quatre emplacements de camping sur douze acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.",
+      keywords: "camping Festival médiéval de Montpellier, camping Namur, camping Petite-Nation, camping Outaouais, où dormir festival médiéval"
+    }
   }
 } as const;
 
@@ -201,4 +213,5 @@ export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
   WWOOFING:       `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   HOSTS:          `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   PPS:            `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
+  CAMPING:        `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
 };

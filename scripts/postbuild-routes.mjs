@@ -29,6 +29,35 @@ const ROUTES = [
       author: { '@type': 'Organization', name: 'Le Salon des Inconnus', url: 'https://www.lesalondesinconnus.com' },
     },
   },
+  {
+    // La page se partage sur Facebook pendant le festival : sans sa propre copie
+    // ici, les robots de partage servent les balises de l'accueil.
+    path: 'camping',
+    title: 'Camping du festival à Namur · Le Salon des Inconnus',
+    description:
+      'Quatre emplacements de camping sur douze acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.',
+    image: 'https://www.lesalondesinconnus.com/media/inn/golden%20drone%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/camping',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: 'Emplacement de camping · fin de semaine du Festival médiéval de Montpellier',
+      description:
+        'Un emplacement de camping sur le terrain du Salon des Inconnus, à Namur, pour les nuits du vendredi et du samedi de la fin de semaine du festival.',
+      image: 'https://www.lesalondesinconnus.com/media/inn/golden%20drone%20copy.jpg',
+      url: 'https://www.lesalondesinconnus.com/camping',
+      brand: { '@type': 'Organization', name: 'Le Salon des Inconnus', url: 'https://www.lesalondesinconnus.com' },
+      offers: {
+        '@type': 'Offer',
+        price: '115.00',
+        priceCurrency: 'CAD',
+        availability: 'https://schema.org/LimitedAvailability',
+        inventoryLevel: { '@type': 'QuantitativeValue', value: 4 },
+        priceValidUntil: '2026-09-27',
+        url: 'https://www.lesalondesinconnus.com/camping',
+      },
+    },
+  },
 ];
 
 const src = readFileSync(join(root, 'dist/index.html'), 'utf8');

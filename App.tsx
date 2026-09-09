@@ -32,6 +32,10 @@ const ForfaitsPage      = lazy(() => import('./components/ForfaitsPage').then(m 
 // Unlisted, noindex: /catalogue, an artwork pre-sale catalogue sent to guests
 // before arrival. Hidden until the artwork photos exist.
 const CataloguePage     = lazy(() => import('./components/CataloguePage').then(m => ({ default: m.CataloguePage })));
+// /camping : les quatre emplacements ouverts sur le terrain pour la fin de
+// semaine du Festival médiéval de Montpellier. La page se ferme d'elle-même
+// quand le festival est passé.
+const CampingPage       = lazy(() => import('./components/CampingPage').then(m => ({ default: m.CampingPage })));
 const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
@@ -183,7 +187,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 
 
 // View State Definitions
-type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE'
+type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE' | 'CAMPING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC';
 
@@ -214,6 +218,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   ENTREPRISES:    '/entreprises',
   FORFAITS:       '/forfaits',
   CATALOGUE:      '/catalogue',
+  CAMPING:        '/camping',
   MY_PROFILE:     '/profil',
   PUBLIC_PROFILE: '/membre',
   MESSAGING:      '/messages',
@@ -917,6 +922,14 @@ const App: React.FC = () => {
         {/* VIEW 7i: CATALOGUE (unlisted, noindex: artwork pre-sale catalogue) */}
         {currentView === 'CATALOGUE' && (
           <CataloguePage
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            language={language}
+          />
+        )}
+
+        {/* VIEW 7j: CAMPING (/camping, les 4 emplacements du festival) */}
+        {currentView === 'CAMPING' && (
+          <CampingPage
             onNavigate={(view) => handleNavigation(view as ViewState)}
             language={language}
           />
