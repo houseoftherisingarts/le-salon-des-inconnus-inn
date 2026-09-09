@@ -1022,7 +1022,7 @@ export const stripeCampingWebhook = onRequest(
 
     if (nouveau) {
       await notifyAlex(
-        'Camping du festival — un emplacement de réservé',
+        'Camping du festival : un emplacement de réservé',
         line('Nom', nom) +
         line('Courriel', courriel) +
         line('Montant', `${(montantCents / 100).toFixed(2)} $`) +

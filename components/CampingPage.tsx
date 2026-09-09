@@ -110,9 +110,9 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
   const [lienStripe, setLienStripe] = useState(LIEN_STRIPE_SECOURS);
   const [pret, setPret] = useState(false);
 
-  // Le document est en lecture publique (règle Firestore sur /config). On
-  // s'abonne plutôt que de lire une fois : le compteur baisse sous les yeux du
-  // visiteur pendant qu'il hésite, ce qui est exactement l'effet voulu.
+  // Le document est en lecture publique (règle Firestore sur /config). Nous nous
+  // abonnons plutôt que de lire une seule fois : le compteur baisse sous les yeux
+  // du visiteur pendant qu'il hésite, ce qui est exactement l'effet voulu.
   useEffect(() => {
     if (!db) { setPret(true); return; }
     const unsub = onSnapshot(
@@ -177,7 +177,7 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
           />
         </section>
 
-        {/* II · Les quatre emplacements — LA rupture visuelle de la page */}
+        {/* II · Les quatre emplacements, la rupture visuelle de la page */}
         <section className="mb-28 md:mb-40">
           <SectionLabel numeral="II" label={t('Four pitches, no more', 'Quatre emplacements, pas un de plus')} />
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-center">
@@ -235,8 +235,8 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
                 {etat === 'ferme' && (
                   <p className="font-cormorant" style={{ color: 'rgba(255,250,240,0.74)', fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)', lineHeight: 1.6, fontWeight: 500 }}>
                     {t(
-                      'The festival camping is over for this year. The land reopens for the next edition.',
-                      "Le camping du festival est terminé pour cette année. Le terrain rouvrira pour la prochaine édition.",
+                      'The festival camping is over for this year, and the land will reopen for the next edition.',
+                      "Le camping du festival est terminé pour cette année, et le terrain rouvrira pour la prochaine édition.",
                     )}
                   </p>
                 )}
@@ -257,8 +257,8 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
                       style={{ color: 'rgba(255,250,240,0.78)', fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)', lineHeight: 1.6, fontWeight: 500 }}
                     >
                       {t(
-                        `Payment goes through by card, and your pitch is held the moment the transaction clears. Arrival on ${CAMPING.arriveeEN}, departure on ${CAMPING.departEN}.`,
-                        `Le paiement se fait par carte, et votre emplacement est retenu dès que la transaction passe. Arrivée le ${CAMPING.arriveeFR}, départ le ${CAMPING.departFR}.`,
+                        `Payment goes through by card, your pitch is held the moment the transaction clears, and you arrive on ${CAMPING.arriveeEN} to leave again on ${CAMPING.departEN}.`,
+                        `Le paiement se fait par carte, votre emplacement est retenu dès que la transaction passe, et vous arrivez le ${CAMPING.arriveeFR} pour repartir le ${CAMPING.departFR}.`,
                       )}
                     </p>
                     <div className="flex flex-wrap items-center gap-6">

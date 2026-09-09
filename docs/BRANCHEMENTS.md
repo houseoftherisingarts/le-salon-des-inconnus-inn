@@ -1,4 +1,4 @@
-# Branchements — Le Salon des Inconnus
+# Branchements du Salon des Inconnus
 
 Les clés, comptes et réglages externes dont le site a besoin pour fonctionner,
 avec l'endroit exact où chacun se pose. Rien ici n'est un secret : les valeurs
