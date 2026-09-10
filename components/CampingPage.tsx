@@ -75,48 +75,7 @@ const lienDansLaLangue = (lien: string, fr: boolean): string => {
 
 /** Les nombres s'ecrivent en toutes lettres dans la copie du site. */
 const MOTS_FR = ['aucun', 'un seul', 'deux', 'trois', 'quatre'];
-const MOTS_EN = ['no', 'a single', 'two', 'three', 'four'];
-
-/** Bandeau d'arrivée. La plupart des visiteurs débarquent ici depuis la page
- *  Hébergement du Festival médiéval de Montpellier, en cherchant une chambre.
- *  La première ligne qu'ils lisent doit leur dire pourquoi ils sont sur une
- *  page de camping, et combien il en reste. */
-const BandeauArrivee: React.FC<{ restants: number; fr: boolean }> = ({ restants, fr }) => {
-  const complet = restants === 0;
-  const texte = complet
-    ? (fr
-        ? "L'auberge et le camping sont complets pour la fin de semaine du festival."
-        : 'The inn and the camping are both full for the festival weekend.')
-    : (fr
-        ? `L'auberge est complète pour la fin de semaine du festival, et il reste ${MOTS_FR[restants]} ${restants === 1 ? 'emplacement' : 'emplacements'} de camping.`
-        : `The inn is full for the festival weekend, and ${MOTS_EN[restants]} camping ${restants === 1 ? 'pitch is' : 'pitches are'} left.`);
-
-  return (
-    <div className="px-3 md:px-6 pt-20 md:pt-24">
-      <Glass className="flex items-start gap-4 px-5 md:px-8 py-4 md:py-5" style={{ borderColor: 'rgba(217,180,92,0.34)' }}>
-        <span
-          className={`shrink-0 rounded-full mt-[0.55em] ${complet ? '' : 'cp-braise'}`}
-          style={{ width: '9px', height: '9px', background: complet ? 'rgba(255,250,240,0.3)' : GOLD }}
-          aria-hidden
-        />
-        <p
-          className="font-cormorant"
-          style={{ color: CREAM, fontSize: 'clamp(1.02rem, 1.35vw, 1.22rem)', lineHeight: 1.45, fontWeight: 500 }}
-        >
-          {texte}
-        </p>
-      </Glass>
-      <style>{`
-        .cp-braise { animation: cpBraise 2.8s ease-in-out infinite; }
-        @keyframes cpBraise {
-          0%, 100% { opacity: .45; box-shadow: 0 0 0 0 rgba(217,180,92,0); }
-          50%      { opacity: 1;   box-shadow: 0 0 14px 3px rgba(217,180,92,0.45); }
-        }
-        @media (prefers-reduced-motion: reduce) { .cp-braise { animation: none; opacity: 1; } }
-      `}</style>
-    </div>
-  );
-};
+const MOTS_EN = ['No', 'A single', 'Two', 'Three', 'Four'];
 
 /** Les quatre emplacements, en clair : celui qui reste libre porte son chiffre
  *  en or, celui qui est pris s'éteint. C'est la seule rupture visuelle de la
@@ -201,6 +160,18 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
 
   const etat: Etat = !pret ? 'chargement' : passe ? 'ferme' : restants === 0 ? 'complet' : 'ouvert';
 
+  // Le titre annonce que les chambres sont parties. Le sous-titre enchaîne sur
+  // ce qui reste, avec le vrai compte plutôt qu'un chiffre figé dans le code.
+  const sousTitre = restants === 0
+    ? t(
+        'The camping pitches are gone too, for the festival weekend. The land reopens for the next edition.',
+        'Les emplacements de camping sont partis eux aussi, pour la fin de semaine du festival. Le terrain rouvrira pour la prochaine édition.',
+      )
+    : t(
+        `${MOTS_EN[restants]} camping ${restants === 1 ? 'pitch is' : 'pitches are'} left on the twelve wooded acres of Maison Favier, in Namur, ten minutes from the Montpellier Medieval Festival. You put up your tent on the Friday and you leave on the Sunday.`,
+        `Il reste ${MOTS_FR[restants]} ${restants === 1 ? 'emplacement' : 'emplacements'} de camping sur les douze acres boisés de la Maison Favier, à Namur, à dix minutes du Festival médiéval de Montpellier. Vous plantez votre tente le vendredi et vous repartez le dimanche.`,
+      );
+
   const scrollRef = React.useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
@@ -219,20 +190,13 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
         back={t('Back', 'Retour')}
       />
 
-      {etat !== 'ferme' && <BandeauArrivee restants={restants} fr={fr} />}
-
-      <div className={etat !== 'ferme' ? 'pt-4 md:pt-5 [&>section]:pt-0' : undefined}>
-        <HeroFramed
-          img={HERO}
-        kicker={t('Montpellier Medieval Festival', 'Festival médiéval de Montpellier')}
-        lead={t('The festival', 'Le camp')}
-        accent={t('camp', 'du festival')}
-        sub={t(
-          'Four pitches on the twelve wooded acres of Maison Favier, in Namur, from September 25 to 27. You put up your tent on the Friday, you leave on the Sunday, and the forest takes care of the rest.',
-          "Quatre emplacements sur les douze acres boisés de la Maison Favier, à Namur, du 25 au 27 septembre. Vous plantez votre tente le vendredi, vous repartez le dimanche, et la forêt s'occupe du reste.",
-          )}
-        />
-      </div>
+      <HeroFramed
+        img={HERO}
+        kicker={t('September 25 to 27, 2026', '25 au 27 septembre 2026')}
+        lead={t('The inn is', "L'auberge est")}
+        accent={t('full', 'complète')}
+        sub={sousTitre}
+      />
 
       <main className="px-5 md:px-10 lg:px-16 py-24 md:py-32 max-w-[1500px] mx-auto">
         {/* I · Ce que vous réservez */}
@@ -275,10 +239,10 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
             flip
             img={PHOTO_FORET}
             kicker={t('Namur, Outaouais', 'Namur, en Outaouais')}
-            title={t('Half an hour from the festival', "À une demi-heure du festival")}
+            title={t('Ten minutes from the festival', 'À dix minutes du festival')}
             body={t(
-              'The festival site is in Montpellier, less than half an hour away by road. You sleep under the trees, you spend your day in the Middle Ages, and you come back at night to a fire that someone has already lit.',
-              "Le site du festival se tient à Montpellier, à moins d'une demi-heure de route. Vous dormez sous les arbres, vous passez la journée au Moyen Âge, et vous rentrez le soir vers un feu que quelqu'un a déjà allumé.",
+              'The festival site is in Montpellier, ten minutes away by road. You sleep under the trees, you spend your day in the Middle Ages, and you come back at night to a fire that someone has already lit.',
+              "Le site du festival se tient à Montpellier, à dix minutes de route. Vous dormez sous les arbres, vous passez la journée au Moyen Âge, et vous rentrez le soir vers un feu que quelqu'un a déjà allumé.",
             )}
           />
         </section>
