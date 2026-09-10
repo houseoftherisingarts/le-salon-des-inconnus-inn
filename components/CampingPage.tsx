@@ -168,8 +168,8 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
         'Les emplacements de camping sont partis eux aussi pour la fin de semaine du festival, et le terrain rouvrira pour la prochaine édition.',
       )
     : t(
-        `${MOTS_EN[restants]} camping ${restants === 1 ? 'pitch is' : 'pitches are'} left on the twelve wooded acres of Maison Favier, in Namur, ten minutes from the Montpellier Medieval Festival. You put up your tent on the Friday and you leave on the Sunday.`,
-        `Il reste ${MOTS_FR[restants]} ${restants === 1 ? 'emplacement' : 'emplacements'} de camping sur les douze acres boisés de la Maison Favier, à Namur, à dix minutes du Festival médiéval de Montpellier. Vous plantez votre tente le vendredi et vous repartez le dimanche.`,
+        `${MOTS_EN[restants]} camping ${restants === 1 ? 'pitch is' : 'pitches are'} left on the five wooded acres of Maison Favier, in Namur, ten minutes from the Montpellier Medieval Festival. You put up your tent on the Friday and you leave on the Sunday.`,
+        `Il reste ${MOTS_FR[restants]} ${restants === 1 ? 'emplacement' : 'emplacements'} de camping sur les cinq acres boisés de la Maison Favier, à Namur, à dix minutes du Festival médiéval de Montpellier. Vous plantez votre tente le vendredi et vous repartez le dimanche.`,
       );
 
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -222,8 +222,8 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
               style={{ color: 'rgba(255,250,240,0.74)', fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)', lineHeight: 1.6, fontWeight: 500 }}
             >
               {t(
-                'We are opening four for that weekend, because twelve acres fill up faster than you would think and nobody wants to camp pressed against their neighbour. Once the four are taken, the page closes on its own.',
-                "Nous en ouvrons quatre pour cette fin de semaine-là, parce que douze acres se remplissent plus vite qu'on ne le croit et que personne n'a envie de camper collé sur son voisin. Quand les quatre sont pris, la page se ferme d'elle-même.",
+                'We are opening four for that weekend, because five acres fill up faster than you would think and nobody wants to camp pressed against their neighbour. Once the four are taken, the page closes on its own.',
+                "Nous en ouvrons quatre pour cette fin de semaine-là, parce que cinq acres se remplissent plus vite qu'on ne le croit et que personne n'a envie de camper collé sur son voisin. Quand les quatre sont pris, la page se ferme d'elle-même.",
               )}
             </p>
             <div className="md:col-span-8">

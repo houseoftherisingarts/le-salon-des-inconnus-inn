@@ -35,7 +35,7 @@ const ROUTES = [
     path: 'camping',
     title: 'Camping du festival à Namur · Le Salon des Inconnus',
     description:
-      'Quatre emplacements de camping sur douze acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.',
+      'Quatre emplacements de camping sur cinq acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.',
     image: 'https://www.lesalondesinconnus.com/media/inn/golden%20drone%20copy.jpg',
     url: 'https://www.lesalondesinconnus.com/camping',
     jsonLd: {

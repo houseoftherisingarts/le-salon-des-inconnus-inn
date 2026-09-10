@@ -178,12 +178,12 @@ export const PAGE_META = {
   CAMPING: {
     EN: {
       title: "Festival Camping in Namur | Le Salon des Inconnus",
-      description: "Four camping pitches on twelve wooded acres in Namur, for the weekend of the Montpellier Medieval Festival, September 25 to 27. 115 $ all in, fire pits and parking on site.",
+      description: "Four camping pitches on five wooded acres in Namur, for the weekend of the Montpellier Medieval Festival, September 25 to 27. 115 $ all in, fire pits and parking on site.",
       keywords: "camping Festival médiéval Montpellier, camping Namur Outaouais, camping Petite-Nation, festival camping Quebec"
     },
     FR: {
       title: "Camping du festival à Namur | Le Salon des Inconnus",
-      description: "Quatre emplacements de camping sur douze acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.",
+      description: "Quatre emplacements de camping sur cinq acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.",
       keywords: "camping Festival médiéval de Montpellier, camping Namur, camping Petite-Nation, camping Outaouais, où dormir festival médiéval"
     }
   }
