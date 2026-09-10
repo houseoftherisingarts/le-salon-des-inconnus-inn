@@ -164,8 +164,8 @@ export const CampingPage: React.FC<Props> = ({ onNavigate, language }) => {
   // ce qui reste, avec le vrai compte plutôt qu'un chiffre figé dans le code.
   const sousTitre = restants === 0
     ? t(
-        'The camping pitches are gone too, for the festival weekend. The land reopens for the next edition.',
-        'Les emplacements de camping sont partis eux aussi, pour la fin de semaine du festival. Le terrain rouvrira pour la prochaine édition.',
+        'The camping pitches are gone too for the festival weekend, and the land will reopen for the next edition.',
+        'Les emplacements de camping sont partis eux aussi pour la fin de semaine du festival, et le terrain rouvrira pour la prochaine édition.',
       )
     : t(
         `${MOTS_EN[restants]} camping ${restants === 1 ? 'pitch is' : 'pitches are'} left on the twelve wooded acres of Maison Favier, in Namur, ten minutes from the Montpellier Medieval Festival. You put up your tent on the Friday and you leave on the Sunday.`,
