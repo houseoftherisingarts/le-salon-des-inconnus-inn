@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-11",
+        title_fr: "La greffe",
+        title_en: "The graft",
+        body_fr: "Les vieux vergers gardent une leçon que j'aime. Quand un pommier donne un fruit rare, personne ne le fait repartir de zéro : le jardinier coupe une petite branche et la greffe sur les racines d'un autre arbre, souvent un sauvageon qui n'a rien demandé. Les deux blessures se rejoignent, l'écorce se referme autour de la rencontre, et la branche étrangère se met à donner ses pommes à elle sur des racines qui ne l'ont pas vue naître. Le plus étonnant, c'est que l'arbre entier y gagne : le porte-greffe donne sa force et le greffon donne son fruit, et aucun des deux n'aurait fait grand-chose seul. Je pense souvent que les maisons d'accueil font le même travail. Nous prêtons nos racines à des gens de passage, le temps qu'une idée ou un projet reprenne des forces, et leurs fruits ne nous appartiennent jamais, ce qui est exactement la beauté de l'affaire. À qui est-ce que je pourrais prêter mes racines, cette saison?",
+        body_en: "Old orchards keep a lesson I love. When an apple tree gives a rare fruit, nobody makes it start over from nothing: the gardener cuts a small branch and grafts it onto the roots of another tree, often a wild seedling that never asked for anything. The two wounds knit together, the bark closes around the encounter, and the foreign branch begins to give its own apples on roots that never saw it born. The most astonishing part is that the whole tree gains from it: the rootstock gives its strength and the scion gives its fruit, and neither would have done much alone. I often think that houses of welcome do the same work. We lend our roots to people passing through, for as long as it takes an idea or a project to gather strength, and their fruit never belongs to us, which is exactly the beauty of the arrangement. Whose branch could I lend my roots to this season?",
+    },
+    {
         date: "2026-09-09",
         title_fr: "L'envers de l'ouvrage",
         title_en: "The back of the weave",
