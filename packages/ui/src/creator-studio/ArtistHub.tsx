@@ -5373,6 +5373,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             language={language}
                             onOuvrirMembre={ouvrirMembre}
                             editeurProfil={contenuEditeur}
+                            ongletInitial={retourPro ? 'pro' : undefined}
                             profilPro={(
                                 <ProfilProAdmin
                                     uid={currentUser.uid}
