@@ -3747,6 +3747,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
     // --- TRANSLATION MAPS ---
     const tabTranslations: Record<Tab, string> = {
+        WALL: language === 'EN' ? 'THE WALL' : 'LE MUR',
         COLLABORATE: language === 'EN' ? 'COLLABORATE' : 'COLLABORER',
         TOOLS: language === 'EN' ? 'TOOLS' : 'OUTILS',
         READS: language === 'EN' ? 'READS' : 'LECTURES',
