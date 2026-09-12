@@ -1,0 +1,22 @@
+# PRD : Creator Studio, réseau social d'artistes et Profil Pro (12 septembre 2026)
+
+## Contexte
+Le Creator Studio du Salon des Inconnus (apps/salon, packages/ui/src/creator-studio) est en bêta publique depuis le 14 août 2026. Il a une porte Google et courriel, des amitiés, une messagerie privée, un annuaire curé et un Super Profile (gabarits plein écran) déverrouillé à la main. La direction complète du chantier est dans docs/PROFIL-PRO-DIRECTION.md, source unique.
+
+## Objectif en une phrase
+Donner au Creator Studio le compte et le réseau social des autres sites d'Alex (Krystine, Laurie, FMM), puis transformer le Super Profile en offre « Profil Pro » à 100 $ par mois, avec un gabarit par type d'artiste, la prise de rendez-vous, le nom de domaine, le back-office et l'upsell vers Vexel.
+
+## Exigences
+1. Porte de connexion : Google avec repli redirection, courriel et mot de passe, mot de passe oublié, messages lisibles FR et EN, fiche members/{uid} créée à la connexion, bouton Problème technique.
+2. Coquille de profil façon réseau social (bannière, avatar, nom, sous-ligne, badges, onglets soulignés) enveloppant l'onglet PROFILE existant; images redimensionnées au canvas et rangées dans Storage.
+3. Mur du studio (billets, photo, votes, commentaires) en nouvel onglet WALL par défaut, avec règles Firestore diff-based et sans compteur écrit par le client.
+4. Cloche (messages non lus, demandes d'amitié, commentaires et votes reçus), badges d'artistes décernés par l'admin avec vitrine, blocage et signalement, page publique de membre /membre/{uid}.
+5. Profil Pro : type d'artiste dans superProfile/config, gabarits peintre et musicien neufs, photographe et écrivain rafraîchis, sections éteignables, vrai site qui défile avec pied de page et collant Vexel.
+6. Prise de rendez-vous par artiste (agenda, créneaux, rendez-vous, occupations publiques, salle Jitsi, iCal), compte créé à la réservation, admin des disponibilités et des rendez-vous.
+7. Nom de domaine : domaines/{hostname} et résolution par hostname dans apps/salon, onglet Domaine avec la procédure, BRANCHEMENTS.md pour Alex.
+8. Abonnement Stripe 100 $ par mois : creerAbonnementProfilPro, webhookProfilPro (pose flags.proEnabled), portailProfilPro, phrase Interac; back-office ProfilProAdmin avec les onglets Mon site, Œuvres et contenu, Rendez-vous, Domaine, Abonnement, et la carte d'upsell Vexel à 350 $ par mois sur chaque onglet.
+9. Page publique ProfilProPage montée sur /{slug} et par hostname, avec titre, description, Open Graph et JSON-LD Person.
+10. Intégration, tests de règles sur l'émulateur, boucle verdict (captures 1440 et 390 regardées), déploiement (règles, Storage, fonctions, hosting salon), endpoint webhook Stripe, preuve en ligne, journal, mémoire, ledger, rapport de complétion.
+
+## Hors périmètre
+Les gabarits des autres types d'artiste que peintre et musicien (variantes des gabarits existants seulement), l'Open Graph servi par une fonction serveur, le branchement des domaines dans la console Firebase (geste d'Alex), les publicités du Salon sur les profils pro.
