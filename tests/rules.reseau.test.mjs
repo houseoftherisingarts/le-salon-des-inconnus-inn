@@ -170,7 +170,7 @@ async function main() {
     );
     await attenduRefus(
         'un membre ne lit pas les signalements',
-        getDoc(doc(dbB(), 'signalements', 'sig-1')).then((s) => { if (!s.exists()) throw Object.assign(new Error('doc absent'), { code: 'permission-denied' }); }),
+        getDoc(doc(dbB(), 'signalements', 'sig-1')),
     );
     await attenduOk(
         'l’admin lit les signalements',
