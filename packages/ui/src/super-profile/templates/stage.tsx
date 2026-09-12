@@ -52,7 +52,7 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
                     {name}
                 </h1>
                 {tagline && (
-                    <p className="mt-4 font-cormorant italic text-neutral-300 text-xl md:text-2xl leading-relaxed pl-[40vw]">
+                    <p className="mt-4 font-lato font-light text-neutral-300 text-xl md:text-2xl leading-relaxed pl-[40vw]">
                         {tagline}
                     </p>
                 )}
