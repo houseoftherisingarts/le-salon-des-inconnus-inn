@@ -50,6 +50,20 @@ function pathToNode(pathname: string): string {
   return SLUG_TO_NODE[normalize(pathname)] ?? 'hub';
 }
 
+// La fiche publique d'un membre : /membre/{uid} (adresse canon) ou, pour ne
+// pas casser le lien « Voir le dossier » déjà en place dans l'onglet ROSTER
+// du Creator Studio, /membre?uid={uid}. Les deux mènent à la même page.
+function membreUidDeLadresse(pathname: string, search: string): string | null {
+  const chemin = normalize(pathname);
+  const segment = chemin.match(/^\/membre\/([^/]+)$/);
+  if (segment) return decodeURIComponent(segment[1]);
+  if (chemin === '/membre') {
+    const uid = new URLSearchParams(search).get('uid');
+    if (uid) return uid;
+  }
+  return null;
+}
+
 export default function App() {
   const [target, setTarget] = useState<string>(() => pathToNode(window.location.pathname));
 
