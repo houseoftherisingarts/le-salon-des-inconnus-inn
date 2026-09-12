@@ -1229,7 +1229,43 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
         setAccessLevel(currentUser ? 'MEMBER' : 'GUEST');
         if (currentUser) {
             setPhase('LOBBY');
+            // Le mur du studio est l'accueil d'un membre connecté (réseau
+            // social d'artistes) — mais seulement au tout premier passage :
+            // si la personne a déjà choisi un onglet, on ne lui vole pas la
+            // main.
+            if (!hasNavigated) setActiveTab('WALL');
         }
+    }, [currentUser?.uid]);
+
+    // Admin du Salon — même allow-list que firestore.rules / storage.rules,
+    // via lib/auth. Sert la Cloche, le mur (suppression) et le panneau de
+    // badges de ROSTER.
+    const isAdmin = isAdminEmail(currentUser);
+
+    // « Écrire » depuis /membre/{uid} arrive ici avec ?dm=<uid> : on ouvre
+    // (ou crée) le fil et on saute directement dans COLLABORATE. Le
+    // paramètre est retiré de l'adresse une fois consommé pour ne pas le
+    // rejouer à un rechargement.
+    useEffect(() => {
+        if (!currentUser?.uid) return;
+        const params = new URLSearchParams(window.location.search);
+        const dmUid = params.get('dm');
+        if (!dmUid || dmUid === currentUser.uid) return;
+        (async () => {
+            try {
+                const autre = await getMembre(dmUid);
+                const convId = await ouvrirConversation(
+                    currentUser.uid, regData.name || currentUser.displayName || 'Membre', avatarUrl ?? currentUser.photoURL,
+                    dmUid, autre?.displayName || 'Un membre', autre?.photoURL,
+                );
+                if (convId) setActiveConvId(convId);
+            } catch { /* silencieux : le membre atterrit quand même dans COLLABORATE */ }
+            setActiveTab('COLLABORATE');
+            setHasNavigated(true);
+            params.delete('dm');
+            const reste = params.toString();
+            window.history.replaceState({}, '', window.location.pathname + (reste ? `?${reste}` : ''));
+        })();
     }, [currentUser?.uid]);
     const [membershipTier, setMembershipTier] = useState<MembershipTier>('INITIATE');
     const [userPoints, setUserPoints] = useState(50);
