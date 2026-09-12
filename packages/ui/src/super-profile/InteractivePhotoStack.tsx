@@ -152,7 +152,7 @@ export const InteractivePhotoStack = React.forwardRef<
                                         />
                                     </div>
                                     <div className="flex h-12 flex-grow items-center justify-center">
-                                        <p className="font-cinzel text-base italic text-[#f3e5ab] tracking-wider">
+                                        <p className="font-cinzel text-base text-[#f3e5ab] tracking-wider">
                                             {item.name}
                                         </p>
                                     </div>
