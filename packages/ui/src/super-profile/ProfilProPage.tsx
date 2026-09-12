@@ -56,7 +56,7 @@ function poserBalise(rel: 'og' | 'meta', nom: string, contenu: string): HTMLMeta
     return el;
 }
 
-export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, language = 'FR', onNavigateHome }) => {
+export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, language = 'FR', onNavigateHome, site = 'atelier' }) => {
     const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
     const [etat, setEtat] = React.useState<EtatChargement>({ etape: 'chargement' });
 
