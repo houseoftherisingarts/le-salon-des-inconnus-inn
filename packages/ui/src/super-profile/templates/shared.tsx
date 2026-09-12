@@ -8,10 +8,10 @@ interface BackLinkProps {
 }
 
 /** Subtle "← Le Salon des Inconnus" anchor pinned to the corner of the page. */
-export const BackToSalonLink: React.FC<BackLinkProps> = ({ href = '/' }) => (
+export const BackToSalonLink: React.FC<BackLinkProps> = ({ href = '/centre' }) => (
     <a
         href={href}
-        className="fixed top-5 left-5 z-50 font-cinzel text-[13px] uppercase tracking-[0.4em] text-neutral-500 hover:text-[#c5a059] transition-colors"
+        className="fixed top-4 left-4 z-50 inline-flex items-center min-h-[44px] px-4 rounded-full bg-black/45 backdrop-blur-md border border-white/10 font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-300 hover:text-[#c5a059] hover:border-[#c5a059]/50 transition-colors"
     >
         ← Le Salon des Inconnus
     </a>
