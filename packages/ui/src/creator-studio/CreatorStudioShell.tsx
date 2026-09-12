@@ -62,13 +62,22 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
 
      // Gate sign-in form state (Google + email). Hooks stay top-level so the
      // hook count is stable across the gate/full-studio conditional return.
+     // Three modes, comme chez Krystine et Laurie : connexion, inscription,
+     // mot de passe oublié.
      const [authEmail, setAuthEmail] = useState('');
      const [authPassword, setAuthPassword] = useState('');
      const [authName, setAuthName] = useState('');
-     const [authMode, setAuthMode] = useState<'signup' | 'signin'>('signup');
+     const [authMode, setAuthMode] = useState<'signup' | 'signin' | 'forgot'>('signup');
      const [authBusy, setAuthBusy] = useState(false);
      const [authError, setAuthError] = useState('');
+     const [authResetSent, setAuthResetSent] = useState(false);
      const [showLegal, setShowLegal] = useState(false);
+
+     // Repli d'une connexion Google lancée par signInWithRedirect (fureteur
+     // qui bloque la popup) : à récupérer une seule fois, au montage.
+     useEffect(() => {
+         handleRedirectResult().catch(() => { /* déjà journalisé dans reseau/auth */ });
+     }, []);
 
      // Vetted flag ("curated artist") from members/{uid}/admin/flags.isArtist.
      const [isArtistInternal, setIsArtistInternal] = useState(false);
