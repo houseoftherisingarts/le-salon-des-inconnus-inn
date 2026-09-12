@@ -102,6 +102,15 @@ const TAB_META: Record<ViewerTab, {
         toColor: '#22d3ee',
         glowColor: '#facc15',
     },
+    WALL: {
+        titleEn: 'The Studio Wall',
+        titleFr: 'Le mur du studio',
+        subtitleEn: 'What the artists of the Salon are making, showing and asking this week.',
+        subtitleFr: 'Ce que les artistes du Salon font, montrent et demandent cette semaine.',
+        fromColor: '#c5a059',
+        toColor: '#3a2a10',
+        glowColor: '#f3e5ab',
+    },
     PROFILE: {
         titleEn: 'Your Profile',
         titleFr: 'Votre Profil',
