@@ -151,6 +151,7 @@ export default function App() {
         slug={slugPro}
         language="FR"
         onNavigateHome={() => { window.history.pushState({}, '', '/centre'); window.location.reload(); }}
+        site="atelier"
       />
     );
   }
