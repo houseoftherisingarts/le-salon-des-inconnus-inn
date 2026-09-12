@@ -73,7 +73,7 @@ match /rendezvousPro/{rdvId} {
               || (request.auth != null && resource.data.artisteUid == request.auth.uid);
   allow create: if isAdmin()
                 || (request.auth != null
-                    && isOwner(request.resource.data.uid)
+                    && request.resource.data.uid == request.auth.uid
                     && request.resource.data.statut == 'demande'
                     && request.resource.data.creePar == 'client'
                     && request.resource.data.debut > request.time
