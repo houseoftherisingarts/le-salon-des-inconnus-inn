@@ -79,13 +79,17 @@ async function connecter(page) {
   const email = page.locator('input[type="email"]').first();
   if (!(await email.count())) return true; // déjà connecté (aucune porte affichée)
   // La porte peut ouvrir en mode inscription : on bascule vers la connexion si le bouton existe.
-  const versConnexion = page.getByRole('button', { name: /^(Se connecter|Connexion|Sign in|J'ai déjà un compte|Already have an account)/i }).first();
-  if (await versConnexion.count()) { try { await versConnexion.click({ timeout: 2000 }); } catch {} }
+  const versConnexion = page.getByRole('button', { name: /Déjà un compte|Already have an account/i }).first();
+  if (await versConnexion.count()) { try { await versConnexion.click({ timeout: 2000 }); await page.waitForTimeout(300); } catch {} }
   await email.fill(EMAIL);
   await page.locator('input[type="password"]').first().fill(PW);
-  const bouton = page.locator('form button[type="submit"]').first();
+  const bouton = page.getByRole('button', { name: /^(Se connecter|Sign in)$/i }).first();
   if (await bouton.count()) await bouton.click();
-  else await page.locator('input[type="password"]').first().press('Enter');
+  else {
+    const submit = page.locator('form button[type="submit"]').first();
+    if (await submit.count()) await submit.click();
+    else await page.locator('input[type="password"]').first().press('Enter');
+  }
   try { await page.locator('input[type="password"]').first().waitFor({ state: 'detached', timeout: 20000 }); } catch { rapport.erreurs.push(`connexion : la porte est restée affichée sur ${page.url()}`); return false; }
   await page.waitForTimeout(2500);
   return true;
