@@ -19,6 +19,7 @@ export const MusicienTemplate: React.FC<TemplateProps> = ({ config, uid, fallbac
                 language={language}
                 ambiance="scene"
                 fondUrl={fondUrl}
+                count={config.dates?.length || 0}
                 workCountLabel={language === 'FR' ? 'dates' : 'dates'}
             />
             <div id="contenu">
