@@ -20,14 +20,16 @@ interface HeroSectionProps {
      *  scène si l'artiste en a mis une comme "œuvre" d'ouverture. */
     fondUrl?: string;
     workCountLabel?: string;
+    /** Compteur affiché en bas à droite. Par défaut : nombre d'œuvres. */
+    count?: number;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-    config, fallbackDisplayName, language = 'FR', ambiance, fondUrl, workCountLabel,
+    config, fallbackDisplayName, language = 'FR', ambiance, fondUrl, workCountLabel, count: countProp,
 }) => {
     const t = useTexte(language);
     const displayName = config.displayName || fallbackDisplayName || config.username;
-    const count = (config.oeuvres ?? config.works ?? []).length;
+    const count = countProp ?? (config.oeuvres?.length || config.works?.length || 0);
 
     return (
         <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
