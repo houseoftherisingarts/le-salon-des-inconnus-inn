@@ -698,6 +698,7 @@ export const StudioContextViewer: React.FC<Props> = ({
                 // Restore the original per-theme signature hero on first
                 // arrival. Each theme keeps its visual identity intact.
                 return <WelcomeHero theme={theme} language={language} />;
+            case 'WALL':
             case 'COLLABORATE':
             case 'READS':
             case 'MARKET':
