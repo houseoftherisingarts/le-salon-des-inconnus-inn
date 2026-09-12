@@ -68,7 +68,7 @@ export async function domaineDe(uid: string): Promise<{ hostname: string; claim:
  */
 export async function reserverDomaine(uid: string, slug: string, hostnameBrut: string): Promise<void> {
     const validation = validerHostname(hostnameBrut);
-    if (!validation.ok) throw new Error(`Nom de domaine ${validation.reason}.`);
+    if (validation.ok === false) throw new Error(`Nom de domaine ${validation.reason}.`);
     const hostname = normaliserHostname(hostnameBrut);
     const db = getFirestore(getApp());
 

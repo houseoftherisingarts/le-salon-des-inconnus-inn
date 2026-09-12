@@ -55,7 +55,7 @@ export const DomaineAdmin: React.FC<DomaineAdminProps> = ({ uid, slug, language 
     const enregistrer = async () => {
         setErreur(null);
         const v = validerHostname(saisie);
-        if (!v.ok) {
+        if (v.ok === false) {
             setErreur({
                 vide: t('Enter a domain.', 'Entrez un domaine.'),
                 invalide: t('This does not look like a domain (example: your-name.com).', 'Ceci ne ressemble pas à un domaine (exemple : votre-nom.com).'),
