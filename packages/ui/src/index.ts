@@ -26,3 +26,7 @@ export type { SdiCafeProps } from './sdi-cafe/SdiCafe';
 // the editor panel mounted inside the Studio's PROFILE tab, and the public
 // templates dispatched on by medium.
 export * from './super-profile';
+
+// Réseau social d'artistes: la porte, la fiche de membre, le mur du
+// studio, la cloche, les badges, et la page publique /membre/{uid}.
+export * from './reseau';
