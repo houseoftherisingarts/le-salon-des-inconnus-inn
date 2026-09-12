@@ -5462,6 +5462,13 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                 ★ {language === 'EN' ? 'I am this artist · Claim profile' : 'Je suis cette personne · Réclamer le profil'}
                                             </button>
                                         )}
+
+                                        {/* Décernement de badges : admin seulement, et seulement quand
+                                            l'entrée est rattachée à un vrai uid (badges/{uid} vit sur un
+                                            membre réel, jamais sur une graine du répertoire non réclamée). */}
+                                        {isAdmin && dossierUid && (
+                                            <PanneauAdminBadges uid={dossierUid} language={language} />
+                                        )}
                                     </div>
                                 </div>
                                 );
