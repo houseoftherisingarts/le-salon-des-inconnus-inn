@@ -28,6 +28,7 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDi
     const tiles = Array.from({ length: tileCount }, (_, i) => works[i % works.length]).filter(Boolean);
 
     return (
+        <>
         <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
             <BackToSalonLink />
 
