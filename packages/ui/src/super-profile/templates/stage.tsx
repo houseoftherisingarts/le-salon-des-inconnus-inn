@@ -51,8 +51,10 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
                 >
                     {name}
                 </h1>
+                {/* Sur mobile, la découpe couvrirait la sous-ligne : elle descend
+                    alors dans le dock du bas (voir BottomDock). */}
                 {tagline && (
-                    <p className="mt-4 font-lato font-light text-neutral-300 text-xl md:text-2xl leading-relaxed pl-[40vw]">
+                    <p className="hidden md:block mt-4 font-lato font-light text-neutral-300 text-2xl leading-relaxed pl-[40vw]">
                         {tagline}
                     </p>
                 )}
