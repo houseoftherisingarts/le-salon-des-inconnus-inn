@@ -4058,8 +4058,15 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     })}
                 </div>
 
-                {/* Tokens (Was Essence) / Admin Toggle */}
+                {/* Cloche (réseau social) + Tokens (Was Essence) / Admin Toggle */}
                 <div className="flex items-center gap-4">
+                    {accessLevel === 'MEMBER' && currentUser?.uid && (
+                        <Cloche
+                            uid={currentUser.uid}
+                            language={language}
+                            onOuvrirOnglet={(tab) => { setActiveTab(tab as Tab); setHasNavigated(true); }}
+                        />
+                    )}
                     {accessLevel === 'MEMBER' && (
                         <div className="flex items-center gap-1">
                             <span className={`font-bold font-serif italic text-sm ${currentStyles.highlight}`}>{userTokens}</span>
