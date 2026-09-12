@@ -79,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Indice de défilement : le gabarit est une vraie page. */}
             <a
-                href="#suite"
+                href="#contenu"
                 aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
                 className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-neutral-400 hover:text-[#c5a059] transition-colors animate-bounce"
             >
