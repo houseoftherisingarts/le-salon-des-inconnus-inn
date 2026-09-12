@@ -71,7 +71,7 @@ const BlocOeuvres: React.FC<{ uid: string; valeur: OeuvreProfilPro[]; language: 
         const ref = storageRef(storage, chemin);
         await uploadBytes(ref, file, { contentType: file.type || 'image/jpeg' });
         const url = await getDownloadURL(ref);
-        setListe((l) => [...l, { url, storagePath: chemin, statutVente: 'a-vendre' }].slice(0, MAX_OEUVRES));
+        setListe((l) => [...l, { url, storagePath: chemin, statutVente: 'a-vendre' as const }].slice(0, MAX_OEUVRES));
     };
 
     const maj = (i: number, patch: Partial<OeuvreProfilPro>) => setListe((l) => l.map((o, idx) => (idx === i ? { ...o, ...patch } : o)));
