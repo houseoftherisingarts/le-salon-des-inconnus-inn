@@ -6,7 +6,7 @@
 //   signalements/{id}   un billet, un commentaire ou un membre rapporté
 import { getApp } from 'firebase/app';
 import {
-    getFirestore, addDoc, arrayRemove, arrayUnion, collection, doc, onSnapshot,
+    getFirestore, addDoc, arrayRemove, arrayUnion, collection, doc, getDoc, onSnapshot,
     serverTimestamp, setDoc,
 } from 'firebase/firestore';
 
