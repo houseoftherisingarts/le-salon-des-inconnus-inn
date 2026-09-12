@@ -124,9 +124,34 @@ export default function App() {
     window.history.pushState({}, '', slug);
   }, []);
 
+  // Un domaine personnel d'artiste (Profil Pro) branché sur ce site : la page
+  // rend son profil directement, sans passer par le graphe du Salon.
+  if (!estUnHoteDuSalon(window.location.hostname)) {
+    return (
+      <ProfilProPage
+        hostname={window.location.hostname.toLowerCase()}
+        language="FR"
+        onNavigateHome={() => window.location.assign('https://inconnus-salon.web.app/centre')}
+      />
+    );
+  }
+
   // Page d'artiste d'Alex : une page pleine, hors du graphe d'ArtsPage.
   if (normalize(window.location.pathname) === '/alex') {
     return <AlexPage />;
+  }
+
+  // /{slug} : la page publique d'un Profil Pro (gabarit selon le type
+  // d'artiste), une page pleine comme /alex.
+  const slugPro = slugProfilProDeLadresse(window.location.pathname);
+  if (slugPro) {
+    return (
+      <ProfilProPage
+        slug={slugPro}
+        language="FR"
+        onNavigateHome={() => { window.history.pushState({}, '', '/centre'); window.location.reload(); }}
+      />
+    );
   }
 
   // La fiche publique d'un membre du réseau social d'artistes : une page
