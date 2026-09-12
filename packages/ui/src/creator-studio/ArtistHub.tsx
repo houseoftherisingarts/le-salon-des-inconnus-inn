@@ -4297,7 +4297,13 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                 )}
 
                 {/* PROFILE */}
-                {activeTab === 'PROFILE' && (
+                {activeTab === 'PROFILE' && (() => {
+                    // Le contenu existant (formulaire + galerie + Super Profile)
+                    // ne bouge pas d'une ligne : il devient le slot editeurProfil
+                    // de la coquille sociale ProfilSocial pour un membre connecté,
+                    // et se rend tel quel (comme avant) pour un invité, qui n'a
+                    // pas de fiche de membre à montrer dans une bannière.
+                    const contenuEditeur = (
                     <div className="relative w-full h-full">
                         {/* Hidden file inputs for avatar + gallery uploads. Triggered
                             via the visible buttons below. */}
