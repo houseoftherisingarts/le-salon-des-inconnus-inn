@@ -61,7 +61,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         background:
                             ambiance === 'galerie'
                                 ? 'radial-gradient(ellipse at center, rgba(5,5,5,0.25) 20%, rgba(5,5,5,0.78) 70%, rgba(5,5,5,0.96) 100%)'
-                                : 'linear-gradient(180deg, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.35) 40%, rgba(5,5,5,0.9) 100%)',
+                                : 'linear-gradient(180deg, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.62) 45%, rgba(5,5,5,0.95) 100%)',
                     }}
                 />
             </div>
