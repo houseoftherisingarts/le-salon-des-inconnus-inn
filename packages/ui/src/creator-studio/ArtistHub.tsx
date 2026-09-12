@@ -5355,6 +5355,13 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             language={language}
                             onOuvrirMembre={ouvrirMembre}
                             editeurProfil={contenuEditeur}
+                            profilPro={(
+                                <ProfilProAdmin
+                                    uid={currentUser.uid}
+                                    fallbackDisplayName={regData.name || currentUser.displayName || null}
+                                    language={language}
+                                />
+                            )}
                         />
                     ) : contenuEditeur;
                 })()}
