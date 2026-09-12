@@ -14,7 +14,7 @@ import {
 import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import {
     cleJour, creneauxLibres, demanderRendezVous, formatDate, formatHeure,
-    icsRendezVous, joursDisponibles, nomSalle, rencontreOuverte, salleUrl,
+    icsRendezVous, joursDisponibles, rencontreOuverte,
     telechargerIcs, useAgendaConfig, useMesRendezVousPro, useOccupationsPro,
     annulerRendezVousPro,
     type Creneau,
