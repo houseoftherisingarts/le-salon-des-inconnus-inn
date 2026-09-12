@@ -5342,19 +5342,9 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             </div>
                         )}
 
-                        {/* Super Profile (Maestro tier): gated. The editor
-                            self-subscribes to members/{uid}/admin/flags.maestroEnabled
-                            and renders nothing while loading, a locked card if
-                            not granted, or the full editor otherwise. */}
-                        {accessLevel === 'MEMBER' && currentUser && (
-                            <div className="mt-10 max-w-5xl mx-auto px-4">
-                                <SuperProfileEditor
-                                    uid={currentUser.uid}
-                                    fallbackDisplayName={regData.name || currentUser.displayName || null}
-                                    language={language}
-                                />
-                            </div>
-                        )}
+                        {/* Le Profil Pro (ancien Super Profile / Maestro) vit
+                            maintenant dans son propre onglet de la coquille
+                            ProfilSocial, monté plus bas via le slot profilPro. */}
                     </div>
                     );
                     return currentUser ? (

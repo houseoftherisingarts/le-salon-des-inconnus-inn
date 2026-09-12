@@ -1048,3 +1048,8 @@ export const stripeCampingWebhook = onRequest(
     res.status(200).send('OK');
   },
 );
+
+// ─── Profil Pro du Creator Studio (abonnement 100 $ par mois) ────────────────
+// Les trois fonctions vivent dans ./profilPro : ouverture du Checkout Stripe,
+// webhook signé qui pose flags.proEnabled, et portail client.
+export { creerAbonnementProfilPro, webhookProfilPro, portailProfilPro } from './profilPro';
