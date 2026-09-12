@@ -143,7 +143,7 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
                         </button>
                     ))}
                 </div>
-                <p className="font-lato text-xs text-neutral-500 mt-2">
+                <p className="font-lato text-[13px] text-neutral-500 mt-2">
                     {language === 'FR' ? LIBELLES_ARTISTE[type].aideFr : LIBELLES_ARTISTE[type].aideEn}
                 </p>
             </div>
@@ -160,11 +160,11 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
                         className={CHAMP}
                     />
                 </div>
-                {slugStatut === 'pris' && <p className="text-rose-300 text-xs mt-2 font-lato">{t('This address is already taken.', 'Cette adresse est déjà prise.')}</p>}
-                {slugStatut === 'invalide' && <p className="text-rose-300 text-xs mt-2 font-lato">{t('Use only letters, digits and hyphens, 3 to 32 characters.', 'Seulement lettres, chiffres et traits d’union, de 3 à 32 caractères.')}</p>}
-                {slugStatut === 'ok' && <p className="text-[#c5a059] text-xs mt-2 font-lato">{t('Available.', 'Disponible.')}</p>}
+                {slugStatut === 'pris' && <p className="text-rose-300 text-[13px] mt-2 font-lato">{t('This address is already taken.', 'Cette adresse est déjà prise.')}</p>}
+                {slugStatut === 'invalide' && <p className="text-rose-300 text-[13px] mt-2 font-lato">{t('Use only letters, digits and hyphens, 3 to 32 characters.', 'Seulement lettres, chiffres et traits d’union, de 3 à 32 caractères.')}</p>}
+                {slugStatut === 'ok' && <p className="text-[#c5a059] text-[13px] mt-2 font-lato">{t('Available.', 'Disponible.')}</p>}
                 {!slug && displayName && (
-                    <button type="button" onClick={() => setSlug(slugifyDisplayName(displayName))} className="text-xs text-neutral-500 hover:text-[#c5a059] mt-2 font-lato underline">
+                    <button type="button" onClick={() => setSlug(slugifyDisplayName(displayName))} className="text-[13px] text-neutral-500 hover:text-[#c5a059] mt-2 font-lato underline">
                         {t('Suggest from my name', 'Suggérer à partir de mon nom')}
                     </button>
                 )}
@@ -229,7 +229,7 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
                     type="button"
                     onClick={enregistrer}
                     disabled={!modifie || enregistrement || slugStatut === 'pris' || slugStatut === 'invalide'}
-                    className="min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[15px]"
+                    className="min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[15px]"
                 >
                     {enregistrement ? t('Saving…', 'Enregistrement…') : t('Save', 'Enregistrer')}
                 </button>

@@ -36,7 +36,7 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
                 so the cutout above stays interactive. */}
             <div className="relative w-full pr-[4vw] text-right">
                 {mediumLabel && (
-                    <p className="font-cinzel text-[#c5a059] text-[13px] md:text-xs uppercase tracking-[0.5em] mb-3">
+                    <p className="font-cinzel text-[#c5a059] text-[13px] md:text-[13px] uppercase tracking-[0.5em] mb-3">
                         {mediumLabel}
                     </p>
                 )}

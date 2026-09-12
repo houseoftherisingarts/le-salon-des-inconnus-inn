@@ -92,7 +92,7 @@ export const Composeur: React.FC<ComposeurProps> = ({ uid, nom, avatarUrl, langu
                     {envoi ? t('Posting…', 'Publication…') : t('Post', 'Publier')}
                 </button>
             </div>
-            {erreur && <p className="mt-2 text-xs text-rose-400 font-lato">{erreur}</p>}
+            {erreur && <p className="mt-2 text-[13px] text-rose-400 font-lato">{erreur}</p>}
         </section>
     );
 };

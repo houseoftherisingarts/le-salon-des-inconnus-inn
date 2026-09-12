@@ -55,7 +55,7 @@ export const RendezVousAdmin: React.FC<RendezVousAdminProps> = ({ uid, language 
                                 <p className="font-lato text-sm text-neutral-400 mt-1">{formatDate(rdv.debut, language)} · {formatHeure(rdv.debut, language)}</p>
                                 {rdv.note && <p className="font-lato text-sm text-neutral-300 mt-3 whitespace-pre-line">{rdv.note}</p>}
                             </div>
-                            <span className={`text-xs font-cinzel uppercase tracking-[0.2em] px-2.5 py-1 rounded-full shrink-0 ${
+                            <span className={`text-[13px] font-cinzel uppercase tracking-[0.2em] px-2.5 py-1 rounded-full shrink-0 ${
                                 rdv.statut === 'confirme' ? 'bg-[#c5a059]/15 text-[#c5a059]' : 'border border-white/15 text-neutral-400'
                             }`}>
                                 {LIBELLES[rdv.statut][language === 'FR' ? 'fr' : 'en']}

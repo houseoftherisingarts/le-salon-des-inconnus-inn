@@ -32,7 +32,7 @@ export const LiensSection: React.FC<SectionProps> = ({ config, language = 'FR' }
                         rel="noreferrer noopener"
                         className={`flex items-center justify-between px-6 py-5 hover:border-[#c5a059]/50 transition-colors ${CARD_GLASS}`}
                     >
-                        <span className="font-cinzel text-xs uppercase tracking-[0.3em] text-[#f3e5ab]">
+                        <span className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#f3e5ab]">
                             {t(LIBELLES[k].en, LIBELLES[k].fr)}
                         </span>
                         <span className="text-[#c5a059]">↗</span>

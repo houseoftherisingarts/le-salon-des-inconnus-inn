@@ -28,7 +28,7 @@ export const ContactSection: React.FC<SectionProps> = ({ config, language = 'FR'
                 {rendezvousAllume ? (
                     <a
                         href="#rendezvous"
-                        className="inline-block px-8 py-4 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors rounded-[15px]"
+                        className="inline-block px-8 py-4 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors rounded-[15px]"
                     >
                         {t('Book a meeting', 'Prendre rendez-vous')}
                     </a>
@@ -37,7 +37,7 @@ export const ContactSection: React.FC<SectionProps> = ({ config, language = 'FR'
                         href={lienExterne}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="inline-block px-8 py-4 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors rounded-[15px]"
+                        className="inline-block px-8 py-4 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors rounded-[15px]"
                     >
                         {t('Book a meeting', 'Prendre rendez-vous')}
                     </a>

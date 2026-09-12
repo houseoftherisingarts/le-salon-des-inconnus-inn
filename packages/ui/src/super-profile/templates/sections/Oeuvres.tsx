@@ -45,7 +45,7 @@ const Carte: React.FC<{ oeuvre: OeuvreProfilPro; language: 'EN' | 'FR' }> = ({ o
                 }`}
             >
                 {oeuvre.titre && <p className="font-prata text-[#f3e5ab] text-lg leading-tight mb-1">{oeuvre.titre}</p>}
-                {details && <p className="font-lato text-xs text-neutral-300 mb-1">{details}</p>}
+                {details && <p className="font-lato text-[13px] text-neutral-300 mb-1">{details}</p>}
                 <StatutBadge oeuvre={oeuvre} language={language} />
             </figcaption>
         </figure>

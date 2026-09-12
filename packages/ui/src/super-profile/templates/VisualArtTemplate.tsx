@@ -55,7 +55,7 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
                                     loading="lazy"
                                 />
                                 {w.caption && (
-                                    <figcaption className="absolute -bottom-6 left-0 right-0 text-center font-lato text-neutral-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <figcaption className="absolute -bottom-6 left-0 right-0 text-center font-lato text-neutral-400 text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">
                                         {w.caption}
                                     </figcaption>
                                 )}

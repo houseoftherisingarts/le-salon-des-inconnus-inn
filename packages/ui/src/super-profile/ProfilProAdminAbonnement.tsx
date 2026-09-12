@@ -75,7 +75,7 @@ export const ProfilProAdminAbonnement: React.FC<ProfilProAdminAbonnementProps> =
                     type="button"
                     onClick={ouvrirPortail}
                     disabled={ouverture}
-                    className="min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors rounded-[15px]"
+                    className="min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors rounded-[15px]"
                 >
                     {ouverture ? t('Opening…', 'Ouverture…') : t('Manage my subscription', 'Gérer mon abonnement')}
                 </button>

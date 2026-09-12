@@ -187,7 +187,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
                     >
                         <IconChevronGauche />
                     </button>
-                    <p className="font-cinzel text-xs uppercase tracking-[0.3em] text-[#f3e5ab] capitalize">{nomMois}</p>
+                    <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#f3e5ab] capitalize">{nomMois}</p>
                     <button
                         type="button"
                         onClick={() => setMoisAffiche(new Date(moisAffiche.getFullYear(), moisAffiche.getMonth() + 1, 1))}
@@ -288,7 +288,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
                             type="button"
                             onClick={confirmer}
                             disabled={envoiEnCours}
-                            className="min-h-[44px] px-6 py-3 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors rounded-[15px]"
+                            className="min-h-[44px] px-6 py-3 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors rounded-[15px]"
                         >
                             {envoiEnCours ? t('Sending…', 'Envoi…') : t('Request this time', 'Demander ce moment')}
                         </button>
@@ -316,7 +316,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
                                             <p className="font-prata text-[#f3e5ab]">{formatDate(rdv.debut, language)}</p>
                                             <p className="text-neutral-400 text-sm mt-0.5 font-lato">{formatHeure(rdv.debut, language)}</p>
                                         </div>
-                                        <span className={`text-xs font-cinzel uppercase tracking-[0.2em] px-2.5 py-1 rounded-full ${rdv.statut === 'confirme' ? 'bg-[#c5a059]/15 text-[#c5a059]' : 'border border-white/15 text-neutral-400'}`}>
+                                        <span className={`text-[13px] font-cinzel uppercase tracking-[0.2em] px-2.5 py-1 rounded-full ${rdv.statut === 'confirme' ? 'bg-[#c5a059]/15 text-[#c5a059]' : 'border border-white/15 text-neutral-400'}`}>
                                             {libelle}
                                         </span>
                                     </div>
@@ -325,7 +325,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
                                             <button
                                                 type="button"
                                                 onClick={() => setSalleActive({ salle: rdv.salle, nom: nom || user.displayName || '' })}
-                                                className="min-h-[44px] inline-flex items-center gap-2 px-5 rounded-[15px] bg-[#c5a059] text-[#050505] hover:bg-[#d4b06a] text-xs font-cinzel uppercase tracking-[0.25em] transition-colors"
+                                                className="min-h-[44px] inline-flex items-center gap-2 px-5 rounded-[15px] bg-[#c5a059] text-[#050505] hover:bg-[#d4b06a] text-[13px] font-cinzel uppercase tracking-[0.25em] transition-colors"
                                             >
                                                 <IconVideo /> {t('Join the meeting', 'Rejoindre la rencontre')}
                                             </button>
@@ -333,7 +333,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
                                         <button
                                             type="button"
                                             onClick={() => telechargerIcs('rendez-vous.ics', icsRendezVous(rdv, t(`Meeting with ${artisteNom}`, `Rencontre avec ${artisteNom}`)))}
-                                            className="min-h-[44px] inline-flex items-center gap-2 px-5 rounded-[15px] border border-white/15 text-neutral-200 hover:border-[#c5a059] text-xs font-cinzel uppercase tracking-[0.25em] transition-colors"
+                                            className="min-h-[44px] inline-flex items-center gap-2 px-5 rounded-[15px] border border-white/15 text-neutral-200 hover:border-[#c5a059] text-[13px] font-cinzel uppercase tracking-[0.25em] transition-colors"
                                         >
                                             <IconTelecharger /> {t('Add to calendar', 'Ajouter au calendrier')}
                                         </button>
@@ -341,7 +341,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
                                             <button
                                                 type="button"
                                                 onClick={() => annulerRendezVousPro(rdv.id)}
-                                                className="min-h-[44px] px-5 text-neutral-500 hover:text-rose-300 text-xs font-cinzel uppercase tracking-[0.25em] transition-colors"
+                                                className="min-h-[44px] px-5 text-neutral-500 hover:text-rose-300 text-[13px] font-cinzel uppercase tracking-[0.25em] transition-colors"
                                             >
                                                 {t('Cancel', 'Annuler')}
                                             </button>

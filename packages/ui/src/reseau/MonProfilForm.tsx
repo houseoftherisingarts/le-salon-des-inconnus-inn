@@ -98,7 +98,7 @@ export const MonProfilForm: React.FC<MonProfilFormProps> = ({ uid, membre, langu
                         {(avatarApercu || membre?.photoURL) ? (
                             <img src={avatarApercu || membre?.photoURL} alt="" className="w-full h-full object-cover" />
                         ) : (
-                            <span className="w-full h-full flex items-center justify-center text-neutral-600 text-xs font-lato">{t('Photo', 'Photo')}</span>
+                            <span className="w-full h-full flex items-center justify-center text-neutral-600 text-[13px] font-lato">{t('Photo', 'Photo')}</span>
                         )}
                         {televersement === 'avatar' && <span className="absolute inset-0 bg-black/60 flex items-center justify-center text-[13px] text-neutral-200">…</span>}
                     </button>
@@ -110,7 +110,7 @@ export const MonProfilForm: React.FC<MonProfilFormProps> = ({ uid, membre, langu
                         {(banniereApercu || membre?.banniereURL) ? (
                             <img src={banniereApercu || membre?.banniereURL} alt="" className="w-full h-full object-cover" />
                         ) : (
-                            <span className="w-full h-full flex items-center justify-center text-neutral-600 text-xs font-lato">{t('Banner', 'Bannière')}</span>
+                            <span className="w-full h-full flex items-center justify-center text-neutral-600 text-[13px] font-lato">{t('Banner', 'Bannière')}</span>
                         )}
                         {televersement === 'banniere' && <span className="absolute inset-0 bg-black/60 flex items-center justify-center text-[13px] text-neutral-200">…</span>}
                     </button>
@@ -154,7 +154,7 @@ export const MonProfilForm: React.FC<MonProfilFormProps> = ({ uid, membre, langu
                     {enregistrement ? t('Saving…', 'Sauvegarde…') : t('Save', 'Sauvegarder')}
                 </button>
                 {statut === 'ok' && <span className="text-[13px] font-cinzel uppercase tracking-widest text-emerald-400">✓ {t('Saved', 'Sauvegardé')}</span>}
-                {erreur && <span className="text-xs text-rose-400 font-lato">{erreur}</span>}
+                {erreur && <span className="text-[13px] text-rose-400 font-lato">{erreur}</span>}
             </div>
         </div>
     );

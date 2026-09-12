@@ -120,7 +120,7 @@ export const AgendaAdmin: React.FC<AgendaAdminProps> = ({ uid, language = 'FR' }
                 {JOURS_ORDRE.map((jour) => (
                     <div key={jour} className="min-w-0 bg-black/30 border border-white/10 rounded-[15px] p-4">
                         <div className="flex items-center justify-between mb-3">
-                            <p className="font-cinzel text-xs uppercase tracking-[0.2em] text-[#f3e5ab]">{JOURS_LABEL[jour]}</p>
+                            <p className="font-cinzel text-[13px] uppercase tracking-[0.2em] text-[#f3e5ab]">{JOURS_LABEL[jour]}</p>
                             <button type="button" onClick={() => ajouterPlage(jour)} aria-label={t('Add a slot', 'Ajouter une plage')} className="w-11 h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-[#c5a059] transition-colors">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M12 5v14M5 12h14" /></svg>
                             </button>
@@ -158,7 +158,7 @@ export const AgendaAdmin: React.FC<AgendaAdminProps> = ({ uid, language = 'FR' }
             </div>
 
             <div className="bg-black/30 border border-white/10 rounded-[15px] p-4 space-y-4">
-                <p className="font-cinzel text-xs uppercase tracking-[0.2em] text-[#f3e5ab]">{t('Exceptions', 'Exceptions')}</p>
+                <p className="font-cinzel text-[13px] uppercase tracking-[0.2em] text-[#f3e5ab]">{t('Exceptions', 'Exceptions')}</p>
                 <div className="flex flex-wrap items-end gap-3">
                     <label className="flex-1 min-w-[10rem]">
                         <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{t('Exception date', 'Date de l’exception')}</span>
@@ -203,7 +203,7 @@ export const AgendaAdmin: React.FC<AgendaAdminProps> = ({ uid, language = 'FR' }
                     type="button"
                     onClick={enregistrer}
                     disabled={!modifie || enregistrement}
-                    className="min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[15px]"
+                    className="min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[15px]"
                 >
                     {enregistrement ? t('Saving…', 'Enregistrement…') : t('Save', 'Enregistrer')}
                 </button>

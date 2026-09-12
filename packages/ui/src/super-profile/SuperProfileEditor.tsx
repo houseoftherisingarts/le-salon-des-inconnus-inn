@@ -425,7 +425,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
     if (!maestroEnabled) {
         return (
             <section className="border border-white/10 bg-black/40 p-6 rounded">
-                <h3 className="font-cinzel text-[#c5a059] text-xs uppercase tracking-[0.4em] mb-2">
+                <h3 className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.4em] mb-2">
                     Super Profile · Maestro tier
                 </h3>
                 <p className="text-neutral-400 text-sm font-lato leading-relaxed">
@@ -457,7 +457,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                         Maestro · Super Profile
                     </p>
                     <h3 className="font-prata text-[#f3e5ab] text-2xl mt-1">Your /name page</h3>
-                    <p className="text-neutral-500 text-xs font-lato mt-2 max-w-xl">
+                    <p className="text-neutral-500 text-[13px] font-lato mt-2 max-w-xl">
                         A standalone, fullscreen portfolio page at <code className="text-[#c5a059]">/{slug || 'username'}</code>. The layout adapts to your medium.
                     </p>
                 </div>
@@ -708,7 +708,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     <p className="font-prata text-[#f3e5ab] text-lg leading-tight mb-1">
                         Want a portfolio designed for you?
                     </p>
-                    <p className="text-neutral-500 text-xs font-lato leading-relaxed">
+                    <p className="text-neutral-500 text-[13px] font-lato leading-relaxed">
                         Pick from a catalog of components and Alex assembles a bespoke version of your Mind Palace. <span className="text-fuchsia-300 group-hover:underline">Coming soon →</span>
                     </p>
                 </button>

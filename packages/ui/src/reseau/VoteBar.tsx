@@ -23,7 +23,7 @@ export const VoteBar: React.FC<{
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                 </svg>
             </button>
-            <span className={`text-xs font-bold tabular-nums px-0.5 font-lato ${scoreClasse}`}>{score}</span>
+            <span className={`text-[13px] font-bold tabular-nums px-0.5 font-lato ${scoreClasse}`}>{score}</span>
             <button
                 type="button"
                 disabled={disabled}

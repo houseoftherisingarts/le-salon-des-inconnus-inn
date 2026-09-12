@@ -39,7 +39,7 @@ const BoutonEnregistrer: React.FC<{ onClick: () => void; enCours: boolean; enreg
             <button type="button" onClick={onClick} disabled={enCours} className="min-h-[40px] px-5 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.25em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[10px]">
                 {enCours ? t('Saving…', 'Enregistrement…') : t('Save', 'Enregistrer')}
             </button>
-            {enregistre && <span className="text-[#c5a059] text-xs font-lato">{t('Saved', 'Enregistré')}</span>}
+            {enregistre && <span className="text-[#c5a059] text-[13px] font-lato">{t('Saved', 'Enregistré')}</span>}
         </div>
     );
 };
@@ -139,7 +139,7 @@ const BlocEcoute: React.FC<{ uid: string; valeur: LienEcoute[]; language: 'EN' |
                     {t('Add', 'Ajouter')}
                 </button>
             </div>
-            <p className="font-lato text-xs text-neutral-500 -mt-2">{t('Paste a Spotify, YouTube, Bandcamp or SoundCloud link.', 'Collez un lien Spotify, YouTube, Bandcamp ou SoundCloud.')}</p>
+            <p className="font-lato text-[13px] text-neutral-500 -mt-2">{t('Paste a Spotify, YouTube, Bandcamp or SoundCloud link.', 'Collez un lien Spotify, YouTube, Bandcamp ou SoundCloud.')}</p>
             <div className="space-y-2">
                 {liste.map((l, i) => (
                     <div key={i} className="flex gap-2 items-center">

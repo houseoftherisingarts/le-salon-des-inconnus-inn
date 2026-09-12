@@ -422,7 +422,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          <button
                              onClick={() => (onRequestSignIn ? onRequestSignIn() : googleSignIn())}
                              disabled={authBusy}
-                             className="w-full py-4 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-xs uppercase tracking-[0.35em] hover:bg-[#d4b06a] hover:scale-[1.01] transition-all disabled:opacity-50"
+                             className="w-full py-4 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-[13px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] hover:scale-[1.01] transition-all disabled:opacity-50"
                              style={{ boxShadow: '0 6px 24px rgba(197,160,89,0.3), inset 0 1px 0 rgba(255,255,255,0.2)' }}
                          >
                              {t('Continue with Google', 'Continuer avec Google')}

@@ -57,7 +57,7 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
                 <h1 className="font-prata text-2xl md:text-3xl text-[#f3e5ab]">{t('Sign in to see this profile', 'Connectez-vous pour voir ce profil')}</h1>
                 <a
                     href="/createur"
-                    className="px-8 py-3.5 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] transition-colors"
+                    className="px-8 py-3.5 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] transition-colors"
                 >
                     {t('Open the Creator Studio', 'Ouvrir le Creator Studio')}
                 </a>
@@ -121,10 +121,10 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
 
                 {(membre.liens?.site || membre.liens?.instagram || membre.liens?.facebook || membre.liens?.autre) && (
                     <div className="flex flex-wrap gap-3 mb-6">
-                        {membre.liens?.site && <a href={membre.liens.site} target="_blank" rel="noopener noreferrer" className="text-xs text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">{t('Website', 'Site web')}</a>}
-                        {membre.liens?.instagram && <a href={membre.liens.instagram} target="_blank" rel="noopener noreferrer" className="text-xs text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">Instagram</a>}
-                        {membre.liens?.facebook && <a href={membre.liens.facebook} target="_blank" rel="noopener noreferrer" className="text-xs text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">Facebook</a>}
-                        {membre.liens?.autre && <a href={membre.liens.autre} target="_blank" rel="noopener noreferrer" className="text-xs text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">{t('Other link', 'Autre lien')}</a>}
+                        {membre.liens?.site && <a href={membre.liens.site} target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">{t('Website', 'Site web')}</a>}
+                        {membre.liens?.instagram && <a href={membre.liens.instagram} target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">Instagram</a>}
+                        {membre.liens?.facebook && <a href={membre.liens.facebook} target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">Facebook</a>}
+                        {membre.liens?.autre && <a href={membre.liens.autre} target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#c5a059] hover:text-[#d4b06a] underline underline-offset-2">{t('Other link', 'Autre lien')}</a>}
                     </div>
                 )}
 
@@ -133,39 +133,39 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
                 {!soi && (
                     <div className="flex flex-wrap items-center gap-3 mb-10 pb-6 border-b border-white/10">
                         {amis ? (
-                            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#c5a059]/40 text-xs font-cinzel uppercase tracking-widest text-[#c5a059]">
+                            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#c5a059]/40 text-[13px] font-cinzel uppercase tracking-widest text-[#c5a059]">
                                 ✓ {t('Friends', 'Amis')}
                             </span>
                         ) : jeLaiRecue ? (
-                            <button type="button" onClick={accepter} disabled={envoi} className="px-5 py-2.5 rounded-full bg-[#c5a059] text-[#18181b] text-xs font-cinzel font-bold uppercase tracking-widest disabled:opacity-50">
+                            <button type="button" onClick={accepter} disabled={envoi} className="px-5 py-2.5 rounded-full bg-[#c5a059] text-[#18181b] text-[13px] font-cinzel font-bold uppercase tracking-widest disabled:opacity-50">
                                 {t('Accept request', 'Accepter la demande')}
                             </button>
                         ) : jeLaiEnvoyee ? (
-                            <span className="inline-flex items-center px-5 py-2.5 rounded-full border border-white/15 text-xs font-cinzel uppercase tracking-widest text-neutral-500">
+                            <span className="inline-flex items-center px-5 py-2.5 rounded-full border border-white/15 text-[13px] font-cinzel uppercase tracking-widest text-neutral-500">
                                 {t('Request sent', 'Demande envoyée')}
                             </span>
                         ) : (
-                            <button type="button" onClick={demander} disabled={envoi} className="px-5 py-2.5 rounded-full bg-[#c5a059] text-[#18181b] text-xs font-cinzel font-bold uppercase tracking-widest disabled:opacity-50">
+                            <button type="button" onClick={demander} disabled={envoi} className="px-5 py-2.5 rounded-full bg-[#c5a059] text-[#18181b] text-[13px] font-cinzel font-bold uppercase tracking-widest disabled:opacity-50">
                                 {t('Add friend', 'Demander l’amitié')}
                             </button>
                         )}
                         <a
                             href={`/createur?dm=${uid}`}
-                            className="px-5 py-2.5 rounded-full border border-white/15 text-xs font-cinzel uppercase tracking-widest text-neutral-300 hover:border-[#c5a059]/60 hover:text-[#c5a059] transition-colors"
+                            className="px-5 py-2.5 rounded-full border border-white/15 text-[13px] font-cinzel uppercase tracking-widest text-neutral-300 hover:border-[#c5a059]/60 hover:text-[#c5a059] transition-colors"
                         >
                             {t('Write', 'Écrire')}
                         </a>
                         <button
                             type="button"
                             onClick={() => (jeLaiBloque ? debloquer(currentUser.uid, uid) : bloquer(currentUser.uid, uid))}
-                            className="px-4 py-2.5 rounded-full border border-white/10 text-xs text-neutral-500 hover:text-rose-300 hover:border-rose-400/40 transition-colors"
+                            className="px-4 py-2.5 rounded-full border border-white/10 text-[13px] text-neutral-500 hover:text-rose-300 hover:border-rose-400/40 transition-colors"
                         >
                             {jeLaiBloque ? t('Unblock', 'Débloquer') : t('Block', 'Bloquer')}
                         </button>
                         <button
                             type="button"
                             onClick={signalerCeMembre}
-                            className={`px-4 py-2.5 rounded-full border text-xs transition-colors ${signale ? 'border-[#c5a059]/40 text-[#c5a059]' : 'border-white/10 text-neutral-500 hover:text-[#c5a059]'}`}
+                            className={`px-4 py-2.5 rounded-full border text-[13px] transition-colors ${signale ? 'border-[#c5a059]/40 text-[#c5a059]' : 'border-white/10 text-neutral-500 hover:text-[#c5a059]'}`}
                         >
                             {signale ? t('Reported', 'Signalé') : t('Report', 'Signaler')}
                         </button>

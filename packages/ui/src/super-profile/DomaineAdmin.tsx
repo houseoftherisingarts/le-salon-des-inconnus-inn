@@ -118,7 +118,7 @@ export const DomaineAdmin: React.FC<DomaineAdminProps> = ({ uid, slug, language 
                         type="button"
                         onClick={enregistrer}
                         disabled={enregistrement}
-                        className="shrink-0 min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors rounded-[15px]"
+                        className="shrink-0 min-h-[44px] px-6 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors rounded-[15px]"
                     >
                         {domaine ? t('Update', 'Mettre à jour') : t('Reserve', 'Réserver')}
                     </button>

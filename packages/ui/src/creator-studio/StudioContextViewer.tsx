@@ -23,6 +23,7 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'fire
 
 export type ViewerTab =
     | 'WELCOME'  // pre-tab branded state (initial mount)
+    | 'WALL'     // le mur du studio (réseau social d'artistes)
     | 'PROFILE'
     | 'ROSTER'
     | 'TOOLS'

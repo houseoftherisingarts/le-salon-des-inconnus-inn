@@ -20,7 +20,7 @@ export const ExpositionsSection: React.FC<SectionProps> = ({ config, language = 
                     <li key={`${e.titre}-${i}`} className={`p-5 ${CARD_GLASS}`}>
                         <p className="font-prata text-[#f3e5ab] text-lg leading-snug">{e.titre}</p>
                         <p className="font-lato text-sm text-neutral-400 mt-1">{e.lieu}</p>
-                        <p className="font-lato text-xs text-neutral-500 mt-1">{e.dates}</p>
+                        <p className="font-lato text-[13px] text-neutral-500 mt-1">{e.dates}</p>
                     </li>
                 ))}
             </ul>
