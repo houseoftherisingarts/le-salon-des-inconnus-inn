@@ -82,7 +82,12 @@ service cloud.firestore {
     // Each user can only write their own profile.
     match /members/{userId} {
       allow read:  if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
+      // membreValide borne les champs sociaux (bio, discipline, ville,
+      // liens) et ceux de la porte; hasOnly ferme la porte à tout champ
+      // admin qu'un client tenterait d'y glisser (isArtist, verifie, etc.
+      // vivent tous ailleurs, jamais sur ce document top-level).
+      allow write: if isAdmin()
+                   || (isSelf(userId) && membreValide(request.resource.data));
 
       // Admin-controlled flags (isArtist, etc). Owner can read their own flags
       // (so the UI knows what to unlock); admins are the only writers.
