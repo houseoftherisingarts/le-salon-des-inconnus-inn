@@ -11,7 +11,6 @@
 // cette seule lecture suffit à savoir si la page doit s'afficher.
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
 import { getApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot, getDoc } from 'firebase/firestore';
 import { resolveSlugToUid } from './usernames';
