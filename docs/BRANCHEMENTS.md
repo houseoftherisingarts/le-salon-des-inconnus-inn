@@ -68,6 +68,66 @@ Pour la prochaine édition, les dates, le nombre de places et le prix vivent dan
 le bloc `CAMPING` en haut de `components/CampingPage.tsx`, et un nouveau lien de
 paiement se colle dans Firestore `config/camping.lienStripe` sans redéploiement.
 
+## Profil Pro du Creator Studio (`/{slug}` et `functions/src/profilPro.ts`)
+
+L'abonnement à 100 $ CAD par mois qui débloque la page d'artiste, la prise de
+rendez-vous et le back-office. Trois fonctions, aucun SDK Stripe installé : la
+même méthode que `stripeCampingWebhook` plus haut, une authentification Basic
+sur la clé secrète et des appels `fetch` directs vers `api.stripe.com`.
+
+| Quoi | Identifiant ou emplacement |
+|---|---|
+| Fonction d'ouverture du paiement | `creerAbonnementProfilPro` (onCall) |
+| Fonction de webhook | `webhookProfilPro` (onRequest) |
+| Fonction du portail client | `portailProfilPro` (onCall) |
+| Clé secrète Stripe | Secret Manager → `STRIPE_SECRET_KEY` |
+| Secret de signature du webhook | Secret Manager → `STRIPE_WEBHOOK_PRO_SECRET` (posé après la création de l'endpoint, voir plus bas) |
+| Avis de bienvenue par courriel | Secret Manager → `ZOHO_USER`, `ZOHO_PASS` (déjà posés pour le reste du site) |
+| Abonnements | Firestore → `abonnementsPro/{uid}` |
+| Drapeau qui débloque la page | Firestore → `members/{uid}/admin/flags.proEnabled` (`maestroEnabled` reste accepté comme synonyme) |
+| Agenda de chaque artiste | Firestore → `members/{uid}/agenda/config` |
+| Rendez-vous | Firestore → `rendezvousPro/{id}` et son miroir public `occupationsPro/{id}` |
+| Domaine personnel réservé | Firestore → `domaines/{hostname}` |
+
+Le webhook n'est pas encore créé côté Stripe au moment d'écrire ces lignes : la
+marche à suivre, une seule fois, après le premier déploiement des fonctions :
+
+```bash
+firebase deploy --only functions:creerAbonnementProfilPro,functions:webhookProfilPro,functions:portailProfilPro
+```
+
+puis, dans le tableau de bord Stripe (Developers → Webhooks), un nouvel
+endpoint sur l'adresse que le déploiement affiche pour `webhookProfilPro`
+(le patron est `https://us-central1-le-salon-des-inconnus.cloudfunctions.net/webhookProfilPro`),
+avec les trois événements `checkout.session.completed`,
+`customer.subscription.updated` et `customer.subscription.deleted`. Le secret
+de signature que Stripe donne à cet instant se pose avec :
+
+```bash
+firebase functions:secrets:set STRIPE_WEBHOOK_PRO_SECRET
+```
+
+Le compte Stripe du Salon sert plusieurs projets à la fois et Stripe envoie
+chaque événement à tous les endpoints du compte. Le filtre ici n'est pas un
+identifiant de lien de paiement (il n'y a pas de lien fixe : chaque abonnement
+ouvre sa propre session Checkout) mais `metadata.projet`, posé sur le client,
+la session ET l'abonnement Stripe eux-mêmes, sous la valeur `creator-studio-pro`.
+Un événement qui ne porte pas cette métadonnée repart en succès sans être
+traité, exactement comme le camping ignore ce qui n'est pas son propre lien.
+
+### Le nom de domaine personnel d'un artiste
+
+Le branchement d'un domaine que l'artiste possède déjà est un geste manuel
+d'Alex dans la console Firebase du projet `le-salon-des-inconnus`, section
+Hosting → Ajouter un domaine personnalisé, sur le site `inconnus-salon`. C'est
+cette console, et seulement elle, qui produit les enregistrements DNS exacts
+(un enregistrement A et un enregistrement TXT de validation) à donner à
+l'artiste pour son registraire : ils n'existent qu'une fois le domaine ajouté
+là, personne ne peut les deviner ni les préparer à l'avance. Une fois le
+domaine ajouté dans la console et les enregistrements propagés (24 à 48 heures
+en général), poser `verifie: true` sur le document `domaines/{hostname}`
+correspondant dans Firestore referme la boucle côté application.
+
 ## Le reste du site
 
 | Quoi | Où |
