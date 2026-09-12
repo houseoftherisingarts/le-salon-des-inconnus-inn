@@ -171,6 +171,15 @@ export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, la
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [etat, language]);
 
+    // Titre d'onglet de la page introuvable, retiré au démontage comme les
+    // balises ci-dessus pour ne jamais s'accrocher à la page suivante.
+    React.useEffect(() => {
+        if (etat.etape !== 'pas-trouve') return;
+        const titrePrecedent = document.title;
+        document.title = 'Page introuvable';
+        return () => { document.title = titrePrecedent; };
+    }, [etat]);
+
     if (etat.etape === 'chargement') {
         return (
             <div className="fixed inset-0 bg-[#050505] z-30 flex items-center justify-center">
