@@ -7,13 +7,13 @@
 //   node scripts/qa/firestore-rest.mjs get <chemin/du/doc>
 //   node scripts/qa/firestore-rest.mjs seed <fichier.json>                 ({ "chemin": {..}, ... })
 //   node scripts/qa/firestore-rest.mjs delete <chemin/du/doc>
-import { execSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
 const PROJET = process.env.FIREBASE_PROJECT || 'le-salon-des-inconnus';
 const BASE = `https://firestore.googleapis.com/v1/projects/${PROJET}/databases/(default)/documents`;
 
-const jeton = () => execSync('gcloud auth print-access-token', { encoding: 'utf8' }).trim();
+const jeton = () => execFileSync('gcloud', ['auth', 'print-access-token'], { encoding: 'utf8' }).trim();
 
 // Conversion JSON → valeurs typées Firestore (un sous-ensemble suffisant pour les tests).
 function versValeur(v) {
