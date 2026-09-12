@@ -2,6 +2,7 @@
 // qui le rend. artistes.ts sait déjà quelle FAMILLE de gabarit sert un type
 // (familleGabarit) ; ici, la famille devient un vrai composant.
 
+import type * as React from 'react';
 import type { ArtistType } from '../types';
 import { familleGabarit } from '../artistes';
 import type { TemplateProps } from './shared';
