@@ -18,16 +18,18 @@ interface ProfilSocialProps {
     editeurProfil?: React.ReactNode;
     /** Monté plus tard par l'intégration (back-office du Profil Pro). */
     profilPro?: React.ReactNode;
+    /** L'onglet ouvert au montage (le retour de Stripe ouvre « Profil Pro »). */
+    ongletInitial?: 'mur' | 'amis' | 'profil' | 'pro';
     onOuvrirMembre?: (uid: string) => void;
 }
 
 export const ProfilSocial: React.FC<ProfilSocialProps> = ({
-    uid, currentUser, isAdmin, language, editeurProfil, profilPro, onOuvrirMembre,
+    uid, currentUser, isAdmin, language, editeurProfil, profilPro, ongletInitial, onOuvrirMembre,
 }) => {
     const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
     const [membre, setMembre] = useState<MembreDoc | null>(null);
     const [amities, setAmities] = useState<Amitie[]>([]);
-    const [onglet, setOnglet] = useState<OngletProfil>('mur');
+    const [onglet, setOnglet] = useState<OngletProfil>(ongletInitial ?? 'mur');
 
     useEffect(() => suivreMembre(uid, setMembre), [uid]);
     useEffect(() => suivreMesAmities(uid, setAmities), [uid]);
