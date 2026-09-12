@@ -69,6 +69,11 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
  */
 export const BottomDock: React.FC<{ config: SuperProfileConfig }> = ({ config }) => (
     <div className="absolute bottom-8 left-8 right-8 md:right-auto md:max-w-md z-30 pointer-events-auto">
+        {config.tagline && (
+            <p className="md:hidden font-lato font-light text-[#f3e5ab] text-lg leading-snug mb-3">
+                {config.tagline}
+            </p>
+        )}
         {config.bio && (
             <p className="font-lato text-neutral-300 text-sm md:text-base leading-relaxed mb-4 max-w-prose">
                 {config.bio}
