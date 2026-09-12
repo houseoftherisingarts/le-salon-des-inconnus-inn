@@ -441,27 +441,65 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          )}
                          <input value={authEmail} onChange={e => setAuthEmail(e.target.value)} type="email" autoComplete="email"
                              placeholder={t('Email', 'Courriel')}
+                             onKeyDown={e => { if (e.key === 'Enter' && authMode === 'forgot') emailAuth(); }}
                              className="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 font-lato text-sm text-neutral-100 placeholder:text-neutral-600 focus:border-[#c5a059]/60 outline-none transition-colors" />
-                         <input value={authPassword} onChange={e => setAuthPassword(e.target.value)} type="password"
-                             autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
-                             onKeyDown={e => { if (e.key === 'Enter') emailAuth(); }}
-                             placeholder={t('Password', 'Mot de passe')}
-                             className="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 font-lato text-sm text-neutral-100 placeholder:text-neutral-600 focus:border-[#c5a059]/60 outline-none transition-colors" />
+                         {authMode !== 'forgot' && (
+                             <input value={authPassword} onChange={e => setAuthPassword(e.target.value)} type="password"
+                                 autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
+                                 onKeyDown={e => { if (e.key === 'Enter') emailAuth(); }}
+                                 placeholder={t('Password', 'Mot de passe')}
+                                 className="w-full bg-white/5 border border-white/15 rounded-sm px-4 py-3 font-lato text-sm text-neutral-100 placeholder:text-neutral-600 focus:border-[#c5a059]/60 outline-none transition-colors" />
+                         )}
                          <button
                              onClick={emailAuth}
                              disabled={authBusy}
                              className="w-full py-3.5 border border-[#c5a059]/50 text-[#f3e5ab] font-cinzel text-[11px] uppercase tracking-[0.3em] hover:bg-[#c5a059]/10 hover:border-[#c5a059] transition-all disabled:opacity-50"
                          >
-                             {authBusy ? t('Please wait', 'Un instant') : authMode === 'signup' ? t('Create my account', 'Créer mon compte') : t('Sign in', 'Se connecter')}
+                             {authBusy
+                                 ? t('Please wait', 'Un instant')
+                                 : authMode === 'signup' ? t('Create my account', 'Créer mon compte')
+                                 : authMode === 'forgot' ? t('Send reset link', 'Envoyer le lien')
+                                 : t('Sign in', 'Se connecter')}
                          </button>
+                         {authResetSent && authMode === 'forgot' && (
+                             <p className="text-[11px] text-emerald-300 font-lato text-center pt-1">
+                                 {t('Check your inbox for the reset link.', 'Vérifiez votre boîte de réception pour le lien.')}
+                             </p>
+                         )}
                          {authError && <p className="text-[11px] text-rose-300 font-lato text-center pt-1">{authError}</p>}
-                         <button
-                             onClick={() => { setAuthMode(m => m === 'signup' ? 'signin' : 'signup'); setAuthError(''); }}
-                             className="w-full text-center text-[10px] text-neutral-500 hover:text-[#f3e5ab] font-lato pt-1 transition-colors"
-                         >
-                             {authMode === 'signup' ? t('Already have an account? Sign in', 'Déjà un compte ? Se connecter') : t('New here? Create an account', 'Nouveau ici ? Créer un compte')}
-                         </button>
+                         <div className="flex items-center justify-between gap-3 pt-1">
+                             <button
+                                 onClick={() => { setAuthMode(m => m === 'signup' ? 'signin' : 'signup'); setAuthError(''); setAuthResetSent(false); }}
+                                 className="text-[10px] text-neutral-500 hover:text-[#f3e5ab] font-lato transition-colors"
+                             >
+                                 {authMode === 'signup' ? t('Already have an account? Sign in', 'Déjà un compte ? Se connecter') : t('New here? Create an account', 'Nouveau ici ? Créer un compte')}
+                             </button>
+                             {authMode !== 'forgot' ? (
+                                 <button
+                                     onClick={() => { setAuthMode('forgot'); setAuthError(''); setAuthResetSent(false); }}
+                                     className="text-[10px] text-neutral-600 hover:text-[#f3e5ab] font-lato transition-colors"
+                                 >
+                                     {t('Forgot password?', 'Mot de passe oublié ?')}
+                                 </button>
+                             ) : (
+                                 <button
+                                     onClick={() => { setAuthMode('signin'); setAuthError(''); setAuthResetSent(false); }}
+                                     className="text-[10px] text-neutral-600 hover:text-[#f3e5ab] font-lato transition-colors"
+                                 >
+                                     {t('Back to sign in', 'Retour à la connexion')}
+                                 </button>
+                             )}
+                         </div>
                      </div>
+
+                     {/* Personne ne reste coincé devant la porte : un geste
+                         direct vers Alex, sujet prérempli. */}
+                     <a
+                         href={`mailto:alex@lesalondesinconnus.com?subject=${encodeURIComponent(t('Trouble signing in to the Creator Studio', 'Problème de connexion au Creator Studio'))}`}
+                         className="mt-6 block w-full text-center text-[10px] text-neutral-700 hover:text-neutral-400 font-lato underline underline-offset-2 transition-colors"
+                     >
+                         {t('Technical trouble?', 'Problème technique ?')}
+                     </a>
 
                      <div className="flex items-center gap-3 my-8 text-neutral-700">
                          <span className="flex-1 h-px bg-white/10" />
