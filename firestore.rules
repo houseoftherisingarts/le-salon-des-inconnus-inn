@@ -341,7 +341,11 @@ service cloud.firestore {
       allow write: if isSelf(uid);
     }
     match /signalements/{id} {
-      allow create: if isSignedIn() && request.resource.data.parUid == request.auth.uid;
+      allow create: if isSignedIn()
+                    && request.resource.data.parUid == request.auth.uid
+                    && request.resource.data.cible in ['post', 'commentaire', 'membre']
+                    && request.resource.data.raison is string
+                    && request.resource.data.raison.size() <= 2000;
       allow read, update, delete: if isAdmin();
     }
 
