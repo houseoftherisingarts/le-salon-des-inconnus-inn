@@ -4015,7 +4015,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
             {/* Top Navigation Bar - Updated with Gradient Fade Out */}
             <div 
-                className={`z-40 sticky top-0 px-6 pt-4 pb-12 flex items-center justify-between bg-gradient-to-b from-[#1a1a1a] to-transparent`}
+                className={`z-40 sticky top-0 px-6 py-3 flex items-center justify-between bg-[#141414]/90 backdrop-blur-md border-b border-white/5`}
             >
                 <div className="flex items-center gap-4">
                     <div className={`w-10 h-10 rounded-full border-2 ${currentStyles.border} flex items-center justify-center bg-black/50 shadow-inner`}>
