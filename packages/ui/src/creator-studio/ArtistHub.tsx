@@ -18,7 +18,7 @@ import { Inspirosphere } from './Inspirosphere';
 import { JigsawPuzzle } from './JigsawPuzzle';
 import { PuzzleCelebration } from './PuzzleCelebration';
 import { MyVideosPanel } from './MyVideosPanel';
-import { SuperProfileEditor } from '../super-profile/SuperProfileEditor';
+import { ProfilProAdmin } from '../super-profile/ProfilProAdmin';
 import {
     PUZZLE_PIECES_TOTAL, PUZZLE_PIECES_PRE_REVEALED, PUZZLE_PIECES_TO_EARN,
     COINS_PER_PIECE, COINS_PER_COMPLETION_BONUS,
