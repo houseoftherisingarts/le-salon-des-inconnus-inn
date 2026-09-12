@@ -96,10 +96,10 @@ const BlocOeuvres: React.FC<{ uid: string; valeur: OeuvreProfilPro[]; language: 
                     <div key={`${o.storagePath}-${i}`} className="flex gap-3 items-start">
                         <img src={o.url} alt="" className="w-20 h-20 object-cover rounded-[8px] border border-white/10 shrink-0" />
                         <div className="flex-1 grid grid-cols-2 gap-2">
-                            <input className={CHAMP} placeholder={t('Title', 'Titre')} value={o.titre ?? ''} onChange={(e) => maj(i, { titre: e.target.value })} />
-                            <input className={CHAMP} placeholder={t('Technique', 'Technique')} value={o.technique ?? ''} onChange={(e) => maj(i, { technique: e.target.value })} />
-                            <input className={CHAMP} placeholder={t('Dimensions', 'Dimensions')} value={o.dimensions ?? ''} onChange={(e) => maj(i, { dimensions: e.target.value })} />
-                            <input className={CHAMP} placeholder={t('Year', 'Année')} value={o.annee ?? ''} onChange={(e) => maj(i, { annee: e.target.value })} />
+                            <input className={CHAMP} maxLength={150} placeholder={t('Title', 'Titre')} value={o.titre ?? ''} onChange={(e) => maj(i, { titre: e.target.value.slice(0, 150) })} />
+                            <input className={CHAMP} maxLength={120} placeholder={t('Technique', 'Technique')} value={o.technique ?? ''} onChange={(e) => maj(i, { technique: e.target.value.slice(0, 120) })} />
+                            <input className={CHAMP} maxLength={60} placeholder={t('Dimensions', 'Dimensions')} value={o.dimensions ?? ''} onChange={(e) => maj(i, { dimensions: e.target.value.slice(0, 60) })} />
+                            <input className={CHAMP} maxLength={20} placeholder={t('Year', 'Année')} value={o.annee ?? ''} onChange={(e) => maj(i, { annee: e.target.value.slice(0, 20) })} />
                             <select className={CHAMP} value={o.statutVente ?? 'a-vendre'} onChange={(e) => maj(i, { statutVente: e.target.value as OeuvreProfilPro['statutVente'] })}>
                                 <option value="a-vendre">{t('For sale', 'À vendre')}</option>
                                 <option value="vendu">{t('Sold', 'Vendu')}</option>
@@ -214,8 +214,8 @@ const BlocPresse: React.FC<{ uid: string; valeur: CitationPresse[]; lienEPK?: st
             <div className="space-y-2">
                 {liste.map((c, i) => (
                     <div key={i} className="grid grid-cols-1 md:grid-cols-3 gap-2 items-start">
-                        <textarea className={`${CHAMP} md:col-span-1`} placeholder={t('Quote', 'Citation')} value={c.citation} onChange={(e) => maj(i, { citation: e.target.value })} />
-                        <input className={CHAMP} placeholder={t('Source', 'Source')} value={c.source ?? ''} onChange={(e) => maj(i, { source: e.target.value })} />
+                        <textarea className={`${CHAMP} md:col-span-1`} maxLength={500} placeholder={t('Quote', 'Citation')} value={c.citation} onChange={(e) => maj(i, { citation: e.target.value.slice(0, 500) })} />
+                        <input className={CHAMP} maxLength={120} placeholder={t('Source', 'Source')} value={c.source ?? ''} onChange={(e) => maj(i, { source: e.target.value.slice(0, 120) })} />
                         <div className="flex gap-2">
                             <input className={CHAMP} placeholder={t('Article link', 'Lien de l’article')} value={c.lienArticle ?? ''} onChange={(e) => maj(i, { lienArticle: e.target.value })} />
                             <IconRetirer onClick={() => setListe((ll) => ll.filter((_, idx) => idx !== i))} label={t('Remove', 'Retirer')} />
@@ -248,9 +248,9 @@ const BlocExpositions: React.FC<{ uid: string; valeur: ExpositionProfilPro[]; la
             <div className="space-y-2">
                 {liste.map((e, i) => (
                     <div key={i} className="grid grid-cols-2 md:grid-cols-5 gap-2 items-center">
-                        <input className={CHAMP} placeholder={t('Title', 'Titre')} value={e.titre} onChange={(ev) => maj(i, { titre: ev.target.value })} />
-                        <input className={CHAMP} placeholder={t('Venue', 'Lieu')} value={e.lieu} onChange={(ev) => maj(i, { lieu: ev.target.value })} />
-                        <input className={CHAMP} placeholder={t('Dates (free text)', 'Dates (texte libre)')} value={e.dates} onChange={(ev) => maj(i, { dates: ev.target.value })} />
+                        <input className={CHAMP} maxLength={150} placeholder={t('Title', 'Titre')} value={e.titre} onChange={(ev) => maj(i, { titre: ev.target.value.slice(0, 150) })} />
+                        <input className={CHAMP} maxLength={150} placeholder={t('Venue', 'Lieu')} value={e.lieu} onChange={(ev) => maj(i, { lieu: ev.target.value.slice(0, 150) })} />
+                        <input className={CHAMP} maxLength={200} placeholder={t('Dates (free text)', 'Dates (texte libre)')} value={e.dates} onChange={(ev) => maj(i, { dates: ev.target.value.slice(0, 200) })} />
                         <label className="flex items-center gap-2 font-lato text-sm text-neutral-300">
                             <input type="checkbox" checked={e.aVenir} onChange={(ev) => maj(i, { aVenir: ev.target.checked })} /> {t('Upcoming', 'À venir')}
                         </label>
@@ -300,7 +300,7 @@ const BlocLivres: React.FC<{ uid: string; valeur: LivreProfilPro[]; language: 'E
                         </button>
                         <input ref={(el) => { inputRefs.current[i] = el; }} type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void televerserCouverture(i, f); e.target.value = ''; }} />
                         <div className="flex-1 grid grid-cols-2 gap-2">
-                            <input className={CHAMP} placeholder={t('Title', 'Titre')} value={l.titre} onChange={(e) => maj(i, { titre: e.target.value })} />
+                            <input className={CHAMP} maxLength={150} placeholder={t('Title', 'Titre')} value={l.titre} onChange={(e) => maj(i, { titre: e.target.value.slice(0, 150) })} />
                             <input className={CHAMP} placeholder={t('Buy link', 'Lien d’achat')} value={l.lienAchat ?? ''} onChange={(e) => maj(i, { lienAchat: e.target.value })} />
                         </div>
                         <IconRetirer onClick={() => setListe((ll) => ll.filter((_, idx) => idx !== i))} label={t('Remove', 'Retirer')} />
@@ -326,12 +326,12 @@ const BlocAtelier: React.FC<{ uid: string; valeur?: AtelierProfilPro; language: 
         <div className={BLOC}>
             <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Studio', 'Atelier')}</h4>
             <div className="grid gap-2 sm:grid-cols-2">
-                <input className={CHAMP} placeholder={t('City', 'Ville')} value={ville} onChange={(e) => setVille(e.target.value)} />
+                <input className={CHAMP} maxLength={120} placeholder={t('City', 'Ville')} value={ville} onChange={(e) => setVille(e.target.value.slice(0, 120))} />
                 <label className="flex items-center gap-2 font-lato text-sm text-neutral-300">
                     <input type="checkbox" checked={visites} onChange={(e) => setVisites(e.target.checked)} /> {t('Open by appointment', 'Ouvert sur rendez-vous')}
                 </label>
             </div>
-            <textarea className={`${CHAMP} min-h-[5rem]`} placeholder={t('A note about visiting', 'Une note sur les visites')} value={note} onChange={(e) => setNote(e.target.value)} />
+            <textarea className={`${CHAMP} min-h-[5rem]`} maxLength={800} placeholder={t('A note about visiting', 'Une note sur les visites')} value={note} onChange={(e) => setNote(e.target.value.slice(0, 800))} />
             <BoutonEnregistrer onClick={enregistrer} enCours={enCours} enregistre={enregistre} language={language} />
         </div>
     );

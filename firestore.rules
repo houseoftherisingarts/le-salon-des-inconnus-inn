@@ -136,12 +136,25 @@ service cloud.firestore {
       // Gating maestroEnabled at the rules layer (not just the UI) means a
       // user who knows the schema still can't enable a Super Profile they
       // haven't been granted.
+      // Le Profil Pro (proEnabled, posé par le webhook Stripe) ou l'ancien
+      // Maestro (maestroEnabled, gardé comme synonyme) débloquent l'écriture.
+      // La lecture reste publique : c'est ProfilProPage qui refuse d'afficher
+      // une page dont `enabled` est faux.
       match /superProfile/{docId} {
         allow read: if true;
         allow write: if request.auth != null
                      && request.auth.uid == userId
                      && exists(/databases/$(database)/documents/members/$(userId)/admin/flags)
-                     && get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.maestroEnabled == true;
+                     && (get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.proEnabled == true
+                         || get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.maestroEnabled == true);
+      }
+
+      // L'agenda de CET artiste (Profil Pro) : lecture publique, parce que le
+      // calendrier public en a besoin avant même la connexion; écriture par
+      // le propriétaire seulement.
+      match /agenda/{docId} {
+        allow read:  if true;
+        allow write: if request.auth != null && request.auth.uid == userId;
       }
 
       // Personal Kanban board — strictly private to the owner.

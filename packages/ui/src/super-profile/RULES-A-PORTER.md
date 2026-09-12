@@ -15,7 +15,7 @@ Seule l'écriture change : elle accepte `proEnabled` en plus de `maestroEnabled`
 
 ## firestore.rules
 
-### 1. `members/{userId}/superProfile/{docId}` — remplace le bloc existant
+### 1. `members/{userId}/superProfile/{docId}`, remplace le bloc existant
 
 ```js
 // Le Profil Pro (proEnabled) ou l'ancien Maestro (maestroEnabled, gardé comme
@@ -32,7 +32,7 @@ match /superProfile/{docId} {
 }
 ```
 
-### 2. `members/{userId}/agenda/{docId}` — bloc neuf, à ajouter dans `match /members/{userId}`
+### 2. `members/{userId}/agenda/{docId}`, bloc neuf, à ajouter dans `match /members/{userId}`
 
 ```js
 // L'agenda de CET artiste : lecture publique (le calendrier public en a
@@ -43,7 +43,7 @@ match /agenda/{docId} {
 }
 ```
 
-### 3. `usernames/{slug}` — remplace la condition `create` du bloc existant
+### 3. `usernames/{slug}`, remplace la condition `create` du bloc existant
 
 ```js
 match /usernames/{slug} {
@@ -61,9 +61,9 @@ match /usernames/{slug} {
 }
 ```
 
-### 4. `rendezvousPro/{rdvId}` et `occupationsPro/{rdvId}` — blocs neufs, au niveau racine
+### 4. `rendezvousPro/{rdvId}` et `occupationsPro/{rdvId}`, blocs neufs, au niveau racine
 
-Port du patron `rendezvous`/`occupations` de Xena Horizon, avec `artisteUid`
+Port du patron `rendezvous`/`occupations` d'un chantier précédent, avec `artisteUid`
 en plus puisqu'un agenda existe par artiste plutôt qu'un seul par site.
 
 ```js
@@ -113,7 +113,7 @@ match /occupationsPro/{rdvId} {
 }
 ```
 
-### 5. `domaines/{hostname}` — bloc neuf, au niveau racine
+### 5. `domaines/{hostname}`, bloc neuf, au niveau racine
 
 ```js
 // hostname (en minuscules, sans protocole ni chemin) est l'id du document.
@@ -135,7 +135,7 @@ match /domaines/{hostname} {
 }
 ```
 
-### 6. `abonnementsPro/{userId}` — bloc neuf, au niveau racine
+### 6. `abonnementsPro/{userId}`, bloc neuf, au niveau racine
 
 ```js
 // Lecture par le propriétaire (et l'admin) seulement ; écriture par les
