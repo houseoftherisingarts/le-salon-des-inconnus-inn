@@ -1,18 +1,24 @@
 // PhotoTemplate: photographer's Mind Palace.
 //
-// Three layers, back-to-front:
+// Three layers, back-to-front, puis les sections du Profil Pro en dessous :
 //   1. Works mosaic, full-bleed, with the RevealWaveImage shader playing
 //      on each tile (B&W dither + flashlight reveal on cursor).
 //   2. Huge name flowing right-to-left in display type, mix-blend screen so
 //      the photos underneath bleed through.
 //   3. Artist cutout, centered, the focal point.
+//
+// Le bloc `fixed inset-0` d'origine verrouillait tout l'écran : ce gabarit
+// est maintenant un vrai site qui défile, le mur de photos n'étant plus que
+// le premier écran (`relative`), les sections suivant en dessous.
 
 import * as React from 'react';
 import { RevealWaveImage } from '../RevealWaveImage';
-import { ArtistCutout, BackToSalonLink, type TemplateProps } from './shared';
+import { ArtistCutout, BackToSalonLink, useTexte, type TemplateProps } from './shared';
 import { BottomDock, NameLayer, WorkCountChip } from './stage';
+import { BioSection, ContactSection, LiensSection, OeuvresSection, PiedDePageSection, PriseRendezVousSection } from './sections';
 
-export const PhotoTemplate: React.FC<TemplateProps> = ({ config, fallbackDisplayName }) => {
+export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDisplayName, language = 'FR' }) => {
+    const t = useTexte(language);
     const works = config.works ?? [];
     const displayName = config.displayName || fallbackDisplayName || config.username;
 
@@ -22,7 +28,7 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, fallbackDisplay
     const tiles = Array.from({ length: tileCount }, (_, i) => works[i % works.length]).filter(Boolean);
 
     return (
-        <div className="fixed inset-0 bg-[#050505] text-white overflow-hidden font-lato">
+        <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
             <BackToSalonLink />
 
             {/* ── Layer 1 · Back: works mosaic ──────────────────────────── */}
