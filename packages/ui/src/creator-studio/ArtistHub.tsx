@@ -4100,7 +4100,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             </div>
 
             {/* Main Content Area */}
-            <div className="w-full max-w-[95%] mx-auto px-4 pb-12 relative min-h-[80vh] -mt-8">
+            <div className="w-full max-w-[95%] mx-auto px-4 pb-12 pt-6 relative min-h-[80vh]">
 
                 {/* TOOLS: Inspirosphere variant.
                     When the user opens the Inspirosphere from the Arsenal
