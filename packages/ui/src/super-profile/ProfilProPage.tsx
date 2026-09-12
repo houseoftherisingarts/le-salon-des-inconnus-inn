@@ -192,28 +192,12 @@ export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, la
 
     if (etat.etape === 'pas-trouve' || etat.etape === 'en-pause') {
         return (
-            <div className="fixed inset-0 bg-[#050505] z-30 flex items-center justify-center px-6 text-center">
-                <div>
-                    <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.5em] mb-3">
-                        Le Salon des Inconnus
-                    </p>
-                    <h1 className="font-prata text-[#f3e5ab] text-3xl md:text-4xl mb-3">
-                        {etat.etape === 'en-pause' ? t('This page is paused', 'Cette page est en pause') : t('Page not found', 'Page introuvable')}
-                    </h1>
-                    <p className="font-lato text-neutral-400 text-sm mb-8 max-w-md mx-auto">
-                        {etat.etape === 'en-pause'
-                            ? t('This artist has stepped away for now.', 'Cet artiste s’est retiré pour le moment.')
-                            : t('There is no Profil Pro at this address.', 'Il n’y a pas de Profil Pro à cette adresse.')}
-                    </p>
-                    <button
-                        type="button"
-                        onClick={onNavigateHome}
-                        className="px-5 py-2.5 border border-white/15 text-neutral-300 font-cinzel text-[13px] uppercase tracking-[0.35em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
-                    >
-                        {t('Back to the Salon', 'Retour au Salon')}
-                    </button>
-                </div>
-            </div>
+            <PageIntrouvable
+                site={site}
+                enPause={etat.etape === 'en-pause'}
+                language={language}
+                onNavigateHome={onNavigateHome}
+            />
         );
     }
 
