@@ -319,6 +319,5 @@ export async function majRendezVousProParArtiste(
 /** Enregistre les disponibilités de l'artiste, en fusion. */
 export async function enregistrerAgendaConfig(artisteUid: string, patch: Partial<AgendaConfig>): Promise<void> {
     const db = getFirestore(getApp());
-    const { setDoc } = await import('firebase/firestore');
     await setDoc(doc(db, 'members', artisteUid, 'agenda', 'config'), patch, { merge: true });
 }
