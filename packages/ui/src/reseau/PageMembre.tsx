@@ -108,7 +108,9 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
                 </a>
             </div>
 
-            <div className="max-w-3xl mx-auto px-6">
+            {/* Pleine largeur à 1440 : la fiche à gauche, le mur de la personne à droite. */}
+            <div className="max-w-6xl mx-auto px-6 md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-12 md:items-start">
+              <div className="min-w-0">
                 <div className="relative flex flex-col md:flex-row md:items-end gap-4 -mt-14 md:-mt-16 pb-6">
                     <Avatar nom={nom} url={membre.photoURL} taille={128} className="border-2 shadow-xl" />
                     <div className="flex-1 min-w-0 pb-1">
