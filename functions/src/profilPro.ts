@@ -150,7 +150,7 @@ async function envoyerBienvenueProfilPro(destinataire: string, prenom: string): 
 // ─── creerAbonnementProfilPro ──────────────────────────────────────────────
 
 export const creerAbonnementProfilPro = onCall(
-  { secrets: [STRIPE_SECRET_KEY] },
+  { secrets: [STRIPE_SECRET_KEY], invoker: 'public' },
   async (request) => {
     if (!request.auth) {
       throw new HttpsError('unauthenticated', 'Il faut être connecté pour ouvrir un Profil Pro.');
@@ -332,7 +332,7 @@ export const webhookProfilPro = onRequest(
 // ─── portailProfilPro ──────────────────────────────────────────────────────
 
 export const portailProfilPro = onCall(
-  { secrets: [STRIPE_SECRET_KEY] },
+  { secrets: [STRIPE_SECRET_KEY], invoker: 'public' },
   async (request) => {
     if (!request.auth) {
       throw new HttpsError('unauthenticated', 'Il faut être connecté pour ouvrir le portail.');

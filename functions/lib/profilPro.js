@@ -169,7 +169,7 @@ async function envoyerBienvenueProfilPro(destinataire, prenom) {
     }
 }
 // ─── creerAbonnementProfilPro ──────────────────────────────────────────────
-exports.creerAbonnementProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_KEY] }, async (request) => {
+exports.creerAbonnementProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_KEY], invoker: 'public' }, async (request) => {
     if (!request.auth) {
         throw new https_1.HttpsError('unauthenticated', 'Il faut être connecté pour ouvrir un Profil Pro.');
     }
@@ -338,7 +338,7 @@ exports.webhookProfilPro = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK_PRO
     res.status(200).send('Ignored');
 });
 // ─── portailProfilPro ──────────────────────────────────────────────────────
-exports.portailProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_KEY] }, async (request) => {
+exports.portailProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_KEY], invoker: 'public' }, async (request) => {
     if (!request.auth) {
         throw new https_1.HttpsError('unauthenticated', 'Il faut être connecté pour ouvrir le portail.');
     }
