@@ -1,7 +1,8 @@
-// rendezvous.ts : les fonctions Calendly du Profil Pro, portées du module de
-// Territoire Incarné (Élise) puis de Xena Horizon (Laurie), adaptées pour
-// qu'un artiste par uid ait son propre agenda plutôt qu'un agenda unique par
-// site. Trois collections top-level plutôt qu'un settings/agenda par site :
+// rendezvous.ts : les fonctions Calendly du Profil Pro, portées d'un module
+// de rendez-vous déjà construit et éprouvé sur un chantier précédent,
+// adaptées pour qu'un artiste par uid ait son propre agenda plutôt qu'un
+// agenda unique par site. Trois collections top-level plutôt qu'un
+// settings/agenda par site :
 //
 //   • members/{artisteUid}/agenda/config → AgendaConfig de CET artiste
 //   • rendezvousPro/{id}                 → { artisteUid, uid, ... }
