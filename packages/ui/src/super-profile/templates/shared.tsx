@@ -82,8 +82,19 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({ links, accent = '#c5a0
 
 export interface TemplateProps {
     config: SuperProfileConfig;
+    /** uid du membre : les sections Profil Pro (rendez-vous, contact) en ont
+     *  besoin pour lire son agenda et écrire dans ses collections. Optionnel
+     *  pour ne rien casser sur un ancien appel de PhotoTemplate/etc sans uid. */
+    uid?: string;
     /** Auth-display fallback when config.displayName is missing. */
     fallbackDisplayName?: string;
+    /** Langue de la page publique. Le français d'abord : FR par défaut. */
+    language?: 'EN' | 'FR';
+}
+
+/** Le patron bilingue du studio : `t('anglais', 'français')`. */
+export function useTexte(language: 'EN' | 'FR' = 'FR') {
+    return (en: string, fr: string) => (language === 'FR' ? fr : en);
 }
 
 /**
