@@ -27,6 +27,38 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags).data.isArtist == true;
     }
 
+    // ── Réseau social d'artistes : petits helpers partagés ─────────────────────
+    function isSignedIn() { return request.auth != null; }
+    function isSelf(uid) { return isSignedIn() && request.auth.uid == uid; }
+
+    // Un lien vide, ou un lien https:// de moins de 200 caractères. Jamais
+    // http:// ni javascript: — c'est le champ le plus exposé du profil.
+    function lienValide(v) {
+      return v is string && v.size() <= 200 && (v.size() == 0 || v.matches('^https://.*'));
+    }
+
+    // Les champs sociaux de members/{uid} (bio, discipline, ville, liens) et
+    // ceux que la porte (ensureMember) écrit à chaque connexion. Aucun autre
+    // champ n'entre ici : c'est la seule barrière entre un membre et les
+    // drapeaux admin, qui vivent ailleurs (members/{uid}/admin/flags).
+    function membreValide(d) {
+      return d.keys().hasOnly([
+               'displayName', 'email', 'photoURL', 'banniereURL', 'bio',
+               'discipline', 'ville', 'liens', 'provider', 'joinedAt', 'lastSeenAt'
+             ])
+        && (!('bio' in d) || (d.bio is string && d.bio.size() <= 1000))
+        && (!('discipline' in d) || (d.discipline is string && d.discipline.size() <= 80))
+        && (!('ville' in d) || (d.ville is string && d.ville.size() <= 80))
+        && (!('liens' in d) || (
+             d.liens is map
+             && d.liens.keys().hasOnly(['site', 'instagram', 'facebook', 'autre'])
+             && (!('site' in d.liens) || lienValide(d.liens.site))
+             && (!('instagram' in d.liens) || lienValide(d.liens.instagram))
+             && (!('facebook' in d.liens) || lienValide(d.liens.facebook))
+             && (!('autre' in d.liens) || lienValide(d.liens.autre))
+           ));
+    }
+
     // ── Site config ───────────────────────────────────────────────────────────
     // Cosmetic site-wide settings (e.g. hero photo framing / focal points). Public
     // read so the live site applies them; only admins can change them.
