@@ -26,6 +26,14 @@ import {
     type PuzzleArtwork,
 } from './puzzleArtworks';
 import { getApp } from 'firebase/app';
+import { isAdmin as isAdminEmail } from '../lib/auth';
+import { MurSocial } from '../reseau/MurSocial';
+import { Cloche } from '../reseau/Cloche';
+import { ProfilSocial } from '../reseau/ProfilSocial';
+import { MonProfilForm } from '../reseau/MonProfilForm';
+import { PanneauAdminBadges } from '../reseau/BadgesUI';
+import { getMembre } from '../reseau/membres';
+import { ouvrirConversation } from '../reseau/dms';
 
 // Safe firebase accessors: return null when no app is initialized (e.g. when
 // the studio is mounted in a context that hasn't set up Firebase yet, like
