@@ -14,7 +14,7 @@
 
 import { getApp } from 'firebase/app';
 import {
-    getFirestore, doc, collection, getDoc, onSnapshot, query, where,
+    getFirestore, doc, collection, getDoc, setDoc, onSnapshot, query, where,
     Timestamp, serverTimestamp, writeBatch, updateDoc, deleteDoc,
 } from 'firebase/firestore';
 import * as React from 'react';
