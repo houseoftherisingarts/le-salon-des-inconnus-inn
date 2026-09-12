@@ -64,6 +64,29 @@ service firebase.storage {
       allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
     }
 
+    // ── Réseau social d'artistes · avatar, bannière, photos du mur ──────────
+    // members/{uid}/profil/{avatar.jpg,banniere.jpg} et members/{uid}/mur/*.jpg
+    // sont déjà redimensionnés côté client (voir packages/ui/src/reseau/images.ts)
+    // avant l'envoi; la règle ne fait que confirmer image + 5 Mo + propriétaire,
+    // et laisse la lecture publique (le mur et les profils s'affichent partout,
+    // y compris sur la fiche publique /membre/{uid} vue par un visiteur).
+    match /members/{userId}/profil/{allPaths=**} {
+      allow read:   if true;
+      allow write:  if request.auth != null
+                    && request.auth.uid == userId
+                    && isImage()
+                    && request.resource.size < 5 * 1024 * 1024;
+      allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+    }
+    match /members/{userId}/mur/{allPaths=**} {
+      allow read:   if true;
+      allow write:  if request.auth != null
+                    && request.auth.uid == userId
+                    && isImage()
+                    && request.resource.size < 5 * 1024 * 1024;
+      allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+    }
+
     // ── Super Profile (Maestro tier) · hero photo + portfolio works ────────
     // The hero cutout and each portfolio work for the /{username} fullscreen
     // page. Public read so anonymous visitors can load the page; owner-only
