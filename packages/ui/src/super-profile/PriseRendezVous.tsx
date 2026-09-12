@@ -1,6 +1,6 @@
 // PriseRendezVous : le widget public de réservation, monté dans la section
-// du même nom de chaque gabarit du Profil Pro. Porté de Xena Horizon
-// (components/espace/RendezVous.tsx), avec un ajout : la personne qui
+// du même nom de chaque gabarit du Profil Pro. Porté d'un widget déjà construit
+// pour un chantier précédent, avec un ajout : la personne qui
 // réserve n'a pas besoin d'avoir déjà un compte. Si elle n'en a pas, le
 // widget lui en ouvre un à la volée (mot de passe aléatoire, courriel de
 // réinitialisation), ce qui en fait au passage un membre du Creator Studio.

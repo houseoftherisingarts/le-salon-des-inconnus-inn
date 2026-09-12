@@ -1,6 +1,6 @@
 // PiedDePage : le pied de page pleine largeur de chaque gabarit, avec le
-// collant Vexel en foil holographique porté de Terre Sauvage
-// (src/components/CollantVexel.tsx, règle d'Alex du 11 septembre : toujours
+// collant Vexel en foil holographique porté d'un chantier précédent
+// (règle d'Alex du 11 septembre : toujours
 // en foil, sur tout site). Le CSS du foil est inline ici plutôt que dans une
 // feuille globale : ce fichier ne touche jamais index.css d'apps/salon.
 

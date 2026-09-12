@@ -1,5 +1,5 @@
 // AgendaAdmin : « Mes disponibilités », l'onglet Rendez-vous du Profil Pro.
-// Porté de Xena Horizon (components/admin/agenda/Disponibilites.tsx),
+// Porté d'un panneau de disponibilités déjà construit pour un chantier précédent,
 // adapté pour écrire sous members/{uid}/agenda/config plutôt que sous un
 // document unique par site.
 

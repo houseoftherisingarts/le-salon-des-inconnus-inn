@@ -1,6 +1,6 @@
 // Rencontre : la salle vidéo d'un rendez-vous du Profil Pro. Salle Jitsi
 // Meet nommée d'après le rendez-vous, aucune clé d'API, aucun serveur à
-// louer. Porté de Xena Horizon (components/espace/Rencontre.tsx).
+// louer. Porté d'un module de rendez-vous déjà construit pour un chantier précédent.
 
 import * as React from 'react';
 import { salleUrl } from './rendezvous';
@@ -64,7 +64,7 @@ export const Rencontre: React.FC<RencontreProps> = ({ salle, nom, language = 'FR
                     width: '100%',
                     height: '100%',
                     userInfo: { displayName: nom },
-                    configOverwrite: { prejoinPageEnabled: true, disableDeepLinking: true, subject: 'Le Salon des Inconnus — Profil Pro' },
+                    configOverwrite: { prejoinPageEnabled: true, disableDeepLinking: true, subject: 'Le Salon des Inconnus, Profil Pro' },
                     interfaceConfigOverwrite: { SHOW_JITSI_WATERMARK: false },
                 });
                 apiRef.current = api;

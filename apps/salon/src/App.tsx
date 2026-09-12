@@ -104,6 +104,13 @@ export default function App() {
     return <AlexPage />;
   }
 
+  // La fiche publique d'un membre du réseau social d'artistes : une page
+  // pleine, hors du graphe d'ArtsPage, comme /alex ci-dessus.
+  const membreUid = membreUidDeLadresse(window.location.pathname, window.location.search);
+  if (membreUid) {
+    return <PageMembre uid={membreUid} language="FR" />;
+  }
+
   return (
     <ArtsPage
       language="FR"
