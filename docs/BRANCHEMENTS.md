@@ -89,8 +89,18 @@ sur la clé secrète et des appels `fetch` directs vers `api.stripe.com`.
 | Rendez-vous | Firestore → `rendezvousPro/{id}` et son miroir public `occupationsPro/{id}` |
 | Domaine personnel réservé | Firestore → `domaines/{hostname}` |
 
-Le webhook n'est pas encore créé côté Stripe au moment d'écrire ces lignes : la
-marche à suivre, une seule fois, après le premier déploiement des fonctions :
+Fait le 12 septembre 2026 : les trois fonctions sont déployées (us-central1), l'endpoint
+webhook `we_1UEvdJKKPSkaQESft1CvO5iJ` existe sur le compte Stripe du Salon avec ses trois
+événements, son secret de signature est dans Secret Manager, et l'appel d'ouverture rend
+une vraie session Checkout pour un compte témoin. Deux choses à savoir pour la suite :
+le déploiement n'avait pas rendu les deux fonctions appelables publiques (401 de Cloud
+Run), le droit `roles/run.invoker` pour `allUsers` a été posé à la main puis rendu durable
+par `invoker: 'public'` dans le code; et trois comptes témoins existent (mot de passe dans
+`~/.config/salon/temoins-creator-studio.txt`), dont deux Profils Pro d'exemple en ligne à
+`/temoin-peintre` et `/temoin-musicien`, à garder comme démonstrations ou à retirer par
+`superProfile/config.enabled = false`.
+
+La marche à suivre d'origine, si l'endpoint devait un jour être recréé :
 
 ```bash
 firebase deploy --only functions:creerAbonnementProfilPro,functions:webhookProfilPro,functions:portailProfilPro

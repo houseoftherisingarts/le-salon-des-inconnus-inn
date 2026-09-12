@@ -110,7 +110,7 @@
         "updatedAt": "2026-08-14T19:30:15.335Z"
       },
       {
-        "id": 10,
+        "id": "10",
         "title": "Authentication & Member Profile Foundation",
         "description": "Implement comprehensive authentication system with Google OAuth (popup with redirect fallback) and email/password, create member profiles with social network shell (banner, avatar, badges), and image upload/resize system via Canvas API and Firebase Storage",
         "details": "Build authentication gate in CreatorStudioShell.tsx with:\n1. Google sign-in via signInWithPopup with fallback to signInWithRedirect on specific auth errors (popup-blocked, operation-not-supported-in-this-environment, web-storage-unsupported, internal-error)\n2. Email/password with three modes: sign-in, sign-up, forgot password (sendPasswordResetEmail)\n3. Error messages in FR/EN (invalid email/password, account exists, password too short, too many attempts)\n4. 'ensureMember' function to create/update members/{uid} with displayName, email, photoURL, provider, joinedAt (once), lastSeenAt\n5. Technical support button → mailto:alex@lesalondesinconnus.com\n\nExtend members/{uid} schema with: banniereURL, bio (max 1000 chars), discipline (max 80), ville (max 80), liens {site, instagram, facebook, autre - all https, max 200}, provider\n\nCreate ProfilSocial component (port from EspaceShell.tsx in xena-horizon-platform):\n- Banner: full-width 2:1 mobile, 3:1 desktop, default from apps/salon/public/media\n- Avatar: 128px overlapping bottom of banner\n- Name in Prata font, subtitle 'discipline · ville'\n- Badge showcase\n- Underlined tabs (NOT pills): Mon mur, Mes amis, Mon profil, Profil Pro\n\nImage upload system in packages/ui/src/reseau/images.ts:\n- Canvas resizing: 512px avatar, 1920px banner, JPEG quality 0.85\n- Firebase Storage: members/{uid}/profil/avatar.jpg and banniere.jpg\n- Update Auth photoURL and artistProfile/profile.avatarUrl when avatar changes\n- Storage rules: image only, <5MB, owner write, public read",
@@ -121,128 +121,140 @@
         "subtasks": []
       },
       {
-        "id": 11,
+        "id": "11",
         "title": "Social Wall & Activity Feed",
         "description": "Build the studio social wall with posts (text + optional photo), votes, comments, and real-time subscriptions using diff-based Firestore counters (no client-written counts)",
         "details": "Create Firestore collections in packages/ui/src/reseau/mur.ts:\n- mur/{postId}: {uid, nom, avatarUrl?, texte (max 2000), photoURL?, fil: 'studio', creeLe}\n- mur/{postId}/votes/{voterUid}: {valeur: 1 | -1, nom, majLe}\n- mur/{postId}/commentaires/{cid}: {uid, nom, avatarUrl?, texte (max 1000), creeLe}\n\nStorage path for post images: members/{uid}/mur/{postId}.jpg, resized to 1600px, <5MB\n\nBuild components in packages/ui/src/reseau/:\n- MurSocial.tsx: composer at top (text input + optional photo upload), feed below sorted by date descending\n- BilletCarte.tsx: avatar, clickable name → /membre/{uid}, relative date, text, optional photo, VoteBar, collapsible comments, delete button (owner + admin), report button\n- VoteBar.tsx: upvote/downvote buttons, vote count from subcollection subscription (NOT document field)\n\nAdd WALL tab to ArtistHub.tsx as first tab ('LE MUR' / 'THE WALL'), default for authenticated members. Client-side sorting by creeLe descending, no composite index required.\n\nFirestore rules (diff-based pattern from Terre Sauvage):\n- mur: authenticated read/create (own uid), owner delete\n- votes subcollection: authenticated create (own voterUid), owner delete\n- commentaires: authenticated create (own uid), owner delete\n- Counts calculated via onSnapshot(collection(db, 'mur', postId, 'votes'))",
         "testStrategy": "Test post creation with text only and with photo, verify Storage upload and 1600px resize. Test vote system: upvote/downvote, vote count updates via subscription (no document write), vote flip (remove old, add new). Test comments: create, display, delete (owner + admin). Verify real-time updates when other users post/vote/comment. Test client-side date sorting. Run Firestore emulator tests (tests/rules.reseau.test.mjs) to verify: member can't write other's uid, can't vote as another user, can't delete other's post, can't modify vote counts directly.",
         "priority": "high",
         "dependencies": [
-          10
+          "10"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.535Z"
       },
       {
-        "id": 12,
+        "id": "12",
         "title": "Notifications Bell, Badges, Blocking & Member Pages",
         "description": "Implement notification system (bell icon with unread count), artist badges awarded by admin, user blocking, content reporting, and public member profile pages",
         "details": "Notification system in packages/ui/src/reseau/notifications.ts:\n- Cloche component in ArtistHub top bar (right side)\n- Badge shows count of: unread messages (conversations where unread[uid] exists OR lastMessageAt > lastReadAt[uid]), pending friend requests (friendships where status='pending' AND requestedBy != currentUser.uid), new notifications\n- notifications/{uid}/items/{id}: {type: 'commentaire'|'vote'|'badge', deUid, deNom, postId?, texte, creeLe, lu: boolean}\n- Create notification when: commenting on another's post, voting on another's post, admin awards badge\n- Panel lists 10 most recent, marks as read on view, navigates to appropriate tab\n\nBadges system in packages/ui/src/reseau/badges.ts:\n- badges/{uid}: {obtenus: {[badgeId]: date}, exposes: string[] (max 5)}\n- Catalog: première œuvre, premier billet, cent votes reçus, collaborateur, mécène, exposé au Salon, profil complet, profil pro\n- Admin-only award button in ROSTER tab\n- Member selects up to 5 badges to display on profile\n\nBlocking & reporting:\n- blocages/{uid}: {bloques: string[]}\n- signalements/{id}: {parUid, cible: 'post'|'commentaire'|'membre', cibleId, raison, creeLe}\n- Blocked users: hidden from wall, comments, can't send messages (check before envoyerMessage)\n- Admin-only signalements read\n\nPublic member page /membre/{uid} in apps/salon/src/App.tsx:\n- ProfilSocial shell (banner, avatar, name, subtitle, badges, links) in read-only mode\n- Show user's posts from mur collection (fil='studio', uid={uid})\n- Buttons: Demander en ami, Écrire (opens existing conversation in COLLABORATE tab), Bloquer, Signaler\n- Non-authenticated visitors see sign-in gate",
         "testStrategy": "Test notification creation: post comment on another's post, verify notification created with correct deUid/deNom. Test unread count: create conversation message, verify unread count increments, mark conversation as read, verify count decrements. Test badges: admin awards badge, verify obtenus updated, member selects 5 to expose, verify exposes array. Test blocking: block user, verify they disappear from wall/comments, verify can't send message. Test reporting: report post/comment/member, verify signalement created, verify admin can read. Test public page: visit /membre/{uid} as authenticated user (see action buttons), as guest (see sign-in gate). Verify blocked user's content invisible to blocker.",
         "priority": "medium",
         "dependencies": [
-          10,
-          11
+          "10",
+          "11"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.544Z"
       },
       {
-        "id": 13,
+        "id": "13",
         "title": "Profil Pro Templates - Painter & Musician",
         "description": "Create two new premium artist templates (PeintreTemplate and MusicienTemplate) with full-page scroll, shared section components, and artist type selection in superProfile/config",
         "details": "Extend superProfile/config schema:\n- Add 'type' field: 'peintre'|'musicien'|'photographe'|'sculpteur'|'ecrivain'|'scene'|'cineaste'|'artisan'|'numerique'|'autre'\n- Map from existing 'medium' when type missing: photo→photographe, visual-art→peintre, other→autre\n- Add sections object: {[sectionId]: boolean} to enable/disable sections\n- Add section data: oeuvres (max 48), ecoute (max 12), dates (max 24), presse, expositions, livres, atelier\n\nCreate packages/ui/src/super-profile/templates/:\n- PeintreTemplate.tsx: hero with découpe or large artwork, gallery wall (titre, technique, dimensions, année, prix|'vendu'|'sur demande'), démarche section, expositions (past/upcoming), atelier (ville, visits by appointment), prise de rendez-vous, contact/links. Style: gallery at dusk, gold on black, artwork-driven\n- MusicienTemplate.tsx: full-screen photo hero, écoute section (Spotify/YouTube/Bandcamp/SoundCloud iframe embeds with domain allowlist), prochaines dates (lieu, ville, date, ticket link), presse/EPK (quotes, PDF dossier), booking by appointment, contact/links. Style: venue before first chord, strong contrasts\n\nCreate packages/ui/src/super-profile/templates/sections/:\n- Oeuvres.tsx, Ecoute.tsx, Dates.tsx, Bio.tsx, Livres.tsx, Expositions.tsx, PriseRendezVous.tsx (placeholder for task 14), Contact.tsx, Liens.tsx\n- PiedDePage.tsx with Vexel sticky footer (port from terre-sauvage/src/components/CollantVexel.tsx, use apps/salon/public/vexel-logo.png)\n\nRefresh existing templates:\n- PhotoTemplate: remove all italics, add sections below full-screen hero, make scrollable\n- EditorialTemplate: remove italics, add Livres section (cover, title, buy link), make scrollable\n\nDesign system adherence:\n- Background #050505 with photo/texture overlay, never plain black\n- Gold #c5a059 as only accent, cream #f3e5ab for titles\n- Fonts: Prata (display titles), Cinzel (labels in small caps with letter-spacing), Lato 300/400 (body)\n- Glass cards: bg-black/40 backdrop-blur-md border-white/15, rounded-[15px]\n- NO italics anywhere (Alex's hard rule)\n- Hero titles max 2 lines\n- Full-width layouts, no centered blocks with side whitespace",
         "testStrategy": "Test template rendering: create superProfile/config with type='peintre', verify PeintreTemplate renders with all sections. Test type='musicien', verify MusicienTemplate with iframe embeds for Spotify/YouTube URLs. Test section toggling: disable 'expositions' in config.sections, verify section hidden. Test existing templates: verify PhotoTemplate and EditorialTemplate scroll, no italics, sections visible. Measure fonts/colors in DevTools against design system. Capture 1440px and 390px screenshots, verify hero titles max 2 lines, full-width layouts, glass cards with exact border/blur values. Test with max data: 48 oeuvres, 24 dates, verify performance and layout integrity.",
         "priority": "high",
         "dependencies": [
-          10
+          "10"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.548Z"
       },
       {
-        "id": 14,
+        "id": "14",
         "title": "Appointment Booking System (Calendly Functions)",
         "description": "Build complete appointment system with artist availability config, public booking widget, Jitsi video rooms, iCal downloads, and admin interface for managing bookings",
         "details": "Port from xena-horizon-platform (3) to packages/ui/src/super-profile/rendezvous/:\n\nFirestore collections:\n- members/{uid}/agenda/config: {durée, tampon, délai_minimal, horizon, fuseau, jours: {[0-6]: PlageHoraire[]}, exceptions: {[YYYY-MM-DD]: PlageHoraire[]}}\n  - PlageHoraire: {debut: 'HH:MM', fin: 'HH:MM'}\n  - Public read, owner write\n- rendezvousPro/{id}: {artisteUid, uid, nom, courriel, debut: Timestamp, fin: Timestamp, duree: number, statut: 'demande'|'confirme'|'annule'|'complete', salle: string, note?, noteAdmin?, creePar: 'client'|'artiste', createdAt, updatedAt}\n  - Read: artiste OR client (uid match), Write: writeBatch with getAfter() guard\n- occupationsPro/{id}: {artisteUid, debut: Timestamp, fin: Timestamp}\n  - Public read (no personal data), created in batch with rendezvous\n\nPublic booking widget (PriseRendezVous.tsx mounted in template sections):\n1. Fetch agenda/config and occupationsPro for artist\n2. Calculate available slots: artist's jours + exceptions, minus occupations, respecting délai_minimal and horizon\n3. Display calendar with available time slots\n4. On booking: if user not authenticated, create account (createUserWithEmailAndPassword with 48-char random password, updateProfile with nom, sendPasswordResetEmail with url='/createur')\n5. writeBatch: create rendezvousPro + occupationsPro\n6. Jitsi room: meet.jit.si/salon-{id}, accessible 10min before to 30min after\n7. Generate .ics file for download (iCal format with VEVENT)\n\nArtist admin (AgendaAdmin.tsx in ProfilProAdmin):\n- Disponibilités tab: configure jours, exceptions, durée, tampon, délai_minimal, horizon, fuseau\n- Rendez-vous tab: list all appointments (upcoming/past), actions: confirmer, annuler, add noteAdmin\n- Display appointee info: nom, courriel, date/time, statut, Jitsi room link (when active)\n\nFirestore rules:\n- agenda/config: public read, owner write\n- rendezvousPro: read if artisteUid==uid OR uid==request.auth.uid, create with validation (artisteUid matches, debut < fin, future date)\n- occupationsPro: public read, write in batch only (validated via getAfter)",
         "testStrategy": "Test availability calculation: set artist jours to Mon-Fri 9-17, create occupations for Mon 10-11 and 14-15, verify available slots exclude those times and respect tampon/délai. Test booking flow as guest: enter name/email, book slot, verify account created with random password, password reset email sent, rendezvous and occupation created in batch. Test as authenticated user: verify no account creation, immediate booking. Test Jitsi room: verify URL format, accessible window (10min before to 30min after). Test .ics download: verify VEVENT with correct DTSTART, DTEND, SUMMARY. Test admin: confirm booking (status→confirme), cancel (status→annule), add noteAdmin. Run emulator tests: verify non-owner can't write agenda/config, can't read other's appointments, can't create occupation without matching rendezvous.",
         "priority": "medium",
         "dependencies": [
-          10,
-          13
+          "10",
+          "13"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.552Z"
       },
       {
-        "id": 15,
+        "id": "15",
         "title": "Custom Domain Support & Hostname Resolution",
         "description": "Implement custom domain registration per artist, hostname resolution system, admin domain verification flow, and documentation for Alex to configure Firebase Hosting",
         "details": "Create Firestore collection and resolution service:\n- domaines/{hostname}: {uid, slug, creeLe, verifie: boolean}\n  - hostname: lowercase, no protocol/path\n  - Create: owner only, max 1 domain per uid\n  - verifie field: admin write only\n- resoudreHostname(hostname): return slug for domain or null\n\nDomain admin tab (in ProfilProAdmin):\n1. Input field for custom domain (e.g., 'artiste.com')\n2. After creation in Firestore, display Firebase Hosting DNS records (A/CNAME) that Alex will see in Firebase Console\n3. Explain: 'Enter your domain, point these DNS records at your registrar, Alex will connect it within 24-48 hours, then click Verify'\n4. Verify button: checks domaines/{hostname}.verifie, shows status\n5. Honest messaging: domain connection is manual step by Alex, not instant\n\nCreate docs/BRANCHEMENTS.md in repository:\n- For Alex: how to add custom domain to inconnus-salon Firebase Hosting site\n- Steps: go to Hosting console, click 'Add custom domain', enter hostname from domaines collection, follow Firebase verification steps, set verifie=true in Firestore\n- Document DNS propagation (24-48h typical)\n\nUpdate ProfilProPage resolution (task 16 dependency):\n- Check if hostname matches custom domain, resolve to slug\n- Support: inconnus-salon.web.app/{slug}, lesalondesinconnus.com/{slug}, custom-domain.com (root)\n\nFirestore rules:\n- domaines: authenticated read, create if request.auth.uid==uid AND uid has no existing domain (validated via exists()), verifie write admin only",
         "testStrategy": "Test domain creation: authenticated user creates domaines/artiste.com with their uid and slug, verify written. Test duplicate prevention: same user tries second domain, verify rejected by rules. Test resolution: call resoudreHostname('artiste.com') before and after verifie=true, verify correct slug returned when verified. Test admin verification: admin sets verifie=true, non-admin attempts, verify rejected by rules. Verify DNS record display matches Firebase Hosting format (A records to Firebase IPs, or CNAME to project.web.app). Review BRANCHEMENTS.md documentation for clarity and completeness of Alex's steps.",
         "priority": "low",
         "dependencies": [
-          10,
-          13
+          "10",
+          "13"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.556Z"
       },
       {
-        "id": 16,
+        "id": "16",
         "title": "Stripe Subscription & Payment Integration",
         "description": "Implement Stripe Checkout subscription flow ($100 CAD/month), webhook handling for subscription lifecycle, customer portal, Interac alternative, and proEnabled flag management",
         "details": "Create functions/src/profilPro.ts with Firebase Functions v2:\n\n1. creerAbonnementProfilPro (onCall, authenticated):\n   - Get/create Stripe customer by uid in abonnementsPro/{uid}\n   - Create Checkout session: mode='subscription', price_data={unit_amount: 10000, currency: 'cad', recurring: {interval: 'month'}}\n   - metadata: {projet: 'creator-studio-pro', uid}\n   - client_reference_id: uid\n   - success_url: /createur?pro=merci, cancel_url: /createur?pro=annule\n   - Return session URL\n\n2. webhookProfilPro (onRequest):\n   - Verify Stripe signature manually (crypto.createHmac, no Stripe SDK) like stripeCampingWebhook\n   - Filter: only process events with metadata.projet=='creator-studio-pro'\n   - Events: checkout.session.completed, customer.subscription.updated, customer.subscription.deleted\n   - On success: write abonnementsPro/{uid} {statut, stripeCustomerId, stripeSubscriptionId, periodeFin, montant}, set members/{uid}/admin/flags.proEnabled=true\n   - On deletion: set flags.proEnabled=false\n   - Send welcome email via Zoho (ZOHO_USER, ZOHO_PASS from secrets)\n\n3. portailProfilPro (onCall, authenticated):\n   - Create Stripe customer portal session\n   - Return portal URL for subscription management\n\nSecrets to configure:\n- STRIPE_SECRET_KEY (already present per docs)\n- STRIPE_WEBHOOK_PRO_SECRET (set after webhook endpoint creation)\n- ZOHO_USER, ZOHO_PASS (already present)\n\nClient-side (packages/ui/src/super-profile/abonnement.ts):\n- Call creerAbonnementProfilPro → redirect to Stripe Checkout\n- Call portailProfilPro → open customer portal\n- Subscribe to abonnementsPro/{uid} for status display\n- Display Interac option: 'Vous préférez un virement Interac ? Envoyez 100 $ à alex@lesalondesinconnus.com avec votre nom d'artiste en message, et votre Profil Pro s'allume dans la journée.'\n\nExport functions from functions/src/index.ts (integration step)\n\nFirestore rules:\n- abonnementsPro/{uid}: owner read only (no write, functions write via admin SDK)",
         "testStrategy": "Test Checkout creation: call creerAbonnementProfilPro, verify Stripe session created with correct amount (10000 CAD), metadata, success/cancel URLs. Test webhook signature: send test event with invalid signature, verify rejected. Send valid checkout.session.completed event, verify abonnementsPro doc created, flags.proEnabled=true, welcome email sent to test address. Test subscription update: send customer.subscription.updated with new periodeFin, verify doc updated. Test deletion: send customer.subscription.deleted, verify flags.proEnabled=false. Test portal: call portailProfilPro, verify portal URL returned and valid. Test client subscription: verify abonnementsPro/{uid} read succeeds for owner, fails for other user. Verify Interac text displays correctly in FR/EN.",
         "priority": "medium",
         "dependencies": [
-          10
+          "10"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.560Z"
       },
       {
-        "id": 17,
+        "id": "17",
         "title": "Profil Pro Admin Interface & Public Pages",
         "description": "Build complete Profil Pro back-office with tabbed admin interface, Vexel upsell cards, and public ProfilProPage with SEO (title, description, Open Graph, JSON-LD Person)",
         "details": "ProfilProAdmin component in packages/ui/src/super-profile/:\n\nWhen flags.proEnabled=false (offer page):\n- Explain Profil Pro benefits: custom URL, artist template, appointment booking, domain, admin interface, Salon advertising on profile\n- Price: $100/month CAD, no commitment, cancel anytime\n- 'Ouvrir mon Profil Pro' button → calls creerAbonnementProfilPro\n- Interac text from task 16\n- Preview of templates by type (screenshots/demos)\n\nWhen flags.proEnabled=true (admin tabs):\n1. Mon site tab:\n   - Artist type selector (updates superProfile/config.type)\n   - Address display: /{slug}\n   - Name, tagline, bio editors\n   - Sections toggles (config.sections.{id})\n   - Hero photo uploader (découpe)\n\n2. Œuvres et contenu tab (conditional on type):\n   - Peintre/photographe/sculpteur: oeuvres editor (titre, technique, dimensions, année, prix)\n   - Musicien/cinéaste: ecoute links editor (Spotify, YouTube, Bandcamp, SoundCloud), dates editor (lieu, ville, date, billets link)\n   - Écrivain: livres editor (cover, title, buy link)\n   - All: presse/EPK editor, expositions editor\n\n3. Rendez-vous tab:\n   - Mount AgendaAdmin from task 14\n\n4. Domaine tab:\n   - Mount domain management from task 15\n\n5. Abonnement tab:\n   - Display abonnementsPro status, periodeFin, montant\n   - 'Gérer mon abonnement' button → calls portailProfilPro\n\nVexel upsell card (bottom of EVERY tab, identical text):\n'Envie de quelque chose de plus personnalisé ? Le Profil Pro vous donne un gabarit soigné. Un site Vexel vous donne une direction artistique à vous, des pages à votre mesure et une équipe qui retouche votre site chaque mois. Ça commence à 350 $ par mois, comme pour tous les clients du studio, et vous passez du même coup au traitement privilégié.'\nButton: 'Voir ce que Vexel ferait pour vous' → https://vexelwebstudio.com/?origine=profil-pro\n\nProfilProPage component:\n- Accepts slug OR hostname\n- Resolves usernames/{slug} or domaines/{hostname} → uid\n- Subscribes to members/{uid}/superProfile/config\n- Rejects if config.enabled=false or neither flags.proEnabled nor flags.maestroEnabled (maestroEnabled kept as synonym for backward compat)\n- Renders template based on config.type\n- Sets document.title: '{Nom} · {Type} · Profil Pro du Salon des Inconnus'\n- Meta description: config.bio (first 160 chars)\n- Open Graph: og:title, og:description, og:image (hero photo), og:url\n- JSON-LD Person schema: {\"@type\": \"Person\", name, description, sameAs: [config.liens]}\n- 'Page not found' state (404) and 'Page paused' state (enabled=false) in Salon design canon\n\nIntegration in apps/salon/src/App.tsx:\n- Mount ProfilProPage for single-segment paths that aren't known routes\n- Mount for custom hostnames (not inconnus-salon.web.app, localhost, lesalondesinconnus.com, or Salon subdomains)\n- For custom domain root, render the domain owner's Profil Pro\n- Update components/SuperProfilePage.tsx in root app to render same ProfilProPage\n\nMount ProfilProAdmin in ProfilSocial shell's 'Profil Pro' tab (integration with task 10)",
         "testStrategy": "Test offer page: access as user with proEnabled=false, verify benefits listed, Checkout button works, Interac text visible, template previews render. Test admin tabs: enable proEnabled, verify all 5 tabs render, type selector updates config.type, sections toggles work, oeuvres/ecoute/dates editors save to Firestore. Test Vexel upsell: verify card appears at bottom of all 5 tabs with exact copy, button link includes ?origine=profil-pro. Test ProfilProPage slug resolution: visit /artist-slug, verify resolves to correct uid, renders correct template. Test hostname resolution: configure custom domain, verify root renders profile. Test rejection: set enabled=false, verify 'Page paused' renders. Test SEO: inspect document.title, meta tags, Open Graph properties, JSON-LD script in page source. Capture 1440px and 390px screenshots of offer page, all admin tabs, and public page with both templates. Verify design canon: #050505 bg, #c5a059 accent, Prata/Cinzel/Lato, no italics, glass cards, full-width.",
         "priority": "high",
         "dependencies": [
-          10,
-          13,
-          14,
-          15,
-          16
+          "10",
+          "13",
+          "14",
+          "15",
+          "16"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.563Z"
       },
       {
-        "id": 18,
+        "id": "18",
         "title": "Integration, Testing, Deployment & Documentation",
         "description": "Integrate all components into apps/salon, merge Firestore/Storage rules, build and test functions, run emulator rule tests, execute boucle-verdict visual verification, deploy to Firebase, create webhook endpoint, and deliver complete documentation",
         "details": "Integration steps:\n\n1. Component wiring in apps/salon/src/App.tsx:\n   - Import ProfilProPage from @inconnus/ui\n   - Route single-segment paths (not known routes) to ProfilProPage with slug\n   - Route custom hostnames to ProfilProPage with hostname resolution\n   - Update components/SuperProfilePage.tsx to render ProfilProPage\n\n2. ProfilSocial integration:\n   - Wrap existing ArtistHub PROFILE tab with ProfilSocial shell from task 10\n   - Mount ProfilProAdmin in 'Profil Pro' tab\n   - Wire 'Mon profil' tab to existing SuperProfileEditor\n   - Wire 'Mon mur' to user's own posts, 'Mes amis' to friendships\n\n3. Firestore rules merge:\n   - Copy rule blocks from packages/ui/src/reseau/ and super-profile/RULES-A-PORTER.md\n   - Merge into firestore.rules: mur collections, notifications, badges, blocages, signalements, domaines, rendezvousPro, occupationsPro, abonnementsPro\n   - Validate members/{uid} size limits: bio 1000, discipline 80, ville 80, liens 200\n\n4. Storage rules merge:\n   - Add rules for members/{uid}/profil/**, members/{uid}/mur/**\n   - Validate: image only, <5MB, owner write, public read\n\n5. Functions deployment:\n   - Export creerAbonnementProfilPro, webhookProfilPro, portailProfilPro in functions/src/index.ts\n   - Configure secrets on functions: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_PRO_SECRET (after endpoint creation), ZOHO_USER, ZOHO_PASS\n   - npm run build in functions/, fix all TypeScript errors\n\n6. Rule testing:\n   - Create tests/rules.reseau.test.mjs (based on functions/test-webhook.mjs pattern)\n   - firebase emulators:exec --only firestore\n   - Test: member can't write admin flags, can't vote as other user, can't delete other's posts, can't award badges, can't read signalements, can't write multiple domains\n\n7. Boucle verdict (skill boucle-verdict):\n   - Build apps/salon: npm run build, serve dist/ locally\n   - Playwright headless screenshots at 1440px and 390px:\n     * Auth gate (Google + email forms)\n     * Social wall with posts\n     * Member profile (all tabs)\n     * Public member page /membre/{uid}\n     * Profil Pro offer page\n     * Profil Pro admin (all 5 tabs)\n     * PeintreTemplate and MusicienTemplate with test data\n   - Independent Sonnet agent reviews captures against grille (2-line titles, full-width, no hidden elements, readable text, correct colors/fonts)\n   - Fix issues, max 3 rounds\n\n8. Deployment:\n   - firebase deploy --only firestore:rules,storage\n   - firebase deploy --only functions (includes new profilPro functions)\n   - Create Stripe webhook endpoint via API, note URL, configure STRIPE_WEBHOOK_PRO_SECRET\n   - firebase deploy --only hosting:salon\n\n9. Verification:\n   - Compare local bundle hash to served bundle hash\n   - Test title of deployed page\n   - Test creerAbonnementProfilPro callable responds\n   - Test ProfilProPage renders live at inconnus-salon.web.app/{test-slug}\n\n10. Documentation:\n    - Update 50_journal/2026-09-12.md with completed work\n    - Create memory in Obsidian vault\n    - Update improvements-ledger.md if breakthroughs found\n    - Ensure docs/BRANCHEMENTS.md created for Alex (domain connection steps)\n    - Completion report: all 10 PRD requirements ✅ or ⏳ with reason",
         "testStrategy": "Build verification: npm run build in apps/salon and functions succeeds with 0 errors. Rule tests: all emulator tests pass. Visual verification: boucle-verdict agent approves all captures (or documents remaining issues after 3 rounds). Deployment verification: firestore.rules deployed, functions deployed and callable via client, hosting deployed and serving correct bundle. Post-deployment smoke test: create account, post to wall, vote, comment, enable Profil Pro (test mode), configure artist type, verify public page renders, test appointment booking creates rendezvous, verify webhook processes test subscription event. Documentation verification: BRANCHEMENTS.md contains clear steps for Alex, journal entry complete, memory created with [[wikilinks]].",
         "priority": "high",
         "dependencies": [
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-09-12T18:37:12.566Z"
       }
     ],
     "metadata": {
-      "created": "2026-09-12T15:53:54.494Z",
-      "updated": "2026-09-12T15:53:54.494Z",
-      "description": "Tasks for master context"
+      "version": "1.0.0",
+      "lastModified": "2026-09-12T18:37:12.567Z",
+      "taskCount": 18,
+      "completedCount": 14,
+      "tags": [
+        "master"
+      ]
     }
   }
 }
