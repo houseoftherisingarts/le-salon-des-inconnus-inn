@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { ArtsPage } from '@inconnus/ui';
+import { ArtsPage, PageMembre } from '@inconnus/ui';
 import AlexPage from './AlexPage';
 
 // Route model:
