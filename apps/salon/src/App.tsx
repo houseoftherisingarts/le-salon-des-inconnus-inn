@@ -132,6 +132,7 @@ export default function App() {
         hostname={window.location.hostname.toLowerCase()}
         language="FR"
         onNavigateHome={() => window.location.assign('https://inconnus-salon.web.app/centre')}
+        site="atelier"
       />
     );
   }
