@@ -174,7 +174,9 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
                     </div>
                 )}
 
-                <div>
+              </div>
+
+                <div className="min-w-0 md:pt-8">
                     <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-4">
                         {t('The wall of', 'Le mur de')} {nom}
                     </p>
