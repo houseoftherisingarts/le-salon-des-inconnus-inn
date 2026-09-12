@@ -11,6 +11,7 @@
 // cette seule lecture suffit à savoir si la page doit s'afficher.
 
 import * as React from 'react';
+import { motion } from 'framer-motion';
 import { getApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot, getDoc } from 'firebase/firestore';
 import { resolveSlugToUid } from './usernames';
@@ -18,6 +19,7 @@ import { resoudreHostname } from './domaines';
 import { deduireType, LIBELLES_ARTISTE } from './artistes';
 import { gabaritPour } from './templates';
 import type { SuperProfileConfig } from './types';
+import { PageIntrouvable } from './PageIntrouvable';
 
 export interface ProfilProPageProps {
     /** Le slug d'URL, déjà normalisé en minuscules par l'appelant. */
@@ -27,6 +29,11 @@ export interface ProfilProPageProps {
     hostname?: string;
     language?: 'EN' | 'FR';
     onNavigateHome: () => void;
+    /** Quel univers habille la page « introuvable » / « en pause » : l'auberge
+     *  (lesalondesinconnus.com) ou l'atelier du Creator Studio
+     *  (inconnus-salon.web.app). Par défaut 'atelier', le terrain natif de ce
+     *  paquet ; components/SuperProfilePage.tsx (racine) passe 'auberge'. */
+    site?: 'auberge' | 'atelier';
 }
 
 type EtatChargement =
