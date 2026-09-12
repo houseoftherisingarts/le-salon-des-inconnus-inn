@@ -180,7 +180,7 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
                         currentUser={{ uid: currentUser.uid, displayName: currentUser.displayName, photoURL: currentUser.photoURL }}
                         monNom={currentUser.displayName || 'Un membre'}
                         monAvatar={currentUser.photoURL ?? undefined}
-                        isAdmin={isAdmin}
+                        isAdmin={estAdminEmail(currentUser)}
                         language={language}
                         seulementDe={uid}
                     />
