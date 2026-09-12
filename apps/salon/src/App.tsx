@@ -1,6 +1,31 @@
 import { useEffect, useState, useCallback } from 'react';
-import { ArtsPage, PageMembre } from '@inconnus/ui';
+import { ArtsPage, PageMembre, ProfilProPage, RESERVED_SLUGS } from '@inconnus/ui';
 import AlexPage from './AlexPage';
+
+// Les hôtes du Salon lui-même. Tout autre nom d'hôte est le domaine personnel
+// d'un artiste au Profil Pro (branché sur ce site hosting par Alex) : la page
+// rend alors son profil, quelle que soit l'adresse demandée.
+const HOTES_DU_SALON = [
+  /^localhost$/, /^127\.0\.0\.1$/, /^\[::1\]$/, /^0\.0\.0\.0$/,
+  /\.web\.app$/, /\.firebaseapp\.com$/,
+  /(^|\.)lesalondesinconnus\.com$/, /(^|\.)aubergedesinconnus\.com$/, /(^|\.)houseoftherisingarts\.com$/,
+];
+export function estUnHoteDuSalon(hostname: string): boolean {
+  const h = hostname.toLowerCase();
+  return HOTES_DU_SALON.some((re) => re.test(h));
+}
+
+// /{slug} : la page publique d'un Profil Pro. Un seul segment, en minuscules,
+// qui n'est ni un nœud du Salon, ni une adresse réservée, ni une page pleine.
+const SLUG_PUBLIC = /^[a-z0-9][a-z0-9-]{1,30}[a-z0-9]$/;
+export function slugProfilProDeLadresse(pathname: string): string | null {
+  const chemin = pathname.replace(/\/$/, '') || '/';
+  if (chemin === '/' || chemin.slice(1).includes('/')) return null;
+  const slug = chemin.slice(1).toLowerCase();
+  if (`/${slug}` in SLUG_TO_NODE || slug === 'alex' || slug === 'membre') return null;
+  if (!SLUG_PUBLIC.test(slug) || RESERVED_SLUGS.has(slug)) return null;
+  return slug;
+}
 
 // Route model:
 //   '/' & '/centre' → arts hub (the Patron/Creator choice)

@@ -128,6 +128,15 @@ domaine ajouté dans la console et les enregistrements propagés (24 à 48 heure
 en général), poser `verifie: true` sur le document `domaines/{hostname}`
 correspondant dans Firestore referme la boucle côté application.
 
+Firebase Hosting accepte une vingtaine de domaines personnalisés par site (la
+limite vient des certificats, et la documentation ne publie pas de chiffre plus
+précis). Dès que le site `inconnus-salon` approche de vingt domaines d'artistes,
+le geste est de créer un deuxième site hosting dans le même projet (par exemple
+`inconnus-profils-2`, cible `profils2`) qui sert le même dossier
+`apps/salon/dist` avec les mêmes réécritures dans `firebase.json`, et d'y
+brancher les domaines suivants : l'application résout le domaine par
+`domaines/{hostname}` quel que soit le site qui la sert.
+
 ## Le reste du site
 
 | Quoi | Où |
