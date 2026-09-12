@@ -270,6 +270,81 @@ service cloud.firestore {
       }
     }
 
+    // ── Le mur du studio (réseau social d'artistes) ────────────────────────────
+    // Un seul fil, 'studio', ouvert à tout membre connecté (cohérent avec le
+    // reste du Creator Studio : pas de lecture anonyme). Aucun compteur écrit
+    // par le client : les votes vivent chacun dans leur propre document, les
+    // cartes les comptent en direct côté client (patron Terre Sauvage).
+    match /mur/{postId} {
+      allow read:   if isSignedIn();
+      allow create: if isSignedIn()
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.fil == 'studio'
+                    && request.resource.data.texte is string
+                    && request.resource.data.texte.size() <= 2000
+                    && (!('photoURL' in request.resource.data) || request.resource.data.photoURL is string);
+      allow update: if isAdmin();
+      allow delete: if isAdmin() || (isSignedIn() && resource.data.uid == request.auth.uid);
+
+      match /votes/{voterUid} {
+        allow read:  if isSignedIn();
+        // Le document est nommé par l'uid du votant : on ne peut voter
+        // qu'en son propre nom, jamais au nom d'un autre.
+        allow write: if isSelf(voterUid);
+      }
+      match /commentaires/{cid} {
+        allow read:   if isSignedIn();
+        allow create: if isSignedIn()
+                      && request.resource.data.uid == request.auth.uid
+                      && request.resource.data.texte is string
+                      && request.resource.data.texte.size() <= 1000;
+        allow update: if false;
+        allow delete: if isAdmin()
+                      || (isSignedIn() && resource.data.uid == request.auth.uid)
+                      || (isSignedIn() && get(/databases/$(database)/documents/mur/$(postId)).data.uid == request.auth.uid);
+      }
+    }
+
+    // ── La cloche : notifications écrites par un tiers ─────────────────────────
+    // Une notification est toujours écrite par la personne qui AGIT
+    // (commente ou vote), jamais par le destinataire, et jamais pour
+    // soi-même. Le destinataire ne peut modifier que le champ 'lu'.
+    match /notifications/{uid}/items/{itemId} {
+      allow read:   if isSelf(uid) || isAdmin();
+      allow create: if isSignedIn()
+                    && request.resource.data.deUid == request.auth.uid
+                    && request.resource.data.deUid != uid
+                    && request.resource.data.type in ['commentaire', 'vote', 'badge'];
+      allow update: if isSelf(uid)
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lu']);
+      allow delete: if isSelf(uid) || isAdmin();
+    }
+
+    // ── Badges du réseau d'artistes ─────────────────────────────────────────────
+    // Tout le monde connecté lit (la vitrine s'affiche sur le mur, le profil,
+    // la fiche publique); seul l'admin décerne; le membre n'édite que sa
+    // propre vitrine (exposes), cinq badges au plus, tous vérifiés côté
+    // client contre ce qu'il a réellement reçu.
+    match /badges/{uid} {
+      allow read:   if isSignedIn();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+                    || (isSelf(uid)
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['exposes'])
+                        && request.resource.data.exposes is list
+                        && request.resource.data.exposes.size() <= 5);
+    }
+
+    // ── La tenue du studio : blocages et signalements ──────────────────────────
+    match /blocages/{uid} {
+      allow read:  if isSignedIn();
+      allow write: if isSelf(uid);
+    }
+    match /signalements/{id} {
+      allow create: if isSignedIn() && request.resource.data.parUid == request.auth.uid;
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Events ───────────────────────────────────────────────────────────────
     // Public read on the event document itself (name, dates, description).
     match /events/{eventId} {
