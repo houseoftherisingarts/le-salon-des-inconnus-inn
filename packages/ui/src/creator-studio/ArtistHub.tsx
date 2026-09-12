@@ -5356,7 +5356,18 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             </div>
                         )}
                     </div>
-                )}
+                    );
+                    return currentUser ? (
+                        <ProfilSocial
+                            uid={currentUser.uid}
+                            currentUser={currentUser}
+                            isAdmin={isAdmin}
+                            language={language}
+                            onOuvrirMembre={ouvrirMembre}
+                            editeurProfil={contenuEditeur}
+                        />
+                    ) : contenuEditeur;
+                })()}
 
                 {/* ROSTER (ALL ARTISTS) - NEW TAB */}
                 {activeTab === 'ROSTER' && (
