@@ -74,8 +74,9 @@ interface ArtistHubProps {
 type AccessLevel = 'GUEST' | 'MEMBER';
 type MembershipTier = 'FREE' | 'INITIATE' | 'ARTISAN' | 'MAESTRO';
 
-// Reordered: COLLABORATE is now first
-type Tab = 'COLLABORATE' | 'TOOLS' | 'READS' | 'ROSTER' | 'PROFILE' | 'MARKET' | 'STORE' | 'HOT_SEAT' | 'CHAT';
+// WALL (le mur du studio, réseau social) est en tête : c'est l'onglet par
+// défaut d'un membre connecté (voir hasNavigated plus bas).
+type Tab = 'WALL' | 'COLLABORATE' | 'TOOLS' | 'READS' | 'ROSTER' | 'PROFILE' | 'MARKET' | 'STORE' | 'HOT_SEAT' | 'CHAT';
 
 interface RegistrationData {
     name: string;
