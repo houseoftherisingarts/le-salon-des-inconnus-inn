@@ -55,13 +55,11 @@ export async function signaler(s: Signalement): Promise<void> {
 /** Vérifie le blocage avant tout envoi de message privé, dans les deux
  *  sens : si l'un des deux a fait taire l'autre, rien ne part. */
 export async function peutEcrireA(moiUid: string, autreUid: string): Promise<boolean> {
-    const [maListe, sonneListe] = await Promise.all([
-        new Promise<string[]>((resolve) => {
-            const off = suivreBlocages(moiUid, (b) => { resolve(b); off(); });
-        }),
-        new Promise<string[]>((resolve) => {
-            const off = suivreBlocages(autreUid, (b) => { resolve(b); off(); });
-        }),
+    const [maFiche, sonFiche] = await Promise.all([
+        getDoc(doc(db(), 'blocages', moiUid)),
+        getDoc(doc(db(), 'blocages', autreUid)),
     ]);
+    const maListe = (maFiche.data()?.bloques as string[]) || [];
+    const sonneListe = (sonFiche.data()?.bloques as string[]) || [];
     return !maListe.includes(autreUid) && !sonneListe.includes(moiUid);
 }
