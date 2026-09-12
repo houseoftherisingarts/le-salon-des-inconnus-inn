@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, type User } from 'firebase/auth';
+import { isAdmin as estAdminEmail } from '../lib/auth';
 import { suivreMembre, type MembreDoc } from './membres';
 import {
     suivreMesAmities, demanderAmitie, accepterAmitie, retirerAmitie,
