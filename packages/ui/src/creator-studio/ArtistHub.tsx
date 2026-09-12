@@ -595,7 +595,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
 
                             <div className="grid grid-cols-1 gap-4">
                                 {/* Free Template 1 */}
-                                <div className="p-4 border border-white/10 bg-white/5 rounded flex justify-between items-center group hover:border-[#d4af37]/50 transition-colors">
+                                <div className="p-4 border border-white/10 bg-white/5 rounded flex justify-between items-center group hover:border-[#c5a059]/50 transition-colors">
                                     <div>
                                         <h4 className="font-bold text-white text-sm">Model Release Form</h4>
                                         <p className="text-[10px] text-neutral-400 uppercase tracking-widest mt-1">Essential for Photographers</p>
@@ -604,7 +604,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                                 </div>
 
                                 {/* Free Template 2 */}
-                                <div className="p-4 border border-white/10 bg-white/5 rounded flex justify-between items-center group hover:border-[#d4af37]/50 transition-colors">
+                                <div className="p-4 border border-white/10 bg-white/5 rounded flex justify-between items-center group hover:border-[#c5a059]/50 transition-colors">
                                     <div>
                                         <h4 className="font-bold text-white text-sm">Work for Hire Agreement</h4>
                                         <p className="text-[10px] text-neutral-400 uppercase tracking-widest mt-1">For Freelancers & Clients</p>
@@ -635,7 +635,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                             
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
-                                    <h4 className="font-bold text-[#d4af37] text-sm uppercase tracking-widest mb-3">Images & Video</h4>
+                                    <h4 className="font-bold text-[#c5a059] text-sm uppercase tracking-widest mb-3">Images & Video</h4>
                                     <ul className="space-y-2">
                                         <li><a href="https://unsplash.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Unsplash</a></li>
                                         <li><a href="https://pexels.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Pexels</a></li>
@@ -643,7 +643,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                                     </ul>
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-[#d4af37] text-sm uppercase tracking-widest mb-3">Music & Audio</h4>
+                                    <h4 className="font-bold text-[#c5a059] text-sm uppercase tracking-widest mb-3">Music & Audio</h4>
                                     <ul className="space-y-2">
                                         <li><a href="https://freemusicarchive.org" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Free Music Archive</a></li>
                                         <li><a href="https://youtube.com/audiolibrary" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ YouTube Audio Library</a></li>
@@ -651,7 +651,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                                     </ul>
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-[#d4af37] text-sm uppercase tracking-widest mb-3">Learn & Practice</h4>
+                                    <h4 className="font-bold text-[#c5a059] text-sm uppercase tracking-widest mb-3">Learn & Practice</h4>
                                     <ul className="space-y-2">
                                         <li><a href="https://photoskop.com/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Photoskop</a></li>
                                         <li><a href="https://www.hooktheory.com/hookpad" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm hover:text-white text-neutral-400 transition-colors">↗ Hookpad (Hooktheory)</a></li>
@@ -696,7 +696,7 @@ const LegalModal: React.FC<{ onClose: () => void; themeStyles: any; isMaestro: b
                          <button 
                             disabled={!isMaestro}
                             className={`flex-1 py-4 px-6 font-cinzel font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all rounded
-                                ${isMaestro ? 'bg-[#d4af37] text-black hover:bg-[#b89c6f]' : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'}
+                                ${isMaestro ? 'bg-[#c5a059] text-black hover:bg-[#b89c6f]' : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'}
                             `}
                          >
                              {!isMaestro && <Icons.Lock />}
@@ -785,7 +785,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                         {/* Vertical line from parent */}
                         <div className="h-8 w-px bg-white/20 -mt-8 mb-0"></div>
                         
-                        <div className="group relative p-4 bg-neutral-900 border border-white/20 rounded-lg hover:border-[#d4af37] transition-all w-48 text-center">
+                        <div className="group relative p-4 bg-neutral-900 border border-white/20 rounded-lg hover:border-[#c5a059] transition-all w-48 text-center">
                             <h4 className="text-white font-bold text-sm mb-1">{child.label}</h4>
                             <div className="text-[9px] text-neutral-400 uppercase tracking-widest mt-2 border-t border-white/10 pt-2">
                                 Becomes: <span className="text-fuchsia-400">{child.evolution}</span>
@@ -833,7 +833,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                             {/* Progress */}
                             <div className="flex gap-2 mb-8">
                                 {[1,2,3,4,5].map(i => (
-                                    <div key={i} className={`h-1 flex-1 rounded-full transition-all ${i <= step ? 'bg-[#d4af37]' : 'bg-white/10'}`}></div>
+                                    <div key={i} className={`h-1 flex-1 rounded-full transition-all ${i <= step ? 'bg-[#c5a059]' : 'bg-white/10'}`}></div>
                                 ))}
                             </div>
 
@@ -853,7 +853,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                                             <h2 className="font-cinzel text-3xl text-white mb-2">1. The Hook (Attention)</h2>
                                             <p className="text-neutral-500 text-xs uppercase tracking-widest mb-4">The Headline</p>
                                             <textarea 
-                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#d4af37] outline-none text-lg font-serif"
+                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#c5a059] outline-none text-lg font-serif"
                                                 placeholder="e.g. I paint the nightmares you forget when you wake up."
                                                 value={answers.hook}
                                                 onChange={(e) => setAnswers({...answers, hook: e.target.value})}
@@ -877,7 +877,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                                             <h2 className="font-cinzel text-3xl text-white mb-2">2. The Story (Connection)</h2>
                                             <p className="text-neutral-500 text-xs uppercase tracking-widest mb-4">Origin Story</p>
                                             <textarea 
-                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#d4af37] outline-none text-lg font-serif"
+                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#c5a059] outline-none text-lg font-serif"
                                                 placeholder="Tell the origin story..."
                                                 value={answers.story}
                                                 onChange={(e) => setAnswers({...answers, story: e.target.value})}
@@ -901,7 +901,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                                             <h2 className="font-cinzel text-3xl text-white mb-2">3. The Value (Transformation)</h2>
                                             <p className="text-neutral-500 text-xs uppercase tracking-widest mb-4">The Shift</p>
                                             <textarea 
-                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#d4af37] outline-none text-lg font-serif"
+                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#c5a059] outline-none text-lg font-serif"
                                                 placeholder="e.g. My work brings chaos into order, giving your space a focal point of intense calm."
                                                 value={answers.value}
                                                 onChange={(e) => setAnswers({...answers, value: e.target.value})}
@@ -925,7 +925,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                                             <h2 className="font-cinzel text-3xl text-white mb-2">4. The Ask (Close)</h2>
                                             <p className="text-neutral-500 text-xs uppercase tracking-widest mb-4">Call to Action</p>
                                             <textarea 
-                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#d4af37] outline-none text-lg font-serif"
+                                                className="w-full h-32 bg-black border border-white/20 p-4 text-white focus:border-[#c5a059] outline-none text-lg font-serif"
                                                 placeholder="e.g. Join the collection. Book a consultation."
                                                 value={answers.ask}
                                                 onChange={(e) => setAnswers({...answers, ask: e.target.value})}
@@ -942,7 +942,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
                                         </div>
                                         <button 
                                             onClick={() => navigator.clipboard.writeText(generateBio())}
-                                            className="px-8 py-3 bg-[#d4af37] hover:bg-[#b89c6f] text-black font-bold uppercase text-xs tracking-widest rounded transition-colors"
+                                            className="px-8 py-3 bg-[#c5a059] hover:bg-[#b89c6f] text-black font-bold uppercase text-xs tracking-widest rounded transition-colors"
                                         >
                                             Copy to Clipboard
                                         </button>
@@ -1065,7 +1065,7 @@ const BioForge: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onClose
 // Glass + gold border, Cinzel uppercase: mirrors the café gating tile in
 // ArtsPage so the whole studio reads as an honest beta.
 const BientotPill: React.FC<{ language: 'EN' | 'FR'; className?: string }> = ({ language, className = '' }) => (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full border border-[#d4af37]/40 bg-black/40 backdrop-blur-md font-cinzel text-[9px] uppercase tracking-[0.25em] text-[#d4af37] whitespace-nowrap ${className}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full border border-[#c5a059]/40 bg-black/40 backdrop-blur-md font-cinzel text-[9px] uppercase tracking-[0.25em] text-[#c5a059] whitespace-nowrap ${className}`}>
         {language === 'EN' ? 'Coming soon' : 'Bientôt'}
     </span>
 );
@@ -1151,7 +1151,7 @@ const CopyrighterModal: React.FC<{ onClose: () => void; themeStyles: any }> = ({
                                 </div>
                                 <div>
                                     <span className="text-[10px] uppercase text-neutral-500 block">Timestamp</span>
-                                    <span className="text-[#d4af37] text-sm font-mono">{timestamp}</span>
+                                    <span className="text-[#c5a059] text-sm font-mono">{timestamp}</span>
                                 </div>
                                 <div>
                                     <span className="text-[10px] uppercase text-neutral-500 block">Hash ID</span>
@@ -1181,7 +1181,7 @@ const LibraryModal: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onC
                 
                 <div className="p-10 border-b border-white/10 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')]">
                     <h2 className="font-cinzel text-4xl text-white mb-2">The Library</h2>
-                    <p className="text-[#d4af37] text-xs uppercase tracking-[0.2em]">Essential Readings for the Creator</p>
+                    <p className="text-[#c5a059] text-xs uppercase tracking-[0.2em]">Essential Readings for the Creator</p>
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1191,10 +1191,10 @@ const LibraryModal: React.FC<{ onClose: () => void; themeStyles: any }> = ({ onC
                             href={book.url} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="group block bg-[#1a1a1a] border border-white/10 p-6 hover:border-[#d4af37] transition-all hover:-translate-y-1"
+                            className="group block bg-[#1a1a1a] border border-white/10 p-6 hover:border-[#c5a059] transition-all hover:-translate-y-1"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-serif text-xl text-white group-hover:text-[#d4af37] transition-colors">{book.title}</h3>
+                                <h3 className="font-serif text-xl text-white group-hover:text-[#c5a059] transition-colors">{book.title}</h3>
                                 <span className="text-neutral-500 text-lg">↗</span>
                             </div>
                             <p className="text-xs text-neutral-500 uppercase tracking-widest mb-4">By {book.author}</p>
@@ -4035,7 +4035,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                              {/* Level Progress Bar */}
                              <div className="h-1.5 w-24 bg-black/50 rounded-full overflow-hidden border border-white/10" title={`${userPoints % 10} / 10 Points to next level`}>
                                 <div 
-                                    className={`h-full ${theme === 'RED' ? 'bg-red-600' : 'bg-[#d4af37]'} transition-all duration-1000`} 
+                                    className={`h-full ${theme === 'RED' ? 'bg-red-600' : 'bg-[#c5a059]'} transition-all duration-1000`} 
                                     style={{ width: `${(userPoints % 10) * 10}%` }}
                                 ></div>
                              </div>
@@ -4092,7 +4092,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     )}
                     {accessLevel === 'MEMBER' && (
                         <div className="flex items-center gap-1">
-                            <span className={`font-bold font-serif italic text-sm ${currentStyles.highlight}`}>{userTokens}</span>
+                            <span className={`font-bold font-serif text-sm ${currentStyles.highlight}`}>{userTokens}</span>
                             <Icons.Token />
                         </div>
                     )}
@@ -4291,7 +4291,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     'studio' ouvert à tout membre connecté; un invité voit
                     l'invitation à se connecter (le mur exige un compte). */}
                 {activeTab === 'WALL' && (
-                    <div className="max-w-2xl mx-auto animate-fadeIn">
+                    <div className="max-w-4xl mx-auto animate-fadeIn">
                         {currentUser ? (
                             <MurSocial
                                 currentUser={currentUser}
@@ -5512,7 +5512,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 transition-colors text-neutral-400 group-hover:text-white`}>
                                         <Icons.Home />
                                     </div>
-                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#d4af37]">{language === 'EN' ? "Artist Residency" : "Résidence d'Artiste"}</h3>
+                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#c5a059]">{language === 'EN' ? "Artist Residency" : "Résidence d'Artiste"}</h3>
                                     <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                                         Retreat to create. We offer space, silence, and support.
                                     </p>
@@ -5527,7 +5527,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 transition-colors text-neutral-400 group-hover:text-white`}>
                                         <Icons.Spark />
                                     </div>
-                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#d4af37]">{language === 'EN' ? "Propose Event" : "Proposer un Événement"}</h3>
+                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#c5a059]">{language === 'EN' ? "Propose Event" : "Proposer un Événement"}</h3>
                                     <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                                         Workshops, concerts, or gatherings. Bring your community.
                                     </p>
@@ -5542,7 +5542,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 transition-colors text-neutral-400 group-hover:text-white`}>
                                         <Icons.Handshake />
                                     </div>
-                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#d4af37]">{language === 'EN' ? "Creative Collab" : "Collab Créative"}</h3>
+                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#c5a059]">{language === 'EN' ? "Creative Collab" : "Collab Créative"}</h3>
                                     <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                                         Have a wild idea? Seeking a specific skill? Let's build together.
                                     </p>
@@ -5557,7 +5557,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 transition-colors text-neutral-400 group-hover:text-white`}>
                                         <Icons.Digital />
                                     </div>
-                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#d4af37]">{language === 'EN' ? "Contribute Code" : "Contribuer du Code"}</h3>
+                                    <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#c5a059]">{language === 'EN' ? "Contribute Code" : "Contribuer du Code"}</h3>
                                     <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                                         Help build this platform. PRs welcomed.
                                     </p>
@@ -5609,17 +5609,17 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <div className="space-y-8">
                                         {/* Residency-only protocol callout */}
                                         {collabForm === 'RESIDENCY' && (
-                                            <div className={`p-5 rounded-lg border-l-4 border-[#d4af37] bg-[#d4af37]/5`}>
-                                                <h4 className="font-cinzel text-[10px] font-bold text-[#d4af37] uppercase tracking-[0.3em] mb-3">
+                                            <div className={`p-5 rounded-lg border-l-4 border-[#c5a059] bg-[#c5a059]/5`}>
+                                                <h4 className="font-cinzel text-[10px] font-bold text-[#c5a059] uppercase tracking-[0.3em] mb-3">
                                                     {language === 'EN' ? 'Official protocol' : 'Protocole officiel'}
                                                 </h4>
                                                 <ul className="space-y-3 text-sm text-neutral-300 font-lato leading-relaxed">
                                                     <li className="flex gap-3">
-                                                        <span className="font-mono text-[#d4af37] tabular-nums">01</span>
+                                                        <span className="font-mono text-[#c5a059] tabular-nums">01</span>
                                                         <span><strong className="text-white">{language === 'EN' ? 'Letter of intent:' : "Lettre d'intention :"}</strong> {language === 'EN' ? 'a clear statement of what you intend to create or explore.' : "un énoncé clair de ce que vous comptez créer ou explorer."}</span>
                                                     </li>
                                                     <li className="flex gap-3">
-                                                        <span className="font-mono text-[#d4af37] tabular-nums">02</span>
+                                                        <span className="font-mono text-[#c5a059] tabular-nums">02</span>
                                                         <span><strong className="text-white">{language === 'EN' ? 'Trace of work:' : 'Trace du travail :'}</strong> {language === 'EN' ? 'leave a tangible form (art, recording, performance, knowledge) at the Salon to receive recognition documents.' : "laisse une forme tangible (œuvre, enregistrement, performance, savoir) pour recevoir les documents de reconnaissance."}</span>
                                                     </li>
                                                 </ul>
@@ -5679,8 +5679,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
 
                                                 {/* Bursary toggle: surfaces only when emerging */}
                                                 {collabFormData.revenueTier === 'emerging' && (
-                                                    <label className="mt-3 flex items-start gap-3 cursor-pointer p-4 rounded border-l-4 border-[#d4af37] bg-[#d4af37]/5 hover:bg-[#d4af37]/10 transition-colors">
-                                                        <span className={`shrink-0 mt-0.5 w-5 h-5 border-2 rounded flex items-center justify-center transition-all ${collabFormData.needsBursary ? 'bg-[#d4af37] border-[#d4af37]' : 'bg-transparent border-white/30'}`}>
+                                                    <label className="mt-3 flex items-start gap-3 cursor-pointer p-4 rounded border-l-4 border-[#c5a059] bg-[#c5a059]/5 hover:bg-[#c5a059]/10 transition-colors">
+                                                        <span className={`shrink-0 mt-0.5 w-5 h-5 border-2 rounded flex items-center justify-center transition-all ${collabFormData.needsBursary ? 'bg-[#c5a059] border-[#c5a059]' : 'bg-transparent border-white/30'}`}>
                                                             <input
                                                                 type="checkbox"
                                                                 checked={collabFormData.needsBursary}
@@ -6543,8 +6543,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     </div>
 
                                     {/* Suggested Books Button */}
-                                    <div className="border-l-2 border-[#d4af37]/30 pl-6">
-                                        <span className="font-mono text-xs text-[#d4af37] uppercase tracking-widest mb-4 block">/ Library</span>
+                                    <div className="border-l-2 border-[#c5a059]/30 pl-6">
+                                        <span className="font-mono text-xs text-[#c5a059] uppercase tracking-widest mb-4 block">/ Library</span>
                                         <button 
                                             onClick={() => setIsLibraryOpen(true)}
                                             className="w-full text-left bg-white/5 hover:bg-white/10 border border-white/10 p-3 text-neutral-300 font-cinzel text-xs uppercase tracking-wider transition-colors"
@@ -6576,7 +6576,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                 stay real and live in the Profile tab. The original feed render
                                 is preserved under {false && …} below for reactivation. */}
                             <div className="flex-1 flex items-center justify-center min-h-[40vh]">
-                                <div className="relative w-full max-w-2xl text-center rounded-2xl border border-[#d4af37]/25 bg-black/30 backdrop-blur-md p-12 overflow-hidden">
+                                <div className="relative w-full max-w-2xl text-center rounded-2xl border border-[#c5a059]/25 bg-black/30 backdrop-blur-md p-12 overflow-hidden">
                                     <div className="absolute top-4 right-4"><BientotPill language={language} /></div>
                                     <h3 className="font-cinzel text-2xl text-white/80 tracking-widest mb-3">{language === 'EN' ? 'Community Reads' : 'Lectures de la communauté'}</h3>
                                     <p className="font-lato text-sm text-neutral-400 leading-relaxed">
@@ -6670,7 +6670,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <br/>
                                     {language === 'EN' ? "Give an hour of your skill to earn a Token. Spend a Token to request an hour from another." : "Donnez une heure de votre compétence pour gagner un Jeton. Dépensez un Jeton pour demander une heure à un autre."}
                                 </p>
-                                <div className="flex justify-center gap-8 text-sm font-mono uppercase tracking-widest text-[#d4af37]">
+                                <div className="flex justify-center gap-8 text-sm font-mono uppercase tracking-widest text-[#c5a059]">
                                     <span>{language === 'EN' ? "1 Hour = 1 Token" : "1 Heure = 1 Jeton"}</span>
                                     <span>{language === 'EN' ? "Max Hoarding: 100 Tokens" : "Max Cumul: 100 Jetons"}</span>
                                 </div>
@@ -6694,10 +6694,10 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             </div>
 
                             {/* Official Salon Donation Contract */}
-                            <div className={`relative p-6 border-2 border-[#d4af37] bg-gradient-to-b from-[#1a1500] to-black flex flex-col transition-all group hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]`}>
+                            <div className={`relative p-6 border-2 border-[#c5a059] bg-gradient-to-b from-[#1a1500] to-black flex flex-col transition-all group hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]`}>
                                 <div className="flex justify-between items-start mb-4">
-                                    <span className="font-mono text-[10px] text-[#d4af37]">OFFICIAL QUEST</span>
-                                    <span className="px-2 py-1 text-[10px] font-bold uppercase bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/50">
+                                    <span className="font-mono text-[10px] text-[#c5a059]">OFFICIAL QUEST</span>
+                                    <span className="px-2 py-1 text-[10px] font-bold uppercase bg-[#c5a059]/20 text-[#c5a059] border border-[#c5a059]/50">
                                         EARN TOKENS
                                     </span>
                                 </div>
@@ -6713,7 +6713,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     Help maintain the digital or physical space. Gardening, Coding, Cleaning, Organizing.
                                 </p>
 
-                                <div className="mt-auto pt-4 border-t border-[#d4af37]/20 flex items-center justify-between">
+                                <div className="mt-auto pt-4 border-t border-[#c5a059]/20 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <Icons.Token />
                                         <span className="font-bold text-white text-sm">1 Token / hr</span>
@@ -6721,7 +6721,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     
                                     <button 
                                         onClick={() => accessLevel === 'MEMBER' && setUserTokens(t => Math.min(100, t + 1))}
-                                        className={`text-xs font-bold uppercase tracking-widest text-[#d4af37] hover:text-white`}
+                                        className={`text-xs font-bold uppercase tracking-widest text-[#c5a059] hover:text-white`}
                                     >
                                         Accept Task →
                                     </button>
@@ -6745,7 +6745,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         </div>
                                     </div>
                                     
-                                    <h3 className="font-cinzel font-bold text-white text-xl mb-2 group-hover:text-[#d4af37] transition-colors">{c.title}</h3>
+                                    <h3 className="font-cinzel font-bold text-white text-xl mb-2 group-hover:text-[#c5a059] transition-colors">{c.title}</h3>
                                     
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="w-8 h-8 rounded-full bg-neutral-800 overflow-hidden border border-white/20">
@@ -6797,7 +6797,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     ) : (
                                                         <button 
                                                             onClick={() => handleAcceptContract(c.id)}
-                                                            className="text-xs font-bold uppercase tracking-widest text-[#d4af37] hover:text-white"
+                                                            className="text-xs font-bold uppercase tracking-widest text-[#c5a059] hover:text-white"
                                                         >
                                                             {c.team.some(avatar => avatar.includes('1534528741775')) ? 'Joined' : 'Accept Job →'}
                                                         </button>
@@ -7127,8 +7127,8 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     { id: "ARTISAN", name: "Artisan", price: "$18", period: "/ Month", features: ["Enhanced Profile", "Priority Market Listing", "15% Shop Discount", "Access to Analytics"] },
                                     { id: "MAESTRO", name: "Maestro", price: "$48", period: "/ Month", features: ["Write Articles", "0% Commission", "VIP Event Access", "Dedicated Concierge", "25% Shop Discount"] }
                                 ].map((tier, idx) => (
-                                    <div key={idx} className={`relative bg-black/40 border p-8 flex flex-col items-center text-center transition-all group hover:-translate-y-2 ${idx === 1 ? 'border-[#d4af37] shadow-[0_0_30px_rgba(212,175,55,0.1)] scale-105 z-10' : 'border-white/10 hover:border-white/30'}`}>
-                                        {idx === 1 && <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#d4af37] text-black text-[10px] font-bold uppercase px-3 py-1 tracking-widest">Most Popular</div>}
+                                    <div key={idx} className={`relative bg-black/40 border p-8 flex flex-col items-center text-center transition-all group hover:-translate-y-2 ${idx === 1 ? 'border-[#c5a059] shadow-[0_0_30px_rgba(212,175,55,0.1)] scale-105 z-10' : 'border-white/10 hover:border-white/30'}`}>
+                                        {idx === 1 && <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#c5a059] text-black text-[10px] font-bold uppercase px-3 py-1 tracking-widest">Most Popular</div>}
                                         
                                         <h3 className="font-cinzel text-2xl text-white mb-2">{tier.name}</h3>
                                         <div className="flex items-baseline gap-1 mb-6">
@@ -7139,7 +7139,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                         <ul className="space-y-3 mb-8 w-full">
                                             {tier.features.map((feat, i) => (
                                                 <li key={i} className="text-xs text-neutral-300 font-lato flex items-center justify-center gap-2">
-                                                    <span className="text-[#d4af37]">•</span> {feat}
+                                                    <span className="text-[#c5a059]">•</span> {feat}
                                                 </li>
                                             ))}
                                         </ul>
@@ -7153,7 +7153,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             <HexButton
                                                 themeStyles={currentStyles}
                                                 disabled
-                                                className={`w-full ${idx === 1 ? 'border-[#d4af37] text-[#d4af37]' : ''}`}
+                                                className={`w-full ${idx === 1 ? 'border-[#c5a059] text-[#c5a059]' : ''}`}
                                             >
                                                 {membershipTier === tier.id ? (language === 'EN' ? 'Current Plan' : 'Plan actuel') : (language === 'EN' ? 'Subscribe' : "S'abonner")}
                                             </HexButton>
@@ -7201,7 +7201,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                     <p className="text-neutral-500 text-xs uppercase tracking-widest">Digital cosmetics & Level Rewards</p>
                                 </div>
                                 <div className="hidden md:block text-right">
-                                    <span className="text-xs text-[#d4af37] font-bold border border-[#d4af37]/30 px-3 py-1 bg-[#d4af37]/10 uppercase">
+                                    <span className="text-xs text-[#c5a059] font-bold border border-[#c5a059]/30 px-3 py-1 bg-[#c5a059]/10 uppercase">
                                         Current Goal: Server Upgrade (45%)
                                     </span>
                                 </div>
@@ -7303,7 +7303,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                                     <button
                                                         disabled
                                                         title={language === 'EN' ? 'Card checkout coming soon' : 'Paiement par carte bientôt'}
-                                                        className={`py-2 border ${skin.style.border} text-[#d4af37] text-[8px] font-cinzel font-bold uppercase tracking-[0.15em] rounded opacity-50 cursor-not-allowed select-none`}
+                                                        className={`py-2 border ${skin.style.border} text-[#c5a059] text-[8px] font-cinzel font-bold uppercase tracking-[0.15em] rounded opacity-50 cursor-not-allowed select-none`}
                                                     >
                                                         {language === 'EN' ? 'Soon' : 'Bientôt'}
                                                     </button>
@@ -7426,7 +7426,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                                             />
                                             <span className="text-xs uppercase tracking-widest text-neutral-500">{language === 'EN' ? 'hours' : 'heures'}</span>
                                         </div>
-                                        <div className={`px-4 py-3 border-2 rounded ${tokens > 0 ? 'border-[#d4af37] bg-[#d4af37]/10 text-[#f3e5ab]' : 'border-white/10 text-neutral-600'} text-sm font-cinzel uppercase tracking-widest flex items-center gap-2`}>
+                                        <div className={`px-4 py-3 border-2 rounded ${tokens > 0 ? 'border-[#c5a059] bg-[#c5a059]/10 text-[#f3e5ab]' : 'border-white/10 text-neutral-600'} text-sm font-cinzel uppercase tracking-widest flex items-center gap-2`}>
                                             <span className="font-serif italic text-2xl normal-case">{tokens}</span>
                                             <span>{language === 'EN' ? 'tokens' : 'jetons'}</span>
                                         </div>
