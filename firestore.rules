@@ -554,7 +554,8 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.auth.uid == request.resource.data.uid
                     && exists(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags)
-                    && get(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags).data.maestroEnabled == true;
+                    && (get(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags).data.proEnabled == true
+                        || get(/databases/$(database)/documents/members/$(request.auth.uid)/admin/flags).data.maestroEnabled == true);
       // Update only by owner, and they can't reassign the slug to another uid.
       allow update: if request.auth != null
                     && resource.data.uid == request.auth.uid
