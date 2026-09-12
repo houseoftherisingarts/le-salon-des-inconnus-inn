@@ -1272,6 +1272,24 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
             window.history.replaceState({}, '', window.location.pathname + (reste ? `?${reste}` : ''));
         })();
     }, [currentUser?.uid]);
+
+    // Retour de Stripe après l'ouverture (ou l'abandon) d'un Profil Pro :
+    // /createur?pro=merci ou ?pro=annule ouvre directement l'onglet PROFILE
+    // sur « Profil Pro ». Le paramètre est retiré une fois consommé.
+    const [retourPro, setRetourPro] = useState<'merci' | 'annule' | null>(() => {
+        if (typeof window === 'undefined') return null;
+        const v = new URLSearchParams(window.location.search).get('pro');
+        return v === 'merci' || v === 'annule' ? v : null;
+    });
+    useEffect(() => {
+        if (!retourPro || !currentUser?.uid) return;
+        setActiveTab('PROFILE');
+        setHasNavigated(true);
+        const params = new URLSearchParams(window.location.search);
+        params.delete('pro');
+        const reste = params.toString();
+        window.history.replaceState({}, '', window.location.pathname + (reste ? `?${reste}` : ''));
+    }, [retourPro, currentUser?.uid]);
     const [membershipTier, setMembershipTier] = useState<MembershipTier>('INITIATE');
     const [userPoints, setUserPoints] = useState(50);
     const userLevel = Math.floor(userPoints / 10);
