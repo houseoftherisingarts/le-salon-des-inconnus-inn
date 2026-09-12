@@ -21,7 +21,7 @@ export const UpsellCard: React.FC<UpsellCardProps> = ({ language = 'FR' }) => {
                 href="https://vexelwebstudio.com/?origine=profil-pro"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-block mt-5 px-6 py-3 border border-[#c5a059]/60 text-[#c5a059] hover:bg-[#c5a059] hover:text-[#050505] font-cinzel text-[11px] uppercase tracking-[0.3em] transition-colors rounded-[15px]"
+                className="inline-block mt-5 px-6 py-3 border border-[#c5a059]/60 text-[#c5a059] hover:bg-[#c5a059] hover:text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.3em] transition-colors rounded-[15px]"
             >
                 {t('See what Vexel would build for you', 'Voir ce que Vexel ferait pour vous')}
             </a>

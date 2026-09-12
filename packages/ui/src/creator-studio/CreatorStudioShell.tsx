@@ -430,7 +430,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
 
                          <div className="flex items-center gap-3 py-1 text-neutral-700">
                              <span className="flex-1 h-px bg-white/10" />
-                             <span className="text-[9px] font-cinzel uppercase tracking-[0.35em]">{t('or by email', 'ou par courriel')}</span>
+                             <span className="text-[13px] font-cinzel uppercase tracking-[0.35em]">{t('or by email', 'ou par courriel')}</span>
                              <span className="flex-1 h-px bg-white/10" />
                          </div>
 
@@ -453,7 +453,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          <button
                              onClick={emailAuth}
                              disabled={authBusy}
-                             className="w-full py-3.5 border border-[#c5a059]/50 text-[#f3e5ab] font-cinzel text-[11px] uppercase tracking-[0.3em] hover:bg-[#c5a059]/10 hover:border-[#c5a059] transition-all disabled:opacity-50"
+                             className="w-full py-3.5 border border-[#c5a059]/50 text-[#f3e5ab] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#c5a059]/10 hover:border-[#c5a059] transition-all disabled:opacity-50"
                          >
                              {authBusy
                                  ? t('Please wait', 'Un instant')
@@ -462,29 +462,29 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                                  : t('Sign in', 'Se connecter')}
                          </button>
                          {authResetSent && authMode === 'forgot' && (
-                             <p className="text-[11px] text-emerald-300 font-lato text-center pt-1">
+                             <p className="text-[13px] text-emerald-300 font-lato text-center pt-1">
                                  {t('Check your inbox for the reset link.', 'Vérifiez votre boîte de réception pour le lien.')}
                              </p>
                          )}
-                         {authError && <p className="text-[11px] text-rose-300 font-lato text-center pt-1">{authError}</p>}
+                         {authError && <p className="text-[13px] text-rose-300 font-lato text-center pt-1">{authError}</p>}
                          <div className="flex items-center justify-between gap-3 pt-1">
                              <button
                                  onClick={() => { setAuthMode(m => m === 'signup' ? 'signin' : 'signup'); setAuthError(''); setAuthResetSent(false); }}
-                                 className="text-[10px] text-neutral-500 hover:text-[#f3e5ab] font-lato transition-colors"
+                                 className="text-[13px] text-neutral-500 hover:text-[#f3e5ab] font-lato transition-colors"
                              >
                                  {authMode === 'signup' ? t('Already have an account? Sign in', 'Déjà un compte ? Se connecter') : t('New here? Create an account', 'Nouveau ici ? Créer un compte')}
                              </button>
                              {authMode !== 'forgot' ? (
                                  <button
                                      onClick={() => { setAuthMode('forgot'); setAuthError(''); setAuthResetSent(false); }}
-                                     className="text-[10px] text-neutral-600 hover:text-[#f3e5ab] font-lato transition-colors"
+                                     className="text-[13px] text-neutral-600 hover:text-[#f3e5ab] font-lato transition-colors"
                                  >
                                      {t('Forgot password?', 'Mot de passe oublié ?')}
                                  </button>
                              ) : (
                                  <button
                                      onClick={() => { setAuthMode('signin'); setAuthError(''); setAuthResetSent(false); }}
-                                     className="text-[10px] text-neutral-600 hover:text-[#f3e5ab] font-lato transition-colors"
+                                     className="text-[13px] text-neutral-600 hover:text-[#f3e5ab] font-lato transition-colors"
                                  >
                                      {t('Back to sign in', 'Retour à la connexion')}
                                  </button>
@@ -496,14 +496,14 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          direct vers Alex, sujet prérempli. */}
                      <a
                          href={`mailto:alex@lesalondesinconnus.com?subject=${encodeURIComponent(t('Trouble signing in to the Creator Studio', 'Problème de connexion au Creator Studio'))}`}
-                         className="mt-6 block w-full text-center text-[10px] text-neutral-700 hover:text-neutral-400 font-lato underline underline-offset-2 transition-colors"
+                         className="mt-6 block w-full text-center text-[13px] text-neutral-700 hover:text-neutral-400 font-lato underline underline-offset-2 transition-colors"
                      >
                          {t('Technical trouble?', 'Problème technique ?')}
                      </a>
 
                      <div className="flex items-center gap-3 my-8 text-neutral-700">
                          <span className="flex-1 h-px bg-white/10" />
-                         <span className="text-[9px] font-cinzel uppercase tracking-[0.4em]">
+                         <span className="text-[13px] font-cinzel uppercase tracking-[0.4em]">
                              {t('or', 'ou')}
                          </span>
                          <span className="flex-1 h-px bg-white/10" />
@@ -511,11 +511,11 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
 
                      <button
                          onClick={() => setAsVisitor(true)}
-                         className="w-full py-3 border border-white/15 text-neutral-300 hover:text-[#f3e5ab] hover:border-[#c5a059]/50 font-cinzel text-[11px] uppercase tracking-[0.3em] transition-colors"
+                         className="w-full py-3 border border-white/15 text-neutral-300 hover:text-[#f3e5ab] hover:border-[#c5a059]/50 font-cinzel text-[13px] uppercase tracking-[0.3em] transition-colors"
                      >
                          {t('View as visitor', 'Voir comme visiteur')}
                      </button>
-                     <p className="text-[10px] text-neutral-600 mt-3 font-lato leading-relaxed">
+                     <p className="text-[13px] text-neutral-600 mt-3 font-lato leading-relaxed">
                          {t(
                              "Browse the studio with limited access. Profile, publish, and curated tools require an account.",
                              "Parcourir le studio avec un accès limité. Profil, publication et outils réservés nécessitent un compte.",

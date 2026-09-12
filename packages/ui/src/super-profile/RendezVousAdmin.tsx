@@ -68,7 +68,7 @@ export const RendezVousAdmin: React.FC<RendezVousAdminProps> = ({ uid, language 
                                     type="button"
                                     disabled={enCours === rdv.id}
                                     onClick={() => agir(rdv.id, { statut: 'confirme' })}
-                                    className="min-h-[44px] px-5 bg-[#c5a059] text-[#050505] font-cinzel text-[10px] uppercase tracking-[0.25em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[10px]"
+                                    className="min-h-[44px] px-5 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.25em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[10px]"
                                 >
                                     {t('Confirm', 'Confirmer')}
                                 </button>
@@ -77,7 +77,7 @@ export const RendezVousAdmin: React.FC<RendezVousAdminProps> = ({ uid, language 
                                 <button
                                     type="button"
                                     onClick={() => setSalleActive({ salle: rdv.salle, nom: t('You', 'Vous') })}
-                                    className="min-h-[44px] px-5 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]"
+                                    className="min-h-[44px] px-5 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]"
                                 >
                                     {t('Join', 'Rejoindre')}
                                 </button>
@@ -87,7 +87,7 @@ export const RendezVousAdmin: React.FC<RendezVousAdminProps> = ({ uid, language 
                                     type="button"
                                     disabled={enCours === rdv.id}
                                     onClick={() => agir(rdv.id, { statut: 'annule' })}
-                                    className="min-h-[44px] px-5 text-neutral-500 hover:text-rose-300 font-cinzel text-[10px] uppercase tracking-[0.25em] disabled:opacity-40 transition-colors"
+                                    className="min-h-[44px] px-5 text-neutral-500 hover:text-rose-300 font-cinzel text-[13px] uppercase tracking-[0.25em] disabled:opacity-40 transition-colors"
                                 >
                                     {t('Cancel', 'Annuler')}
                                 </button>
@@ -97,7 +97,7 @@ export const RendezVousAdmin: React.FC<RendezVousAdminProps> = ({ uid, language 
                                     type="button"
                                     disabled={enCours === rdv.id}
                                     onClick={() => agir(rdv.id, { statut: 'complete' })}
-                                    className="min-h-[44px] px-5 text-neutral-500 hover:text-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] disabled:opacity-40 transition-colors"
+                                    className="min-h-[44px] px-5 text-neutral-500 hover:text-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] disabled:opacity-40 transition-colors"
                                 >
                                     {t('Mark completed', 'Marquer terminé')}
                                 </button>
@@ -116,7 +116,7 @@ export const RendezVousAdmin: React.FC<RendezVousAdminProps> = ({ uid, language 
                                 type="button"
                                 disabled={enCours === rdv.id || note === (rdv.noteAdmin ?? '')}
                                 onClick={() => agir(rdv.id, { noteAdmin: note })}
-                                className="px-4 border border-white/15 text-neutral-300 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.2em] disabled:opacity-30 transition-colors rounded-[10px]"
+                                className="px-4 border border-white/15 text-neutral-300 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.2em] disabled:opacity-30 transition-colors rounded-[10px]"
                             >
                                 {t('Save', 'Enregistrer')}
                             </button>

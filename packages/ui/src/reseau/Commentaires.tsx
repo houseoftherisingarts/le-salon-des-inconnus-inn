@@ -80,7 +80,7 @@ export const Commentaires: React.FC<CommentairesProps> = ({
                 </div>
             )}
             {commentaires.length === 0 ? (
-                <p className="text-[12px] text-neutral-500 font-lato">{t('No comments yet.', 'Aucun commentaire pour le moment.')}</p>
+                <p className="text-[13px] text-neutral-500 font-lato">{t('No comments yet.', 'Aucun commentaire pour le moment.')}</p>
             ) : (
                 <div className="divide-y divide-white/5">
                     {commentaires.map((c) => {
@@ -93,18 +93,18 @@ export const Commentaires: React.FC<CommentairesProps> = ({
                                         <button
                                             type="button"
                                             onClick={() => onOuvrirMembre?.(c.uid)}
-                                            className="font-cinzel text-[12px] text-neutral-200 hover:text-[#c5a059] transition-colors"
+                                            className="font-cinzel text-[13px] text-neutral-200 hover:text-[#c5a059] transition-colors"
                                         >
                                             {c.nom}
                                         </button>
-                                        <span className="text-[10px] text-neutral-500 font-lato">{quandTexte(c.creeLe?.toMillis?.() ?? Date.now(), language)}</span>
+                                        <span className="text-[13px] text-neutral-500 font-lato">{quandTexte(c.creeLe?.toMillis?.() ?? Date.now(), language)}</span>
                                     </div>
                                     <p className="text-[13px] text-neutral-300 font-lato leading-relaxed mt-0.5 whitespace-pre-line">{c.texte}</p>
                                     {peutSupprimer && (
                                         <button
                                             type="button"
                                             onClick={() => { void retirerCommentaire(postId, c.id); }}
-                                            className="mt-1 text-[10px] text-neutral-600 hover:text-rose-400 font-cinzel uppercase tracking-wider transition-colors"
+                                            className="mt-1 text-[13px] text-neutral-600 hover:text-rose-400 font-cinzel uppercase tracking-wider transition-colors"
                                         >
                                             {t('Remove', 'Retirer')}
                                         </button>

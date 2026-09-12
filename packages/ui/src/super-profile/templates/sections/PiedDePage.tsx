@@ -89,7 +89,7 @@ export const PiedDePageSection: React.FC<SectionProps> = ({ config, language = '
         <footer className="relative w-full bg-[#050505] border-t border-white/10 px-6 md:px-14 py-14">
             <style>{FOIL_CSS}</style>
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-                <p className="font-cinzel text-[10px] uppercase tracking-[0.4em] text-neutral-500 text-center md:text-left">
+                <p className="font-cinzel text-[13px] uppercase tracking-[0.4em] text-neutral-500 text-center md:text-left">
                     {t('Powered by Le Salon des Inconnus', 'Porté par Le Salon des Inconnus')}
                 </p>
                 <CollantVexel />

@@ -200,7 +200,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
 
                 <div className="grid grid-cols-7 gap-1 mb-1">
                     {(language === 'FR' ? 'L,M,M,J,V,S,D' : 'M,T,W,T,F,S,S').split(',').map((j, i) => (
-                        <p key={`${j}-${i}`} className="text-center text-[10px] font-cinzel uppercase tracking-widest text-neutral-500 py-1">{j}</p>
+                        <p key={`${j}-${i}`} className="text-center text-[13px] font-cinzel uppercase tracking-widest text-neutral-500 py-1">{j}</p>
                     ))}
                 </div>
                 <div className="grid grid-cols-7 gap-1">
@@ -234,7 +234,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
 
                 {jourChoisi && creneauxDuJour.length > 0 && (
                     <div className="mt-6">
-                        <p className="font-cinzel text-[9px] uppercase tracking-[0.3em] text-neutral-500 mb-3">{t('Available times', 'Créneaux disponibles')}</p>
+                        <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-3">{t('Available times', 'Créneaux disponibles')}</p>
                         <div className="flex flex-wrap gap-2">
                             {creneauxDuJour.map((c) => {
                                 const choisi = creneauChoisi && creneauChoisi.debut.getTime() === c.debut.getTime();
@@ -299,7 +299,7 @@ export const PriseRendezVous: React.FC<PriseRendezVousProps> = ({ artisteUid, ar
             {/* Mes rendez-vous */}
             {user && mesRendezVous.length > 0 && (
                 <div>
-                    <p className="font-cinzel text-[9px] uppercase tracking-[0.3em] text-neutral-500 mb-4">{t('Your appointments', 'Vos rendez-vous')}</p>
+                    <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-4">{t('Your appointments', 'Vos rendez-vous')}</p>
                     <ul className="space-y-3">
                         {mesRendezVous.map((rdv) => {
                             const rejoindre = rencontreOuverte(rdv, maintenant);

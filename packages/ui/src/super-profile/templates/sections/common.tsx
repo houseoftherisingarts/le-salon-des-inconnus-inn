@@ -46,7 +46,7 @@ export const SectionShell: React.FC<SectionShellProps> = ({
         >
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14">
-                    <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">
+                    <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.4em]">
                         {t(eyebrowEn, eyebrowFr)}
                     </p>
                     {aside}

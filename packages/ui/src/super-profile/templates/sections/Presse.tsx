@@ -19,7 +19,7 @@ export const PresseSection: React.FC<SectionProps> = ({ config, language = 'FR' 
                         href={config.lienEPK}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className={`shrink-0 px-5 py-2.5 font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#f3e5ab] hover:text-[#050505] hover:bg-[#c5a059] transition-colors ${CARD_GLASS}`}
+                        className={`shrink-0 px-5 py-2.5 font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#f3e5ab] hover:text-[#050505] hover:bg-[#c5a059] transition-colors ${CARD_GLASS}`}
                     >
                         {t('Press kit', 'Dossier de presse')}
                     </a>
@@ -31,7 +31,7 @@ export const PresseSection: React.FC<SectionProps> = ({ config, language = 'FR' 
                         <blockquote key={i} className={`p-6 ${CARD_GLASS}`}>
                             <p className="font-prata text-[#f3e5ab] text-lg leading-snug">&laquo;&nbsp;{c.citation}&nbsp;&raquo;</p>
                             {(c.source || c.lienArticle) && (
-                                <footer className="mt-4 font-cinzel text-[9px] uppercase tracking-[0.3em] text-neutral-400">
+                                <footer className="mt-4 font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-400">
                                     {c.lienArticle ? (
                                         <a href={c.lienArticle} target="_blank" rel="noreferrer noopener" className="hover:text-[#c5a059] transition-colors">
                                             {c.source || c.lienArticle}

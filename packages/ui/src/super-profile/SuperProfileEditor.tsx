@@ -387,7 +387,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                             <path d="M8 11V8a4 4 0 0 1 8 0v3" />
                         </svg>
                     </div>
-                    <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] mb-3">
+                    <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.5em] mb-3">
                         Subscription paused
                     </p>
                     <h3 className="font-prata text-[#f3e5ab] text-2xl mb-3">
@@ -400,7 +400,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     </p>
                     <a
                         href="mailto:alex@lesalondesinconnus.com?subject=Resume%20Maestro%20subscription"
-                        className="inline-block px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel text-[11px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors"
+                        className="inline-block px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel text-[13px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors"
                     >
                         Resume access
                     </a>
@@ -453,7 +453,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
         <section className="border border-[#c5a059]/30 bg-gradient-to-br from-[#0a0a0a] via-black/60 to-[#1a1208]/40 p-6 rounded space-y-6">
             <header className="flex items-start justify-between gap-4 flex-wrap">
                 <div>
-                    <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">
+                    <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.4em]">
                         Maestro · Super Profile
                     </p>
                     <h3 className="font-prata text-[#f3e5ab] text-2xl mt-1">Your /name page</h3>
@@ -462,7 +462,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     </p>
                 </div>
                 <label className="flex items-center gap-3 cursor-pointer select-none">
-                    <span className="text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400">
+                    <span className="text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400">
                         Page {draft.enabled ? 'live' : 'off'}
                     </span>
                     <input
@@ -476,7 +476,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
 
             {/* Username */}
             <div>
-                <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-2">
+                <label className="block text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-2">
                     Username
                 </label>
                 <div className="flex items-center gap-2">
@@ -493,7 +493,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     />
                 </div>
                 {usernameMessage && (
-                    <p className={`text-[11px] mt-1 ${slugBlocked ? 'text-rose-300' : 'text-neutral-400'}`}>
+                    <p className={`text-[13px] mt-1 ${slugBlocked ? 'text-rose-300' : 'text-neutral-400'}`}>
                         {usernameMessage}
                     </p>
                 )}
@@ -501,7 +501,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
 
             {/* Medium */}
             <div>
-                <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-3">
+                <label className="block text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-3">
                     Layout (chosen by medium)
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -516,10 +516,10 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                                     : 'border-white/10 hover:border-white/30'
                             }`}
                         >
-                            <p className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#f3e5ab] mb-1">
+                            <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#f3e5ab] mb-1">
                                 {opt.label}
                             </p>
-                            <p className="text-[11px] text-neutral-400 font-lato leading-snug">
+                            <p className="text-[13px] text-neutral-400 font-lato leading-snug">
                                 {opt.hint}
                             </p>
                         </button>
@@ -529,7 +529,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
 
             {/* Hero photo */}
             <div>
-                <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-3">
+                <label className="block text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-3">
                     Hero photo (transparent background)
                 </label>
                 <HeroPhotoUploader
@@ -542,7 +542,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
 
             {/* Works */}
             <div>
-                <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-3">
+                <label className="block text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-3">
                     Works ({draft.works.length} / {MAX_WORKS})
                 </label>
                 <div className="flex flex-wrap gap-3">
@@ -555,7 +555,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                                         type="button"
                                         onClick={() => moveWork(i, -1)}
                                         disabled={i === 0}
-                                        className="text-[10px] font-cinzel text-white hover:text-[#c5a059] disabled:opacity-30 px-1"
+                                        className="text-[13px] font-cinzel text-white hover:text-[#c5a059] disabled:opacity-30 px-1"
                                     >
                                         ←
                                     </button>
@@ -563,7 +563,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                                         type="button"
                                         onClick={() => moveWork(i, 1)}
                                         disabled={i === draft.works.length - 1}
-                                        className="text-[10px] font-cinzel text-white hover:text-[#c5a059] disabled:opacity-30 px-1"
+                                        className="text-[13px] font-cinzel text-white hover:text-[#c5a059] disabled:opacity-30 px-1"
                                     >
                                         →
                                     </button>
@@ -571,7 +571,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                                 <button
                                     type="button"
                                     onClick={() => handleRemoveWork(i)}
-                                    className="text-[10px] font-cinzel uppercase text-rose-300 hover:text-rose-100"
+                                    className="text-[13px] font-cinzel uppercase text-rose-300 hover:text-rose-100"
                                 >
                                     Remove
                                 </button>
@@ -583,7 +583,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                             type="button"
                             disabled={workUploading}
                             onClick={() => worksInputRef.current?.click()}
-                            className="w-24 h-24 border-2 border-dashed border-white/15 rounded text-neutral-500 hover:border-[#c5a059] hover:text-[#c5a059] transition-colors flex items-center justify-center font-cinzel text-[10px] uppercase tracking-widest"
+                            className="w-24 h-24 border-2 border-dashed border-white/15 rounded text-neutral-500 hover:border-[#c5a059] hover:text-[#c5a059] transition-colors flex items-center justify-center font-cinzel text-[13px] uppercase tracking-widest"
                         >
                             {workUploading ? '…' : '+ Add'}
                         </button>
@@ -619,7 +619,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                 />
             </div>
             <div>
-                <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-2">
+                <label className="block text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-2">
                     Bio
                 </label>
                 <textarea
@@ -664,7 +664,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     type="button"
                     onClick={handleSave}
                     disabled={saving || slugBlocked}
-                    className="px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel text-[11px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors"
+                    className="px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel text-[13px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors"
                 >
                     {saving ? 'Saving…' : 'Save'}
                 </button>
@@ -673,7 +673,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                         href={previewHref}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="px-4 py-2.5 border border-white/15 text-neutral-300 font-cinzel text-[11px] uppercase tracking-[0.35em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+                        className="px-4 py-2.5 border border-white/15 text-neutral-300 font-cinzel text-[13px] uppercase tracking-[0.35em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
                     >
                         View page ↗
                     </a>
@@ -683,13 +683,13 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                         type="button"
                         onClick={handleDisable}
                         disabled={saving}
-                        className="ml-auto px-3 py-2.5 text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-500 hover:text-rose-300 transition-colors"
+                        className="ml-auto px-3 py-2.5 text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-500 hover:text-rose-300 transition-colors"
                     >
                         Disable & release username
                     </button>
                 )}
-                {savedAt && <span className="text-[11px] text-emerald-400 font-lato">Saved.</span>}
-                {error && <span className="text-[11px] text-rose-300 font-lato">{error}</span>}
+                {savedAt && <span className="text-[13px] text-emerald-400 font-lato">Saved.</span>}
+                {error && <span className="text-[13px] text-rose-300 font-lato">{error}</span>}
             </div>
 
             {/* Bespoke-tier upsell: placeholder for the eventual "Alex
@@ -702,7 +702,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                     onClick={() => setBespokeOpen(true)}
                     className="w-full text-left p-5 border border-fuchsia-400/20 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-[#c5a059]/5 rounded hover:border-fuchsia-400/40 transition-colors group"
                 >
-                    <p className="font-cinzel text-fuchsia-300 text-[10px] uppercase tracking-[0.4em] mb-1">
+                    <p className="font-cinzel text-fuchsia-300 text-[13px] uppercase tracking-[0.4em] mb-1">
                         Bespoke · upgrade
                     </p>
                     <p className="font-prata text-[#f3e5ab] text-lg leading-tight mb-1">
@@ -723,7 +723,7 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                         className="relative max-w-lg w-full bg-[#0a0a0a] border border-[#c5a059]/40 rounded p-8 text-center"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <p className="font-cinzel text-fuchsia-300 text-[10px] uppercase tracking-[0.5em] mb-4">
+                        <p className="font-cinzel text-fuchsia-300 text-[13px] uppercase tracking-[0.5em] mb-4">
                             Bespoke · coming soon
                         </p>
                         <h3 className="font-prata text-[#f3e5ab] text-3xl mb-4 leading-tight">
@@ -735,14 +735,14 @@ export const SuperProfileEditor: React.FC<SuperProfileEditorProps> = ({
                         <div className="flex flex-wrap gap-3 justify-center">
                             <a
                                 href="mailto:alex@lesalondesinconnus.com?subject=Bespoke%20Mind%20Palace%20interest"
-                                className="px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel text-[11px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors"
+                                className="px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel text-[13px] uppercase tracking-[0.35em] hover:bg-[#d4b06a] transition-colors"
                             >
                                 Tell Alex you're interested
                             </a>
                             <button
                                 type="button"
                                 onClick={() => setBespokeOpen(false)}
-                                className="px-5 py-2.5 border border-white/15 text-neutral-400 font-cinzel text-[11px] uppercase tracking-[0.35em] hover:border-white/40 hover:text-white transition-colors"
+                                className="px-5 py-2.5 border border-white/15 text-neutral-400 font-cinzel text-[13px] uppercase tracking-[0.35em] hover:border-white/40 hover:text-white transition-colors"
                             >
                                 Close
                             </button>
@@ -766,7 +766,7 @@ interface FieldProps {
 
 const Field: React.FC<FieldProps> = ({ label, value, placeholder, maxLength, onChange }) => (
     <div>
-        <label className="block text-[10px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-2">
+        <label className="block text-[13px] font-cinzel uppercase tracking-[0.3em] text-neutral-400 mb-2">
             {label}
         </label>
         <input

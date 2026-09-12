@@ -19,7 +19,7 @@ interface ProfilProAdminSiteProps {
 }
 
 const CHAMP = 'w-full bg-black/40 border border-white/15 rounded-[15px] px-4 py-3 text-[#f3e5ab] placeholder-neutral-500 outline-none transition-colors focus:border-[#c5a059] font-lato';
-const LABEL = 'font-cinzel text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-2 block';
+const LABEL = 'font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-2 block';
 
 const SECTIONS_ETIQUETTES: Record<SectionId, { en: string; fr: string }> = {
     oeuvres: { en: 'Works', fr: 'Œuvres' },
@@ -217,7 +217,7 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
                                 }`}
                             >
                                 <span className="font-lato text-sm">{language === 'FR' ? SECTIONS_ETIQUETTES[id].fr : SECTIONS_ETIQUETTES[id].en}</span>
-                                <span className="font-cinzel text-[9px] uppercase tracking-[0.2em]">{allumee ? t('On', 'On') : t('Off', 'Off')}</span>
+                                <span className="font-cinzel text-[13px] uppercase tracking-[0.2em]">{allumee ? t('On', 'On') : t('Off', 'Off')}</span>
                             </button>
                         );
                     })}

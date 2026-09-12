@@ -167,7 +167,7 @@ export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, la
     if (etat.etape === 'chargement') {
         return (
             <div className="fixed inset-0 bg-[#050505] z-30 flex items-center justify-center">
-                <div className="text-[#c5a059] text-[10px] font-cinzel uppercase tracking-[0.5em] animate-pulse">
+                <div className="text-[#c5a059] text-[13px] font-cinzel uppercase tracking-[0.5em] animate-pulse">
                     Le Salon des Inconnus
                 </div>
             </div>
@@ -178,7 +178,7 @@ export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, la
         return (
             <div className="fixed inset-0 bg-[#050505] z-30 flex items-center justify-center px-6 text-center">
                 <div>
-                    <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] mb-3">
+                    <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.5em] mb-3">
                         Le Salon des Inconnus
                     </p>
                     <h1 className="font-prata text-[#f3e5ab] text-3xl md:text-4xl mb-3">
@@ -192,7 +192,7 @@ export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, la
                     <button
                         type="button"
                         onClick={onNavigateHome}
-                        className="px-5 py-2.5 border border-white/15 text-neutral-300 font-cinzel text-[11px] uppercase tracking-[0.35em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+                        className="px-5 py-2.5 border border-white/15 text-neutral-300 font-cinzel text-[13px] uppercase tracking-[0.35em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
                     >
                         {t('Back to the Salon', 'Retour au Salon')}
                     </button>

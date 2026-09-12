@@ -17,7 +17,7 @@ interface Item {
 }
 
 const Pastille: React.FC<{ n: number }> = ({ n }) => n > 0 ? (
-    <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#c5a059] text-[#18181b]">
+    <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full flex items-center justify-center text-[13px] font-bold bg-[#c5a059] text-[#18181b]">
         {n > 9 ? '9+' : n}
     </span>
 ) : null;
@@ -109,7 +109,7 @@ export const Cloche: React.FC<ClocheProps> = ({ uid, language, onOuvrirOnglet })
                         className="absolute right-0 top-[calc(100%+10px)] z-50 w-[min(22rem,calc(100vw-2rem))] rounded-[15px] overflow-hidden bg-black/80 backdrop-blur-xl border border-white/15 shadow-2xl"
                         role="menu"
                     >
-                        <p className="px-4 pt-3.5 pb-2 text-[10px] font-cinzel uppercase tracking-[0.18em] text-neutral-500 border-b border-white/10">
+                        <p className="px-4 pt-3.5 pb-2 text-[13px] font-cinzel uppercase tracking-[0.18em] text-neutral-500 border-b border-white/10">
                             {t('What’s waiting for you', 'Ce qui vous attend')}
                         </p>
                         {items.length === 0 ? (

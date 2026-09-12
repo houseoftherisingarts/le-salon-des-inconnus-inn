@@ -77,17 +77,17 @@ export const Composeur: React.FC<ComposeurProps> = ({ uid, nom, avatarUrl, langu
                 <button
                     type="button"
                     onClick={() => fichier.current?.click()}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/15 text-[10px] font-cinzel uppercase tracking-[0.18em] text-neutral-400 hover:border-[#c5a059]/60 hover:text-[#c5a059] transition-colors"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/15 text-[13px] font-cinzel uppercase tracking-[0.18em] text-neutral-400 hover:border-[#c5a059]/60 hover:text-[#c5a059] transition-colors"
                 >
                     {t('Photo', 'Photo')}
                 </button>
                 <input ref={fichier} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={choisirPhoto} />
-                <span className="ml-auto text-[10px] text-neutral-600 font-lato">{texte.length}/{LONGUEUR_MAX_POST}</span>
+                <span className="ml-auto text-[13px] text-neutral-600 font-lato">{texte.length}/{LONGUEUR_MAX_POST}</span>
                 <button
                     type="button"
                     onClick={publier}
                     disabled={envoi || (!texte.trim() && !photoFile)}
-                    className="px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] transition-all disabled:opacity-50"
+                    className="px-5 py-2.5 bg-[#c5a059] text-[#18181b] font-cinzel font-bold text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] transition-all disabled:opacity-50"
                 >
                     {envoi ? t('Posting…', 'Publication…') : t('Post', 'Publier')}
                 </button>

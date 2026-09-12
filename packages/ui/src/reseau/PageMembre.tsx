@@ -53,7 +53,7 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
     if (!currentUser) {
         return (
             <div className="min-h-screen bg-[#050505] text-neutral-100 flex flex-col items-center justify-center gap-6 px-6 text-center">
-                <p className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em]">Le Salon des Inconnus</p>
+                <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.5em]">Le Salon des Inconnus</p>
                 <h1 className="font-prata text-2xl md:text-3xl text-[#f3e5ab]">{t('Sign in to see this profile', 'Connectez-vous pour voir ce profil')}</h1>
                 <a
                     href="/createur"
@@ -103,7 +103,7 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
             <div className="relative w-full aspect-[2/1] md:aspect-[3/1] overflow-hidden bg-black/40">
                 <img src={membre.banniereURL || BANNIERE_DEFAUT} alt="" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-x-0 bottom-0 h-24 md:h-32 bg-gradient-to-t from-black/80 to-transparent" />
-                <a href="/createur" className="absolute top-4 left-4 md:top-6 md:left-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-[10px] font-cinzel uppercase tracking-[0.2em] text-neutral-200 hover:border-[#c5a059]/60 hover:text-[#c5a059] transition-colors">
+                <a href="/createur" className="absolute top-4 left-4 md:top-6 md:left-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-[13px] font-cinzel uppercase tracking-[0.2em] text-neutral-200 hover:border-[#c5a059]/60 hover:text-[#c5a059] transition-colors">
                     ← {t('Creator Studio', 'Creator Studio')}
                 </a>
             </div>
@@ -173,7 +173,7 @@ export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
                 )}
 
                 <div>
-                    <p className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">
+                    <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-4">
                         {t('The wall of', 'Le mur de')} {nom}
                     </p>
                     <MurSocial

@@ -83,7 +83,7 @@ export const BilletCarte: React.FC<BilletCarteProps> = ({
                     >
                         {post.nom}
                     </button>
-                    <p className="text-[11px] text-neutral-500 font-lato">{quandTexte(post.creeLe?.toMillis?.() ?? Date.now(), language)}</p>
+                    <p className="text-[13px] text-neutral-500 font-lato">{quandTexte(post.creeLe?.toMillis?.() ?? Date.now(), language)}</p>
                 </div>
                 {currentUser && currentUser.uid !== post.uid && (
                     <button
@@ -124,7 +124,7 @@ export const BilletCarte: React.FC<BilletCarteProps> = ({
                 <button
                     type="button"
                     onClick={() => setCommentairesOuverts((v) => !v)}
-                    className="inline-flex items-center gap-1.5 text-[11px] font-cinzel uppercase tracking-[0.14em] text-neutral-500 hover:text-[#c5a059] transition-colors"
+                    className="inline-flex items-center gap-1.5 text-[13px] font-cinzel uppercase tracking-[0.14em] text-neutral-500 hover:text-[#c5a059] transition-colors"
                 >
                     {t('Comment', 'Commenter')}
                 </button>

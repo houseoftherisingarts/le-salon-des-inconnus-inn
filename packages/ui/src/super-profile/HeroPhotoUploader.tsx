@@ -191,7 +191,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                 <button
                     type="button"
                     onClick={() => setMode('manual-png')}
-                    className={`flex-1 px-3 py-2 text-[10px] font-cinzel uppercase tracking-[0.25em] transition-colors ${
+                    className={`flex-1 px-3 py-2 text-[13px] font-cinzel uppercase tracking-[0.25em] transition-colors ${
                         mode === 'manual-png'
                             ? 'bg-[#c5a059] text-[#18181b]'
                             : 'bg-transparent text-neutral-400 hover:bg-white/5'
@@ -202,7 +202,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                 <button
                     type="button"
                     onClick={() => setMode('auto-removed')}
-                    className={`flex-1 px-3 py-2 text-[10px] font-cinzel uppercase tracking-[0.25em] transition-colors ${
+                    className={`flex-1 px-3 py-2 text-[13px] font-cinzel uppercase tracking-[0.25em] transition-colors ${
                         mode === 'auto-removed'
                             ? 'bg-[#c5a059] text-[#18181b]'
                             : 'bg-transparent text-neutral-400 hover:bg-white/5'
@@ -212,13 +212,13 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                 </button>
             </div>
 
-            <p className="text-[11px] font-lato text-neutral-500 leading-relaxed">
+            <p className="text-[13px] font-lato text-neutral-500 leading-relaxed">
                 {mode === 'manual-png'
                     ? 'Upload a PNG you\'ve already cut out (Photoshop, Pixelmator, online tools, etc.). We\'ll reject opaque PNGs.'
                     : 'Drop any JPG or PNG of yourself and we\'ll cut the background out in your browser. Takes 5–15 seconds per photo (after the model loads).'}
             </p>
             {mode === 'auto-removed' && (
-                <p className="text-[10px] font-lato text-amber-200/80 leading-relaxed border border-amber-300/20 bg-amber-300/5 rounded px-3 py-2">
+                <p className="text-[13px] font-lato text-amber-200/80 leading-relaxed border border-amber-300/20 bg-amber-300/5 rounded px-3 py-2">
                     First run downloads a ~24 MB AI model. It's cached in your browser after that, so future cutouts are instant.
                 </p>
             )}
@@ -232,7 +232,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                         className="absolute inset-0 w-full h-full object-contain"
                     />
                 ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-neutral-700 font-cinzel text-[10px] uppercase tracking-widest">
+                    <div className="absolute inset-0 flex items-center justify-center text-neutral-700 font-cinzel text-[13px] uppercase tracking-widest">
                         No photo yet
                     </div>
                 )}
@@ -244,7 +244,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                     type="button"
                     disabled={busy}
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-4 py-2 bg-[#c5a059] text-[#18181b] font-cinzel text-[10px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors"
+                    className="px-4 py-2 bg-[#c5a059] text-[#18181b] font-cinzel text-[13px] uppercase tracking-[0.3em] hover:bg-[#d4b06a] disabled:opacity-50 transition-colors"
                 >
                     {hero ? 'Replace photo' : 'Upload photo'}
                 </button>
@@ -253,7 +253,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
                         type="button"
                         disabled={busy}
                         onClick={handleRemove}
-                        className="px-4 py-2 border border-white/15 text-neutral-400 font-cinzel text-[10px] uppercase tracking-[0.3em] hover:border-rose-400/50 hover:text-rose-300 disabled:opacity-50 transition-colors"
+                        className="px-4 py-2 border border-white/15 text-neutral-400 font-cinzel text-[13px] uppercase tracking-[0.3em] hover:border-rose-400/50 hover:text-rose-300 disabled:opacity-50 transition-colors"
                     >
                         Remove
                     </button>
@@ -271,7 +271,7 @@ export const HeroPhotoUploader: React.FC<HeroPhotoUploaderProps> = ({
             </div>
 
             {(status || error) && (
-                <p className={`text-[11px] font-lato ${error ? 'text-rose-300' : 'text-neutral-400'}`}>
+                <p className={`text-[13px] font-lato ${error ? 'text-rose-300' : 'text-neutral-400'}`}>
                     {error ?? status}
                 </p>
             )}

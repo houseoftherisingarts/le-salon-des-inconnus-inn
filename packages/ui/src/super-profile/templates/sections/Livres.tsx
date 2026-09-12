@@ -34,7 +34,7 @@ export const LivresSection: React.FC<SectionProps> = ({ config, language = 'FR' 
                                 href={l.lienAchat}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className="font-cinzel text-[9px] uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+                                className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors"
                             >
                                 {t('Buy', 'Se procurer')}
                             </a>

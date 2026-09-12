@@ -23,7 +23,7 @@ export const DatesSection: React.FC<SectionProps> = ({ config, language = 'FR' }
                                 href={d.lienBillets}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className={`shrink-0 px-5 py-2.5 font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#f3e5ab] hover:text-[#050505] hover:bg-[#c5a059] transition-colors ${CARD_GLASS}`}
+                                className={`shrink-0 px-5 py-2.5 font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#f3e5ab] hover:text-[#050505] hover:bg-[#c5a059] transition-colors ${CARD_GLASS}`}
                             >
                                 {t('Tickets', 'Billets')}
                             </a>

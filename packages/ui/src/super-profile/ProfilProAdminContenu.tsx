@@ -36,7 +36,7 @@ const BoutonEnregistrer: React.FC<{ onClick: () => void; enCours: boolean; enreg
     const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
     return (
         <div className="flex items-center gap-3 pt-2">
-            <button type="button" onClick={onClick} disabled={enCours} className="min-h-[40px] px-5 bg-[#c5a059] text-[#050505] font-cinzel text-[10px] uppercase tracking-[0.25em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[10px]">
+            <button type="button" onClick={onClick} disabled={enCours} className="min-h-[40px] px-5 bg-[#c5a059] text-[#050505] font-cinzel text-[13px] uppercase tracking-[0.25em] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors rounded-[10px]">
                 {enCours ? t('Saving…', 'Enregistrement…') : t('Save', 'Enregistrer')}
             </button>
             {enregistre && <span className="text-[#c5a059] text-xs font-lato">{t('Saved', 'Enregistré')}</span>}
@@ -86,7 +86,7 @@ const BlocOeuvres: React.FC<{ uid: string; valeur: OeuvreProfilPro[]; language: 
         <div className={BLOC}>
             <div className="flex items-center justify-between">
                 <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Works', 'Œuvres')}</h4>
-                <button type="button" onClick={() => inputRef.current?.click()} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
+                <button type="button" onClick={() => inputRef.current?.click()} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
                     {t('Add', 'Ajouter')}
                 </button>
                 <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void televerser(f); e.target.value = ''; }} />
@@ -135,7 +135,7 @@ const BlocEcoute: React.FC<{ uid: string; valeur: LienEcoute[]; language: 'EN' |
         <div className={BLOC}>
             <div className="flex items-center justify-between">
                 <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Listen', 'Écoute')}</h4>
-                <button type="button" onClick={() => setListe((l) => l.length < MAX_LIENS_ECOUTE ? [...l, { url: '', titre: '' }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
+                <button type="button" onClick={() => setListe((l) => l.length < MAX_LIENS_ECOUTE ? [...l, { url: '', titre: '' }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
                     {t('Add', 'Ajouter')}
                 </button>
             </div>
@@ -167,7 +167,7 @@ const BlocDates: React.FC<{ uid: string; valeur: DateSpectacle[]; language: 'EN'
         <div className={BLOC}>
             <div className="flex items-center justify-between">
                 <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Upcoming dates', 'Dates à venir')}</h4>
-                <button type="button" onClick={() => setListe((l) => l.length < MAX_DATES ? [...l, { lieu: '', ville: '', date: '' }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
+                <button type="button" onClick={() => setListe((l) => l.length < MAX_DATES ? [...l, { lieu: '', ville: '', date: '' }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
                     {t('Add', 'Ajouter')}
                 </button>
             </div>
@@ -203,12 +203,12 @@ const BlocPresse: React.FC<{ uid: string; valeur: CitationPresse[]; lienEPK?: st
         <div className={BLOC}>
             <div className="flex items-center justify-between">
                 <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Press', 'Presse')}</h4>
-                <button type="button" onClick={() => setListe((l) => [...l, { citation: '' }])} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
+                <button type="button" onClick={() => setListe((l) => [...l, { citation: '' }])} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
                     {t('Add', 'Ajouter')}
                 </button>
             </div>
             <label className="block">
-                <span className="font-cinzel text-[9px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{t('Press kit link', 'Lien du dossier de presse')}</span>
+                <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{t('Press kit link', 'Lien du dossier de presse')}</span>
                 <input className={CHAMP} placeholder="https://…" value={epk} onChange={(e) => setEpk(e.target.value)} />
             </label>
             <div className="space-y-2">
@@ -241,7 +241,7 @@ const BlocExpositions: React.FC<{ uid: string; valeur: ExpositionProfilPro[]; la
         <div className={BLOC}>
             <div className="flex items-center justify-between">
                 <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Exhibitions', 'Expositions')}</h4>
-                <button type="button" onClick={() => setListe((l) => l.length < MAX_EXPOSITIONS ? [...l, { titre: '', lieu: '', dates: '', aVenir: true }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
+                <button type="button" onClick={() => setListe((l) => l.length < MAX_EXPOSITIONS ? [...l, { titre: '', lieu: '', dates: '', aVenir: true }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
                     {t('Add', 'Ajouter')}
                 </button>
             </div>
@@ -288,7 +288,7 @@ const BlocLivres: React.FC<{ uid: string; valeur: LivreProfilPro[]; language: 'E
         <div className={BLOC}>
             <div className="flex items-center justify-between">
                 <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Books', 'Livres')}</h4>
-                <button type="button" onClick={() => setListe((l) => l.length < MAX_LIVRES ? [...l, { titre: '' }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
+                <button type="button" onClick={() => setListe((l) => l.length < MAX_LIVRES ? [...l, { titre: '' }] : l)} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
                     {t('Add', 'Ajouter')}
                 </button>
             </div>
@@ -296,7 +296,7 @@ const BlocLivres: React.FC<{ uid: string; valeur: LivreProfilPro[]; language: 'E
                 {liste.map((l, i) => (
                     <div key={i} className="flex gap-3 items-center">
                         <button type="button" onClick={() => inputRefs.current[i]?.click()} className="w-16 h-20 shrink-0 rounded-[8px] border border-white/15 overflow-hidden bg-black/40 flex items-center justify-center">
-                            {l.couvertureUrl ? <img src={l.couvertureUrl} alt="" className="w-full h-full object-cover" /> : <span className="text-neutral-600 text-[9px]">{t('Cover', 'Couverture')}</span>}
+                            {l.couvertureUrl ? <img src={l.couvertureUrl} alt="" className="w-full h-full object-cover" /> : <span className="text-neutral-600 text-[13px]">{t('Cover', 'Couverture')}</span>}
                         </button>
                         <input ref={(el) => { inputRefs.current[i] = el; }} type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void televerserCouverture(i, f); e.target.value = ''; }} />
                         <div className="flex-1 grid grid-cols-2 gap-2">

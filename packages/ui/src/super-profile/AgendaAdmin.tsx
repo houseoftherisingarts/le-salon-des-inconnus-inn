@@ -144,7 +144,7 @@ export const AgendaAdmin: React.FC<AgendaAdminProps> = ({ uid, language = 'FR' }
                     { label: t('Booking horizon (days)', 'Horizon de réservation (jours)'), value: horizonJours, set: setHorizonJours, min: 1, step: 1 },
                 ].map((champ) => (
                     <label key={champ.label} className="block">
-                        <span className="font-cinzel text-[9px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{champ.label}</span>
+                        <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{champ.label}</span>
                         <input
                             type="number"
                             min={champ.min}
@@ -161,10 +161,10 @@ export const AgendaAdmin: React.FC<AgendaAdminProps> = ({ uid, language = 'FR' }
                 <p className="font-cinzel text-xs uppercase tracking-[0.2em] text-[#f3e5ab]">{t('Exceptions', 'Exceptions')}</p>
                 <div className="flex flex-wrap items-end gap-3">
                     <label className="flex-1 min-w-[10rem]">
-                        <span className="font-cinzel text-[9px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{t('Exception date', 'Date de l’exception')}</span>
+                        <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500 mb-1.5 block">{t('Exception date', 'Date de l’exception')}</span>
                         <input type="date" value={dateException} onChange={(e) => setDateException(e.target.value)} className={CHAMP_NOMBRE} />
                     </label>
-                    <button type="button" onClick={ajouterException} disabled={!dateException} className="min-h-[44px] px-5 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[10px] uppercase tracking-[0.25em] disabled:opacity-40 transition-colors rounded-[10px]">
+                    <button type="button" onClick={ajouterException} disabled={!dateException} className="min-h-[44px] px-5 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] disabled:opacity-40 transition-colors rounded-[10px]">
                         {t('Add the exception', 'Ajouter l’exception')}
                     </button>
                 </div>

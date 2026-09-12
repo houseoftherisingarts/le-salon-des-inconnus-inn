@@ -11,7 +11,7 @@ interface BackLinkProps {
 export const BackToSalonLink: React.FC<BackLinkProps> = ({ href = '/' }) => (
     <a
         href={href}
-        className="fixed top-5 left-5 z-50 font-cinzel text-[9px] uppercase tracking-[0.4em] text-neutral-500 hover:text-[#c5a059] transition-colors"
+        className="fixed top-5 left-5 z-50 font-cinzel text-[13px] uppercase tracking-[0.4em] text-neutral-500 hover:text-[#c5a059] transition-colors"
     >
         ← Le Salon des Inconnus
     </a>
@@ -109,7 +109,7 @@ export const ArtistCutout: React.FC<{
 }> = ({ src, alt, className }) => {
     if (!src) {
         return (
-            <div className={`flex items-center justify-center text-neutral-700 font-cinzel text-[10px] uppercase tracking-[0.3em] ${className ?? ''}`}>
+            <div className={`flex items-center justify-center text-neutral-700 font-cinzel text-[13px] uppercase tracking-[0.3em] ${className ?? ''}`}>
                 {alt}
             </div>
         );

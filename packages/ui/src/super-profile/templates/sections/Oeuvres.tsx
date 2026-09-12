@@ -10,10 +10,10 @@ import { CARD_GLASS, formatPrixCents, sectionVisible, SectionShell, SectionTitle
 const StatutBadge: React.FC<{ oeuvre: OeuvreProfilPro; language: 'EN' | 'FR' }> = ({ oeuvre, language }) => {
     const t = useTexte(language);
     if (oeuvre.statutVente === 'vendu') {
-        return <span className="font-cinzel text-[9px] uppercase tracking-[0.3em] text-neutral-400">{t('Sold', 'Vendu')}</span>;
+        return <span className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-400">{t('Sold', 'Vendu')}</span>;
     }
     if (oeuvre.statutVente === 'sur-demande') {
-        return <span className="font-cinzel text-[9px] uppercase tracking-[0.3em] text-[#c5a059]">{t('On request', 'Sur demande')}</span>;
+        return <span className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#c5a059]">{t('On request', 'Sur demande')}</span>;
     }
     if (typeof oeuvre.prixCents === 'number' && oeuvre.prixCents > 0) {
         return <span className="font-lato text-sm text-[#c5a059]">{formatPrixCents(oeuvre.prixCents)}</span>;

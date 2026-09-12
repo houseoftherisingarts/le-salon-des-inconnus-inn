@@ -102,7 +102,7 @@ export const DomaineAdmin: React.FC<DomaineAdminProps> = ({ uid, slug, language 
             </div>
 
             <div className="space-y-4">
-                <label htmlFor="domaine-input" className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-neutral-500">
+                <label htmlFor="domaine-input" className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500">
                     {t('Your domain', 'Votre domaine')}
                 </label>
                 <div className="flex flex-col sm:flex-row gap-3">
@@ -130,7 +130,7 @@ export const DomaineAdmin: React.FC<DomaineAdminProps> = ({ uid, slug, language 
                 <div className="p-5 bg-black/40 border border-white/15 rounded-[15px] flex items-center justify-between gap-4">
                     <div>
                         <p className="font-lato text-[#f3e5ab]">{domaine.hostname}</p>
-                        <p className="font-cinzel text-[9px] uppercase tracking-[0.3em] mt-1 text-neutral-500">
+                        <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] mt-1 text-neutral-500">
                             {domaine.claim.verifie
                                 ? t('Connected', 'Branché')
                                 : t('Waiting for the Salon to connect it', 'En attente du branchement par le Salon')}
@@ -140,7 +140,7 @@ export const DomaineAdmin: React.FC<DomaineAdminProps> = ({ uid, slug, language 
                         type="button"
                         onClick={retirer}
                         disabled={enregistrement}
-                        className="text-neutral-500 hover:text-rose-300 font-cinzel text-[10px] uppercase tracking-[0.3em] transition-colors"
+                        className="text-neutral-500 hover:text-rose-300 font-cinzel text-[13px] uppercase tracking-[0.3em] transition-colors"
                     >
                         {t('Remove', 'Retirer')}
                     </button>

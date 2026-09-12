@@ -53,18 +53,18 @@ export const ProfilProAdminAbonnement: React.FC<ProfilProAdminAbonnementProps> =
 
             <div className="p-6 bg-black/30 border border-white/10 rounded-[15px] space-y-3">
                 <div className="flex items-center justify-between">
-                    <span className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-neutral-500">{t('Status', 'État')}</span>
+                    <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500">{t('Status', 'État')}</span>
                     <span className={`font-lato text-sm ${abonnement?.statut === 'actif' || !abonnement ? 'text-[#c5a059]' : 'text-rose-300'}`}>{libelleStatut}</span>
                 </div>
                 {echeance && (
                     <div className="flex items-center justify-between">
-                        <span className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-neutral-500">{t('Next billing', 'Prochaine échéance')}</span>
+                        <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500">{t('Next billing', 'Prochaine échéance')}</span>
                         <span className="font-lato text-sm text-[#f3e5ab]">{echeance}</span>
                     </div>
                 )}
                 {typeof abonnement?.montant === 'number' && (
                     <div className="flex items-center justify-between">
-                        <span className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-neutral-500">{t('Amount', 'Montant')}</span>
+                        <span className="font-cinzel text-[13px] uppercase tracking-[0.25em] text-neutral-500">{t('Amount', 'Montant')}</span>
                         <span className="font-lato text-sm text-[#f3e5ab]">{(abonnement.montant / 100).toLocaleString('fr-CA')} $ / {t('month', 'mois')}</span>
                     </div>
                 )}

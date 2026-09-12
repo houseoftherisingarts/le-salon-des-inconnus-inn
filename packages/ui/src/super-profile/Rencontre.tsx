@@ -100,7 +100,7 @@ export const Rencontre: React.FC<RencontreProps> = ({ salle, nom, language = 'FR
                             href={salleUrl(salle)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="min-h-[44px] inline-flex items-center rounded-[15px] bg-[#c5a059] text-[#050505] hover:bg-[#d4b06a] px-5 font-cinzel text-[11px] uppercase tracking-[0.3em] transition-colors"
+                            className="min-h-[44px] inline-flex items-center rounded-[15px] bg-[#c5a059] text-[#050505] hover:bg-[#d4b06a] px-5 font-cinzel text-[13px] uppercase tracking-[0.3em] transition-colors"
                         >
                             {t('Open the meeting in a new tab', 'Ouvrir la rencontre dans un nouvel onglet')}
                         </a>
@@ -110,7 +110,7 @@ export const Rencontre: React.FC<RencontreProps> = ({ salle, nom, language = 'FR
             <button
                 type="button"
                 onClick={onQuitter}
-                className="min-h-[44px] px-5 rounded-[15px] border border-white/15 text-neutral-200 font-cinzel text-[11px] uppercase tracking-[0.3em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+                className="min-h-[44px] px-5 rounded-[15px] border border-white/15 text-neutral-200 font-cinzel text-[13px] uppercase tracking-[0.3em] hover:border-[#c5a059] hover:text-[#f3e5ab] transition-colors"
             >
                 {t('Leave the meeting', 'Quitter la rencontre')}
             </button>

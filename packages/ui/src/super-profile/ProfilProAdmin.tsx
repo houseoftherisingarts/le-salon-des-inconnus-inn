@@ -48,7 +48,7 @@ const OffrePage: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => {
     return (
         <div className="max-w-3xl space-y-10">
             <div>
-                <p className="font-cinzel text-[10px] uppercase tracking-[0.4em] text-[#c5a059] mb-3">{t('Profil Pro', 'Profil Pro')}</p>
+                <p className="font-cinzel text-[13px] uppercase tracking-[0.4em] text-[#c5a059] mb-3">{t('Profil Pro', 'Profil Pro')}</p>
                 <h2 className="font-prata text-[#f3e5ab] text-4xl md:text-5xl leading-[1.1] mb-4">
                     {t('A page built for your art, not a template for everyone', 'Une page bâtie pour votre art, pas un gabarit pour tout le monde')}
                 </h2>
@@ -94,7 +94,7 @@ const OffrePage: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => {
             </div>
 
             <div>
-                <p className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">{t('A template for your practice', 'Un gabarit pour votre pratique')}</p>
+                <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-4">{t('A template for your practice', 'Un gabarit pour votre pratique')}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {ORDRE_TYPES.map((id) => (
                         <div key={id} className="px-4 py-3 rounded-[10px] border border-white/10 text-neutral-300">
@@ -151,7 +151,7 @@ export const ProfilProAdmin: React.FC<ProfilProAdminProps> = ({ uid, fallbackDis
                         key={o.id}
                         type="button"
                         onClick={() => setOnglet(o.id)}
-                        className={`min-h-[44px] px-4 font-cinzel text-[10px] uppercase tracking-[0.25em] border-b-2 -mb-px transition-colors ${
+                        className={`min-h-[44px] px-4 font-cinzel text-[13px] uppercase tracking-[0.25em] border-b-2 -mb-px transition-colors ${
                             onglet === o.id ? 'border-[#c5a059] text-[#f3e5ab]' : 'border-transparent text-neutral-500 hover:text-neutral-300'
                         }`}
                     >
