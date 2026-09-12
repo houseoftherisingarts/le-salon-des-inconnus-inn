@@ -1,21 +1,27 @@
 // VisualArtTemplate: painter / illustrator / sculptor Mind Palace.
 //
-// Three layers, back-to-front:
+// Three layers, back-to-front, puis les sections du Profil Pro en dessous :
 //   1. Works scattered as a "wall of sketches", each rotated and offset
 //      deterministically so the composition is stable on every render.
 //   2. Huge name flowing right-to-left, partially obscured by the cutout.
 //   3. Artist cutout, centered.
+//
+// `fixed inset-0` devient `relative min-h-screen` : ce premier écran n'est
+// plus toute la page, les sections communes défilent en dessous.
 
 import * as React from 'react';
-import { ArtistCutout, BackToSalonLink, type TemplateProps } from './shared';
+import { ArtistCutout, BackToSalonLink, useTexte, type TemplateProps } from './shared';
 import { BottomDock, NameLayer, WorkCountChip, deterministicTransform } from './stage';
+import { BioSection, ContactSection, LiensSection, OeuvresSection, PiedDePageSection, PriseRendezVousSection } from './sections';
 
-export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, fallbackDisplayName }) => {
+export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDisplayName, language = 'FR' }) => {
+    const t = useTexte(language);
     const works = config.works ?? [];
     const displayName = config.displayName || fallbackDisplayName || config.username;
 
     return (
-        <div className="fixed inset-0 bg-[#050505] text-white overflow-hidden font-lato">
+        <>
+        <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
             <BackToSalonLink />
 
             {/* Ambient washes so the dark canvas doesn't read as a void */}
@@ -49,7 +55,7 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, fallbackDis
                                     loading="lazy"
                                 />
                                 {w.caption && (
-                                    <figcaption className="absolute -bottom-6 left-0 right-0 text-center font-cormorant italic text-neutral-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <figcaption className="absolute -bottom-6 left-0 right-0 text-center font-lato text-neutral-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                                         {w.caption}
                                     </figcaption>
                                 )}
@@ -75,6 +81,27 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, fallbackDis
 
             <BottomDock config={config} />
             <WorkCountChip count={works.length} />
+
+            <a
+                href="#contenu"
+                aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 text-neutral-400 hover:text-[#c5a059] transition-colors animate-bounce"
+            >
+                <span className="font-cinzel text-[9px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                    <path d="M12 4v16M6 14l6 6 6-6" />
+                </svg>
+            </a>
         </div>
+
+        <div id="contenu" className="bg-[#050505]">
+            <OeuvresSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
+            <BioSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
+            <PriseRendezVousSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
+            <ContactSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
+            <LiensSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
+            <PiedDePageSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
+        </div>
+        </>
     );
 };
