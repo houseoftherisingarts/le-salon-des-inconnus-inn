@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { suivreMembre, type MembreDoc } from './membres';
 import { suivreMesAmities, accepterAmitie, retirerAmitie, type Amitie } from './amities';
 import { Avatar } from './Avatar';
-import { VitrineBadges, SelecteurBadges } from './Badges';
+import { VitrineBadges, SelecteurBadges } from './BadgesUI';
 import { MurSocial } from './MurSocial';
 
 const BANNIERE_DEFAUT = '/media/Artistes/magnetosphere.jpg';

@@ -9,7 +9,7 @@ import {
 } from './amities';
 import { suivreBlocages, bloquer, debloquer, signaler } from './moderation';
 import { Avatar } from './Avatar';
-import { VitrineBadges } from './Badges';
+import { VitrineBadges } from './BadgesUI';
 import { MurSocial } from './MurSocial';
 
 const BANNIERE_DEFAUT = '/media/Artistes/magnetosphere.jpg';

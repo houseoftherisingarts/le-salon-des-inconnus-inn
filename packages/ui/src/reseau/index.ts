@@ -16,7 +16,7 @@ export { BilletCarte } from './BilletCarte';
 export { Commentaires } from './Commentaires';
 export { Composeur } from './Composeur';
 export { Cloche } from './Cloche';
-export { VitrineBadges, SelecteurBadges, PanneauAdminBadges } from './Badges';
+export { VitrineBadges, SelecteurBadges, PanneauAdminBadges } from './BadgesUI';
 export { ProfilSocial } from './ProfilSocial';
 export { MonProfilForm } from './MonProfilForm';
 export { PageMembre } from './PageMembre';
