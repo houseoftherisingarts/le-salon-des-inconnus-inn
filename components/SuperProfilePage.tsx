@@ -18,5 +18,5 @@ interface SuperProfilePageProps {
 }
 
 export const SuperProfilePage: React.FC<SuperProfilePageProps> = ({ slug, onNavigateHome }) => (
-    <ProfilProPage slug={slug} language="FR" onNavigateHome={onNavigateHome} />
+    <ProfilProPage slug={slug} language="FR" onNavigateHome={onNavigateHome} site="auberge" />
 );
