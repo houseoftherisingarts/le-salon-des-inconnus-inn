@@ -328,10 +328,13 @@ const App: React.FC = () => {
   const [isMusicMenuOpen, setIsMusicMenuOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Les pages autonomes (/coffre, /tools) sont des calques plein écran : elles ne
-  // montrent jamais les photos de l'auberge. Sans ce garde-fou, y arriver
-  // directement téléchargeait ~16 Mo d'images invisibles.
-  const isStandalonePage = currentView === 'COFFRE' || currentView === 'DOWNLOAD';
+  // Les pages autonomes (/coffre, /tools, /{slug} d'un Profil Pro) sont des
+  // calques plein écran : elles ne montrent jamais les photos de l'auberge.
+  // Sans ce garde-fou, y arriver directement téléchargeait ~16 Mo d'images
+  // invisibles, et SUPER_PROFILE attendait même des textures externes qui
+  // échouent parfois (ERR_BLOCKED_BY_ORB) avant de laisser voir le profil
+  // ou la page « introuvable » en dessous.
+  const isStandalonePage = currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE';
 
   // Trigger Background Loading when initial loading finishes
   useIdlePreloader(DEFERRED_ASSETS, !isLoading && !isStandalonePage);
