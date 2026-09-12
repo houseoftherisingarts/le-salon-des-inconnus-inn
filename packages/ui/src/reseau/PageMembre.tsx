@@ -17,13 +17,12 @@ const BANNIERE_DEFAUT = '/media/Artistes/magnetosphere.jpg';
 interface PageMembreProps {
     uid: string;
     language: 'EN' | 'FR';
-    isAdmin?: boolean;
 }
 
 /** La fiche publique d'un membre : bannière, avatar, badges, liens, ses
  *  billets. Demander en ami / Écrire / Bloquer / Signaler pour tout autre
  *  membre connecté; un visiteur anonyme voit une invitation à se connecter. */
-export const PageMembre: React.FC<PageMembreProps> = ({ uid, language, isAdmin = false }) => {
+export const PageMembre: React.FC<PageMembreProps> = ({ uid, language }) => {
     const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
 
     const [currentUser, setCurrentUser] = useState<User | null>(null);
