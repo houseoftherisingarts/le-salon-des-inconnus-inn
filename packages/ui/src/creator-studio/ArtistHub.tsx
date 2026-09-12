@@ -4269,6 +4269,33 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                     </div>
                 )}
 
+                {/* WALL — le mur du studio (réseau social d'artistes). Fil
+                    'studio' ouvert à tout membre connecté; un invité voit
+                    l'invitation à se connecter (le mur exige un compte). */}
+                {activeTab === 'WALL' && (
+                    <div className="max-w-2xl mx-auto animate-fadeIn">
+                        {currentUser ? (
+                            <MurSocial
+                                currentUser={currentUser}
+                                monNom={regData.name || currentUser.displayName || 'Membre'}
+                                monAvatar={avatarUrl ?? currentUser.photoURL ?? undefined}
+                                isAdmin={isAdmin}
+                                language={language}
+                                onOuvrirMembre={ouvrirMembre}
+                            />
+                        ) : (
+                            <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-8 text-center">
+                                <p className="font-prata text-xl text-[#f3e5ab] mb-3">
+                                    {language === 'EN' ? 'The wall belongs to members' : 'Le mur appartient aux membres'}
+                                </p>
+                                <p className="text-sm text-neutral-400 font-lato">
+                                    {language === 'EN' ? 'Sign in to read and post on the studio wall.' : 'Connectez-vous pour lire et publier sur le mur du studio.'}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 {/* PROFILE */}
                 {activeTab === 'PROFILE' && (
                     <div className="relative w-full h-full">
