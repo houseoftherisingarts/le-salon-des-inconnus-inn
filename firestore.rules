@@ -595,6 +595,80 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // ── Profil Pro · rendez-vous ─────────────────────────────────────────────
+    // Patron porté du module client Vexel, avec artisteUid en plus puisqu'un
+    // agenda existe par artiste. La personne qui réserve n'annule que le sien;
+    // l'artiste confirme, termine, annule et note en privé les siens.
+    match /rendezvousPro/{rdvId} {
+      allow read: if isAdmin()
+                  || (request.auth != null && resource.data.uid == request.auth.uid)
+                  || (request.auth != null && resource.data.artisteUid == request.auth.uid);
+      allow create: if isAdmin()
+                    || (request.auth != null
+                        && request.resource.data.uid == request.auth.uid
+                        && request.resource.data.statut == 'demande'
+                        && request.resource.data.creePar == 'client'
+                        && request.resource.data.debut > request.time
+                        && request.resource.data.keys().hasOnly(
+                             ['artisteUid','uid','nom','courriel','debut','fin','duree','statut','salle','note','creePar','createdAt','updatedAt']));
+      allow update: if isAdmin()
+                    || (request.auth != null
+                        && resource.data.uid == request.auth.uid
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['statut','updatedAt'])
+                        && request.resource.data.statut == 'annule')
+                    || (request.auth != null
+                        && resource.data.artisteUid == request.auth.uid
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['statut','noteAdmin','updatedAt']));
+      allow delete: if isAdmin();
+    }
+
+    // Miroir sans donnée personnelle : lisible par tous, même avant la
+    // connexion, pour que le calendrier public retire les créneaux pris. Le
+    // miroir n'existe que pour un rendez-vous réel écrit dans le même lot.
+    match /occupationsPro/{rdvId} {
+      allow read: if true;
+      allow create: if isAdmin()
+                    || (request.auth != null
+                        && request.resource.data.debut is timestamp
+                        && request.resource.data.fin is timestamp
+                        && request.resource.data.fin > request.resource.data.debut
+                        && request.resource.data.keys().hasOnly(['artisteUid','debut','fin'])
+                        && getAfter(/databases/$(database)/documents/rendezvousPro/$(rdvId)).data.uid == request.auth.uid
+                        && getAfter(/databases/$(database)/documents/rendezvousPro/$(rdvId)).data.artisteUid == request.resource.data.artisteUid
+                        && getAfter(/databases/$(database)/documents/rendezvousPro/$(rdvId)).data.debut == request.resource.data.debut
+                        && getAfter(/databases/$(database)/documents/rendezvousPro/$(rdvId)).data.fin == request.resource.data.fin);
+      allow delete: if isAdmin()
+                    || (request.auth != null && get(/databases/$(database)/documents/rendezvousPro/$(rdvId)).data.uid == request.auth.uid)
+                    || (request.auth != null && get(/databases/$(database)/documents/rendezvousPro/$(rdvId)).data.artisteUid == request.auth.uid);
+      allow update: if isAdmin();
+    }
+
+    // ── Profil Pro · domaine personnel ───────────────────────────────────────
+    // L'id est le hostname en minuscules. Lecture publique pour que la racine
+    // du site résolve un domaine vers le bon Profil Pro; `verifie` ne passe à
+    // true que par l'admin, une fois le domaine branché dans la console.
+    match /domaines/{hostname} {
+      allow read: if true;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.verifie == false
+                    && request.resource.data.keys().hasOnly(['uid','slug','creeLe','verifie']);
+      allow update: if isAdmin()
+                    || (request.auth != null
+                        && resource.data.uid == request.auth.uid
+                        && request.resource.data.uid == request.auth.uid
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['slug']));
+      allow delete: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
+    }
+
+    // ── Profil Pro · abonnement ──────────────────────────────────────────────
+    // Lecture par le propriétaire et l'admin; écriture par les fonctions
+    // (Admin SDK) seulement. Aucune porte client.
+    match /abonnementsPro/{userId} {
+      allow read:  if isAdmin() || (request.auth != null && request.auth.uid == userId);
+      allow write: if false;
+    }
+
     // ── Puzzle gifts ─────────────────────────────────────────────────────────
     // A member can offer a completed puzzle from their display case to another
     // member. The recipient accepts (puzzle joins their case) or declines
