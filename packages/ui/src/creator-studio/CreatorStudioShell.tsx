@@ -6,7 +6,11 @@ import { LoadingOrb } from './LoadingOrb';
 import { WelcomeWizard } from './WelcomeWizard';
 import { getApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { getAuth, signOut, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+import {
+    loginWithGoogle, handleRedirectResult, loginWithEmail, signUpWithEmail,
+    sendPasswordReset, messageErreur,
+} from '../reseau/auth';
 
 export type CreatorTheme = 'RAINBOW' | 'RED' | 'BLUE_PUNK' | 'CLASSY' | 'CHROMATIC' | 'COMIC';
 export type HubPhase = 'GATEWAY' | 'CHAMPION_SELECT' | 'LOBBY';
