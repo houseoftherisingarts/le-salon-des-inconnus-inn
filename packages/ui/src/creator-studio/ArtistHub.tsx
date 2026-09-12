@@ -1242,6 +1242,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     // badges de ROSTER.
     const isAdmin = isAdminEmail(currentUser);
 
+    // Un nom, un avatar cliquables (mur, commentaires, amis) mènent tous à
+    // la même fiche publique. Navigation classique (pas de routeur ici) :
+    // une adresse complète, comme le lien « Voir le dossier » de ROSTER.
+    const ouvrirMembre = (uid: string) => { window.location.href = `/membre/${uid}`; };
+
     // « Écrire » depuis /membre/{uid} arrive ici avec ?dm=<uid> : on ouvre
     // (ou crée) le fil et on saute directement dans COLLABORATE. Le
     // paramètre est retiré de l'adresse une fois consommé pour ne pas le
