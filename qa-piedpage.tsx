@@ -1,6 +1,7 @@
 // QA temporaire, jamais committé : rend PiedDePageSection isolée pour capture.
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
+import './index.css';
 import { PiedDePageSection } from './packages/ui/src/super-profile/templates/sections/PiedDePage';
 import type { SuperProfileConfig } from './packages/ui/src/super-profile/types';
 
