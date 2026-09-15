@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-15",
+        title_fr: "La pierre sèche",
+        title_en: "Dry stone",
+        body_fr: "Dans les campagnes, il reste des murs de pierres sèches montés sans une once de mortier, et plusieurs tiennent debout depuis des siècles pendant que des murs cimentés de la dernière génération se fendent au premier grand gel. Le secret des maçons qui les élèvent tient dans la patience du geste : chaque pierre est tournée dans les mains jusqu'à ce qu'elle trouve la face qui épouse ses voisines, et celle qui ne convient nulle part est déposée à côté, parce que son trou l'attend plus loin dans le mur. Rien ne colle ces pierres ensemble; elles se retiennent les unes les autres, et le léger jeu laissé entre elles permet au mur de respirer avec le gel au lieu de se rompre. J'y vois une leçon pour les tablées d'inconnus. Personne ne se cimente à personne; chacun cherche l'angle par lequel il touche ses voisins, et l'ensemble tient précisément parce qu'il garde un peu de jeu. Les liens les plus durables que je connaisse ont cette souplesse de pierre bien posée. Où est-ce que je mets du ciment, ces temps-ci, là où un simple ajustement suffirait?",
+        body_en: "In the countryside there remain dry-stone walls raised without an ounce of mortar, and many have stood for centuries while cemented walls from the last generation split at the first hard frost. The secret of the masons who build them lies in the patience of the gesture: each stone is turned in the hands until it finds the face that fits its neighbours, and the one that suits nowhere is set aside, because its place is waiting for it farther along the wall. Nothing glues these stones together; they hold one another, and the slight play left between them lets the wall breathe with the frost instead of breaking. I see a lesson in this for tables of strangers. Nobody is cemented to anybody; each person looks for the angle by which they touch their neighbours, and the whole holds precisely because it keeps a little play. The most lasting bonds I know have that suppleness of a well-set stone. Where am I laying cement these days, where a simple adjustment would do?",
+    },
+    {
         date: "2026-09-11",
         title_fr: "La greffe",
         title_en: "The graft",
