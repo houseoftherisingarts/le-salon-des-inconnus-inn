@@ -32,7 +32,8 @@ const HABIT: Record<CreatorTheme, { cadre: string; lueur: string; filet: string;
         cadre: 'bg-[#120a1f] border border-fuchsia-500/40 rounded-sm',
         lueur: 'rgba(34,211,238,0.20)',
         filet: 'bg-cyan-400',
-        bouton: 'rounded-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-white border border-cyan-400/40',
+        // text-cyan-50 et non text-white : la coquille repeint .font-cinzel.text-white en cyan, illisible sur le fuchsia.
+        bouton: 'rounded-sm bg-fuchsia-600 hover:bg-fuchsia-500 text-cyan-50 border border-cyan-400/40',
     },
     CLASSY: {
         cadre: 'bg-[#091428] border-2 border-[#c8aa6e]/50 rounded',
@@ -50,7 +51,8 @@ const HABIT: Record<CreatorTheme, { cadre: string; lueur: string; filet: string;
         cadre: 'bg-[#1e1e24] border-2 border-black shadow-[6px_6px_0px_#facc15] rounded-sm',
         lueur: 'rgba(250,204,21,0.16)',
         filet: 'bg-[#facc15]',
-        bouton: 'rounded-sm bg-[#ef4444] text-white border-2 border-black shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000]',
+        // text-black et non text-white : la coquille repeint .font-cinzel.text-white en jaune cerclé de noir, illisible à 12 px sur le rouge.
+        bouton: 'rounded-sm bg-[#ef4444] text-black border-2 border-black shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000]',
     },
 };
 
@@ -101,9 +103,9 @@ export const VexelInvitationStudio: React.FC<{
                         className="font-prata text-white leading-[1.1] text-[clamp(1.125rem,5.2vw,2.75rem)] lg:text-[clamp(1.5rem,2.8vw,2.75rem)]"
                     >
                         {language === 'FR' ? (
-                            <>Un site à votre nom qui vend <span className={themeStyles.highlight}>vos œuvres</span></>
+                            <>Un site à votre nom qui vend <span className={`whitespace-nowrap ${themeStyles.highlight}`}>vos œuvres</span></>
                         ) : (
-                            <>A site in your name that sells <span className={themeStyles.highlight}>your work</span></>
+                            <>A site in your name that sells <span className={`whitespace-nowrap ${themeStyles.highlight}`}>your work</span></>
                         )}
                     </h2>
 
