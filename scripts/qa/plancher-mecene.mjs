@@ -160,8 +160,9 @@ async function images(page, etiquette, dpr) {
 }
 
 async function allerPaliers(page) {
-  await page.getByRole('button', { name: /Soutenir des projets|Support projects/ }).click({ force: true });
-  await page.locator('.pl-scene').first().waitFor({ state: 'attached', timeout: 30000 });
+  // La carte flotte sans fin : Playwright ne la juge jamais stable, le clic passe donc par le DOM.
+  await page.evaluate(() => [...document.querySelectorAll('.pl-carte button')].find((b) => /Soutenir des projets|Support projects/.test(b.textContent)).click());
+  await page.locator('.pl-objet[data-haut]').first().waitFor({ state: 'attached', timeout: 30000 });
   await attendre(1500);
 }
 
@@ -205,11 +206,11 @@ for (const app of APPAREILS) {
       const aria = await page.locator('.pl-scene').ariaSnapshot();
       writeFileSync(join(OUT, `aria-menu-${et}.txt`), aria);
       // Le nom d'un bouton reprend son texte : on compte les nœuds texte, là où un reflet se dédoublerait.
-      const textes = aria.split('\n').filter((l) => /^\s*- text:/.test(l)).join('\n');
-      const doublons = ['Nos artistes', 'Investir et économiser', 'Soutenir des projets', 'Café'].filter((t) => textes.split(t).length - 1 !== 1);
+      const doublons = ['Nos artistes', 'Investir et économiser', 'Soutenir des projets', 'Café'].filter((t) => aria.split(t).length - 1 !== 1);
       noter(8, doublons.length === 0, `${et} titres en double dans l'arbre : ${doublons.join(',') || 'aucun'}`);
       if (app.largeur === 1440) {
         await defilerMain(page, 0);
+        await page.evaluate(() => document.activeElement?.blur());
         await page.locator('.pl-carte button').nth(1).hover({ force: true });
         await attendre(900);
         await page.screenshot({ path: join(OUT, 'menu-1440-survol.png') });
@@ -287,7 +288,7 @@ for (const app of APPAREILS) {
       }
       const scene = await page.evaluate(() => { const s = document.querySelector('.pl-scene'); const main = s.closest('main'); return main.scrollTop + s.getBoundingClientRect().top - main.getBoundingClientRect().top; });
       await mesuresDom(page, `paliers-fr ${et}`, 'FR');
-      await captures(page, 'paliers-fr', app, [['haut', { px: scene }], ['milieu', 0.5], ['bas', 1]]);
+      await captures(page, 'paliers-fr', app, [['haut', { px: Math.max(0, scene - 180) }], ['milieu', 0.5], ['bas', 1]]);
       await reflets(page, `paliers-fr ${et}`);
       await context.close();
     }
@@ -296,6 +297,7 @@ for (const app of APPAREILS) {
       const { context, page } = await ouvrirContexte(nav, app, false);
       await page.goto(`${BASE}/mecene`, { waitUntil: 'domcontentloaded', timeout: 90000 });
       await pret(page);
+      await attendre(6000);
       await page.screenshot({ path: join(OUT, 'menu-fr-chromium-390-temoins.png') });
       await context.close();
     }
