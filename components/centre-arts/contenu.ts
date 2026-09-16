@@ -201,7 +201,7 @@ export const S7 = {
     [t('Mont-Tremblant'), t('Domaine skiable', 'Ski resort'), t('35 minutes')],
   ],
   rangees: [
-    { libelle: t('Séjourner', 'Stay'), valeur: t('Réserver une chambre à l’auberge', 'Book a room at the inn'), vue: 'INN' },
+    { libelle: t('Séjourner', 'Stay'), valeur: t('Réserver une chambre à l\'auberge', 'Book a room at the inn'), vue: 'INN' },
     { libelle: t('Téléphone', 'Phone'), valeur: t('514 418 3450'), href: 'tel:+15144183450', casseNormale: true },
     { libelle: t('Courriel', 'Email'), valeur: t('alex@lesalondesinconnus.com'), href: 'mailto:alex@lesalondesinconnus.com', casseNormale: true },
   ] as Meta[],
