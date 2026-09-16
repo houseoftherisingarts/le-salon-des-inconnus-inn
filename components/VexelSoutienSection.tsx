@@ -99,7 +99,7 @@ export const VexelSoutienSection: React.FC<{ language: 'EN' | 'FR' }> = ({ langu
               href={VEXEL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex w-full sm:w-auto items-center justify-center gap-4 min-h-[52px] px-8 md:px-10 rounded-[15px] bg-[#c5a059] text-[#18181b] font-josefin font-bold text-xs uppercase tracking-[0.3em] hover:bg-[#d4b06a] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f3e5ab]"
+              className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 sm:gap-4 min-h-[52px] px-6 sm:px-8 md:px-10 rounded-[15px] bg-[#c5a059] text-[#18181b] font-josefin font-bold text-xs uppercase tracking-[0.18em] sm:tracking-[0.3em] hover:bg-[#d4b06a] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f3e5ab]"
             >
               {t('See what Vexel builds', 'Voir ce que Vexel bâtit')}
               <span

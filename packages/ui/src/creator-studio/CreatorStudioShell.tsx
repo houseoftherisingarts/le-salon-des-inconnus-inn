@@ -4,6 +4,7 @@ import { ArtistHub } from './ArtistHub';
 import { StudioContextViewer, type ViewerContext, type ViewerTab } from './StudioContextViewer';
 import { LoadingOrb } from './LoadingOrb';
 import { WelcomeWizard } from './WelcomeWizard';
+import { VexelInvitationStudio } from './VexelInvitationStudio';
 import { getApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -751,6 +752,12 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                         });
                     }}
                  />
+
+                 {/* Fin du hub : l'invitation Vexel, habillée par le thème actif.
+                     Absente de la porte (GATEWAY) et du choix d'archétype. */}
+                 {hubPhase === 'LOBBY' && (
+                     <VexelInvitationStudio language={language} theme={theme} themeStyles={themeStyles} />
+                 )}
 
              </div>
              
