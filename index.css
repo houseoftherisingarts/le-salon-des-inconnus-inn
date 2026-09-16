@@ -1,5 +1,5 @@
-/* Fonts (preserved from original inline import — keeps existing vibe identity intact). */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&family=Prata&family=Josefin+Sans:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,700;1,700&family=MedievalSharp&display=swap');
+/* Fonts : chargées par un <link> dans index.html (plus d'@import qui enchaîne
+   la feuille des polices derrière le CSS du site). Mêmes familles, mêmes graisses. */
 
 @tailwind base;
 @tailwind components;

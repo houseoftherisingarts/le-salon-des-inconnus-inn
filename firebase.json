@@ -109,6 +109,24 @@
               "value": "max-age=31536000, immutable"
             }
           ]
+        },
+        {
+          "source": "**/*.@(jpg|jpeg|png|gif|webp|avif|svg|ico|mp4|webm|woff|woff2|ttf|otf)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=604800"
+            }
+          ]
+        },
+        {
+          "source": "/assets/**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000, immutable"
+            }
+          ]
         }
       ]
     },
@@ -177,6 +195,15 @@
         },
         {
           "source": "**/*.@(js|mjs|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000, immutable"
+            }
+          ]
+        },
+        {
+          "source": "/assets/**",
           "headers": [
             {
               "key": "Cache-Control",

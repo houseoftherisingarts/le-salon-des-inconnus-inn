@@ -2,6 +2,7 @@ import '../../../packages/ui/src/lib/gardeHote'; // jamais web.app : redirige av
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './tailwind.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Could not find #root');

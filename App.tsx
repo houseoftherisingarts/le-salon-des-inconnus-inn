@@ -42,7 +42,7 @@ const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m
 const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => ({ default: m.AdminCRM })));
 const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CreatorStudio })));
 // Le centre d'arts (hub Mécène/Artiste, menu mécène, café), venu d'apps/salon.
-const ArtsPage          = lazy(() => import('@inconnus/ui').then(m => ({ default: m.ArtsPage })));
+const ArtsPage          = lazy(() => import('@inconnus/ui/arts').then(m => ({ default: m.ArtsPage })));
 // /c/{uid}/{slug}: public read-only call sheet, shared by a member with their
 // crew/figurants. No auth required (Firestore rule grants read when shared).
 const CallSheetPublicView = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CallSheetPublicView })));
@@ -70,7 +70,7 @@ import { MUSIC_GENRES, ACCOMMODATIONS } from './constants';
 import { PAGE_META, SITE_URL, CONTACT_INFO, OG_IMAGES, DEFAULT_OG_IMAGE, ROBOTS_OVERRIDES } from './config/seo.config';
 import { SEO_CONTENT, type SeoViewKey } from './config/seo.content';
 import { PENSEES } from './data/pensees';
-import { getOptimizedUrl } from './utils/imageOptimizer';
+import { getOptimizedUrl, heroCoverWidth } from './utils/imageOptimizer';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, getRedirectResult } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -83,8 +83,8 @@ const TARGET_VOLUME = 0.63;
 // --- 1. CRITICAL ASSETS (Above the fold) ---
 // These block the loading screen. Minimized to ensuring immediate visual quality.
 const INITIAL_ASSETS = [
-  // Hero Image (InnPage) - Width 1920
-  getOptimizedUrl("/media/inn/golden%20drone%20copy.jpg", 1920),
+  // Hero Image: same width as the hero carousel texture, so both share one download
+  getOptimizedUrl("/media/inn/golden%20drone%20copy.jpg", typeof window !== 'undefined' ? heroCoverWidth(window.innerWidth, window.innerHeight) : 1920),
   
   // Textures (InnPage) - Width 1000
   getOptimizedUrl("https://raw.githubusercontent.com/SochavaAG/example-assets/master/fog1.png", 1000),
@@ -115,10 +115,8 @@ const DEFERRED_ASSETS = [
     getOptimizedUrl("/media/Cuisine/Plating%20alexis%20ai%20(1).jpg", 800),
     // Massage Portal
     getOptimizedUrl("/media/massage/massage%20andre.jpg", 800),
-    // Local Guide Parallax
-    getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1920),
-    // Gallery Highlight
-    getOptimizedUrl("/media/Auberge%20photos/Maison%20main.jpg", 1920),
+    // Local Guide Parallax (same width as GuidePage requests)
+    getOptimizedUrl("/media/Auberge%20photos/nature%20coco%20upscale.jpg", 1400),
     // Listing Thumbnails (First image of each accommodation, Card size)
     ...ACCOMMODATIONS.map(acc => getOptimizedUrl(acc.images[0], 800))
 ];

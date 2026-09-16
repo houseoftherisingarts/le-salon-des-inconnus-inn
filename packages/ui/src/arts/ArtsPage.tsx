@@ -1,11 +1,12 @@
 
-import React, { useState, useEffect, useRef, useMemo, createContext, useContext } from 'react';
+import React, { useState, useEffect, useRef, useMemo, createContext, useContext, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { GoogleGenAI } from "@google/genai";
 import { ARTISTS_ROSTER } from './roster';
 import { ArtistProfile } from './types';
 import { SiteMap } from './SiteMap';
-import { CreatorStudio } from '../creator-studio/CreatorStudioShell';
+// Le Creator Studio et le SDK Gemini ne se chargent qu'à l'ouverture : la page
+// du centre d'arts n'a plus à télécharger ~1 Mo de JS pour un visiteur qui regarde.
+const CreatorStudio = lazy(() => import('../creator-studio/CreatorStudioShell').then((m) => ({ default: m.CreatorStudio })));
 import { SdiCafe } from '../sdi-cafe/SdiCafe';
 
 // Header links to the rest of the famille des Inconnus, on our own domains
@@ -469,6 +470,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                     return;
                 }
                 try {
+                    const { GoogleGenAI } = await import('@google/genai');
                     const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
                     let imagePrompt = "";
                     switch(artist.category) {
@@ -1970,7 +1972,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
           houseoftherisingarts.com migrates to the creator-studio
           experience directly, that app will mount this same component at /.
         */}
-        {rootView === 'ARTIST' && <CreatorStudio language={language} />}
+        {rootView === 'ARTIST' && <Suspense fallback={null}><CreatorStudio language={language} /></Suspense>}
 
         {rootView === 'BUYER' && (
             <>

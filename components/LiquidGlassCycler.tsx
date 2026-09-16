@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { getOptimizedUrl, heroCoverWidth } from '../utils/imageOptimizer';
 
 // WebGL shaders: liquid glass bubble transition (extracted from InnPage hero).
 // Same visual as the Inn page's hero. Pass an array of image URLs; the component
@@ -73,7 +74,10 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
     let dead = false;
     const fx = (i: number) => focus?.[i] ?? 0.5; // horizontal focal point per image
     let renderer: any, scene: any, camera: any, mat: any;
-    let txs: any[] = [], blobUrls: string[] = [];
+    // txs[i] : undefined = pas encore chargée, null = échec, sinon la texture.
+    let txs: any[] = new Array(images.length).fill(undefined);
+    let texWidth = 0;
+    const urlFor = (src: string) => (texWidth ? getOptimizedUrl(src, texWidth) : src);
     let cur = 0, transitioning = false;
     let auto: ReturnType<typeof setInterval> | null = null;
 
@@ -90,22 +94,15 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
         document.head.appendChild(s);
       });
 
-    const fetchBlobUrl = async (src: string): Promise<string | null> => {
-      try {
-        // External (absolute) URLs go through the wsrv.nl proxy for CORS + resize.
-        // Local same-origin images (/media/…, /wwoof/…) are already optimised and
-        // CORS-clean, so fetch them directly. The proxy 404s on relative URLs.
-        const url = /^https?:\/\//.test(src) ? `https://images.weserv.nl/?url=${encodeURIComponent(src)}` : src;
-        const r = await fetch(url, { mode: 'cors' });
-        if (!r.ok) return null;
-        return URL.createObjectURL(await r.blob());
-      } catch { return null; }
-    };
-
     const loadTex = (url: string): Promise<any> =>
       new Promise(res => {
         const img = new Image();
-        img.onload = () => {
+        // Le proxy externe exige CORS pour WebGL ; les images locales restent
+        // sans crossOrigin pour partager le cache des <img> de la page.
+        if (/^https?:\/\//.test(url)) img.crossOrigin = 'anonymous';
+        img.onload = async () => {
+          try { await img.decode(); } catch {}
+          if (dead) { res(null); return; }
           try {
             const THREE = (window as any).THREE;
             const t = new THREE.Texture(img);
@@ -129,7 +126,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       bg.style.display = 'block';
       imgs.forEach((src, i) => {
         const sl = document.createElement('div');
-        sl.style.cssText = `position:absolute;inset:0;background:url(${src}) ${(fx(i) * 100).toFixed(1)}% center/cover no-repeat;opacity:${i === 0 ? 1 : 0};transition:opacity 1.8s ease;`;
+        sl.style.cssText = `position:absolute;inset:0;background:url(${urlFor(src)}) ${(fx(i) * 100).toFixed(1)}% center/cover no-repeat;opacity:${i === 0 ? 1 : 0};transition:opacity 1.8s ease;`;
         bg.appendChild(sl);
       });
       const slides = bg.querySelectorAll<HTMLElement>('div');
@@ -162,10 +159,31 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       });
     };
 
+    // Chargement paresseux : seules les deux photos qui suivent la photo affichée
+    // sont téléchargées, au lieu des treize d'un coup au montage.
+    const ensure = (i: number) => {
+      const j = i % images.length;
+      if (txs[j] !== undefined || dead) return;
+      txs[j] = loadTex(urlFor(images[j])).then((t) => { if (!dead) txs[j] = t; return t; });
+    };
+    const ready = (j: number) => txs[j] && !(txs[j] instanceof Promise);
+    // Photo suivante dans l'ordre ; on attend (-1) si elle charge encore, on saute un échec.
+    const nextIdx = () => {
+      for (let k = 1; k < images.length; k++) {
+        const j = (cur + k) % images.length;
+        if (ready(j)) return j;
+        if (txs[j] !== null) return -1;
+      }
+      return -1;
+    };
+
     const startAuto = () => {
       if (auto) clearInterval(auto);
       auto = setInterval(() => {
-        if (!dead) doTransition((cur + 1) % Math.max(txs.length, 1));
+        if (dead) return;
+        ensure(cur + 1); ensure(cur + 2);
+        const n = nextIdx();
+        if (n >= 0) doTransition(n);
       }, intervalMs);
     };
 
@@ -229,15 +247,11 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
         startAuto();
       };
 
-      await Promise.all(images.map(async (src, i) => {
-        if (dead) return;
-        const blobUrl = await fetchBlobUrl(src);
-        if (blobUrl && !dead) {
-          blobUrls.push(blobUrl);
-          const t = await loadTex(blobUrl);
-          if (t && !dead) { txs[i] = t; tryGL(); }
-        }
-      }));
+      texWidth = heroCoverWidth(W, H);
+      ensure(0); ensure(1);
+      await Promise.all([txs[0], txs[1]]);
+      if (dead) return;
+      tryGL();
 
       if (!glStarted) initCSSFallback(images);
 
@@ -258,8 +272,7 @@ export const LiquidGlassCycler: React.FC<LiquidGlassCyclerProps> = ({
       dead = true;
       if (auto) clearInterval(auto);
       try { (mat as any)?.__cleanup?.(); } catch {}
-      blobUrls.forEach(u => URL.revokeObjectURL(u));
-      txs.forEach(t => t?.dispose?.());
+      txs.forEach(t => (t instanceof Promise ? t.then((x: any) => x?.dispose?.()) : t?.dispose?.()));
       if (renderer) renderer.dispose();
     };
   }, [images.join('|'), (focus ?? []).join(','), intervalMs]);

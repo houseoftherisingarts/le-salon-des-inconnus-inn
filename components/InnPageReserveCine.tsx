@@ -7,6 +7,7 @@ import { db } from '../firebase';
 import { VexelSoutienSection } from './VexelSoutienSection';
 import { CentreArtsCommunauteSection } from './CentreArtsCommunauteSection';
 import { SiteFooter } from './SiteFooter';
+import { getOptimizedUrl, getSrcSet } from '../utils/imageOptimizer';
 import {
   TrustedPlatforms,
   ManorRoomsSection,
@@ -161,17 +162,48 @@ export const InnPageReserveCine: React.FC<Props> = ({
   // Preload the cinematic frames once; redraw the current frame as each image
   // arrives so there's no blank flash. Frames are ~115KB each (5.6MB total),
   // lighter than the old 10MB clip, and they drive the scrub on every viewport.
+  // Only the first frame loads with the page; the other 47 (~5.5MB) start at the
+  // first scroll gesture or once the browser is idle after load, so they stay off
+  // the first-screen critical path without delaying the scrub for real visitors.
   useEffect(() => {
     const imgs: HTMLImageElement[] = [];
+    const srcOf = (i: number) => `/hero/cine-rev/f_${String(i).padStart(2, '0')}.jpg`;
     for (let i = 1; i <= CINE_FRAME_COUNT; i++) {
       const im = new Image();
       im.decoding = 'async';
       im.onload = () => { fitCine(); drawCine(); };
-      im.src = `/hero/cine-rev/f_${String(i).padStart(2, '0')}.jpg`;
       imgs.push(im);
     }
+    imgs[0].src = srcOf(1);
     cineFramesRef.current = imgs;
-    return () => { cineFramesRef.current = []; };
+    let started = false;
+    let idleId = 0;
+    const root = scrollRef.current;
+    const startAll = () => {
+      if (started) return;
+      started = true;
+      imgs.forEach((im, i) => { if (!im.src) im.src = srcOf(i + 1); });
+    };
+    const opts: AddEventListenerOptions = { passive: true, once: true };
+    root?.addEventListener('scroll', startAll, opts);
+    window.addEventListener('wheel', startAll, opts);
+    window.addEventListener('touchstart', startAll, opts);
+    window.addEventListener('keydown', startAll, { once: true });
+    const onLoad = () => {
+      const ric = (window as any).requestIdleCallback as undefined | ((cb: () => void, o?: { timeout: number }) => number);
+      idleId = ric ? ric(startAll, { timeout: 4000 }) : window.setTimeout(startAll, 2500);
+    };
+    if (document.readyState === 'complete') onLoad(); else window.addEventListener('load', onLoad, { once: true });
+    return () => {
+      root?.removeEventListener('scroll', startAll);
+      window.removeEventListener('wheel', startAll);
+      window.removeEventListener('touchstart', startAll);
+      window.removeEventListener('keydown', startAll);
+      window.removeEventListener('load', onLoad);
+      const cic = (window as any).cancelIdleCallback;
+      if (cic) cic(idleId); else clearTimeout(idleId);
+      cineFramesRef.current = [];
+    };
   }, [fitCine, drawCine]);
 
   const scrollToRooms = () => {
@@ -908,7 +940,9 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   }}
                 >
                   <img
-                    src={ESPACE_COVER_PHOTO}
+                    src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1600)}
+                    srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
+                    sizes="82vw"
                     alt=""
                     aria-hidden
                     loading="eager"
@@ -1014,7 +1048,9 @@ export const InnPageReserveCine: React.FC<Props> = ({
               className="services-portal group relative overflow-hidden border border-[#d4af37]/30 hover:border-[#d4af37] transition-all duration-700 rounded-t-[30px] md:rounded-tr-none md:rounded-bl-[30px] md:rounded-tl-[30px] cursor-pointer min-h-[420px] md:min-h-[560px] text-left block"
             >
               <img
-                src={KITCHEN_PHOTO}
+                src={getOptimizedUrl(KITCHEN_PHOTO, 1600)}
+                srcSet={getSrcSet(KITCHEN_PHOTO)}
+                sizes="(min-width: 768px) 50vw, 100vw"
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -1048,7 +1084,9 @@ export const InnPageReserveCine: React.FC<Props> = ({
               className="services-portal group relative overflow-hidden border border-[#d4af37]/30 hover:border-[#d4af37] transition-all duration-700 rounded-b-[30px] md:rounded-bl-none md:rounded-br-[30px] md:rounded-tr-[30px] cursor-pointer min-h-[420px] md:min-h-[560px] text-left block"
             >
               <img
-                src={MASSAGE_PHOTO}
+                src={getOptimizedUrl(MASSAGE_PHOTO, 1600)}
+                srcSet={getSrcSet(MASSAGE_PHOTO)}
+                sizes="(min-width: 768px) 50vw, 100vw"
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -1119,7 +1157,9 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   aria-label={d.title}
                 >
                   <img
-                    src={d.img}
+                    src={getOptimizedUrl(d.img, 1600)}
+                    srcSet={getSrcSet(d.img)}
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     alt=""
                     loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
