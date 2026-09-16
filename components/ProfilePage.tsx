@@ -58,6 +58,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Téléphone lu dans members/{uid}/prive/coordonnees (déplacé hors de la fiche publique).
+  useEffect(() => {
+    if (!db) return;
+    getDoc(doc(db, 'members', user.uid, 'prive', 'coordonnees'))
+      .then((snap) => { const tel = snap.data()?.telephone; if (tel) setPhone((p) => p || tel); })
+      .catch(() => {});
+  }, [user.uid]);
+
   // Live-subscribe to the user's registration doc so any changes (whether made
   // here or on /ceilidh) reflect immediately. The doc id IS the uid, so we read
   // the single doc rather than running a where('uid','==',uid) query. That
@@ -96,9 +104,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     try {
       const fields: Partial<MemberProfile> = {
         displayName: displayName.trim() || memberProfile.displayName,
-        phone: phone.trim() || undefined,
       };
       await updateDoc(doc(db, 'members', user.uid), fields);
+      // Le téléphone vit dans la sous-collection privée, jamais sur la fiche publique.
+      await setDoc(doc(db, 'members', user.uid, 'prive', 'coordonnees'),
+        { telephone: phone.trim(), majLe: serverTimestamp() }, { merge: true });
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, { displayName: fields.displayName });
       }
@@ -387,9 +397,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       Admin
                     </span>
                   )}
-                  {(memberProfile.email || memberProfile.phone) && (
+                  {(memberProfile.email || phone) && (
                     <span className="font-josefin text-neutral-400 text-xs uppercase tracking-[0.2em] truncate">
-                      {memberProfile.email || memberProfile.phone}
+                      {memberProfile.email || phone}
                     </span>
                   )}
                 </div>

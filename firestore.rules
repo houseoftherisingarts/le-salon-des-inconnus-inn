@@ -41,11 +41,24 @@ service cloud.firestore {
     // ceux que la porte (ensureMember) écrit à chaque connexion. Aucun autre
     // champ n'entre ici : c'est la seule barrière entre un membre et les
     // drapeaux admin, qui vivent ailleurs (members/{uid}/admin/flags).
+    // Vague 7, lot 0 : la porte « Espace Membre » (AuthModal) écrit aussi
+    // uid, membershipType, createdAt et le consentement de la Loi 25. isAdmin
+    // et phone n'y entrent jamais : le drapeau admin se calcule depuis le
+    // jeton, le téléphone vit dans members/{uid}/prive/coordonnees.
     function membreValide(d) {
       return d.keys().hasOnly([
                'displayName', 'email', 'photoURL', 'banniereURL', 'bio',
-               'discipline', 'ville', 'liens', 'provider', 'joinedAt', 'lastSeenAt'
+               'discipline', 'ville', 'liens', 'provider', 'joinedAt', 'lastSeenAt',
+               'uid', 'membershipType', 'createdAt', 'consentDate', 'consentVersion'
              ])
+        && (!('uid' in d) || d.uid == request.auth.uid)
+        && (!('membershipType' in d) || d.membershipType in ['voyageur', 'artiste', 'membre-communaute', 'resident', 'woofer'])
+        && (!('consentDate' in d) || (d.consentDate is string && d.consentDate.size() <= 40))
+        && (!('consentVersion' in d) || (d.consentVersion is string && d.consentVersion.size() <= 10))
+        && (!('displayName' in d) || (d.displayName is string && d.displayName.size() <= 120))
+        // Le courriel de la fiche sert à reconnaître l'admin sur une fiche
+        // publique : il ne peut valoir que celui du jeton, ou rien.
+        && (!('email' in d) || d.email == '' || d.email == request.auth.token.get('email', ''))
         && (!('bio' in d) || (d.bio is string && d.bio.size() <= 1000))
         && (!('discipline' in d) || (d.discipline is string && d.discipline.size() <= 80))
         && (!('ville' in d) || (d.ville is string && d.ville.size() <= 80))
@@ -86,8 +99,41 @@ service cloud.firestore {
       // liens) et ceux de la porte; hasOnly ferme la porte à tout champ
       // admin qu'un client tenterait d'y glisser (isArtist, verifie, etc.
       // vivent tous ailleurs, jamais sur ce document top-level).
-      allow write: if isAdmin()
-                   || (isSelf(userId) && membreValide(request.resource.data));
+      // create et update séparés : createdAt vaut l'heure du serveur à la
+      // création et ne bouge plus ensuite (ni ajouté après coup à une fiche
+      // du Creator Studio qui n'en avait pas). delete explicite, parce qu'une
+      // suppression n'a pas de request.resource à valider.
+      allow create: if isAdmin()
+                    || (isSelf(userId) && membreValide(request.resource.data)
+                        && (!('createdAt' in request.resource.data)
+                            || request.resource.data.createdAt == request.time));
+      allow update: if isAdmin()
+                    || (isSelf(userId) && membreValide(request.resource.data)
+                        && request.resource.data.get('createdAt', null) == resource.data.get('createdAt', null));
+      allow delete: if isAdmin() || isSelf(userId);
+
+      // Coordonnées et préférences : jamais sur le document public, qui est
+      // lisible par tout membre connecté.
+      match /prive/coordonnees {
+        allow read:  if isSelf(userId) || isAdmin();
+        allow write: if isAdmin()
+                     || (isSelf(userId)
+                         && request.resource.data.keys().hasOnly(['telephone', 'majLe'])
+                         && (!('telephone' in request.resource.data)
+                             || (request.resource.data.telephone is string
+                                 && request.resource.data.telephone.size() <= 40
+                                 && request.resource.data.telephone.matches('^[0-9 +().-]*$'))));
+      }
+      match /prive/preferences {
+        allow read:  if isSelf(userId) || isAdmin();
+        allow write: if isAdmin()
+                     || (isSelf(userId)
+                         && request.resource.data.keys().hasOnly(['langue', 'banniere', 'courrielReponseEquipe', 'courrielNouveauMessage', 'majLe'])
+                         && (!('langue' in request.resource.data) || request.resource.data.langue in ['FR', 'EN'])
+                         && (!('banniere' in request.resource.data) || request.resource.data.banniere in ['maison', 'yourte', 'drone', 'bus', 'jardins', 'hemerocales', 'photo'])
+                         && (!('courrielReponseEquipe' in request.resource.data) || request.resource.data.courrielReponseEquipe is bool)
+                         && (!('courrielNouveauMessage' in request.resource.data) || request.resource.data.courrielNouveauMessage is bool));
+      }
 
       // Admin-controlled flags (isArtist, etc). Owner can read their own flags
       // (so the UI knows what to unlock); admins are the only writers.

@@ -76,6 +76,7 @@ import { onAuthStateChanged, getRedirectResult } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './components/AuthModal';
+import { estAdmin } from './components/AuthModal';
 
 // -4dB is approximately 0.63 on the linear 0-1 volume scale
 const TARGET_VOLUME = 0.63;
@@ -542,7 +543,8 @@ const App: React.FC = () => {
       setCurrentUser(user);
       if (user && db) {
         const snap = await getDoc(doc(db, 'members', user.uid));
-        setMemberProfile(snap.exists() ? snap.data() as MemberProfile : null);
+        // isAdmin se calcule depuis le jeton vérifié, jamais depuis la fiche.
+        setMemberProfile(snap.exists() ? { ...(snap.data() as MemberProfile), isAdmin: estAdmin(user) } : null);
       } else {
         setMemberProfile(null);
       }
@@ -585,7 +587,7 @@ const App: React.FC = () => {
         if (snap.exists()) {
           // Returning member: profile already loaded by onAuthStateChanged, just ensure it's set
           setCurrentUser(result.user);
-          setMemberProfile(snap.data() as MemberProfile);
+          setMemberProfile({ ...(snap.data() as MemberProfile), isAdmin: estAdmin(result.user) });
         } else {
           // New user via redirect: need membership selection
           setCurrentUser(result.user);

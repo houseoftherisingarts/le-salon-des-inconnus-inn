@@ -62,6 +62,16 @@ interface AuthModalProps {
 const ADMIN_EMAILS = ['houseoftherisingarts@gmail.com', 'alex@lesalondesinconnus.com'];
 const CONSENT_VERSION = '1';
 
+/** Le courriel appartient-il à l'admin ? Sert aux fiches d'autres membres,
+ *  dont le champ email est borné par la règle au courriel du jeton. */
+export const estCourrielAdmin = (email?: string | null): boolean =>
+  !!email && ADMIN_EMAILS.includes(email.toLowerCase());
+
+/** Drapeau admin de la session : calculé depuis le jeton (courriel vérifié),
+ *  jamais lu ni écrit dans members/{uid}. */
+export const estAdmin = (user?: User | null): boolean =>
+  !!user && user.emailVerified && estCourrielAdmin(user.email);
+
 const MEMBERSHIP_OPTIONS: {
   id: MembershipType; label: string; label_fr: string; desc: string; desc_fr: string; icon: string;
 }[] = [
@@ -80,7 +90,7 @@ async function fetchMemberProfile(user: User): Promise<MemberProfile | null> {
   if (!db) return null;
   try {
     const snap = await getDoc(doc(db, 'members', user.uid));
-    return snap.exists() ? (snap.data() as MemberProfile) : null;
+    return snap.exists() ? ({ ...(snap.data() as MemberProfile), isAdmin: estAdmin(user) }) : null;
   } catch {
     // Firestore unreachable or rules not yet deployed: treat as new user
     return null;
@@ -92,21 +102,31 @@ async function createMemberProfile(
   membershipType: MembershipType,
   displayName: string,
 ): Promise<MemberProfile> {
-  // Firestore rejects `undefined`: only include optional fields when they have a value
-  const profile: MemberProfile = {
+  // Firestore rejects `undefined`: only include optional fields when they have a value.
+  // Exactement les champs que membreValide (firestore.rules) accepte : ni isAdmin
+  // ni phone sur ce document, qui est lisible par tout membre connecté.
+  const fiche = {
     uid: user.uid,
     email: user.email || '',
     displayName,
     membershipType,
-    isAdmin: ADMIN_EMAILS.includes(user.email.toLowerCase()),
-    ...(user.phoneNumber ? { phone: user.phoneNumber } : {}),
     ...(user.photoURL   ? { photoURL: user.photoURL }  : {}),
     createdAt: serverTimestamp(),
     consentDate: new Date().toISOString(),
     consentVersion: CONSENT_VERSION,
   };
-  if (db) await setDoc(doc(db, 'members', user.uid), profile);
-  return profile;
+  if (db) {
+    await setDoc(doc(db, 'members', user.uid), fiche);
+    if (user.phoneNumber) {
+      await setDoc(doc(db, 'members', user.uid, 'prive', 'coordonnees'),
+        { telephone: user.phoneNumber, majLe: serverTimestamp() }, { merge: true });
+    }
+  }
+  return {
+    ...fiche,
+    ...(user.phoneNumber ? { phone: user.phoneNumber } : {}),
+    isAdmin: estAdmin(user),
+  };
 }
 
 async function deleteMemberData(user: User): Promise<void> {

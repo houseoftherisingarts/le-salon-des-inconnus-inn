@@ -646,7 +646,8 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
             email: data.email,
             photoURL: data.photoURL,
             membershipType: data.membershipType,
-            isAdmin: data.isAdmin,
+            // Déduit du courriel, que la règle borne à celui du jeton.
+            isAdmin: ADMIN_EMAILS.includes(String(data.email || '').toLowerCase()),
             createdAt: data.createdAt,
           };
         });

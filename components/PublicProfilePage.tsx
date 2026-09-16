@@ -9,6 +9,7 @@ import {
 import { ref as storageRef, getDownloadURL } from 'firebase/storage';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './AuthModal';
+import { estCourrielAdmin } from './AuthModal';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -775,7 +776,7 @@ export const PublicProfilePage: React.FC<PublicProfilePageProps> = ({
             <div className={`text-sm font-cinzel ${membership.color}`}>
               {language === 'FR' ? membership.fr : membership.en}
             </div>
-            {profile.isAdmin && (
+            {estCourrielAdmin(profile.email) && (
               <span className="text-[9px] font-cinzel uppercase tracking-widest bg-[#d4af37]/20 text-[#d4af37] px-2 py-0.5 rounded-full">
                 Admin
               </span>
