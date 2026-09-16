@@ -8,6 +8,7 @@ interface Onglet {
 
 const ONGLETS: Onglet[] = [
   { id: 'profil', labelFR: 'Profil', labelEN: 'Profile' },
+  { id: 'sejours', labelFR: 'Vos séjours', labelEN: 'Your stays' },
   { id: 'billets', labelFR: 'Vos billets', labelEN: 'Your tickets' },
   { id: 'communaute', labelFR: 'Communauté', labelEN: 'Community' },
   { id: 'artistique', labelFR: 'Communauté artistique', labelEN: 'Artistic community' },

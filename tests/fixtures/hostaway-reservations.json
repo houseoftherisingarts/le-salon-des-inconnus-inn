@@ -1,0 +1,81 @@
+{
+  "status": "success",
+  "count": 5,
+  "result": [
+    {
+      "id": 1001,
+      "guestEmail": "qa-espace-a@lesalondesinconnus.com",
+      "listingMapId": 345789,
+      "arrivalDate": "2026-10-10",
+      "departureDate": "2026-10-12",
+      "status": "confirmed",
+      "totalPrice": 320,
+      "currency": "CAD",
+      "numberOfGuests": 2,
+      "channelName": "Direct",
+      "reservationId": "RES-1001",
+      "confirmationCode": "ABC123",
+      "guestPortalUrl": "https://portal.hostaway.com/guest/RES-1001"
+    },
+    {
+      "id": 1002,
+      "guestEmail": "QA-ESPACE-A@LESALONDESINCONNUS.COM",
+      "listingMapId": 345786,
+      "arrivalDate": "2026-07-01",
+      "departureDate": "2026-07-04",
+      "status": "checked_out",
+      "totalPrice": 480,
+      "currency": "CAD",
+      "numberOfGuests": 4,
+      "channelName": "Booking.com",
+      "reservationId": "RES-1002",
+      "confirmationCode": "DEF456",
+      "guestPortalUrl": "https://portal.hostaway.com/guest/RES-1002"
+    },
+    {
+      "id": 1003,
+      "guestEmail": "qa-espace-a@lesalondesinconnus.com",
+      "listingMapId": 345791,
+      "arrivalDate": "2026-06-10",
+      "departureDate": "2026-06-12",
+      "status": "ownerStay",
+      "totalPrice": 0,
+      "currency": "CAD",
+      "numberOfGuests": 1,
+      "channelName": "Direct",
+      "reservationId": "RES-1003",
+      "confirmationCode": "OWNER1",
+      "guestPortalUrl": null
+    },
+    {
+      "id": 1004,
+      "guestEmail": "qa-espace-a@lesalondesinconnus.com",
+      "listingMapId": 345789,
+      "arrivalDate": "2026-05-01",
+      "departureDate": "2026-05-03",
+      "status": "cancelled",
+      "totalPrice": 250,
+      "currency": "CAD",
+      "numberOfGuests": 2,
+      "channelName": "Airbnb",
+      "reservationId": "RES-1004",
+      "confirmationCode": "GHI789",
+      "guestPortalUrl": null
+    },
+    {
+      "id": 1005,
+      "guestEmail": "qa-espace-a@lesalondesinconnus.com",
+      "listingMapId": 999999,
+      "arrivalDate": "2026-10-20",
+      "departureDate": "2026-10-22",
+      "status": "confirmed",
+      "totalPrice": 200,
+      "currency": "CAD",
+      "numberOfGuests": 2,
+      "channelName": "Direct",
+      "reservationId": "RES-1005",
+      "confirmationCode": "JKL012",
+      "guestPortalUrl": null
+    }
+  ]
+}
