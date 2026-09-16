@@ -2558,12 +2558,12 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
   const [teams, setTeams] = useState<CeilidhTeamData[]>(TEAMS);
   const [carpools, setCarpools] = useState<Carpool[]>([]);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [showTickets, setShowTickets] = useState<ShowTicket[]>([]);
+  const [showTicketsVendus, setShowTicketsVendus] = useState(0);
+  const [userShowTicket, setUserShowTicket] = useState<ShowTicket | null>(null);
   const [showBuyTicketModal, setShowBuyTicketModal] = useState(false);
   const [needs, setNeeds] = useState<CeilidhNeed[]>([]);
 
-  const userShowTicket = showTickets.find(t => t.uid === user?.uid) ?? null;
-  const showSpotsLeft = SHOW_CAPACITY - showTickets.length;
+  const showSpotsLeft = SHOW_CAPACITY - showTicketsVendus;
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -2624,14 +2624,25 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
     return unsub;
   }, []);
 
-  // Load show tickets (public read, tracks remaining spots)
+  // Compteur public lu dans config/ceilidhPlaces (recompté par la fonction
+  // compterPlacesCeilidh), car showTickets est désormais réservé à son
+  // propriétaire et à l'admin.
   useEffect(() => {
     if (!db) return;
-    const unsub = onSnapshot(collection(db, 'events', EVENT_ID, 'showTickets'), snap => {
-      setShowTickets(snap.docs.map(d => ({ uid: d.id, ...d.data() }) as ShowTicket));
+    const unsub = onSnapshot(doc(db, 'config', 'ceilidhPlaces'), snap => {
+      setShowTicketsVendus(Number(snap.data()?.vendus ?? 0));
     }, () => {});
     return unsub;
   }, []);
+
+  // Le billet du membre lui-même, lisible par son propriétaire seulement.
+  useEffect(() => {
+    if (!db || !user) { setUserShowTicket(null); return; }
+    const unsub = onSnapshot(doc(db, 'events', EVENT_ID, 'showTickets', user.uid), snap => {
+      setUserShowTicket(snap.exists() ? ({ uid: snap.id, ...snap.data() } as ShowTicket) : null);
+    }, () => {});
+    return unsub;
+  }, [user]);
 
   // Load ceilidh needs
   useEffect(() => {
@@ -3088,7 +3099,7 @@ export const CeilidhPage: React.FC<CeilidhPageProps> = ({ onNavigate, language, 
                                   <div
                                     className="h-full rounded-full transition-all duration-500"
                                     style={{
-                                      width: `${(showTickets.length / 20) * 100}%`,
+                                      width: `${(showTicketsVendus / 20) * 100}%`,
                                       backgroundColor: showSpotsLeft <= 3 ? '#ef4444' : '#d4af37',
                                       opacity: 0.6,
                                     }}
