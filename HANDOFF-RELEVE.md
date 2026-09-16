@@ -1,3 +1,5 @@
+> **Mise à jour 16 sept, 18 h (session lesalondesinconnus-de) : la vague 5 est BÂTIE, DÉPLOYÉE et vérifiée en ligne** (bundle index-YtGoCJKk.js sur www.lesalondesinconnus.com et aubergedesinconnus.com, captures 1440/390 regardées, aucune image en 404, aucun défilement horizontal). Ne pas la refaire. Il reste : la vague 7 (espace membre, lots 1 à 8 du devis vague7-espace-membre.md), la vague 4 (bureau aux 3 livres, attend le OK d'Alex sur 8 à 16 crédits Higgsfield) et un pied de page pour /formations chez Krystine.
+
 # Passation du 16 septembre 2026 (session lesalondesinconnus-de → relève)
 
 La session Claude Code qui travaillait ici a frappé sa limite Anthropic en plein milieu de la vague 5 du plan écosystème. Voici exactement où elle en était, dans ses propres mots.
