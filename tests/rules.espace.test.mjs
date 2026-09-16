@@ -1,0 +1,144 @@
+// Banc d'essai du lot 0 de la vague 7 (porte d'inscription de la fenêtre
+// « Espace Membre »), même harnais que rules.reseau.test.mjs : le SDK
+// `firebase` parle à l'émulateur avec un jeton simulé, aucun paquet ajouté.
+//
+// Lancé par :
+//   PATH="$(brew --prefix openjdk)/bin:$PATH" npx firebase emulators:exec \
+//     --only firestore --project demo-salon \
+//     "node tests/rules.reseau.test.mjs && node tests/rules.espace.test.mjs"
+import { initializeApp, deleteApp } from 'firebase/app';
+import {
+    getFirestore, connectFirestoreEmulator, doc, setDoc, updateDoc, deleteDoc, getDoc,
+    serverTimestamp, Timestamp,
+} from 'firebase/firestore';
+
+const PROJECT_ID = process.env.GCLOUD_PROJECT || 'demo-salon';
+const UID_A = 'espace-a';
+const UID_B = 'espace-b';
+const UID_T = 'espace-tel';
+const UID_G = 'espace-google';
+
+let compteur = 0;
+const apps = [];
+function baseComme(claims) {
+    const app = initializeApp({ projectId: PROJECT_ID }, `espace-test-${compteur++}`);
+    apps.push(app);
+    const db = getFirestore(app);
+    connectFirestoreEmulator(db, '127.0.0.1', 8080, claims ? { mockUserToken: claims } : {});
+    return db;
+}
+const dbA = () => baseComme({ sub: UID_A, email: 'a@example.com', email_verified: true });
+const dbB = () => baseComme({ sub: UID_B, email: 'b@example.com', email_verified: true });
+const dbG = () => baseComme({ sub: UID_G, email: 'g@example.com', email_verified: true, firebase: { sign_in_provider: 'google.com' } });
+const dbTel = () => baseComme({ sub: UID_T, phone_number: '+18195550101', firebase: { sign_in_provider: 'phone' } });
+const dbAdmin = () => baseComme({ sub: 'admin-uid', email: 'alex@lesalondesinconnus.com', email_verified: true });
+const dbFauxAdmin = () => baseComme({ sub: 'faux-admin', email: 'alex@lesalondesinconnus.com', email_verified: false });
+const dbAnon = () => baseComme(null);
+
+let ok = 0;
+let fail = 0;
+const resultats = [];
+async function attenduOk(nom, p) {
+    try { await p; resultats.push(`✅ ${nom}`); ok++; }
+    catch (e) { resultats.push(`❌ ${nom} (devait réussir)\n   ${String(e.message || e).split('\n')[0]}`); fail++; }
+}
+async function attenduRefus(nom, p) {
+    try { await p; resultats.push(`❌ ${nom} (devait être refusé, a réussi)`); fail++; }
+    catch (e) {
+        if (String(e.code || e.message || '').match(/permission-denied|PERMISSION_DENIED/i)) { resultats.push(`✅ ${nom}`); ok++; }
+        else { resultats.push(`❌ ${nom} (erreur inattendue)\n   ${String(e.message || e).split('\n')[0]}`); fail++; }
+    }
+}
+
+// La forme exacte qu'écrit createMemberProfile (components/AuthModal.tsx).
+const ficheAuthModal = (uid, email, extra = {}) => ({
+    uid,
+    email,
+    displayName: 'Essai',
+    membershipType: 'voyageur',
+    createdAt: serverTimestamp(),
+    consentDate: new Date().toISOString(),
+    consentVersion: '1',
+    ...extra,
+});
+
+async function main() {
+    // ── Inscription par les trois portes ───────────────────────────────────
+    await attenduOk('R-01 inscription par courriel : forme exacte d\'AuthModal',
+        setDoc(doc(dbA(), 'members', UID_A), ficheAuthModal(UID_A, 'a@example.com')));
+    await attenduOk('R-01 g inscription par Google (avec photoURL)',
+        setDoc(doc(dbG(), 'members', UID_G), ficheAuthModal(UID_G, 'g@example.com', { photoURL: 'https://lh3.googleusercontent.com/x' })));
+    await attenduOk('R-01 t inscription par téléphone (courriel vide)',
+        setDoc(doc(dbTel(), 'members', UID_T), ficheAuthModal(UID_T, '', { membershipType: 'artiste' })));
+    await attenduOk('R-01 t le téléphone va dans prive/coordonnees',
+        setDoc(doc(dbTel(), 'members', UID_T, 'prive', 'coordonnees'), { telephone: '+18195550101', majLe: serverTimestamp() }));
+
+    // ── Ce que la porte ne peut plus écrire ─────────────────────────────────
+    await attenduRefus('R-02 un membre crée sa fiche avec isAdmin: true',
+        setDoc(doc(dbB(), 'members', UID_B), ficheAuthModal(UID_B, 'b@example.com', { isAdmin: true })));
+    await attenduRefus('R-02 b un membre ajoute isAdmin à sa fiche existante',
+        setDoc(doc(dbA(), 'members', UID_A), { isAdmin: true }, { merge: true }));
+    await attenduRefus('R-03 un membre crée sa fiche avec phone',
+        setDoc(doc(dbB(), 'members', UID_B), ficheAuthModal(UID_B, 'b@example.com', { phone: '+18195550101' })));
+    await attenduRefus('R-04 membershipType « admin »',
+        setDoc(doc(dbB(), 'members', UID_B), ficheAuthModal(UID_B, 'b@example.com', { membershipType: 'admin' })));
+    await attenduRefus('R-05 un membre change son createdAt',
+        updateDoc(doc(dbA(), 'members', UID_A), { createdAt: Timestamp.fromDate(new Date('2020-01-01')) }));
+    await attenduOk('R-06 fusion ensureMember (displayName, email, photoURL, provider, lastSeenAt)',
+        setDoc(doc(dbA(), 'members', UID_A), {
+            displayName: 'Essai A', email: 'a@example.com', photoURL: '', provider: 'email', lastSeenAt: serverTimestamp(),
+        }, { merge: true }));
+    await attenduRefus('R-07 A écrit la fiche de B',
+        setDoc(doc(dbA(), 'members', UID_B), ficheAuthModal(UID_B, 'b@example.com')));
+    await attenduRefus('R-09 A se crée une fiche avec le courriel d\'Alex',
+        setDoc(doc(dbB(), 'members', UID_B), ficheAuthModal(UID_B, 'alex@lesalondesinconnus.com')));
+    await attenduRefus('R-09 c createdAt fixé au 1er janvier 2020 à la création',
+        setDoc(doc(dbB(), 'members', UID_B), ficheAuthModal(UID_B, 'b@example.com', { createdAt: Timestamp.fromDate(new Date('2020-01-01')) })));
+    await attenduRefus('R-01 u uid qui ne correspond pas au document',
+        setDoc(doc(dbB(), 'members', UID_B), ficheAuthModal(UID_A, 'b@example.com')));
+
+    // Fiche sans createdAt (porte du Creator Studio) : B la crée par ensureMember.
+    await attenduOk('R-09 d préparation : fiche ensureMember sans createdAt',
+        setDoc(doc(dbB(), 'members', UID_B), { displayName: 'B', email: 'b@example.com', photoURL: '', provider: 'google', joinedAt: serverTimestamp(), lastSeenAt: serverTimestamp() }));
+    await attenduRefus('R-09 d B ajoute un createdAt à une fiche qui n\'en avait pas',
+        updateDoc(doc(dbB(), 'members', UID_B), { createdAt: serverTimestamp() }));
+
+    // ── Lectures ─────────────────────────────────────────────────────────────
+    await attenduOk('lecture de la fiche d\'autrui par un membre connecté (page publique)',
+        getDoc(doc(dbB(), 'members', UID_A)));
+    await attenduRefus('lecture d\'une fiche par un visiteur anonyme',
+        getDoc(doc(dbAnon(), 'members', UID_A)));
+
+    // ── Sous-collection privée ───────────────────────────────────────────────
+    await attenduOk('R-10 A écrit prive/coordonnees { telephone }',
+        setDoc(doc(dbA(), 'members', UID_A, 'prive', 'coordonnees'), { telephone: '819 555-0101' }));
+    await attenduRefus('R-10 b téléphone avec des lettres',
+        setDoc(doc(dbA(), 'members', UID_A, 'prive', 'coordonnees'), { telephone: 'javascript:1' }));
+    await attenduRefus('R-11 B lit prive/coordonnees de A',
+        getDoc(doc(dbB(), 'members', UID_A, 'prive', 'coordonnees')));
+    await attenduOk('R-12 l\'admin vérifié lit prive/coordonnees de A',
+        getDoc(doc(dbAdmin(), 'members', UID_A, 'prive', 'coordonnees')));
+    await attenduRefus('R-13 le faux admin non vérifié lit prive/coordonnees de A',
+        getDoc(doc(dbFauxAdmin(), 'members', UID_A, 'prive', 'coordonnees')));
+    await attenduRefus('R-13 b le faux admin non vérifié écrit la fiche de A',
+        setDoc(doc(dbFauxAdmin(), 'members', UID_A), { isAdmin: true }, { merge: true }));
+    await attenduRefus('R-14 prive/preferences { langue: DE }',
+        setDoc(doc(dbA(), 'members', UID_A, 'prive', 'preferences'), { langue: 'DE' }));
+    await attenduRefus('R-15 prive/preferences avec un champ role',
+        setDoc(doc(dbA(), 'members', UID_A, 'prive', 'preferences'), { langue: 'FR', role: 'admin' }));
+    await attenduOk('R-15 b prive/preferences valides',
+        setDoc(doc(dbA(), 'members', UID_A, 'prive', 'preferences'), { langue: 'FR', courrielNouveauMessage: true }));
+
+    // ── Suppression par soi-même ─────────────────────────────────────────────
+    await attenduOk('R-09 b A supprime sa propre fiche',
+        deleteDoc(doc(dbA(), 'members', UID_A)));
+    await attenduRefus('R-09 e B supprime la fiche de G',
+        deleteDoc(doc(dbB(), 'members', UID_G)));
+
+    console.log('\n' + resultats.join('\n'));
+    console.log(`\n${ok} réussis, ${fail} échoués, sur ${ok + fail} cas.`);
+    await Promise.all(apps.map((a) => deleteApp(a).catch(() => {})));
+    if (fail > 0) process.exitCode = 1;
+}
+
+main().catch((e) => { console.error(e); process.exitCode = 1; });
