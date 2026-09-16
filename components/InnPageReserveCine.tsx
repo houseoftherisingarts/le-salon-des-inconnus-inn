@@ -1145,6 +1145,10 @@ export const InnPageReserveCine: React.FC<Props> = ({
             App.tsx route effect. */}
         <SeoBlock viewKey="INN" language={language} onNavigate={onNavigate} />
 
+        {/* Faire vivre le Salon autrement : confier un site à Vexel Webstudio,
+            dernière scène avant le pied de page (demande d'Alex, 16 sept. 2026). */}
+        <VexelSoutienSection language={language} />
+
         <div className="cv-auto">
           <MapFooterSection language={language} vibe={'HOSTEL'} />
         </div>
