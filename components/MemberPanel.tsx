@@ -102,7 +102,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
           onClick={() => setShowAuth(true)}
           className="flex-shrink-0 whitespace-nowrap flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full
                      text-[10px] font-cinzel uppercase tracking-widest text-yellow-100/60
-                     hover:border-[#d4af37]/50 hover:text-yellow-100 transition-all duration-200"
+                     hover:border-[#c5a059]/50 hover:text-yellow-100 transition-all duration-200"
           title={t('Member Space', 'Espace Membre')}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 shrink-0">
@@ -135,9 +135,9 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
   const photoURL = memberProfile.photoURL || user.photoURL;
   const isAdmin = memberProfile.isAdmin;
 
-  // When logged in, the chip jumps straight to the dashboard (/profil): the
+  // When logged in, the chip jumps straight to the dashboard (/compte): the
   // old dropdown's items now live inside the dashboard itself.
-  const goToDashboard = () => onNavigate?.('MY_PROFILE');
+  const goToDashboard = () => onNavigate?.('COMPTE');
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -145,15 +145,15 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
       {/* ── Avatar chip: click goes straight to the dashboard ── */}
       <button
         onClick={goToDashboard}
-        className="flex items-center gap-2 bg-black/40 backdrop-blur-md border rounded-full px-2 py-1 transition-all duration-200 border-white/10 hover:border-[#d4af37]/40"
+        className="flex items-center gap-2 bg-black/40 backdrop-blur-md border rounded-full px-2 py-1 transition-all duration-200 border-white/10 hover:border-[#c5a059]/40"
         title={t('Member Space', 'Espace Membre')}
       >
-        <div className="w-6 h-6 rounded-full overflow-hidden border border-[#d4af37]/40 shrink-0">
+        <div className="w-6 h-6 rounded-full overflow-hidden border border-[#c5a059]/40 shrink-0">
           {photoURL ? (
             <img src={photoURL} alt={displayName} className="w-full h-full object-cover" />
           ) : (
-            <div className="w-full h-full bg-[#d4af37]/20 flex items-center justify-center">
-              <span className="text-[9px] font-cinzel font-bold text-[#d4af37]">
+            <div className="w-full h-full bg-[#c5a059]/20 flex items-center justify-center">
+              <span className="text-[9px] font-cinzel font-bold text-[#c5a059]">
                 {getInitials(displayName)}
               </span>
             </div>
@@ -162,30 +162,30 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
         <span className="hidden sm:block text-[10px] font-cinzel text-yellow-100/80 max-w-[120px] truncate">
           {displayName.split(' ')[0]}
         </span>
-        <span className="text-[9px] font-cinzel text-[#d4af37]/70 px-1" aria-hidden>→</span>
+        <span className="text-[9px] font-cinzel text-[#c5a059]/70 px-1" aria-hidden>→</span>
       </button>
 
       {/* ── Dropdown panel ── */}
       {isOpen && (
-        <div className="absolute top-10 right-0 z-[200] w-72 bg-[#0a0a0a] border border-[#d4af37]/25
+        <div className="absolute top-10 right-0 z-[200] w-72 bg-[#0a0a0a] border border-[#c5a059]/25
                         shadow-2xl animate-fadeInPanel">
 
           {/* Corner accents */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#d4af37]/50" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#d4af37]/50" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#d4af37]/50" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#d4af37]/50" />
+          <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#c5a059]/50" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#c5a059]/50" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#c5a059]/50" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#c5a059]/50" />
 
           {/* Header */}
           <div className="p-5 border-b border-white/5">
             <div className="flex items-center gap-3">
               {/* Large avatar */}
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#d4af37]/40 shrink-0">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#c5a059]/40 shrink-0">
                 {photoURL ? (
                   <img src={photoURL} alt={displayName} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full bg-[#d4af37]/15 flex items-center justify-center">
-                    <span className="text-sm font-cinzel font-bold text-[#d4af37]">
+                  <div className="w-full h-full bg-[#c5a059]/15 flex items-center justify-center">
+                    <span className="text-sm font-cinzel font-bold text-[#c5a059]">
                       {getInitials(displayName)}
                     </span>
                   </div>
@@ -206,7 +206,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
                 )}
                 {/* Admin badge */}
                 {isAdmin && (
-                  <span className="inline-block ml-1 mt-1.5 px-2 py-0.5 rounded-full text-[9px] font-cinzel uppercase tracking-wider bg-[#d4af37]/20 text-[#d4af37]">
+                  <span className="inline-block ml-1 mt-1.5 px-2 py-0.5 rounded-full text-[9px] font-cinzel uppercase tracking-wider bg-[#c5a059]/20 text-[#c5a059]">
                     Admin
                   </span>
                 )}
@@ -217,21 +217,21 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
           {/* Actions */}
           <div className="py-2">
 
-            {/* My Profile */}
+            {/* Votre espace */}
             {onNavigate && (
               <button
-                onClick={() => { onNavigate('MY_PROFILE'); setIsOpen(false); }}
+                onClick={() => { onNavigate('COMPTE'); setIsOpen(false); }}
                 className="w-full flex items-center gap-3 px-5 py-3 text-left
                            text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
+                  className="w-4 h-4 text-[#c5a059]/50 group-hover:text-[#c5a059] transition-colors shrink-0">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                 </svg>
                 <div>
-                  <div className="text-xs font-cinzel">{t('My Profile', 'Mon Profil')}</div>
+                  <div className="text-xs font-cinzel">{t('Your space', 'Votre espace')}</div>
                   <div className="text-[10px] text-neutral-600 font-lato mt-0.5">
-                    {t('Edit info · Photo · Dashboard', 'Modifier · Photo · Tableau de bord')}
+                    {t('Dashboard · Profile · Community', 'Tableau de bord · Profil · Communauté')}
                   </div>
                 </div>
               </button>
@@ -245,7 +245,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
                            text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
+                  className="w-4 h-4 text-[#c5a059]/50 group-hover:text-[#c5a059] transition-colors shrink-0">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                 </svg>
                 <div>
@@ -259,61 +259,21 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
 
             <div className="h-px bg-white/5 mx-5 my-1" />
 
-            {/* My Registrations */}
+            {/* Creator Studio */}
             {onNavigate && (
               <button
-                onClick={() => { onNavigate('EVENTS'); setIsOpen(false); }}
+                onClick={() => { onNavigate('CREATOR_STUDIO'); setIsOpen(false); }}
                 className="w-full flex items-center gap-3 px-5 py-3 text-left
                            text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                  className="w-4 h-4 text-[#c5a059]/50 group-hover:text-[#c5a059] transition-colors shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.813-3.814a1.151 1.151 0 00-1.627-1.627l-3.814 3.813a15.996 15.996 0 00-4.648 4.764m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
                 </svg>
                 <div>
-                  <div className="text-xs font-cinzel">{t('My Events', 'Mes Événements')}</div>
+                  <div className="text-xs font-cinzel">{t('Join the artistic community', 'Devenir membre de la communauté artistique')}</div>
                   <div className="text-[10px] text-neutral-600 font-lato mt-0.5">
-                    {t('Ceilidh de Mai · Registrations', 'Ceilidh de Mai · Inscriptions')}
-                  </div>
-                </div>
-              </button>
-            )}
-
-            {/* Ceilidh shortcut */}
-            {onNavigate && (
-              <button
-                onClick={() => { onNavigate('CEILIDH'); setIsOpen(false); }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-left
-                           text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
-                </svg>
-                <div>
-                  <div className="text-xs font-cinzel">{t('Ceilidh de Mai 2026', 'Ceilidh de Mai 2026')}</div>
-                  <div className="text-[10px] text-neutral-600 font-lato mt-0.5">
-                    {t('May 21–25 · Namur, QC', '21–25 mai · Namur, QC')}
-                  </div>
-                </div>
-              </button>
-            )}
-
-            {/* Join the community: apply to live and work here (opens the form directly) */}
-            {onNavigate && (
-              <button
-                onClick={() => { try { sessionStorage.setItem('openCommunityForm', '1'); } catch { /* ignore */ } onNavigate('COMMUNITY'); setIsOpen(false); }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-left
-                           text-neutral-400 hover:text-white hover:bg-white/4 transition-colors group"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                  className="w-4 h-4 text-[#d4af37]/50 group-hover:text-[#d4af37] transition-colors shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                </svg>
-                <div>
-                  <div className="text-xs font-cinzel">{t('Join the community', 'Faire partie de la communauté')}</div>
-                  <div className="text-[10px] text-neutral-600 font-lato mt-0.5">
-                    {t('Apply to live and work here', 'Postuler pour vivre et travailler ici')}
+                    {t('Creator Studio', 'Creator Studio')}
                   </div>
                 </div>
               </button>

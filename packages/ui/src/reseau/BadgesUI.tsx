@@ -51,7 +51,7 @@ export const SelecteurBadges: React.FC<{ uid: string; language: 'EN' | 'FR' }> =
     return (
         <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5">
             <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-3">
-                {t('Your badges — pick up to five to show', 'Vos badges — choisissez-en cinq à exposer au plus')}
+                {t('Your badges: pick up to five to show', 'Vos badges : choisissez-en cinq au plus à exposer')}
             </p>
             <div className="flex flex-wrap gap-2">
                 {obtenusIds.map((id) => {

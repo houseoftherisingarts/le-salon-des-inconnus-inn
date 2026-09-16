@@ -206,12 +206,16 @@ export const PAGE_META = {
       keywords: "camping Festival médiéval Montpellier, camping Namur Outaouais, camping Petite-Nation, festival camping Quebec"
     },
     FR: {
-      title: "Camping du festival à Namur | Le Salon des Inconnus",
-      description: "Quatre emplacements de camping sur cinq acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout compris, pits à feux et stationnement sur place.",
-      keywords: "camping Festival médiéval de Montpellier, camping Namur, camping Petite-Nation, camping Outaouais, où dormir festival médiéval"
+      title: "Camping festival à Namur | Le Salon des Inconnus",
+      description: "Quatre emplacements de camping sur cinq acres boisés à Namur, pour la fin de semaine du Festival médiéval de Montpellier, du 25 au 27 septembre. 115 $ tout inclus, ronds de feu et stationnement sur place.",
+      keywords: "camping Festival médiéval Montpellier, camping Namur Outaouais, camping Petite-Nation, camping rustique"
     }
+  },
+  COMPTE: {
+    EN: { title: "Your space · Le Salon des Inconnus", description: "Your private member space.", keywords: "" },
+    FR: { title: "Votre espace · Le Salon des Inconnus", description: "Votre espace privé.", keywords: "" }
   }
-} as const;
+};
 
 export type ViewKey = keyof typeof PAGE_META;
 
@@ -223,6 +227,7 @@ export const ROBOTS_OVERRIDES: Partial<Record<ViewKey, string>> = {
   // Brouillon : la page existe mais reste hors index tant que les photos des
   // œuvres ne sont pas en place.
   CATALOGUE: 'noindex, nofollow',
+  COMPTE: 'noindex, nofollow',
 };
 
 // Social/AI share image per route — ABSOLUTE URLs (crawlers require absolute).

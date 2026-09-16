@@ -13,7 +13,7 @@ import { MUSIC_GENRES } from '../constants';
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'BLOG' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
-  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'CENTRE_ARTS' | 'MECENE';
+  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'CENTRE_ARTS' | 'MECENE' | 'COMPTE';
 
 interface SiteHeaderProps {
   language: 'EN' | 'FR';

@@ -13,8 +13,8 @@ export const ListeAmis: React.FC<ListeAmisProps> = ({ uid, amities, language, on
     const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
 
     const acceptees = amities.filter((a) => a.status === 'accepted');
-    const recues = amities.filter((a) => a.status === 'pending' && a.actionUid !== uid);
-    const envoyees = amities.filter((a) => a.status === 'pending' && a.actionUid === uid);
+    const recues = amities.filter((a) => a.status === 'pending' && a.requestedBy !== uid);
+    const envoyees = amities.filter((a) => a.status === 'pending' && a.requestedBy === uid);
 
     return (
         <div className="space-y-8 max-w-2xl">

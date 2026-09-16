@@ -85,6 +85,42 @@
       ],
       "headers": [
         {
+          "source": "/invitation",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/compte",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/profil",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/messages",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
           "source": "**",
           "headers": [
             {
@@ -164,6 +200,33 @@
       "headers": [
         {
           "source": "/invitation",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/compte",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/profil",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/messages",
           "headers": [
             {
               "key": "X-Robots-Tag",

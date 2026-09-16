@@ -40,6 +40,7 @@ const ProfilePage       = lazy(() => import('./components/ProfilePage').then(m =
 const PublicProfilePage = lazy(() => import('./components/PublicProfilePage').then(m => ({ default: m.PublicProfilePage })));
 const MessagingPage     = lazy(() => import('./components/MessagingPage').then(m => ({ default: m.MessagingPage })));
 const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => ({ default: m.AdminCRM })));
+const EspaceMembrePage  = lazy(() => import('./components/compte/EspaceMembrePage').then(m => ({ default: m.default })));
 const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CreatorStudio })));
 // Le centre d'arts (hub Mécène/Artiste, menu mécène, café), venu d'apps/salon.
 const CentreArtsPage    = lazy(() => import('./components/centre-arts/CentreArtsPage'));
@@ -192,7 +193,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE' | 'CAMPING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC'
-              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE'
+              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE'
               | 'MECENE_ARTISTES' | 'MECENE_FISCALITE' | 'MECENE_SOUTIEN';
 
 // Note: SUPER_PROFILE intentionally has no fixed path. Its path is the
@@ -234,6 +235,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   MECENE_ARTISTES:  '/mecene/artistes',
   MECENE_FISCALITE: '/mecene/fiscalite',
   MECENE_SOUTIEN:   '/mecene/soutenir',
+  COMPTE:         '/compte',
   SUPER_PROFILE:  '',
   HIGHS_TEST:     '/highstest',
   CALLSHEET_PUBLIC: '',  // dynamic: /c/{uid}/{slug}, never navigated to in-app
@@ -297,6 +299,7 @@ const pathToView = (pathname: string): ViewState => {
   if (PATH_VIEWS[normalized]) return PATH_VIEWS[normalized];
   if (normalized === '/tools' || normalized === '/outils') return 'DOWNLOAD';
   if (normalized === '/coffre') return 'COFFRE';
+  if (normalized === '/profil' || normalized === '/messages') return 'COMPTE';
   // Ancienne adresse du Creator Studio sur inconnus-salon (liens de courriel déjà envoyés).
   if (normalized === '/createur') return 'CREATOR_STUDIO';
   if (extractCallsheet(normalized)) return 'CALLSHEET_PUBLIC';
@@ -371,13 +374,33 @@ const App: React.FC = () => {
   // échouent parfois (ERR_BLOCKED_BY_ORB) avant de laisser voir le profil
   // ou la page « introuvable » en dessous.
   const isArtsView = currentView in ARTS_NODE_BY_VIEW;
-  const isStandalonePage = currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE' || isArtsView || currentView === 'CENTRE_ARTS';
+  const isStandalonePage = currentView === 'COMPTE' || currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE' || isArtsView || currentView === 'CENTRE_ARTS';
 
   // Trigger Background Loading when initial loading finishes
   useIdlePreloader(DEFERRED_ASSETS, !isLoading && !isStandalonePage);
 
   // --- 1. NAVIGATION HELPER ---
+  const naviguerCompte = (onglet: string, sous?: string, conv?: string) => {
+    let url = `/compte?onglet=${onglet}`;
+    if (sous) url += `&sous=${sous}`;
+    if (conv) url += `&conv=${conv}`;
+    if (window.location.pathname + window.location.search !== url) {
+      history.pushState({ view: 'COMPTE' }, '', url);
+    }
+    setCurrentView('COMPTE');
+    setSuperProfileSlug(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleNavigation = (destination: ViewState) => {
+    if (destination === 'MY_PROFILE') {
+      naviguerCompte('profil');
+      return;
+    }
+    if (destination === 'MESSAGING') {
+      naviguerCompte('communaute', 'messages', activeConversationId || undefined);
+      return;
+    }
     // SUPER_PROFILE is reached by entering its slug URL directly. It's never
     // navigated to from in-app, so we don't push a path for it.
     if (destination === 'SUPER_PROFILE') {
@@ -622,6 +645,7 @@ const App: React.FC = () => {
 
   const handleStartDM = (conversationId: string) => {
     setActiveConversationId(conversationId);
+    naviguerCompte('communaute', 'messages', conversationId);
   };
 
   // Initialize Audio
@@ -738,7 +762,7 @@ const App: React.FC = () => {
       )}
 
       {/* 2. Global site header: INN + editorial test3 (test page parity) */}
-      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3' || currentView === 'INN_RESERVE_CINE' || currentView === 'CENTRE_ARTS') && (
+      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3' || currentView === 'INN_RESERVE_CINE' || currentView === 'CENTRE_ARTS' || currentView === 'COMPTE') && (
         <SiteHeader
           language={language}
           currentView={currentView}
@@ -1030,6 +1054,19 @@ const App: React.FC = () => {
               language={language}
               onNavigate={(view) => handleNavigation(view as ViewState)}
               user={currentUser}
+            />
+          </div>
+        )}
+
+        {/* COMPTE : L'espace membre, lazy loaded comme l'admin */}
+        {currentView === 'COMPTE' && (
+          <div className="h-screen overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
+            <EspaceMembrePage
+              language={language}
+              user={currentUser}
+              memberProfile={memberProfile}
+              onUserChange={handleUserChange}
+              onNavigate={(view) => handleNavigation(view as ViewState)}
             />
           </div>
         )}
