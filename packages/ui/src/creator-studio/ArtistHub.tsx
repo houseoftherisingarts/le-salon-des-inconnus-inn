@@ -3984,8 +3984,11 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
     }
 
     // --- LOBBY (The Main Hub) ---
+    // Le hub ne remplit plus un écran entier : depuis le 16 sept, l'invitation
+    // Vexel le suit dans la coquille, et un onglet court laissait une bande vide
+    // d'environ 400 px au-dessus d'elle.
     return (
-        <div className={`w-full min-h-screen ${currentStyles.text} font-sans relative`}>
+        <div className={`w-full min-h-[55svh] ${currentStyles.text} font-sans relative`}>
 
             {/* Theme Background Override Layer */}
             {currentSkin && (
