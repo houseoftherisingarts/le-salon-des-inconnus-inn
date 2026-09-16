@@ -47,6 +47,21 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
     }
   }, []);
 
+  // Le bandeau est fixé en bas : il publie sa hauteur dans --bandeau-temoins pour
+  // que le pied de page et le menu mobile se prolongent d'autant et ne restent
+  // jamais cachés dessous tant que le visiteur n'a pas répondu.
+  const bandeauRef = React.useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = bandeauRef.current;
+    const root = document.documentElement;
+    if (!visible || !el) { root.style.removeProperty('--bandeau-temoins'); return; }
+    const maj = () => root.style.setProperty('--bandeau-temoins', `${el.offsetHeight}px`);
+    maj();
+    const ro = new ResizeObserver(maj);
+    ro.observe(el);
+    return () => { ro.disconnect(); root.style.removeProperty('--bandeau-temoins'); };
+  }, [visible, showDetails]);
+
   if (!visible) return null;
 
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
@@ -59,6 +74,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = ({ language, onShowPriv
 
   return (
     <div
+      ref={bandeauRef}
       className="fixed bottom-0 left-0 right-0 z-[250] animate-slideUp"
       role="dialog"
       aria-modal="false"

@@ -115,7 +115,7 @@ export const SiteFooter: React.FC<{
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
   return (
-    <footer className="relative z-[40] w-full bg-[#050505] text-neutral-300">
+    <footer className="relative z-[40] w-full bg-[#050505] text-neutral-300" style={{ paddingBottom: 'var(--bandeau-temoins, 0px)' }}>
       {/* a. À propos du lieu : le texte SEO de la route, mots et titres intacts */}
       <SeoBlock viewKey={viewKey} language={language} onNavigate={onNavigate} />
 

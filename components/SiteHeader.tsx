@@ -351,7 +351,7 @@ const MobileMenu: React.FC<{
       <div
         data-open={open}
         className="flex-1 overflow-y-auto p-5 flex flex-col gap-6"
-        style={{ animation: 'mobileMenuIn 0.22s ease-out both' }}
+        style={{ animation: 'mobileMenuIn 0.22s ease-out both', paddingBottom: 'calc(1.25rem + var(--bandeau-temoins, 0px))' }}
       >
         {/* ÊTRE */}
         <div>
