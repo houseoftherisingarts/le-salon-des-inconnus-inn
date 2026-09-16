@@ -145,7 +145,7 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
                   <span>
                     {renderLink(link, i)}
                     {link.hint && (
-                      <span className="text-neutral-500 italic"> · {link.hint}</span>
+                      <span className="text-neutral-500"> · {link.hint}</span>
                     )}
                   </span>
                 </li>

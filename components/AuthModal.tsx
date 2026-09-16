@@ -52,6 +52,9 @@ interface AuthModalProps {
    *  membre-communaute to COMMUNITY). Keeps every signup door leading to the
    *  same form instead of creating a "typed but formless" account. */
   onNavigate?: (view: string) => void;
+  /** Lance la fenêtre Google dès l'ouverture (porte du Creator Studio), pour
+   *  que le visiteur n'ait pas à recliquer « Continuer avec Google ». */
+  startWithGoogle?: boolean;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -124,7 +127,7 @@ const GoogleIcon = () => (
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, language, onShowPrivacy, redirectPendingUser, onNavigate }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, language, onShowPrivacy, redirectPendingUser, onNavigate, startWithGoogle = false }) => {
   const [mode, setMode] = useState<AuthMode>('login');
 
   // Email/password fields
@@ -160,6 +163,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
     }
   }, [redirectPendingUser]);
 
+  // ── Porte du Creator Studio : la fenêtre Google part à l'ouverture ─────────
+  // Le clic qui ouvre la modale donne encore l'activation utilisateur au
+  // navigateur, donc la fenêtre n'est pas bloquée ; si elle l'est, le repli
+  // par redirection de handleGoogleSignIn prend le relais.
+  const googleLance = useRef(false);
+  useEffect(() => {
+    if (!startWithGoogle || redirectPendingUser || googleLance.current) return;
+    googleLance.current = true;
+    handleGoogleSignIn(true);
+  }, [startWithGoogle, redirectPendingUser]);
+
   // ── reCAPTCHA lifecycle ──────────────────────────────────────────────────────
 
   useEffect(() => {
@@ -190,8 +204,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    if (!auth) { setError('Firebase non configuré'); return; }
+  const handleGoogleSignIn = async (auto = false) => {
+    if (!auth) {
+      setError(t('Sign-in is unavailable right now. Please try again in a moment.', 'La connexion est indisponible pour le moment. Veuillez réessayer dans un instant.'));
+      return;
+    }
     setLoading(true); setError('');
 
     const provider = new GoogleAuthProvider();
@@ -210,7 +227,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
         'auth/cancelled-popup-request',
       ].includes(e.code);
 
-      if (popupBlocked) {
+      if (auto && e.code === 'auth/popup-closed-by-user') {
+        // Lancée d'office puis refermée par le visiteur : on le laisse choisir.
+        setError(t('The Google window was closed. Click “Continue with Google” to try again.', 'La fenêtre Google a été fermée. Cliquez sur « Continuer avec Google » pour recommencer.'));
+        setLoading(false);
+      } else if (popupBlocked) {
         // signInWithRedirect navigates away: no need to reset loading or show error
         try {
           await signInWithRedirect(auth, provider);
@@ -453,7 +474,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
             <>
               {/* Google sign-in */}
               <button
-                onClick={handleGoogleSignIn}
+                onClick={() => handleGoogleSignIn()}
                 disabled={loading}
                 className="w-full flex items-center justify-center gap-3 py-3 bg-white text-black font-semibold text-sm hover:bg-neutral-100 disabled:opacity-50 transition-all mb-4"
               >

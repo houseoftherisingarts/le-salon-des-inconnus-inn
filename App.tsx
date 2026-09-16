@@ -408,6 +408,13 @@ const App: React.FC = () => {
     return () => window.removeEventListener('salon:navigate', onNav as EventListener);
   }, []);
 
+  // Le lien « Politique de confidentialité » du pied de page ouvre la modale.
+  useEffect(() => {
+    const onPrivacy = () => setShowPrivacyPolicy(true);
+    window.addEventListener('salon:privacy', onPrivacy);
+    return () => window.removeEventListener('salon:privacy', onPrivacy);
+  }, []);
+
   // Update document title + meta description + canonical + per-route JSON-LD per view.
   // Single source of truth: config/seo.config.ts (meta) + config/seo.content.ts (FAQ).
   useEffect(() => {
@@ -1124,6 +1131,9 @@ const App: React.FC = () => {
           onShowPrivacy={() => setShowPrivacyPolicy(true)}
           redirectPendingUser={redirectPendingUser}
           onNavigate={(view) => handleNavigation(view as ViewState)}
+          // Le bouton « Continuer avec Google » du Creator Studio ouvre ici :
+          // la fenêtre Google part tout de suite, sans second clic.
+          startWithGoogle
         />
       )}
 
