@@ -63,6 +63,8 @@ const CSS = `
 .pl-objet:has(> .pl-carte :focus-visible) .pl-ombre{scale:.88}
 .pl-scene[data-anime="non"] :is(.pl-carte,.pl-reflet-flotte,.pl-ombre,.pl-lustre){animation-play-state:paused}
 @media (max-width:639px){.pl-scene{--_flou:.8px}}
+/* Repli R3 : sur écran tactile, le reflet et l'ombre restent immobiles et nets, seule la carte flotte. */
+@media (hover:none){.pl-reflet-flotte,.pl-ombre{animation:none}.pl-scene{--_flou:0px}}
 @media (prefers-reduced-motion:reduce){
   .pl-scene :is(.pl-carte,.pl-reflet-flotte,.pl-ombre,.pl-lustre){animation:none!important;transition:none!important;translate:none!important;scale:none!important}
 }

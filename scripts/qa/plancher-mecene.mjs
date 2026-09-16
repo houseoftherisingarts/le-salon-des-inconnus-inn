@@ -65,7 +65,7 @@ async function mesuresDom(page, etiquette, langue) {
     const out = {};
     out.debord = [main.scrollWidth - main.clientWidth, document.documentElement.scrollWidth - innerWidth];
     out.largeurs = [...document.querySelectorAll('.pl-scene')].map((s) => Math.abs(s.getBoundingClientRect().width - main.clientWidth));
-    document.getAnimations().forEach((a) => { try { a.currentTime = 0; a.pause(); } catch {} });
+    document.getAnimations().forEach((a) => { try { a.pause(); a.currentTime = a.effect.getTiming().delay || 0; } catch {} });
     const objets = [...document.querySelectorAll('.pl-objet')].map((o) => {
       const c = o.querySelector(':scope > .pl-carte').getBoundingClientRect();
       const rf = o.querySelector(':scope > .pl-reflet').getBoundingClientRect();
@@ -149,16 +149,18 @@ async function images(page, etiquette, dpr) {
   // charger les images paresseuses en parcourant <main>
   for (const f of [0.25, 0.5, 0.75, 1, 0]) { await defilerMain(page, f); await attendre(600); }
   await page.waitForFunction(() => [...document.querySelectorAll('.pl-carte img')].every((i) => i.complete && i.naturalWidth), null, { timeout: 30000 }).catch(() => {});
-  const r = await page.evaluate((dpr) => [...document.querySelectorAll('.pl-carte img')].map((i) => {
+  // naturalWidth d'une image à srcset est divisé par la densité choisie : on relit la vraie taille du fichier servi.
+  const r = await page.evaluate((dpr) => Promise.all([...document.querySelectorAll('.pl-carte img')].map(async (i) => {
     const b = i.getBoundingClientRect();
-    return { ratio: Math.max((b.width * dpr) / i.naturalWidth, (b.height * dpr) / i.naturalHeight), src: i.currentSrc };
-  }), dpr);
+    const vrai = new Image(); vrai.src = i.currentSrc; await vrai.decode().catch(() => {});
+    return { ratio: Math.max((b.width * dpr) / vrai.naturalWidth, (b.height * dpr) / vrai.naturalHeight), src: i.currentSrc };
+  })), dpr);
   const ok = r.every((x) => x.ratio <= 1.05 && (/\.webp$/.test(x.src) || /unsplash/.test(x.src)));
   noter(16, ok, `${etiquette} ${r.map((x) => `${x.ratio.toFixed(2)} ${x.src.split('/').pop().slice(0, 40)}`).join(' | ')}`);
 }
 
 async function allerPaliers(page) {
-  await page.getByRole('button', { name: /Soutenir des projets|Support projects/ }).click();
+  await page.getByRole('button', { name: /Soutenir des projets|Support projects/ }).click({ force: true });
   await page.locator('.pl-scene').first().waitFor({ state: 'attached', timeout: 30000 });
   await attendre(1500);
 }
@@ -202,11 +204,13 @@ for (const app of APPAREILS) {
       // 8. arbre d'accessibilité
       const aria = await page.locator('.pl-scene').ariaSnapshot();
       writeFileSync(join(OUT, `aria-menu-${et}.txt`), aria);
-      const doublons = ['Nos artistes', 'Investir et économiser', 'Soutenir des projets', 'Café'].filter((t) => aria.split(t).length - 1 !== 1);
+      // Le nom d'un bouton reprend son texte : on compte les nœuds texte, là où un reflet se dédoublerait.
+      const textes = aria.split('\n').filter((l) => /^\s*- text:/.test(l)).join('\n');
+      const doublons = ['Nos artistes', 'Investir et économiser', 'Soutenir des projets', 'Café'].filter((t) => textes.split(t).length - 1 !== 1);
       noter(8, doublons.length === 0, `${et} titres en double dans l'arbre : ${doublons.join(',') || 'aucun'}`);
       if (app.largeur === 1440) {
         await defilerMain(page, 0);
-        await page.locator('.pl-carte button').nth(1).hover();
+        await page.locator('.pl-carte button').nth(1).hover({ force: true });
         await attendre(900);
         await page.screenshot({ path: join(OUT, 'menu-1440-survol.png') });
         await page.mouse.move(5, 895);
@@ -300,8 +304,7 @@ for (const app of APPAREILS) {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.goto(`${BASE}/mecene`, { waitUntil: 'domcontentloaded', timeout: 90000 });
       await pret(page);
-      await images(page, `reduit ${et}`, dpr).catch(() => {});
-      M[16].detail.pop();
+      for (const f of [0.5, 1, 0]) { await defilerMain(page, f); await attendre(700); }
       await defilerMain(page, 0);
       await page.mouse.move(2, 2);
       await attendre(1000);

@@ -40,7 +40,8 @@ function CarteMenu({ titre, surtitre, src, srcSet, alt, position, onClick, badge
         src={src}
         srcSet={srcSet}
         sizes={SIZES_MENU}
-        alt={reflet ? '' : alt}
+        // Dans un bouton titré, la photo est décorative : le nom du bouton reste le surtitre et le titre.
+        alt={reflet || active ? '' : alt}
         loading={prioritaire && !reflet ? 'eager' : 'lazy'}
         fetchPriority={prioritaire && !reflet ? 'high' : 'auto'}
         decoding="async"
