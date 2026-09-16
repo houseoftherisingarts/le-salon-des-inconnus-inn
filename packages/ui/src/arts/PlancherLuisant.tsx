@@ -20,15 +20,15 @@ const CSS = `
 .pl-scene{position:relative;isolation:isolate;width:100%;background:#050505;
   --_reflet:var(--pl-reflet,clamp(64px,9vw,140px));--_lev0:var(--pl-lev,14px);--_lev:var(--_lev0);
   --_sol:calc(var(--_reflet) + var(--_lev0));--_amp:var(--pl-amp,5px);--_survol:var(--pl-survol,8px);
-  --_flou:1.5px;--_ombre:.85}
+  --_flou:1px;--_ombre:.85}
 .pl-fond{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
   background:linear-gradient(to bottom,#0a0808 0%,#0e0b0a var(--pl-horizon,30%),#070606 calc(var(--pl-horizon,30%) + 1px),#050505 72%,#030303 100%)}
 .pl-lignes{position:absolute;left:0;top:var(--pl-horizon,30%);width:100%;height:calc(100% - var(--pl-horizon,30%));
   -webkit-mask-image:linear-gradient(to bottom,transparent,#000 40%);mask-image:linear-gradient(to bottom,transparent,#000 40%)}
 .pl-horizon{position:absolute;left:0;right:0;top:var(--pl-horizon,30%);height:1px;
-  background:linear-gradient(90deg,transparent,rgba(197,160,89,.20) 28%,rgba(243,229,171,.26) 50%,rgba(197,160,89,.20) 72%,transparent)}
+  background:linear-gradient(90deg,transparent,rgba(197,160,89,.34) 28%,rgba(243,229,171,.45) 50%,rgba(197,160,89,.34) 72%,transparent)}
 .pl-horizon::after{content:"";position:absolute;left:12%;right:12%;top:-48px;height:96px;
-  background:radial-gradient(50% 50% at 50% 50%,rgba(197,160,89,.09),transparent 70%)}
+  background:radial-gradient(50% 50% at 50% 50%,rgba(197,160,89,.16),transparent 70%)}
 .pl-lustre{position:absolute;left:0;width:55%;top:var(--pl-horizon,30%);height:min(40%,460px);
   background:radial-gradient(50% 50% at 50% 35%,rgba(243,229,171,.075),rgba(243,229,171,.02) 45%,transparent 70%);
   animation:pl-lustre 26s ease-in-out infinite alternate}
@@ -45,13 +45,13 @@ const CSS = `
 .pl-objet[data-haut] .pl-ombre{left:3%;right:3%}
 .pl-reflet{position:absolute;z-index:0;left:0;right:0;bottom:0;height:calc(var(--_sol) - var(--_lev));
   overflow:hidden;pointer-events:none;-webkit-user-select:none;user-select:none;
-  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.16) 55%,transparent 100%);
-  mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.16) 55%,transparent 100%)}
-.pl-reflet::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,5,5,.10),rgba(5,5,5,.55))}
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.95) 0%,rgba(0,0,0,.5) 50%,transparent 100%);
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.95) 0%,rgba(0,0,0,.5) 50%,transparent 100%)}
+.pl-reflet::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(243,229,171,.05),rgba(5,5,5,.30))}
 .pl-reflet-flotte{position:absolute;inset:0;
   animation:pl-flotte-reflet 7.5s ease-in-out calc(var(--pl-i,0) * -1.9s) infinite;
   transition:translate .6s cubic-bezier(.16,1,.3,1)}
-.pl-copie{position:absolute;left:0;right:0;top:0;transform:scaleY(-1);filter:blur(var(--_flou));opacity:.6}
+.pl-copie{position:absolute;left:0;right:0;top:0;transform:scaleY(-1);filter:blur(var(--_flou)) brightness(1.25);opacity:.9}
 .pl-copie *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;transition:none!important;animation:none!important}
 @media (hover:hover){
   .pl-objet:has(> .pl-carte:hover) .pl-carte{translate:0 calc(var(--_survol) * -1)}
@@ -105,7 +105,7 @@ export function PlancherLuisant({ children, className = '', contenuClassName = '
       <style href="inconnus-plancher-luisant" precedence="medium">{CSS}</style>
       <div className="pl-fond" aria-hidden="true">
         <svg className="pl-lignes" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-          <path d={LIGNES_SOL} fill="none" stroke="#f3e5ab" strokeOpacity="0.045" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          <path d={LIGNES_SOL} fill="none" stroke="#f3e5ab" strokeOpacity="0.12" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         </svg>
         <div className="pl-horizon" />
         <div className="pl-lustre" />
