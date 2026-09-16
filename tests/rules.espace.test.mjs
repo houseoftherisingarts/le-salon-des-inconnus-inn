@@ -9,7 +9,7 @@
 import { initializeApp, deleteApp } from 'firebase/app';
 import {
     getFirestore, connectFirestoreEmulator, doc, setDoc, updateDoc, deleteDoc, getDoc,
-    serverTimestamp, Timestamp,
+    getDocs, collection, serverTimestamp, Timestamp,
 } from 'firebase/firestore';
 
 const PROJECT_ID = process.env.GCLOUD_PROJECT || 'demo-salon';
@@ -34,6 +34,16 @@ const dbTel = () => baseComme({ sub: UID_T, phone_number: '+18195550101', fireba
 const dbAdmin = () => baseComme({ sub: 'admin-uid', email: 'alex@lesalondesinconnus.com', email_verified: true });
 const dbFauxAdmin = () => baseComme({ sub: 'faux-admin', email: 'alex@lesalondesinconnus.com', email_verified: false });
 const dbAnon = () => baseComme(null);
+// Mode « owner » : le jeton littéral 'owner' est traité par l'émulateur comme
+// l'Admin SDK (contourne les règles). Sert à semer showTickets, que la règle
+// `allow write: false` interdit à tout client, même admin.
+const dbOwner = () => {
+    const app = initializeApp({ projectId: PROJECT_ID }, `espace-owner-${compteur++}`);
+    apps.push(app);
+    const db = getFirestore(app);
+    connectFirestoreEmulator(db, '127.0.0.1', 8080, { mockUserToken: 'owner' });
+    return db;
+};
 
 let ok = 0;
 let fail = 0;
@@ -134,6 +144,28 @@ async function main() {
         deleteDoc(doc(dbA(), 'members', UID_A)));
     await attenduRefus('R-09 e B supprime la fiche de G',
         deleteDoc(doc(dbB(), 'members', UID_G)));
+
+    // ── Lot 3 : billets du Ceilidh (showTickets / config / registrations) ────
+    // Un billet factice semé en mode owner (la règle refuse l'écriture client).
+    await attenduOk('semis du billet showTickets/A en mode owner',
+        setDoc(doc(dbOwner(), 'events', 'ceilidh-mai-2026', 'showTickets', UID_A), {
+            uid: UID_A, ticketType: 'single', nights: [], ticketCode: 'CEIL26-TEST-0001', amountCents: 1000, createdAt: serverTimestamp(),
+        }));
+
+    await attenduRefus('R-60 un visiteur anonyme lit showTickets/A',
+        getDoc(doc(dbAnon(), 'events', 'ceilidh-mai-2026', 'showTickets', UID_A)));
+    await attenduOk('R-61 un visiteur anonyme lit config/ceilidhPlaces',
+        getDoc(doc(dbAnon(), 'config', 'ceilidhPlaces')));
+    await attenduOk('R-62 un visiteur anonyme lit la collection registrations',
+        getDocs(collection(dbAnon(), 'events', 'ceilidh-mai-2026', 'registrations')));
+    await attenduRefus('R-63 A écrit son inscription avec un champ email',
+        setDoc(doc(dbA(), 'events', 'ceilidh-mai-2026', 'registrations', UID_A), { uid: UID_A, email: 'a@example.com' }));
+    await attenduOk('R-63 b A écrit son inscription sans email',
+        setDoc(doc(dbA(), 'events', 'ceilidh-mai-2026', 'registrations', UID_A), { uid: UID_A, displayName: 'Essai A' }));
+    await attenduOk('R-64 A lit son propre billet showTickets/A',
+        getDoc(doc(dbA(), 'events', 'ceilidh-mai-2026', 'showTickets', UID_A)));
+    await attenduRefus('R-64 b B lit le billet showTickets de A',
+        getDoc(doc(dbB(), 'events', 'ceilidh-mai-2026', 'showTickets', UID_A)));
 
     console.log('\n' + resultats.join('\n'));
     console.log(`\n${ok} réussis, ${fail} échoués, sur ${ok + fail} cas.`);
