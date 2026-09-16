@@ -1433,7 +1433,9 @@ export const WwoofingSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; 
     );
 };
 
-export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void }> = ({ language, vibe, onNavigate }) => (
+// `sansCoordonnees` : sur l'accueil, téléphone, courriel et politique d'annulation
+// vivent dans le pied de page (SiteFooter), donc on ne les répète pas ici.
+export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onNavigate: (view: any) => void; sansCoordonnees?: boolean }> = ({ language, vibe, onNavigate, sansCoordonnees = false }) => (
     <div className="min-h-screen flex flex-col justify-center items-center max-w-7xl mx-auto px-6 py-32 text-center">
         <div className="w-48 h-auto mb-8 animate-fadeIn">
              <img src="/media/logo.png" alt="Maison Favier Logo" className={`w-full h-full object-contain drop-shadow-2xl transition-all duration-1000 ${vibe === 'HOSTEL' ? 'brightness-125 sepia-[.5] hue-rotate-[-30deg]' : vibe === 'SHIRE' ? 'brightness-110 sepia-[0.8] hue-rotate-[5deg] saturate-[1.4]' : 'brightness-100'}`} />
@@ -1443,7 +1445,7 @@ export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onN
             <p className={`text-neutral-400 text-xl max-w-2xl mx-auto leading-relaxed mb-12 ${vibe === 'HOSTEL' ? 'font-josefin tracking-wide' : vibe === 'SHIRE' ? 'font-medieval text-[#faeecd]/90' : 'font-lato'}`}>{language === 'EN' ? "And the story behind the projects." : "Et l'histoire derrière les projets."}</p>
             <button onClick={() => onNavigate('HOSTS')} className={`px-10 py-5 bg-transparent border-2 font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 ${vibe === 'HOSTEL' ? 'border-[#c5a059] text-[#f3e5ab] hover:bg-[#c5a059] hover:text-[#1e1e24]' : vibe === 'SHIRE' ? 'border-[#dcb055] text-[#faeecd] hover:bg-[#dcb055] hover:text-[#1a1107]' : 'border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black'}`}>{language === 'EN' ? "Meet the Team" : "Rencontrer l'Équipe"}</button>
         </RevealOnScroll>
-        <div className="mt-16 flex flex-col items-center gap-3">
+        {!sansCoordonnees && <div className="mt-16 flex flex-col items-center gap-3">
           <a href="tel:5144183450" className={`text-base font-bold tracking-widest hover:opacity-80 transition-opacity ${vibe === 'HOSTEL' ? 'text-[#f3e5ab] font-josefin' : vibe === 'SHIRE' ? 'text-[#dcb055] font-medieval' : 'text-[#d4af37] font-cinzel'}`}>
             514 418 3450
           </a>
@@ -1453,7 +1455,7 @@ export const HostsSection: React.FC<{ language: 'EN' | 'FR'; vibe: VibeMode; onN
           <a href="/politique-annulation.html" target="_blank" rel="noopener noreferrer" className={`text-xs opacity-50 hover:opacity-80 transition-opacity font-lato underline underline-offset-4 ${vibe === 'HOSTEL' ? 'text-[#f3e5ab]' : vibe === 'SHIRE' ? 'text-[#faeecd]' : 'text-neutral-400'}`}>
             {language === 'EN' ? 'Cancellation policy' : "Politique d'annulation"}
           </a>
-        </div>
+        </div>}
 
         {/* Map + copyright moved to bottom of InnPage as a full-width footer section */}
     </div>

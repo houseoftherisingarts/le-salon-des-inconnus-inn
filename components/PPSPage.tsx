@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SeoBlock } from './SeoBlock';
+import { SiteFooter } from './SiteFooter';
 
 interface PPSPageProps {
   onNavigate: (view: 'INN') => void;
@@ -161,7 +161,7 @@ export const PPSPage: React.FC<PPSPageProps> = ({ onNavigate, language }) => {
           </div>
         </section>
 
-        <SeoBlock viewKey="PPS" language={language} onNavigate={onNavigate} />
+        <SiteFooter viewKey="PPS" language={language} onNavigate={onNavigate} />
       </main>
 
       <style>{`

@@ -100,7 +100,7 @@ export const MemberPanel: React.FC<MemberPanelProps> = ({
       <>
         <button
           onClick={() => setShowAuth(true)}
-          className="flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full
+          className="flex-shrink-0 whitespace-nowrap flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full
                      text-[10px] font-cinzel uppercase tracking-widest text-yellow-100/60
                      hover:border-[#d4af37]/50 hover:text-yellow-100 transition-all duration-200"
           title={t('Member Space', 'Espace Membre')}

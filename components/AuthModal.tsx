@@ -229,7 +229,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
 
       if (auto && e.code === 'auth/popup-closed-by-user') {
         // Lancée d'office puis refermée par le visiteur : on le laisse choisir.
-        setError(t('The Google window was closed. Click “Continue with Google” to try again.', 'La fenêtre Google a été fermée. Cliquez sur « Continuer avec Google » pour recommencer.'));
+        setError(t('The Google window closed before you signed in, and a click on “Continue with Google” will open it again.', 'La fenêtre Google s\'est refermée avant la connexion, et un clic sur « Continuer avec Google » la rouvrira.'));
         setLoading(false);
       } else if (popupBlocked) {
         // signInWithRedirect navigates away: no need to reset loading or show error

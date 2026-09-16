@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { OptimizedImage } from './OptimizedImage';
 import { getOptimizedUrl } from '../utils/imageOptimizer';
-import { SeoBlock } from './SeoBlock';
+import { SiteFooter } from './SiteFooter';
 
 interface KitchenPageProps {
   onNavigate: () => void;
@@ -455,7 +455,7 @@ export const KitchenPage: React.FC<KitchenPageProps> = ({ onNavigate, language }
                </section>
            </StickySection>
 
-           <SeoBlock viewKey="KITCHEN" language={language} />
+           <SiteFooter viewKey="KITCHEN" language={language} />
 
       </main>
 

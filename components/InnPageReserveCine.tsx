@@ -4,8 +4,9 @@ import { LiquidGlassCycler } from './LiquidGlassCycler';
 import { HeroFocalAdmin } from './HeroFocalAdmin';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { SeoBlock } from './SeoBlock';
 import { VexelSoutienSection } from './VexelSoutienSection';
+import { CentreArtsCommunauteSection } from './CentreArtsCommunauteSection';
+import { SiteFooter } from './SiteFooter';
 import {
   TrustedPlatforms,
   ManorRoomsSection,
@@ -16,7 +17,6 @@ import {
   VideoTourSection,
   LocalGuideSection,
   HostsSection,
-  MapFooterSection,
   LazySection,
   INN_HERO_IMAGES,
   INN_HERO_FOCUS,
@@ -43,7 +43,7 @@ const CEILIDH_DOORS_DATE = new Date('2026-05-21T12:00:00');
 //   12. HostsSection
 //   13. EventsSection (Ceilidh teaser)
 //   14. WwoofingSection
-//   15. MapFooterSection
+//   15. SiteFooter (À propos du lieu, carte, NAP, liens, collant Vexel)
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Props {
@@ -1094,7 +1094,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           <LocalGuideSection language={language} vibe={'HOSTEL'} onNavigate={onNavigate} />
         </div>
         <div className="cv-auto">
-          <HostsSection language={language} vibe={'HOSTEL'} onNavigate={onNavigate} />
+          <HostsSection language={language} vibe={'HOSTEL'} onNavigate={onNavigate} sansCoordonnees />
         </div>
         {/* ── DIAGONAL DOORS: Grand Ceilidh × Wwoofing fused ────────────── */}
         {/* ── Participer: three doors into the project ─────────────────── */}
@@ -1141,18 +1141,17 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
         </section>
 
-        {/* SEO body section: substantial French copy, internal links, external
-            citations, FAQ accordion. Also sources the FAQPage JSON-LD via
-            App.tsx route effect. */}
-        <SeoBlock viewKey="INN" language={language} onNavigate={onNavigate} />
+        {/* Centre d'arts et communauté : avant « À propos du lieu », qui vit
+            désormais dans le pied de page (vague 2, 16 sept. 2026). */}
+        <CentreArtsCommunauteSection language={language} onNavigate={onNavigate} />
 
         {/* Faire vivre le Salon autrement : confier un site à Vexel Webstudio,
             dernière scène avant le pied de page (demande d'Alex, 16 sept. 2026). */}
         <VexelSoutienSection language={language} />
 
-        <div className="cv-auto">
-          <MapFooterSection language={language} vibe={'HOSTEL'} />
-        </div>
+        {/* Vrai pied de page : À propos du lieu (SEO + FAQ, source du JSON-LD
+            FAQPage), carte, adresse NAP, plan du site et collant Vexel. */}
+        <SiteFooter viewKey="INN" language={language} onNavigate={onNavigate} />
       </div>
 
       {/* Hero animation styles */}

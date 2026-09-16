@@ -8,7 +8,7 @@ Le Salon des Inconnus est une auberge victorienne (Maison Favier, 1898) située 
 - Téléphone : +1 514 418 3450
 - Courriel : alex@lesalondesinconnus.com
 - Site web : https://www.lesalondesinconnus.com
-- Coordonnées GPS : 45.8943, -74.9118
+- Coordonnées GPS : 45.896466, -74.9362425
 - Langues : français (principal), anglais
 
 ## Type d'établissement
@@ -33,6 +33,17 @@ Le Salon des Inconnus est une auberge victorienne (Maison Favier, 1898) située 
 - Programme de wwoofing : 4 heures de travail par jour en échange du gîte et du couvert, séjour minimum de 7 jours
 - Spectacles, concerts, ceilidhs et résidences d'artistes
 - Méditation guidée deux fois par jour (facultative)
+
+## Centre d'arts et communauté
+- Centre d'arts : https://www.lesalondesinconnus.com/centre-arts (d'un côté les acheteurs et les mécènes, de l'autre les artistes et leur Creator Studio)
+- Les mécènes : https://www.lesalondesinconnus.com/mecene (acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec)
+- Creator Studio (bêta) : https://www.lesalondesinconnus.com/creator (espace de travail pour les artistes en résidence, les interprètes et les collaborateurs : profil, écrits, demande de mise en avant)
+- Accueil d'artistes émergents, professionnels et multidisciplinaires en résidence
+
+## La famille des Inconnus (domaines)
+- Les Inconnus, page de sélection : https://lesinconnus.ca/ (en anglais : https://theunknowns.ca/)
+- L'Auberge des Inconnus : https://aubergedesinconnus.com/
+- Le Dôme des Inconnus, la communauté : https://ledomedesinconnus.com/
 
 ## Événements
 - Grand Ceilidh de Mai 2026 — du 21 au 25 mai 2026 (spectacles, banquet, wwoofing communautaire)
@@ -62,6 +73,10 @@ Le Salon des Inconnus est une auberge victorienne (Maison Favier, 1898) située 
 - Cuisine : https://www.lesalondesinconnus.com/cuisine
 - Hôtes / À propos : https://www.lesalondesinconnus.com/about
 - Guide local : https://www.lesalondesinconnus.com/guide
+- Centre d'arts : https://www.lesalondesinconnus.com/centre-arts
+- Mécènes : https://www.lesalondesinconnus.com/mecene
+- Café : https://www.lesalondesinconnus.com/cafe
+- Creator Studio : https://www.lesalondesinconnus.com/creator
 
 ## Réservation
 - Téléphone : +1 514 418 3450

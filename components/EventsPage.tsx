@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './AuthModal';
-import { SeoBlock } from './SeoBlock';
+import { SiteFooter } from './SiteFooter';
 
 interface EventsPageProps {
   onNavigate: (view: any) => void;
@@ -224,11 +224,8 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onNavigate, language }) 
 
       </main>
 
-      <SeoBlock viewKey="EVENTS" language={language} onNavigate={onNavigate} />
+      <SiteFooter viewKey="EVENTS" language={language} onNavigate={onNavigate} />
 
-      <footer className="text-center pb-12 text-neutral-700 text-xs font-cinzel uppercase tracking-widest">
-        © 2026 Le Salon des Inconnus
-      </footer>
 
       <style>{`
         .animate-fadeIn { animation: fadeInEvPage 0.8s ease-out forwards; }

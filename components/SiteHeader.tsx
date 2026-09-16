@@ -165,6 +165,8 @@ const Dropdown: React.FC<{
 }> = ({ label, items, language, currentView, onNavigate }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  // Le survol ouvre déjà le menu : le clic qui suit ne doit pas le refermer.
+  const viaSurvol = useRef(false);
   const isActive = items.some(i => i.view === currentView);
 
   useEffect(() => {
@@ -178,8 +180,8 @@ const Dropdown: React.FC<{
   return (
     <div ref={ref} className="relative">
       <button
-        onMouseEnter={() => setOpen(true)}
-        onClick={() => setOpen(o => !o)}
+        onMouseEnter={() => { viaSurvol.current = true; setOpen(true); }}
+        onClick={() => { const survol = viaSurvol.current; viaSurvol.current = false; setOpen(o => (survol ? true : !o)); }}
         aria-haspopup="true"
         aria-expanded={open}
         className={`${PILL} ${open ? PILL_OPEN : isActive ? PILL_ACTIVE : PILL_IDLE}`}
@@ -195,7 +197,7 @@ const Dropdown: React.FC<{
 
       {open && (
         <div
-          onMouseLeave={() => setOpen(false)}
+          onMouseLeave={() => { viaSurvol.current = false; setOpen(false); }}
           className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 animate-header-drop"
           style={{ minWidth: '340px' }}
         >
@@ -254,6 +256,8 @@ const FamilyDropdown: React.FC<{
 }> = ({ label, items, language, currentView, onNavigate }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  // Le survol ouvre déjà le menu : le clic qui suit ne doit pas le refermer.
+  const viaSurvol = useRef(false);
   const isActive = items.some(i => i.view === currentView);
 
   useEffect(() => {
@@ -267,8 +271,8 @@ const FamilyDropdown: React.FC<{
   return (
     <div ref={ref} className="relative">
       <button
-        onMouseEnter={() => setOpen(true)}
-        onClick={() => setOpen(o => !o)}
+        onMouseEnter={() => { viaSurvol.current = true; setOpen(true); }}
+        onClick={() => { const survol = viaSurvol.current; viaSurvol.current = false; setOpen(o => (survol ? true : !o)); }}
         aria-haspopup="true"
         aria-expanded={open}
         className={`${PILL} ${open ? PILL_OPEN : isActive ? PILL_ACTIVE : PILL_IDLE}`}
@@ -284,7 +288,7 @@ const FamilyDropdown: React.FC<{
 
       {open && (
         <div
-          onMouseLeave={() => setOpen(false)}
+          onMouseLeave={() => { viaSurvol.current = false; setOpen(false); }}
           className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 animate-header-drop"
           style={{ minWidth: '340px' }}
         >
@@ -562,7 +566,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         }`}
         style={{ height: '56px' }}
       >
-        <nav className="h-full mx-auto max-w-7xl px-5 flex items-center justify-between gap-4">
+        <nav className="h-full mx-auto max-w-[1400px] px-5 flex items-center justify-between gap-4">
 
           {/* Logo */}
           <button
@@ -612,7 +616,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               onClick={() => handleNavigate('PETITE_MONNAIE')}
               title="Bureau de change Petite Monnaie"
               aria-label="Bureau de change Petite Monnaie"
-              className="flex items-center gap-2 pl-1 pr-1 lg:pr-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-[#C9A85A]/40 hover:border-[#C9A85A] hover:bg-black/60 transition-colors"
+              className="flex-shrink-0 flex items-center gap-2 pl-1 pr-1 2xl:pr-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-[#C9A85A]/40 hover:border-[#C9A85A] hover:bg-black/60 transition-colors"
             >
               <img
                 src="https://pmonnaie.ca/wp-content/uploads/2024/04/cropped-PM_profil-e1712766855885-270x270.png"
@@ -620,7 +624,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                 className="w-7 h-7 rounded-full object-cover ring-1 ring-[#C9A85A]/60"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
               />
-              <span className="hidden lg:flex flex-col leading-none text-left">
+              <span className="hidden 2xl:flex flex-col leading-none text-left whitespace-nowrap">
                 <span className="text-[7px] font-cinzel uppercase tracking-[0.2em] text-[#C9A85A]/70">{language === 'FR' ? 'Bureau de change' : 'Exchange point'}</span>
                 <span className="text-[10px] font-cinzel font-bold uppercase tracking-[0.14em] text-[#f3e5ab] mt-0.5">Petite Monnaie</span>
               </span>

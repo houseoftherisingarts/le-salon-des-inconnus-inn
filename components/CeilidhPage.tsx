@@ -24,7 +24,7 @@ import { LiquidGlassCycler } from './LiquidGlassCycler';
 import { ContributionPanel } from './ContributionPanel';
 import { ShowTicketModal } from './ShowTicketModal';
 import { ShowOfferModal } from './ShowOfferModal';
-import { SeoBlock } from './SeoBlock';
+import { SiteFooter } from './SiteFooter';
 import type { MemberProfile } from './AuthModal';
 import {
   EVENT_ID,
@@ -498,7 +498,7 @@ export const CeilidhPage: React.FC<Props> = ({
 
       {/* SEO body section: substantial FR copy + FAQ + internal/external links.
           Sources the FAQPage + Event JSON-LD via App.tsx route effect. */}
-      <SeoBlock viewKey="CEILIDH" language={language} onNavigate={onNavigate} />
+      <SiteFooter viewKey="CEILIDH" language={language} onNavigate={onNavigate} />
 
       {/* Footer spacer so the dock doesn't overlap the last chapter */}
       <div className="h-32 bg-[#050505]" />

@@ -66,10 +66,10 @@ export const CentreArtsCommunauteSection: React.FC<{
       </div>
 
       <div className="relative w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 pb-16 pt-2 lg:py-24">
-        <div className="max-w-[560px]">
+        <div className="max-w-[760px]">
           <div className={`flex items-center gap-4 mb-6 ${monte}`}>
             <span className="h-px w-12 bg-[#c5a059]" aria-hidden />
-            <span className="font-cinzel uppercase text-[#c5a059] text-[12px] tracking-[0.4em]">
+            <span className="font-cinzel uppercase text-[#c5a059] text-[12px] tracking-[0.25em] sm:tracking-[0.4em] whitespace-nowrap">
               {t('Arts centre & community', "Centre d'arts et communauté")}
             </span>
           </div>
@@ -82,7 +82,7 @@ export const CentreArtsCommunauteSection: React.FC<{
             {t('A manor that welcomes artists', 'Un manoir qui accueille les artistes')}
           </h2>
 
-          <div className={`space-y-5 font-lato text-neutral-200 text-[16px] md:text-[17px] leading-[1.8] ${monte}`} style={delai(240)}>
+          <div className={`max-w-[600px] space-y-5 font-lato text-neutral-200 text-[16px] md:text-[17px] leading-[1.8] ${monte}`} style={delai(240)}>
             <p>
               {t(
                 'Beyond the rooms, Maison Favier houses an artists’ centre where emerging, professional and multidisciplinary artists in residence cross paths with musicians and entrepreneurs, so live performances are part of the life of the house.',
@@ -101,14 +101,14 @@ export const CentreArtsCommunauteSection: React.FC<{
             <a
               href="/centre-arts"
               onClick={aller('CENTRE_ARTS')}
-              className="inline-flex items-center justify-center gap-3 min-h-[50px] px-7 rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.22em] shadow-[0_6px_24px_rgba(197,160,89,0.28)] hover:bg-[#d4b06a] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+              className="inline-flex items-center justify-center gap-3 min-h-[50px] px-5 sm:px-7 whitespace-nowrap rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.12em] sm:tracking-[0.22em] shadow-[0_6px_24px_rgba(197,160,89,0.28)] hover:bg-[#d4b06a] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
             >
-              {t('Discover the arts centre', "Découvrir le centre d'arts")} <span aria-hidden>→</span>
+              {t('Discover the arts centre', "Découvrir le centre d'arts")} <span aria-hidden className="hidden sm:inline">→</span>
             </a>
             <a
               href="/creator"
               onClick={aller('CREATOR_STUDIO')}
-              className="inline-flex items-center justify-center gap-3 min-h-[50px] px-7 rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 backdrop-blur-md text-[#f3e5ab] font-cinzel font-bold uppercase text-[12px] tracking-[0.22em] hover:border-[#c5a059] hover:bg-[#0a0808]/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+              className="inline-flex items-center justify-center gap-3 min-h-[50px] px-5 sm:px-7 whitespace-nowrap rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 backdrop-blur-md text-[#f3e5ab] font-cinzel font-bold uppercase text-[12px] tracking-[0.12em] sm:tracking-[0.22em] hover:border-[#c5a059] hover:bg-[#0a0808]/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
             >
               {t('Enter the Creator Studio', 'Entrer au Creator Studio')}
             </a>

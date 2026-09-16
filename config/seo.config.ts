@@ -9,8 +9,8 @@ export const CONTACT_INFO = {
   country: "CA",
   phone: "+15144183450",
   coords: {
-    lat: 45.8943,
-    lng: -74.9118
+    lat: 45.896466,
+    lng: -74.9362425
   }
 };
 

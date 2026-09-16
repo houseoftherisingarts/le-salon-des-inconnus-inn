@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import type { User } from 'firebase/auth';
 import { AuthModal, type MemberProfile } from './AuthModal';
 import { CommunityMembershipSection } from './CommunityMembershipSection';
-import { SeoBlock } from './SeoBlock';
+import { SiteFooter } from './SiteFooter';
 
 // Dedicated page for the paid resident-member offer ("Faire partie de la
 // communauté"), at /communaute. Separate from the volunteer wwoofing page.
@@ -50,9 +50,7 @@ export const CommunityPage: React.FC<Props> = ({
           onRequestAuth={() => { setAuthPending(true); setShowAuth(true); }}
         />
 
-        <SeoBlock viewKey="COMMUNITY" language={language} />
-
-        <footer className="px-6 md:px-12 lg:px-20 py-16 border-t border-[#c5a059]/10 bg-[#050505]">
+        <div className="px-6 md:px-12 lg:px-20 py-16 border-t border-[#c5a059]/10 bg-[#050505]">
           <div className="max-w-6xl flex flex-wrap items-center gap-8">
             <button
               onClick={() => onNavigate('WWOOFING')}
@@ -61,7 +59,9 @@ export const CommunityPage: React.FC<Props> = ({
               {t('Prefer a shorter volunteer stay? See wwoofing', 'Plutôt un séjour bénévole plus court ? Voir le wwoofing')} →
             </button>
           </div>
-        </footer>
+        </div>
+
+        <SiteFooter viewKey="COMMUNITY" language={language} />
       </main>
 
       {showAuth && (

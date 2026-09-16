@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { OptimizedImage } from './OptimizedImage';
-import { SeoBlock } from './SeoBlock';
+import { SiteFooter } from './SiteFooter';
 
 interface HostsPageProps {
   onNavigate: (view: 'INN' | 'MASSOTHERAPY') => void;
@@ -255,7 +255,7 @@ export const HostsPage: React.FC<HostsPageProps> = ({ onNavigate, language }) =>
               index={hosts.length}
           />
 
-          <SeoBlock viewKey="HOSTS" language={language} />
+          <SiteFooter viewKey="HOSTS" language={language} />
 
       </main>
 
