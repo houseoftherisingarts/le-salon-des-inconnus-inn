@@ -90,6 +90,16 @@ export const PageIntrouvable: React.FC<PageIntrouvableProps> = ({ site, enPause,
     const table = COPIE[site][enPause ? 'enPause' : 'introuvable'];
     const estAuberge = site === 'auberge';
 
+    // Hébergement en réécriture « ** » : l'adresse inconnue répond 200, donc la
+    // page le dit elle-même aux robots (soft 404 hors index), puis rend la main.
+    React.useEffect(() => {
+        const el = document.querySelector('meta[name="robots"]');
+        if (!el) return;
+        const avant = el.getAttribute('content');
+        el.setAttribute('content', 'noindex, follow');
+        return () => { if (avant !== null) el.setAttribute('content', avant); };
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
