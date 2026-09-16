@@ -67,7 +67,15 @@
       ],
       "rewrites": [
         {
-          "source": "**",
+          "regex": "^/[a-z0-9][a-z0-9-]{1,30}[a-z0-9]/?$",
+          "destination": "/index.html"
+        },
+        {
+          "regex": "^/(pensees|blog|guide|chambre)/[A-Za-z0-9-]+/?$",
+          "destination": "/index.html"
+        },
+        {
+          "regex": "^/c/[A-Za-z0-9_-]{6,}/[A-Za-z0-9_-]{3,}/?$",
           "destination": "/index.html"
         }
       ],
@@ -115,7 +123,15 @@
       ],
       "rewrites": [
         {
-          "source": "**",
+          "regex": "^/[a-z0-9][a-z0-9-]{1,30}[a-z0-9]/?$",
+          "destination": "/index.html"
+        },
+        {
+          "regex": "^/(pensees|blog|guide|chambre)/[A-Za-z0-9-]+/?$",
+          "destination": "/index.html"
+        },
+        {
+          "regex": "^/c/[A-Za-z0-9_-]{6,}/[A-Za-z0-9_-]{3,}/?$",
           "destination": "/index.html"
         }
       ],
