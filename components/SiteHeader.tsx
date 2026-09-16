@@ -13,7 +13,7 @@ import { MUSIC_GENRES } from '../constants';
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'BLOG' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
-  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'CENTRE_ARTS';
+  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'CENTRE_ARTS' | 'MECENE';
 
 interface SiteHeaderProps {
   language: 'EN' | 'FR';
@@ -74,9 +74,8 @@ const FAIRE: NavItem[] = [
   { view: 'CEILIDH',      label_fr: 'Ceilidh de Mai',   label_en: 'May Ceilidh',     desc_fr: 'Festival communautaire 2026',    desc_en: 'Community festival 2026',      icon: '🎶' },
   { view: 'WWOOFING',     label_fr: 'Wwoofing',         label_en: 'Wwoofing',        desc_fr: 'Vivez et travaillez sur le domaine', desc_en: 'Live and work on the estate', icon: '🌿' },
   { view: 'PPS',          label_fr: 'Soirées thématiques', label_en: 'Theme Evenings', desc_fr: 'Retraites d\'équipe, avec PPS Canada', desc_en: 'Team retreats, with PPS Canada', icon: '🎪' },
-  // Internal route (/creator) through the app's ViewState navigation, same as
-  // every other FAIRE entry. Marked Bêta while the studio ships as a beta.
-  { view: 'CREATOR_STUDIO', label_fr: 'Creator Studio · Bêta', label_en: 'Creator Studio · Beta', desc_fr: 'L\'atelier des artistes', desc_en: 'The artists\' workshop', icon: '🎨' },
+  // Le Creator Studio a déménagé dans le menu « Centre d'arts et communauté »
+  // (vague 2 de l'écosystème, 16 sept. 2026) pour ne pas figurer deux fois.
 ];
 
 // Liens vers les autres propriétés de la famille des Inconnus, sur nos domaines.
@@ -97,28 +96,40 @@ const familyClick = (item: FamilyLink, onNavigate: (v: ViewState) => void, after
     after?.();
   };
 
+// Menu « Centre d'arts et communauté » (vague 2, 16 sept. 2026) : les pages
+// internes passent par la navigation de l'app, les domaines de la famille
+// restent des ancres ordinaires.
 const FAMILLE: FamilyLink[] = [
   {
-    // Page de sélection de la famille des Inconnus (double comme retour à la sélection).
-    href: 'https://lesinconnus.ca/',
-    href_en: 'https://theunknowns.ca/',
-    label_fr: '← Les Inconnus', label_en: '← Les Inconnus',
-    desc_fr: 'Retour à la sélection', desc_en: 'Back to selection',
-    icon: '🧭',
+    href: '/centre-arts', view: 'CENTRE_ARTS',
+    label_fr: 'Le centre d\'arts', label_en: 'The arts centre',
+    desc_fr: 'Acheteurs, mécènes et artistes', desc_en: 'Buyers, patrons and artists',
+    icon: '🎭',
   },
   {
-    // Le centre d'arts vit sur ce site : navigation interne vers /centre-arts.
-    href: '/centre-arts',
-    view: 'CENTRE_ARTS',
-    label_fr: 'Le Salon', label_en: 'Le Salon',
-    desc_fr: 'Centre d\'art', desc_en: 'Art center',
-    icon: '🎭',
+    href: '/mecene', view: 'MECENE',
+    label_fr: 'Les mécènes', label_en: 'Patrons',
+    desc_fr: 'Acheter et soutenir l\'art autrement', desc_en: 'Buy and support art differently',
+    icon: '✦',
+  },
+  {
+    href: '/creator', view: 'CREATOR_STUDIO',
+    label_fr: 'Creator Studio · Bêta', label_en: 'Creator Studio · Beta',
+    desc_fr: 'L\'atelier des artistes', desc_en: 'The artists\' workshop',
+    icon: '🎨',
   },
   {
     href: 'https://ledomedesinconnus.com/',
     label_fr: 'Le Dôme', label_en: 'Le Dôme',
     desc_fr: 'La communauté', desc_en: 'The community',
     icon: '⛺',
+  },
+  {
+    // Page de sélection de la famille des Inconnus.
+    href: 'https://lesinconnus.ca/', href_en: 'https://theunknowns.ca/',
+    label_fr: 'Les Inconnus', label_en: 'Les Inconnus',
+    desc_fr: 'Retour à la sélection', desc_en: 'Back to selection',
+    icon: '🧭',
   },
 ];
 
@@ -136,6 +147,14 @@ function useScroll(threshold: number) {
 }
 
 // ─── Dropdown ─────────────────────────────────────────────────────────────────
+
+// Les trois menus de l'en-tête en pastilles de verre (vague 2, 16 sept. 2026) :
+// 13 px en crème pleine opacité, fond noir chaud translucide et flouté, fine
+// bordure d'or antique, pour qu'ils se lisent même sur le ciel pâle du hero.
+const PILL = 'flex items-center gap-2 h-9 px-4 rounded-full whitespace-nowrap text-[13px] font-cinzel font-bold uppercase tracking-[0.12em] backdrop-blur-md border transition-[background-color,border-color,color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0808]';
+const PILL_IDLE = 'text-[#f3e5ab] bg-[#0a0808]/55 border-[#c5a059]/45 shadow-[0_2px_14px_rgba(0,0,0,0.35)] hover:bg-[#0a0808]/80 hover:border-[#c5a059] hover:text-white';
+const PILL_ACTIVE = 'text-[#f3e5ab] bg-[#0a0808]/70 border-[#c5a059] shadow-[0_0_0_1px_rgba(197,160,89,0.35)] hover:text-white';
+const PILL_OPEN = 'text-[#0a0808] bg-[#c5a059] border-[#c5a059] shadow-[0_4px_18px_rgba(197,160,89,0.35)]';
 
 const Dropdown: React.FC<{
   label: string;
@@ -161,10 +180,9 @@ const Dropdown: React.FC<{
       <button
         onMouseEnter={() => setOpen(true)}
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-[11px] font-cinzel font-bold uppercase tracking-[0.18em] transition-all duration-200
-          ${isActive
-            ? 'text-[#d4af37]'
-            : 'text-white/70 hover:text-white'}`}
+        aria-haspopup="true"
+        aria-expanded={open}
+        className={`${PILL} ${open ? PILL_OPEN : isActive ? PILL_ACTIVE : PILL_IDLE}`}
       >
         {label}
         <svg
@@ -182,11 +200,11 @@ const Dropdown: React.FC<{
           style={{ minWidth: '340px' }}
         >
           {/* Arrow */}
-          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-[#111] border-l border-t border-[#d4af37]/20" />
+          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-[#111] border-l border-t border-[#c5a059]/30" />
 
           <ul
-            className="relative bg-[#0e0e0e]/95 backdrop-blur-xl border border-[#d4af37]/20 rounded-xl shadow-2xl overflow-hidden"
-            style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08)' }}
+            className="relative bg-[#0e0e0e]/95 backdrop-blur-xl border border-[#c5a059]/30 rounded-xl shadow-2xl overflow-hidden"
+            style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(197,160,89,0.10)' }}
           >
             {items.map((item) => {
               const active = currentView === item.view;
@@ -231,10 +249,12 @@ const FamilyDropdown: React.FC<{
   label: string;
   items: FamilyLink[];
   language: 'EN' | 'FR';
+  currentView: ViewState;
   onNavigate: (v: ViewState) => void;
-}> = ({ label, items, language, onNavigate }) => {
+}> = ({ label, items, language, currentView, onNavigate }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isActive = items.some(i => i.view === currentView);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -249,7 +269,9 @@ const FamilyDropdown: React.FC<{
       <button
         onMouseEnter={() => setOpen(true)}
         onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-1.5 px-3 py-2 rounded-md text-[11px] font-cinzel font-bold uppercase tracking-[0.18em] transition-all duration-200 text-white/70 hover:text-white"
+        aria-haspopup="true"
+        aria-expanded={open}
+        className={`${PILL} ${open ? PILL_OPEN : isActive ? PILL_ACTIVE : PILL_IDLE}`}
       >
         {label}
         <svg
@@ -267,11 +289,11 @@ const FamilyDropdown: React.FC<{
           style={{ minWidth: '340px' }}
         >
           {/* Arrow */}
-          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-[#111] border-l border-t border-[#d4af37]/20" />
+          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-[#111] border-l border-t border-[#c5a059]/30" />
 
           <ul
-            className="relative bg-[#0e0e0e]/95 backdrop-blur-xl border border-[#d4af37]/20 rounded-xl shadow-2xl overflow-hidden"
-            style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08)' }}
+            className="relative bg-[#0e0e0e]/95 backdrop-blur-xl border border-[#c5a059]/30 rounded-xl shadow-2xl overflow-hidden"
+            style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(197,160,89,0.10)' }}
           >
             {items.map((item) => (
               <li key={item.href}>
@@ -329,7 +351,7 @@ const MobileMenu: React.FC<{
       >
         {/* ÊTRE */}
         <div>
-          <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
+          <p className="text-[12px] font-cinzel font-bold uppercase tracking-[0.3em] text-[#c5a059] mb-2 px-1">
             {language === 'FR' ? 'Être' : 'Be'}
           </p>
           <div className="flex flex-col gap-1">
@@ -356,7 +378,7 @@ const MobileMenu: React.FC<{
 
         {/* FAIRE */}
         <div>
-          <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
+          <p className="text-[12px] font-cinzel font-bold uppercase tracking-[0.3em] text-[#c5a059] mb-2 px-1">
             {language === 'FR' ? 'Faire' : 'Do'}
           </p>
           <div className="flex flex-col gap-1">
@@ -381,10 +403,10 @@ const MobileMenu: React.FC<{
           </div>
         </div>
 
-        {/* LA FAMILLE : liens externes vers les autres propriétés, hors ViewState */}
+        {/* CENTRE D'ARTS ET COMMUNAUTÉ : pages internes et domaines de la famille */}
         <div>
-          <p className="text-[9px] font-cinzel font-bold uppercase tracking-[0.35em] text-[#d4af37]/60 mb-2 px-1">
-            {language === 'FR' ? 'La famille' : 'The family'}
+          <p className="text-[12px] font-cinzel font-bold uppercase tracking-[0.3em] text-[#c5a059] mb-2 px-1">
+            {language === 'FR' ? 'Centre d\'arts et communauté' : 'Arts centre & community'}
           </p>
           <div className="flex flex-col gap-1">
             {FAMILLE.map(item => (
@@ -536,7 +558,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         className={`fixed top-0 left-0 right-0 z-[109] transition-all duration-300 ${
           scrolled
             ? 'bg-[#050505]/90 backdrop-blur-xl border-b border-[#d4af37]/15 shadow-[0_1px_30px_rgba(0,0,0,0.6)]'
-            : 'bg-transparent border-b border-transparent'
+            : 'bg-gradient-to-b from-[#050505]/75 via-[#050505]/35 to-transparent border-b border-transparent'
         }`}
         style={{ height: '56px' }}
       >
@@ -553,13 +575,13 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               className="h-7 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
               style={{ filter: 'brightness(0) invert(1)' }}
             />
-            <span className="hidden sm:block font-cinzel text-[10px] font-bold uppercase tracking-[0.25em] text-white/70 group-hover:text-white/90 transition-colors">
+            <span className="hidden sm:block lg:hidden xl:block font-cinzel text-[10px] font-bold uppercase tracking-[0.25em] text-[#f3e5ab] group-hover:text-white transition-colors">
               Le Salon des Inconnus
             </span>
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-0.5">
+          <div className="hidden lg:flex items-center gap-2">
             <Dropdown
               label={language === 'FR' ? 'Être' : 'Be'}
               items={etreItems}
@@ -575,9 +597,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               onNavigate={handleNavigate}
             />
             <FamilyDropdown
-              label={language === 'FR' ? 'La famille' : 'The family'}
+              label={language === 'FR' ? 'Centre d\'arts et communauté' : 'Arts centre & community'}
               items={FAMILLE}
               language={language}
+              currentView={currentView}
               onNavigate={handleNavigate}
             />
           </div>
@@ -647,7 +670,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             {/* Hamburger: mobile only */}
             <button
               onClick={() => setMobileOpen(o => !o)}
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-black/40 text-white/80 hover:text-white transition-colors"
+              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full border border-[#c5a059]/45 bg-[#0a0808]/55 backdrop-blur-md text-[#f3e5ab] hover:text-white transition-colors"
               aria-label="Menu"
               aria-expanded={mobileOpen}
             >

@@ -30,3 +30,7 @@ export * from './super-profile';
 // Réseau social d'artistes: la porte, la fiche de membre, le mur du
 // studio, la cloche, les badges, et la page publique /membre/{uid}.
 export * from './reseau';
+
+// Collant Vexel en foil (source canonique), réemployé par le pied de page du
+// Salon et par chaque gabarit de Profil Pro. Import léger : '@inconnus/ui/collant'.
+export { CollantVexel } from './super-profile/templates/sections/CollantVexel';
