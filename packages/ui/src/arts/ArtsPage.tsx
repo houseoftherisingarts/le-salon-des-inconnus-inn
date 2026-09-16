@@ -8,6 +8,7 @@ import { SiteMap } from './SiteMap';
 // du centre d'arts n'a plus à télécharger ~1 Mo de JS pour un visiteur qui regarde.
 const CreatorStudio = lazy(() => import('../creator-studio/CreatorStudioShell').then((m) => ({ default: m.CreatorStudio })));
 import { SdiCafe } from '../sdi-cafe/SdiCafe';
+import { MenuMecene, PaliersMecene } from './MeceneScenes';
 
 // Header links to the rest of the famille des Inconnus, on our own domains
 // (never web.app). The hub has a French and an English domain; the Auberge is
@@ -335,63 +336,6 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
       </div>
     );
   };
-
-  // 2. Buyer Menu
-  const BuyerMenu = () => (
-    <div className="max-w-6xl mx-auto h-full flex items-center justify-center p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-         <MenuCard
-           title={language === 'EN' ? "See Our Artists" : "Nos Artistes"}
-           subtitle={language === 'EN' ? "The Roster" : "Le Registre"}
-           bg="/media/Artistes/leslie%20main.jpg"
-           onClick={() => setBuyerView('CATALOG')}
-         />
-         <MenuCard
-           title={language === 'EN' ? "Invest & Save" : "Investir & Économiser"}
-           subtitle={language === 'EN' ? "Fiscal Advantages" : "Avantages Fiscaux"}
-           bg="/media/Financement%20Artistique/kamy%20museum.png"
-           onClick={() => setBuyerView('TAXES')}
-         />
-         <MenuCard
-           title={language === 'EN' ? "Support Projects" : "Soutenir des Projets"}
-           subtitle={language === 'EN' ? "Patronage" : "Mécénat"}
-           bg="/media/Financement%20Artistique/kamy%20christina%20barcelona.jpg"
-           onClick={() => {
-              setBuyerView('SUPPORT');
-              setPatronTab('CENTER'); // Default tab
-           }}
-         />
-         {/* Café: EN ATTENTE (décision Alex 2026-07-21). Intégration à définir.
-             Tuile visible mais non cliquable, badge « Bientôt ». Le slot
-             'PLATFORMS' et <SdiCafe> restent en place pour la réactivation. */}
-         <div className="group relative h-64 md:h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-default">
-           <div className="absolute inset-0 bg-indigo-950/70" />
-           <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1000&auto=format&fit=crop" alt="Café" className="w-full h-full object-cover opacity-30" />
-           <div className="absolute top-4 right-4 px-4 py-1.5 rounded-full border border-[#d4af37]/40 bg-black/50 backdrop-blur-md">
-             <span className="font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">{language === 'EN' ? "Coming soon" : "Bientôt"}</span>
-           </div>
-           <div className="absolute inset-0 flex flex-col items-center justify-center">
-             <h3 className="font-cinzel text-2xl md:text-3xl text-white/70 tracking-widest">Café</h3>
-             <span className="font-lato text-xs tracking-[0.2em] text-indigo-300/60 mt-2">{language === 'EN' ? "Productions & Artists" : "Productions & Artistes"}</span>
-           </div>
-         </div>
-      </div>
-    </div>
-  );
-
-  const MenuCard = ({ title, subtitle, bg, onClick }: { title: string, subtitle: string, bg: string, onClick: () => void }) => (
-    <div 
-      onClick={onClick}
-      className="group relative h-64 md:h-80 rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-2xl"
-    >
-      <div className="absolute inset-0 bg-indigo-950/60 group-hover:bg-indigo-900/40 transition-colors" />
-      <img src={bg} alt={title} className="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h3 className="font-cinzel text-2xl md:text-3xl text-white tracking-widest text-shadow-lg group-hover:-translate-y-2 transition-transform duration-500">{title}</h3>
-        <span className="font-lato text-xs tracking-[0.2em] text-indigo-300 mt-2 opacity-70 group-hover:opacity-100 transition-opacity">{subtitle}</span>
-      </div>
-    </div>
-  );
 
   // 3. Artist Catalog (The Dossier)
   const ArtistCard: React.FC<{ artist: ArtistProfile; index: number }> = ({ artist, index }) => {
@@ -869,10 +813,11 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
             </div>
 
             {/* TAB CONTENT AREAS */}
-            <div className="max-w-7xl mx-auto px-6 min-h-[50vh]">
+            <div className="min-h-[50vh]">
                 
                 {/* 1. ARTIST SPONSORSHIP */}
                 {patronTab === 'ARTIST' && (
+                    <div className="max-w-7xl mx-auto px-6">
                     <div className="animate-fadeIn">
                         <div className="text-center mb-12">
                              <p className="text-neutral-400 font-medium font-lato text-lg max-w-3xl mx-auto">
@@ -885,96 +830,33 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                             ))}
                         </div>
                     </div>
+                </div>
                 )}
 
                 {/* 2. CENTER SUPPORT */}
                 {patronTab === 'CENTER' && (
                     <div className="animate-fadeIn">
+                         <div className="max-w-7xl mx-auto px-6">
                          {/* Split Donation Banner */}
-                         <div className="bg-[#1a1a1a] rounded-2xl border border-[#d4af37]/20 p-8 md:p-12 text-center mb-16 relative overflow-hidden shadow-2xl">
-                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
-                             <h3 className="font-cinzel text-3xl text-[#d4af37] mb-4 tracking-widest">{language === 'EN' ? "The Fair Choice" : "Le Choix Équitable"}</h3>
+                         <div className="bg-[#1a1a1a] rounded-2xl border border-[#c5a059]/20 p-8 md:p-12 text-center mb-16 relative overflow-hidden shadow-2xl">
+                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#c5a059] to-transparent" />
+                             <h3 className="font-cinzel text-3xl text-[#c5a059] mb-4 tracking-widest">{language === 'EN' ? "The Fair Choice" : "Le Choix Équitable"}</h3>
                              <p className="text-neutral-300 max-w-2xl mx-auto mb-8 font-light">
                                  {language === 'EN' ? "Not sure who to support? Choose our Split Donation model. 50% of your contribution is divided equally among our featured resident artists, and 50% sustains the Salon's operations." : "Pas certain de qui soutenir ? Choisissez notre modèle de Don Partagé. 50% est divisé entre nos artistes résidents, et 50% soutient les opérations du Salon."}
                              </p>
-                             <button className="px-8 py-3 bg-[#d4af37] text-black font-cinzel font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#b89c6f] shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all">
+                             <button className="px-8 py-3 bg-[#c5a059] text-black font-cinzel font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#b89c6f] shadow-[0_0_20px_rgba(197,160,89,0.3)] transition-all">
                                  {language === 'EN' ? "Make a Split Donation" : "Faire un Don Partagé"}
                              </button>
                          </div>
-
-                         {/* Membership Tiers */}
-                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
-                             {/* Tier 1 */}
-                             <motion.div
-                                initial={{ opacity: 0, y: 18 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
-                                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                                className="bg-[#141414] border border-white/10 rounded-2xl p-8 flex flex-col h-[400px]"
-                             >
-                                 <h4 className="font-cinzel text-2xl text-white mb-2">{language === 'EN' ? "The Initiate" : "L'Initié"}</h4>
-                                 <div className="text-4xl font-cinzel text-white mb-8">$20 <span className="text-xs font-sans text-neutral-500 font-normal">/ month</span></div>
-                                 <ul className="space-y-4 mb-8 flex-1">
-                                     <li className="flex gap-3 text-sm text-neutral-400"><span className="text-indigo-400">♦</span> Exclusive Digital Content</li>
-                                     <li className="flex gap-3 text-sm text-neutral-400"><span className="text-indigo-400">♦</span> Newsletter Access</li>
-                                     <li className="flex gap-3 text-sm text-neutral-400"><span className="text-indigo-400">♦</span> Priority Booking (48h)</li>
-                                 </ul>
-                                 <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 font-cinzel font-bold text-xs uppercase tracking-widest rounded transition-colors">
-                                     Join The Circle
-                                 </button>
-                             </motion.div>
-
-                             {/* Tier 2 (Featured) */}
-                             <motion.div
-                                initial={{ opacity: 0, y: 18 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
-                                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                                className="bg-[#0f0f1a] border border-indigo-500/30 rounded-2xl p-8 flex flex-col h-[450px] relative shadow-[0_0_30px_rgba(79,70,229,0.15)] transform md:-translate-y-4"
-                             >
-                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-lg">
-                                     Most Popular
-                                 </div>
-                                 <h4 className="font-cinzel text-2xl text-white mb-2">{language === 'EN' ? "The Guardian" : "Le Gardien"}</h4>
-                                 <div className="text-5xl font-cinzel text-white mb-8">$100 <span className="text-xs font-sans text-neutral-500 font-normal">/ month</span></div>
-                                 <ul className="space-y-4 mb-8 flex-1">
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-indigo-400">♦</span> All Initiate Perks</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-indigo-400">♦</span> 1 Limited Edition Print/Year</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-indigo-400">♦</span> 10% Discount on Stays</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-indigo-400">♦</span> Corporate Tax Receipt</li>
-                                 </ul>
-                                 <button className="w-full py-4 bg-indigo-900/40 hover:bg-indigo-900/60 border border-indigo-500/30 text-indigo-100 font-cinzel font-bold text-xs uppercase tracking-widest rounded transition-colors shadow-lg">
-                                     Join The Circle
-                                 </button>
-                             </motion.div>
-
-                             {/* Tier 3 */}
-                             <motion.div
-                                initial={{ opacity: 0, y: 18 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
-                                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                                className="bg-[#14120a] border border-[#d4af37]/30 rounded-2xl p-8 flex flex-col h-[450px]"
-                             >
-                                 <h4 className="font-cinzel text-2xl text-white mb-2">{language === 'EN' ? "The Maecenas" : "Le Mécène"}</h4>
-                                 <div className="text-5xl font-cinzel text-white mb-8">$500 <span className="text-xs font-sans text-neutral-500 font-normal">/ month</span></div>
-                                 <ul className="space-y-4 mb-8 flex-1">
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-[#d4af37]">♦</span> All Guardian Perks</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-[#d4af37]">♦</span> Original Sketch/Year</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-[#d4af37]">♦</span> Private Dinner with Artists</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-[#d4af37]">♦</span> Name on Founders Wall</li>
-                                     <li className="flex gap-3 text-sm text-neutral-300"><span className="text-[#d4af37]">♦</span> Concierge Service</li>
-                                 </ul>
-                                 <button className="w-full py-4 bg-[#d4af37] hover:bg-[#b89c6f] text-black font-cinzel font-bold text-xs uppercase tracking-widest rounded transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)]">
-                                     Join The Circle
-                                 </button>
-                             </motion.div>
                          </div>
+
+                         <PaliersMecene language={language} />
                     </div>
                 )}
 
                 {/* 3. PROJECT SUPPORT */}
                 {patronTab === 'PROJECT' && (
+                    <div className="max-w-7xl mx-auto px-6">
                     <div className="animate-fadeIn max-w-5xl mx-auto space-y-12">
                         {projects.map((project, idx) => (
                             <div key={project.id} className="bg-[#141414] rounded-2xl border border-white/10 overflow-hidden flex flex-col md:flex-row">
@@ -1016,10 +898,12 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                             </div>
                         ))}
                     </div>
+                    </div>
                 )}
 
                 {/* 4. BEYOND MONEY */}
                 {patronTab === 'BEYOND' && (
+                    <div className="max-w-7xl mx-auto px-6">
                     <div className="animate-fadeIn max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                             {/* Host Card */}
@@ -1075,6 +959,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                                  </button>
                              </div>
                         </div>
+                    </div>
                     </div>
                 )}
             </div>
@@ -1976,7 +1861,14 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
 
         {rootView === 'BUYER' && (
             <>
-                {buyerView === 'MENU' && <BuyerMenu />}
+                {buyerView === 'MENU' && (
+                  <MenuMecene
+                    language={language}
+                    onArtistes={() => setBuyerView('CATALOG')}
+                    onFiscalite={() => setBuyerView('TAXES')}
+                    onSoutien={() => { setBuyerView('SUPPORT'); setPatronTab('CENTER'); }}
+                  />
+                )}
                 {buyerView === 'CATALOG' && <Catalog />}
                 {buyerView === 'TAXES' && <FiscalityPage />}
                 {buyerView === 'SUPPORT' && <PatronageSection />}
