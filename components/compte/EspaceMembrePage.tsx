@@ -9,6 +9,7 @@ import { RailMembre } from './RailMembre';
 import { OngletProfil } from './onglets/OngletProfil';
 const OngletCommunaute = React.lazy(() => import('./onglets/OngletCommunaute').then(m => ({ default: m.OngletCommunaute })));
 const OngletArtistique = React.lazy(() => import('./onglets/OngletArtistique').then(m => ({ default: m.OngletArtistique })));
+const OngletBillets = React.lazy(() => import('./onglets/OngletBillets').then(m => ({ default: m.OngletBillets })));
 // Import lazy des autres onglets (ajoutés au fil des lots)
 
 interface EspaceMembrePageProps {
@@ -220,7 +221,15 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 onNavigate={onNavigate}
               />
             )}
-            {actif !== 'profil' && actif !== 'communaute' && actif !== 'artistique' && (
+            {actif === 'billets' && (
+              <OngletBillets
+                user={user}
+                memberProfile={memberProfile}
+                language={language}
+                onNavigate={onNavigate}
+              />
+            )}
+            {actif !== 'profil' && actif !== 'communaute' && actif !== 'artistique' && actif !== 'billets' && (
               <div className="text-neutral-500 font-lato italic py-10">Onglet en construction...</div>
             )}
           </React.Suspense>

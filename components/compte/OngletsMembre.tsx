@@ -8,6 +8,7 @@ interface Onglet {
 
 const ONGLETS: Onglet[] = [
   { id: 'profil', labelFR: 'Profil', labelEN: 'Profile' },
+  { id: 'billets', labelFR: 'Vos billets', labelEN: 'Your tickets' },
   { id: 'communaute', labelFR: 'Communauté', labelEN: 'Community' },
   { id: 'artistique', labelFR: 'Communauté artistique', labelEN: 'Artistic community' },
   // Les onglets qui ne sont pas construits n'apparaissent pas encore.

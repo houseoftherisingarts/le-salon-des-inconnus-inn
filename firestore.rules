@@ -417,7 +417,14 @@ service cloud.firestore {
       // Each user may only write their own registration.
       match /registrations/{regId} {
         allow read:  if true;
-        allow write: if request.auth != null
+        // Le champ email ne s'écrit plus : le courriel de l'inscrit ne doit pas
+        // être lisible par tout visiteur. La suppression n'a pas de
+        // request.resource, d'où le allow delete séparé.
+        allow create, update: if request.auth != null
+                     && (request.auth.uid == regId
+                         || isAdmin())
+                     && !('email' in request.resource.data);
+        allow delete: if request.auth != null
                      && (request.auth.uid == regId
                          || isAdmin());
       }
@@ -508,8 +515,9 @@ service cloud.firestore {
         allow update: if isAdmin();
       }
 
-      // Show tickets: public read for spot counting; Cloud Function (admin SDK) writes.
-      // Admin can delete. Users cannot write directly.
+      // Show tickets: read only by the owner or an admin; the public spot
+      // counter reads config/ceilidhPlaces (recompté par compterPlacesCeilidh).
+      // Cloud Function (admin SDK) writes. Admin can delete.
       match /showTickets/{ticketId} {
         allow read:   if request.auth != null && (request.auth.uid == ticketId || isAdmin());
         allow delete: if request.auth != null

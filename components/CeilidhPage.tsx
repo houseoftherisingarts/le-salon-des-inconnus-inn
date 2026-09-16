@@ -1773,7 +1773,6 @@ const TeamsChapterBody: React.FC<{
         {
           uid: u.uid,
           displayName: u.displayName ?? '',
-          email: u.email ?? '',
           photoURL: u.photoURL ?? '',
           teams: newTeams,
           arrivalDate: '2026-05-22',
@@ -2707,7 +2706,6 @@ const LodgingChapterBody: React.FC<{
         {
           uid: u.uid,
           displayName: u.displayName ?? '',
-          email: u.email ?? '',
           photoURL: u.photoURL ?? '',
           roomId: l.id,
           roomName: language === 'FR' ? l.nameFr : l.nameEn,
@@ -3325,17 +3323,19 @@ const ShowTicketSlot: React.FC<{
   onRequireAuth: () => void;
 }> = ({ language, user, memberProfile, onRequireAuth }) => {
   const t = (en: string, fr: string) => (language === 'EN' ? en : fr);
-  const [tickets, setTickets] = useState<{ id: string }[]>([]);
+  const [vendus, setVendus] = useState(0);
   const [open, setOpen] = useState(false);
   const [purchasedCode, setPurchasedCode] = useState<string | null>(null);
 
   useEffect(() => {
-    return onSnapshot(collection(db, `events/${EVENT_ID}/showTickets`), (snap) => {
-      setTickets(snap.docs.map((d) => ({ id: d.id })));
+    // Le compteur public vit désormais dans config/ceilidhPlaces, recompté par
+    // la fonction compterPlacesCeilidh à chaque écriture sur showTickets.
+    return onSnapshot(doc(db, 'config', 'ceilidhPlaces'), (snap) => {
+      setVendus(Number(snap.data()?.vendus ?? 0));
     });
   }, []);
   const SHOW_CAPACITY = 20;
-  const spotsLeft = Math.max(0, SHOW_CAPACITY - tickets.length);
+  const spotsLeft = Math.max(0, SHOW_CAPACITY - vendus);
 
   const handleOpen = () => {
     if (!user || !memberProfile) { onRequireAuth(); return; }

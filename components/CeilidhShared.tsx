@@ -1722,7 +1722,6 @@ const TeamRegistrationModal: React.FC<{
       await setDoc(doc(db, 'events', EVENT_ID, 'registrations', user.uid), {
         uid: user.uid,
         displayName: memberProfile.displayName,
-        email: memberProfile.email,
         ...(memberProfile.photoURL ? { photoURL: memberProfile.photoURL } : {}),
         teams: updatedTeams,
         teamId: firstPrimary?.teamId ?? deleteField(),
@@ -1892,7 +1891,6 @@ const RoomRegistrationModal: React.FC<{
       const regUpdate: Partial<CeilidhRegistration> = {
         uid: user.uid,
         displayName: memberProfile.displayName,
-        email: memberProfile.email,
         ...(user.photoURL ? { photoURL: user.photoURL } : {}),
         roomId: room.id,
         roomName: language === 'FR' ? room.name_fr : room.name,

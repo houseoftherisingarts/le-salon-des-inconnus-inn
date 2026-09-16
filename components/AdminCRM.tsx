@@ -988,11 +988,16 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     await deleteDoc(doc(db, 'events', EVENT_ID, 'showTickets', uid));
   }, []);
 
+  // Courriel des inscrits : pris dans la fiche membre (members/{uid}), puisque
+  // le champ email ne s'écrit plus sur les inscriptions.
+  const memberEmailByUid = new Map(members.map(m => [m.uid, m.email] as const));
+
   // All unique emails across registrations + showTickets
   const allEmails = (() => {
     const map = new Map<string, { name: string; source: string; email: string }>();
     registrations.forEach(r => {
-      if (r.email) map.set(r.email, { email: r.email, name: r.displayName, source: 'Ceilidh' });
+      const email = memberEmailByUid.get(r.uid);
+      if (email) map.set(email, { email, name: r.displayName, source: 'Ceilidh' });
     });
     showTickets.forEach(t => {
       if (t.email) {
