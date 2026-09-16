@@ -4,6 +4,15 @@ import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import * as crypto from 'crypto';
 import { defineSecret } from 'firebase-functions/params';
 import nodemailer from 'nodemailer';
+import {
+  HOSTAWAY_API_KEY,
+  HOSTAWAY_ACCOUNT_ID,
+  HOSTAWAY_BASE,
+  ALLOWED_LISTINGS,
+  getHostawayToken,
+  isValidDate,
+  addDays,
+} from './hostaway';
 
 admin.initializeApp();
 
@@ -380,63 +389,10 @@ export const onConferenceRequest = functions
 // Read-only: real availability + an authoritative live price quote. These are
 // 2nd-gen callable functions so they can pull HOSTAWAY_API_KEY / ACCOUNT_ID from
 // Firebase Secret Manager. The Square functions above stay 1st gen and untouched.
-//
-// Deploy: set the two secrets first, then deploy only these two functions:
-//   firebase functions:secrets:set HOSTAWAY_API_KEY
-//   firebase functions:secrets:set HOSTAWAY_ACCOUNT_ID
-//   firebase deploy --only functions:getHostawayAvailability,functions:getHostawayQuote
+// Le socle Hostaway (secrets, base, liste des annonces, jeton) vit dans
+// ./hostaway.ts, importé en tête de fichier.
 //
 // The key is never sent to the client; the price is always computed server-side.
-
-const HOSTAWAY_API_KEY = defineSecret('HOSTAWAY_API_KEY');
-const HOSTAWAY_ACCOUNT_ID = defineSecret('HOSTAWAY_ACCOUNT_ID');
-
-const HOSTAWAY_BASE = 'https://api.hostaway.com/v1';
-
-// The confirmed live listing ids. Requests for anything else are rejected so
-// this endpoint can't be turned into an open proxy against the HostAway account.
-const ALLOWED_LISTINGS = new Set([
-  345789, 345790, 345792, 345787, 345786, 345791, 345788, 559483,
-  563826, // La Méditante
-]);
-
-// Token cache shared across warm invocations of a single instance. HostAway
-// access tokens are long-lived (≈ 24 months); we refresh well before expiry.
-let cachedToken: { value: string; expiresAt: number } | null = null;
-
-async function getHostawayToken(): Promise<string> {
-  const now = Date.now();
-  if (cachedToken && cachedToken.expiresAt > now + 60_000) {
-    return cachedToken.value;
-  }
-  const body = new URLSearchParams({
-    grant_type: 'client_credentials',
-    client_id: HOSTAWAY_ACCOUNT_ID.value(),
-    client_secret: HOSTAWAY_API_KEY.value(),
-    scope: 'general',
-  });
-  const res = await fetch(`${HOSTAWAY_BASE}/accessTokens`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Cache-control': 'no-cache',
-    },
-    body,
-  });
-  const json = (await res.json()) as { access_token?: string; expires_in?: number };
-  if (!res.ok || !json.access_token) {
-    console.error('HostAway token error:', res.status, JSON.stringify(json));
-    throw new HttpsError('internal', 'Could not authenticate with HostAway.');
-  }
-  const ttlMs = (json.expires_in ?? 3600) * 1000;
-  cachedToken = { value: json.access_token, expiresAt: now + ttlMs };
-  return json.access_token;
-}
-
-// Accept only YYYY-MM-DD to keep the calendar / quote queries well-formed.
-function isValidDate(s: unknown): s is string {
-  return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s));
-}
 
 function validateListing(listingId: unknown): number {
   const id = Number(listingId);
@@ -471,13 +427,6 @@ async function fetchCalendar(
     throw new HttpsError('internal', 'Could not read HostAway availability.');
   }
   return json.result;
-}
-
-// Add `days` calendar-days to a YYYY-MM-DD string (UTC, no DST drift).
-function addDays(date: string, days: number): string {
-  const d = new Date(`${date}T00:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
 }
 
 function nightsBetween(checkIn: string, checkOut: string): number {
