@@ -5,6 +5,7 @@ import { HeroFocalAdmin } from './HeroFocalAdmin';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { SeoBlock } from './SeoBlock';
+import { VexelSoutienSection } from './VexelSoutienSection';
 import {
   TrustedPlatforms,
   ManorRoomsSection,
