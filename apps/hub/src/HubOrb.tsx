@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { PiedEcosysteme } from '@inconnus/ui/ecosysteme';
 
 // lesinconnus.com: the family selection page. One cinematic background (the
 // golden-hour drone shot of the domain), a welcome title, and three glass
@@ -245,6 +246,13 @@ export function HubOrb() {
           </div>
         </section>
       </div>
+
+      {/* Pied de page : les trois maisons et le collant Vexel (vague 3, 16 sept. 2026). */}
+      <PiedEcosysteme
+        language={EN ? 'EN' : 'FR'}
+        titreLiens={EN ? 'The three houses' : 'Les trois maisons'}
+        liens={CHOICES.map((c) => ({ label: EN ? c.nameEn : c.name, href: c.url }))}
+      />
 
       <style>{`
         .hub-kenburns { animation: hubKen 30s ease-in-out infinite alternate; transform-origin: 50% 40%; }

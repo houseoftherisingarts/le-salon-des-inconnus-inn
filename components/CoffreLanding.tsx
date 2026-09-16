@@ -16,7 +16,7 @@ interface Props {
 type Lang = 'EN' | 'FR' | 'ES';
 
 const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
-const DEMO = 'https://coffre-des-inconnus.web.app';
+const DEMO = 'https://coffre.lesinconnus.ca';
 const DL_MAC = `${DEMO}/dl/CoffreDesInconnus-mac.dmg`;
 const DL_WIN = `${DEMO}/dl/CoffreDesInconnus-Setup.exe`;
 const GUIDE = `${DEMO}/dl/guide-coffre-des-inconnus.pdf`;

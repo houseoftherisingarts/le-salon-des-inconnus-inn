@@ -1,6 +1,7 @@
 import React, { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { CHARTE, VERSION_CHARTE } from './charte';
+import { CollantVexel } from '@inconnus/ui/collant';
 
 // ── Le Dôme des Inconnus ─────────────────────────────────────────────────────
 // The community surface of the four-property family (hub · Salon · Auberge ·
@@ -425,8 +426,9 @@ const FAMILY = [
 ];
 
 const FooterBand: React.FC = () => (
-  <footer className="px-6 md:px-12 mt-28 md:mt-36 mb-10">
-    <div className="max-w-6xl mx-auto pt-12" style={{ borderTop: '1px solid rgba(217,180,92,0.12)' }}>
+  <footer className="w-full px-6 md:px-12 lg:px-16 mt-28 md:mt-36 pb-10" style={{ borderTop: '1px solid rgba(217,180,92,0.12)' }}>
+    <div className="w-full pt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+    <div>
       <span className="font-cinzel uppercase block mb-6" style={{ fontSize: '10px', letterSpacing: '0.4em', color: 'rgba(255,250,240,0.45)' }}>
         La famille des Inconnus
       </span>
@@ -446,6 +448,11 @@ const FooterBand: React.FC = () => (
       <span className="font-cinzel uppercase block" style={{ fontSize: '10px', letterSpacing: '0.28em', color: 'rgba(255,250,240,0.3)' }}>
         © Le Dôme des Inconnus, à Namur au Québec
       </span>
+    </div>
+    {/* Le collant Vexel en foil (vague 3 de l'écosystème, 16 sept. 2026). */}
+    <div className="shrink-0">
+      <CollantVexel language="FR" />
+    </div>
     </div>
   </footer>
 );

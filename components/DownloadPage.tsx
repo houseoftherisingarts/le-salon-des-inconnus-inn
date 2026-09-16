@@ -14,7 +14,7 @@ interface Props {
 type Lang = 'EN' | 'FR' | 'ES';
 
 const GRAIN = 'https://www.transparenttextures.com/patterns/stardust.png';
-const BANQUE = 'https://petite-banque-inconnus.web.app';
+const BANQUE = 'https://banque.lesinconnus.ca';
 
 export const DownloadPage: React.FC<Props> = ({ onNavigate, language }) => {
   const [lang, setLang] = React.useState<Lang>(() => {

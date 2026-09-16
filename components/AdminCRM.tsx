@@ -9,7 +9,7 @@ import { signOut, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from
 import type { User } from 'firebase/auth';
 import type { WwooferProfile, WwooferVisitRequest, WwooferMessage, WwooferStatus } from '../types';
 import type { CommunityApplication, CommunityApplicationStatus } from '../types';
-import { AdminShell, type AdminNavItem } from './AdminShell';
+import { AdminShell, BasculeAdmin, type AdminNavItem } from './AdminShell';
 import { NewsletterSection } from './admin/NewsletterSection';
 import { MessagesSection } from './admin/MessagesSection';
 import { MediaSection } from './admin/MediaSection';
@@ -155,7 +155,8 @@ const AccessDenied: React.FC<{ user: User | null; onNavigate: (view: string) => 
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6">
+    <div className="relative min-h-screen bg-[#050505] flex items-center justify-center p-6">
+      <BasculeAdmin className="absolute top-5 right-5" />
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <p className="text-[#d4af37] text-xs font-cinzel uppercase tracking-[0.5em] mb-3">Le Salon des Inconnus</p>

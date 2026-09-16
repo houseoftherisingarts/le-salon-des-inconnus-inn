@@ -4171,7 +4171,7 @@ export const ArtistHub: React.FC<ArtistHubProps> = ({ theme, themeStyles, phase,
                             {/* Tool: Le Coffre des Inconnus: l'app familiale d'éducation financière.
                                 Outil public du Salon : ouvre l'app dans un nouvel onglet. */}
                             <div
-                                onClick={() => window.open('https://petite-banque-inconnus.web.app/telecharger.html', '_blank', 'noopener')}
+                                onClick={() => window.open('https://banque.lesinconnus.ca/telecharger.html', '_blank', 'noopener')}
                                 className={`bg-black/40 border ${currentStyles.border} p-8 hover:bg-white/5 transition-all group cursor-pointer aspect-square flex flex-col items-center justify-center text-center`}
                             >
                                 <div className={`w-20 h-20 mb-6 rounded-full border-2 border-white/10 group-hover:${currentStyles.border} flex items-center justify-center bg-black/50 text-neutral-400 group-hover:text-white`}>

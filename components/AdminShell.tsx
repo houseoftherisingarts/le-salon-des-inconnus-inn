@@ -35,6 +35,27 @@ interface AdminShellProps<TId extends string> {
     children: React.ReactNode;
 }
 
+
+// Bascule « Vexel · Salon » (vague 3 de l'écosystème, 16 sept. 2026) : les deux
+// admins reconnaissent les mêmes courriels et gardent chacun leur session, donc
+// un simple lien suffit pour passer de l'un à l'autre. « Salon » est actif ici.
+export const BasculeAdmin: React.FC<{ className?: string }> = ({ className = '' }) => (
+    <nav aria-label="Changer d'administration" className={`inline-flex items-stretch p-0.5 border border-white/10 bg-black/40 ${className}`}>
+        <a
+            href="https://vexelwebstudio.com/admin"
+            className="inline-flex items-center min-h-[32px] px-3 font-cinzel text-[10px] uppercase tracking-[0.3em] text-neutral-500 hover:text-[#f3e5ab] hover:bg-white/[0.04] transition-colors"
+        >
+            Vexel
+        </a>
+        <span
+            aria-current="page"
+            className="inline-flex items-center min-h-[32px] px-3 font-cinzel text-[10px] uppercase tracking-[0.3em] text-[#f3e5ab] bg-[#1a1208] border border-[#c5a059]/60"
+        >
+            Salon
+        </span>
+    </nav>
+);
+
 export function AdminShell<TId extends string>({
     user, sectionId, onSectionChange, nav, onBackToSite, onSignOut, title, subtitle, onSwitchSpace, children,
 }: AdminShellProps<TId>) {
@@ -173,6 +194,7 @@ export function AdminShell<TId extends string>({
                         <p className="font-cinzel text-[#c5a059] text-[9px] uppercase tracking-[0.45em]">Section</p>
                         <h1 className="font-prata text-[#f3e5ab] text-xl md:text-2xl leading-tight truncate">{headerTitle}</h1>
                     </div>
+                    <BasculeAdmin className="shrink-0" />
                     <button
                         onClick={onBackToSite}
                         className="hidden md:inline-flex items-center gap-2 px-3 py-2 border border-white/10 text-neutral-400 hover:text-[#f3e5ab] hover:border-[#c5a059]/40 font-cinzel text-[10px] uppercase tracking-[0.35em] transition-colors"

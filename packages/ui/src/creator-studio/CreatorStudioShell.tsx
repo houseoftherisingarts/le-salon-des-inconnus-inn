@@ -5,6 +5,7 @@ import { StudioContextViewer, type ViewerContext, type ViewerTab } from './Studi
 import { LoadingOrb } from './LoadingOrb';
 import { WelcomeWizard } from './WelcomeWizard';
 import { VexelInvitationStudio } from './VexelInvitationStudio';
+import { PiedEcosysteme } from '../ecosysteme/PiedEcosysteme';
 import { getApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -393,8 +394,8 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
 
      if (!currentUser && !asVisitor) {
          return (
-             <div className="fixed inset-0 z-50 bg-[#050505] text-neutral-100 font-lato flex items-center justify-center p-6 overflow-hidden">
-                 <div aria-hidden className="absolute inset-0 pointer-events-none opacity-40">
+             <div className="fixed inset-0 z-50 bg-[#050505] text-neutral-100 font-lato flex flex-col overflow-x-hidden overflow-y-auto">
+                 <div aria-hidden className="fixed inset-0 pointer-events-none opacity-40">
                      <div
                          className="absolute inset-0"
                          style={{
@@ -405,6 +406,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                      />
                  </div>
 
+                 <div className="relative z-10 flex-1 flex items-center justify-center p-6">
                  <div className="relative z-10 w-full max-w-md text-center">
                      <p className="font-cinzel text-fuchsia-300 text-[10px] uppercase tracking-[0.5em] mb-3">
                          Le Salon des Inconnus
@@ -562,6 +564,10 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                          </button>
                      )}
                  </div>
+                 </div>
+
+                 {/* Pied de page de l'écosystème (vague 3) : collant Vexel et mention du Salon. */}
+                 <PiedEcosysteme language={language} className="z-10" />
              </div>
          );
      }
@@ -757,6 +763,12 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                      Absente de la porte (GATEWAY) et du choix d'archétype. */}
                  {hubPhase === 'LOBBY' && (
                      <VexelInvitationStudio language={language} theme={theme} themeStyles={themeStyles} />
+                 )}
+
+                 {/* Pied de page de l'écosystème (vague 3) : collant Vexel en foil et
+                     mention du Salon, au bas du hall seulement. */}
+                 {hubPhase === 'LOBBY' && (
+                     <PiedEcosysteme language={language} className="mt-16 md:mt-24" />
                  )}
 
              </div>

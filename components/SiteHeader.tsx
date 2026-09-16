@@ -135,14 +135,28 @@ const FAMILLE: FamilyLink[] = [
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 
-function useScroll(threshold: number) {
+function useScroll(threshold: number, resetKey?: string) {
   const [scrolled, setScrolled] = useState(false);
-  const onScroll = useCallback(() => setScrolled(window.scrollY > threshold), [threshold]);
+  // Les pages du Salon défilent dans leur propre conteneur (fixed inset-0
+  // overflow-y-auto), jamais dans la fenêtre : on écoute donc le défilement
+  // de tout le document en capture et on lit le scrollTop de l'élément qui
+  // a bougé. Les petits conteneurs (carrousels, listes) sont ignorés.
+  const onScroll = useCallback((e?: Event) => {
+    const el = e?.target;
+    if (el instanceof HTMLElement) {
+      if (el.clientHeight < window.innerHeight * 0.6) return;
+      setScrolled(el.scrollTop > threshold);
+    } else {
+      setScrolled(window.scrollY > threshold);
+    }
+  }, [threshold]);
   useEffect(() => {
-    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => document.removeEventListener('scroll', onScroll, { capture: true });
   }, [onScroll]);
+  // Nouvelle page : elle repart du sommet, la barre retrouve son voile.
+  useEffect(() => { setScrolled(false); }, [resetKey]);
   return scrolled;
 }
 
@@ -345,7 +359,7 @@ const MobileMenu: React.FC<{
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[108] flex flex-col bg-[#080808]/98 backdrop-blur-xl"
+      className="fixed inset-0 z-[108] flex flex-col bg-[#0a0808]"
       style={{ top: '56px' }}
     >
       <div
@@ -543,8 +557,8 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   isMusicPlaying, isMusicMenuOpen, setIsMusicMenuOpen, changeGenre, toggleMute, currentGenre,
   user, memberProfile, onUserChange, onShowPrivacy, redirectPendingUser, onRedirectUserHandled,
 }) => {
-  const scrolled = useScroll(10);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const scrolled = useScroll(10, currentView);
   const hasChronicles = useHasChronicles();
   const etreItems = hasChronicles ? [...ETRE, BLOG_NAV] : ETRE;
 
@@ -559,9 +573,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[109] transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#050505]/90 backdrop-blur-xl border-b border-[#d4af37]/15 shadow-[0_1px_30px_rgba(0,0,0,0.6)]'
+        className={`fixed top-0 left-0 right-0 z-[109] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out ${
+          mobileOpen
+            ? 'bg-[#0a0808] border-b border-[#c5a059]/20'
+            : scrolled
+            ? 'bg-[#0a0808]/[0.88] backdrop-blur-xl backdrop-saturate-150 border-b border-[#c5a059]/20 shadow-[0_1px_30px_rgba(0,0,0,0.55)]'
             : 'bg-gradient-to-b from-[#050505]/75 via-[#050505]/35 to-transparent border-b border-transparent'
         }`}
         style={{ height: '56px' }}
