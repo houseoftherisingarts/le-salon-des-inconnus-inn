@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ARTISTS_ROSTER } from './roster';
+// Vague 5 : le répertoire du centre d'arts porte les chemins d'avatars corrigés ;
+// les avatars hors de /media/ (Unsplash) ne montrent pas les vrais artistes.
+import { ARTISTS_ROSTER as ROSTER_ARTS } from '../arts/roster';
+const ARTISTS_ROSTER = ROSTER_ARTS.filter((a) => a.avatarUrl.startsWith('/media/'));
 import { ArtistProfile } from './types';
 
 // Imported from sdi-artist-caferepo. NOT mounted anywhere yet. This lives
@@ -23,21 +26,20 @@ type CreatorView = 'CINEMA' | 'GALLERY' | 'MUSIC' | 'CREATE' | 'ROSTER';
 
 const PARTNER_PRODUCTIONS = [
     { title: "L'habitude de mourir", artist: "La Bronze", type: "Music Video", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "/media/Artistes/vignes%20et%20cam.jpg" },
-    { title: "Where the Witch Lives", artist: "Mariel Sharp", type: "Short Film", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "/media/Artistes/WHERE-THE-WITCH-LIVES_Mariel-Sharp_Director-Headshot-1-400x600.jpg" }
+    { title: "Where the Witch Lives", artist: "Mariel Sharp", type: "Short Film", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", thumb: "/media/Artistes/roster/mariel-sharp.jpg" }
 ];
 
 const SALON_PRODUCTIONS = {
     LIVE: [
-        { title: "Improvisation No. 3", artist: "Sebastien Leblanc", type: "Live Session", url: "#", thumb: "/media/Artistes/thumbnail%20sebastien%20leblanc%20one%20for%20all%201.png" },
+        { title: "Improvisation No. 3", artist: "Sebastien Leblanc", type: "Live Session", url: "#", thumb: "/media/Artistes/roster/sebastien-oneforall.jpg" },
         { title: "Salon Sessions Vol. 1", artist: "Collectif", type: "Full Set", url: "#", thumb: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=1000&auto=format&fit=crop" }
     ],
     CLIPS: [
-        { title: "Fallin", artist: "Leslie", type: "Music Video", url: "#", thumb: "/media/Artistes/EXP15_1.48.1.png" },
-        { title: "Fille des bois", artist: "Tania Martin", type: "Music Video", url: "#", thumb: "/media/Artistes/oqqArs4S41o-HD.jpg" }
+        { title: "Fallin", artist: "Leslie", type: "Music Video", url: "#", thumb: "/media/Artistes/roster/leslie-fallin.jpg" },
+        { title: "Fille des bois", artist: "Tania Martin", type: "Music Video", url: "#", thumb: "/media/Artistes/tenesse%20whiskey%20tania.jpg" }
     ],
     VISUAL: [
-        { title: "Magnetosphere", artist: "Magnetosphere", type: "Visual Art", url: "#", thumb: "/media/Artistes/buJf1H0Im6w-HD.jpg" },
-        { title: "Futuristic Slums", artist: "Jean-Guilhem", type: "Digital Art", url: "#", thumb: "/media/Artistes/jean-guilhem-bargues-futuristic-slums-small.jpg" }
+        { title: "Magnetosphere", artist: "Magnetosphere", type: "Visual Art", url: "#", thumb: "/media/Artistes/magnetosphere.jpg" }
     ]
 };
 

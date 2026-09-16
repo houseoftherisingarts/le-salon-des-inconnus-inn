@@ -4,7 +4,7 @@ import { SEO_CONTENT, type SeoViewKey, type SeoLink } from '../config/seo.conten
 // VIEW_PATHS lives in App.tsx; we duplicate the small subset we need here so
 // SeoBlock can render anchor hrefs (real <a> tags, crawlable) and still call
 // the SPA navigator on click for real visitors.
-const VIEW_PATHS: Record<SeoViewKey, string> = {
+const VIEW_PATHS: Record<string, string> = {
   INN: '/',
   WWOOFING: '/wwoofing',
   PPS: '/soiree-thematique-pps',
@@ -16,13 +16,17 @@ const VIEW_PATHS: Record<SeoViewKey, string> = {
   GUIDE: '/guide',
   PETITE_MONNAIE: '/petite-monnaie',
   COMMUNITY: '/communaute',
+  // Vague 5 : liens internes du bloc « À propos » de /centre-arts.
+  CENTRE_ARTS: '/centre-arts',
+  MECENE: '/mecene',
+  CREATOR_STUDIO: '/creator',
 };
 
 // SEO viewKey set as a runtime guard. Anything not in this list is treated as
 // an external URL (rendered with rel=noopener and target=_blank).
 const SEO_VIEW_KEYS = new Set<string>(Object.keys(VIEW_PATHS));
 
-function isInternal(to: string): to is SeoViewKey {
+function isInternal(to: string): boolean {
   return SEO_VIEW_KEYS.has(to);
 }
 
@@ -37,6 +41,8 @@ interface Props {
   onNavigate?: (view: string) => void;
   /** Extra classes for the wrapper section. */
   className?: string;
+  /** La page porte déjà son h1 visible : le titre descriptif sort en <p>. */
+  sansH1?: boolean;
 }
 
 /**
@@ -50,11 +56,11 @@ interface Props {
  * gold/cream tokens) so it reads as part of the design rather than an
  * appended SEO blob.
  */
-export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, className = '' }) => {
+export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, className = '', sansH1 = false }) => {
   const content = SEO_CONTENT[viewKey][language];
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const navigate = (view: SeoViewKey) => {
+  const navigate = (view: string) => {
     if (onNavigate) {
       onNavigate(view);
       return;
@@ -106,12 +112,16 @@ export const SeoBlock: React.FC<Props> = ({ viewKey, language, onNavigate, class
     >
       {/* Visually hidden descriptive H1: helps crawlers understand what the
           page IS without disturbing the existing visual hero. */}
-      <h1 id={`seo-h1-${viewKey}`} className="sr-only">
-        {content.h1}
-      </h1>
+      {sansH1 ? (
+        <p id={`seo-h1-${viewKey}`} className="sr-only">{content.h1}</p>
+      ) : (
+        <h1 id={`seo-h1-${viewKey}`} className="sr-only">
+          {content.h1}
+        </h1>
+      )}
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
-        <div className="lg:sticky lg:top-24 self-start">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
+        <div className="self-start">
         {/* Kicker + section title (visible H2) */}
         <div className="flex items-center gap-4 mb-6">
           <div className="h-px w-10 bg-[#c5a059]" aria-hidden />

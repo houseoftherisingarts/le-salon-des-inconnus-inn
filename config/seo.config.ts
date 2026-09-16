@@ -176,12 +176,24 @@ export const PAGE_META = {
     FR: { title: "Catalogue d'œuvres | Le Salon des Inconnus", description: "Les œuvres accrochées au manoir, par les artistes que nous représentons, offertes aux invités qui séjournent chez nous.", keywords: "" }
   },
   CENTRE_ARTS: {
-    EN: { title: "Arts Centre | Le Salon des Inconnus, Namur", description: "The arts centre of Le Salon des Inconnus in Namur, Outaouais: collectors and patrons on one side, artists and their Creator Studio on the other.", keywords: "arts centre Outaouais, artists Petite-Nation, art patronage Quebec" },
-    FR: { title: "Centre d'arts | Le Salon des Inconnus, Namur", description: "Le centre d'arts du Salon des Inconnus à Namur, en Outaouais : d'un côté les acheteurs et les mécènes, de l'autre les artistes et leur Creator Studio.", keywords: "centre d'arts Outaouais, artistes Petite-Nation, mécénat Québec" }
+    EN: { title: "Arts Centre | Le Salon des Inconnus, Namur", description: "The arts centre of Le Salon des Inconnus, at Maison Favier in Namur: artists in residence, a performance hall, the patrons and the artists' Creator Studio.", keywords: "arts centre Outaouais, artists Petite-Nation, art patronage Quebec" },
+    FR: { title: "Centre d'arts | Le Salon des Inconnus, Namur", description: "Le centre d'arts du Salon des Inconnus, à la Maison Favier de Namur : des artistes en résidence, une salle de spectacle, les mécènes et le Creator Studio des artistes.", keywords: "centre d'arts Outaouais, artistes Petite-Nation, mécénat Québec" }
   },
   MECENE: {
     EN: { title: "Patrons | Le Salon des Inconnus", description: "Buy and support art differently: the artists we represent, patronage, and the tax side of buying art in Quebec.", keywords: "art patronage Quebec, buy art Outaouais" },
     FR: { title: "Le Mécène | Le Salon des Inconnus", description: "Acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec.", keywords: "mécénat Québec, acheter de l'art Outaouais, fiscalité de l'art" }
+  },
+  MECENE_ARTISTES: {
+    EN: { title: "Our artists | Le Salon des Inconnus", description: "The artists we represent at Le Salon des Inconnus, in Namur.", keywords: "" },
+    FR: { title: "Nos artistes | Le Salon des Inconnus", description: "Les artistes que nous représentons au Salon des Inconnus, à Namur.", keywords: "" }
+  },
+  MECENE_FISCALITE: {
+    EN: { title: "Art and taxes | Le Salon des Inconnus", description: "The tax side of buying art in Quebec, explained by the arts centre of Le Salon des Inconnus.", keywords: "" },
+    FR: { title: "Fiscalité de l'art | Le Salon des Inconnus", description: "La fiscalité de l'achat d'œuvres au Québec, expliquée par le centre d'arts du Salon des Inconnus.", keywords: "" }
+  },
+  MECENE_SOUTIEN: {
+    EN: { title: "Support the centre | Le Salon des Inconnus", description: "Three monthly tiers and the Split Donation to support the artists and the arts centre of Le Salon des Inconnus.", keywords: "" },
+    FR: { title: "Soutenir le centre | Le Salon des Inconnus", description: "Trois paliers mensuels et le Don partagé pour soutenir les artistes et le centre d'arts du Salon des Inconnus.", keywords: "" }
   },
   CAFE: {
     EN: { title: "The Café | Le Salon des Inconnus", description: "The digital platforms and projects of Le Salon des Inconnus.", keywords: "" },
@@ -226,7 +238,7 @@ export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
   HOSTS:          `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   PPS:            `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
   CAMPING:        `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
-  CENTRE_ARTS:    `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  CENTRE_ARTS:    `${SITE_URL}/media/centre-arts/og-centre-arts.jpg`,
   MECENE:         `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   CAFE:           `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
 };

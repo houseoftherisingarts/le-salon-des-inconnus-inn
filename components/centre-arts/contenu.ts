@@ -50,7 +50,7 @@ export const IMAGES = {
   salle: { base: B + 'salle-a-manger', largeurs: [960, 1600, 2400], w: 2800, h: 2100, ratioBureau: '4 / 3', ratioTel: '4 / 3',
     alt: t('La salle à manger du manoir et son tapis rouge', "The manor's dining room and its red rug") },
   kamy: { base: B + 'kamy', largeurs: [960, 1600, 2400], w: 2617, h: 1446, ratioBureau: '21 / 9', ratioTel: '4 / 3', position: '45% 15%',
-    alt: t('Une femme aux lunettes rondes dans un atelier, entre les guitares, les toiles et une sculpture', 'A woman in round glasses in a studio, among guitars, canvases and a sculpture') },
+    alt: t('Une femme aux lunettes rondes dans un atelier, entre des guitares et des toiles', 'A woman in round glasses in a studio, among guitars and canvases') },
   nolin: { base: B + 'nolin', largeurs: [640, 1200, 1800], w: 2768, h: 4328, ratioBureau: '4 / 5', ratioTel: '4 / 5', position: '50% 0%',
     alt: t('Portrait de Claude Philippe Nolin en noir et blanc', 'Black and white portrait of Claude Philippe Nolin') },
   alex: { base: B + 'alex', largeurs: [960, 1600, 2400], w: 2800, h: 1712, ratioBureau: '21 / 9', ratioTel: '4 / 3', position: '62% 10%',
@@ -90,13 +90,13 @@ export const S2 = {
   surtitre: t('Le lieu', 'The place'),
   sousTitre: t('Un manoir victorien de 1898', 'A Victorian manor built in 1898'),
   texte: t(
-    "Le manoir loue cinq chambres dont les noms annoncent la couleur, puisque la Musicienne et l'Écrivaine y côtoient la Cinéaste, le Théâtre et la Tour. Autour d'elles s'ouvrent une salle de spectacle, une bibliothèque et la salle à manger commune, et dehors, les jardins et la serre mènent jusqu'à la yourte et à l'autobus aménagé qui abrite un piano.",
-    'The manor rents five rooms whose names set the tone, since the Musicienne and the Écrivaine sit alongside the Cinéaste, the Théâtre and the Tour. Around them are a performance hall, a library and the shared dining room, and outside, the gardens and the greenhouse lead to the yurt and to the converted bus, which houses a piano.'),
+    "Le manoir loue cinq chambres dont les noms annoncent la couleur, puisque la Musicienne et l'Écrivaine y côtoient la Cinéaste, le Théâtre et la Tour. Autour d'elles s'ouvrent la salle de spectacle et la bibliothèque, puis la salle à manger commune, et dehors, les jardins et la serre mènent jusqu'à la yourte et à l'autobus aménagé qui abrite un piano.",
+    'The manor rents five rooms whose names set the tone, since the Musicienne and the Écrivaine sit alongside the Cinéaste, the Théâtre and the Tour. Around them open the performance hall and the library, then the shared dining room, and outside, the gardens and the greenhouse lead to the yurt and to the converted bus, which houses a piano.'),
   metas: [
     { libelle: t('Construit', 'Built'), valeur: t('1898') },
     { libelle: t('Chambres', 'Rooms'), valeur: t('Cinq, au manoir', 'Five, in the manor') },
     { libelle: t('Scène', 'Stage'), valeur: t('Une salle de spectacle', 'A performance hall') },
-    { libelle: t('Dehors', 'Outside'), valeur: t('Jardins, serre et yourte', 'Gardens, greenhouse and yurt') },
+    { libelle: t('Dehors', 'Outside'), valeur: t('Les jardins et la yourte', 'The gardens and the yurt') },
   ] as Meta[],
 };
 
@@ -106,8 +106,8 @@ export const S3 = {
   surtitre: t("Résidences d'artistes", 'Artist residencies'),
   sousTitre: t('Nous accueillons des artistes en résidence', 'We host artists in residence'),
   texte: t(
-    "Le manoir ouvre ses portes aux artistes en résidence, qui partagent la maison avec les musiciens, les entrepreneurs et les wwoofers de la saison. Pour proposer une résidence, écrivez-nous à alex@lesalondesinconnus.com en présentant votre projet en quelques lignes et en précisant les dates qui vous conviennent.",
-    "The manor opens its doors to artists in residence, who share the house with the season's musicians, entrepreneurs and wwoofers. To propose a residency, write to us at alex@lesalondesinconnus.com with a few lines about your project and the dates that suit you."),
+    "Le manoir ouvre ses portes aux artistes en résidence, qui partagent la maison avec les musiciens et les entrepreneurs, et avec les wwoofers de la saison. Pour proposer une résidence, écrivez-nous à alex@lesalondesinconnus.com en présentant votre projet en quelques lignes et en précisant les dates qui vous conviennent.",
+    "The manor opens its doors to artists in residence, who share the house with musicians and entrepreneurs, and with the season's wwoofers. To propose a residency, write to us at alex@lesalondesinconnus.com with a few lines about your project and the dates that suit you."),
   bouton: t('Proposer une résidence', 'Propose a residency'),
   mailto: t('mailto:alex@lesalondesinconnus.com?subject=Proposition%20de%20r%C3%A9sidence', 'mailto:alex@lesalondesinconnus.com?subject=Residency%20proposal'),
   surtitreFiches: t('Les artistes que nous représentons', 'The artists we represent'),
@@ -144,8 +144,8 @@ export const S4 = {
   surtitre: t('Spectacles et ateliers', 'Shows and workshops'),
   sousTitre: t('La salle de spectacle du manoir', "The manor's performance hall"),
   texte: t(
-    "Le Salon des Inconnus accueille des spectacles vivants, des résidences artistiques, des banquets et des rassemblements communautaires tout au long de l'année, et sa programmation met de l'avant la musique, la danse, le théâtre, la performance et les arts multidisciplinaires.",
-    'Le Salon des Inconnus hosts live performances, artist residencies, banquets and community gatherings year-round, and its program leans on music, dance, theatre, performance and multidisciplinary art.'),
+    "Le Salon des Inconnus accueille toute l'année des spectacles vivants et des résidences artistiques, mais aussi des banquets et des rassemblements communautaires, et sa programmation va de la musique et de la danse jusqu'au théâtre et à la performance.",
+    'Le Salon des Inconnus hosts live performances and artist residencies year-round, along with banquets and community gatherings, and its program runs from music and dance to theatre and performance.'),
   surtitreCeilidh: t('Grand Ceilidh de Mai 2026'),
   metasCeilidh: [
     { libelle: t('Quand', 'When'), valeur: t('Du 21 au 25 mai 2026', 'May 21 to 25, 2026') },
@@ -155,10 +155,10 @@ export const S4 = {
   ] as Meta[],
   surtitreAteliers: t('Ateliers et soirées', 'Workshops and evenings'),
   ateliers: [
-    { libelle: t('Ateliers culinaires', 'Culinary workshops'), valeur: t('La fermentation, le dressage et les techniques moléculaires, avec le chef Marc Alexis Pepin', 'Fermentation, plating and molecular techniques, with chef Marc Alexis Pepin'), vue: 'KITCHEN' },
+    { libelle: t('Ateliers culinaires', 'Culinary workshops'), valeur: t('La fermentation et le dressage jusqu\'aux techniques moléculaires, avec le chef Marc Alexis Pepin', 'Fermentation and plating through to molecular techniques, with chef Marc Alexis Pepin'), vue: 'KITCHEN' },
     { libelle: t('En famille', 'For families'), valeur: t("Le Coffre des Inconnus, l'application gratuite d'économie personnelle et familiale, de 4 ans au doctorat", 'Le Coffre des Inconnus, the free personal and family finance app, from age 4 to the doctorate'), vue: 'COFFRE' },
     { libelle: t('Soirées thématiques', 'Theme evenings'), valeur: t('Des soirées clés en main pour les groupes, en partenariat avec PPS Canada', 'Turnkey evenings for groups, in partnership with PPS Canada'), vue: 'PPS' },
-    { libelle: t('Événements privés', 'Private events'), valeur: t('Le manoir, la salle de spectacle, la salle à manger et les jardins se réservent pour les mariages, les retraites et les lancements', 'The manor, the performance hall, the dining room and the gardens can be booked for weddings, retreats and launches'), vue: 'EVENTS' },
+    { libelle: t('Événements privés', 'Private events'), valeur: t('Le manoir et ses jardins se réservent pour les mariages et les retraites', 'The manor and its gardens can be booked for weddings and retreats'), vue: 'EVENTS' },
   ] as Meta[],
 };
 
@@ -181,7 +181,7 @@ export const S6 = {
   sousTitre: t("L'atelier des artistes", "The artists' workshop"),
   texte: t(
     "Le Creator Studio est l'espace de travail des artistes en résidence, des interprètes et des collaborateurs du Salon, qui y bâtissent leur profil, y publient leurs écrits et peuvent y demander une mise en avant. Il est ouvert en version bêta.",
-    "The Creator Studio is the workspace of the Salon's artists in residence, performers and collaborators, who build their profile there, publish their writing and can ask to be featured. It is open as a beta."),
+    "The Creator Studio is the workspace of the Salon's artists in residence and performers, and of its collaborators, who build their profile and publish their writing there, and can ask to be featured. It is open as a beta."),
   bouton: t('Entrer au Creator Studio', 'Enter the Creator Studio'),
   surtitreRangees: t('La communauté', 'The community'),
   rangees: [

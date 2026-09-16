@@ -77,6 +77,10 @@
         {
           "regex": "^/c/[A-Za-z0-9_-]{6,}/[A-Za-z0-9_-]{3,}/?$",
           "destination": "/index.html"
+        },
+        {
+          "regex": "^/mecene/(artistes|fiscalite|soutenir)/?$",
+          "destination": "/index.html"
         }
       ],
       "headers": [
@@ -150,6 +154,10 @@
         },
         {
           "regex": "^/c/[A-Za-z0-9_-]{6,}/[A-Za-z0-9_-]{3,}/?$",
+          "destination": "/index.html"
+        },
+        {
+          "regex": "^/mecene/(artistes|fiscalite|soutenir)/?$",
           "destination": "/index.html"
         }
       ],

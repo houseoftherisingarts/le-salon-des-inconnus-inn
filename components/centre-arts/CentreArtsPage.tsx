@@ -15,7 +15,6 @@ import {
 } from './contenu';
 
 type Nav = (view: string) => void;
-type Ton = 'noir' | 'creme' | 'or';
 
 const CSS = `
 .ca-racine{--ca-noir:#0a0808;--ca-noir-pied:#050505;--ca-creme:#f3e5ab;--ca-or:#c5a059;--ca-bronze:#6b4e1c;--ca-bronze-nuit:#3d2a0c;
@@ -133,7 +132,7 @@ const Cadre: React.FC<{
             alt={txt(image.alt, langue)}
             decoding="async"
             loading={prioritaire ? 'eager' : 'lazy'}
-            {...(prioritaire ? { fetchpriority: 'high' } : {})}
+            fetchPriority={prioritaire ? 'high' : 'auto'}
             style={{ objectPosition: image.position ?? '50% 50%' }}
           />
         </span>

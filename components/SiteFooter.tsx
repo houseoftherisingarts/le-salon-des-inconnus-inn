@@ -111,13 +111,15 @@ export const SiteFooter: React.FC<{
   viewKey: SeoViewKey;
   language: 'EN' | 'FR';
   onNavigate?: (view: string) => void;
-}> = ({ viewKey, language, onNavigate }) => {
+  /** La page porte déjà son h1 visible (vague 5, /centre-arts). */
+  sansH1?: boolean;
+}> = ({ viewKey, language, onNavigate, sansH1 }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
   return (
     <footer className="relative z-[40] w-full bg-[#050505] text-neutral-300" style={{ paddingBottom: 'var(--bandeau-temoins, 0px)' }}>
       {/* a. À propos du lieu : le texte SEO de la route, mots et titres intacts */}
-      <SeoBlock viewKey={viewKey} language={language} onNavigate={onNavigate} />
+      <SeoBlock viewKey={viewKey} language={language} onNavigate={onNavigate} sansH1={sansH1} />
 
       {/* b + c. Nous trouver : adresse NAP et carte */}
       <div className="border-t border-[#c5a059]/15 px-6 md:px-12 lg:px-24 py-16 md:py-20">

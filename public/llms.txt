@@ -35,8 +35,10 @@ Le Salon des Inconnus est une auberge victorienne (Maison Favier, 1898) située 
 - Méditation guidée deux fois par jour (facultative)
 
 ## Centre d'arts et communauté
-- Centre d'arts : https://www.lesalondesinconnus.com/centre-arts (d'un côté les acheteurs et les mécènes, de l'autre les artistes et leur Creator Studio)
+- Centre d'arts : https://www.lesalondesinconnus.com/centre-arts (à la Maison Favier : les artistes en résidence, la salle de spectacle, les mécènes et le Creator Studio des artistes)
 - Les mécènes : https://www.lesalondesinconnus.com/mecene (acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec)
+- Nos artistes : https://www.lesalondesinconnus.com/mecene/artistes (le catalogue des artistes que nous représentons)
+- Fiscalité de l'art : https://www.lesalondesinconnus.com/mecene/fiscalite (la fiscalité de l'achat d'œuvres au Québec)
 - Creator Studio (bêta) : https://www.lesalondesinconnus.com/creator (espace de travail pour les artistes en résidence, les interprètes et les collaborateurs : profil, écrits, demande de mise en avant)
 - Accueil d'artistes émergents, professionnels et multidisciplinaires en résidence
 

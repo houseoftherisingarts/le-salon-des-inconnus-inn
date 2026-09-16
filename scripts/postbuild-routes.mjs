@@ -62,8 +62,8 @@ const ROUTES = [
   {
     path: "centre-arts",
     title: "Centre d'arts | Le Salon des Inconnus, Namur",
-    description: "Le centre d'arts du Salon des Inconnus à Namur, en Outaouais : d'un côté les acheteurs et les mécènes, de l'autre les artistes et leur Creator Studio.",
-    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    description: "Le centre d'arts du Salon des Inconnus, à la Maison Favier de Namur : des artistes en résidence, une salle de spectacle, les mécènes et le Creator Studio des artistes.",
+    image: 'https://www.lesalondesinconnus.com/media/centre-arts/og-centre-arts.jpg',
     url: 'https://www.lesalondesinconnus.com/centre-arts',
   },
   {
@@ -72,6 +72,28 @@ const ROUTES = [
     description: "Acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec.",
     image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
     url: 'https://www.lesalondesinconnus.com/mecene',
+  },
+  // Vague 5 : les sous-pages du mécène ont leur adresse propre.
+  {
+    path: 'mecene/artistes',
+    title: 'Nos artistes | Le Salon des Inconnus',
+    description: 'Les artistes que nous représentons au Salon des Inconnus, à Namur.',
+    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/mecene/artistes',
+  },
+  {
+    path: 'mecene/fiscalite',
+    title: "Fiscalité de l'art | Le Salon des Inconnus",
+    description: "La fiscalité de l'achat d'œuvres au Québec, expliquée par le centre d'arts du Salon des Inconnus.",
+    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/mecene/fiscalite',
+  },
+  {
+    path: 'mecene/soutenir',
+    title: 'Soutenir le centre | Le Salon des Inconnus',
+    description: "Trois paliers mensuels et le Don partagé pour soutenir les artistes et le centre d'arts du Salon des Inconnus.",
+    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/mecene/soutenir',
   },
   {
     path: "cafe",

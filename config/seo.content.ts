@@ -47,7 +47,7 @@ type PerLanguage<T> = { FR: T; EN: T };
 /** Pages that get a full SeoBlock. Other pages can inherit from INN. */
 export type SeoViewKey = Extract<
   ViewKey,
-  'INN' | 'WWOOFING' | 'EVENTS' | 'CEILIDH' | 'MASSOTHERAPY' | 'KITCHEN' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'COMMUNITY' | 'PPS'
+  'INN' | 'WWOOFING' | 'EVENTS' | 'CEILIDH' | 'MASSOTHERAPY' | 'KITCHEN' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'COMMUNITY' | 'PPS' | 'CENTRE_ARTS'
 >;
 
 export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
@@ -831,6 +831,56 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
           q: "What festivals should I watch for in the Petite-Nation?",
           a: "Ripon Trad Festival, Festival Médiéval de Montpellier, Festival Western St-André-Avellin and NCC Fall Rhapsody, among others.",
         },
+      ],
+    },
+  },
+  // ───────────────────────────────────────────────────────────────────────────
+  // Vague 5 (16 septembre 2026) : bloc « À propos » de la page /centre-arts.
+  CENTRE_ARTS: {
+    FR: {
+      h1: "Centre d'arts du Salon des Inconnus, à la Maison Favier de Namur (Outaouais)",
+      kicker: "Centre d'arts",
+      sectionTitle: "Un centre d'artistes dans un manoir de 1898",
+      paragraphs: [
+        "Le Salon des Inconnus est une auberge et un centre d'artistes installés dans la Maison Favier, un manoir victorien de 1898 à Namur, dans la Petite-Nation en Outaouais, où des artistes émergents comme professionnels séjournent en résidence aux côtés des musiciens et des wwoofers de la saison.",
+        "Le centre d'arts réunit d'un côté les acheteurs et les mécènes, qui y trouvent les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec, et de l'autre les artistes, qui disposent au Creator Studio d'un espace de travail pour bâtir leur profil et publier leurs écrits. La salle de spectacle du manoir accueille des spectacles vivants tout au long de l'année, et le Grand Ceilidh de Mai y a réuni artistes et voisins du 21 au 25 mai 2026.",
+      ],
+      internalLinks: [
+        { to: 'MECENE', label: 'les mécènes', hint: "acheter et soutenir l'art autrement" },
+        { to: 'CREATOR_STUDIO', label: 'le Creator Studio', hint: "l'atelier des artistes" },
+        { to: 'EVENTS', label: 'les événements et spectacles' },
+      ],
+      externalLinks: [
+        { to: 'https://tourismeoutaouais.com', label: 'Tourisme Outaouais' },
+        { to: 'https://www.parcomega.ca', label: 'Parc Oméga' },
+      ],
+      faq: [
+        { q: "Acceptez-vous les artistes en résidence ?", a: "Oui, le Salon des Inconnus accueille des artistes de toutes disciplines, émergents comme professionnels, et les résidences se réservent par téléphone (514 418 3450) ou par courriel (alex@lesalondesinconnus.com)." },
+        { q: "Comment proposer une résidence artistique ?", a: "Par courriel à alex@lesalondesinconnus.com avec une courte présentation du projet et les dates souhaitées." },
+        { q: "Y a-t-il une salle de spectacle ?", a: "Oui, le manoir a sa salle de spectacle, et des espaces extérieurs sont aménagés pour les performances en saison." },
+      ],
+    },
+    EN: {
+      h1: "Arts centre of Le Salon des Inconnus, at Maison Favier in Namur (Outaouais)",
+      kicker: "Arts centre",
+      sectionTitle: "An artists' centre in an 1898 manor",
+      paragraphs: [
+        "Le Salon des Inconnus is an inn and artists' centre set in Maison Favier, an 1898 Victorian manor in Namur, in the Petite-Nation region of Outaouais, where emerging and professional artists stay in residence alongside musicians and seasonal wwoofers.",
+        "The arts centre brings together buyers and patrons on one side, who find the artists we represent and the tax side of buying art in Quebec along with patronage, and artists on the other, who have a workspace in the Creator Studio to build their profile and publish their writing. The manor's performance hall hosts live shows year-round, and the Grand Ceilidh de Mai brought artists and neighbours together there from May 21 to 25, 2026.",
+      ],
+      internalLinks: [
+        { to: 'MECENE', label: 'patrons', hint: 'buy and support art differently' },
+        { to: 'CREATOR_STUDIO', label: 'the Creator Studio', hint: "the artists' workshop" },
+        { to: 'EVENTS', label: 'events and shows' },
+      ],
+      externalLinks: [
+        { to: 'https://tourismeoutaouais.com/en', label: 'Tourisme Outaouais' },
+        { to: 'https://www.parcomega.ca', label: 'Parc Oméga' },
+      ],
+      faq: [
+        { q: "Do you host artists in residence?", a: "Yes, we host emerging and professional artists of every discipline, and residencies can be booked by phone (514 418 3450) or by email (alex@lesalondesinconnus.com)." },
+        { q: "How do I propose an artist residency?", a: "By email to alex@lesalondesinconnus.com, with a short presentation of the project and the dates you have in mind." },
+        { q: "Is there a performance hall?", a: "Yes, the manor has its own performance room, and outdoor spaces are set up for in-season shows." },
       ],
     },
   },
