@@ -63,7 +63,8 @@ const STRIPE_SECRET_KEY = (0, params_1.defineSecret)('STRIPE_SECRET_KEY');
 const STRIPE_WEBHOOK_PRO_SECRET = (0, params_1.defineSecret)('STRIPE_WEBHOOK_PRO_SECRET');
 const PROJET = 'creator-studio-pro';
 const PRIX_CENTS = 10000; // 100,00 $ CAD par mois
-const BASE_URL = 'https://inconnus-salon.web.app';
+// Le Creator Studio vit sur le monolithe (www.lesalondesinconnus.com/creator).
+const BASE_URL = 'https://www.lesalondesinconnus.com';
 const NOM_PRODUIT = 'Profil Pro du Salon des Inconnus';
 // ─── Petit client Stripe par fetch, sans SDK ──────────────────────────────
 /** Aplati un objet en paramètres de formulaire à la façon de Stripe :
@@ -150,7 +151,7 @@ async function envoyerBienvenueProfilPro(destinataire, prenom) {
         '',
         "Votre Profil Pro est maintenant actif sur Le Salon des Inconnus. Votre page vous attend, et vous pouvez dès maintenant choisir votre gabarit, ajouter vos oeuvres et ouvrir votre agenda de rendez-vous depuis votre tableau de bord :",
         '',
-        `${BASE_URL}/createur`,
+        `${BASE_URL}/creator`,
         '',
         'Pour toute question sur votre installation, écrivez-nous à alex@lesalondesinconnus.com.',
         '',
@@ -205,8 +206,8 @@ exports.creerAbonnementProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET
             }],
         subscription_data: { metadata: { uid, projet: PROJET } },
         metadata: { uid, projet: PROJET },
-        success_url: `${BASE_URL}/createur?pro=merci`,
-        cancel_url: `${BASE_URL}/createur?pro=annule`,
+        success_url: `${BASE_URL}/creator?pro=merci`,
+        cancel_url: `${BASE_URL}/creator?pro=annule`,
     });
     return { url: session.url };
 });
@@ -352,7 +353,7 @@ exports.portailProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_KEY], i
     const secret = STRIPE_SECRET_KEY.value();
     const portail = await stripeFetch(secret, 'POST', 'billing_portal/sessions', {
         customer: stripeCustomerId,
-        return_url: `${BASE_URL}/createur`,
+        return_url: `${BASE_URL}/creator`,
     });
     return { url: portail.url };
 });

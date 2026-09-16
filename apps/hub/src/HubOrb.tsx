@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 // lesinconnus.com: the family selection page. One cinematic background (the
 // golden-hour drone shot of the domain), a welcome title, and three glass
@@ -9,37 +9,78 @@ import { useCallback, useRef, useState } from 'react';
 type Choice = {
   id: string;
   name: string;
+  nameEn: string;
   taglineFr: string;
+  taglineEn: string;
   url: string;
   image: string;
   imagePosition?: string;
 };
 
+// lesinconnus.ca is the French hub, theunknowns.ca (and .org) the English one.
+const EN = /(^|\.)theunknowns\./i.test(typeof window !== 'undefined' ? window.location.hostname : '');
+
+const TEXT = EN
+  ? {
+      lang: 'en',
+      title: 'The Unknowns · Inn, art and gatherings · Outaouais',
+      description: 'The world of The Unknowns at Maison Favier, Namur, Quebec: an inn, an arts centre (Le Salon des Inconnus) and a community (The Dome).',
+      canonical: 'https://theunknowns.ca/',
+      welcome: 'Welcome to The Unknowns',
+      select: 'Make your selection',
+      whoWeAre: 'Who we are',
+      intro: "An unknown is a friend we have not met yet. The Unknowns is that idea turned into a project: building places all over the world where a stranger is welcomed like family, where artists create and meet the people who support them, and where a community looks after a place that is truly alive. It is a bridge between worlds that cross paths too rarely: travellers and their hosts, creators and their patrons, the practical and the dream. The first house opened its doors in the Petite-Nation, in Quebec. The idea itself has no borders, and it keeps growing so it can take root wherever women and men want to create and live together.",
+      closing: 'Whether you are passing through or here to stay, you are already one of us.',
+      columns: [
+        ['The Inn', 'The open door: a roof, a long table and fires in the evening, where the traveller becomes a familiar face.'],
+        ['Le Salon', 'Art without borders: creators show and sell their work here and meet their patrons, on site as well as online.'],
+        ['The Dome', 'The community: the people who live on the land, farm it and invent a shared way of life.'],
+      ],
+    }
+  : {
+      lang: 'fr',
+      title: 'Les Inconnus · Auberge, art et rassemblements · Outaouais',
+      description: "L'univers des Inconnus à Maison Favier, Namur QC : auberge (L'Auberge Inconnue), centre d'art (Le Salon des Inconnus), spectacles (Le Dôme) et rassemblements.",
+      canonical: 'https://lesinconnus.ca/',
+      welcome: 'Bienvenue chez les Inconnus',
+      select: 'Faites votre sélection',
+      whoWeAre: 'Qui sommes-nous',
+      intro: "Un inconnu, c'est un ami que nous n'avons pas encore rencontré. Les Inconnus, c'est cette idée devenue un projet: bâtir, partout dans le monde, des lieux où l'étranger est reçu comme un proche, où les artistes créent et rencontrent celles et ceux qui les soutiennent, et où une communauté veille sur un lieu bien vivant. Un pont entre des mondes qui se croisent trop peu: les voyageurs et leurs hôtes, les créateurs et leurs mécènes, le concret et le rêve. La première maison a ouvert ses portes dans la Petite-Nation, au Québec. L'idée, elle, n'a pas de frontière: elle grandit pour prendre racine partout où des femmes et des hommes veulent créer et vivre ensemble.",
+      closing: 'Que vous soyez de passage ou venu pour rester, vous êtes déjà des nôtres.',
+      columns: [
+        ["L'Auberge", "La porte ouverte: un toit, une grande table, des feux le soir, là où le voyageur devient un familier."],
+        ['Le Salon', "L'art sans frontière: les créateurs y exposent, y vendent et rencontrent leurs mécènes, sur place comme en ligne."],
+        ['Le Dôme', 'La communauté: celles et ceux qui habitent le lieu, cultivent la terre et inventent la vie commune.'],
+      ],
+    };
+
 const CHOICES: Choice[] = [
   {
     id: 'auberge',
     name: "L'Auberge des Inconnus",
+    nameEn: 'The Inn of the Unknowns',
     taglineFr: 'Maison Favier · Namur',
-    // Interim: swap back to https://aubergedesinconnus.com/ once DNS is connected.
-    url: 'https://inconnus-auberge.web.app/',
+    taglineEn: 'Maison Favier · Namur',
+    url: 'https://aubergedesinconnus.com/',
     image: '/media/Auberge%20photos/Maison%20main.jpg',
   },
   {
     id: 'salon',
     name: 'Le Salon des Inconnus',
+    nameEn: 'Le Salon des Inconnus (arts centre)',
     taglineFr: "Centre d'art & activités",
-    // Interim: the art surface lives on the inconnus-salon Firebase site until
-    // the lesalondesinconnus.com domain swap (Phase 2.1). Update then.
-    url: 'https://inconnus-salon.web.app/',
+    taglineEn: 'Arts centre & activities',
+    url: 'https://www.lesalondesinconnus.com/centre-arts',
     image: '/media/biblio.jpg',
     imagePosition: '50% 30%',
   },
   {
     id: 'dome',
     name: 'Le Dôme des Inconnus',
+    nameEn: 'The Dome of the Unknowns',
     taglineFr: 'La communauté',
-    // Interim: swap to https://ledomedesinconnus.com/ once DNS is connected.
-    url: 'https://inconnus-dome.web.app/',
+    taglineEn: 'The community',
+    url: 'https://ledomedesinconnus.com/',
     image: '/media/yourte%20coucher%20de%20soleil.jpg',
   },
 ];
@@ -75,6 +116,14 @@ function playShimmer(ctx: AudioContext, gainScale = 1) {
 export function HubOrb() {
   const [leaving, setLeaving] = useState(false);
   const audioRef = useRef<AudioContext | null>(null);
+
+  // Language by host: <html lang>, title, description and canonical.
+  useEffect(() => {
+    document.documentElement.lang = TEXT.lang;
+    document.title = TEXT.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', TEXT.description);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', TEXT.canonical);
+  }, []);
 
   const shimmer = useCallback((scale = 1) => {
     try {
@@ -118,7 +167,7 @@ export function HubOrb() {
       {/* Brand mark */}
       <div className="absolute top-6 left-6 md:top-8 md:left-10 z-20">
         <span className="font-cinzel text-[11px] uppercase tracking-[0.45em]" style={{ color: 'rgba(217,180,92,0.8)' }}>
-          Les Inconnus
+          {EN ? 'The Unknowns' : 'Les Inconnus'}
         </span>
       </div>
 
@@ -129,10 +178,10 @@ export function HubOrb() {
             className="mb-4"
             style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(2.1rem, 5vw, 4rem)', lineHeight: 1.05, textShadow: '0 4px 40px rgba(0,0,0,0.65)' }}
           >
-            Bienvenue chez les Inconnus
+            {TEXT.welcome}
           </h1>
           <p className="font-cinzel uppercase" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', letterSpacing: '0.45em', color: GOLD }}>
-            Faites votre sélection
+            {TEXT.select}
           </p>
         </header>
 
@@ -147,7 +196,7 @@ export function HubOrb() {
             >
               <img
                 src={c.image}
-                alt={c.name}
+                alt={EN ? c.nameEn : c.name}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
                 style={c.imagePosition ? { objectPosition: c.imagePosition } : undefined}
               />
@@ -155,10 +204,10 @@ export function HubOrb() {
               <div className="absolute inset-x-3 bottom-3 rounded-[16px] px-5 py-4 backdrop-blur-md transition-colors duration-300"
                    style={{ background: 'rgba(20,15,11,0.5)', border: '1px solid rgba(217,180,92,0.2)' }}>
                 <span className="block" style={{ fontFamily: "'Prata', serif", color: CREAM, fontSize: 'clamp(1.02rem, 1.4vw, 1.2rem)', lineHeight: 1.25 }}>
-                  {c.name}
+                  {EN ? c.nameEn : c.name}
                 </span>
                 <span className="font-cinzel uppercase block mt-1.5" style={{ fontSize: '9.5px', letterSpacing: '0.32em', color: GOLD }}>
-                  {c.taglineFr}
+                  {EN ? c.taglineEn : c.taglineFr}
                 </span>
               </div>
             </button>
@@ -172,21 +221,17 @@ export function HubOrb() {
             style={{ background: 'rgba(20,15,11,0.42)', border: '1px solid rgba(217,180,92,0.18)' }}
           >
             <span className="font-cinzel uppercase block mb-4" style={{ fontSize: '10px', letterSpacing: '0.42em', color: GOLD }}>
-              Qui sommes-nous
+              {TEXT.whoWeAre}
             </span>
             <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.9)', fontSize: 'clamp(1.1rem, 1.7vw, 1.35rem)', lineHeight: 1.62, fontWeight: 500 }}>
-              Un inconnu, c'est un ami que nous n'avons pas encore rencontré. Les Inconnus, c'est cette idée devenue un projet: bâtir, partout dans le monde, des lieux où l'étranger est reçu comme un proche, où les artistes créent et rencontrent celles et ceux qui les soutiennent, et où une communauté veille sur un lieu bien vivant. Un pont entre des mondes qui se croisent trop peu: les voyageurs et leurs hôtes, les créateurs et leurs mécènes, le concret et le rêve. La première maison a ouvert ses portes dans la Petite-Nation, au Québec. L'idée, elle, n'a pas de frontière: elle grandit pour prendre racine partout où des femmes et des hommes veulent créer et vivre ensemble.
+              {TEXT.intro}
             </p>
             <p style={{ fontFamily: "'Cormorant Garamond', serif", color: 'rgba(246,234,208,0.82)', fontSize: 'clamp(1rem, 1.4vw, 1.15rem)', lineHeight: 1.55, fontWeight: 500, marginTop: '1.1rem' }}>
-              Que vous soyez de passage ou venu pour rester, vous êtes déjà des nôtres.
+              {TEXT.closing}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4 mt-8 text-left">
-              {[
-                ["L'Auberge", "La porte ouverte: un toit, une grande table, des feux le soir, là où le voyageur devient un familier."],
-                ['Le Salon', "L'art sans frontière: les créateurs y exposent, y vendent et rencontrent leurs mécènes, sur place comme en ligne."],
-                ['Le Dôme', 'La communauté: celles et ceux qui habitent le lieu, cultivent la terre et inventent la vie commune.'],
-              ].map(([label, body]) => (
+              {TEXT.columns.map(([label, body]) => (
                 <div key={label}>
                   <span className="font-cinzel uppercase block mb-1.5" style={{ fontSize: '10px', letterSpacing: '0.28em', color: GOLD }}>
                     {label}

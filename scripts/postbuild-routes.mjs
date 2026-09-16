@@ -58,6 +58,28 @@ const ROUTES = [
       },
     },
   },
+  // Centre d'arts (venu d'apps/salon) : partages et robots lisent ces balises.
+  {
+    path: "centre-arts",
+    title: "Centre d'arts | Le Salon des Inconnus, Namur",
+    description: "Le centre d'arts du Salon des Inconnus à Namur, en Outaouais : d'un côté les acheteurs et les mécènes, de l'autre les artistes et leur Creator Studio.",
+    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/centre-arts',
+  },
+  {
+    path: "mecene",
+    title: "Le Mécène | Le Salon des Inconnus",
+    description: "Acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec.",
+    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/mecene',
+  },
+  {
+    path: "cafe",
+    title: "Le Café | Le Salon des Inconnus",
+    description: "Les plateformes et les projets numériques du Salon des Inconnus.",
+    image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
+    url: 'https://www.lesalondesinconnus.com/cafe',
+  },
 ];
 
 const src = readFileSync(join(root, 'dist/index.html'), 'utf8');

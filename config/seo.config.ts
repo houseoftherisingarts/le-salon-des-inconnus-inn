@@ -175,6 +175,18 @@ export const PAGE_META = {
     EN: { title: "Artwork Catalogue | Le Salon des Inconnus", description: "The works hanging in the manor, by the artists we represent, available to the guests who stay with us.", keywords: "" },
     FR: { title: "Catalogue d'œuvres | Le Salon des Inconnus", description: "Les œuvres accrochées au manoir, par les artistes que nous représentons, offertes aux invités qui séjournent chez nous.", keywords: "" }
   },
+  CENTRE_ARTS: {
+    EN: { title: "Arts Centre | Le Salon des Inconnus, Namur", description: "The arts centre of Le Salon des Inconnus in Namur, Outaouais: collectors and patrons on one side, artists and their Creator Studio on the other.", keywords: "arts centre Outaouais, artists Petite-Nation, art patronage Quebec" },
+    FR: { title: "Centre d'arts | Le Salon des Inconnus, Namur", description: "Le centre d'arts du Salon des Inconnus à Namur, en Outaouais : d'un côté les acheteurs et les mécènes, de l'autre les artistes et leur Creator Studio.", keywords: "centre d'arts Outaouais, artistes Petite-Nation, mécénat Québec" }
+  },
+  MECENE: {
+    EN: { title: "Patrons | Le Salon des Inconnus", description: "Buy and support art differently: the artists we represent, patronage, and the tax side of buying art in Quebec.", keywords: "art patronage Quebec, buy art Outaouais" },
+    FR: { title: "Le Mécène | Le Salon des Inconnus", description: "Acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec.", keywords: "mécénat Québec, acheter de l'art Outaouais, fiscalité de l'art" }
+  },
+  CAFE: {
+    EN: { title: "The Café | Le Salon des Inconnus", description: "The digital platforms and projects of Le Salon des Inconnus.", keywords: "" },
+    FR: { title: "Le Café | Le Salon des Inconnus", description: "Les plateformes et les projets numériques du Salon des Inconnus.", keywords: "" }
+  },
   CAMPING: {
     EN: {
       title: "Festival Camping in Namur | Le Salon des Inconnus",
@@ -214,4 +226,7 @@ export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
   HOSTS:          `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   PPS:            `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
   CAMPING:        `${SITE_URL}/media/inn/golden%20drone%20copy.jpg`,
+  CENTRE_ARTS:    `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  MECENE:         `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  CAFE:           `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
 };

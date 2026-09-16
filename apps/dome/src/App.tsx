@@ -119,10 +119,10 @@ const Reveal: React.FC<{
   );
 };
 
-/** Fixed top-left way back to the hub. Swap href to https://lesinconnus.com/ once DNS connects. */
+/** Fixed top-left way back to the hub (lesinconnus.ca). */
 const BackToHub: React.FC = () => (
   <a
-    href="https://inconnus-hub.web.app/"
+    href="https://lesinconnus.ca/"
     rel="noopener"
     className="dome-pill fixed top-5 left-5 md:top-7 md:left-7 z-50 inline-flex items-center gap-2 font-cinzel uppercase rounded-full px-5 py-2.5"
     style={{ fontSize: '11px', letterSpacing: '0.28em', color: GOLD }}
@@ -419,9 +419,9 @@ const CandidatureSection: React.FC = () => {
 // ── 6 · LA FAMILLE DES INCONNUS ─────────────────────────────────────────────
 // Staging URLs for the sibling properties. Swap to the real domains once DNS connects.
 const FAMILY = [
-  { label: "L'Auberge", href: 'https://inconnus-auberge.web.app/' },
-  { label: 'Le Salon', href: 'https://inconnus-salon.web.app/' },
-  { label: 'Le Hub', href: 'https://inconnus-hub.web.app/' },
+  { label: "L'Auberge", href: 'https://aubergedesinconnus.com/' },
+  { label: 'Le Salon', href: 'https://www.lesalondesinconnus.com/centre-arts' },
+  { label: 'Le Hub', href: 'https://lesinconnus.ca/' },
 ];
 
 const FooterBand: React.FC = () => (

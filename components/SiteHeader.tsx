@@ -13,7 +13,7 @@ import { MUSIC_GENRES } from '../constants';
 type ViewState =
   | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'BLOG' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
-  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO';
+  | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'CENTRE_ARTS';
 
 interface SiteHeaderProps {
   language: 'EN' | 'FR';
@@ -79,30 +79,43 @@ const FAIRE: NavItem[] = [
   { view: 'CREATOR_STUDIO', label_fr: 'Creator Studio · Bêta', label_en: 'Creator Studio · Beta', desc_fr: 'L\'atelier des artistes', desc_en: 'The artists\' workshop', icon: '🎨' },
 ];
 
-// Liens externes vers les autres propriétés de la famille des Inconnus.
-// Ces liens sortent volontairement de la navigation interne (ViewState) : ce sont
-// des ancres <a> ordinaires vers d'autres apps Firebase, pas des vues internes.
-type FamilyLink = { href: string; label_fr: string; label_en: string; desc_fr: string; desc_en: string; icon: string };
+// Liens vers les autres propriétés de la famille des Inconnus, sur nos domaines.
+// Les liens externes sont des ancres <a> ordinaires. Le Salon (centre d'arts)
+// vit sur ce même site : son entrée porte une `view` et passe par la navigation
+// interne, sans rechargement.
+type FamilyLink = { href: string; href_en?: string; view?: ViewState; label_fr: string; label_en: string; desc_fr: string; desc_en: string; icon: string };
+
+const familyHref = (item: FamilyLink, language: 'EN' | 'FR') =>
+  language === 'EN' && item.href_en ? item.href_en : item.href;
+
+// Clic sur une entrée interne : on reste dans l'app (le href sert au clic milieu).
+const familyClick = (item: FamilyLink, onNavigate: (v: ViewState) => void, after?: () => void) =>
+  (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!item.view || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    onNavigate(item.view);
+    after?.();
+  };
 
 const FAMILLE: FamilyLink[] = [
   {
     // Page de sélection de la famille des Inconnus (double comme retour à la sélection).
-    // TODO: remplacer par lesinconnus.com une fois le DNS branché.
-    href: 'https://inconnus-hub.web.app/',
+    href: 'https://lesinconnus.ca/',
+    href_en: 'https://theunknowns.ca/',
     label_fr: '← Les Inconnus', label_en: '← Les Inconnus',
     desc_fr: 'Retour à la sélection', desc_en: 'Back to selection',
     icon: '🧭',
   },
   {
-    // TODO: remplacer par lesalondesinconnus.com une fois le DNS branché (post-échange de noms).
-    href: 'https://inconnus-salon.web.app/',
+    // Le centre d'arts vit sur ce site : navigation interne vers /centre-arts.
+    href: '/centre-arts',
+    view: 'CENTRE_ARTS',
     label_fr: 'Le Salon', label_en: 'Le Salon',
     desc_fr: 'Centre d\'art', desc_en: 'Art center',
     icon: '🎭',
   },
   {
-    // TODO: remplacer par ledomedesinconnus.com une fois le DNS branché.
-    href: 'https://inconnus-dome.web.app/',
+    href: 'https://ledomedesinconnus.com/',
     label_fr: 'Le Dôme', label_en: 'Le Dôme',
     desc_fr: 'La communauté', desc_en: 'The community',
     icon: '⛺',
@@ -218,7 +231,8 @@ const FamilyDropdown: React.FC<{
   label: string;
   items: FamilyLink[];
   language: 'EN' | 'FR';
-}> = ({ label, items, language }) => {
+  onNavigate: (v: ViewState) => void;
+}> = ({ label, items, language, onNavigate }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -263,8 +277,9 @@ const FamilyDropdown: React.FC<{
               <li key={item.href}>
                 {/* External link, plain anchor: does not go through the internal ViewState navigation */}
                 <a
-                  href={item.href}
+                  href={familyHref(item, language)}
                   target="_self"
+                  onClick={familyClick(item, onNavigate, () => setOpen(false))}
                   className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 group hover:bg-white/[0.04] border-l-2 border-transparent"
                 >
                   <div className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-base border transition-colors bg-white/5 border-white/10 group-hover:border-[#d4af37]/30">
@@ -375,8 +390,9 @@ const MobileMenu: React.FC<{
             {FAMILLE.map(item => (
               <a
                 key={item.href}
-                href={item.href}
+                href={familyHref(item, language)}
                 target="_self"
+                onClick={familyClick(item, onNavigate, onClose)}
                 className="flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-colors hover:bg-white/5"
               >
                 <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-sm flex-shrink-0">{item.icon}</span>
@@ -562,6 +578,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               label={language === 'FR' ? 'La famille' : 'The family'}
               items={FAMILLE}
               language={language}
+              onNavigate={handleNavigate}
             />
           </div>
 

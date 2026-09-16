@@ -131,7 +131,7 @@ export default function App() {
       <ProfilProPage
         hostname={window.location.hostname.toLowerCase()}
         language="FR"
-        onNavigateHome={() => window.location.assign('https://inconnus-salon.web.app/centre')}
+        onNavigateHome={() => window.location.assign('https://www.lesalondesinconnus.com/centre-arts')}
         site="atelier"
       />
     );

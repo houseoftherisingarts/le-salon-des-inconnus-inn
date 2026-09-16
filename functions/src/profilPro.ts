@@ -38,7 +38,8 @@ const STRIPE_WEBHOOK_PRO_SECRET = defineSecret('STRIPE_WEBHOOK_PRO_SECRET');
 
 const PROJET = 'creator-studio-pro';
 const PRIX_CENTS = 10000; // 100,00 $ CAD par mois
-const BASE_URL = 'https://inconnus-salon.web.app';
+// Le Creator Studio vit sur le monolithe (www.lesalondesinconnus.com/creator).
+const BASE_URL = 'https://www.lesalondesinconnus.com';
 const NOM_PRODUIT = 'Profil Pro du Salon des Inconnus';
 
 // ─── Petit client Stripe par fetch, sans SDK ──────────────────────────────
@@ -129,7 +130,7 @@ async function envoyerBienvenueProfilPro(destinataire: string, prenom: string): 
     '',
     "Votre Profil Pro est maintenant actif sur Le Salon des Inconnus. Votre page vous attend, et vous pouvez dès maintenant choisir votre gabarit, ajouter vos oeuvres et ouvrir votre agenda de rendez-vous depuis votre tableau de bord :",
     '',
-    `${BASE_URL}/createur`,
+    `${BASE_URL}/creator`,
     '',
     'Pour toute question sur votre installation, écrivez-nous à alex@lesalondesinconnus.com.',
     '',
@@ -190,8 +191,8 @@ export const creerAbonnementProfilPro = onCall(
       }],
       subscription_data: { metadata: { uid, projet: PROJET } },
       metadata: { uid, projet: PROJET },
-      success_url: `${BASE_URL}/createur?pro=merci`,
-      cancel_url: `${BASE_URL}/createur?pro=annule`,
+      success_url: `${BASE_URL}/creator?pro=merci`,
+      cancel_url: `${BASE_URL}/creator?pro=annule`,
     });
 
     return { url: session.url as string };
@@ -347,7 +348,7 @@ export const portailProfilPro = onCall(
     const secret = STRIPE_SECRET_KEY.value();
     const portail = await stripeFetch(secret, 'POST', 'billing_portal/sessions', {
       customer: stripeCustomerId,
-      return_url: `${BASE_URL}/createur`,
+      return_url: `${BASE_URL}/creator`,
     });
     return { url: portail.url as string };
   },

@@ -151,7 +151,7 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
             <div>
                 <label htmlFor="pp-slug" className={LABEL}>{t('Address', 'Adresse')}</label>
                 <div className="flex items-center gap-2">
-                    <span className="font-lato text-neutral-500 text-sm shrink-0">inconnus-salon.web.app/</span>
+                    <span className="font-lato text-neutral-500 text-sm shrink-0">www.lesalondesinconnus.com/</span>
                     <input
                         id="pp-slug"
                         type="text"

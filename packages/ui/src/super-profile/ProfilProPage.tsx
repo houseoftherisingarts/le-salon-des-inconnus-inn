@@ -41,7 +41,7 @@ type EtatChargement =
     | { etape: 'en-pause' }
     | { etape: 'pret'; uid: string; config: SuperProfileConfig; displayName: string | null };
 
-const SALON_URL = 'https://inconnus-salon.web.app';
+const SALON_URL = 'https://www.lesalondesinconnus.com';
 
 function poserBalise(rel: 'og' | 'meta', nom: string, contenu: string): HTMLMetaElement {
     const selecteur = rel === 'og' ? `meta[property="${nom}"]` : `meta[name="${nom}"]`;

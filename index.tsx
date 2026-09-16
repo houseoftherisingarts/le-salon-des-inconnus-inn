@@ -1,3 +1,4 @@
+import './packages/ui/src/lib/gardeHote'; // jamais web.app : redirige avant tout le reste
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

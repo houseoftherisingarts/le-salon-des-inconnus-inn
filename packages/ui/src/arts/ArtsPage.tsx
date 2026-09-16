@@ -8,13 +8,14 @@ import { SiteMap } from './SiteMap';
 import { CreatorStudio } from '../creator-studio/CreatorStudioShell';
 import { SdiCafe } from '../sdi-cafe/SdiCafe';
 
-// Header links to the rest of the famille des Inconnus. Auberge points at the
-// live Firebase URL because aubergedesinconnus.com is still parked; swap to
-// the custom domain once DNS connects. Dome and hub are already live.
+// Header links to the rest of the famille des Inconnus, on our own domains
+// (never web.app). The hub has a French and an English domain; the Auberge is
+// the home of the monolith that now hosts this arts centre.
 const FAMILY_LINKS = {
-  hub: 'https://inconnus-hub.web.app/',
-  auberge: 'https://inconnus-auberge.web.app/',
-  dome: 'https://inconnus-dome.web.app/',
+  hub: 'https://lesinconnus.ca/',
+  hubEn: 'https://theunknowns.ca/',
+  auberge: 'https://www.lesalondesinconnus.com/',
+  dome: 'https://ledomedesinconnus.com/',
 };
 
 export interface ArtsPageProps {
@@ -1893,7 +1894,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 Mobile: collapsed into one "Famille" toggle + glass dropdown. */}
             <div className="hidden md:flex items-center gap-2">
               <a
-                href={FAMILY_LINKS.hub}
+                href={language === 'EN' ? FAMILY_LINKS.hubEn : FAMILY_LINKS.hub}
                 className="px-3 py-2 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 hover:text-white transition-all text-xs uppercase tracking-widest text-neutral-300"
               >
                 {language === 'EN' ? "The Family" : "Les Inconnus"}
@@ -1923,7 +1924,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
               {isFamilyMenuOpen && (
                 <div className="absolute right-0 top-full mt-2 w-44 rounded-xl border border-white/10 bg-[#1a1a1a]/95 backdrop-blur-md shadow-2xl overflow-hidden z-50">
                   <a
-                    href={FAMILY_LINKS.hub}
+                    href={language === 'EN' ? FAMILY_LINKS.hubEn : FAMILY_LINKS.hub}
                     className="block px-4 py-3 text-xs uppercase tracking-widest text-neutral-300 hover:bg-white/5 hover:text-white transition-all"
                   >
                     {language === 'EN' ? "The Family" : "Les Inconnus"}

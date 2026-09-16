@@ -1,3 +1,4 @@
+import '../../../packages/ui/src/lib/gardeHote'; // jamais web.app : redirige avant tout le reste
 import './firebase'; // initialize default Firebase app before App renders
 import { installerRapportErreurs } from './errorReporter';
 import React from 'react';

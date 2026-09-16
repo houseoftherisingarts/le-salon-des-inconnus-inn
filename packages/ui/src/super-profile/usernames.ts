@@ -24,7 +24,7 @@ export const RESERVED_SLUGS: ReadonlySet<string> = new Set([
     // Existing routes (matches VIEW_PATHS in App.tsx, minus the leading /)
     'admin', 'mainpagetest2', 'mainpagetest3', 'massage', 'guide',
     'cuisine', 'evenements', 'ceilidh', 'wwoofing', 'profil', 'membre',
-    'messages', 'creator', 'createur', 'centre', 'cafe', 'mecene', 'c',
+    'messages', 'creator', 'createur', 'centre', 'centre-arts', 'cafe', 'mecene', 'c',
     // Reserved future paths
     'api', 'auth', 'login', 'signup', 'sdi', 'salon', 'inn', 'u',
     // Brand names
