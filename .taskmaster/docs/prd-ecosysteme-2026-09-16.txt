@@ -1,0 +1,23 @@
+# PRD · Écosystème Salon des Inconnus / Vexel Webstudio / Creator Studio (16 septembre 2026)
+
+Contexte : Alex veut que les sites de l'écosystème se relient entre eux. Plan validé (« ok go ») : ~/Documents/Onyx/10_projects/salon-des-inconnus/plan-ecosysteme-2026-09-16.md
+
+Objectif : relier Salon, Vexel et Creator Studio, rester sur nos domaines, refaire les pages demandées, puis une passe de performance.
+
+Exigences (mots d'Alex) :
+1. Tous les sites sauf Vexel ont le petit collant « Vexel Webstudio » en bas dans le footer.
+2. Vexel Webstudio est étiqueté « un projet créatif du Salon des Inconnus ».
+3. Creator Studio porte les deux.
+4. Salon : les 3 boutons du header plus évidents; « La famille » devient « Centre d'arts et communauté »; ajouter avant « À propos du lieu ».
+5. Salon : vrai footer qui fusionne la carte, « À propos du lieu » et le footer, selon les règles GEO SEO.
+6. Page « Les Inconnus » (Bienvenue chez les Inconnus / Faites votre sélection) : reprendre le module du bureau aux livres (menu de sélection d'origine), assets refaits pour 3 livres, musique en fond.
+7. Jamais de web.app : rester sur nos domaines. Domaines Network Solutions à connecter : lesinconnus.ca, theunknowns.ca, theunknowns.org, aubergedesinconnus.com.
+8. Page centre d'arts refaite plus comme Fortiche (forticheprod.com).
+9. Page mécène : plancher noir luisant, cartes qui flottent avec un reflet léger.
+10. Espace membres du Salon refait complètement comme Krystine, avec ses fonctions et son backend.
+11. Admins liés : basculer entre l'admin Vexel et l'admin du Salon en 1 clic.
+12. Espace membre : « Devenir membre de la communauté artistique » avec lien vers Creator Studio.
+13. lelynx.ca : collant Vexel Webstudio en bas au lieu du Salon des Inconnus (fait le 16 sept).
+14. Ensuite : performance.
+
+Hors périmètre : bascule de lesalondesinconnus.com vers l'app artistique et déménagement de l'auberge (décision d'architecture du 6 juillet, non demandée aujourd'hui); houseoftherisingarts.com (zone Netlify, non nommée).
