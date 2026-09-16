@@ -511,7 +511,7 @@ service cloud.firestore {
       // Show tickets: public read for spot counting; Cloud Function (admin SDK) writes.
       // Admin can delete. Users cannot write directly.
       match /showTickets/{ticketId} {
-        allow read:   if true;
+        allow read:   if request.auth != null && (request.auth.uid == ticketId || isAdmin());
         allow delete: if request.auth != null
                       && isAdmin();
         allow write:  if false;
