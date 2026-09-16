@@ -123,7 +123,7 @@ export const SiteFooter: React.FC<{
 
       {/* b + c. Nous trouver : adresse NAP et carte */}
       <div className="border-t border-[#c5a059]/15 px-6 md:px-12 lg:px-24 py-16 md:py-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
           <div>
             <div className="flex items-center gap-4 mb-6">
               <span className="h-px w-10 bg-[#c5a059]" aria-hidden />
@@ -183,7 +183,7 @@ export const SiteFooter: React.FC<{
 
       {/* d. Colonnes de liens */}
       <div className="border-t border-[#c5a059]/15 px-6 md:px-12 lg:px-24 py-14 md:py-16">
-        <nav aria-label={t('Site map', 'Plan du site')} className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+        <nav aria-label={t('Site map', 'Plan du site')} className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
           {COLONNES.map((col) => (
             <div key={col.fr} className="min-w-0">
               <p className={`${SURTITRE} tracking-[0.25em] mb-4 leading-relaxed`}>{language === 'FR' ? col.fr : col.en}</p>
@@ -201,7 +201,7 @@ export const SiteFooter: React.FC<{
 
       {/* e. Rangée d'écosystème */}
       <div className="border-t border-[#c5a059]/15 px-6 md:px-12 lg:px-24 py-10">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-center justify-between gap-8">
+        <div className="w-full flex flex-col md:flex-row items-center md:items-center justify-between gap-8">
           <CollantVexel language={language} />
           <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             <li><Ancre lien={{ fr: 'Creator Studio', en: 'Creator Studio', view: 'CREATOR_STUDIO', href: '/creator' }} language={language} className={`${LIEN} font-cinzel uppercase text-[12px] tracking-[0.2em]`} /></li>
