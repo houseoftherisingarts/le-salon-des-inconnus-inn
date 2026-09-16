@@ -723,6 +723,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // ── Espace membre · séjours (état serveur, jamais écrit par le navigateur)
+    match /sejours/{uid} {
+      allow read:  if isSelf(uid) || isAdmin();
+      allow write: if false;
+    }
+
     // ── Puzzle gifts ─────────────────────────────────────────────────────────
     // A member can offer a completed puzzle from their display case to another
     // member. The recipient accepts (puzzle joins their case) or declines

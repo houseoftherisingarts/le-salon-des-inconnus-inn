@@ -167,6 +167,18 @@ async function main() {
     await attenduRefus('R-64 b B lit le billet showTickets de A',
         getDoc(doc(dbB(), 'events', 'ceilidh-mai-2026', 'showTickets', UID_A)));
 
+    // ── Lot 4 : séjours Hostaway (état serveur, jamais écrit par le client) ──
+    await attenduOk('semis de sejours/A en mode owner',
+        setDoc(doc(dbOwner(), 'sejours', UID_A), { derniereLecture: serverTimestamp() }));
+    await attenduRefus('R-20 A écrit sejours/A',
+        setDoc(doc(dbA(), 'sejours', UID_A), { reservationsLiees: [123] }));
+    await attenduOk('R-21 A lit sejours/A',
+        getDoc(doc(dbA(), 'sejours', UID_A)));
+    await attenduRefus('R-21 b B lit sejours/A',
+        getDoc(doc(dbB(), 'sejours', UID_A)));
+    await attenduOk('R-21 c l\'admin lit sejours/A',
+        getDoc(doc(dbAdmin(), 'sejours', UID_A)));
+
     console.log('\n' + resultats.join('\n'));
     console.log(`\n${ok} réussis, ${fail} échoués, sur ${ok + fail} cas.`);
     await Promise.all(apps.map((a) => deleteApp(a).catch(() => {})));
