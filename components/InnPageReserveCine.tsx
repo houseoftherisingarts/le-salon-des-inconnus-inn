@@ -215,21 +215,11 @@ export const InnPageReserveCine: React.FC<Props> = ({
   };
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
-  const [spacesOpen, setSpacesOpen] = useState(false);
-  // L'Espace expanded grid: column count tracks viewport width so the
-  // 12 cards stack 1 / 2 / 4 across small / medium / large screens.
-  // Without this, mobile saw 4 narrow columns of unreadable text.
-  const [espaceCols, setEspaceCols] = useState<1 | 2 | 4>(4);
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const compute = () => {
-      const w = window.innerWidth;
-      setEspaceCols(w < 640 ? 1 : w < 1024 ? 2 : 4);
-    };
-    compute();
-    window.addEventListener('resize', compute);
-    return () => window.removeEventListener('resize', compute);
-  }, []);
+  // L'Espace: pinned intro (words → picture) scrubbed by scroll, then a list.
+  const espaceTrackRef = useRef<HTMLDivElement>(null);
+  const espaceWordsRef = useRef<HTMLDivElement>(null);
+  const espacePhotoRef = useRef<HTMLDivElement>(null);
+  const espaceListRef = useRef<HTMLUListElement>(null);
   const [doorsExiting, setDoorsExiting] = useState<null | 'CEILIDH' | 'WWOOFING'>(null);
   const daysToCeilidhDoors = Math.max(0, Math.ceil((CEILIDH_DOORS_DATE.getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
 
@@ -384,6 +374,71 @@ export const InnPageReserveCine: React.FC<Props> = ({
       if (rafTick) cancelAnimationFrame(rafTick);
     };
   }, [fitCine, drawCine]);
+
+  // ── L'ESPACE intro: the words "L'Espace" dissolve + rise while the full-bleed
+  //    picture dollies in behind them, all scrubbed by the scroll position of the
+  //    pinned track. Same getBoundingClientRect() progress math as the reserve act. ──
+  useEffect(() => {
+    const root = scrollRef.current;
+    const track = espaceTrackRef.current;
+    const words = espaceWordsRef.current;
+    const photo = espacePhotoRef.current;
+    if (!root || !track || !words || !photo) return;
+
+    let rafTick = 0;
+    let lastP = -1;
+    const update = () => {
+      rafTick = 0;
+      const rect = track.getBoundingClientRect();
+      const vh = root.clientHeight;
+      const span = track.offsetHeight - vh;
+      const scrolled = -rect.top;
+      const p = Math.min(1, Math.max(0, scrolled / Math.max(1, span)));
+      if (Math.abs(p - lastP) < 0.004) return;
+      lastP = p;
+
+      // Words hold briefly, then dissolve + rise as the photo comes through
+      // (crossfade between p 0.30 and 0.85).
+      const wOut = Math.min(1, Math.max(0, (p - 0.3) / 0.45));
+      words.style.opacity = String(1 - wOut);
+      words.style.transform = `translate3d(0, ${-wOut * 36}px, 0) scale(${1 + wOut * 0.06})`;
+      // Photo fades in and dollies from 1.14 toward a settled 1.02, just behind
+      // the words so the reveal reads as the words opening onto the space.
+      const phIn = Math.min(1, Math.max(0, (p - 0.3) / 0.55));
+      photo.style.opacity = String(phIn);
+      photo.style.transform = `scale(${1.14 - phIn * 0.12})`;
+    };
+    const onScroll = () => { if (rafTick) return; rafTick = requestAnimationFrame(update); };
+    const onResize = () => { lastP = -1; if (!rafTick) rafTick = requestAnimationFrame(update); };
+    update();
+    root.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    return () => {
+      root.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      if (rafTick) cancelAnimationFrame(rafTick);
+    };
+  }, []);
+
+  // ── L'ESPACE list: each inventory row fades/slides in as it enters the viewport. ──
+  useEffect(() => {
+    const list = espaceListRef.current;
+    if (!list) return;
+    const items = Array.from(list.children) as HTMLElement[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('espace-in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
+    items.forEach((it) => io.observe(it));
+    return () => io.disconnect();
+  }, []);
 
   return (
     <RoomOrbProvider language={language}>
@@ -720,306 +775,108 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
         </LazySection>
 
-        {/* L'Espace: atmospheric 3D deck. Closed: featured top card + visible fan of cards behind,
-            ambient sway (8s), gold glow + soft fog. Click → cyclone reveal into 4×3 grid.
-            All motion uses transform/opacity only; respects prefers-reduced-motion. */}
-        <section
-          data-l-espace
-          className="cv-auto relative bg-[#050505] py-12 md:py-32 border-t border-[#c5a059]/10 overflow-hidden"
-        >
-          {/* Atmospheric backdrop: soft gold radial + fog blobs (CSS only, no JS animation).
-              Fog drift pauses while open so the grid view is fully static (zero idle paint). */}
-          <div aria-hidden className={`absolute inset-0 pointer-events-none ${spacesOpen ? 'espace-bg-still' : ''}`}>
-            <div
-              className="absolute inset-0 espace-fog"
-              style={{
-                background:
-                  'radial-gradient(ellipse 60% 55% at 50% 55%, rgba(197,160,89,0.14) 0%, rgba(197,160,89,0.05) 35%, transparent 70%)',
-              }}
-            />
-            <div
-              className="absolute inset-0 espace-fog espace-fog-2"
-              style={{
-                background:
-                  'radial-gradient(ellipse 38% 28% at 30% 70%, rgba(243,229,171,0.06) 0%, transparent 60%), radial-gradient(ellipse 32% 24% at 72% 38%, rgba(197,160,89,0.07) 0%, transparent 60%)',
-              }}
-            />
-            {/* Subtle grain via repeating gradient */}
-            <div
-              className="absolute inset-0 opacity-[0.07] mix-blend-overlay"
-              style={{
-                backgroundImage:
-                  'repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0px, transparent 1px, transparent 3px)',
-              }}
-            />
-          </div>
-
-          <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-            {/* Editorial header: slimmer now that the cover card carries the
-                title. We keep the section heading + tagline for editorial
-                rhythm, but drop the redundant "L'Inventaire" eyebrow. */}
-            <div className="text-center mb-8 md:mb-12">
-              <h2
-                className="font-prata uppercase text-[#f3e5ab] leading-[0.9] tracking-[-0.01em] mb-4"
-                style={{ fontSize: 'clamp(2.4rem, 7vw, 7rem)', textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}
-              >
-                {t('The Space', "L'Espace")}
-              </h2>
-              <p className="font-josefin text-neutral-400 text-xs md:text-sm uppercase tracking-[0.35em]">
-                12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
-              </p>
-            </div>
-
-            {/* Deck stage: perspective wrapper. Inner wrapper takes the ambient sway so the
-                12 cards animate via a single transform rather than 12 simultaneous rAF loops. */}
-            <div
-              className="relative mx-auto select-none"
-              style={{
-                perspective: '1800px',
-                perspectiveOrigin: '50% 45%',
-                width: '100%',
-                maxWidth: '1200px',
-                // Mobile gets a taller stage so the (now bigger) cover card
-                // breathes; desktop keeps its cinematic aspect, just a touch
-                // taller now that the card dominates. When open, the height
-                // scales with column count so cards stay readable.
-                height: spacesOpen
-                  ? (espaceCols === 4 ? 'min(900px, 110vw)'
-                     : espaceCols === 2 ? '1700px'
-                     : '3200px')
-                  : 'min(620px, 110vw)',
-                transition: 'height 1.4s cubic-bezier(0.5, 0, 0.2, 1)',
-              }}
-            >
-              {/* Cast shadow under the deck, visually grounds it, fades out when expanding */}
+        {/* L'Espace: the words lead into a full-bleed picture, then on scroll a
+            list of the twelve spaces unfolds. Act 1 is a sticky scrubbed intro
+            (giant "L'Espace" crossfading into the gardens photo); Act 2 is the
+            inventory list, each row revealed as it enters the viewport. */}
+        <section data-l-espace className="relative bg-[#050505] border-t border-[#c5a059]/10">
+          {/* ── Act 1 · pinned intro: the words open onto the picture ── */}
+          <div ref={espaceTrackRef} className="relative">
+            <div className="sticky top-0 h-screen overflow-hidden">
+              {/* Picture layer: fades in and dollies toward a settled frame just
+                  behind the words, so the reveal reads as the title opening onto
+                  the space. */}
               <div
+                ref={espacePhotoRef}
                 aria-hidden
-                className="absolute left-1/2 -translate-x-1/2 pointer-events-none transition-opacity duration-700"
-                style={{
-                  bottom: '4%',
-                  width: '46%',
-                  height: '8%',
-                  background: 'radial-gradient(ellipse, rgba(0,0,0,0.55) 0%, transparent 70%)',
-                  filter: 'blur(8px)',
-                  opacity: spacesOpen ? 0 : 1,
-                }}
-              />
-
-              {/* Static stack wrapper. We keep preserve-3d for the per-card depth fan,
-                  but DO NOT animate this wrapper: animating a parent of 12 preserve-3d
-                  children forces a 12-layer composite every frame and tanks idle FPS to ~12.
-                  Ambient motion now lives on the front card only (1 layer). */}
-              {/* Stage: when CLOSED the click target is the cover button (below).
-                  When OPEN, clicking anywhere on the stage collapses back to cover. */}
-              <div
-                className="relative w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  cursor: spacesOpen ? 'pointer' : 'default',
-                }}
-                onClick={() => { if (spacesOpen) setSpacesOpen(false); }}
+                className="absolute inset-0 z-10 will-change-transform"
+                style={{ opacity: 0, transform: 'scale(1.14)' }}
               >
-                {SPACES_DATA.map((space, i) => {
-                  const col = i % espaceCols;
-                  const row = Math.floor(i / espaceCols);
-                  const numRows = Math.ceil(SPACES_DATA.length / espaceCols);
-                  const depth = i; // 0..11; 0 sits at the back of the cover, others fan further behind.
-                  const fanY = depth * -3.5;
-                  const fanZ = depth * -38;
-                  const fanRot = depth * 1.2;
-                  const fanX = depth * 1.8;
-                  const fanYpx = depth * 4;
-                  const collapsedTransform =
-                    `translate3d(calc(-50% + ${fanX}px), calc(-50% + ${fanYpx}px), 0)` +
-                    ` rotateY(${fanY}deg)` +
-                    ` rotateZ(${fanRot}deg)` +
-                    ` translateZ(${fanZ}px)`;
-                  // Open-grid percentages: column width = 100/cols, leave a
-                  // small gutter. Card height = 100/rows minus a tighter gap
-                  // so 12 stacked cards on mobile still get usable vertical
-                  // space (~250px each at the 3200px stage height).
-                  const colSpan = 100 / espaceCols;
-                  const rowSpan = 100 / numRows;
-                  const widthPct  = colSpan - 3;
-                  const heightPct = rowSpan - 1.5;
-                  const gridX = col * colSpan + 1.5;
-                  const gridY = row * rowSpan + 0.75;
-                  // All cards uniform when closed: the cover overlay sits on top.
-                  // Slight opacity falloff keeps the deeper cards quieter.
-                  const closedOpacity = Math.max(0.5, 1 - depth * 0.05);
-
-                  return (
-                    <div
-                      key={i}
-                      className="deck-card absolute"
-                      style={{
-                        width: spacesOpen ? `${widthPct}%` : '52%',
-                        height: spacesOpen ? `${heightPct}%` : '70%',
-                        left: spacesOpen ? `${gridX}%` : '50%',
-                        top: spacesOpen ? `${gridY}%` : '50%',
-                        transform: spacesOpen
-                          ? 'translate3d(0, 0, 0) rotateY(0deg) rotateZ(0deg) translateZ(0px)'
-                          : collapsedTransform,
-                        opacity: spacesOpen ? 1 : closedOpacity,
-                        transition:
-                          'left 1.2s cubic-bezier(0.5,0,0.2,1), top 1.2s cubic-bezier(0.5,0,0.2,1),' +
-                          ' width 1.2s cubic-bezier(0.5,0,0.2,1), height 1.2s cubic-bezier(0.5,0,0.2,1),' +
-                          ' transform 1.4s cubic-bezier(0.5,0,0.2,1), opacity 0.9s ease',
-                        transitionDelay: `${(spacesOpen ? i : SPACES_DATA.length - 1 - i) * 55}ms`,
-                        background: 'linear-gradient(135deg, rgba(34,26,16,0.94) 0%, rgba(16,13,9,0.98) 100%)',
-                        border: '1px solid rgba(197,160,89,0.18)',
-                        borderRadius: '14px',
-                        boxShadow: '0 16px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)',
-                        zIndex: spacesOpen ? 1 : SPACES_DATA.length - depth,
-                        // Hide the per-card content when closed to save paint cost: the cover
-                        // hides the whole stack visually anyway. Visibility flips with a delay so
-                        // the open transition reveals content as cards spread.
-                        pointerEvents: spacesOpen ? 'auto' : 'none',
-                      }}
-                    >
-                      <div
-                        className="h-full flex flex-col p-5 md:p-6 lg:p-8 relative overflow-hidden"
-                        style={{
-                          opacity: spacesOpen ? 1 : 0,
-                          transition: 'opacity 0.5s ease',
-                          transitionDelay: spacesOpen ? `${i * 55 + 600}ms` : '0ms',
-                        }}
-                      >
-                        <span className="font-cinzel text-[#c5a059] uppercase tracking-[0.45em] mb-3 text-[10px] md:text-[9px]">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <h3 className="font-prata uppercase text-[#f3e5ab] leading-tight mb-3 tracking-[-0.005em] text-xl md:text-base">
-                          {language === 'EN' ? space.titleEn : space.titleFr}
-                        </h3>
-                        <ul
-                          className="space-y-1.5 text-neutral-300 font-josefin uppercase text-xs md:text-[10px]"
-                          style={{ letterSpacing: '0.16em' }}
-                        >
-                          {(language === 'EN' ? space.itemsEn : space.itemsFr).map((item, j) => (
-                            <li key={j} className="flex items-baseline gap-2">
-                              <span className="text-[#c5a059] shrink-0" aria-hidden>—</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t border-r border-[#c5a059]/50" aria-hidden />
-                        <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b border-l border-[#c5a059]/50" aria-hidden />
-                      </div>
-                    </div>
-                  );
-                })}
-
-                {/* Cover overlay: sits in front of the deck while closed.
-                    Garden image + "L'Espace" title + tagline. When the user clicks anywhere on
-                    the cover (or on the stage behind it), the cover fades + scales away and the
-                    12 data cards expand into the grid. */}
-                <button
-                  type="button"
-                  onClick={() => setSpacesOpen((o) => !o)}
-                  aria-expanded={spacesOpen}
-                  aria-label={t('Reveal the space', "Révéler l'espace")}
-                  className="absolute deck-cover overflow-hidden cursor-pointer text-left"
+                <img
+                  src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1800)}
+                  srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
+                  sizes="100vw"
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* soft vignette + bottom fall-off into the list below */}
+                <div
+                  className="absolute inset-0"
                   style={{
-                    // Card is the focal element of the section now, bigger so it dominates.
-                    width: '82%',
-                    height: '92%',
-                    left: '50%',
-                    top: '50%',
-                    transform: spacesOpen
-                      ? 'translate3d(-50%, -50%, 0) scale(0.94)'
-                      : 'translate3d(-50%, -50%, 0) scale(1)',
-                    opacity: spacesOpen ? 0 : 1,
-                    pointerEvents: spacesOpen ? 'none' : 'auto',
-                    transition: 'transform 1.1s cubic-bezier(0.5,0,0.2,1), opacity 0.7s ease',
-                    borderRadius: '16px',
-                    border: '1px solid rgba(197,160,89,0.45)',
-                    boxShadow:
-                      '0 40px 100px rgba(0,0,0,0.7), 0 0 80px rgba(197,160,89,0.18), inset 0 1px 0 rgba(255,255,255,0.08)',
-                    zIndex: 50,
-                    background: '#0c0a07',
+                    background:
+                      'radial-gradient(ellipse 75% 60% at 50% 42%, rgba(5,5,5,0) 45%, rgba(5,5,5,0.55) 100%)',
                   }}
-                >
-                  <img
-                    src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1600)}
-                    srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
-                    sizes="82vw"
-                    alt=""
-                    aria-hidden
-                    loading="eager"
-                    decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                    style={{ borderRadius: '16px' }}
-                  />
-                  {/* Bottom-up dark gradient for text legibility */}
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 pointer-events-none"
+                />
+                <div
+                  className="absolute inset-x-0 bottom-0 h-[32%]"
+                  style={{ background: 'linear-gradient(to top, #050505 0%, rgba(5,5,5,0.55) 55%, transparent 100%)' }}
+                />
+              </div>
+
+              {/* Words layer: the giant title that leads into the picture. */}
+              <div className="absolute inset-0 z-20 flex items-center justify-center px-6 text-center">
+                <div ref={espaceWordsRef} className="will-change-transform">
+                  <h2
+                    className="font-prata uppercase text-[#f3e5ab] leading-[0.9] tracking-[-0.015em]"
                     style={{
-                      borderRadius: '16px',
-                      background:
-                        'linear-gradient(180deg, rgba(8,6,4,0.5) 0%, rgba(8,6,4,0.18) 35%, rgba(8,6,4,0.7) 78%, rgba(8,6,4,0.92) 100%)',
+                      fontSize: 'clamp(3rem, 15vw, 13rem)',
+                      textShadow: '0 6px 60px rgba(0,0,0,0.75)',
                     }}
-                  />
-                  {/* Top-left gold light wash */}
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      borderRadius: '16px',
-                      background:
-                        'radial-gradient(ellipse 70% 50% at 22% 12%, rgba(243,229,171,0.22) 0%, transparent 65%)',
-                    }}
-                  />
-                  {/* Cover content */}
-                  <div className="relative z-10 h-full flex flex-col p-5 md:p-10 lg:p-14">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-cinzel text-[#c5a059] text-[8px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.55em]">
-                        12 / 12
-                      </span>
-                      <div className="w-2.5 h-2.5 border-t border-r border-[#c5a059]/60 shrink-0" aria-hidden />
-                    </div>
-                    <div className="mt-auto">
-                      <h3
-                        className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em] mb-3 md:mb-4"
-                        style={{
-                          fontSize: 'clamp(1.8rem, 6vw, 5.5rem)',
-                          textShadow: '0 4px 30px rgba(0,0,0,0.7)',
-                        }}
-                      >
-                        {t('The Space', "L'Espace")}
-                      </h3>
-                      <p
-                        className="font-josefin text-neutral-200 uppercase mb-4 md:mb-6"
-                        style={{
-                          fontSize: 'clamp(0.6rem, 0.9vw, 0.85rem)',
-                          letterSpacing: '0.22em',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.85)',
-                        }}
-                      >
-                        12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
-                      </p>
-                      <div className="flex items-center gap-4">
-                        <span className="h-px w-10 bg-[#c5a059]/60" />
-                        <span className="font-cinzel text-[#f3e5ab] text-[10px] md:text-xs uppercase tracking-[0.5em]">
-                          {t('Tap to reveal', 'Toucher pour révéler')}
-                        </span>
-                        <span className="font-josefin text-[#f3e5ab] text-lg" aria-hidden>↗</span>
-                      </div>
-                    </div>
-                  </div>
-                </button>
+                  >
+                    {t('The Space', "L'Espace")}
+                  </h2>
+                  <p
+                    className="font-cinzel text-[#c5a059] text-[10px] md:text-sm uppercase mt-6 tracking-[0.55em]"
+                    style={{ textShadow: '0 2px 16px rgba(0,0,0,0.85)' }}
+                  >
+                    12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
+                  </p>
+                </div>
               </div>
             </div>
+            {/* Scroll length of the act: the sticky panel pins for this extent. */}
+            <div aria-hidden style={{ height: '150vh' }} />
+          </div>
 
-            {/* Sub-label below the deck */}
-            <div className="text-center mt-10 md:mt-14">
-              <span className="font-cinzel text-[#c5a059]/70 text-[10px] uppercase tracking-[0.5em] block mb-2">
-                01–12
+          {/* ── Act 2 · the inventory list ── */}
+          <div className="relative max-w-5xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
+            <div className="text-center mb-14 md:mb-20">
+              <span className="font-cinzel text-[#c5a059] text-[10px] md:text-xs uppercase tracking-[0.55em]">
+                {t('The Inventory', "L'Inventaire")}
               </span>
-              <span className="font-cinzel text-[#f3e5ab] text-[11px] md:text-xs uppercase tracking-[0.4em]">
-                {spacesOpen ? t('Click to collapse', 'Cliquer pour replier') : t('Click to reveal', 'Cliquer pour révéler')}
-              </span>
+              <h2
+                className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em] mt-4"
+                style={{ fontSize: 'clamp(2rem, 5vw, 4.25rem)' }}
+              >
+                {t('Twelve spaces', 'Douze espaces')}
+              </h2>
             </div>
+
+            <ul ref={espaceListRef} className="border-b border-[#c5a059]/10">
+              {SPACES_DATA.map((space, i) => (
+                <li
+                  key={i}
+                  className="espace-row grid grid-cols-[2.4rem_1fr] md:grid-cols-[5rem_1fr_minmax(0,26rem)] gap-x-4 md:gap-x-10 items-start py-8 md:py-10 border-t border-[#c5a059]/10"
+                >
+                  <span className="font-cinzel text-[#c5a059] text-xs md:text-base tracking-[0.3em] pt-1.5 md:pt-2">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="font-prata uppercase text-[#f3e5ab] text-2xl md:text-4xl leading-[1.05] tracking-[-0.01em]">
+                    {language === 'EN' ? space.titleEn : space.titleFr}
+                  </h3>
+                  <ul className="col-start-2 md:col-start-3 mt-4 md:mt-2 space-y-2">
+                    {(language === 'EN' ? space.itemsEn : space.itemsFr).map((item, j) => (
+                      <li key={j} className="flex items-baseline gap-3 font-josefin text-neutral-300 text-sm md:text-[15px]">
+                        <span className="inline-block w-1 h-1 rounded-full bg-[#c5a059]/70 shrink-0 translate-y-[-2px]" aria-hidden />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -1260,47 +1117,14 @@ export const InnPageReserveCine: React.FC<Props> = ({
           100% { transform: scale(1.09) translate3d(-1%, -0.6%, 0); }
         }
 
-        /* L'Espace: keyline grows from 0 to ~120px on hover (closed state); always visible when open */
-        .lespace-mark:hover .lespace-keyline { width: 120px; }
-        .lespace-mark[aria-expanded="true"] .lespace-keyline { width: 100% !important; }
-
-        /* L'Espace: atmospheric fog drift + ambient deck sway.
-           Sway is a single transform on the wrapper, not 12 per-card animations,
-           so the GPU only composites one layer for the idle motion. */
-        .espace-fog {
-          animation: espaceFogDrift 18s ease-in-out infinite alternate;
-          will-change: transform;
+        /* L'Espace inventory rows: hidden until they scroll into view, then a
+           gentle fade + rise. The IntersectionObserver adds .espace-in once. */
+        .espace-row {
+          opacity: 0;
+          transform: translateY(40px);
+          transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .espace-fog-2 { animation-duration: 24s; animation-delay: -6s; }
-        .espace-bg-still .espace-fog { animation: none !important; transform: none !important; }
-        @keyframes espaceFogDrift {
-          0%   { transform: translate3d(-1.5%, 0.5%, 0) scale(1.02); }
-          100% { transform: translate3d(2%, -0.8%, 0) scale(1.06); }
-        }
-        .espace-sway {
-          animation: espaceSway 9s ease-in-out infinite alternate;
-          transform-style: preserve-3d;
-        }
-        @keyframes espaceSway {
-          0%   { transform: rotateY(-2.4deg) rotateX(1.2deg); }
-          50%  { transform: rotateY(0.4deg)  rotateX(0.6deg); }
-          100% { transform: rotateY(2.6deg)  rotateX(-1deg); }
-        }
-        /* Cover-only ambient float: one animated layer instead of animating the 12-card stack.
-           Pauses when hovered (stable click target) and when the deck is open (handled by
-           Tailwind opacity:0 on the cover, plus the inline transform also takes over). */
-        .deck-cover {
-          animation: espaceCoverFloat 7s ease-in-out infinite alternate;
-          will-change: transform;
-        }
-        @keyframes espaceCoverFloat {
-          0%   { transform: translate3d(-50%, calc(-50% - 4px), 0) rotateZ(-0.35deg) scale(1); }
-          100% { transform: translate3d(calc(-50% + 4px), -50%, 0) rotateZ(0.5deg)   scale(1); }
-        }
-        .deck-cover:hover { animation-play-state: paused; }
-        /* When open, kill the float animation so the inline transform (scale 0.94) actually applies.
-           Without this, the keyframe transform overrides and the cover doesn't shrink/disappear. */
-        .deck-cover[aria-expanded="true"] { animation: none !important; }
+        .espace-row.espace-in { opacity: 1; transform: translateY(0); }
 
         /* ── Cinematic INTRO ACT ─────────────────────────────────────────────
            The track holds a sticky 100vh video + an extent spacer that supplies
@@ -1325,9 +1149,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           .rooms-eyebrow, .rooms-title, .rooms-rule { animation: none !important; opacity: 1 !important; transform: none !important; }
           .rooms-rule { width: 80px !important; }
           .rooms-title { -webkit-text-fill-color: #f3e5ab !important; color: #f3e5ab !important; background: none !important; }
-          .espace-fog, .espace-fog-2, .espace-sway {
-            animation: none !important;
-          }
+          .espace-row { opacity: 1 !important; transform: none !important; transition: none !important; }
         }
       `}</style>
     </div>
