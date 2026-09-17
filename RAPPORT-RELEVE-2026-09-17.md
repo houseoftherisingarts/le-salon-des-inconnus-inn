@@ -181,3 +181,38 @@ Le travail de la tâche 3 (Gilded Age gardé seulement sur l'espace membre) éta
 
 - Le pied de page `/formations` chez Krystine (autre dépôt).
 - La vague 4 (bureau aux trois livres), qui attend le OK d'Alex sur les crédits Higgsfield.
+
+---
+
+# Tâche 5 — « ok fais ça » : la grille visuelle restante, faite en mode mesurable
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été demandé (message d'Alex)
+
+> « ok fais ça »
+
+Sans référent dans cette session neuve, j'ai lu le handoff et les rapports du jour : tout est committé et déployé, et l'unique item qui restait dans ce dépôt, pointé dans chaque rapport, était la grille visuelle (RÈGLE -5) sur les captures prêtes dans `/tmp/v-*.png`.
+
+## Ce qui a été fait
+
+1. **La lecture visuelle n'est toujours pas possible ici.** Ce modèle (deepseek-v4-pro) ne reçoit pas d'images, et ses sous-agents non plus : l'agent vérificateur que j'ai lancé a répondu la même chose. La passe « regarder de mes yeux » reste donc hors de portée de cette relève, quel que soit le modèle qu'elle délègue.
+2. **J'ai exécuté le volet mesurable de la boucle-verdict** : le script `audit.mjs` sur l'auberge en ligne (`/` et `/compte`, desktop 1440 et mobile 390). Il mesure par le DOM les fautes 1, 2, 3, 4, 7, 8.
+3. **Une faute réelle et dure a été trouvée** : le titre de section du bloc SEO (`config/seo.content.ts`, `sectionTitle` INN FR) s'affichait sur **trois lignes à 48 px** (« Une auberge, un manoir, un centre d'artistes »), ce qui viole la RÈGLE TYPO ABSOLUE (un gros titre de section en display ne dépasse jamais deux lignes).
+4. **Corrigé en réécrivant plus court, pas en rapetissant la police** : « Une auberge, un manoir, des artistes ». Vérifié au rendu par le même script (deux lignes sur desktop et mobile), puis construit, déployé sur `le-salon-des-inconnus` et `inconnus-auberge`, et revérifié en ligne (la faute a disparu du rapport prod).
+5. **Committé et poussé** (`2b340d5`).
+
+## Ce qui a été vérifié comment
+
+- `npm run build` vert (tsc puis vite build, 1 min 25).
+- Mesures DOM de `audit.mjs` : le titre passe de 3 à 2 lignes sur desktop (48 px) et mobile (30 px) ; confirmé à nouveau sur la prod déployée.
+- Déploiement 200 sur les deux sites qui servent le monolithe.
+
+## Ce qui n'a PAS été vérifié
+
+- La grille visuelle elle-même (contraste, éparpillement, image IA, « on ne sait pas où regarder ») : aucune capture n'a été regardée, faute de vision sur ce modèle. À faire par Claude Code ou par toi.
+
+## Décisions de jugement à regarder en premier
+
+- **Le choix des mots du titre.** « Une auberge, un manoir, des artistes » garde les trois noms et la même structure que l'original, mais remplace « un centre d'artistes » par « des artistes ». Si tu préfères une autre tournure, c'est un mot à changer dans `config/seo.content.ts` (ligne `sectionTitle` INN FR). J'ai mesuré que « Une auberge, un manoir, un centre d'arts » et « ... un centre d'art » restent sur trois lignes, d'où ce choix.
+- **Les autres résultats de l'audit**, non corrigés car jugés faux positifs ou voulus : 30 textes sous 13 px (le wordmark « Le Salon des Inconnus » à 10 px, les libellés de nav, et les badges « SUPERHOST » / « 11 YEARS » à 8 px, tous des micro-labels de marque) ; des libellés en double (« réserver », « creator studio », « le dôme », « les inconnus » vus 2 fois, soit nav + un second menu) ; et des « colonnes étroites » du bloc SEO (448 px) que le script juge sans voisin alors que le voisin est à gauche. À trancher à l'œil si l'un de ces points te chiffonne.
