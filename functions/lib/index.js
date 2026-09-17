@@ -22,18 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.lierSejour = exports.mesSejours = exports.mesBillets = exports.compterPlacesCeilidh = exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeCampingWebhook = exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.onMessageEntreMembres = exports.onProblemeTechnique = exports.onMessageSoutien = exports.parrainageFilleul = exports.nettoyerCompteSupprime = exports.lierSejour = exports.mesSejours = exports.mesBillets = exports.compterPlacesCeilidh = exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeCampingWebhook = exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
 const crypto = __importStar(require("crypto"));
 const params_1 = require("firebase-functions/params");
-const nodemailer_1 = __importDefault(require("nodemailer"));
 const hostaway_1 = require("./hostaway");
+const courriel_1 = require("./courriel");
 admin.initializeApp();
 // ─── Square client ────────────────────────────────────────────────────────────
 // IMPORTANT: the `square` SDK is heavy and eager-imports thousands of API
@@ -165,54 +162,19 @@ exports.createShowTicketPayment = functions.https.onCall(async (data, context) =
 //   firebase functions:secrets:set ZOHO_USER   (alex@lesalondesinconnus.com)
 //   firebase functions:secrets:set ZOHO_PASS   (Zoho app password)
 // then: firebase deploy --only functions   (deploys all the triggers below)
-const NOTIFY_TO = 'alex@lesalondesinconnus.com';
-const RUNTIME_WITH_SMTP = { secrets: ['ZOHO_USER', 'ZOHO_PASS'] };
-// Build a one-off Zoho transporter from the runtime secrets. Returns null (and
-// logs) if the secrets aren't present, so a misconfig never crashes a write.
-function smtpTransport() {
-    const user = process.env.ZOHO_USER;
-    const pass = process.env.ZOHO_PASS;
-    if (!user || !pass) {
-        console.error('ZOHO_USER / ZOHO_PASS not set — skipping notification email.');
-        return null;
-    }
-    return nodemailer_1.default.createTransport({
-        host: 'smtp.zohocloud.ca',
-        port: 465,
-        secure: true,
-        auth: { user, pass },
-    });
-}
-// Send a plain-text notification to Alex. Never throws — a failed email must not
-// fail the Firestore write that triggered it.
-async function notifyAlex(subject, body) {
-    const transporter = smtpTransport();
-    if (!transporter)
-        return;
-    const from = `"Le Salon des Inconnus" <${process.env.ZOHO_USER}>`;
-    try {
-        await transporter.sendMail({ from, to: NOTIFY_TO, subject, text: body });
-    }
-    catch (err) {
-        console.error('Notification email failed:', subject, err);
-    }
-}
-// Small helper: "Label: value\n" only when value is non-empty.
-function line(label, value) {
-    return value !== undefined && value !== null && value !== '' ? `${label}: ${String(value)}\n` : '';
-}
+// Le transport, notifyAlex, line et RUNTIME_WITH_SMTP vivent dans ./courriel.
 // 1. Community membership application — the paid resident place (André's spot).
 exports.onCommunityApplication = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('communityApplications/{uid}')
     .onCreate(async (snap) => {
     const a = snap.data() ?? {};
     const body = `Nouvelle candidature pour la place de membre de la communauté (la place d'André).\n\n` +
-        line('Nom', a.displayName) +
-        line('Courriel', a.email) +
-        line('Téléphone', a.phone) +
-        line('Vient de', a.city) +
-        line('Disponibilité', a.availability) +
+        (0, courriel_1.line)('Nom', a.displayName) +
+        (0, courriel_1.line)('Courriel', a.email) +
+        (0, courriel_1.line)('Téléphone', a.phone) +
+        (0, courriel_1.line)('Vient de', a.city) +
+        (0, courriel_1.line)('Disponibilité', a.availability) +
         `\n--- Présentation ---\n${a.introduction ?? ''}\n` +
         `\n--- Pourquoi la communauté / pourquoi ici ---\n${a.communityMotivation ?? ''}\n` +
         (a.cleaningAttitude ? `\n--- Rapport au ménage ---\n${a.cleaningAttitude}\n` : '') +
@@ -220,32 +182,32 @@ exports.onCommunityApplication = functions
         (a.workspaceNeeds ? `\n--- Espace de travail souhaité ---\n${a.workspaceNeeds}\n` : '') +
         (a.needs ? `\n--- Besoins ---\n${a.needs}\n` : '') +
         `\nÀ traiter dans le CRM admin (onglet Communauté).`;
-    await notifyAlex(`Nouvelle candidature communauté — ${a.displayName ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`Nouvelle candidature communauté — ${a.displayName ?? 'Inconnu'}`, body);
 });
 // 2. Wwoofer application (the volunteer room-and-board flow).
 exports.onWwooferApplication = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('wwoofers/{uid}')
     .onCreate(async (snap) => {
     const w = snap.data() ?? {};
     const body = `Nouvelle candidature wwoofer.\n\n` +
-        line('Nom', w.displayName) +
-        line('Courriel', w.email) +
-        line('Téléphone', w.phone) +
-        line('Ville', [w.city, w.country].filter(Boolean).join(', ')) +
-        line('Âge', w.age) +
-        line('Langues', Array.isArray(w.languages) ? w.languages.join(', ') : w.languages) +
-        line('Tâches préférées', Array.isArray(w.preferredTasks) ? w.preferredTasks.join(', ') : w.preferredTasks) +
-        line('Hébergement', w.accommodationPreference) +
+        (0, courriel_1.line)('Nom', w.displayName) +
+        (0, courriel_1.line)('Courriel', w.email) +
+        (0, courriel_1.line)('Téléphone', w.phone) +
+        (0, courriel_1.line)('Ville', [w.city, w.country].filter(Boolean).join(', ')) +
+        (0, courriel_1.line)('Âge', w.age) +
+        (0, courriel_1.line)('Langues', Array.isArray(w.languages) ? w.languages.join(', ') : w.languages) +
+        (0, courriel_1.line)('Tâches préférées', Array.isArray(w.preferredTasks) ? w.preferredTasks.join(', ') : w.preferredTasks) +
+        (0, courriel_1.line)('Hébergement', w.accommodationPreference) +
         (w.experience ? `\n--- Expérience ---\n${w.experience}\n` : '') +
         (w.motivations ? `\n--- Motivations ---\n${w.motivations}\n` : '') +
         (w.needs ? `\n--- Besoins ---\n${w.needs}\n` : '') +
         `\nÀ traiter dans le CRM admin (onglet Wwoofing).`;
-    await notifyAlex(`Nouvelle candidature wwoofer — ${w.displayName ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`Nouvelle candidature wwoofer — ${w.displayName ?? 'Inconnu'}`, body);
 });
 // 3. Wwoofer date request (a new visit window from an existing wwoofer).
 exports.onWwooferVisitRequest = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('wwoofers/{uid}/visitRequests/{reqId}')
     .onCreate(async (snap, context) => {
     const r = snap.data() ?? {};
@@ -258,39 +220,39 @@ exports.onWwooferVisitRequest = functions
     }
     catch { /* fall back to uid */ }
     const body = `Nouvelle demande de dates wwoofer.\n\n` +
-        line('Wwoofer', who) +
-        line('Du', r.startDate) +
-        line('Au', r.endDate) +
-        line('Durée', r.numberOfDays ? `${r.numberOfDays} jours` : undefined) +
+        (0, courriel_1.line)('Wwoofer', who) +
+        (0, courriel_1.line)('Du', r.startDate) +
+        (0, courriel_1.line)('Au', r.endDate) +
+        (0, courriel_1.line)('Durée', r.numberOfDays ? `${r.numberOfDays} jours` : undefined) +
         (r.notes ? `\nNotes: ${r.notes}\n` : '') +
         `\nÀ traiter dans le CRM admin (onglet Wwoofing).`;
-    await notifyAlex(`Demande de dates wwoofer — ${r.startDate ?? ''} → ${r.endDate ?? ''}`, body);
+    await (0, courriel_1.notifyAlex)(`Demande de dates wwoofer — ${r.startDate ?? ''} → ${r.endDate ?? ''}`, body);
 });
 // 4. Show offer — an artist offering to perform (events/{id}/showOffers).
 exports.onShowOffer = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('events/{eventId}/showOffers/{offerId}')
     .onCreate(async (snap, context) => {
     const o = snap.data() ?? {};
     const body = `Nouvelle offre de spectacle (événement ${context.params.eventId}).\n\n` +
-        line('Artiste', o.artistName) +
-        line('Contact', o.contactName) +
-        line('Courriel', o.email) +
-        line('Téléphone', o.phone) +
-        line('Type', o.type) +
-        line('Cachet demandé (CAD)', o.requestedFeeCAD) +
-        line('Nb interprètes', o.performersCount) +
-        line('Durée (min)', o.durationMinutes) +
-        line('Genre', o.genre) +
+        (0, courriel_1.line)('Artiste', o.artistName) +
+        (0, courriel_1.line)('Contact', o.contactName) +
+        (0, courriel_1.line)('Courriel', o.email) +
+        (0, courriel_1.line)('Téléphone', o.phone) +
+        (0, courriel_1.line)('Type', o.type) +
+        (0, courriel_1.line)('Cachet demandé (CAD)', o.requestedFeeCAD) +
+        (0, courriel_1.line)('Nb interprètes', o.performersCount) +
+        (0, courriel_1.line)('Durée (min)', o.durationMinutes) +
+        (0, courriel_1.line)('Genre', o.genre) +
         (o.description ? `\n--- Description ---\n${o.description}\n` : '') +
         (o.technicalNeeds ? `\n--- Besoins techniques ---\n${o.technicalNeeds}\n` : '') +
         (o.notes ? `\nNotes: ${o.notes}\n` : '') +
         `\nÀ traiter dans le CRM admin (onglet Spectacles).`;
-    await notifyAlex(`Nouvelle offre de spectacle — ${o.artistName ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`Nouvelle offre de spectacle — ${o.artistName ?? 'Inconnu'}`, body);
 });
 // 5. New member signup — an adhésion to the Salon.
 exports.onNewMember = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('members/{uid}')
     .onCreate(async (snap) => {
     const m = snap.data() ?? {};
@@ -303,61 +265,61 @@ exports.onNewMember = functions
     if (m.membershipType === 'woofer' || m.membershipType === 'membre-communaute')
         return;
     const body = `Nouvelle adhésion sur le site.\n\n` +
-        line('Nom', m.displayName) +
-        line('Courriel', m.email) +
-        line('Téléphone', m.phone) +
-        line('Type', m.membershipType) +
+        (0, courriel_1.line)('Nom', m.displayName) +
+        (0, courriel_1.line)('Courriel', m.email) +
+        (0, courriel_1.line)('Téléphone', m.phone) +
+        (0, courriel_1.line)('Type', m.membershipType) +
         `\nVisible dans le CRM admin (onglet Membres).`;
-    await notifyAlex(`Nouvelle adhésion — ${m.displayName ?? m.email ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`Nouvelle adhésion — ${m.displayName ?? m.email ?? 'Inconnu'}`, body);
 });
 // 6. Invitation RSVP — private evening at the manor, QR-code invitation only.
 exports.onRsvpInvitation = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('rsvpInvitation/{id}')
     .onCreate(async (snap) => {
     const r = snap.data() ?? {};
     const body = `Nouvelle confirmation — La Table des Inconnus (page /invitation).\n\n` +
-        line('Nom', r.name) +
-        line('Courriel', r.email) +
-        line('Date proposée', r.proposedDate) +
+        (0, courriel_1.line)('Nom', r.name) +
+        (0, courriel_1.line)('Courriel', r.email) +
+        (0, courriel_1.line)('Date proposée', r.proposedDate) +
         `\nÀ traiter directement par courriel.`;
-    await notifyAlex(`RSVP La Table des Inconnus — ${r.name ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`RSVP La Table des Inconnus — ${r.name ?? 'Inconnu'}`, body);
 });
 // 7. Proposal request — corporate retreats pitch (events/entreprises).
 exports.onProposalRequest = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('proposalRequests/{id}')
     .onCreate(async (snap) => {
     const r = snap.data() ?? {};
     const body = `Nouvelle demande de proposition — page /entreprises.\n\n` +
-        line('Nom', r.name) +
-        line('Courriel', r.email) +
-        line('Entreprise', r.company) +
+        (0, courriel_1.line)('Nom', r.name) +
+        (0, courriel_1.line)('Courriel', r.email) +
+        (0, courriel_1.line)('Entreprise', r.company) +
         (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
         `\nÀ traiter directement par courriel.`;
-    await notifyAlex(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`Demande de proposition — ${r.company ?? r.name ?? 'Inconnu'}`, body);
 });
 // 8. Conference request: school/library/organization asking for one of the
 // six free family evenings (Le Coffre des Inconnus x La Petite Monnaie, page
 // /coffre). Lands in its own Firestore collection, kept separate from the
 // other request inboxes above.
 exports.onConferenceRequest = functions
-    .runWith(RUNTIME_WITH_SMTP)
+    .runWith(courriel_1.RUNTIME_WITH_SMTP)
     .firestore.document('conferenceRequests/{id}')
     .onCreate(async (snap) => {
     const r = snap.data() ?? {};
     const body = `Nouvelle demande de conférence, page /coffre.\n\n` +
-        line('Établissement', r.establishmentName) +
-        line('Type', r.establishmentType) +
-        line('Municipalité', r.municipality) +
-        line('Personne responsable', r.contactName) +
-        line('Courriel', r.email) +
-        line('Téléphone', r.phone) +
-        line('Nombre de familles attendu', r.expectedFamilies) +
-        line('Dates envisagées', r.desiredDates) +
+        (0, courriel_1.line)('Établissement', r.establishmentName) +
+        (0, courriel_1.line)('Type', r.establishmentType) +
+        (0, courriel_1.line)('Municipalité', r.municipality) +
+        (0, courriel_1.line)('Personne responsable', r.contactName) +
+        (0, courriel_1.line)('Courriel', r.email) +
+        (0, courriel_1.line)('Téléphone', r.phone) +
+        (0, courriel_1.line)('Nombre de familles attendu', r.expectedFamilies) +
+        (0, courriel_1.line)('Dates envisagées', r.desiredDates) +
         (r.message ? `\n--- Message ---\n${r.message}\n` : '') +
         `\nÀ traiter dans le CRM admin (audience Maison, onglet Conférences).`;
-    await notifyAlex(`Nouvelle demande de conférence : ${r.establishmentName ?? 'Inconnu'}`, body);
+    await (0, courriel_1.notifyAlex)(`Nouvelle demande de conférence : ${r.establishmentName ?? 'Inconnu'}`, body);
 });
 // ─── HostAway integration (Phase 1) ───────────────────────────────────────────
 // Read-only: real availability + an authoritative live price quote. These are
@@ -833,11 +795,11 @@ exports.stripeCampingWebhook = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK
         return true;
     });
     if (nouveau) {
-        await notifyAlex('Camping du festival : un emplacement de réservé', line('Nom', nom) +
-            line('Courriel', courriel) +
-            line('Téléphone', telephone) +
-            line('Montant', `${(montantCents / 100).toFixed(2)} $`) +
-            line('Session Stripe', sessionId));
+        await (0, courriel_1.notifyAlex)('Camping du festival : un emplacement de réservé', (0, courriel_1.line)('Nom', nom) +
+            (0, courriel_1.line)('Courriel', courriel) +
+            (0, courriel_1.line)('Téléphone', telephone) +
+            (0, courriel_1.line)('Montant', `${(montantCents / 100).toFixed(2)} $`) +
+            (0, courriel_1.line)('Session Stripe', sessionId));
     }
     res.status(200).send('OK');
 });
@@ -853,4 +815,11 @@ Object.defineProperty(exports, "compterPlacesCeilidh", { enumerable: true, get: 
 Object.defineProperty(exports, "mesBillets", { enumerable: true, get: function () { return espaceMembre_1.mesBillets; } });
 Object.defineProperty(exports, "mesSejours", { enumerable: true, get: function () { return espaceMembre_1.mesSejours; } });
 Object.defineProperty(exports, "lierSejour", { enumerable: true, get: function () { return espaceMembre_1.lierSejour; } });
+Object.defineProperty(exports, "nettoyerCompteSupprime", { enumerable: true, get: function () { return espaceMembre_1.nettoyerCompteSupprime; } });
+var parrainage_1 = require("./parrainage");
+Object.defineProperty(exports, "parrainageFilleul", { enumerable: true, get: function () { return parrainage_1.parrainageFilleul; } });
+var soutien_1 = require("./soutien");
+Object.defineProperty(exports, "onMessageSoutien", { enumerable: true, get: function () { return soutien_1.onMessageSoutien; } });
+Object.defineProperty(exports, "onProblemeTechnique", { enumerable: true, get: function () { return soutien_1.onProblemeTechnique; } });
+Object.defineProperty(exports, "onMessageEntreMembres", { enumerable: true, get: function () { return soutien_1.onMessageEntreMembres; } });
 //# sourceMappingURL=index.js.map

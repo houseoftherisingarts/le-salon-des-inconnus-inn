@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mesBillets = exports.compterPlacesCeilidh = exports.lierSejour = exports.mesSejours = void 0;
+exports.nettoyerCompteSupprime = exports.mesBillets = exports.compterPlacesCeilidh = exports.lierSejour = exports.mesSejours = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
 const admin = __importStar(require("firebase-admin"));
@@ -184,11 +184,20 @@ exports.lierSejour = (0, https_1.onCall)({ secrets: [hostaway_1.HOSTAWAY_API_KEY
     if (!request.auth) {
         throw new https_1.HttpsError('unauthenticated', 'Must be signed in.');
     }
-    const verifie = request.auth.token?.email_verified === true && !!request.auth.token?.email;
-    if (!verifie) {
-        throw new https_1.HttpsError('failed-precondition', 'courriel-non-verifie');
+    // Lot 7 : l'admin peut rattacher un séjour au compte d'un membre (uidCible),
+    // avec les mêmes gardes que 4.1 mais sans limite d'essais.
+    const uidCible = request.data?.uidCible;
+    const estCible = typeof uidCible === 'string' && uidCible.length > 0;
+    if (estCible && !estAdmin(request.auth)) {
+        throw new https_1.HttpsError('permission-denied', 'Admins only.');
     }
-    const uid = request.auth.uid;
+    if (!estCible) {
+        const verifie = request.auth.token?.email_verified === true && !!request.auth.token?.email;
+        if (!verifie) {
+            throw new https_1.HttpsError('failed-precondition', 'courriel-non-verifie');
+        }
+    }
+    const uid = estCible ? uidCible : request.auth.uid;
     const { code, arrivee } = (request.data ?? {});
     if (typeof code !== 'string' || !/^[A-Za-z0-9-]{4,40}$/.test(code)) {
         throw new https_1.HttpsError('invalid-argument', 'Code invalide.');
@@ -200,7 +209,7 @@ exports.lierSejour = (0, https_1.onCall)({ secrets: [hostaway_1.HOSTAWAY_API_KEY
     const jour = jourToronto();
     const etat = await docRef.get();
     const essais = (etat.data()?.essaisLiaison ?? {});
-    if ((essais[jour] ?? 0) >= 5) {
+    if (!estCible && (essais[jour] ?? 0) >= 5) {
         throw new https_1.HttpsError('resource-exhausted', "Trop d'essais aujourd'hui.");
     }
     const token = await (0, hostaway_1.getHostawayToken)();
@@ -222,7 +231,9 @@ exports.lierSejour = (0, https_1.onCall)({ secrets: [hostaway_1.HOSTAWAY_API_KEY
         return identifiants.some((v) => v.toLowerCase() === codeNormal);
     });
     if (!trouvee) {
-        await docRef.set({ essaisLiaison: { ...essais, [jour]: (essais[jour] ?? 0) + 1 } }, { merge: true });
+        if (!estCible) {
+            await docRef.set({ essaisLiaison: { ...essais, [jour]: (essais[jour] ?? 0) + 1 } }, { merge: true });
+        }
         return { lie: false };
     }
     // Déjà liée à un autre membre ?
@@ -271,10 +282,21 @@ exports.mesBillets = (0, https_1.onCall)({ cors: true, maxInstances: 5 }, async 
     if (!request.auth) {
         throw new https_1.HttpsError('unauthenticated', 'Must be signed in.');
     }
-    const uid = request.auth.uid;
-    const emailVerifie = request.auth.token.email_verified === true && request.auth.token.email
+    let uid = request.auth.uid;
+    let emailVerifie = request.auth.token.email_verified === true && request.auth.token.email
         ? request.auth.token.email
         : null;
+    // Lot 7 : l'admin peut lire les billets d'un membre (uidCible). Le courriel
+    // vérifié cible se lit alors dans Auth, jamais dans l'entrée.
+    const uidCible = request.data?.uidCible;
+    if (uidCible) {
+        if (!estAdmin(request.auth)) {
+            throw new https_1.HttpsError('permission-denied', 'Admins only.');
+        }
+        const cible = await (0, auth_1.getAuth)().getUser(uidCible);
+        uid = uidCible;
+        emailVerifie = cible.emailVerified && cible.email ? cible.email : null;
+    }
     // 1. Spectacles (events/ceilidh-mai-2026/showTickets/{uid})
     const spectacles = [];
     const ticketDoc = await db.doc(`events/ceilidh-mai-2026/showTickets/${uid}`).get();
@@ -337,5 +359,37 @@ exports.mesBillets = (0, https_1.onCall)({ cors: true, maxInstances: 5 }, async 
         });
     }
     return { spectacles, inscriptions, contributions, camping };
+});
+// ─── 4.10 nettoyerCompteSupprime · effacement complet du compte ──────────────
+// deleteMemberData (AuthModal) n'efface que members/{uid} avant de supprimer le
+// compte Auth. Ici on termine le travail : le téléphone, le fil d'aide, l'état
+// des séjours, le parrainage, les signalements, les notifications et les images
+// Storage. Les messages envoyés à d'autres membres restent, comme le dit 6.10.
+exports.nettoyerCompteSupprime = functions.auth.user().onDelete(async (user) => {
+    const uid = user.uid;
+    const db2 = admin.firestore();
+    // Fiche complète (sous-collections comprises : prive, artistProfile, etc.).
+    await db2.recursiveDelete(db2.doc(`members/${uid}`)).catch((e) => {
+        console.warn('[nettoyage] members indisponible', e);
+    });
+    // Fil d'aide et ses messages.
+    await db2.recursiveDelete(db2.doc(`soutien/${uid}`)).catch(() => { });
+    // État serveur des séjours.
+    await db2.doc(`sejours/${uid}`).delete().catch(() => { });
+    // Parrainage : mon entrée de filleul, mon compteur et mon code.
+    await db2.doc(`parrainages/${uid}`).delete().catch(() => { });
+    await db2.doc(`parrainagesCompte/${uid}`).delete().catch(() => { });
+    const codes = await db2.collection('codesParrain').where('uid', '==', uid).get();
+    await Promise.all(codes.docs.map((d) => d.ref.delete().catch(() => { })));
+    // Signalements techniques.
+    const signalements = await db2.collection('problemesTechniques').where('uid', '==', uid).get();
+    await Promise.all(signalements.docs.map((d) => d.ref.delete().catch(() => { })));
+    // Notifications.
+    await db2.recursiveDelete(db2.doc(`notifications/${uid}`)).catch(() => { });
+    // Images Storage : avatar/bannière de profil et captures de signalement.
+    const bucket = admin.storage().bucket();
+    await bucket.deleteFiles({ prefix: `members/${uid}/profil/` }).catch(() => { });
+    await bucket.deleteFiles({ prefix: `problemes/${uid}/` }).catch(() => { });
+    console.log(`[nettoyage] compte ${uid} effacé`);
 });
 //# sourceMappingURL=espaceMembre.js.map
