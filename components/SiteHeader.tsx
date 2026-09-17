@@ -162,10 +162,10 @@ function useScroll(threshold: number, resetKey?: string) {
 
 // ─── Dropdown ─────────────────────────────────────────────────────────────────
 
-// Les trois menus de l'en-tête en pastilles de verre (vague 2, 16 sept. 2026) :
-// 13 px en crème pleine opacité, fond noir chaud translucide et flouté, fine
+// Les trois menus de l'en-tête en pastilles de verre (16 sept. 2026) :
+// 11 px en crème pleine opacité, fond noir chaud translucide et flouté, fine
 // bordure d'or antique, pour qu'ils se lisent même sur le ciel pâle du hero.
-const PILL = 'flex items-center gap-2 h-9 px-4 rounded-full whitespace-nowrap text-[13px] font-cinzel font-bold uppercase tracking-[0.12em] backdrop-blur-md border transition-[background-color,border-color,color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0808]';
+const PILL = 'flex items-center gap-1.5 h-8 px-3.5 rounded-full whitespace-nowrap text-[11px] font-cinzel font-bold uppercase tracking-[0.1em] backdrop-blur-md border transition-[background-color,border-color,color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3e5ab] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0808]';
 const PILL_IDLE = 'text-[#f3e5ab] bg-[#0a0808]/55 border-[#c5a059]/45 shadow-[0_2px_14px_rgba(0,0,0,0.35)] hover:bg-[#0a0808]/80 hover:border-[#c5a059] hover:text-white';
 const PILL_ACTIVE = 'text-[#f3e5ab] bg-[#0a0808]/70 border-[#c5a059] shadow-[0_0_0_1px_rgba(197,160,89,0.35)] hover:text-white';
 const PILL_OPEN = 'text-[#0a0808] bg-[#c5a059] border-[#c5a059] shadow-[0_4px_18px_rgba(197,160,89,0.35)]';
@@ -573,12 +573,12 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[109] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out ${
+        className={`fixed top-0 left-0 right-0 z-[109] transition-[background-color,backdrop-filter] duration-300 ease-out ${
           mobileOpen
-            ? 'bg-[#0a0808] border-b border-[#c5a059]/20'
+            ? 'bg-[#0a0808]'
             : scrolled
-            ? 'bg-[#0a0808]/[0.88] backdrop-blur-xl backdrop-saturate-150 border-b border-[#c5a059]/20 shadow-[0_1px_30px_rgba(0,0,0,0.55)]'
-            : 'bg-gradient-to-b from-[#050505]/75 via-[#050505]/35 to-transparent border-b border-transparent'
+            ? 'bg-[#0a0808]/[0.6] backdrop-blur-xl backdrop-saturate-150'
+            : 'bg-gradient-to-b from-[#050505]/75 via-[#050505]/35 to-transparent'
         }`}
         style={{ height: '56px' }}
       >
@@ -632,12 +632,12 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               onClick={() => handleNavigate('PETITE_MONNAIE')}
               title="Bureau de change Petite Monnaie"
               aria-label="Bureau de change Petite Monnaie"
-              className="flex-shrink-0 flex items-center gap-2 pl-1 pr-1 2xl:pr-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-[#C9A85A]/40 hover:border-[#C9A85A] hover:bg-black/60 transition-colors"
+              className="flex-shrink-0 flex items-center gap-2 pl-1 pr-1 2xl:pr-3 py-1 rounded-full bg-black/30 backdrop-blur-md hover:bg-black/50 transition-colors"
             >
               <img
                 src="https://pmonnaie.ca/wp-content/uploads/2024/04/cropped-PM_profil-e1712766855885-270x270.png"
                 alt="Petite Monnaie"
-                className="w-7 h-7 rounded-full object-cover ring-1 ring-[#C9A85A]/60"
+                className="w-7 h-7 rounded-full object-cover"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
               />
               <span className="hidden 2xl:flex flex-col leading-none text-left whitespace-nowrap">

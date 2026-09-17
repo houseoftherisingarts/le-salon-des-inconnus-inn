@@ -43,7 +43,6 @@ const AdminCRM          = lazy(() => import('./components/AdminCRM').then(m => (
 const EspaceMembrePage  = lazy(() => import('./components/compte/EspaceMembrePage').then(m => ({ default: m.default })));
 const CreatorStudio     = lazy(() => import('@inconnus/ui').then(m => ({ default: m.CreatorStudio })));
 // Le centre d'arts (hub Mécène/Artiste, menu mécène, café), venu d'apps/salon.
-const CentreArtsPage    = lazy(() => import('./components/centre-arts/CentreArtsPage'));
 const ArtsPage          = lazy(() => import('@inconnus/ui/arts').then(m => ({ default: m.ArtsPage })));
 // /c/{uid}/{slug}: public read-only call sheet, shared by a member with their
 // crew/figurants. No auth required (Firestore rule grants read when shared).
@@ -194,8 +193,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE' | 'CAMPING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC'
-              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE'
-              | 'MECENE_ARTISTES' | 'MECENE_FISCALITE' | 'MECENE_SOUTIEN';
+              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE';
 
 // Note: SUPER_PROFILE intentionally has no fixed path. Its path is the
 // dynamic slug. We list it here for completeness but handleNavigation never
@@ -233,9 +231,6 @@ const VIEW_PATHS: Record<ViewState, string> = {
   CENTRE_ARTS:    '/centre-arts',
   MECENE:         '/mecene',
   CAFE:           '/cafe',
-  MECENE_ARTISTES:  '/mecene/artistes',
-  MECENE_FISCALITE: '/mecene/fiscalite',
-  MECENE_SOUTIEN:   '/mecene/soutenir',
   COMPTE:         '/compte',
   SUPER_PROFILE:  '',
   HIGHS_TEST:     '/highstest',
@@ -271,14 +266,10 @@ const extractCallsheet = (pathname: string): { uid: string; slug: string } | nul
 };
 
 // Centre d'arts : chaque vue du monolithe correspond à un nœud d'ArtsPage.
-// Depuis la vague 5, /centre-arts est sa propre page (CentreArtsPage) ; les
-// sous-pages du mécène ont chacune leur adresse.
 const ARTS_NODE_BY_VIEW: Partial<Record<ViewState, string>> = {
-  MECENE:           'patron_hub',
-  CAFE:             'platforms',
-  MECENE_ARTISTES:  'roster',
-  MECENE_FISCALITE: 'fiscality',
-  MECENE_SOUTIEN:   'patronage',
+  CENTRE_ARTS: 'hub',
+  MECENE:      'patron_hub',
+  CAFE:        'platforms',
 };
 // Nœud d'ArtsPage → vue du monolithe. Le côté créateur mène au Creator Studio
 // (/creator) ; les sous-pages du mécène sans adresse propre gardent l'URL.
@@ -286,9 +277,6 @@ const ARTS_VIEW_BY_NODE: Record<string, ViewState> = {
   hub:        'CENTRE_ARTS',
   patron_hub: 'MECENE',
   platforms:  'CAFE',
-  roster:     'MECENE_ARTISTES',
-  fiscality:  'MECENE_FISCALITE',
-  patronage:  'MECENE_SOUTIEN',
   artist_hub: 'CREATOR_STUDIO',
   registry:   'CREATOR_STUDIO',
   grimoire:   'CREATOR_STUDIO',
@@ -375,7 +363,7 @@ const App: React.FC = () => {
   // échouent parfois (ERR_BLOCKED_BY_ORB) avant de laisser voir le profil
   // ou la page « introuvable » en dessous.
   const isArtsView = currentView in ARTS_NODE_BY_VIEW;
-  const isStandalonePage = currentView === 'COMPTE' || currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE' || isArtsView || currentView === 'CENTRE_ARTS';
+  const isStandalonePage = currentView === 'COMPTE' || currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE' || isArtsView;
 
   // Trigger Background Loading when initial loading finishes
   useIdlePreloader(DEFERRED_ASSETS, !isLoading && !isStandalonePage);
@@ -788,7 +776,7 @@ const App: React.FC = () => {
       )}
 
       {/* 2. Global site header: INN + editorial test3 (test page parity) */}
-      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3' || currentView === 'INN_RESERVE_CINE' || currentView === 'CENTRE_ARTS' || currentView === 'COMPTE') && (
+      {!isLoading && (currentView === 'INN' || currentView === 'INN_TEST3' || currentView === 'INN_RESERVE_CINE' || currentView === 'COMPTE') && (
         <SiteHeader
           language={language}
           currentView={currentView}
@@ -1097,13 +1085,9 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* CENTRE D'ARTS, vague 5 : la page éditoriale de /centre-arts. */}
-        {currentView === 'CENTRE_ARTS' && (
-          <CentreArtsPage language={language} pret={!isLoading} onNavigate={(v) => handleNavigation(v as ViewState)} />
-        )}
-
-        {/* MÉCÈNE : /mecene et ses sous-pages, /cafe. Un seul montage d'ArtsPage
-            pour les trois adresses, pour ne pas le remonter en changeant de nœud. */}
+        {/* CENTRE D'ARTS / MÉCÈNE / CAFÉ : /centre-arts, /mecene, /cafe. Un seul
+            montage d'ArtsPage pour les trois adresses, pour ne pas le remonter
+            en changeant de nœud. */}
         {isArtsView && (
           <ArtsPage
             language={language}

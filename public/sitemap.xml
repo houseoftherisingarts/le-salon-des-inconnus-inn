@@ -23,18 +23,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.lesalondesinconnus.com/mecene/artistes</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.lesalondesinconnus.com/mecene/fiscalite</loc>
-    <lastmod>2026-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.lesalondesinconnus.com/cafe</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>

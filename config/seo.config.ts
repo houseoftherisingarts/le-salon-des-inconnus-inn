@@ -183,18 +183,6 @@ export const PAGE_META = {
     EN: { title: "Patrons | Le Salon des Inconnus", description: "Buy and support art differently: the artists we represent, patronage, and the tax side of buying art in Quebec.", keywords: "art patronage Quebec, buy art Outaouais" },
     FR: { title: "Le Mécène | Le Salon des Inconnus", description: "Acheter et soutenir l'art autrement : les artistes que nous représentons, le mécénat et la fiscalité de l'achat d'œuvres au Québec.", keywords: "mécénat Québec, acheter de l'art Outaouais, fiscalité de l'art" }
   },
-  MECENE_ARTISTES: {
-    EN: { title: "Our artists | Le Salon des Inconnus", description: "The artists we represent at Le Salon des Inconnus, in Namur.", keywords: "" },
-    FR: { title: "Nos artistes | Le Salon des Inconnus", description: "Les artistes que nous représentons au Salon des Inconnus, à Namur.", keywords: "" }
-  },
-  MECENE_FISCALITE: {
-    EN: { title: "Art and taxes | Le Salon des Inconnus", description: "The tax side of buying art in Quebec, explained by the arts centre of Le Salon des Inconnus.", keywords: "" },
-    FR: { title: "Fiscalité de l'art | Le Salon des Inconnus", description: "La fiscalité de l'achat d'œuvres au Québec, expliquée par le centre d'arts du Salon des Inconnus.", keywords: "" }
-  },
-  MECENE_SOUTIEN: {
-    EN: { title: "Support the centre | Le Salon des Inconnus", description: "Three monthly tiers and the Split Donation to support the artists and the arts centre of Le Salon des Inconnus.", keywords: "" },
-    FR: { title: "Soutenir le centre | Le Salon des Inconnus", description: "Trois paliers mensuels et le Don partagé pour soutenir les artistes et le centre d'arts du Salon des Inconnus.", keywords: "" }
-  },
   CAFE: {
     EN: { title: "The Café | Le Salon des Inconnus", description: "The digital platforms and projects of Le Salon des Inconnus.", keywords: "" },
     FR: { title: "Le Café | Le Salon des Inconnus", description: "Les plateformes et les projets numériques du Salon des Inconnus.", keywords: "" }
