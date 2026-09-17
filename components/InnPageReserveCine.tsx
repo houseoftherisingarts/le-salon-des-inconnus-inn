@@ -753,14 +753,6 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   loading="eager"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover"
-                  style={{ opacity: 0.5 }}
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse 75% 60% at 50% 42%, rgba(5,5,5,0) 40%, rgba(5,5,5,0.42) 100%)',
-                  }}
                 />
               </div>
             }
@@ -786,35 +778,48 @@ export const InnPageReserveCine: React.FC<Props> = ({
             }
           >
             <div style={{ textAlign: 'center', maxWidth: '60ch', margin: '0 auto' }}>
-              <p className="font-cinzel text-[11px] uppercase tracking-[0.4em] mb-5" style={{ color: 'rgba(10,8,8,.66)' }}>
+              <p className="font-cinzel text-[11px] uppercase tracking-[0.4em] mb-5" style={{ color: '#ffffff', textShadow: '0 1px 10px rgba(0,0,0,0.55)' }}>
                 {t('The Inventory', "L'Inventaire")}
               </p>
-              <h2 className="font-prata" style={{ color: '#0a0808', fontSize: 'clamp(2rem,5vw,4.25rem)', lineHeight: 0.95, margin: '0 0 16px' }}>
+              <h2 className="font-prata" style={{ color: '#ffffff', textShadow: '0 2px 18px rgba(0,0,0,0.55)', fontSize: 'clamp(2rem,5vw,4.25rem)', lineHeight: 0.95, margin: '0 0 16px' }}>
                 {t('Twelve spaces', 'Douze espaces')}
               </h2>
-              <p className="font-cinzel text-[11px] md:text-sm uppercase tracking-[0.55em]" style={{ color: 'rgba(10,8,8,.66)', margin: 0 }}>
+              <p className="font-cinzel text-[11px] md:text-sm uppercase tracking-[0.55em]" style={{ color: '#ffffff', fontWeight: 700, textShadow: '0 1px 10px rgba(0,0,0,0.6)', margin: 0 }}>
                 12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
               </p>
             </div>
           </GlyphPortal>
 
-          {/* ── Act 2 · the inventory list ── */}
-          <div className="relative max-w-5xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
-            <ul ref={espaceListRef} className="border-b border-[#c5a059]/10">
+          {/* ── Act 2 · the twelve squares, laid over the revealed picture ── */}
+          <div className="relative px-6 md:px-12 pb-20 md:pb-32">
+            <div className="absolute inset-0" aria-hidden>
+              <img
+                src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1800)}
+                srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
+                sizes="100vw"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+            <ul ref={espaceListRef} className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 max-w-6xl mx-auto">
               {SPACES_DATA.map((space, i) => (
                 <li
                   key={i}
-                  className="espace-row grid grid-cols-[2.4rem_1fr] md:grid-cols-[5rem_1fr_minmax(0,26rem)] gap-x-4 md:gap-x-10 items-start py-8 md:py-10 border-t border-[#c5a059]/10"
+                  className="espace-row relative flex flex-col justify-between min-h-[240px] md:min-h-[264px] p-5 md:p-6 border border-white/10 bg-[#050505]/75 backdrop-blur-sm rounded-[15px] shadow-[0_10px_34px_rgba(0,0,0,0.5)]"
                 >
-                  <span className="font-cinzel text-[#c5a059] text-xs md:text-base tracking-[0.3em] pt-1.5 md:pt-2">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="font-prata uppercase text-[#f3e5ab] text-2xl md:text-4xl leading-[1.05] tracking-[-0.01em]">
-                    {language === 'EN' ? space.titleEn : space.titleFr}
-                  </h3>
-                  <ul className="col-start-2 md:col-start-3 mt-4 md:mt-2 space-y-2">
+                  <div>
+                    <span className="font-cinzel text-[#c5a059] text-xs md:text-sm tracking-[0.3em] block mb-3">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="font-prata uppercase text-[#f3e5ab] text-xl md:text-2xl leading-[1.1] tracking-[-0.01em]">
+                      {language === 'EN' ? space.titleEn : space.titleFr}
+                    </h3>
+                  </div>
+                  <ul className="mt-4 space-y-1.5">
                     {(language === 'EN' ? space.itemsEn : space.itemsFr).map((item, j) => (
-                      <li key={j} className="flex items-baseline gap-3 font-josefin text-neutral-300 text-sm md:text-[15px]">
+                      <li key={j} className="flex items-baseline gap-2.5 font-josefin text-neutral-300 text-sm md:text-[14px] leading-snug">
                         <span className="inline-block w-1 h-1 rounded-full bg-[#c5a059]/70 shrink-0 translate-y-[-2px]" aria-hidden />
                         <span>{item}</span>
                       </li>
@@ -1063,7 +1068,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
           100% { transform: scale(1.09) translate3d(-1%, -0.6%, 0); }
         }
 
-        /* L'Espace inventory rows: hidden until they scroll into view, then a
+        /* L'Espace inventory cards: hidden until they scroll into view, then a
            gentle fade + rise. The IntersectionObserver adds .espace-in once. */
         .espace-row {
           opacity: 0;

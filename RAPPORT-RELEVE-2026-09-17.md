@@ -399,3 +399,50 @@ Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige
 - `components/InnPageReserveCine.tsx` (import + GlyphPortal dans L'Espace, retrait de l'ancienne intro).
 - Rollback de 21 fichiers de l'espace membre vers `fae88b9` (`components/compte/**`, `ProfilePage`, `MessagingPage`, `AuthModal`, `D20Roller`).
 - `components/GlyphPortal.tsx` inchangé (conservé pour la landing).
+
+---
+
+# Tâche 11 — « le modèle de l'Espace est superbe » : retouches du portail L'Espace
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été demandé (message d'Alex, mot pour mot)
+
+> « enfin le modele de l'Esace est superbe. juste mettre aucun filtre sur l'image et mettre l'écriture avec un font plus bold (ecritre qui dit 12 espaces) et mettre blanc l'écriture avec slight drop shadow. ensuite, les carrés d'espaces doivent apparaitre par dessus l'image révélée »
+
+## Ce qui a été fait
+
+Trois retouches dans la section L'Espace de `components/InnPageReserveCine.tsx` (la landing page principale et `/reserve-cine`) :
+
+1. **Aucun filtre sur l'image.** La photo des jardins (`ESPACE_COVER_PHOTO`) qui se révèle à travers les lettres du portail passait à `opacity: 0.5` avec un voile radial sombre par-dessus. Les deux ont été retirés : l'image est maintenant pleine opacité, sans voile.
+2. **Écriture « 12 espaces » plus bold, blanche, avec une légère ombre portée.** La ligne « 12 espaces · 1 maison » est passée en Cinzel 700, blanche (`#ffffff`) avec `text-shadow: 0 1px 10px rgba(0,0,0,0.6)`. Le titre « Douze espaces » et le surtitre « L'Inventaire » (posés sur la même image révélée) ont été mis en blanc avec ombre portée pour rester lisibles une fois le filtre retiré : c'était soit tout le bloc en blanc, soit un titre noir posé sur la photo, illisible.
+3. **Les carrés des espaces par-dessus l'image révélée.** L'ancienne liste verticale des douze espaces (rangées bordées sur fond noir, en dessous du portail) est devenue une grille de douze cartes (1 colonne mobile, 2 tablette, 4 bureau) posées sur la photo des jardins en fond pleine largeur. Chaque carte a un fond encre translucide (`#050505` à 75 %), un flou d'arrière-plan, des coins à 15 px, une bordure blanche fine et une ombre, pour rester lisible sans masquer l'image. L'animation d'apparition au scroll (`.espace-row` / `.espace-in`) est conservée.
+
+## Ce qui a été vérifié comment
+
+- `npx tsc --noEmit` sans erreur, puis `npm run build` vert (monolithe complet).
+- Mesures DOM par Playwright sur la preview (1440 et 390) :
+  - image du champ à opacité 1 (plus de `0.5`, plus de voile) ;
+  - « 12 espaces · 1 maison » en blanc `rgb(255,255,255)`, `font-weight: 700`, `text-shadow` présent ;
+  - « Douze espaces » en blanc avec ombre ;
+  - inventaire en `display: grid`, 4 colonnes à 1440 (1 colonne à 390), 12 cartes, fond `rgba(5,5,5,0.75)`, bordure blanche, rayon 15 px ;
+  - la photo des jardins en fond derrière la grille ;
+  - aucun débordement horizontal, zéro erreur console.
+
+## Ce qui n'a PAS été vérifié
+
+- **Aucune capture n'a été regardée de mes yeux.** Ce modèle ne lit pas les images ; la grille visuelle de la RÈGLE -5 reste à passer par un agent qui voit. Les points à regarder en priorité : le contraste du blanc sur la photo des jardins (qui peut être claire), l'équilibre des douze cartes sur l'image, et le rendu des cartes sur mobile.
+
+## Décisions de jugement à regarder en premier
+
+- **Le blanc étendu au titre et au surtitre.** Tu n'as parlé explicitement que de « l'écriture qui dit 12 espaces », mais une fois le filtre retiré, le titre « Douze espaces » noir serait illisible sur la photo. J'ai donc mis tout le bloc en blanc avec ombre. Si tu voulais garder le titre en noir, c'est deux lignes à remettre dans `InnPageReserveCine.tsx`.
+- **Les cartes à 75 % d'encre + flou.** Pour que le texte reste lisible par-dessus l'image, j'ai donné aux carrés un fond encre translucide plutôt qu'un voile sur l'image entière. L'image reste sans filtre et se voit dans les gouttières entre les cartes. Si tu préfères des cartes plus transparentes (image plus présente), c'est `bg-[#050505]/75` à baisser.
+- **La photo réutilisée en fond.** Le portail révèle la photo, puis la même photo continue en fond derrière les carrés, pour que les carrés apparaissent bien « par-dessus l'image révélée ». Si tu veux une autre photo pour le fond des carrés, c'est la constante `ESPACE_COVER_PHOTO` à dédoubler.
+
+## Ce qui reste
+
+- La grille visuelle (captures 1440 et 390) du portail et des carrés, par un agent qui voit.
+
+## Fichiers touchés
+
+- `components/InnPageReserveCine.tsx` (filtre retiré, texte blanc bold + ombre, liste → grille de carrés sur la photo).
