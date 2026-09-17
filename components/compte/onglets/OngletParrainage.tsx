@@ -68,8 +68,8 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
     }
   };
 
-  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40';
-  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2';
+  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40';
+  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2';
 
   return (
     <div className="flex flex-col gap-6">
@@ -77,10 +77,10 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
       {/* En-tête */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Referrals', 'Parrainage')}
         </h3>
-        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
+        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
           {t('Invite someone to the Salon', 'Invitez quelqu\'un au Salon')}
         </h2>
         <p className="font-lato text-neutral-200">
@@ -104,7 +104,7 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
       {!readOnly && (
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Your code', 'Votre code')}
         </h3>
         {erreurCode ? (
@@ -113,13 +113,13 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
           </p>
         ) : !code ? (
           <div className="flex items-center gap-3 text-neutral-500 text-sm py-4">
-            <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c8aa6e] rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c5a059] rounded-full animate-spin" />
             {t('Loading…', 'Chargement…')}
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex items-center justify-between gap-4 px-5 py-4 rounded-lg" style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(240,230,210,0.5)' }}>
-              <span className="font-prata text-[#c8aa6e] text-xl tracking-[0.3em]">{code}</span>
+            <div className="flex items-center justify-between gap-4 px-5 py-4 rounded-lg" style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(243,229,171,0.5)' }}>
+              <span className="font-prata text-[#c5a059] text-xl tracking-[0.3em]">{code}</span>
               <span className="font-cinzel text-neutral-400 text-[10px] uppercase tracking-[0.3em]">
                 {nb > 0 ? t(`${nb} guest${nb > 1 ? 's' : ''}`, `${nb} invité${nb > 1 ? 's' : ''}`) : ''}
               </span>
@@ -131,14 +131,14 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
             <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={copier}
-                className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d8bd85] transition-colors"
+                className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d4b06a] transition-colors"
               >
                 {copie ? t('Link copied', 'Lien copié') : t('Copy the link', 'Copier le lien')}
               </button>
               {typeof navigator !== 'undefined' && 'share' in navigator && (
                 <button
                   onClick={partager}
-                  className="rounded-full border border-[#c8aa6e]/55 bg-[#010a13]/55 text-[#f0e6d2] font-cinzel uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-white/5 transition-colors"
+                  className="rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 text-[#f3e5ab] font-cinzel uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-white/5 transition-colors"
                 >
                   {t('Share', 'Partager')}
                 </button>
@@ -153,7 +153,7 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
       {/* Vos invités */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Your guests', 'Vos invités')}
         </h3>
         {filleuls.length === 0 ? (

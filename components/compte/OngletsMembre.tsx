@@ -27,7 +27,7 @@ interface OngletsMembreProps {
 
 export const OngletsMembre: React.FC<OngletsMembreProps> = ({ actif, onChange, language }) => {
   return (
-    <div className="sticky top-[56px] z-[50] w-full bg-[#010a13]/85 backdrop-blur-md border-b border-[#c8aa6e]/15">
+    <div className="sticky top-[56px] z-[50] w-full bg-[#0a0808]/85 backdrop-blur-md border-b border-[#c5a059]/15">
       <div 
         role="tablist"
         aria-label={language === 'FR' ? 'Sections de votre espace' : 'Sections of your space'}
@@ -44,7 +44,7 @@ export const OngletsMembre: React.FC<OngletsMembreProps> = ({ actif, onChange, l
               className={`
                 snap-start shrink-0 px-4 py-4 text-[11px] font-cinzel uppercase tracking-widest transition-colors
                 border-b-2
-                ${isSelected ? 'border-[#c8aa6e] text-[#f0e6d2]' : 'border-transparent text-neutral-400 hover:text-neutral-200'}
+                ${isSelected ? 'border-[#c5a059] text-[#f3e5ab]' : 'border-transparent text-neutral-400 hover:text-neutral-200'}
               `}
             >
               {language === 'FR' ? o.labelFR : o.labelEN}
@@ -52,7 +52,7 @@ export const OngletsMembre: React.FC<OngletsMembreProps> = ({ actif, onChange, l
           );
         })}
         {/* Ombre de fondu */}
-        <div className="sticky right-0 w-8 shrink-0 bg-gradient-to-l from-[#010a13] to-transparent pointer-events-none" />
+        <div className="sticky right-0 w-8 shrink-0 bg-gradient-to-l from-[#0a0808] to-transparent pointer-events-none" />
       </div>
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {

@@ -22,7 +22,7 @@ export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, langua
   if (!etat) {
     return (
       <div className="flex items-center gap-3 text-neutral-500 text-sm py-10 px-4">
-        <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c8aa6e] rounded-full animate-spin" />
+        <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c5a059] rounded-full animate-spin" />
         {t('Loading…', 'Chargement…')}
       </div>
     );
@@ -68,17 +68,17 @@ export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, langua
   return (
     <div className="flex flex-col gap-6">
       
-      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40 overflow-hidden relative">
+      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40 overflow-hidden relative">
         <div className="flex flex-col lg:grid lg:grid-cols-[1.1fr_1fr] gap-8 relative z-10">
           <div>
-            <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2">
-              <div className="h-px w-10 bg-[#c8aa6e]" />
+            <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2">
+              <div className="h-px w-10 bg-[#c5a059]" />
               {t('Arts centre & community', 'Centre d\'arts et communauté')}
             </h3>
             
             {!etat.hasProfile ? (
               <>
-                <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
+                <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
                   {t('Join the artistic community', 'Devenir membre de la communauté artistique')}
                 </h2>
                 <p className="font-lato text-neutral-200 mb-8 max-w-lg">
@@ -90,13 +90,13 @@ export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, langua
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <button
                     onClick={() => onNavigate('CREATOR_STUDIO')}
-                    className="w-full sm:w-auto rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-8 min-h-[48px] hover:bg-[#d8bd85] transition-colors"
+                    className="w-full sm:w-auto rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-8 min-h-[48px] hover:bg-[#d4b06a] transition-colors"
                   >
                     {t('Enter the Creator Studio', 'Entrer au Creator Studio')}
                   </button>
                   <button
                     onClick={() => onNavigate('CENTRE_ARTS')}
-                    className="w-full sm:w-auto rounded-full border border-[#c8aa6e]/55 bg-[#010a13]/55 text-[#f0e6d2] font-cinzel uppercase text-[12px] tracking-[0.18em] px-8 min-h-[48px] hover:bg-white/5 transition-colors"
+                    className="w-full sm:w-auto rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 text-[#f3e5ab] font-cinzel uppercase text-[12px] tracking-[0.18em] px-8 min-h-[48px] hover:bg-white/5 transition-colors"
                   >
                     {t('Discover the arts centre', 'Découvrir le centre d\'arts')}
                   </button>
@@ -104,7 +104,7 @@ export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, langua
               </>
             ) : (
               <>
-                <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
+                <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
                   {t('Your workshop in the Creator Studio', 'Votre atelier au Creator Studio')}
                 </h2>
                 <p className="font-lato text-neutral-200 mb-8 max-w-lg leading-relaxed">
@@ -112,7 +112,7 @@ export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, langua
                 </p>
                 <button
                   onClick={() => onNavigate('CREATOR_STUDIO')}
-                  className="w-full sm:w-auto rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-8 min-h-[48px] hover:bg-[#d8bd85] transition-colors"
+                  className="w-full sm:w-auto rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-8 min-h-[48px] hover:bg-[#d4b06a] transition-colors"
                 >
                   {t('Back to the workshop', 'Retourner à l\'atelier')}
                 </button>

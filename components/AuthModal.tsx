@@ -419,7 +419,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
         type="button"
         onClick={() => setConsentChecked(!consentChecked)}
         className={`w-5 h-5 shrink-0 border-2 flex items-center justify-center mt-0.5 transition-colors
-          ${consentChecked ? 'border-[#c8aa6e] bg-[#c8aa6e]' : 'border-white/20 group-hover:border-[#c8aa6e]/50'}`}
+          ${consentChecked ? 'border-[#c5a059] bg-[#c5a059]' : 'border-white/20 group-hover:border-[#c5a059]/50'}`}
         aria-checked={consentChecked}
         role="checkbox"
       >
@@ -427,9 +427,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
       </button>
       <span className="text-neutral-500 text-xs font-lato leading-relaxed">
         {language === 'FR' ? (
-          <>J'ai lu et j'accepte la{' '}<button type="button" onClick={onShowPrivacy} className="text-[#c8aa6e] hover:underline">Politique de Confidentialité</button>{' '}et je consens à la collecte de mes renseignements personnels (Loi 25 / LPRPDE).</>
+          <>J'ai lu et j'accepte la{' '}<button type="button" onClick={onShowPrivacy} className="text-[#c5a059] hover:underline">Politique de Confidentialité</button>{' '}et je consens à la collecte de mes renseignements personnels (Loi 25 / LPRPDE).</>
         ) : (
-          <>I have read and accept the{' '}<button type="button" onClick={onShowPrivacy} className="text-[#c8aa6e] hover:underline">Privacy Policy</button>{' '}and consent to the collection of my personal information (Law 25 / PIPEDA).</>
+          <>I have read and accept the{' '}<button type="button" onClick={onShowPrivacy} className="text-[#c5a059] hover:underline">Privacy Policy</button>{' '}and consent to the collection of my personal information (Law 25 / PIPEDA).</>
         )}
       </span>
     </label>
@@ -442,7 +442,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
           key={m}
           onClick={() => switchMethod(m)}
           className={`flex-1 py-2 text-xs font-cinzel uppercase tracking-wider transition-colors
-            ${mode === m ? 'bg-[#c8aa6e] text-black' : 'text-neutral-500 hover:text-white hover:bg-white/5'}`}
+            ${mode === m ? 'bg-[#c5a059] text-black' : 'text-neutral-500 hover:text-white hover:bg-white/5'}`}
         >
           {m === 'login'  ? t('Email', 'Courriel')
            : m === 'signup' ? t('Sign Up', 'Inscription')
@@ -459,10 +459,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
       {/* Invisible reCAPTCHA anchor: must be in DOM when phone mode active */}
       <div id="recaptcha-anchor" className="absolute -top-96 -left-96 opacity-0 pointer-events-none" aria-hidden="true"></div>
 
-      <div className="relative w-full max-w-md bg-[#0f0f0f] border border-[#c8aa6e]/30 shadow-2xl max-h-[92vh] overflow-y-auto animate-fadeInModal">
+      <div className="relative w-full max-w-md bg-[#0f0f0f] border border-[#c5a059]/30 shadow-2xl max-h-[92vh] overflow-y-auto animate-fadeInModal">
         {/* Corner decorations */}
         {(['tl','tr','bl','br'] as const).map(c => (
-          <div key={c} className={`absolute w-4 h-4 ${c.includes('t') ? 'top-0' : 'bottom-0'} ${c.includes('l') ? 'left-0' : 'right-0'} border-${c.includes('t') ? 't' : 'b'}-2 border-${c.includes('l') ? 'l' : 'r'}-2 border-[#c8aa6e]/60`}></div>
+          <div key={c} className={`absolute w-4 h-4 ${c.includes('t') ? 'top-0' : 'bottom-0'} ${c.includes('l') ? 'left-0' : 'right-0'} border-${c.includes('t') ? 't' : 'b'}-2 border-${c.includes('l') ? 'l' : 'r'}-2 border-[#c5a059]/60`}></div>
         ))}
 
         <div className="p-7">
@@ -470,7 +470,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
           {/* Header */}
           <div className="flex justify-between items-start mb-6">
             <div>
-              <span className="text-[#c8aa6e] text-[10px] font-cinzel uppercase tracking-[0.5em]">
+              <span className="text-[#c5a059] text-[10px] font-cinzel uppercase tracking-[0.5em]">
                 Le Salon des Inconnus
               </span>
               <h2 className="font-cinzel text-xl text-white mt-1">
@@ -515,12 +515,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
               {mode === 'login' && (
                 <div className="space-y-3">
                   <input type="email" placeholder={t('Email', 'Courriel')} value={email} onChange={e => setEmail(e.target.value)}
-                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600" />
+                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600" />
                   <input type="password" placeholder={t('Password', 'Mot de passe')} value={password} onChange={e => setPassword(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleEmailAuth()}
-                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600" />
+                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600" />
                   <button onClick={handleEmailAuth} disabled={loading || !email || !password}
-                    className="w-full py-3 border border-[#c8aa6e] text-[#c8aa6e] font-cinzel text-sm uppercase tracking-widest hover:bg-[#c8aa6e] hover:text-black disabled:opacity-40 transition-all">
+                    className="w-full py-3 border border-[#c5a059] text-[#c5a059] font-cinzel text-sm uppercase tracking-widest hover:bg-[#c5a059] hover:text-black disabled:opacity-40 transition-all">
                     {loading ? '...' : t('Sign In', 'Se connecter')}
                   </button>
                 </div>
@@ -530,14 +530,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
               {mode === 'signup' && (
                 <div className="space-y-3">
                   <input type="text" placeholder={t('Your name', 'Votre nom')} value={name} onChange={e => setName(e.target.value)}
-                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600" />
+                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600" />
                   <input type="email" placeholder={t('Email', 'Courriel')} value={email} onChange={e => setEmail(e.target.value)}
-                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600" />
+                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600" />
                   <input type="password" placeholder={t('Password (min. 8 chars)', 'Mot de passe (min. 8 caractères)')} value={password} onChange={e => setPassword(e.target.value)}
-                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600" />
+                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600" />
                   <ConsentCheckbox />
                   <button onClick={handleEmailAuth} disabled={loading || !email || !password || !consentChecked}
-                    className="w-full py-3 bg-[#c8aa6e] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f0e6d2] disabled:opacity-40 transition-all">
+                    className="w-full py-3 bg-[#c5a059] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-40 transition-all">
                     {loading ? t('Creating...', 'Création...') : t('Create Account', 'Créer un Compte')}
                   </button>
                 </div>
@@ -555,7 +555,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handlePhoneSend()}
-                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600"
+                    className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600"
                   />
                   <ConsentCheckbox />
                   <p className="text-neutral-600 text-[10px] font-lato">
@@ -565,7 +565,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
                     )}
                   </p>
                   <button onClick={handlePhoneSend} disabled={loading || !phone || !consentChecked}
-                    className="w-full py-3 bg-[#c8aa6e] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f0e6d2] disabled:opacity-40 transition-all">
+                    className="w-full py-3 bg-[#c5a059] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-40 transition-all">
                     {loading ? t('Sending...', 'Envoi...') : t('Send Code', 'Envoyer le Code')}
                   </button>
                 </div>
@@ -591,10 +591,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
                 value={otp}
                 onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                 onKeyDown={e => e.key === 'Enter' && handlePhoneConfirm()}
-                className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato text-center tracking-[0.5em] focus:outline-none focus:border-[#c8aa6e]/60 placeholder:text-neutral-600 placeholder:tracking-normal"
+                className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 text-sm font-lato text-center tracking-[0.5em] focus:outline-none focus:border-[#c5a059]/60 placeholder:text-neutral-600 placeholder:tracking-normal"
               />
               <button onClick={handlePhoneConfirm} disabled={loading || otp.length < 6}
-                className="w-full py-3 bg-[#c8aa6e] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f0e6d2] disabled:opacity-40 transition-all">
+                className="w-full py-3 bg-[#c5a059] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-40 transition-all">
                 {loading ? t('Verifying...', 'Vérification...') : t('Confirm', 'Confirmer')}
               </button>
               <button onClick={() => { setMode('phone'); setOtp(''); setConfirmationResult(null); }}
@@ -608,24 +608,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
           {mode === 'membership' && (
             <div className="space-y-3">
               <p className="text-neutral-400 text-sm font-lato">
-                {t('Welcome, ', 'Bienvenue, ')}<span className="text-[#c8aa6e]">{pendingName}</span>.{' '}
+                {t('Welcome, ', 'Bienvenue, ')}<span className="text-[#c5a059]">{pendingName}</span>.{' '}
                 {t('How do you identify with the Salon?', 'Comment vous identifiez-vous au Salon\u00a0?')}
               </p>
               {MEMBERSHIP_OPTIONS.map(opt => (
                 <button key={opt.id} onClick={() => setSelectedMembership(opt.id)}
                   className={`w-full flex items-start gap-3 p-3 border transition-all text-left
-                    ${selectedMembership === opt.id ? 'border-[#c8aa6e] bg-[#c8aa6e]/10' : 'border-white/10 hover:border-[#c8aa6e]/40'}`}
+                    ${selectedMembership === opt.id ? 'border-[#c5a059] bg-[#c5a059]/10' : 'border-white/10 hover:border-[#c5a059]/40'}`}
                 >
                   <span className="text-2xl mt-0.5">{opt.icon}</span>
                   <div className="flex-1">
                     <div className="font-cinzel text-white text-sm">{language === 'FR' ? opt.label_fr : opt.label}</div>
                     <div className="text-neutral-500 text-xs font-lato mt-0.5">{language === 'FR' ? opt.desc_fr : opt.desc}</div>
                   </div>
-                  {selectedMembership === opt.id && <span className="text-[#c8aa6e] mt-1 shrink-0">✓</span>}
+                  {selectedMembership === opt.id && <span className="text-[#c5a059] mt-1 shrink-0">✓</span>}
                 </button>
               ))}
               <button onClick={handleMembershipSubmit} disabled={!selectedMembership || loading}
-                className="w-full py-3 bg-[#c8aa6e] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f0e6d2] disabled:opacity-40 transition-all">
+                className="w-full py-3 bg-[#c5a059] text-black font-cinzel font-bold text-sm uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-40 transition-all">
                 {loading ? t('Creating...', 'Création...') : t('Create My Space', 'Créer Mon Espace')}
               </button>
 
@@ -669,7 +669,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess, la
           {/* Footer: privacy link */}
           {(mode === 'login' || mode === 'signup' || mode === 'phone') && (
             <p className="mt-5 text-center text-neutral-700 text-[10px] font-lato">
-              <button onClick={onShowPrivacy} className="hover:text-[#c8aa6e] transition-colors">
+              <button onClick={onShowPrivacy} className="hover:text-[#c5a059] transition-colors">
                 {t('Privacy Policy', 'Politique de Confidentialité')}
               </button>
               {' · '}

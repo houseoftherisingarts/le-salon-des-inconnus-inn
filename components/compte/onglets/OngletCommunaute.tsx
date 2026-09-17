@@ -46,12 +46,12 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
     <div className="flex flex-col gap-6 w-full max-w-[1400px]">
       
       {/* En-tête Communauté */}
-      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 transition-colors duration-200 hover:border-[#c8aa6e]/40">
-        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2">
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 transition-colors duration-200 hover:border-[#c5a059]/40">
+        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2">
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Community', 'Communauté')}
         </h3>
-        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
+        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
           {t('Your people at the Salon', 'Vos gens au Salon')}
         </h2>
 
@@ -60,7 +60,7 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
           <button
             onClick={() => changeSousOnglet('amis')}
             className={`font-cinzel uppercase text-[12px] tracking-widest transition-colors ${
-              sousOnglet === 'amis' ? 'text-[#c8aa6e] border-b-2 border-[#c8aa6e] pb-1' : 'text-neutral-400 hover:text-neutral-200'
+              sousOnglet === 'amis' ? 'text-[#c5a059] border-b-2 border-[#c5a059] pb-1' : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
             {t('Friends', 'Amis')}
@@ -68,7 +68,7 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
           <button
             onClick={() => changeSousOnglet('messages')}
             className={`font-cinzel uppercase text-[12px] tracking-widest transition-colors ${
-              sousOnglet === 'messages' ? 'text-[#c8aa6e] border-b-2 border-[#c8aa6e] pb-1' : 'text-neutral-400 hover:text-neutral-200'
+              sousOnglet === 'messages' ? 'text-[#c5a059] border-b-2 border-[#c5a059] pb-1' : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
             {t('Messages', 'Messages')}
@@ -76,7 +76,7 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
           <button
             onClick={() => changeSousOnglet('notifications')}
             className={`font-cinzel uppercase text-[12px] tracking-widest transition-colors ${
-              sousOnglet === 'notifications' ? 'text-[#c8aa6e] border-b-2 border-[#c8aa6e] pb-1' : 'text-neutral-400 hover:text-neutral-200'
+              sousOnglet === 'notifications' ? 'text-[#c5a059] border-b-2 border-[#c5a059] pb-1' : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
             {t('Notifications', 'Notifications')}

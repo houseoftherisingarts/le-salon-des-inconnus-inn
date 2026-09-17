@@ -136,19 +136,19 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
 
   const fieldStyle: React.CSSProperties = {
     background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-    border: '1px solid rgba(200,170,110,0.22)',
+    border: '1px solid rgba(197,160,89,0.22)',
     borderRadius: '14px',
   };
 
   if (!registration) return null;
 
   return (
-    <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40">
-      <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-2 flex items-center gap-2">
-        <div className="h-px w-10 bg-[#c8aa6e]" />
+    <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40">
+      <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-2 flex items-center gap-2">
+        <div className="h-px w-10 bg-[#c5a059]" />
         Grand Ceilidh de Mai 2026
       </h3>
-      <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
+      <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-6">
         {t('My Ceilidh', 'Mon Ceilidh')}
       </h2>
 
@@ -157,7 +157,7 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-5 md:p-6" style={fieldStyle}>
             <div className="flex items-center justify-between mb-3">
-              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
+              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
                 {t('My team', 'Mon équipe')}
               </span>
               {savingTeam && (
@@ -169,8 +169,8 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
             <select
               value={currentTeamId}
               onChange={(e) => setTeam(e.target.value)}
-              className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
-              style={{ border: '1px solid rgba(200,170,110,0.3)' }}
+              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
+              style={{ border: '1px solid rgba(197,160,89,0.3)' }}
             >
               <option value="">{t('Choose a team', 'Choisir une équipe')}</option>
               {TEAMS.map((team) => {
@@ -186,7 +186,7 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
 
           <div className="p-5 md:p-6" style={fieldStyle}>
             <div className="flex items-center justify-between mb-3">
-              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
+              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
                 {t('My bed', 'Mon lit')}
               </span>
               {savingRoom && (
@@ -198,8 +198,8 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
             <select
               value={currentRoomId}
               onChange={(e) => setRoom(e.target.value)}
-              className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
-              style={{ border: '1px solid rgba(200,170,110,0.3)' }}
+              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
+              style={{ border: '1px solid rgba(197,160,89,0.3)' }}
             >
               <option value="">{t('Choose a bed', 'Choisir un lit')}</option>
               {LODGING_GROUPS.map((g) => (
@@ -222,7 +222,7 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-5 md:p-6" style={fieldStyle}>
             <div className="flex items-center justify-between mb-3">
-              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
+              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
                 {t('Arrival day', "Jour d'arrivée")}
               </span>
               {savingArrival && (
@@ -234,8 +234,8 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
             <select
               value={currentArrivalDate}
               onChange={(e) => setArrival({ arrivalDate: e.target.value })}
-              className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
-              style={{ border: '1px solid rgba(200,170,110,0.3)' }}
+              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
+              style={{ border: '1px solid rgba(197,160,89,0.3)' }}
             >
               <option value="">{t('Choose a day', 'Choisir un jour')}</option>
               {ARRIVAL_DAYS_OPTIONS.map((d) => (
@@ -246,7 +246,7 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
 
           <div className="p-5 md:p-6" style={fieldStyle}>
             <div className="flex items-center justify-between mb-3">
-              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
+              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
                 {t('Arrival time', 'Heure d\'arrivée')}
               </span>
             </div>
@@ -254,8 +254,8 @@ export const MonCeilidhPanneau: React.FC<MonCeilidhPanneauProps> = ({ language, 
               type="time"
               value={currentArrivalTime}
               onChange={(e) => setArrival({ arrivalTime: e.target.value })}
-              className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
-              style={{ border: '1px solid rgba(200,170,110,0.3)' }}
+              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
+              style={{ border: '1px solid rgba(197,160,89,0.3)' }}
             />
             <p className="font-josefin text-neutral-500 text-[10px] uppercase tracking-[0.25em] mt-2">
               {t('Visible on your public profile', 'Visible sur votre profil public')}

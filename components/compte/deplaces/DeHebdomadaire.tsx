@@ -125,11 +125,11 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
     <section className="py-2">
       <div>
         <div className="flex items-baseline justify-between mb-5 flex-wrap gap-3">
-          <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block">
+          <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block">
             {t('Weekly roll', 'Lancer hebdomadaire')}
           </span>
           {d20Doc?.sandwichesOwed ? (
-            <span className="font-cinzel text-[#c8aa6e]/80 text-[10px] uppercase tracking-[0.4em]">
+            <span className="font-cinzel text-[#c5a059]/80 text-[10px] uppercase tracking-[0.4em]">
               {d20Doc.sandwichesOwed === 1
                 ? t('You owe 1 chicken sandwich', 'Vous devez 1 sandwich au poulet')
                 : t(`You owe ${d20Doc.sandwichesOwed} chicken sandwiches`,
@@ -143,7 +143,7 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
             className="p-5 md:p-6 rounded-2xl"
             style={{
               background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.85) 100%)',
-              border: '1px solid rgba(200,170,110,0.22)',
+              border: '1px solid rgba(197,160,89,0.22)',
             }}
           >
             <D20Roller
@@ -162,10 +162,10 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
 
             {onCooldown && (
               <div className="mt-5 text-center">
-                <p className="font-cinzel text-[#c8aa6e]/80 text-[9px] uppercase tracking-[0.45em] mb-2">
+                <p className="font-cinzel text-[#c5a059]/80 text-[9px] uppercase tracking-[0.45em] mb-2">
                   {t('Next roll in', 'Prochain lancer dans')}
                 </p>
-                <div className="inline-flex items-baseline gap-2 font-prata text-[#f0e6d2]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                <div className="inline-flex items-baseline gap-2 font-prata text-[#f3e5ab]" style={{ fontVariantNumeric: 'tabular-nums' }}>
                   <span className="text-2xl">{cooldownParts.days}</span>
                   <span className="text-[10px] font-cinzel text-neutral-500 uppercase tracking-[0.3em]">
                     {t('d', 'j')}
@@ -187,7 +187,7 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
                     className={`bg-transparent border-b text-center font-josefin text-[11px] tracking-[0.25em] w-44 py-1 focus:outline-none transition-colors ${
                       travelStatus === 'wrong'
                         ? 'border-rose-500 text-rose-400 placeholder:text-rose-500/40'
-                        : 'border-white/10 text-neutral-400 hover:border-white/20 focus:border-[#c8aa6e]/60 focus:text-[#f0e6d2] placeholder:text-neutral-700'
+                        : 'border-white/10 text-neutral-400 hover:border-white/20 focus:border-[#c5a059]/60 focus:text-[#f3e5ab] placeholder:text-neutral-700'
                     }`}
                   />
                 </form>
@@ -199,11 +199,11 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
             className="p-6 md:p-8 rounded-2xl"
             style={{
               background: 'linear-gradient(135deg, rgba(50,40,22,0.4) 0%, rgba(20,16,10,0.85) 100%)',
-              border: '1px solid rgba(240,230,210,0.2)',
+              border: '1px solid rgba(243,229,171,0.2)',
             }}
           >
             <h4
-              className="font-prata uppercase text-[#f0e6d2] leading-tight mb-4"
+              className="font-prata uppercase text-[#f3e5ab] leading-tight mb-4"
               style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)' }}
             >
               {t('What the dice decides', 'Ce que les dés décident')}
@@ -223,12 +223,12 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
                 <span className="text-amber-200 text-xs">5% {t('rebate code', 'code de rabais')}</span>
               </li>
               <li className="flex items-baseline justify-between gap-3">
-                <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.4em]">16 – 19</span>
-                <span className="text-[#c8aa6e] text-xs">10% {t('rebate code', 'code de rabais')}</span>
+                <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">16 – 19</span>
+                <span className="text-[#c5a059] text-xs">10% {t('rebate code', 'code de rabais')}</span>
               </li>
               <li className="flex items-baseline justify-between gap-3">
-                <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.4em]">20 · Nat 20</span>
-                <span className="text-[#f0e6d2] text-xs font-bold">20% {t('rebate code', 'code de rabais')}</span>
+                <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.4em]">20 · Nat 20</span>
+                <span className="text-[#f3e5ab] text-xs font-bold">20% {t('rebate code', 'code de rabais')}</span>
               </li>
             </ul>
 
@@ -248,10 +248,10 @@ export const DeHebdomadaire: React.FC<DeHebdomadaireProps> = ({ language, user }
                   type="button"
                   onClick={() => copyCoupon(lastEntry.code!)}
                   className="w-full flex items-center justify-between gap-4 px-5 py-4 rounded-lg transition-all hover:bg-black/20"
-                  style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(240,230,210,0.5)' }}
+                  style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(243,229,171,0.5)' }}
                 >
-                  <span className="font-prata text-[#c8aa6e] text-xl tracking-[0.3em]">{lastEntry.code}</span>
-                  <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.45em]">
+                  <span className="font-prata text-[#c5a059] text-xl tracking-[0.3em]">{lastEntry.code}</span>
+                  <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.45em]">
                     {couponCopied ? t('Copied ✓', 'Copié ✓') : t('Tap to copy', 'Toucher pour copier')}
                   </span>
                 </button>

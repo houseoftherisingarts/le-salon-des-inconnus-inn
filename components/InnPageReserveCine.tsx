@@ -23,6 +23,7 @@ import {
   INN_HERO_FOCUS,
 } from './InnPage';
 import { RoomOrbProvider } from './RoomOrbModal';
+import GlyphPortal from './GlyphPortal';
 
 const CEILIDH_DOORS_PHOTO = '/media/inn/golden%20drone%20copy.jpg';
 const WWOOFING_DOORS_PHOTO = '/wwoof/bw-6.jpg';
@@ -215,10 +216,7 @@ export const InnPageReserveCine: React.FC<Props> = ({
   };
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
-  // L'Espace: pinned intro (words → picture) scrubbed by scroll, then a list.
-  const espaceTrackRef = useRef<HTMLDivElement>(null);
-  const espaceWordsRef = useRef<HTMLDivElement>(null);
-  const espacePhotoRef = useRef<HTMLDivElement>(null);
+  // L'Espace: GlyphPortal entry (the word "ESPACE" becomes the door), then a list.
   const espaceListRef = useRef<HTMLUListElement>(null);
   const [doorsExiting, setDoorsExiting] = useState<null | 'CEILIDH' | 'WWOOFING'>(null);
   const daysToCeilidhDoors = Math.max(0, Math.ceil((CEILIDH_DOORS_DATE.getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
@@ -374,51 +372,6 @@ export const InnPageReserveCine: React.FC<Props> = ({
       if (rafTick) cancelAnimationFrame(rafTick);
     };
   }, [fitCine, drawCine]);
-
-  // ── L'ESPACE intro: the words "L'Espace" dissolve + rise while the full-bleed
-  //    picture dollies in behind them, all scrubbed by the scroll position of the
-  //    pinned track. Same getBoundingClientRect() progress math as the reserve act. ──
-  useEffect(() => {
-    const root = scrollRef.current;
-    const track = espaceTrackRef.current;
-    const words = espaceWordsRef.current;
-    const photo = espacePhotoRef.current;
-    if (!root || !track || !words || !photo) return;
-
-    let rafTick = 0;
-    let lastP = -1;
-    const update = () => {
-      rafTick = 0;
-      const rect = track.getBoundingClientRect();
-      const vh = root.clientHeight;
-      const span = track.offsetHeight - vh;
-      const scrolled = -rect.top;
-      const p = Math.min(1, Math.max(0, scrolled / Math.max(1, span)));
-      if (Math.abs(p - lastP) < 0.004) return;
-      lastP = p;
-
-      // Words hold briefly, then dissolve + rise as the photo comes through
-      // (crossfade between p 0.30 and 0.85).
-      const wOut = Math.min(1, Math.max(0, (p - 0.3) / 0.45));
-      words.style.opacity = String(1 - wOut);
-      words.style.transform = `translate3d(0, ${-wOut * 36}px, 0) scale(${1 + wOut * 0.06})`;
-      // Photo fades in and dollies from 1.14 toward a settled 1.02, just behind
-      // the words so the reveal reads as the words opening onto the space.
-      const phIn = Math.min(1, Math.max(0, (p - 0.3) / 0.55));
-      photo.style.opacity = String(phIn);
-      photo.style.transform = `scale(${1.14 - phIn * 0.12})`;
-    };
-    const onScroll = () => { if (rafTick) return; rafTick = requestAnimationFrame(update); };
-    const onResize = () => { lastP = -1; if (!rafTick) rafTick = requestAnimationFrame(update); };
-    update();
-    root.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize);
-    return () => {
-      root.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onResize);
-      if (rafTick) cancelAnimationFrame(rafTick);
-    };
-  }, []);
 
   // ── L'ESPACE list: each inventory row fades/slides in as it enters the viewport. ──
   useEffect(() => {
@@ -775,23 +728,23 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
         </LazySection>
 
-        {/* L'Espace: the words lead into a full-bleed picture, then on scroll a
-            list of the twelve spaces unfolds. Act 1 is a sticky scrubbed intro
-            (giant "L'Espace" crossfading into the gardens photo); Act 2 is the
-            inventory list, each row revealed as it enters the viewport. */}
+        {/* L'Espace: GlyphPortal entry — the word "ESPACE" becomes the door into
+            the twelve-space inventory. The scroll-scrubbed letter portal replaces
+            the earlier words→photo intro; the inventory list follows below. */}
         <section data-l-espace className="relative bg-[#050505] border-t border-[#c5a059]/10">
-          {/* ── Act 1 · pinned intro: the words open onto the picture ── */}
-          <div ref={espaceTrackRef} className="relative">
-            <div className="sticky top-0 h-screen overflow-hidden">
-              {/* Picture layer: fades in and dollies toward a settled frame just
-                  behind the words, so the reveal reads as the title opening onto
-                  the space. */}
-              <div
-                ref={espacePhotoRef}
-                aria-hidden
-                className="absolute inset-0 z-10 will-change-transform"
-                style={{ opacity: 0, transform: 'scale(1.14)' }}
-              >
+          <GlyphPortal
+            word={t('SPACE', 'ESPACE')}
+            fontFamily="'Cinzel', serif"
+            fontWeight={700}
+            enterLabel={t('Enter', 'Entrer')}
+            style={{
+              '--gp-paper': '#050505',
+              '--gp-ink': '#f3e5ab',
+              '--gp-field': '#c5a059',
+              '--gp-foreground': '#0a0808',
+            }}
+            background={
+              <div style={{ position: 'absolute', inset: 0, transform: 'scale(var(--gp-field-scale,1))', background: '#c5a059' }}>
                 <img
                   src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1800)}
                   srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
@@ -800,60 +753,53 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   loading="eager"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover"
+                  style={{ opacity: 0.5 }}
                 />
-                {/* soft vignette + bottom fall-off into the list below */}
                 <div
                   className="absolute inset-0"
                   style={{
                     background:
-                      'radial-gradient(ellipse 75% 60% at 50% 42%, rgba(5,5,5,0) 45%, rgba(5,5,5,0.55) 100%)',
+                      'radial-gradient(ellipse 75% 60% at 50% 42%, rgba(5,5,5,0) 40%, rgba(5,5,5,0.42) 100%)',
                   }}
                 />
-                <div
-                  className="absolute inset-x-0 bottom-0 h-[32%]"
-                  style={{ background: 'linear-gradient(to top, #050505 0%, rgba(5,5,5,0.55) 55%, transparent 100%)' }}
-                />
               </div>
-
-              {/* Words layer: the giant title that leads into the picture. */}
-              <div className="absolute inset-0 z-20 flex items-center justify-center px-6 text-center">
-                <div ref={espaceWordsRef} className="will-change-transform">
-                  <h2
-                    className="font-prata uppercase text-[#f3e5ab] leading-[0.9] tracking-[-0.015em]"
-                    style={{
-                      fontSize: 'clamp(3rem, 15vw, 13rem)',
-                      textShadow: '0 6px 60px rgba(0,0,0,0.75)',
-                    }}
-                  >
-                    {t('The Space', "L'Espace")}
-                  </h2>
-                  <p
-                    className="font-cinzel text-[#c5a059] text-[10px] md:text-sm uppercase mt-6 tracking-[0.55em]"
-                    style={{ textShadow: '0 2px 16px rgba(0,0,0,0.85)' }}
-                  >
-                    12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
-                  </p>
-                </div>
+            }
+            front={
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 'clamp(96px,13%,112px)',
+                  left: 'clamp(24px,6%,64px)',
+                  right: 'clamp(24px,6%,64px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 14,
+                }}
+              >
+                <div style={{ height: 1, width: 40, background: '#c5a059', flex: '0 0 auto' }} />
+                <span className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059]">
+                  {t('The Space', "L'Espace")}
+                </span>
+                <div style={{ height: 1, width: 40, background: '#c5a059', flex: '0 0 auto' }} />
               </div>
+            }
+          >
+            <div style={{ textAlign: 'center', maxWidth: '60ch', margin: '0 auto' }}>
+              <p className="font-cinzel text-[11px] uppercase tracking-[0.4em] mb-5" style={{ color: 'rgba(10,8,8,.66)' }}>
+                {t('The Inventory', "L'Inventaire")}
+              </p>
+              <h2 className="font-prata" style={{ color: '#0a0808', fontSize: 'clamp(2rem,5vw,4.25rem)', lineHeight: 0.95, margin: '0 0 16px' }}>
+                {t('Twelve spaces', 'Douze espaces')}
+              </h2>
+              <p className="font-cinzel text-[11px] md:text-sm uppercase tracking-[0.55em]" style={{ color: 'rgba(10,8,8,.66)', margin: 0 }}>
+                12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
+              </p>
             </div>
-            {/* Scroll length of the act: the sticky panel pins for this extent. */}
-            <div aria-hidden style={{ height: '150vh' }} />
-          </div>
+          </GlyphPortal>
 
           {/* ── Act 2 · the inventory list ── */}
           <div className="relative max-w-5xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
-            <div className="text-center mb-14 md:mb-20">
-              <span className="font-cinzel text-[#c5a059] text-[10px] md:text-xs uppercase tracking-[0.55em]">
-                {t('The Inventory', "L'Inventaire")}
-              </span>
-              <h2
-                className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em] mt-4"
-                style={{ fontSize: 'clamp(2rem, 5vw, 4.25rem)' }}
-              >
-                {t('Twelve spaces', 'Douze espaces')}
-              </h2>
-            </div>
-
             <ul ref={espaceListRef} className="border-b border-[#c5a059]/10">
               {SPACES_DATA.map((space, i) => (
                 <li

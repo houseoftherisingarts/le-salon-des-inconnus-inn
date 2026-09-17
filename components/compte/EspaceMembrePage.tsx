@@ -8,7 +8,6 @@ import { SiteFooter } from '../SiteFooter';
 import { Banniere } from './Banniere';
 import { OngletsMembre } from './OngletsMembre';
 import { RailMembre } from './RailMembre';
-import GlyphPortal from '../GlyphPortal';
 import { OngletProfil } from './onglets/OngletProfil';
 const OngletCommunaute = React.lazy(() => import('./onglets/OngletCommunaute').then(m => ({ default: m.OngletCommunaute })));
 const OngletArtistique = React.lazy(() => import('./onglets/OngletArtistique').then(m => ({ default: m.OngletArtistique })));
@@ -58,12 +57,6 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
   const uidAffiche = vueAdmin?.uid ?? (user ? user.uid : '');
   const profilAffiche = vueAdmin ? (profilCible ?? memberProfile) : memberProfile;
 
-  // Portail d'entrée : le prénom du membre devient la porte du salon.
-  const nomComplet = (profilAffiche?.displayName || user?.displayName || '').trim();
-  const prenom = nomComplet.split(/\s+/)[0] || '';
-  const motPortail = prenom || 'SALON';
-  const lettrePortail = Array.from(motPortail)[0] ?? '';
-
   // Parse query string for current tab
   const getOnglet = () => {
     if (typeof window === 'undefined') return 'profil';
@@ -96,7 +89,7 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
   // 1. Porte non connectée
   if (!user || !memberProfile) {
     return (
-      <div className="relative min-h-[100svh] w-full bg-[#010a13] flex flex-col items-start justify-center px-6 md:px-12 lg:px-20">
+      <div className="relative min-h-[100svh] w-full bg-[#050505] flex flex-col items-start justify-center px-6 md:px-12 lg:px-20">
         <div className="absolute inset-0 z-0">
           <img 
             src="/media/inn/golden drone copy.jpg" 
@@ -105,20 +98,16 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
           />
           <div 
             className="absolute inset-0" 
-            style={{ background: 'linear-gradient(90deg, rgba(1,10,19,.92) 0%, rgba(1,10,19,.7) 45%, rgba(1,10,19,.2) 100%)' }} 
-          />
-          <div 
-            className="absolute inset-0" 
-            style={{ background: 'radial-gradient(circle at 18% 55%, rgba(200,170,110,0.16), transparent 55%)' }} 
+            style={{ background: 'linear-gradient(90deg, rgba(10,8,8,.92) 0%, rgba(10,8,8,.7) 45%, rgba(10,8,8,.2) 100%)' }} 
           />
         </div>
         
         <div className="relative z-10 max-w-xl pt-20">
-          <span className="font-cinzel text-[#c8aa6e] text-[12px] uppercase tracking-[0.35em] block mb-4 flex items-center gap-2">
-            <div className="h-px w-10 bg-[#c8aa6e]" />
+          <span className="font-cinzel text-[#c5a059] text-[12px] uppercase tracking-[0.35em] block mb-4 flex items-center gap-2">
+            <div className="h-px w-10 bg-[#c5a059]" />
             {t('Members\' space', 'Espace membre')}
           </span>
-          <h1 className="font-prata text-[#f0e6d2] text-[clamp(2rem,4vw,3.5rem)] leading-[1.05] mb-6">
+          <h1 className="font-prata text-[#f3e5ab] text-[clamp(2rem,4vw,3.5rem)] leading-[1.05] mb-6">
             {t('Your space at the Salon', 'Votre espace au Salon')}
           </h1>
           <p className="font-lato text-neutral-300 text-lg leading-relaxed mb-10">
@@ -130,7 +119,7 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
           <div className="space-y-6">
             <button
               onClick={() => setShowAuth(true)}
-              className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-8 py-4 hover:bg-[#d8bd85] transition-colors"
+              className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-8 py-4 hover:bg-[#d4b06a] transition-colors"
             >
               {t('Sign in', 'Se connecter')}
             </button>
@@ -160,56 +149,7 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
   }
 
   return (
-    <div className="relative min-h-[100svh] w-full bg-[#010a13]">
-      <div 
-        className="pointer-events-none absolute inset-x-0 top-0 h-[60vh]" 
-        style={{ background: 'radial-gradient(ellipse 70% 100% at 50% 0%, rgba(200,170,110,0.07), transparent 75%)' }} 
-      />
-      {/* 1b. Portail d'entrée : le prénom devient la porte du salon */}
-      <GlyphPortal
-        word={motPortail}
-        focusChar={lettrePortail || undefined}
-        fontFamily="'Cinzel', serif"
-        fontWeight={700}
-        enterLabel={t('Enter', 'Entrer')}
-        style={{
-          '--gp-paper': '#010a13',
-          '--gp-field': '#c8aa6e',
-          '--gp-ink': '#c8aa6e',
-          '--gp-foreground': '#0a0f14',
-        }}
-        background={
-          <div style={{
-            position: 'absolute', inset: 0,
-            transform: 'scale(var(--gp-field-scale,1))',
-            background: 'radial-gradient(circle at 20% 12%, rgba(240,230,210,.55), transparent 40%), radial-gradient(circle at 82% 24%, rgba(216,189,133,.5), transparent 34%), radial-gradient(circle at 50% 85%, rgba(1,10,19,.32), transparent 48%), linear-gradient(135deg,#b8935a 0%,#c8aa6e 42%,#a8814a 100%)',
-          }} />
-        }
-        front={
-          <div style={{ position: 'absolute', top: 'clamp(96px,13%,112px)', left: 'clamp(24px,6%,64px)', right: 'clamp(24px,6%,64px)', display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{ height: 1, width: 40, background: '#c8aa6e', flex: '0 0 auto' }} />
-            <span className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e]">
-              {t('Members\' space', 'Espace membre')}
-            </span>
-          </div>
-        }
-      >
-        <div style={{ textAlign: 'center', maxWidth: '56ch', margin: '0 auto' }}>
-          <p className="font-cinzel text-[11px] uppercase tracking-[0.4em] mb-5" style={{ color: 'rgba(10,15,20,.66)' }}>
-            {t('Welcome to your space at the Salon', 'Bienvenue dans votre espace au Salon')}
-          </p>
-          <h2 className="font-prata" style={{ color: '#0a0f14', fontSize: 'clamp(2rem,5vw,3.5rem)', lineHeight: 1.05, margin: '0 0 16px' }}>
-            {profilAffiche?.displayName || t('Member', 'Membre')}
-          </h2>
-          <p className="font-lato" style={{ color: 'rgba(10,15,20,.72)', fontSize: 16, lineHeight: 1.6, margin: 0 }}>
-            {t(
-              'Your stays, your tickets and the people you met are waiting right below.',
-              'Vos séjours, vos billets et les gens rencontrés vous attendent juste en dessous.'
-            )}
-          </p>
-        </div>
-      </GlyphPortal>
-
+    <div className="relative min-h-[100svh] w-full bg-[#0a0808]">
       {/* 2. Bannière */}
       <Banniere 
         uid={uidAffiche} 
@@ -222,29 +162,29 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
       {/* 3. Bandeau d'identité */}
       <div className="px-4 sm:px-6 md:px-12 lg:px-20 pb-4 relative flex flex-wrap items-end justify-between gap-4">
         <div className="flex items-end gap-5">
-          <div className="relative w-28 h-28 lg:w-36 lg:h-36 -mb-14 lg:-mb-[72px] rounded-full ring-4 ring-[#010a13] border border-[#c8aa6e]/60 bg-[#010a13] overflow-hidden shrink-0 group">
+          <div className="relative w-28 h-28 lg:w-36 lg:h-36 -mb-14 lg:-mb-[72px] rounded-full ring-4 ring-[#0a0808] border border-[#c5a059]/60 bg-[#0a0808] overflow-hidden shrink-0 group">
             {profilAffiche?.photoURL || user.photoURL ? (
               <img src={profilAffiche?.photoURL || user.photoURL || ''} alt="" className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-[#c8aa6e]/10">
-                <span className="font-cinzel text-2xl text-[#c8aa6e]">{profilAffiche?.displayName?.[0] || '?'}</span>
+              <div className="w-full h-full flex items-center justify-center bg-[#c5a059]/10">
+                <span className="font-cinzel text-2xl text-[#c5a059]">{profilAffiche?.displayName?.[0] || '?'}</span>
               </div>
             )}
             
             {/* Voile de survol pour changer l'avatar */}
             {!isReadOnly && (
               <button 
-                className="absolute inset-0 bg-[#010a13]/55 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute inset-0 bg-[#0a0808]/55 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label={t('Change my photo', 'Changer ma photo')}
                 onClick={() => { /* TODO changer avatar */ }}
               >
-                <span className="font-cinzel text-[10px] text-[#f0e6d2] uppercase tracking-widest">{t('Change', 'Changer')}</span>
+                <span className="font-cinzel text-[10px] text-[#f3e5ab] uppercase tracking-widest">{t('Change', 'Changer')}</span>
               </button>
             )}
           </div>
           
           <div className="pb-1">
-            <h1 className="font-prata text-[#f0e6d2] text-[clamp(1.9rem,3.2vw,3rem)] leading-none truncate max-w-[200px] sm:max-w-md lg:max-w-xl">
+            <h1 className="font-prata text-[#f3e5ab] text-[clamp(1.9rem,3.2vw,3rem)] leading-none truncate max-w-[200px] sm:max-w-md lg:max-w-xl">
               {profilAffiche?.displayName || t('Member', 'Membre')}
             </h1>
             <p className="font-lato text-neutral-300 text-sm mt-1">
@@ -255,14 +195,14 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
 
         <div className="flex items-center gap-2 pb-1">
           {profilAffiche?.isAdmin && (
-            <span className="px-3 py-1 bg-[#c8aa6e]/10 text-[#c8aa6e] font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-[#c8aa6e]/30">
+            <span className="px-3 py-1 bg-[#c5a059]/10 text-[#c5a059] font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-[#c5a059]/30">
               {t('Admin space', 'Espace admin')}
             </span>
           )}
           {!isReadOnly && (
             <button
               onClick={() => { /* handleSignOut */ }}
-              className="px-3 py-1 bg-[#010a13]/50 text-neutral-400 font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-white/10 hover:bg-white/5 hover:text-neutral-200 transition-colors"
+              className="px-3 py-1 bg-[#0a0808]/50 text-neutral-400 font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-white/10 hover:bg-white/5 hover:text-neutral-200 transition-colors"
             >
               {t('Sign out', 'Déconnexion')}
             </button>

@@ -60,8 +60,8 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
     }
   };
 
-  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40';
-  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2';
+  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40';
+  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2';
 
   const OuvrirConfidentialite = () => {
     try { window.dispatchEvent(new CustomEvent('salon:privacy')); } catch { /* privé */ }
@@ -73,10 +73,10 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
       {/* En-tête */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Preferences', 'Préférences')}
         </h3>
-        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
+        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
           {t('The way you like it', 'Comme vous l\'aimez')}
         </h2>
       </div>
@@ -84,7 +84,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
       {/* Langue */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Language of your space', 'Langue de votre espace')}
         </h3>
         <div className="flex gap-3">
@@ -95,8 +95,8 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
               disabled={readOnly}
               className={`rounded-full px-6 min-h-[44px] font-cinzel uppercase text-[12px] tracking-[0.18em] transition-colors disabled:opacity-50 ${
                 (prefs?.langue ?? 'FR') === code
-                  ? 'bg-[#c8aa6e] text-[#010a13] font-bold'
-                  : 'border border-white/20 text-neutral-300 hover:border-[#c8aa6e]/50'
+                  ? 'bg-[#c5a059] text-[#0a0808] font-bold'
+                  : 'border border-white/20 text-neutral-300 hover:border-[#c5a059]/50'
               }`}
             >
               {code === 'FR' ? 'Français' : 'English'}
@@ -108,7 +108,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
       {/* Courriels */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c8aa6e]" />
+          <div className="h-px w-10 bg-[#c5a059]" />
           {t('Emails', 'Courriels')}
         </h3>
         <div className="space-y-3">
@@ -121,7 +121,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
               checked={prefs?.courrielReponseEquipe !== false}
               onChange={(e) => maj({ courrielReponseEquipe: e.target.checked })}
               disabled={readOnly}
-              className="w-5 h-5 accent-[#c8aa6e]"
+              className="w-5 h-5 accent-[#c5a059]"
             />
           </label>
           <label className="flex items-center justify-between gap-4 cursor-pointer">
@@ -133,19 +133,19 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
               checked={prefs?.courrielNouveauMessage === true}
               onChange={(e) => maj({ courrielNouveauMessage: e.target.checked })}
               disabled={readOnly}
-              className="w-5 h-5 accent-[#c8aa6e]"
+              className="w-5 h-5 accent-[#c5a059]"
             />
           </label>
         </div>
         <p className="font-lato text-sm mt-4 h-5">
-          {saved && <span className="text-[#c8aa6e]">{t('Saved.', 'C\'est enregistré.')}</span>}
+          {saved && <span className="text-[#c5a059]">{t('Saved.', 'C\'est enregistré.')}</span>}
           {erreur && <span className="text-red-400">{t('That didn\'t save. Try again in a moment.', 'L\'enregistrement n\'a pas passé. Réessayez dans un instant.')}</span>}
         </p>
       </div>
 
       {/* Confidentialité */}
       <div className={carte}>
-        <button onClick={OuvrirConfidentialite} className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-400 hover:text-[#c8aa6e] transition-colors">
+        <button onClick={OuvrirConfidentialite} className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-400 hover:text-[#c5a059] transition-colors">
           {t('Read the privacy policy', 'Lire la politique de confidentialité')} →
         </button>
       </div>
@@ -186,7 +186,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
               value={confirmation}
               onChange={(e) => setConfirmation(e.target.value)}
               placeholder={t('Type DELETE to confirm', 'Tapez SUPPRIMER pour confirmer')}
-              className="w-full mb-4 px-4 py-3 rounded-lg bg-[#010a13]/60 border border-white/15 text-neutral-200 font-lato text-sm focus:outline-none focus:border-[#c8aa6e]/50"
+              className="w-full mb-4 px-4 py-3 rounded-lg bg-[#0a0808]/60 border border-white/15 text-neutral-200 font-lato text-sm focus:outline-none focus:border-[#c5a059]/50"
             />
             <button
               onClick={supprimer}
