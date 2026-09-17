@@ -11,6 +11,8 @@ interface OngletParrainageProps {
   user: User;
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
 const dateCourte = (iso: string, language: 'EN' | 'FR') => {
@@ -22,8 +24,9 @@ const dateCourte = (iso: string, language: 'EN' | 'FR') => {
   }
 };
 
-export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, memberProfile, language }) => {
+export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, memberProfile, language, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+  const uid = uidCible ?? user.uid;
 
   const [code, setCode] = useState<string | null>(null);
   const [erreurCode, setErreurCode] = useState(false);
@@ -34,14 +37,17 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
 
   useEffect(() => {
     let actif = true;
-    trouverOuCreerCode(user.uid)
-      .then((c) => { if (actif) setCode(c); })
-      .catch(() => { if (actif) setErreurCode(true); });
-    lireFilleuls(user.uid).then((f) => { if (actif) setFilleuls(f); }).catch(() => {});
-    lireMonParrainage(user.uid).then((p) => { if (actif) setInvitePar(p); }).catch(() => {});
-    lireNbFilleuls(user.uid).then((n) => { if (actif) setNb(n); }).catch(() => {});
+    // En lecture seule (vue admin), on ne crée jamais de code au nom du membre.
+    if (!readOnly) {
+      trouverOuCreerCode(uid)
+        .then((c) => { if (actif) setCode(c); })
+        .catch(() => { if (actif) setErreurCode(true); });
+    }
+    lireFilleuls(uid).then((f) => { if (actif) setFilleuls(f); }).catch(() => {});
+    lireMonParrainage(uid).then((p) => { if (actif) setInvitePar(p); }).catch(() => {});
+    lireNbFilleuls(uid).then((n) => { if (actif) setNb(n); }).catch(() => {});
     return () => { actif = false; };
-  }, [user.uid]);
+  }, [uid, readOnly]);
 
   const lien = code ? lienInvitation(code) : '';
 
@@ -95,6 +101,7 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
       )}
 
       {/* Mon code et mon lien */}
+      {!readOnly && (
       <div className={carte}>
         <h3 className={surtitre}>
           <div className="h-px w-10 bg-[#c5a059]" />
@@ -141,6 +148,7 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
           </div>
         )}
       </div>
+      )}
 
       {/* Vos invités */}
       <div className={carte}>
@@ -167,7 +175,7 @@ export const OngletParrainage: React.FC<OngletParrainageProps> = ({ user, member
       </div>
 
       {/* Programme affilié (textes conservés de ProfilePage) */}
-      <AffiliationPanneau user={user} memberProfile={memberProfile} language={language} />
+      {!readOnly && <AffiliationPanneau user={user} memberProfile={memberProfile} language={language} />}
 
     </div>
   );

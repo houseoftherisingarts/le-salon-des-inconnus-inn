@@ -230,12 +230,22 @@ export const lierSejour = onCall(
     if (!request.auth) {
       throw new HttpsError('unauthenticated', 'Must be signed in.');
     }
-    const verifie = request.auth.token?.email_verified === true && !!request.auth.token?.email;
-    if (!verifie) {
-      throw new HttpsError('failed-precondition', 'courriel-non-verifie');
+
+    // Lot 7 : l'admin peut rattacher un séjour au compte d'un membre (uidCible),
+    // avec les mêmes gardes que 4.1 mais sans limite d'essais.
+    const uidCible = (request.data as { uidCible?: string } | undefined)?.uidCible;
+    const estCible = typeof uidCible === 'string' && uidCible.length > 0;
+    if (estCible && !estAdmin(request.auth)) {
+      throw new HttpsError('permission-denied', 'Admins only.');
+    }
+    if (!estCible) {
+      const verifie = request.auth.token?.email_verified === true && !!request.auth.token?.email;
+      if (!verifie) {
+        throw new HttpsError('failed-precondition', 'courriel-non-verifie');
+      }
     }
 
-    const uid = request.auth.uid;
+    const uid = estCible ? (uidCible as string) : request.auth.uid;
     const { code, arrivee } = (request.data ?? {}) as { code?: string; arrivee?: string };
     if (typeof code !== 'string' || !/^[A-Za-z0-9-]{4,40}$/.test(code)) {
       throw new HttpsError('invalid-argument', 'Code invalide.');
@@ -248,7 +258,7 @@ export const lierSejour = onCall(
     const jour = jourToronto();
     const etat = await docRef.get();
     const essais: Record<string, number> = (etat.data()?.essaisLiaison ?? {}) as Record<string, number>;
-    if ((essais[jour] ?? 0) >= 5) {
+    if (!estCible && (essais[jour] ?? 0) >= 5) {
       throw new HttpsError('resource-exhausted', "Trop d'essais aujourd'hui.");
     }
 
@@ -272,10 +282,12 @@ export const lierSejour = onCall(
     });
 
     if (!trouvee) {
-      await docRef.set(
-        { essaisLiaison: { ...essais, [jour]: (essais[jour] ?? 0) + 1 } },
-        { merge: true },
-      );
+      if (!estCible) {
+        await docRef.set(
+          { essaisLiaison: { ...essais, [jour]: (essais[jour] ?? 0) + 1 } },
+          { merge: true },
+        );
+      }
       return { lie: false };
     }
 
@@ -338,11 +350,23 @@ export const mesBillets = onCall({ cors: true, maxInstances: 5 }, async (request
     throw new HttpsError('unauthenticated', 'Must be signed in.');
   }
 
-  const uid = request.auth.uid;
-  const emailVerifie =
+  let uid = request.auth.uid;
+  let emailVerifie =
     request.auth.token.email_verified === true && request.auth.token.email
       ? request.auth.token.email
       : null;
+
+  // Lot 7 : l'admin peut lire les billets d'un membre (uidCible). Le courriel
+  // vérifié cible se lit alors dans Auth, jamais dans l'entrée.
+  const uidCible = (request.data as { uidCible?: string } | undefined)?.uidCible;
+  if (uidCible) {
+    if (!estAdmin(request.auth)) {
+      throw new HttpsError('permission-denied', 'Admins only.');
+    }
+    const cible = await getAuth().getUser(uidCible);
+    uid = uidCible;
+    emailVerifie = cible.emailVerified && cible.email ? cible.email : null;
+  }
 
   // 1. Spectacles (events/ceilidh-mai-2026/showTickets/{uid})
   const spectacles: Array<{

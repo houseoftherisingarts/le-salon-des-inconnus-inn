@@ -9,10 +9,13 @@ interface OngletPreferencesProps {
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
-export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, language }) => {
+export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, language, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+  const uid = uidCible ?? user.uid;
 
   const [prefs, setPrefs] = useState<Preferences | null>(null);
   const [saved, setSaved] = useState(false);
@@ -24,8 +27,8 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
   const [erreurSuppression, setErreurSuppression] = useState(false);
 
   useEffect(() => {
-    lirePreferences(user.uid).then((p) => setPrefs(p)).catch(() => {});
-  }, [user.uid]);
+    lirePreferences(uid).then((p) => setPrefs(p)).catch(() => {});
+  }, [uid]);
 
   const maj = (champ: Partial<Preferences>) => {
     if (!prefs) return;
@@ -33,7 +36,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
     setPrefs(suivant);
     setSaved(false);
     setErreur(false);
-    ecrirePreferences(user.uid, champ)
+    ecrirePreferences(uid, champ)
       .then(() => setSaved(true))
       .catch(() => setErreur(true));
   };
@@ -89,7 +92,8 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
             <button
               key={code}
               onClick={() => maj({ langue: code })}
-              className={`rounded-full px-6 min-h-[44px] font-cinzel uppercase text-[12px] tracking-[0.18em] transition-colors ${
+              disabled={readOnly}
+              className={`rounded-full px-6 min-h-[44px] font-cinzel uppercase text-[12px] tracking-[0.18em] transition-colors disabled:opacity-50 ${
                 (prefs?.langue ?? 'FR') === code
                   ? 'bg-[#c5a059] text-[#0a0808] font-bold'
                   : 'border border-white/20 text-neutral-300 hover:border-[#c5a059]/50'
@@ -116,6 +120,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
               type="checkbox"
               checked={prefs?.courrielReponseEquipe !== false}
               onChange={(e) => maj({ courrielReponseEquipe: e.target.checked })}
+              disabled={readOnly}
               className="w-5 h-5 accent-[#c5a059]"
             />
           </label>
@@ -127,6 +132,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
               type="checkbox"
               checked={prefs?.courrielNouveauMessage === true}
               onChange={(e) => maj({ courrielNouveauMessage: e.target.checked })}
+              disabled={readOnly}
               className="w-5 h-5 accent-[#c5a059]"
             />
           </label>
@@ -145,6 +151,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
       </div>
 
       {/* Suppression du compte */}
+      {!readOnly && (
       <div className={carte} style={{ borderColor: 'rgba(220,90,90,0.25)' }}>
         <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-red-400/80 mb-4 flex items-center gap-2">
           <div className="h-px w-10 bg-red-400/50" />
@@ -197,6 +204,7 @@ export const OngletPreferences: React.FC<OngletPreferencesProps> = ({ user, lang
           </p>
         )}
       </div>
+      )}
 
     </div>
   );

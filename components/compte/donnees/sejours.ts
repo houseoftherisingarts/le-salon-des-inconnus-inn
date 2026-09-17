@@ -25,14 +25,14 @@ export interface ReponseSejours {
   lu: string;
 }
 
-export async function lireSejours(): Promise<ReponseSejours> {
-  const fn = httpsCallable<Record<string, never>, ReponseSejours>(getFunctions(), 'mesSejours');
-  const res = await fn({});
+export async function lireSejours(uidCible?: string): Promise<ReponseSejours> {
+  const fn = httpsCallable<{ uidCible?: string }, ReponseSejours>(getFunctions(), 'mesSejours');
+  const res = await fn(uidCible ? { uidCible } : {});
   return res.data;
 }
 
-export async function lierReservation(code: string, arrivee: string): Promise<{ lie: boolean }> {
-  const fn = httpsCallable<{ code: string; arrivee: string }, { lie: boolean }>(getFunctions(), 'lierSejour');
-  const res = await fn({ code, arrivee });
+export async function lierReservation(code: string, arrivee: string, uidCible?: string): Promise<{ lie: boolean }> {
+  const fn = httpsCallable<{ code: string; arrivee: string; uidCible?: string }, { lie: boolean }>(getFunctions(), 'lierSejour');
+  const res = await fn(uidCible ? { code, arrivee, uidCible } : { code, arrivee });
   return res.data;
 }

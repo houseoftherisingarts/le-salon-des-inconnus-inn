@@ -12,6 +12,8 @@ interface OngletCommunauteProps {
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
 export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
@@ -19,8 +21,11 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
   memberProfile,
   language,
   onNavigate,
+  readOnly,
+  uidCible,
 }) => {
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
+  const uid = uidCible ?? user.uid;
   const params = new URLSearchParams(window.location.search);
   const initialSous = params.get('sous') || 'amis';
   const initialConv = params.get('conv');
@@ -29,8 +34,8 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
   const [amities, setAmities] = React.useState<Amitie[]>([]);
 
   React.useEffect(() => {
-    return suivreMesAmities(user.uid, setAmities);
-  }, [user.uid]);
+    return suivreMesAmities(uid, setAmities);
+  }, [uid]);
 
   const changeSousOnglet = (id: string) => {
     setSousOnglet(id);
@@ -83,14 +88,22 @@ export const OngletCommunaute: React.FC<OngletCommunauteProps> = ({
       <div className="w-full">
         {sousOnglet === 'amis' && (
           <ListeAmis
-            uid={user.uid}
+            uid={uid}
             amities={amities}
             language={language}
             onOuvrirMembre={(uid) => { /* TODO: handle public profile open */ }}
           />
         )}
 
-        {sousOnglet === 'messages' && (
+        {sousOnglet === 'messages' && readOnly && (
+          <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7">
+            <p className="font-lato text-neutral-400">
+              {t('Messages between members stay private.', 'Les messages entre membres restent privés.')}
+            </p>
+          </div>
+        )}
+
+        {sousOnglet === 'messages' && !readOnly && (
           <MessagingPage
             user={user}
             memberProfile={memberProfile}

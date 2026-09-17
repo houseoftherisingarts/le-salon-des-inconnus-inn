@@ -9,6 +9,8 @@ interface OngletVivreIciProps {
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
 type Statut = 'pending' | 'approved' | 'declined';
@@ -24,22 +26,23 @@ const labelWwoofing: Record<Statut, { fr: string; en: string }> = {
   declined: { fr: 'Refusée', en: 'Declined' },
 };
 
-export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, onNavigate }) => {
+export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, onNavigate, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+  const uid = uidCible ?? user.uid;
 
   const [communaute, setCommunaute] = useState<Statut | null>(null);
   const [wwoofing, setWwoofing] = useState<Statut | null>(null);
 
   useEffect(() => {
     if (!db) return;
-    const unsubComm = onSnapshot(doc(db, 'communityApplications', user.uid), (snap) => {
+    const unsubComm = onSnapshot(doc(db, 'communityApplications', uid), (snap) => {
       setCommunaute(snap.exists() ? ((snap.data().status ?? 'pending') as Statut) : null);
     });
-    const unsubWw = onSnapshot(doc(db, 'wwoofers', user.uid), (snap) => {
+    const unsubWw = onSnapshot(doc(db, 'wwoofers', uid), (snap) => {
       setWwoofing(snap.exists() ? ((snap.data().status ?? 'pending') as Statut) : null);
     });
     return () => { unsubComm(); unsubWw(); };
-  }, [user.uid]);
+  }, [uid]);
 
   const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40';
   const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2';
@@ -87,12 +90,14 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
                 'Le membre résident habite sur place et participe au ménage en échange de la place.'
               )}
             </p>
+            {!readOnly && (
             <button
               onClick={() => onNavigate('COMMUNITY')}
               className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d4b06a] transition-colors"
             >
               {t('Fill in the application', 'Remplir la candidature')}
             </button>
+            )}
           </>
         )}
       </div>
@@ -113,12 +118,14 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
               .replace('{statut}', language === 'FR' ? labelWwoofing[wwoofing].fr : labelWwoofing[wwoofing].en)}
           </p>
         ) : (
+          !readOnly && (
           <button
             onClick={() => onNavigate('WWOOFING')}
             className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-400 hover:text-[#c5a059] transition-colors"
           >
             {t('Prefer a shorter volunteer stay? See wwoofing', 'Plutôt un séjour bénévole plus court ? Voir le wwoofing')} →
           </button>
+          )
         )}
       </div>
 

@@ -10,6 +10,8 @@ interface OngletBilletsProps {
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
 const NIGHTS_LABELS: Record<string, { fr: string; en: string }> = {
@@ -25,18 +27,18 @@ const nomEquipe = (equipeId: string, language: 'EN' | 'FR') => {
 
 const montant = (v: number) => `$${v.toFixed(2)}`;
 
-export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfile, language, onNavigate }) => {
+export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfile, language, onNavigate, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
   const [billets, setBillets] = useState<Billets | null>(null);
   const [erreur, setErreur] = useState(false);
 
   useEffect(() => {
     let actif = true;
-    lireBillets()
+    lireBillets(uidCible)
       .then((b) => { if (actif) setBillets(b); })
       .catch(() => { if (actif) setErreur(true); });
     return () => { actif = false; };
-  }, []);
+  }, [uidCible]);
 
   const vide = !!billets
     && billets.spectacles.length === 0

@@ -11,6 +11,8 @@ interface OngletSejoursProps {
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
 const LIBELLES_STATUT: Record<StatutSejour, { fr: string; en: string }> = {
@@ -32,7 +34,7 @@ const formaterDate = (iso: string, language: 'EN' | 'FR') => {
 
 const montant = (v: number, devise: string) => `${v.toFixed(2)} ${devise}`;
 
-export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfile, language, onNavigate }) => {
+export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfile, language, onNavigate, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
   const [sejours, setSejours] = useState<Sejour[] | null>(null);
   const [etat, setEtat] = useState<'chargement' | 'erreur' | 'courriel' | 'pret'>('chargement');
@@ -41,7 +43,7 @@ export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfil
 
   useEffect(() => {
     let actif = true;
-    lireSejours()
+    lireSejours(uidCible)
       .then((r) => { if (actif) { setSejours(r.sejours); setEtat('pret'); } })
       .catch((e: any) => {
         if (!actif) return;
@@ -49,14 +51,12 @@ export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfil
         if (message.includes('courriel-non-verifie')) {
           sendEmailVerification(user).catch(() => {});
           setEtat('courriel');
-        } else if (message.includes('hostaway-indisponible')) {
-          setEtat('erreur');
         } else {
           setEtat('erreur');
         }
       });
     return () => { actif = false; };
-  }, [user]);
+  }, [user, uidCible]);
 
   // ── Liaison d'une réservation ─────────────────────────────────────────────
   const [code, setCode] = useState('');
@@ -69,12 +69,12 @@ export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfil
     setLiaisonEnCours(true);
     setLiaisonEtat('idle');
     try {
-      const r = await lierReservation(code.trim(), arrivee);
+      const r = await lierReservation(code.trim(), arrivee, uidCible);
       if (r.lie) {
         setLiaisonEtat('succes');
         setCode('');
         setArrivee('');
-        const relu = await lireSejours();
+        const relu = await lireSejours(uidCible);
         setSejours(relu.sejours);
       } else {
         setLiaisonEtat('echec');
@@ -248,6 +248,7 @@ export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfil
       )}
 
       {/* Rattacher une réservation */}
+      {!readOnly && (
       <div className={carte}>
         <h3 className={surtitre}>
           <div className="h-px w-10 bg-[#c5a059]" />
@@ -308,8 +309,10 @@ export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfil
           </p>
         )}
       </div>
+      )}
 
       {/* Avantages communauté : coupon + dé */}
+      {!readOnly && (
       <div className={carte}>
         <h3 className={surtitre}>
           <div className="h-px w-10 bg-[#c5a059]" />
@@ -320,6 +323,7 @@ export const OngletSejours: React.FC<OngletSejoursProps> = ({ user, memberProfil
           <DeHebdomadaire language={language} user={user} />
         </div>
       </div>
+      )}
 
     </div>
   );

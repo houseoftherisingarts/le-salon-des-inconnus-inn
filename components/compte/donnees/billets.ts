@@ -34,8 +34,8 @@ export interface Billets {
   camping: BilletCamping[];
 }
 
-export async function lireBillets(): Promise<Billets> {
-  const fn = httpsCallable<Record<string, never>, Billets>(getFunctions(), 'mesBillets');
-  const res = await fn({});
+export async function lireBillets(uidCible?: string): Promise<Billets> {
+  const fn = httpsCallable<{ uidCible?: string }, Billets>(getFunctions(), 'mesBillets');
+  const res = await fn(uidCible ? { uidCible } : {});
   return res.data;
 }

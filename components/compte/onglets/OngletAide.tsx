@@ -8,10 +8,13 @@ interface OngletAideProps {
   user: User;
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
-export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, language }) => {
+export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, language, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
+  const uid = uidCible ?? user.uid;
 
   const [messages, setMessages] = useState<MessageSoutien[]>([]);
   const [texte, setTexte] = useState('');
@@ -25,7 +28,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
   const [pbEnvoye, setPbEnvoye] = useState(false);
   const [pbErreur, setPbErreur] = useState<string | null>(null);
 
-  useEffect(() => suivreFilSoutien(user.uid, setMessages), [user.uid]);
+  useEffect(() => suivreFilSoutien(uid, setMessages), [uid]);
 
   useEffect(() => {
     basFil.current?.scrollIntoView({ behavior: 'smooth' });
@@ -40,7 +43,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
     setEnvoi(true);
     setErreur(false);
     try {
-      await envoyerMessageSoutien(user.uid, nom, courriel, contenu);
+      await envoyerMessageSoutien(uid, nom, courriel, contenu);
       setTexte('');
     } catch {
       setErreur(true);
@@ -64,7 +67,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
     setPbErreur(null);
     setPbEnvoye(false);
     try {
-      await envoyerProbleme(user.uid, {
+      await envoyerProbleme(uid, {
         nom,
         courriel,
         texte: contenu,
@@ -129,6 +132,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
           <div ref={basFil} />
         </div>
 
+        {!readOnly && (
         <div className="mt-4 flex gap-3">
           <input
             type="text"
@@ -146,6 +150,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
             {t('Send', 'Envoyer')}
           </button>
         </div>
+        )}
         {erreur && (
           <p className="font-lato text-red-400 text-sm mt-3">
             {t('The message didn\'t go through. Try again in a moment.', 'Le message n\'est pas parti. Réessayez dans un instant.')}
@@ -170,7 +175,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
           <p className="font-lato text-[#c5a059] text-sm">
             {t('Thank you. The report is in our hands.', 'Merci. Le signalement est entre nos mains.')}
           </p>
-        ) : (
+        ) : !readOnly && (
           <>
             <textarea
               value={textePb}

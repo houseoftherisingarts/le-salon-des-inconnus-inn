@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from '../AuthModal';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 import { AuthModal } from '../AuthModal';
 import { SiteFooter } from '../SiteFooter';
 import { Banniere } from './Banniere';
@@ -37,6 +39,23 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
 }) => {
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
   const [showAuth, setShowAuth] = useState(false);
+  const [profilCible, setProfilCible] = useState<MemberProfile | null>(null);
+
+  // Vue admin : on charge la fiche du membre ciblé pour l'afficher à sa place.
+  useEffect(() => {
+    if (!vueAdmin || !db) return;
+    let actif = true;
+    getDoc(doc(db, 'members', vueAdmin.uid))
+      .then((snap) => {
+        if (actif && snap.exists()) setProfilCible({ ...(snap.data() as MemberProfile), isAdmin: false });
+      })
+      .catch(() => {});
+    return () => { actif = false; };
+  }, [vueAdmin?.uid]);
+
+  const isReadOnly = !!vueAdmin;
+  const uidAffiche = vueAdmin?.uid ?? (user ? user.uid : '');
+  const profilAffiche = vueAdmin ? (profilCible ?? memberProfile) : memberProfile;
 
   // Parse query string for current tab
   const getOnglet = () => {
@@ -129,15 +148,12 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
     );
   }
 
-  // Si on est en vueAdmin, on masque l'édition
-  const isReadOnly = !!vueAdmin;
-
   return (
     <div className="relative min-h-[100svh] w-full bg-[#0a0808]">
       {/* 2. Bannière */}
       <Banniere 
-        uid={user.uid} 
-        profile={memberProfile} 
+        uid={uidAffiche} 
+        profile={profilAffiche ?? memberProfile} 
         language={language} 
         onProfileUpdate={(p) => onUserChange(user, p)} 
         readOnly={isReadOnly}
@@ -147,11 +163,11 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
       <div className="px-4 sm:px-6 md:px-12 lg:px-20 pb-4 relative flex flex-wrap items-end justify-between gap-4">
         <div className="flex items-end gap-5">
           <div className="relative w-28 h-28 lg:w-36 lg:h-36 -mb-14 lg:-mb-[72px] rounded-full ring-4 ring-[#0a0808] border border-[#c5a059]/60 bg-[#0a0808] overflow-hidden shrink-0 group">
-            {memberProfile.photoURL || user.photoURL ? (
-              <img src={memberProfile.photoURL || user.photoURL || ''} alt="" className="w-full h-full object-cover" />
+            {profilAffiche?.photoURL || user.photoURL ? (
+              <img src={profilAffiche?.photoURL || user.photoURL || ''} alt="" className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-[#c5a059]/10">
-                <span className="font-cinzel text-2xl text-[#c5a059]">{memberProfile.displayName?.[0] || '?'}</span>
+                <span className="font-cinzel text-2xl text-[#c5a059]">{profilAffiche?.displayName?.[0] || '?'}</span>
               </div>
             )}
             
@@ -169,26 +185,28 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
           
           <div className="pb-1">
             <h1 className="font-prata text-[#f3e5ab] text-[clamp(1.9rem,3.2vw,3rem)] leading-none truncate max-w-[200px] sm:max-w-md lg:max-w-xl">
-              {memberProfile.displayName || t('Member', 'Membre')}
+              {profilAffiche?.displayName || t('Member', 'Membre')}
             </h1>
             <p className="font-lato text-neutral-300 text-sm mt-1">
-              {t('Member', 'Membre')}
+              {isReadOnly ? t('Read only', 'Lecture seule') : t('Member', 'Membre')}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 pb-1">
-          {memberProfile.isAdmin && (
+          {profilAffiche?.isAdmin && (
             <span className="px-3 py-1 bg-[#c5a059]/10 text-[#c5a059] font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-[#c5a059]/30">
               {t('Admin space', 'Espace admin')}
             </span>
           )}
-          <button
-            onClick={() => { /* handleSignOut */ }}
-            className="px-3 py-1 bg-[#0a0808]/50 text-neutral-400 font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-white/10 hover:bg-white/5 hover:text-neutral-200 transition-colors"
-          >
-            {t('Sign out', 'Déconnexion')}
-          </button>
+          {!isReadOnly && (
+            <button
+              onClick={() => { /* handleSignOut */ }}
+              className="px-3 py-1 bg-[#0a0808]/50 text-neutral-400 font-cinzel text-[13px] uppercase tracking-widest rounded-full border border-white/10 hover:bg-white/5 hover:text-neutral-200 transition-colors"
+            >
+              {t('Sign out', 'Déconnexion')}
+            </button>
+          )}
         </div>
       </div>
 
@@ -206,9 +224,11 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
             {actif === 'profil' && (
               <OngletProfil 
                 user={user} 
-                memberProfile={memberProfile} 
+                memberProfile={profilAffiche ?? memberProfile} 
                 language={language} 
                 onProfileUpdate={(p) => onUserChange(user, p)} 
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'communaute' && (
@@ -217,6 +237,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 memberProfile={memberProfile}
                 language={language}
                 onNavigate={onNavigate}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'artistique' && (
@@ -224,6 +246,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 user={user}
                 language={language}
                 onNavigate={onNavigate}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'sejours' && (
@@ -232,6 +256,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 memberProfile={memberProfile}
                 language={language}
                 onNavigate={onNavigate}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'billets' && (
@@ -240,6 +266,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 memberProfile={memberProfile}
                 language={language}
                 onNavigate={onNavigate}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'vivre-ici' && (
@@ -248,6 +276,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 memberProfile={memberProfile}
                 language={language}
                 onNavigate={onNavigate}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'parrainage' && (
@@ -255,6 +285,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 user={user}
                 memberProfile={memberProfile}
                 language={language}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'preferences' && (
@@ -263,6 +295,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 memberProfile={memberProfile}
                 language={language}
                 onNavigate={onNavigate}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif === 'aide' && (
@@ -270,6 +304,8 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 user={user}
                 memberProfile={memberProfile}
                 language={language}
+                readOnly={isReadOnly}
+                uidCible={vueAdmin?.uid}
               />
             )}
             {actif !== 'profil' && actif !== 'sejours' && actif !== 'communaute' && actif !== 'artistique' && actif !== 'billets' && actif !== 'vivre-ici' && actif !== 'parrainage' && actif !== 'preferences' && actif !== 'aide' && (
@@ -279,9 +315,11 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
         </div>
 
         {/* Colonne Rail */}
-        <div className="xl:block">
-          <RailMembre language={language} onNavigate={handleNaviguer} uid={user.uid} />
-        </div>
+        {!isReadOnly && (
+          <div className="xl:block">
+            <RailMembre language={language} onNavigate={handleNaviguer} uid={user.uid} />
+          </div>
+        )}
         
       </div>
 

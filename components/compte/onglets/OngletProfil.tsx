@@ -11,6 +11,8 @@ interface OngletProfilProps {
   memberProfile: MemberProfile;
   language: 'EN' | 'FR';
   onProfileUpdate: (profile: MemberProfile) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
 const MEMBERSHIP_LABELS: Record<string, { en: string; fr: string }> = {
@@ -21,8 +23,9 @@ const MEMBERSHIP_LABELS: Record<string, { en: string; fr: string }> = {
   'woofer': { en: 'Woofer', fr: 'Woofer' },
 };
 
-export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile, language, onProfileUpdate }) => {
+export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile, language, onProfileUpdate, readOnly, uidCible }) => {
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
+  const uid = uidCible ?? user.uid;
 
   const [displayName, setDisplayName] = useState(memberProfile.displayName || user.displayName || '');
   const [savingProfile, setSavingProfile] = useState(false);
@@ -33,10 +36,10 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
   const [contactStatus, setContactStatus] = useState<'idle' | 'saved' | 'error'>('idle');
 
   useEffect(() => {
-    lireCoordonnees(user.uid).then(coords => {
+    lireCoordonnees(uid).then(coords => {
       if (coords?.telephone) setTelephone(coords.telephone);
     });
-  }, [user.uid]);
+  }, [uid]);
 
   const handleSaveProfile = async () => {
     if (!db) return;
@@ -97,7 +100,8 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
               type="text"
               value={displayName}
               onChange={e => setDisplayName(e.target.value)}
-              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
+              disabled={readOnly}
+              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors disabled:opacity-50"
               style={{ border: '1px solid rgba(197,160,89,0.3)' }}
             />
           </div>
@@ -120,6 +124,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
             </div>
           </div>
 
+          {!readOnly && (
           <div className="flex items-center gap-4 pt-2">
             <button
               onClick={handleSaveProfile}
@@ -135,6 +140,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
               <span className="font-cinzel text-red-400 text-[10px] uppercase tracking-[0.4em]">{t('Error', 'L\'enregistrement n\'a pas passé. Réessayez dans un instant.')}</span>
             )}
           </div>
+          )}
         </div>
       </div>
 
@@ -157,11 +163,13 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
               type="tel"
               value={telephone}
               onChange={e => setTelephone(e.target.value)}
-              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
+              disabled={readOnly}
+              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors disabled:opacity-50"
               style={{ border: '1px solid rgba(197,160,89,0.3)' }}
             />
           </div>
 
+          {!readOnly && (
           <div className="flex items-center gap-4 pt-2">
             <button
               onClick={handleSaveContact}
@@ -177,6 +185,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
               <span className="font-cinzel text-red-400 text-[10px] uppercase tracking-[0.4em]">{t('That didn\'t save. Try again in a moment.', 'L\'enregistrement n\'a pas passé. Réessayez dans un instant.')}</span>
             )}
           </div>
+          )}
         </div>
       </div>
 
@@ -193,7 +202,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
 
       {/* Vos badges */}
       <SelecteurBadges 
-        uid={user.uid} 
+        uid={uid} 
         language={language} 
       />
       

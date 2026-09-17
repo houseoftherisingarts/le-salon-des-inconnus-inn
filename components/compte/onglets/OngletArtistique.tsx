@@ -6,15 +6,18 @@ interface OngletArtistiqueProps {
   user: User;
   language: 'EN' | 'FR';
   onNavigate: (view: string) => void;
+  readOnly?: boolean;
+  uidCible?: string;
 }
 
-export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, language, onNavigate }) => {
+export const OngletArtistique: React.FC<OngletArtistiqueProps> = ({ user, language, onNavigate, uidCible }) => {
   const t = (en: string, fr: string) => language === 'FR' ? fr : en;
+  const uid = uidCible ?? user.uid;
   const [etat, setEtat] = useState<CreatorStudioState | null>(null);
 
   useEffect(() => {
-    lireEtatCreatorStudio(user.uid).then(setEtat);
-  }, [user.uid]);
+    lireEtatCreatorStudio(uid).then(setEtat);
+  }, [uid]);
 
   if (!etat) {
     return (

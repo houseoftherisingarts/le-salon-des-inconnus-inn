@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { auth, db } from '../firebase';
 import {
   collection, collectionGroup, onSnapshot, doc, updateDoc, deleteDoc, setDoc, addDoc,
-  query, orderBy, serverTimestamp,
+  query, orderBy, limit, serverTimestamp,
 } from 'firebase/firestore';
 import { signOut, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import type { User } from 'firebase/auth';
@@ -17,6 +17,8 @@ import { ShowOffersSection } from './admin/ShowOffersSection';
 import { InspirosphereSection } from './admin/InspirosphereSection';
 import { BlogSection } from './admin/BlogSection';
 import { ProductLadderSection } from './admin/ProductLadderSection';
+import { SoutienSection } from './admin/SoutienSection';
+import { FicheMembre, type LigneMembre } from './admin/FicheMembre';
 import type { ShowOffer } from '../types';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -65,7 +67,7 @@ type SectionId =
   | 'dashboard' | 'members' | 'roster' | 'feature-requests' | 'collab-requests'
   | 'inspirosphere' | 'ceilidh' | 'tickets' | 'emails' | 'wwoofing' | 'community'
   | 'affiliates' | 'd20codes' | 'newsletter' | 'messages' | 'media' | 'showoffers'
-  | 'product-ladder' | 'hostaway' | 'blog' | 'conferences';
+  | 'product-ladder' | 'hostaway' | 'blog' | 'conferences' | 'soutien';
 
 // The five audiences Alex switches between. One dashboard, one lens at a time.
 type Audience = 'HOTEL' | 'WWOOFERS' | 'COMMUNAUTE' | 'ARTISTES' | 'MAISON';
@@ -82,9 +84,9 @@ const AUDIENCES: { id: Audience; label: string }[] = [
 // default landing tab. Every existing section appears under exactly one
 // audience, nothing is duplicated.
 const AUDIENCE_SECTIONS: Record<Audience, SectionId[]> = {
-  HOTEL:      ['hostaway', 'ceilidh', 'tickets', 'showoffers'],
+  HOTEL:      ['hostaway', 'ceilidh', 'tickets', 'showoffers', 'soutien'],
   WWOOFERS:   ['wwoofing', 'messages'],
-  COMMUNAUTE: ['community', 'members'],
+  COMMUNAUTE: ['community', 'members', 'soutien'],
   ARTISTES:   ['roster', 'feature-requests', 'collab-requests', 'inspirosphere'],
   MAISON:     ['dashboard', 'blog', 'conferences', 'emails', 'affiliates', 'd20codes', 'newsletter', 'media', 'product-ladder'],
 };
@@ -493,6 +495,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     membershipType?: string;
     isAdmin?: boolean;
     createdAt?: any;
+    joinedAt?: any;
     isArtist?: boolean;
     featureCafe?: boolean;
     featureMecene?: boolean;
@@ -503,6 +506,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   };
   const [members, setMembers] = useState<MemberRow[]>([]);
   const [memberSearch, setMemberSearch] = useState('');
+  const [ficheUid, setFicheUid] = useState<string | null>(null);
 
   // Public roster (Annuaire): every member who has a Creator Studio artist
   // profile (members/{uid}/artistProfile/profile). The admin promotes one into
@@ -634,9 +638,11 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     // Members directory: full membership roster + their per-member admin flags
     // doc (members/{uid}/admin/flags). The flags doc is fetched lazily via a
     // second snapshot per row would be expensive; instead, store flags in a
-    // map and merge at render time.
+    // map and merge at render time. Lecture SANS orderBy : les fiches du
+    // Creator Studio n'ont pas de createdAt, un orderBy les exclurait. Le tri
+    // se fait côté client sur createdAt ?? joinedAt.
     const unsub6 = onSnapshot(
-      query(collection(db, 'members'), orderBy('createdAt', 'desc')),
+      query(collection(db, 'members'), limit(1000)),
       snap => {
         const rows: MemberRow[] = snap.docs.map(d => {
           const data = d.data() as any;
@@ -649,7 +655,13 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
             // Déduit du courriel, que la règle borne à celui du jeton.
             isAdmin: ADMIN_EMAILS.includes(String(data.email || '').toLowerCase()),
             createdAt: data.createdAt,
+            joinedAt: data.joinedAt,
           };
+        });
+        rows.sort((a, b) => {
+          const da = a.createdAt?.toMillis?.() ?? a.joinedAt?.toMillis?.() ?? 0;
+          const db2 = b.createdAt?.toMillis?.() ?? b.joinedAt?.toMillis?.() ?? 0;
+          return db2 - da;
         });
         setMembers(rows);
       },
@@ -1081,6 +1093,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
     messages:           { id: 'messages',        label: 'Messages',            iconPath: 'M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z' },
     community:          { id: 'community',       label: 'Communauté',          badge: counts.community,      iconPath: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z' },
     members:            { id: 'members',         label: 'Membres',             badge: members.length,        iconPath: 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z' },
+    soutien:            { id: 'soutien',         label: 'Aide aux membres',     iconPath: 'M12 20.25c4.97 0 9-1.99 9-4.5s-4.03-4.5-9-4.5-9 1.99-9 4.5 4.03 4.5 9 4.5zm0 0v-9m0 9c0 2.485-4.03 4.5-9 4.5M12 11.25c0-2.485 4.03-4.5 9-4.5m-18 0c4.97 0 9 1.99 9 4.5m-9-4.5v4.5m9-4.5v4.5M21 6.75v4.5M3 6.75v4.5' },
     roster:             { id: 'roster',          label: 'Annuaire',            badge: publicRosterUids.size, iconPath: 'M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3' },
     'feature-requests': { id: 'feature-requests', label: 'Demandes',           badge: pendingRequestCount,   iconPath: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z' },
     'collab-requests':  { id: 'collab-requests', label: 'Collabs',             badge: pendingCollabCount,    iconPath: 'M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244' },
@@ -1106,6 +1119,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
   };
 
   return (
+    <>
     <AdminShell<SectionId>
       user={user!}
       sectionId={tab}
@@ -1453,7 +1467,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       || (m.email || '').toLowerCase().includes(q);
                 })
                 .map(m => (
-                  <div key={m.uid} className="grid grid-cols-[2fr_2fr_1fr_auto_auto_auto_auto_auto] gap-3 px-4 py-3 items-center border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] text-xs min-w-[1100px]">
+                  <div key={m.uid} onClick={() => setFicheUid(m.uid)} className="grid grid-cols-[2fr_2fr_1fr_auto_auto_auto_auto_auto] gap-3 px-4 py-3 items-center border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] text-xs min-w-[1100px] cursor-pointer">
                     <div className="flex items-center gap-3 min-w-0">
                       {m.photoURL ? (
                         <img src={m.photoURL} alt="" className="w-8 h-8 rounded-full shrink-0" />
@@ -1473,6 +1487,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       type="checkbox"
                       checked={!!m.isArtist}
                       onChange={e => toggleArtist(m.uid, e.target.checked)}
+                      onClick={e => e.stopPropagation()}
                       className="accent-[#c5a059] w-4 h-4 justify-self-center"
                       title="Curated artist (unlocks Creator Studio publish)"
                     />
@@ -1480,6 +1495,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       type="checkbox"
                       checked={!!m.featureCafe}
                       onChange={e => toggleFeatureFlag(m.uid, 'featureCafe', e.target.checked)}
+                      onClick={e => e.stopPropagation()}
                       className="accent-fuchsia-400 w-4 h-4 justify-self-center"
                       title="Feature in the Café"
                     />
@@ -1487,6 +1503,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       type="checkbox"
                       checked={!!m.featureMecene}
                       onChange={e => toggleFeatureFlag(m.uid, 'featureMecene', e.target.checked)}
+                      onClick={e => e.stopPropagation()}
                       className="accent-fuchsia-400 w-4 h-4 justify-self-center"
                       title="Feature in 'Nos Artistes' (Mécène space)"
                     />
@@ -1494,6 +1511,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       type="checkbox"
                       checked={!!m.featureCreatorStudio}
                       onChange={e => toggleFeatureFlag(m.uid, 'featureCreatorStudio', e.target.checked)}
+                      onClick={e => e.stopPropagation()}
                       className="accent-fuchsia-400 w-4 h-4 justify-self-center"
                       title="Feature in the Creator Studio's Featured Artists row"
                     />
@@ -1501,6 +1519,7 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                       type="checkbox"
                       checked={!!m.maestroEnabled}
                       onChange={e => toggleFeatureFlag(m.uid, 'maestroEnabled', e.target.checked)}
+                      onClick={e => e.stopPropagation()}
                       className="accent-amber-400 w-4 h-4 justify-self-center"
                       title="Maestro tier: unlocks the Super Profile editor + /{username} page"
                     />
@@ -1512,6 +1531,16 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* ── Aide aux membres : fils soutien + signalements techniques ── */}
+        {tab === 'soutien' && (
+          <div>
+            <p className="text-neutral-600 text-xs font-lato mb-4">
+              Fils d'aide des membres et signalements techniques. Cliquer un fil ouvre la fiche du membre.
+            </p>
+            <SoutienSection language={language} onOuvrirMembre={(uid) => setFicheUid(uid)} />
           </div>
         )}
 
@@ -1951,6 +1980,36 @@ export const AdminCRM: React.FC<AdminCRMProps> = ({ language, onNavigate, user }
 
       </div>
     </AdminShell>
+
+    {/* Fiche membre (tiroir) */}
+    {ficheUid && user && (() => {
+      const m = members.find((x) => x.uid === ficheUid);
+      if (!m) return null;
+      const ligne: LigneMembre = {
+        uid: m.uid,
+        displayName: m.displayName,
+        email: m.email,
+        photoURL: m.photoURL,
+        membershipType: m.membershipType,
+        createdAt: m.createdAt,
+        joinedAt: m.joinedAt,
+        isArtist: m.isArtist,
+        featureCafe: m.featureCafe,
+        featureMecene: m.featureMecene,
+        featureCreatorStudio: m.featureCreatorStudio,
+        maestroEnabled: m.maestroEnabled,
+      };
+      return (
+        <FicheMembre
+          membre={ligne}
+          user={user}
+          language={language}
+          onNavigate={onNavigate}
+          onClose={() => setFicheUid(null)}
+        />
+      );
+    })()}
+    </>
   );
 };
 
