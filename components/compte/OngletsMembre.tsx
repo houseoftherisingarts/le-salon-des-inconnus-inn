@@ -14,6 +14,8 @@ const ONGLETS: Onglet[] = [
   { id: 'artistique', labelFR: 'Communauté artistique', labelEN: 'Artistic community' },
   { id: 'vivre-ici', labelFR: 'Vivre ici', labelEN: 'Live here' },
   { id: 'parrainage', labelFR: 'Parrainage', labelEN: 'Referrals' },
+  { id: 'preferences', labelFR: 'Préférences', labelEN: 'Preferences' },
+  { id: 'aide', labelFR: 'Aide', labelEN: 'Help' },
   // Les onglets qui ne sont pas construits n'apparaissent pas encore.
 ];
 

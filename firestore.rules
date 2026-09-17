@@ -767,6 +767,52 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // ── Espace membre · la conversation avec l'équipe ──────────────────────────
+    // Un document parent par membre, une sous-collection de messages. Le membre
+    // ne met à jour que luParMembreLe ; l'admin répond (auteur: 'equipe'), résout
+    // et fait le ménage.
+    match /soutien/{uid} {
+      allow read: if isSelf(uid) || isAdmin();
+      allow create: if isSelf(uid)
+                    && request.resource.data.keys().hasOnly(['uid', 'nom', 'courriel', 'creeLe'])
+                    && request.resource.data.uid == uid
+                    && request.resource.data.nom is string && request.resource.data.nom.size() <= 120
+                    && request.resource.data.courriel is string && request.resource.data.courriel.size() <= 200;
+      allow update: if isAdmin()
+                    || (isSelf(uid)
+                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['luParMembreLe']));
+      allow delete: if isAdmin();
+
+      match /messages/{mid} {
+        allow read: if isSelf(uid) || isAdmin();
+        allow create: if request.resource.data.keys().hasOnly(['auteur', 'texte', 'creeLe'])
+                      && request.resource.data.texte is string
+                      && request.resource.data.texte.size() > 0
+                      && request.resource.data.texte.size() <= 4000
+                      && request.resource.data.creeLe == request.time
+                      && ((isSelf(uid) && request.resource.data.auteur == 'membre')
+                          || (isAdmin() && request.resource.data.auteur == 'equipe'));
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    // ── Espace membre · signalement de problème technique ──────────────────────
+    // Le membre ne crée que ses propres signalements ; la lecture est réservée au
+    // signaleur et à l'admin (le fil de l'admin filtre sur uid == membre).
+    match /problemesTechniques/{id} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.uid == request.auth.uid);
+      allow create: if isSignedIn()
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.keys().hasOnly(['uid', 'nom', 'courriel', 'texte', 'page', 'capture', 'capturePath', 'agent', 'ecran', 'statut', 'cree'])
+                    && request.resource.data.texte is string
+                    && request.resource.data.texte.size() > 0
+                    && request.resource.data.texte.size() <= 4000
+                    && request.resource.data.statut == 'nouveau'
+                    && (!('capturePath' in request.resource.data)
+                        || request.resource.data.capturePath.matches('^(problemes/' + request.auth.uid + '/.*)?$'));
+      allow update, delete: if isAdmin();
+    }
+
     // ── Puzzle gifts ─────────────────────────────────────────────────────────
     // A member can offer a completed puzzle from their display case to another
     // member. The recipient accepts (puzzle joins their case) or declines

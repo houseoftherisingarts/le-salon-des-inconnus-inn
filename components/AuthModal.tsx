@@ -130,7 +130,7 @@ async function createMemberProfile(
   };
 }
 
-async function deleteMemberData(user: User): Promise<void> {
+export async function deleteMemberData(user: User): Promise<void> {
   if (db) await deleteDoc(doc(db, 'members', user.uid));
   await deleteUser(user);
 }

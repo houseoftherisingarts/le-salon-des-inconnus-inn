@@ -3,7 +3,6 @@ import * as functions from 'firebase-functions/v1';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import * as crypto from 'crypto';
 import { defineSecret } from 'firebase-functions/params';
-import nodemailer from 'nodemailer';
 import {
   HOSTAWAY_API_KEY,
   HOSTAWAY_ACCOUNT_ID,
@@ -13,6 +12,7 @@ import {
   isValidDate,
   addDays,
 } from './hostaway';
+import { RUNTIME_WITH_SMTP, notifyAlex, line } from './courriel';
 
 admin.initializeApp();
 
@@ -175,44 +175,7 @@ export const createShowTicketPayment = functions.https.onCall(async (data, conte
 //   firebase functions:secrets:set ZOHO_USER   (alex@lesalondesinconnus.com)
 //   firebase functions:secrets:set ZOHO_PASS   (Zoho app password)
 // then: firebase deploy --only functions   (deploys all the triggers below)
-
-const NOTIFY_TO = 'alex@lesalondesinconnus.com';
-const RUNTIME_WITH_SMTP = { secrets: ['ZOHO_USER', 'ZOHO_PASS'] as string[] };
-
-// Build a one-off Zoho transporter from the runtime secrets. Returns null (and
-// logs) if the secrets aren't present, so a misconfig never crashes a write.
-function smtpTransport() {
-  const user = process.env.ZOHO_USER;
-  const pass = process.env.ZOHO_PASS;
-  if (!user || !pass) {
-    console.error('ZOHO_USER / ZOHO_PASS not set — skipping notification email.');
-    return null;
-  }
-  return nodemailer.createTransport({
-    host: 'smtp.zohocloud.ca',
-    port: 465,
-    secure: true,
-    auth: { user, pass },
-  });
-}
-
-// Send a plain-text notification to Alex. Never throws — a failed email must not
-// fail the Firestore write that triggered it.
-async function notifyAlex(subject: string, body: string): Promise<void> {
-  const transporter = smtpTransport();
-  if (!transporter) return;
-  const from = `"Le Salon des Inconnus" <${process.env.ZOHO_USER}>`;
-  try {
-    await transporter.sendMail({ from, to: NOTIFY_TO, subject, text: body });
-  } catch (err) {
-    console.error('Notification email failed:', subject, err);
-  }
-}
-
-// Small helper: "Label: value\n" only when value is non-empty.
-function line(label: string, value: unknown): string {
-  return value !== undefined && value !== null && value !== '' ? `${label}: ${String(value)}\n` : '';
-}
+// Le transport, notifyAlex, line et RUNTIME_WITH_SMTP vivent dans ./courriel.
 
 // 1. Community membership application — the paid resident place (André's spot).
 export const onCommunityApplication = functions
@@ -1002,5 +965,6 @@ export const stripeCampingWebhook = onRequest(
 // Les trois fonctions vivent dans ./profilPro : ouverture du Checkout Stripe,
 // webhook signé qui pose flags.proEnabled, et portail client.
 export { creerAbonnementProfilPro, webhookProfilPro, portailProfilPro } from './profilPro';
-export { compterPlacesCeilidh, mesBillets, mesSejours, lierSejour } from './espaceMembre';
+export { compterPlacesCeilidh, mesBillets, mesSejours, lierSejour, nettoyerCompteSupprime } from './espaceMembre';
 export { parrainageFilleul } from './parrainage';
+export { onMessageSoutien, onProblemeTechnique, onMessageEntreMembres } from './soutien';

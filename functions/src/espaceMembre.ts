@@ -430,3 +430,44 @@ export const mesBillets = onCall({ cors: true, maxInstances: 5 }, async (request
 
   return { spectacles, inscriptions, contributions, camping };
 });
+
+// ─── 4.10 nettoyerCompteSupprime · effacement complet du compte ──────────────
+// deleteMemberData (AuthModal) n'efface que members/{uid} avant de supprimer le
+// compte Auth. Ici on termine le travail : le téléphone, le fil d'aide, l'état
+// des séjours, le parrainage, les signalements, les notifications et les images
+// Storage. Les messages envoyés à d'autres membres restent, comme le dit 6.10.
+export const nettoyerCompteSupprime = functions.auth.user().onDelete(async (user) => {
+  const uid = user.uid;
+  const db2 = admin.firestore();
+
+  // Fiche complète (sous-collections comprises : prive, artistProfile, etc.).
+  await db2.recursiveDelete(db2.doc(`members/${uid}`)).catch((e) => {
+    console.warn('[nettoyage] members indisponible', e);
+  });
+
+  // Fil d'aide et ses messages.
+  await db2.recursiveDelete(db2.doc(`soutien/${uid}`)).catch(() => {});
+
+  // État serveur des séjours.
+  await db2.doc(`sejours/${uid}`).delete().catch(() => {});
+
+  // Parrainage : mon entrée de filleul, mon compteur et mon code.
+  await db2.doc(`parrainages/${uid}`).delete().catch(() => {});
+  await db2.doc(`parrainagesCompte/${uid}`).delete().catch(() => {});
+  const codes = await db2.collection('codesParrain').where('uid', '==', uid).get();
+  await Promise.all(codes.docs.map((d) => d.ref.delete().catch(() => {})));
+
+  // Signalements techniques.
+  const signalements = await db2.collection('problemesTechniques').where('uid', '==', uid).get();
+  await Promise.all(signalements.docs.map((d) => d.ref.delete().catch(() => {})));
+
+  // Notifications.
+  await db2.recursiveDelete(db2.doc(`notifications/${uid}`)).catch(() => {});
+
+  // Images Storage : avatar/bannière de profil et captures de signalement.
+  const bucket = admin.storage().bucket();
+  await bucket.deleteFiles({ prefix: `members/${uid}/profil/` }).catch(() => {});
+  await bucket.deleteFiles({ prefix: `problemes/${uid}/` }).catch(() => {});
+
+  console.log(`[nettoyage] compte ${uid} effacé`);
+});

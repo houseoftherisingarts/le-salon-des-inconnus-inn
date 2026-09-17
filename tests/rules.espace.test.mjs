@@ -9,7 +9,7 @@
 import { initializeApp, deleteApp } from 'firebase/app';
 import {
     getFirestore, connectFirestoreEmulator, doc, setDoc, updateDoc, deleteDoc, getDoc,
-    getDocs, collection, serverTimestamp, Timestamp,
+    getDocs, collection, serverTimestamp, Timestamp, addDoc,
 } from 'firebase/firestore';
 
 const PROJECT_ID = process.env.GCLOUD_PROJECT || 'demo-salon';
@@ -208,6 +208,55 @@ async function main() {
         getDoc(doc(dbB(), 'codesParrain', 'ABC123')));
     await attenduRefus('R-65 b un visiteur anonyme lit codesParrain/ABC123',
         getDoc(doc(dbAnon(), 'codesParrain', 'ABC123')));
+
+    // ── Lot 6 : fil d'aide (soutien) et signalements techniques ──────────────
+    await attenduOk('R-30 A crée soutien/A puis un message auteur membre',
+        setDoc(doc(dbA(), 'soutien', UID_A), { uid: UID_A, nom: 'Essai A', courriel: 'a@example.com', creeLe: serverTimestamp() })
+            .then(() => addDoc(collection(dbA(), 'soutien', UID_A, 'messages'), {
+                auteur: 'membre', texte: 'Bonjour', creeLe: serverTimestamp(),
+            })));
+    await attenduRefus('R-31 A crée un message auteur equipe dans soutien/A',
+        addDoc(collection(dbA(), 'soutien', UID_A, 'messages'), {
+            auteur: 'equipe', texte: 'Réponse', creeLe: serverTimestamp(),
+        }));
+    await attenduRefus('R-32 B lit les messages de soutien/A',
+        getDocs(collection(dbB(), 'soutien', UID_A, 'messages')));
+    await attenduOk('R-33 l\'admin crée un message auteur equipe dans soutien/A',
+        addDoc(collection(dbAdmin(), 'soutien', UID_A, 'messages'), {
+            auteur: 'equipe', texte: 'Réponse de l\'équipe', creeLe: serverTimestamp(),
+        }));
+    await attenduRefus('R-34 le faux admin non vérifié crée un message equipe',
+        addDoc(collection(dbFauxAdmin(), 'soutien', UID_A, 'messages'), {
+            auteur: 'equipe', texte: 'Réponse', creeLe: serverTimestamp(),
+        }));
+    await attenduRefus('R-35 A pose statut resolu sur soutien/A',
+        updateDoc(doc(dbA(), 'soutien', UID_A), { statut: 'resolu' }));
+    await attenduOk('R-36 A pose luParMembreLe sur soutien/A',
+        updateDoc(doc(dbA(), 'soutien', UID_A), { luParMembreLe: serverTimestamp() }));
+    await attenduRefus('R-37 A crée un message de 4001 caractères',
+        addDoc(collection(dbA(), 'soutien', UID_A, 'messages'), {
+            auteur: 'membre', texte: 'x'.repeat(4001), creeLe: serverTimestamp(),
+        }));
+    await attenduOk('R-40 A crée un signalement problemeTechniques',
+        setDoc(doc(dbA(), 'problemesTechniques', 'pb-a'), {
+            uid: UID_A, nom: 'Essai A', courriel: 'a@example.com', texte: 'Le bouton ne répond pas',
+            page: '/compte', statut: 'nouveau', cree: serverTimestamp(),
+        }));
+    await attenduRefus('R-41 A crée un signalement avec uid: B',
+        setDoc(doc(dbA(), 'problemesTechniques', 'pb-a2'), {
+            uid: UID_B, nom: 'Essai A', courriel: 'a@example.com', texte: 'bug', statut: 'nouveau',
+        }));
+    await attenduRefus('R-42 A crée un signalement avec statut resolu',
+        setDoc(doc(dbA(), 'problemesTechniques', 'pb-a3'), {
+            uid: UID_A, nom: 'Essai A', courriel: 'a@example.com', texte: 'bug', statut: 'resolu',
+        }));
+    await attenduRefus('R-43 A joint une capture sous le chemin de B',
+        setDoc(doc(dbA(), 'problemesTechniques', 'pb-a4'), {
+            uid: UID_A, nom: 'Essai A', courriel: 'a@example.com', texte: 'bug', statut: 'nouveau',
+            capturePath: 'problemes/espace-b/x.png',
+        }));
+    await attenduRefus('R-44 B lit le signalement de A',
+        getDoc(doc(dbB(), 'problemesTechniques', 'pb-a')));
 
     console.log('\n' + resultats.join('\n'));
     console.log(`\n${ok} réussis, ${fail} échoués, sur ${ok + fail} cas.`);

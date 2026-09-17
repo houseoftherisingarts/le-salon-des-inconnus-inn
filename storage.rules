@@ -122,6 +122,18 @@ service firebase.storage {
       allow delete: if true;
     }
 
+    // ── Espace membre · capture jointe à un signalement technique ───────────
+    // Le signaleur dépose une image sous problemes/{uid}/, seul son propriétaire
+    // et l'admin la lisent. Image seulement, 10 Mo au plus.
+    match /problemes/{userId}/{fichier} {
+      allow read:  if (request.auth != null && request.auth.uid == userId) || isAdmin();
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && isImage()
+                   && under10MB();
+      allow delete: if isAdmin();
+    }
+
     // ── Default-deny for anything else ──────────────────────────────────────
     match /{allPaths=**} {
       allow read:  if false;

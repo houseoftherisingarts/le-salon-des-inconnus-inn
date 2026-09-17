@@ -13,6 +13,8 @@ const OngletBillets = React.lazy(() => import('./onglets/OngletBillets').then(m 
 const OngletSejours = React.lazy(() => import('./onglets/OngletSejours').then(m => ({ default: m.OngletSejours })));
 const OngletVivreIci = React.lazy(() => import('./onglets/OngletVivreIci').then(m => ({ default: m.OngletVivreIci })));
 const OngletParrainage = React.lazy(() => import('./onglets/OngletParrainage').then(m => ({ default: m.OngletParrainage })));
+const OngletPreferences = React.lazy(() => import('./onglets/OngletPreferences').then(m => ({ default: m.OngletPreferences })));
+const OngletAide = React.lazy(() => import('./onglets/OngletAide').then(m => ({ default: m.OngletAide })));
 // Import lazy des autres onglets (ajoutés au fil des lots)
 
 interface EspaceMembrePageProps {
@@ -255,7 +257,22 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 language={language}
               />
             )}
-            {actif !== 'profil' && actif !== 'sejours' && actif !== 'communaute' && actif !== 'artistique' && actif !== 'billets' && actif !== 'vivre-ici' && actif !== 'parrainage' && (
+            {actif === 'preferences' && (
+              <OngletPreferences
+                user={user}
+                memberProfile={memberProfile}
+                language={language}
+                onNavigate={onNavigate}
+              />
+            )}
+            {actif === 'aide' && (
+              <OngletAide
+                user={user}
+                memberProfile={memberProfile}
+                language={language}
+              />
+            )}
+            {actif !== 'profil' && actif !== 'sejours' && actif !== 'communaute' && actif !== 'artistique' && actif !== 'billets' && actif !== 'vivre-ici' && actif !== 'parrainage' && actif !== 'preferences' && actif !== 'aide' && (
               <div className="text-neutral-500 font-lato italic py-10">Onglet en construction...</div>
             )}
           </React.Suspense>
