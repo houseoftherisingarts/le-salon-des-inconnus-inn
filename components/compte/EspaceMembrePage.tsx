@@ -8,6 +8,7 @@ import { SiteFooter } from '../SiteFooter';
 import { Banniere } from './Banniere';
 import { OngletsMembre } from './OngletsMembre';
 import { RailMembre } from './RailMembre';
+import GlyphPortal from '../GlyphPortal';
 import { OngletProfil } from './onglets/OngletProfil';
 const OngletCommunaute = React.lazy(() => import('./onglets/OngletCommunaute').then(m => ({ default: m.OngletCommunaute })));
 const OngletArtistique = React.lazy(() => import('./onglets/OngletArtistique').then(m => ({ default: m.OngletArtistique })));
@@ -56,6 +57,12 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
   const isReadOnly = !!vueAdmin;
   const uidAffiche = vueAdmin?.uid ?? (user ? user.uid : '');
   const profilAffiche = vueAdmin ? (profilCible ?? memberProfile) : memberProfile;
+
+  // Portail d'entrée : le prénom du membre devient la porte du salon.
+  const nomComplet = (profilAffiche?.displayName || user?.displayName || '').trim();
+  const prenom = nomComplet.split(/\s+/)[0] || '';
+  const motPortail = prenom || 'SALON';
+  const lettrePortail = Array.from(motPortail)[0] ?? '';
 
   // Parse query string for current tab
   const getOnglet = () => {
@@ -158,6 +165,51 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
         className="pointer-events-none absolute inset-x-0 top-0 h-[60vh]" 
         style={{ background: 'radial-gradient(ellipse 70% 100% at 50% 0%, rgba(200,170,110,0.07), transparent 75%)' }} 
       />
+      {/* 1b. Portail d'entrée : le prénom devient la porte du salon */}
+      <GlyphPortal
+        word={motPortail}
+        focusChar={lettrePortail || undefined}
+        fontFamily="'Cinzel', serif"
+        fontWeight={700}
+        enterLabel={t('Enter', 'Entrer')}
+        style={{
+          '--gp-paper': '#010a13',
+          '--gp-field': '#c8aa6e',
+          '--gp-ink': '#c8aa6e',
+          '--gp-foreground': '#0a0f14',
+        }}
+        background={
+          <div style={{
+            position: 'absolute', inset: 0,
+            transform: 'scale(var(--gp-field-scale,1))',
+            background: 'radial-gradient(circle at 20% 12%, rgba(240,230,210,.55), transparent 40%), radial-gradient(circle at 82% 24%, rgba(216,189,133,.5), transparent 34%), radial-gradient(circle at 50% 85%, rgba(1,10,19,.32), transparent 48%), linear-gradient(135deg,#b8935a 0%,#c8aa6e 42%,#a8814a 100%)',
+          }} />
+        }
+        front={
+          <div style={{ position: 'absolute', top: 'clamp(96px,13%,112px)', left: 'clamp(24px,6%,64px)', right: 'clamp(24px,6%,64px)', display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ height: 1, width: 40, background: '#c8aa6e', flex: '0 0 auto' }} />
+            <span className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e]">
+              {t('Members\' space', 'Espace membre')}
+            </span>
+          </div>
+        }
+      >
+        <div style={{ textAlign: 'center', maxWidth: '56ch', margin: '0 auto' }}>
+          <p className="font-cinzel text-[11px] uppercase tracking-[0.4em] mb-5" style={{ color: 'rgba(10,15,20,.66)' }}>
+            {t('Welcome to your space at the Salon', 'Bienvenue dans votre espace au Salon')}
+          </p>
+          <h2 className="font-prata" style={{ color: '#0a0f14', fontSize: 'clamp(2rem,5vw,3.5rem)', lineHeight: 1.05, margin: '0 0 16px' }}>
+            {profilAffiche?.displayName || t('Member', 'Membre')}
+          </h2>
+          <p className="font-lato" style={{ color: 'rgba(10,15,20,.72)', fontSize: 16, lineHeight: 1.6, margin: 0 }}>
+            {t(
+              'Your stays, your tickets and the people you met are waiting right below.',
+              'Vos séjours, vos billets et les gens rencontrés vous attendent juste en dessous.'
+            )}
+          </p>
+        </div>
+      </GlyphPortal>
+
       {/* 2. Bannière */}
       <Banniere 
         uid={uidAffiche} 

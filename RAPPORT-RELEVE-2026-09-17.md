@@ -216,3 +216,75 @@ Sans référent dans cette session neuve, j'ai lu le handoff et les rapports du 
 
 - **Le choix des mots du titre.** « Une auberge, un manoir, des artistes » garde les trois noms et la même structure que l'original, mais remplace « un centre d'artistes » par « des artistes ». Si tu préfères une autre tournure, c'est un mot à changer dans `config/seo.content.ts` (ligne `sectionTitle` INN FR). J'ai mesuré que « Une auberge, un manoir, un centre d'arts » et « ... un centre d'art » restent sur trois lignes, d'où ce choix.
 - **Les autres résultats de l'audit**, non corrigés car jugés faux positifs ou voulus : 30 textes sous 13 px (le wordmark « Le Salon des Inconnus » à 10 px, les libellés de nav, et les badges « SUPERHOST » / « 11 YEARS » à 8 px, tous des micro-labels de marque) ; des libellés en double (« réserver », « creator studio », « le dôme », « les inconnus » vus 2 fois, soit nav + un second menu) ; et des « colonnes étroites » du bloc SEO (448 px) que le script juge sans voisin alors que le voisin est à gauche. À trancher à l'œil si l'un de ces points te chiffonne.
+
+---
+
+# Tâche 6 — « je ne vois pas de changements, déploie »
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été trouvé
+
+L'arbre de travail était propre et tout était poussé sur `origin/main` (dernier commit `1f8e6f8`). Le site principal (monolithe de l'auberge, servi sur `www.lesalondesinconnus.com` et `aubergedesinconnus.com`) était déjà à jour : le bundle en ligne (`index-DY1lDJnL.js`) correspondait au `dist/` local, y compris le retrait du renommage « House of the Rising Arts » (commit `fae88b9`) et le titre SEO raccourci.
+
+Le seul endroit en retard était les **apps Firebase** : le commit `fae88b9` a touché `packages/ui/src/creator-studio/*` à 00 h 47, soit juste après le dernier build des apps (`apps/salon/dist` et `apps/houseoftherisingarts/dist`, construits à 00 h 46). Ces deux apps servaient donc encore l'ancien wordmark « House of the Rising Arts » au lieu du retour à « Creator Studio » / « Studio des Créateurs ».
+
+## Ce qui a été fait
+
+1. Rebuild de `apps/salon` et `apps/houseoftherisingarts` (les deux apps qui bundlent `@inconnus/ui`, donc `CreatorStudioShell`).
+2. Vérifié dans les bundles frais que « House of the Rising Arts » a disparu et que « Studio des Créateurs » est présent.
+3. Déploiement Firebase : `npx firebase deploy --only hosting:inconnus-salon,hosting:inconnus-houseoftherisingarts --project le-salon-des-inconnus`.
+4. Vérifié en ligne : `inconnus-houseoftherisingarts.web.app` sert désormais `index-Df_lkbkI.js` (0 occurrence de « House of the Rising Arts », 2 de « Studio des Créateurs »).
+
+## À noter pour la suite
+
+- **`houseoftherisingarts.com` est hébergé sur Netlify**, pas sur Firebase (`server: Netlify` en réponse). Il se déploie tout seul depuis GitHub et sert déjà la version corrigée (le wordmark reverté). Le site Firebase `inconnus-houseoftherisingarts` est donc une cible secondaire/legacy.
+- **La syntaxe de déploiement** : `--only hosting:a,b,c` (virgule sans préfixe) n'a déployé que le premier site ; il faut répéter `hosting:` pour chaque site (`--only hosting:a,hosting:b`). C'est pour ça qu'un premier déploiement n'avait couvert que `le-salon-des-inconnus`.
+- `apps/hub` et `apps/dome` n'ont pas été touchés par les commits récents et n'ont pas eu besoin de rebuild.
+
+---
+
+# Tâche 7 — Intégration de GlyphPortal dans l'espace membre
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été demandé (message d'Alex, mot pour mot)
+
+> « Le fichier GlyphPortal.tsx vient d'être généré proprement dans components/GlyphPortal.tsx. TÂCHE : 1. Importe ce composant GlyphPortal et intègre-le au sein de l'espace membre. 2. Valide que le build TypeScript compile correctement (npx tsc --noEmit). 3. Ne te bloque pas pour me poser de questions (A ou B). Choisis la meilleure option visuelle et mène l'intégration jusqu'au bout. »
+
+## Ce qui a été fait
+
+**Intégration en portail d'entrée.** J'ai monté `GlyphPortal` comme premier bloc de l'espace membre connecté (`components/compte/EspaceMembrePage.tsx`), juste avant la bannière. C'est le choix visuel que j'ai retenu sans te reposer la question : le composant est littéralement un portail scroll-scrubbé où une lettre devient la porte (« Enter section », « Scroll to enter »), donc l'entrée de l'espace est son emplacement naturel, et ça colle à ta règle d'entrée en matière explosive.
+
+**Le mot du portail = le prénom du membre.** `word` prend le premier mot du `displayName` (repli sur « SALON » si vide), et `focusChar` pointe l'initiale, pour que le membre entre « par son propre nom ». Le contenu révélé après l'entrée est un écran d'accueil (surlabel, prénom en Prata, une ligne d'invitation), puis la bannière et les onglets suivent normalement dans le flux.
+
+**Palette.** Le portail reprend exactement le canon Gilded Age de l'espace membre : encre `#010a13` en papier, champagne `#c8aa6e` en encre et en champ (les lettres), un dégradé or champagne pour le champ révélé, et texte sombre `#0a0f14` sur le champ. Police du glyphe en Cinzel 700 (la display du salon, déjà chargée).
+
+**Un correctif de type dans le composant généré.** `npx tsc --noEmit` bloquait sur `GlyphPortal.tsx` (ligne 126 : `family.trim()` sur un type `never`, causé par l'union `RegExpMatchArray | never[]` du `?? []`). J'ai annoté `const families: string[]` (ligne 124), ce qui ne change rien au comportement et laisse le reste du fichier intact.
+
+## Ce qui a été vérifié comment
+
+- `npx tsc --noEmit` : zéro erreur (après le correctif de type ci-dessus).
+- `npx vite build` : vert (le chunk `EspaceMembrePage` passe à 41,6 kB et embarque GlyphPortal).
+- Smoke test Playwright sur un serveur de dev (`/compte`, 1440 px) : la porte non connectée s'affiche, aucune erreur console, le chunk charge sans erreur d'import au runtime.
+
+## Ce qui n'a PAS été vérifié
+
+- **Le rendu du portail en état connecté.** Le portail ne se monte que quand `user && memberProfile` est présent, donc derrière une vraie session Firebase (aucun contournement de dev dans `App.tsx`, `onAuthStateChanged` direct). Sans identifiants, je n'ai pas pu atteindre cet état en headless. Aucune capture n'a été regardée non plus (ce modèle ne lit pas les images, comme dans les tâches précédentes).
+- La grille visuelle de la RÈGLE -5 (deux lignes de titre max, aucune superposition, plein écran sans vide latéral) reste à passer par Claude Code ou un agent qui voit, sur le portail connecté à 1440 et 390 px.
+
+## Décisions de jugement à regarder en premier
+
+- **Le prénom comme mot du portail.** C'est le geste le plus personnel, mais un prénom long (ex. « Alexandre ») donne de petites lettres, et un prénom avec espace tombe sur le repli premier-mot. Si tu préfères un mot fixe de marque (« SALON », « BIENVENUE »), il suffit de changer une ligne (`motPortail`).
+- **Le champ or plein après l'entrée.** Après le zoom dans la lettre, l'écran révélé est un aplat or champagne avec texte sombre, avant de redescendre dans l'encre de la bannière. C'est le moment « rupture » voulu, mais si tu le trouves trop clair ou trop long, je peux foncer le champ (`--gp-field`) ou raccourcir `scrollLength`.
+- **Le correctif de type dans GlyphPortal.tsx.** Le fichier n'était pas « proprement » compilable tel quel. Si tu veux le revoir en l'état, `git diff components/GlyphPortal.tsx` montre le seul changement (ligne 124).
+
+## Ce qui reste
+
+- Rien n'est commité ni déployé (la tâche ne le demandait pas). Si tu veux pousser : `git add -A && git commit -m "GlyphPortal : portail d'entrée de l'espace membre + correctif de type"`, puis déploiement.
+- La grille visuelle du portail connecté, par un agent qui voit.
+
+## Fichiers touchés
+
+- `components/compte/EspaceMembrePage.tsx` (import + portail d'entrée avant la bannière).
+- `components/GlyphPortal.tsx` (annotation `string[]` ligne 124, correctif de type).
