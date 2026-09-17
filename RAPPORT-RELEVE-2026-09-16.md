@@ -93,3 +93,19 @@ La vague 7 est maintenant bâtie de bout en bout, déployée en production et po
 **Décisions de jugement à regarder en premier.** La notification de parrainage écrit `deNom` et `creeLe` (et non « `deUid` et `cree` » comme le devis l'écrit littéralement), parce que `reseau/notifications.ts` affiche ces champs-là ; le devis disait « la forme que notifications.ts sait afficher », donc j'ai suivi la forme réelle du code plutôt que la lettre. La fonction `onProblemeTechnique` est déployée sans déclarer `VEXEL_CLE_SALON` (la clé n'est pas posée), elle écrit donc `vexel: 'absent'` et avertit Alex par courriel ; le jour où `clients/salon` existe, il faudra poser le secret et le déclarer. Le tri de l'admin sur `createdAt ?? joinedAt` place les fiches sans date en bas de liste.
 
 **Reste hors de la vague 7.** Le pied de page `/formations` chez Krystine, et la vague 4 (bureau aux trois livres) qui attend le go d'Alex sur les crédits Higgsfield. La capture visuelle de chaque onglet de `/compte` à 1440 et 390 px, et le passage de la grille 9.2.
+
+---
+
+## Retours d'Alex, traités dans la foulée (même soirée, relève)
+
+Alex a relu le site en ligne et a demandé trois corrections. Voici ce qui a été fait, puis ce qui reste de son jugement.
+
+**1. L'en-tête.** Retirée la ligne noire (le `border-b` de la barre au défilement, remplacé par un voile flouté plus léger à 60 % au lieu de la barre quasi noire à 88 %). Retiré le contour de la Petite Monnaie : plus de `border` sur la pastille ni de `ring` sur l'icône. Rapetissé les trois boutons de menu (Être, Faire, Centre d'arts et communauté) : 13 px ramenés à 11 px, hauteur de 36 px à 32 px, padding resserré. Déployé et vérifié en ligne (border 0 px, police 11 px).
+
+**2. Le centre d'arts.** `/centre-arts` est remis sur le hub d'Alex (l'écran partagé Mécène / Artiste), la page éditoriale façon Fortiche (`CentreArtsPage`) est retirée du routage, et les sous-routes `/mecene/artistes`, `/mecene/fiscalite` et `/mecene/soutenir` ont disparu : les pages du mécène (registre, fiscalité, soutien) redeviennent accessibles par le menu du hub, comme Alex les avait conçues. Le sitemap, `llms.txt`, `seo.config.ts` et `postbuild-routes.mjs` ont été nettoyés des trois adresses mortes. Déployé et vérifié en ligne (le hub répond, plus de texte Fortiche). Les fichiers de la page Fortiche (`components/centre-arts/`) restent sur le disque mais ne sont plus montés nulle part.
+
+**3. Le Creator Studio.** Le wordmark visible « Creator Studio » devient « House of the Rising Arts », avec « Studio » en italique, sur l'écran de connexion et dans le titre du viewer d'accueil. Le grand wordmark thématique (« CREATOR / STUDIO » empilé, décliné par thème dans `StudioContextViewer.tsx`) n'a pas été touché : c'est une composition par thème que je ne peux pas refaire sans le voir, et la fusion « Creator Studio et houseoftherisingarts.com ne font qu'un module » est un chantier plus large qui demande le jugement d'Alex.
+
+**Ce que je n'ai pas pu regarder de mes yeux.** Je ne lis pas les images : aucune capture n'a été regardée. J'ai vérifié par les mesures du DOM en ligne (bordure à zéro, taille de police, présence du hub et absence du texte Fortiche), jamais par le rendu visuel. Les trois corrections sont commitées (`3b26488`), poussées sur `main` et déployées sur `le-salon-des-inconnus` et `inconnus-auberge`.
+
+**Décisions de jugement à regarder en premier.** Le voile de l'en-tête au défilement passe de 88 % à 60 % d'opacité : si Alex le trouve encore trop sombre ou trop clair, c'est une ligne à changer. L'italique sur « Studio » est posée malgré la règle « jamais d'italique en design », parce qu'Alex l'a demandé explicitement pour cet endroit. Le grand wordmark du studio affiche encore « CREATOR / STUDIO » : à confirmer s'il doit lui aussi devenir « House of the Rising Arts ».
