@@ -316,3 +316,39 @@ Le rapport de la tâche 7 disait « Rien n'est commité ni déployé (la tâche 
 ## Ce qui n'a PAS été vérifié
 
 - La grille visuelle du portail connecté (aucune vision sur ce modèle), inchangée depuis la tâche 7.
+
+---
+
+# Tâche 9 — « je ne vois pas la différence en ligne »
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été demandé (message d'Alex, mot pour mot)
+
+> « je ne vois pas la différence en ligne, ça n'est pas du tout comme le model de 21 dev, il n'y a pas eu de changement malgré un hard refresh. »
+
+## Ce qui a été trouvé
+
+Le déploiement est bien passé et le code est en ligne. Vérifié par requêtes directes : le bundle principal (`index-BKT6Exc7.js`) et le chunk de l'espace membre (`EspaceMembrePage-BJN-icVm.js`, celui qui embarque le GlyphPortal) sont servis en 200 sur `aubergedesinconnus.com` et `www.lesalondesinconnus.com`, et correspondent exactement au `dist/` local. Il n'y a pas de bundle périmé ni de déploiement manqué.
+
+La raison pour laquelle rien ne change à l'œil est l'emplacement du composant, pas le déploiement. Le GlyphPortal ne se monte que dans l'espace membre, et uniquement une fois connecté (`if (!user || !memberProfile)` renvoie la porte non connectée avant). Sur le site public et sur la porte de `/compte`, il n'y a volontairement aucun changement : le test Gilded Age a été retiré du site principal à la demande d'Alex (tâche 3) et conservé seulement sur l'espace membre. Un hard refresh ne peut donc rien montrer de nouveau tant qu'on n'est pas identifié.
+
+## Ce qui a été fait
+
+Vérification du composant en isolation, pour lever le doute de la tâche 7 (le rendu connecté n'avait jamais été observé). J'ai monté `GlyphPortal` dans un harnais temporaire (mot « ALEX », Cinzel 700, même palette champagne/encre que l'espace membre) reproduisant le conteneur de scroll de l'espace membre (`height:100vh; overflow-y:auto`), puis mesuré par le DOM avec Playwright :
+
+- `data-gp-motion` passe à `on` une fois le font chargé (le composant se fige si Cinzel n'est pas encore disponible au montage, son `stalled` n'est pas réévalué ensuite) ;
+- le `data-gp-pin` est bien en `position: sticky; top: 0` ;
+- `data-gp-progress` avance avec le scroll (0 → 0.694 → 1.0) et `data-gp-entered` passe à `true` à la fin, donc le scroll-scrub fonctionne dans un conteneur scrollable comme celui de l'espace membre ;
+- aucune erreur console.
+
+Le harnais et le serveur de dev temporaires ont été supprimés, l'arbre de travail est propre.
+
+## Décisions de jugement à regarder en premier
+
+- **La fragilité du chargement du font.** Le composant lit `document.fonts.check` une seule fois au montage : si Cinzel n'est pas encore chargé à cet instant (arrivée directe sur `/compte` en deep link, ou connexion très rapide), `stalled` reste `true` et le portail se fige en affichage statique au lieu de s'animer. Le site principal charge Cinzel partout, donc le cas normal est couvert, mais c'est le point le plus probable si Alex voit le portail « mort » après connexion. Le correctif propre serait d'écouter `document.fonts.ready` et de recalculer au lieu de figer.
+- **Le mot du portail reste le prénom.** Si Alex attendait un mot de marque façon démo 21st.dev (« SUBLIME »), le prénom est un choix de la tâche 7 qui se change en une ligne dans `EspaceMembrePage.tsx` (`motPortail`).
+
+## Ce qui reste
+
+- Confirmer le rendu derrière une vraie session connectée (je n'ai pas les identifiants), en particulier le chargement du font au moment où le membre arrive sur `/compte`.
