@@ -352,3 +352,50 @@ Le harnais et le serveur de dev temporaires ont été supprimés, l'arbre de tra
 ## Ce qui reste
 
 - Confirmer le rendu derrière une vraie session connectée (je n'ai pas les identifiants), en particulier le chargement du font au moment où le membre arrive sur `/compte`.
+
+---
+
+# Tâche 10 — GlyphPortal au bon endroit : rollback de l'espace membre, portail dans L'Espace
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été demandé (message d'Alex, mot pour mot)
+
+> « tu as fais ça à la mauvaise place ! je ne veux pas ça dans l'espace membre ! rollback ! je veux ça dans l'endroit qui s'appelle espace — sous la gallerie après la selection de chambres, sur la landing page principale. rollback espace client a la version qu on a fait qui ressemblait a celui de krystine et implemente le code au bon endroit, ensuite, deploie »
+
+## Ce qui a été fait
+
+1. **Rollback de l'espace client (espace membre) à la version Krystine.** Les 21 fichiers de l'espace membre (le dossier `components/compte/` au complet, plus `ProfilePage`, `MessagingPage`, `AuthModal` et `D20Roller`) ont été restaurés à leur état d'avant le test Gilded Age, au commit `fae88b9`. Ça retire d'un seul geste la palette champagne/encre/ivoire ET le `GlyphPortal` qui y avait été ajouté à la tâche 7. Vérifié : plus aucune couleur Gilded Age (`#010a13`, `#c8aa6e`, `#f0e6d2`) dans l'espace membre, retour au canon chaud (crème `#f3e5ab`, or `#c5a059`).
+
+2. **GlyphPortal implanté dans la section L'Espace de la landing page** (`components/InnPageReserveCine.tsx`), c'est-à-dire sous la galerie photo et après la sélection de chambres, exactement là où l'ancienne intro « L'Espace » (mots → photo) vivait. Le portail la remplace : le mot `ESPACE` (ou `SPACE` en anglais) en Cinzel 700 devient la porte, on entre par une lettre au scroll, puis le panneau révélé annonce « L'Inventaire / Douze espaces » avant la liste des douze espaces. L'ancienne intro en `useEffect` (mots → photo) et ses trois refs ont été retirées.
+
+3. **Palette du portail = canon Salon.** Encre chaude `#050505` en papier, or `#c5a059` en champ, crème `#f3e5ab` en encre, texte sombre `#0a0808` sur le champ. La photo des jardins sert de fond au champ, posée à 50 % sur l'or pour garder l'esprit de l'ancienne intro sans brouiller les lettres.
+
+## Ce qui a été vérifié comment
+
+- `npx tsc --noEmit` sans erreur, puis `npm run build` vert (le monolithe complet ; le chunk `InnPageReserveCine` embarque maintenant GlyphPortal).
+- Mesures DOM par Playwright (serveur de préview, 1440 et 390) sur la landing :
+  - `data-gp-ready=true`, `data-gp-motion=on` (le portail n'est pas figé, Cinzel charge bien), `progress` avance avec le scroll (0 → 0.416 → 0.999) et `data-gp-entered=true` à la fin, `fieldClip` passe de la forme des lettres à `none` (l'entrée se fait), 12 lignes d'inventaire, zéro débordement horizontal, zéro erreur console.
+- `/compte` : plus de `GlyphPortal`, titre revenu au crème `#f3e5ab` (canon Salon, pas l'ivoire Gilded Age).
+- Déploiement Firebase sur `inconnus-auberge` et `le-salon-des-inconnus`, release complète, puis re-vérifié en ligne sur `www.lesalondesinconnus.com`, `aubergedesinconnus.com` (`ESPACE`, `motion=on`, 12 lignes) et `/compte` (portail absent, crème `#f3e5ab`).
+
+## Ce qui n'a PAS été vérifié
+
+- **Aucune capture n'a été regardée de mes yeux.** Ce modèle ne lit pas les images, donc la grille visuelle de la RÈGLE -5 n'a pas pu être passée. Les captures `1440` et `390` du portail (entrée + scroll) sont prêtes dans `/tmp/espace-*.png`. À relire par un agent qui voit : contraste du mot sur le fond, cadrage des lettres, équilibre du panneau or révélé, et le rendu sur mobile.
+- **L'effet de fondu exact du panneau révélé** (le moment or plein après l'entrée) n'a été validé que par les attributs DOM, pas à l'œil.
+
+## Décisions de jugement à regarder en premier
+
+- **Le mot du portail est « ESPACE / SPACE »**, pas « L'Espace ». L'apostrophe de « L'Espace » est un caractère difficile pour le rendu SVG des lettres ; « ESPACE » est plus net. Le label « L'Espace » reste affiché au-dessus du mot (bandeau `front`), et « Douze espaces » dans le panneau révélé.
+- **La photo des jardins en fond du champ**, posée à 50 % sur l'or. Si tu la préfères absente (portail or uni) ou plus présente, c'est l'opacité du `img` dans le `background` de `GlyphPortal` à ajuster.
+- **L'en-tête « L'Inventaire / Douze espaces »** de l'ancienne liste a été déplacé dans le panneau révélé du portail (pour ne pas le répéter), la liste suit directement. Si tu préfères garder ce titre au-dessus de la liste aussi, c'est un bloc à remettre.
+
+## Ce qui reste
+
+- La grille visuelle (captures 1440 et 390) du portail, par un agent qui voit.
+
+## Fichiers touchés
+
+- `components/InnPageReserveCine.tsx` (import + GlyphPortal dans L'Espace, retrait de l'ancienne intro).
+- Rollback de 21 fichiers de l'espace membre vers `fae88b9` (`components/compte/**`, `ProfilePage`, `MessagingPage`, `AuthModal`, `D20Roller`).
+- `components/GlyphPortal.tsx` inchangé (conservé pour la landing).
