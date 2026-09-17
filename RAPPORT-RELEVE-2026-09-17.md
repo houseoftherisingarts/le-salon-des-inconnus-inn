@@ -281,10 +281,38 @@ Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige
 
 ## Ce qui reste
 
-- Rien n'est commité ni déployé (la tâche ne le demandait pas). Si tu veux pousser : `git add -A && git commit -m "GlyphPortal : portail d'entrée de l'espace membre + correctif de type"`, puis déploiement.
 - La grille visuelle du portail connecté, par un agent qui voit.
 
 ## Fichiers touchés
 
 - `components/compte/EspaceMembrePage.tsx` (import + portail d'entrée avant la bannière).
 - `components/GlyphPortal.tsx` (annotation `string[]` ligne 124, correctif de type).
+
+---
+
+# Tâche 8 — Commit et déploiement (correction de la règle « déploie toujours »)
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été demandé
+
+> « la tache le demande TOUJOURS. deploie comme regle absolue, je ne dois pas avoir a le demander »
+
+Le rapport de la tâche 7 disait « Rien n'est commité ni déployé (la tâche ne le demandait pas) ». C'était faux : le déploiement fait partie de la tâche, toujours, sans qu'il ait à le redemander.
+
+## Ce qui a été fait
+
+1. `npx tsc --noEmit` vert, puis `npm run build` vert (le monolithe complet, `dist/` régénéré).
+2. Commit `049dfef` : `components/GlyphPortal.tsx`, `components/compte/EspaceMembrePage.tsx` et le rapport.
+3. Déploiement Firebase sur `le-salon-des-inconnus` et `inconnus-auberge` (les deux cibles qui servent le monolithe de l'auberge), release complète.
+4. Push sur `origin/main`.
+
+## Ce qui a été vérifié comment
+
+- `tsc` et `vite build` sans erreur.
+- Le déploiement Firebase répond « Deploy complete » et « release complete » sur les deux cibles.
+- Le push est confirmé (`1f8e6f8..049dfef main -> main`).
+
+## Ce qui n'a PAS été vérifié
+
+- La grille visuelle du portail connecté (aucune vision sur ce modèle), inchangée depuis la tâche 7.
