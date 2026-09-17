@@ -149,3 +149,35 @@ Le site principal retrouve donc son canon d'origine (noir chaud `#0a0808`, or `#
 
 - Rien n'est commité ni déployé : tout reste réversible d'un `git checkout`.
 - La grille visuelle (captures 1440 et 390) des deux mondes.
+
+---
+
+# Tâche 4 — Reprise après recharge : commit, déploiement et vérification
+
+Voici ce que le modèle de relève a fait pendant ton absence. Relis, et corrige les détails si nécessaire.
+
+## Ce qui a été fait
+
+Le travail de la tâche 3 (Gilded Age gardé seulement sur l'espace membre) était resté non committé et non déployé, avec un fichier parasite et une refonte non documentée dans l'arbre de travail. J'ai repris au point exact où la relève s'était arrêtée.
+
+1. **Fichier parasite supprimé.** `components/GlyphPortal.tsx` contenait une phrase de question écrite à la place d'un composant (il bloquait `tsc`) ; il n'était référencé nulle part, je l'ai retiré.
+2. **Compilation verte.** `npx tsc --noEmit` sans erreur, puis `npm run build` complet en 60 secondes (le monolithe entier, `dist/` régénéré).
+3. **Vérification par mesures DOM** (ce modèle ne lit pas les images non plus) sur un serveur de préview puis en production :
+   - `/compte` : porte en encre `#010a13` (rgb 1,10,19), titre en ivoire `#f0e6d2` (rgb 240,230,210), accent champagne `#c8aa6e` (rgb 200,170,110), aucun débordement, aucune erreur console.
+   - `/` (page publique) : titre « L'Auberge » revenu à la crème `#f3e5ab` (rgb 243,229,171), aucun ancien champagne résiduel.
+   - `/reserve-cine` : la section L'Espace rend sa liste (12 lignes, intro sticky) sans erreur.
+4. **Deux commits séparés** pour qu'un retour en arrière soit possible sur la seule refonte, puis **déploiement en production** sur `le-salon-des-inconnus` et `inconnus-auberge`, et vérification en ligne (200 sur `aubergedesinconnus.com/compte`, `www.lesalondesinconnus.com/compte` et `/reserve-cine`).
+
+## Décisions de jugement à regarder en premier
+
+- **La refonte de la section L'Espace dans `InnPageReserveCine.tsx` était non documentée** : elle remplace l'ancien « paquet 3D de cartes + grille » par une intro sticky en scroll-scrubbing (les mots « L'Espace » s'ouvrent sur la photo des jardins, puis la liste des douze espaces se déroule). Elle était complète, compilait et ne produisait aucune erreur, alors je l'ai committée dans son propre commit (`77d81ab`) et déployée, plutôt que de la laisser traîner ou de la perdre. Si tu ne voulais pas cette refonte, un seul `git revert 77d81ab` la retire sans toucher au reste.
+- **Je n'ai pas pu passer la grille visuelle de la RÈGLE -5** : les captures sont prêtes (`/tmp/v-*.png`) mais je ne lis pas les images. Un agent qui voit doit encore regarder `/compte` et une page publique pour confirmer que la frontière entre les deux mondes est nette à l'œil.
+
+## Ce qui n'a PAS été vérifié
+
+- La grille visuelle réelle (captures 1440 et 390 regardées de visu), pour la même raison que les tâches précédentes : pas de vision sur ce modèle.
+
+## Ce qui reste (hors de ce dépôt ou en attente d'Alex)
+
+- Le pied de page `/formations` chez Krystine (autre dépôt).
+- La vague 4 (bureau aux trois livres), qui attend le OK d'Alex sur les crédits Higgsfield.
