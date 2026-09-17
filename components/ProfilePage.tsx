@@ -308,23 +308,23 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   const membership = MEMBERSHIP_LABELS[memberProfile.membershipType] ?? MEMBERSHIP_LABELS['voyageur'];
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#050505] text-white overflow-y-auto custom-scrollbar selection:bg-[#c5a059] selection:text-black">
+    <div className="fixed inset-0 z-50 bg-[#010a13] text-white overflow-y-auto custom-scrollbar selection:bg-[#c8aa6e] selection:text-black">
       <div>
         {/* ── HERO BAND: editorial intro with avatar + identity ──────────── */}
-        <section className="relative bg-[#050505] pt-24 md:pt-32 pb-12 md:pb-16 px-6 md:px-12 lg:px-20 overflow-hidden border-b border-[#c5a059]/10">
+        <section className="relative bg-[#010a13] pt-24 md:pt-32 pb-12 md:pb-16 px-6 md:px-12 lg:px-20 overflow-hidden border-b border-[#c8aa6e]/10">
           {/* Soft gold radial backdrop */}
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(197,160,89,0.10) 0%, transparent 65%)',
+                'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(200,170,110,0.10) 0%, transparent 65%)',
             }}
           />
           <div className="relative max-w-[1400px] mx-auto">
             <button
               onClick={() => onNavigate('INN')}
-              className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] hover:text-[#f3e5ab] transition-colors mb-8 inline-block"
+              className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] hover:text-[#f0e6d2] transition-colors mb-8 inline-block"
             >
               ← {t('Back to the Inn', "Retour à l'auberge")}
             </button>
@@ -339,15 +339,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 <div
                   className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden"
                   style={{
-                    border: '2px solid rgba(243,229,171,0.55)',
-                    boxShadow: '0 12px 40px rgba(0,0,0,0.55), 0 0 60px rgba(197,160,89,0.18)',
+                    border: '2px solid rgba(240,230,210,0.55)',
+                    boxShadow: '0 12px 40px rgba(0,0,0,0.55), 0 0 60px rgba(200,170,110,0.18)',
                   }}
                 >
                   {currentPhotoURL ? (
                     <img src={currentPhotoURL} alt={displayName} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center" style={{ background: '#1f1810' }}>
-                      <span className="text-3xl md:text-4xl font-prata text-[#f3e5ab]">{initials}</span>
+                      <span className="text-3xl md:text-4xl font-prata text-[#f0e6d2]">{initials}</span>
                     </div>
                   )}
                 </div>
@@ -355,7 +355,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   {photoUploading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
-                    <span className="font-cinzel text-[#f3e5ab] text-[9px] uppercase tracking-[0.4em]">
+                    <span className="font-cinzel text-[#f0e6d2] text-[9px] uppercase tracking-[0.4em]">
                       {t('Change', 'Changer')}
                     </span>
                   )}
@@ -365,11 +365,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Identity */}
               <div className="flex-1 min-w-0">
-                <span className="font-cinzel text-[#c5a059] text-[10px] md:text-xs uppercase tracking-[0.55em] block mb-3">
+                <span className="font-cinzel text-[#c8aa6e] text-[10px] md:text-xs uppercase tracking-[0.55em] block mb-3">
                   {t('Member Space', 'Espace Membre')}
                 </span>
                 <h1
-                  className="font-prata uppercase text-[#f3e5ab] leading-[0.9] tracking-[-0.01em] mb-3"
+                  className="font-prata uppercase text-[#f0e6d2] leading-[0.9] tracking-[-0.01em] mb-3"
                   style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}
                 >
                   {displayName}
@@ -378,9 +378,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   <span
                     className="font-cinzel text-[10px] uppercase tracking-[0.4em] px-3 py-1 rounded-full"
                     style={{
-                      color: '#f3e5ab',
-                      background: 'rgba(197,160,89,0.15)',
-                      border: '1px solid rgba(197,160,89,0.4)',
+                      color: '#f0e6d2',
+                      background: 'rgba(200,170,110,0.15)',
+                      border: '1px solid rgba(200,170,110,0.4)',
                     }}
                   >
                     {language === 'FR' ? membership.fr : membership.en}
@@ -390,8 +390,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       className="font-cinzel uppercase tracking-[0.4em] px-3 py-1 rounded-full text-[#1a1208]"
                       style={{
                         fontSize: '10px',
-                        background: 'linear-gradient(180deg, #f3e5ab 0%, #c5a059 100%)',
-                        boxShadow: '0 2px 8px rgba(197,160,89,0.5)',
+                        background: 'linear-gradient(180deg, #f0e6d2 0%, #c8aa6e 100%)',
+                        boxShadow: '0 2px 8px rgba(200,170,110,0.5)',
                       }}
                     >
                       Admin
@@ -409,9 +409,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         </section>
 
         {/* ── QUICK ACTIONS ────────────────────────────────────────────────── */}
-        <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20">
+        <section className="bg-[#010a13] py-12 md:py-16 px-6 md:px-12 lg:px-20">
           <div className="max-w-[1400px] mx-auto">
-            <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-5">
+            <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block mb-5">
               {t('Quick access', 'Accès rapide')}
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
@@ -441,7 +441,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         </section>
 
         {/* ── EDIT PROFILE + EVENTS: two columns on desktop, stacked on mobile ─ */}
-        <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+        <section className="bg-[#010a13] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c8aa6e]/10">
           <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-6 md:gap-8">
 
             {/* Edit profile card */}
@@ -449,10 +449,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               className="p-6 md:p-8 rounded-2xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-                border: '1px solid rgba(197,160,89,0.2)',
+                border: '1px solid rgba(200,170,110,0.2)',
               }}
             >
-              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-4">
+              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block mb-4">
                 {t('Edit profile', 'Modifier le profil')}
               </span>
               <div className="space-y-5">
@@ -464,8 +464,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     type="text"
                     value={displayName}
                     onChange={e => setDisplayName(e.target.value)}
-                    className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
-                    style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+                    className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
+                    style={{ border: '1px solid rgba(200,170,110,0.3)' }}
                   />
                 </div>
 
@@ -478,8 +478,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
                     placeholder={t('e.g. +1 514 555 0000', 'ex. +1 514 555 0000')}
-                    className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors placeholder:text-neutral-600"
-                    style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+                    className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors placeholder:text-neutral-600"
+                    style={{ border: '1px solid rgba(200,170,110,0.3)' }}
                   />
                 </div>
 
@@ -493,7 +493,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       value={memberProfile.email}
                       disabled
                       className="flex-1 bg-black/30 text-neutral-500 px-4 py-3 rounded-lg font-josefin text-sm cursor-not-allowed"
-                      style={{ border: '1px solid rgba(197,160,89,0.15)' }}
+                      style={{ border: '1px solid rgba(200,170,110,0.15)' }}
                     />
                     <span className="font-cinzel text-neutral-600 text-[9px] uppercase tracking-[0.35em] shrink-0">
                       {t('Managed by Google', 'Géré par Google')}
@@ -507,8 +507,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     disabled={saving}
                     className="px-6 py-3 rounded-lg font-cinzel text-[#1a1208] text-[10px] uppercase tracking-[0.45em] disabled:opacity-40 transition-transform hover:scale-[1.02] active:scale-[0.99]"
                     style={{
-                      background: 'linear-gradient(180deg, #f3e5ab 0%, #c5a059 100%)',
-                      boxShadow: '0 4px 16px rgba(197,160,89,0.4)',
+                      background: 'linear-gradient(180deg, #f0e6d2 0%, #c8aa6e 100%)',
+                      boxShadow: '0 4px 16px rgba(200,170,110,0.4)',
                     }}
                   >
                     {saving ? t('Saving…', 'Sauvegarde…') : t('Save changes', 'Sauvegarder')}
@@ -528,16 +528,16 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               className="p-6 md:p-8 rounded-2xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-                border: '1px solid rgba(197,160,89,0.2)',
+                border: '1px solid rgba(200,170,110,0.2)',
               }}
             >
-              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-4">
+              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block mb-4">
                 {t('My events', 'Mes événements')}
               </span>
 
               {registrationsLoading ? (
                 <div className="flex items-center gap-3 text-neutral-500 text-sm py-6">
-                  <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c5a059] rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c8aa6e] rounded-full animate-spin" />
                   {t('Loading…', 'Chargement…')}
                 </div>
               ) : registrations.length === 0 ? (
@@ -547,7 +547,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   </p>
                   <button
                     onClick={() => onNavigate('CEILIDH')}
-                    className="mt-4 font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em] hover:text-[#f3e5ab] transition-colors"
+                    className="mt-4 font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em] hover:text-[#f0e6d2] transition-colors"
                   >
                     {t('Open Ceilidh de Mai 2026', 'Ouvrir le Ceilidh de Mai 2026')} →
                   </button>
@@ -558,14 +558,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     <div
                       key={reg.id}
                       className="p-5 rounded-xl"
-                      style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(197,160,89,0.18)' }}
+                      style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(200,170,110,0.18)' }}
                     >
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <div>
-                          <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em] block mb-1">
+                          <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em] block mb-1">
                             Grand Ceilidh de Mai 2026
                           </span>
-                          <p className="font-prata text-[#f3e5ab] text-base">
+                          <p className="font-prata text-[#f0e6d2] text-base">
                             {language === 'FR' ? 'Inscription confirmée' : 'Registration confirmed'}
                           </p>
                         </div>
@@ -591,13 +591,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         )}
                       </div>
                       {reg.isChefEquipe && (
-                        <p className="mt-3 font-cinzel text-[#d4af37] text-[10px] uppercase tracking-[0.4em]">
+                        <p className="mt-3 font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.4em]">
                           ★ {t('Team leader', "Chef d'équipe")}
                         </p>
                       )}
                       <button
                         onClick={() => onNavigate('CEILIDH')}
-                        className="mt-4 font-cinzel text-[#c5a059] text-[9px] uppercase tracking-[0.45em] hover:text-[#f3e5ab] transition-colors"
+                        className="mt-4 font-cinzel text-[#c8aa6e] text-[9px] uppercase tracking-[0.45em] hover:text-[#f0e6d2] transition-colors"
                       >
                         {t('View event page', 'Voir la page événement')} →
                       </button>
@@ -612,25 +612,25 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
         {/* ── SHOW TICKET: only when paid ─────────────────────────────────── */}
         {showTicket && (
-          <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+          <section className="bg-[#010a13] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c8aa6e]/10">
             <div className="max-w-3xl mx-auto">
-              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-4">
+              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block mb-4">
                 {t('Show ticket', 'Billet spectacle')}
               </span>
               <div
                 className="p-6 md:p-8 rounded-2xl"
                 style={{
                   background: 'linear-gradient(135deg, rgba(50,40,22,0.85) 0%, rgba(28,22,12,0.95) 100%)',
-                  border: '1px solid rgba(243,229,171,0.5)',
-                  boxShadow: '0 0 60px rgba(197,160,89,0.18)',
+                  border: '1px solid rgba(240,230,210,0.5)',
+                  boxShadow: '0 0 60px rgba(200,170,110,0.18)',
                 }}
               >
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <div>
-                    <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em] block mb-1">
+                    <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em] block mb-1">
                       Grand Ceilidh de Mai 2026
                     </span>
-                    <p className="font-prata text-[#f3e5ab] text-lg md:text-xl">
+                    <p className="font-prata text-[#f0e6d2] text-lg md:text-xl">
                       {showTicket.ticketType === 'weekend' ? t('Weekend pass · 3 shows', 'Passe weekend · 3 spectacles') : t('Single show', '1 spectacle')}
                     </p>
                     {showTicket.ticketType === 'single' && showTicket.nights?.length > 0 && (
@@ -649,12 +649,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                 <div
                   className="rounded-xl p-5 text-center printable-ticket"
-                  style={{ background: '#050505', border: '1px solid rgba(243,229,171,0.3)' }}
+                  style={{ background: '#010a13', border: '1px solid rgba(240,230,210,0.3)' }}
                 >
                   <p className="font-cinzel text-neutral-500 text-[9px] uppercase tracking-[0.45em] mb-2">
                     {t('Your code: show it at the door', "Votre code : à présenter à l'entrée")}
                   </p>
-                  <p className="font-prata text-[#d4af37] my-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', letterSpacing: '0.3em' }}>
+                  <p className="font-prata text-[#c8aa6e] my-3" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', letterSpacing: '0.3em' }}>
                     {showTicket.ticketCode}
                   </p>
                   <p className="font-josefin text-neutral-500 text-[9px] uppercase tracking-[0.25em]">
@@ -664,8 +664,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
                 <button
                   onClick={() => window.print()}
-                  className="w-full mt-5 py-3 rounded-lg font-cinzel text-neutral-300 text-[10px] uppercase tracking-[0.45em] hover:text-[#f3e5ab] hover:bg-[#c5a059]/10 transition-all"
-                  style={{ border: '1px solid rgba(197,160,89,0.4)' }}
+                  className="w-full mt-5 py-3 rounded-lg font-cinzel text-neutral-300 text-[10px] uppercase tracking-[0.45em] hover:text-[#f0e6d2] hover:bg-[#c8aa6e]/10 transition-all"
+                  style={{ border: '1px solid rgba(200,170,110,0.4)' }}
                 >
                   {t('Print ticket', 'Imprimer le billet')}
                 </button>
@@ -676,15 +676,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
         {/* ── MON CEILIDH: chats + quick team/bed pickers (only when registered) ── */}
         {registrations.length > 0 && (
-          <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+          <section className="bg-[#010a13] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c8aa6e]/10">
             <div className="max-w-[1400px] mx-auto">
               <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
                 <div>
-                  <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-2">
+                  <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block mb-2">
                     Grand Ceilidh de Mai 2026
                   </span>
                   <h3
-                    className="font-prata uppercase text-[#f3e5ab] leading-[0.95] tracking-[-0.01em]"
+                    className="font-prata uppercase text-[#f0e6d2] leading-[0.95] tracking-[-0.01em]"
                     style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}
                   >
                     {t('My Ceilidh', 'Mon Ceilidh')}
@@ -692,7 +692,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
                 <button
                   onClick={() => onNavigate('CEILIDH')}
-                  className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em] hover:text-[#f3e5ab] transition-colors"
+                  className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em] hover:text-[#f0e6d2] transition-colors"
                 >
                   {t('Open the booklet', 'Ouvrir le livret')} →
                 </button>
@@ -710,9 +710,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         )}
 
         {/* ── COMMUNITY PERKS: coupon + affiliate program ────────────────── */}
-        <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+        <section className="bg-[#010a13] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c8aa6e]/10">
           <div className="max-w-[1400px] mx-auto">
-            <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block mb-5">
+            <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block mb-5">
               {t('Community perks', 'Avantages communauté')}
             </span>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
@@ -722,15 +722,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 className="p-6 md:p-8 rounded-2xl"
                 style={{
                   background: 'linear-gradient(135deg, rgba(50,40,22,0.85) 0%, rgba(28,22,12,0.95) 100%)',
-                  border: '1px solid rgba(243,229,171,0.45)',
-                  boxShadow: '0 0 60px rgba(197,160,89,0.15)',
+                  border: '1px solid rgba(240,230,210,0.45)',
+                  boxShadow: '0 0 60px rgba(200,170,110,0.15)',
                 }}
               >
                 <div className="flex items-baseline justify-between mb-3">
-                  <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
+                  <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
                     {t('Promo code', 'Code promo')}
                   </span>
-                  <span className="font-prata text-[#f3e5ab] text-2xl">10%</span>
+                  <span className="font-prata text-[#f0e6d2] text-2xl">10%</span>
                 </div>
                 <p className="font-josefin text-neutral-300 text-sm leading-relaxed mb-5">
                   {t(
@@ -742,10 +742,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   type="button"
                   onClick={() => copyCoupon('COMMUNAUTE')}
                   className="w-full flex items-center justify-between gap-4 px-5 py-4 rounded-lg transition-all hover:bg-black/20"
-                  style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(243,229,171,0.5)' }}
+                  style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(240,230,210,0.5)' }}
                 >
-                  <span className="font-prata text-[#d4af37] text-xl tracking-[0.3em]">COMMUNAUTE</span>
-                  <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.45em]">
+                  <span className="font-prata text-[#c8aa6e] text-xl tracking-[0.3em]">COMMUNAUTE</span>
+                  <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.45em]">
                     {couponCopied ? t('Copied ✓', 'Copié ✓') : t('Tap to copy', 'Toucher pour copier')}
                   </span>
                 </button>
@@ -756,14 +756,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 className="p-6 md:p-8 rounded-2xl"
                 style={{
                   background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-                  border: '1px solid rgba(197,160,89,0.22)',
+                  border: '1px solid rgba(200,170,110,0.22)',
                 }}
               >
-                <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em] block mb-3">
+                <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em] block mb-3">
                   {t('Affiliate program', 'Programme affilié')}
                 </span>
                 <h4
-                  className="font-prata uppercase text-[#f3e5ab] leading-tight mb-3"
+                  className="font-prata uppercase text-[#f0e6d2] leading-tight mb-3"
                   style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)' }}
                 >
                   {t(
@@ -786,8 +786,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     disabled={affiliateLoading}
                     className="w-full px-5 py-3.5 rounded-lg font-cinzel text-[#1a1208] text-[10px] uppercase tracking-[0.45em] disabled:opacity-40 transition-transform hover:scale-[1.01] active:scale-[0.99]"
                     style={{
-                      background: 'linear-gradient(180deg, #f3e5ab 0%, #c5a059 100%)',
-                      boxShadow: '0 4px 16px rgba(197,160,89,0.4)',
+                      background: 'linear-gradient(180deg, #f0e6d2 0%, #c8aa6e 100%)',
+                      boxShadow: '0 4px 16px rgba(200,170,110,0.4)',
                     }}
                   >
                     {affiliateLoading
@@ -799,14 +799,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 {affiliate?.status === 'waiting' && (
                   <div
                     className="px-5 py-4 rounded-lg flex items-center gap-3"
-                    style={{ background: 'rgba(8,6,4,0.55)', border: '1px solid rgba(197,160,89,0.4)' }}
+                    style={{ background: 'rgba(8,6,4,0.55)', border: '1px solid rgba(200,170,110,0.4)' }}
                   >
                     <span
-                      className="w-2.5 h-2.5 rounded-full bg-[#c5a059]"
+                      className="w-2.5 h-2.5 rounded-full bg-[#c8aa6e]"
                       style={{ animation: 'profilePulse 2.2s ease-in-out infinite' }}
                       aria-hidden
                     />
-                    <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.4em]">
+                    <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.4em]">
                       {t('Waiting for approval', 'En attente d’approbation')}
                     </span>
                   </div>
@@ -821,12 +821,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       type="button"
                       onClick={() => copyCoupon(affiliate.code!)}
                       className="w-full flex items-center justify-between gap-4 px-5 py-4 rounded-lg transition-all hover:bg-black/20"
-                      style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(243,229,171,0.5)' }}
+                      style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(240,230,210,0.5)' }}
                     >
-                      <span className="font-prata text-[#d4af37] text-xl tracking-[0.3em]">
+                      <span className="font-prata text-[#c8aa6e] text-xl tracking-[0.3em]">
                         {affiliate.code}
                       </span>
-                      <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.45em]">
+                      <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.45em]">
                         {couponCopied ? t('Copied ✓', 'Copié ✓') : t('Tap to copy', 'Toucher pour copier')}
                       </span>
                     </button>
@@ -859,14 +859,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             Once per week, the member rolls a 3D D20. Codes are drawn
             atomically from a Firestore pool so each rebate code is one-time.
             Nat 1 records a pending surcharge instead of issuing a code. */}
-        <section className="bg-[#050505] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+        <section className="bg-[#010a13] py-12 md:py-16 px-6 md:px-12 lg:px-20 border-t border-[#c8aa6e]/10">
           <div className="max-w-[1400px] mx-auto">
             <div className="flex items-baseline justify-between mb-5 flex-wrap gap-3">
-              <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.5em] block">
+              <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.5em] block">
                 {t('Weekly roll', 'Lancer hebdomadaire')}
               </span>
               {d20Doc?.sandwichesOwed ? (
-                <span className="font-cinzel text-[#c5a059]/80 text-[10px] uppercase tracking-[0.4em]">
+                <span className="font-cinzel text-[#c8aa6e]/80 text-[10px] uppercase tracking-[0.4em]">
                   {d20Doc.sandwichesOwed === 1
                     ? t('You owe 1 chicken sandwich', 'Vous devez 1 sandwich au poulet')
                     : t(`You owe ${d20Doc.sandwichesOwed} chicken sandwiches`,
@@ -881,7 +881,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 className="p-5 md:p-6 rounded-2xl"
                 style={{
                   background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.85) 100%)',
-                  border: '1px solid rgba(197,160,89,0.22)',
+                  border: '1px solid rgba(200,170,110,0.22)',
                 }}
               >
                 <D20Roller
@@ -902,10 +902,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     while the 7-day timer is still running. */}
                 {onCooldown && (
                   <div className="mt-5 text-center">
-                    <p className="font-cinzel text-[#c5a059]/80 text-[9px] uppercase tracking-[0.45em] mb-2">
+                    <p className="font-cinzel text-[#c8aa6e]/80 text-[9px] uppercase tracking-[0.45em] mb-2">
                       {t('Next roll in', 'Prochain lancer dans')}
                     </p>
-                    <div className="inline-flex items-baseline gap-2 font-prata text-[#f3e5ab]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                    <div className="inline-flex items-baseline gap-2 font-prata text-[#f0e6d2]" style={{ fontVariantNumeric: 'tabular-nums' }}>
                       <span className="text-2xl">{cooldownParts.days}</span>
                       <span className="text-[10px] font-cinzel text-neutral-500 uppercase tracking-[0.3em]">
                         {t('d', 'j')}
@@ -930,7 +930,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                         className={`bg-transparent border-b text-center font-josefin text-[11px] tracking-[0.25em] w-44 py-1 focus:outline-none transition-colors ${
                           travelStatus === 'wrong'
                             ? 'border-rose-500 text-rose-400 placeholder:text-rose-500/40'
-                            : 'border-white/10 text-neutral-400 hover:border-white/20 focus:border-[#c5a059]/60 focus:text-[#f3e5ab] placeholder:text-neutral-700'
+                            : 'border-white/10 text-neutral-400 hover:border-white/20 focus:border-[#c8aa6e]/60 focus:text-[#f0e6d2] placeholder:text-neutral-700'
                         }`}
                       />
                     </form>
@@ -943,11 +943,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 className="p-6 md:p-8 rounded-2xl"
                 style={{
                   background: 'linear-gradient(135deg, rgba(50,40,22,0.4) 0%, rgba(20,16,10,0.85) 100%)',
-                  border: '1px solid rgba(243,229,171,0.2)',
+                  border: '1px solid rgba(240,230,210,0.2)',
                 }}
               >
                 <h4
-                  className="font-prata uppercase text-[#f3e5ab] leading-tight mb-4"
+                  className="font-prata uppercase text-[#f0e6d2] leading-tight mb-4"
                   style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)' }}
                 >
                   {t('What the dice decides', 'Ce que les dés décident')}
@@ -967,12 +967,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     <span className="text-amber-200 text-xs">5% {t('rebate code', 'code de rabais')}</span>
                   </li>
                   <li className="flex items-baseline justify-between gap-3">
-                    <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.4em]">16 – 19</span>
-                    <span className="text-[#d4af37] text-xs">10% {t('rebate code', 'code de rabais')}</span>
+                    <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.4em]">16 – 19</span>
+                    <span className="text-[#c8aa6e] text-xs">10% {t('rebate code', 'code de rabais')}</span>
                   </li>
                   <li className="flex items-baseline justify-between gap-3">
-                    <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.4em]">20 · Nat 20</span>
-                    <span className="text-[#f3e5ab] text-xs font-bold">20% {t('rebate code', 'code de rabais')}</span>
+                    <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.4em]">20 · Nat 20</span>
+                    <span className="text-[#f0e6d2] text-xs font-bold">20% {t('rebate code', 'code de rabais')}</span>
                   </li>
                 </ul>
 
@@ -993,10 +993,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       type="button"
                       onClick={() => copyCoupon(lastEntry.code!)}
                       className="w-full flex items-center justify-between gap-4 px-5 py-4 rounded-lg transition-all hover:bg-black/20"
-                      style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(243,229,171,0.5)' }}
+                      style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(240,230,210,0.5)' }}
                     >
-                      <span className="font-prata text-[#d4af37] text-xl tracking-[0.3em]">{lastEntry.code}</span>
-                      <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.45em]">
+                      <span className="font-prata text-[#c8aa6e] text-xl tracking-[0.3em]">{lastEntry.code}</span>
+                      <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.45em]">
                         {couponCopied ? t('Copied ✓', 'Copié ✓') : t('Tap to copy', 'Toucher pour copier')}
                       </span>
                     </button>
@@ -1008,11 +1008,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         </section>
 
         {/* ── ACCOUNT FOOTER ───────────────────────────────────────────────── */}
-        <section className="bg-[#050505] py-10 md:py-14 px-6 md:px-12 lg:px-20 border-t border-[#c5a059]/10">
+        <section className="bg-[#010a13] py-10 md:py-14 px-6 md:px-12 lg:px-20 border-t border-[#c8aa6e]/10">
           <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
             <button
               onClick={() => onShowPrivacy && onShowPrivacy()}
-              className="font-cinzel text-neutral-500 text-[10px] uppercase tracking-[0.45em] hover:text-[#f3e5ab] transition-colors"
+              className="font-cinzel text-neutral-500 text-[10px] uppercase tracking-[0.45em] hover:text-[#f0e6d2] transition-colors"
             >
               {t('Privacy policy', 'Politique de confidentialité')}
             </button>
@@ -1027,7 +1027,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         </section>
 
         {/* Bottom safe area */}
-        <div className="h-20 bg-[#050505]" />
+        <div className="h-20 bg-[#010a13]" />
       </div>
     </div>
   );
@@ -1047,19 +1047,19 @@ const DashboardTile: React.FC<{
     className="group text-left p-6 rounded-2xl transition-all hover:-translate-y-0.5"
     style={{
       background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-      border: '1px solid rgba(197,160,89,0.22)',
+      border: '1px solid rgba(200,170,110,0.22)',
     }}
   >
     <div className="flex items-start justify-between mb-4">
-      <span className="font-prata text-[#c5a059] text-2xl leading-none" aria-hidden>{icon}</span>
-      <span className="font-cinzel text-neutral-300 text-[10px] uppercase tracking-[0.45em] group-hover:text-[#f3e5ab] transition-colors">
+      <span className="font-prata text-[#c8aa6e] text-2xl leading-none" aria-hidden>{icon}</span>
+      <span className="font-cinzel text-neutral-300 text-[10px] uppercase tracking-[0.45em] group-hover:text-[#f0e6d2] transition-colors">
         →
       </span>
     </div>
-    <span className="font-cinzel text-[#c5a059] text-[9px] uppercase tracking-[0.5em] block mb-2">
+    <span className="font-cinzel text-[#c8aa6e] text-[9px] uppercase tracking-[0.5em] block mb-2">
       {eyebrow}
     </span>
-    <p className="font-prata uppercase text-[#f3e5ab] leading-tight mb-2" style={{ fontSize: '1.1rem' }}>
+    <p className="font-prata uppercase text-[#f0e6d2] leading-tight mb-2" style={{ fontSize: '1.1rem' }}>
       {title}
     </p>
     <p className="font-josefin text-neutral-400 text-xs uppercase leading-relaxed" style={{ letterSpacing: '0.18em' }}>
@@ -1071,7 +1071,7 @@ const DashboardTile: React.FC<{
 const Datum: React.FC<{ label: string; value: string }> = ({ label, value }) => (
   <div>
     <p className="font-cinzel text-neutral-500 text-[9px] uppercase tracking-[0.4em] mb-1">{label}</p>
-    <p className="font-josefin text-[#f3e5ab] text-sm">{value}</p>
+    <p className="font-josefin text-[#f0e6d2] text-sm">{value}</p>
   </div>
 );
 
@@ -1199,7 +1199,7 @@ const MyCeilidhPanel: React.FC<{
 
   const fieldStyle: React.CSSProperties = {
     background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-    border: '1px solid rgba(197,160,89,0.22)',
+    border: '1px solid rgba(200,170,110,0.22)',
     borderRadius: '14px',
   };
 
@@ -1210,7 +1210,7 @@ const MyCeilidhPanel: React.FC<{
         {/* Team picker */}
         <div className="p-5 md:p-6" style={fieldStyle}>
           <div className="flex items-center justify-between mb-3">
-            <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
+            <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
               {t('My team', 'Mon équipe')}
             </span>
             {savingTeam && (
@@ -1222,8 +1222,8 @@ const MyCeilidhPanel: React.FC<{
           <select
             value={currentTeamId}
             onChange={(e) => setTeam(e.target.value)}
-            className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
-            style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+            className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
+            style={{ border: '1px solid rgba(200,170,110,0.3)' }}
           >
             <option value="">{t('Choose a team', 'Choisir une équipe')}</option>
             {TEAMS.map((team) => {
@@ -1240,7 +1240,7 @@ const MyCeilidhPanel: React.FC<{
         {/* Bed picker */}
         <div className="p-5 md:p-6" style={fieldStyle}>
           <div className="flex items-center justify-between mb-3">
-            <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
+            <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
               {t('My bed', 'Mon lit')}
             </span>
             {savingRoom && (
@@ -1252,8 +1252,8 @@ const MyCeilidhPanel: React.FC<{
           <select
             value={currentRoomId}
             onChange={(e) => setRoom(e.target.value)}
-            className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
-            style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+            className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
+            style={{ border: '1px solid rgba(200,170,110,0.3)' }}
           >
             <option value="">{t('Choose a bed', 'Choisir un lit')}</option>
             {LODGING_GROUPS.map((g) => (
@@ -1277,7 +1277,7 @@ const MyCeilidhPanel: React.FC<{
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-5 md:p-6" style={fieldStyle}>
           <div className="flex items-center justify-between mb-3">
-            <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
+            <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
               {t('Arrival day', "Jour d'arrivée")}
             </span>
             {savingArrival && (
@@ -1289,8 +1289,8 @@ const MyCeilidhPanel: React.FC<{
           <select
             value={currentArrivalDate}
             onChange={(e) => setArrival({ arrivalDate: e.target.value })}
-            className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
-            style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+            className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
+            style={{ border: '1px solid rgba(200,170,110,0.3)' }}
           >
             <option value="">{t('Choose a day', 'Choisir un jour')}</option>
             {ARRIVAL_DAYS_OPTIONS.map((d) => (
@@ -1301,7 +1301,7 @@ const MyCeilidhPanel: React.FC<{
 
         <div className="p-5 md:p-6" style={fieldStyle}>
           <div className="flex items-center justify-between mb-3">
-            <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em]">
+            <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em]">
               {t('Arrival time', 'Heure d\'arrivée')}
             </span>
           </div>
@@ -1309,8 +1309,8 @@ const MyCeilidhPanel: React.FC<{
             type="time"
             value={currentArrivalTime}
             onChange={(e) => setArrival({ arrivalTime: e.target.value })}
-            className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors"
-            style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+            className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors"
+            style={{ border: '1px solid rgba(200,170,110,0.3)' }}
           />
           <p className="font-josefin text-neutral-500 text-[10px] uppercase tracking-[0.25em] mt-2">
             {t('Visible on your public profile', 'Visible sur votre profil public')}

@@ -46,8 +46,8 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
     && billets.contributions.length === 0
     && billets.camping.length === 0;
 
-  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40';
-  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2';
+  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40';
+  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2';
 
   return (
     <div className="flex flex-col gap-6">
@@ -55,10 +55,10 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
       {/* En-tête */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c5a059]" />
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Your tickets', 'Vos billets')}
         </h3>
-        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
+        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
           {t('Shows and evenings', 'Spectacles et soirées')}
         </h2>
         <p className="font-lato text-neutral-200">
@@ -77,7 +77,7 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
 
       {!billets && !erreur && (
         <div className="flex items-center gap-3 text-neutral-500 text-sm py-10 px-4">
-          <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c5a059] rounded-full animate-spin" />
+          <div className="w-4 h-4 border-2 border-neutral-700 border-t-[#c8aa6e] rounded-full animate-spin" />
           {t('Loading…', 'Chargement…')}
         </div>
       )}
@@ -89,7 +89,7 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
           </p>
           <button
             onClick={() => onNavigate('CEILIDH')}
-            className="rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 text-[#f3e5ab] font-cinzel uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-white/5 transition-colors"
+            className="rounded-full border border-[#c8aa6e]/55 bg-[#010a13]/55 text-[#f0e6d2] font-cinzel uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-white/5 transition-colors"
           >
             {t('See events', 'Voir les événements')}
           </button>
@@ -100,13 +100,13 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
       {billets && billets.spectacles.length > 0 && (
         <div className={carte}>
           <h3 className={surtitre}>
-            <div className="h-px w-10 bg-[#c5a059]" />
+            <div className="h-px w-10 bg-[#c8aa6e]" />
             {t('Grand Ceilidh, May 2026', 'Grand Ceilidh de Mai 2026')}
           </h3>
           <div className="space-y-3">
             {billets.spectacles.map((s, i) => (
-              <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(197,160,89,0.18)' }}>
-                <p className="font-prata text-[#f3e5ab] text-base mb-1">
+              <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(200,170,110,0.18)' }}>
+                <p className="font-prata text-[#f0e6d2] text-base mb-1">
                   {s.type === 'weekend' ? t('Weekend pass', 'Passe fin de semaine') : t('Show ticket', 'Billet spectacle')}
                 </p>
                 {s.soirs.length > 0 && (
@@ -131,14 +131,14 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
       {billets && billets.inscriptions.length > 0 && (
         <div className={carte}>
           <h3 className={surtitre}>
-            <div className="h-px w-10 bg-[#c5a059]" />
+            <div className="h-px w-10 bg-[#c8aa6e]" />
             {t('Grand Ceilidh, May 2026', 'Grand Ceilidh de Mai 2026')}
           </h3>
           <div className="space-y-3">
             {billets.inscriptions.map((ins, i) => {
               const equipes = ins.equipes.map((e) => nomEquipe(e, language)).join(', ');
               return (
-                <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(197,160,89,0.18)' }}>
+                <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(200,170,110,0.18)' }}>
                   <p className="font-lato text-neutral-300 text-sm">
                     {equipes
                       ? t(`Registered for the Ceilidh · team {team}`, `Inscrit au Ceilidh · équipe {equipe}`).replace('{team}', equipes).replace('{equipe}', equipes)
@@ -155,12 +155,12 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
       {billets && billets.contributions.length > 0 && (
         <div className={carte}>
           <h3 className={surtitre}>
-            <div className="h-px w-10 bg-[#c5a059]" />
+            <div className="h-px w-10 bg-[#c8aa6e]" />
             {t('Grand Ceilidh, May 2026', 'Grand Ceilidh de Mai 2026')}
           </h3>
           <div className="space-y-3">
             {billets.contributions.map((c, i) => (
-              <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(197,160,89,0.18)' }}>
+              <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(200,170,110,0.18)' }}>
                 <p className="font-lato text-neutral-300 text-sm">
                   {t(`{amount} contribution to the Ceilidh`, `Contribution de {montant} au Ceilidh`)
                     .replace('{amount}', montant(c.montant))
@@ -176,12 +176,12 @@ export const OngletBillets: React.FC<OngletBilletsProps> = ({ user, memberProfil
       {billets && billets.camping.length > 0 && (
         <div className={carte}>
           <h3 className={surtitre}>
-            <div className="h-px w-10 bg-[#c5a059]" />
+            <div className="h-px w-10 bg-[#c8aa6e]" />
             {t('Medieval Festival 2026', 'Festival médiéval 2026')}
           </h3>
           <div className="space-y-3">
             {billets.camping.map((camp, i) => (
-              <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(197,160,89,0.18)' }}>
+              <div key={i} className="p-5 rounded-xl" style={{ background: 'rgba(20,16,10,0.6)', border: '1px solid rgba(200,170,110,0.18)' }}>
                 <p className="font-lato text-neutral-300 text-sm">
                   {t('Campsite · Medieval Festival 2026', 'Emplacement de camping · Festival médiéval 2026')}
                   {' · '}{montant(camp.montant)}

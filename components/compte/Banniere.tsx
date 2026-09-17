@@ -44,12 +44,12 @@ export const Banniere: React.FC<BanniereProps> = ({ uid, profile, language, onPr
   return (
     <div className="relative w-full h-[240px] sm:h-[300px] lg:h-[clamp(320px,30vw,440px)] bg-neutral-900 group">
       <img src={currentBanner} alt="Bannière" className="w-full h-full object-cover" />
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,8,8,.9) 0%, rgba(10,8,8,.35) 45%, transparent 100%)' }} />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(1,10,19,.9) 0%, rgba(1,10,19,.35) 45%, transparent 100%)' }} />
 
       {!readOnly && (
         <button
           onClick={() => setIsOpen(true)}
-          className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-[#f3e5ab] border border-[#c5a059]/40 rounded-full px-4 py-2 text-[10px] font-cinzel uppercase tracking-widest transition-colors opacity-0 group-hover:opacity-100"
+          className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-[#f0e6d2] border border-[#c8aa6e]/40 rounded-full px-4 py-2 text-[10px] font-cinzel uppercase tracking-widest transition-colors opacity-0 group-hover:opacity-100"
         >
           {t('Change the banner', 'Changer la bannière')}
         </button>
@@ -57,8 +57,8 @@ export const Banniere: React.FC<BanniereProps> = ({ uid, profile, language, onPr
 
       {isOpen && !readOnly && (
         <div className="fixed inset-0 z-[300] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-[#0a0808] border border-[#c5a059]/30 rounded-[15px] p-6 sm:p-8 max-w-2xl w-full">
-            <h2 className="font-prata text-[#f3e5ab] text-2xl mb-2">{t('Choose a banner', 'Choisir une bannière')}</h2>
+          <div className="bg-[#010a13] border border-[#c8aa6e]/30 rounded-[15px] p-6 sm:p-8 max-w-2xl w-full">
+            <h2 className="font-prata text-[#f0e6d2] text-2xl mb-2">{t('Choose a banner', 'Choisir une bannière')}</h2>
             <p className="font-lato text-neutral-400 text-sm mb-6">{t('Every one of these photos was taken at the Salon. You can also use your own.', 'Ces photos ont toutes été prises au Salon. Vous pouvez aussi mettre la vôtre.')}</p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -66,7 +66,7 @@ export const Banniere: React.FC<BanniereProps> = ({ uid, profile, language, onPr
                 <button
                   key={url}
                   onClick={() => handleSelect(url)}
-                  className="relative aspect-video rounded-lg overflow-hidden border-2 border-transparent hover:border-[#c5a059] transition-colors"
+                  className="relative aspect-video rounded-lg overflow-hidden border-2 border-transparent hover:border-[#c8aa6e] transition-colors"
                 >
                   <img src={url} alt="" className="w-full h-full object-cover" />
                 </button>
@@ -82,7 +82,7 @@ export const Banniere: React.FC<BanniereProps> = ({ uid, profile, language, onPr
               </button>
               <button
                 onClick={handleUpload}
-                className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 py-3 hover:bg-[#d4b06a]"
+                className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 py-3 hover:bg-[#d8bd85]"
               >
                 {t('Use my photo', 'Mettre ma photo')}
               </button>

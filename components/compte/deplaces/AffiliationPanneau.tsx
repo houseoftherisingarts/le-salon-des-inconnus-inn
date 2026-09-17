@@ -12,7 +12,7 @@ interface AffiliationPanneauProps {
 
 // Programme affilié, déplacé depuis ProfilePage.tsx:744-846. Le membre demande
 // à devenir affilié ; l'admin approuve avec un code personnel (10% par séjour
-// de 2 nuits ou plus). Textes conservés tels quels, or #d4af37 passé à #c5a059.
+// de 2 nuits ou plus). Textes conservés tels quels, or #c8aa6e passé à #c8aa6e.
 export const AffiliationPanneau: React.FC<AffiliationPanneauProps> = ({ user, memberProfile, language }) => {
   const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
 
@@ -60,14 +60,14 @@ export const AffiliationPanneau: React.FC<AffiliationPanneauProps> = ({ user, me
       className="p-6 md:p-8 rounded-2xl"
       style={{
         background: 'linear-gradient(135deg, rgba(28,22,14,0.6) 0%, rgba(15,12,8,0.8) 100%)',
-        border: '1px solid rgba(197,160,89,0.22)',
+        border: '1px solid rgba(200,170,110,0.22)',
       }}
     >
-      <span className="font-cinzel text-[#c5a059] text-[10px] uppercase tracking-[0.45em] block mb-3">
+      <span className="font-cinzel text-[#c8aa6e] text-[10px] uppercase tracking-[0.45em] block mb-3">
         {t('Affiliate program', 'Programme affilié')}
       </span>
       <h4
-        className="font-prata uppercase text-[#f3e5ab] leading-tight mb-3"
+        className="font-prata uppercase text-[#f0e6d2] leading-tight mb-3"
         style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)' }}
       >
         {t(
@@ -89,8 +89,8 @@ export const AffiliationPanneau: React.FC<AffiliationPanneauProps> = ({ user, me
           disabled={affiliateLoading}
           className="w-full px-5 py-3.5 rounded-lg font-cinzel text-[#1a1208] text-[10px] uppercase tracking-[0.45em] disabled:opacity-40 transition-transform hover:scale-[1.01] active:scale-[0.99]"
           style={{
-            background: 'linear-gradient(180deg, #f3e5ab 0%, #c5a059 100%)',
-            boxShadow: '0 4px 16px rgba(197,160,89,0.4)',
+            background: 'linear-gradient(180deg, #f0e6d2 0%, #c8aa6e 100%)',
+            boxShadow: '0 4px 16px rgba(200,170,110,0.4)',
           }}
         >
           {affiliateLoading
@@ -102,14 +102,14 @@ export const AffiliationPanneau: React.FC<AffiliationPanneauProps> = ({ user, me
       {affiliate?.status === 'waiting' && (
         <div
           className="px-5 py-4 rounded-lg flex items-center gap-3"
-          style={{ background: 'rgba(8,6,4,0.55)', border: '1px solid rgba(197,160,89,0.4)' }}
+          style={{ background: 'rgba(8,6,4,0.55)', border: '1px solid rgba(200,170,110,0.4)' }}
         >
           <span
-            className="w-2.5 h-2.5 rounded-full bg-[#c5a059]"
+            className="w-2.5 h-2.5 rounded-full bg-[#c8aa6e]"
             style={{ animation: 'affiliationPulse 2.2s ease-in-out infinite' }}
             aria-hidden
           />
-          <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.4em]">
+          <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.4em]">
             {t('Waiting for approval', 'En attente d’approbation')}
           </span>
         </div>
@@ -124,12 +124,12 @@ export const AffiliationPanneau: React.FC<AffiliationPanneauProps> = ({ user, me
             type="button"
             onClick={() => copyCoupon(affiliate.code!)}
             className="w-full flex items-center justify-between gap-4 px-5 py-4 rounded-lg transition-all hover:bg-black/20"
-            style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(243,229,171,0.5)' }}
+            style={{ background: 'rgba(8,6,4,0.6)', border: '1px dashed rgba(240,230,210,0.5)' }}
           >
-            <span className="font-prata text-[#c5a059] text-xl tracking-[0.3em]">
+            <span className="font-prata text-[#c8aa6e] text-xl tracking-[0.3em]">
               {affiliate.code}
             </span>
-            <span className="font-cinzel text-[#f3e5ab] text-[10px] uppercase tracking-[0.45em]">
+            <span className="font-cinzel text-[#f0e6d2] text-[10px] uppercase tracking-[0.45em]">
               {couponCopied ? t('Copied ✓', 'Copié ✓') : t('Tap to copy', 'Toucher pour copier')}
             </span>
           </button>

@@ -44,8 +44,8 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
     return () => { unsubComm(); unsubWw(); };
   }, [uid]);
 
-  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40';
-  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2';
+  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40';
+  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2';
 
   return (
     <div className="flex flex-col gap-6">
@@ -53,10 +53,10 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
       {/* En-tête */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c5a059]" />
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Live here', 'Vivre ici')}
         </h3>
-        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
+        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
           {t('Live and work at the Salon', 'Vivre et travailler au Salon')}
         </h2>
         <p className="font-lato text-neutral-200">
@@ -70,7 +70,7 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
       {/* Candidature communauté */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c5a059]" />
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('The community place', 'La place dans la communauté')}
         </h3>
         {communaute ? (
@@ -93,7 +93,7 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
             {!readOnly && (
             <button
               onClick={() => onNavigate('COMMUNITY')}
-              className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d4b06a] transition-colors"
+              className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d8bd85] transition-colors"
             >
               {t('Fill in the application', 'Remplir la candidature')}
             </button>
@@ -105,7 +105,7 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
       {/* Candidature wwoofing */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c5a059]" />
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Wwoofing', 'Wwoofing')}
         </h3>
         {wwoofing ? (
@@ -121,7 +121,7 @@ export const OngletVivreIci: React.FC<OngletVivreIciProps> = ({ user, language, 
           !readOnly && (
           <button
             onClick={() => onNavigate('WWOOFING')}
-            className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-400 hover:text-[#c5a059] transition-colors"
+            className="font-cinzel text-xs uppercase tracking-[0.3em] text-neutral-400 hover:text-[#c8aa6e] transition-colors"
           >
             {t('Prefer a shorter volunteer stay? See wwoofing', 'Plutôt un séjour bénévole plus court ? Voir le wwoofing')} →
           </button>

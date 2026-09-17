@@ -85,8 +85,8 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
     }
   };
 
-  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40';
-  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2';
+  const carte = 'rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40';
+  const surtitre = 'font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2';
 
   return (
     <div className="flex flex-col gap-6">
@@ -94,10 +94,10 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
       {/* En-tête */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c5a059]" />
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Help', 'Aide')}
         </h3>
-        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
+        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
           {t('Write to us', 'Écrivez-nous')}
         </h2>
         <p className="font-lato text-neutral-200">
@@ -120,9 +120,9 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
               <div
                 key={m.id}
                 className={`max-w-[80%] px-4 py-3 rounded-xl ${m.auteur === 'equipe' ? 'ml-0' : 'ml-auto'}`}
-                style={{ background: m.auteur === 'equipe' ? 'rgba(20,16,10,0.6)' : 'rgba(197,160,89,0.14)', border: '1px solid rgba(197,160,89,0.18)' }}
+                style={{ background: m.auteur === 'equipe' ? 'rgba(20,16,10,0.6)' : 'rgba(200,170,110,0.14)', border: '1px solid rgba(200,170,110,0.18)' }}
               >
-                <p className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-[#c5a059] mb-1">
+                <p className="font-cinzel text-[10px] uppercase tracking-[0.25em] text-[#c8aa6e] mb-1">
                   {m.auteur === 'equipe' ? t('The Salon team', 'L\'équipe du Salon') : t('You', 'Vous')}
                 </p>
                 <p className="font-lato text-neutral-200 text-sm whitespace-pre-wrap">{m.texte}</p>
@@ -140,12 +140,12 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
             onChange={(e) => setTexte(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') void envoyer(); }}
             placeholder={t('Your message', 'Votre message')}
-            className="flex-1 px-4 py-3 rounded-lg bg-[#0a0808]/60 border border-white/15 text-neutral-200 font-lato text-sm focus:outline-none focus:border-[#c5a059]/50"
+            className="flex-1 px-4 py-3 rounded-lg bg-[#010a13]/60 border border-white/15 text-neutral-200 font-lato text-sm focus:outline-none focus:border-[#c8aa6e]/50"
           />
           <button
             onClick={envoyer}
             disabled={envoi || !texte.trim()}
-            className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d4b06a] transition-colors disabled:opacity-40"
+            className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d8bd85] transition-colors disabled:opacity-40"
           >
             {t('Send', 'Envoyer')}
           </button>
@@ -161,10 +161,10 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
       {/* Problème technique */}
       <div className={carte}>
         <h3 className={surtitre}>
-          <div className="h-px w-10 bg-[#c5a059]" />
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Technical problem', 'Problème technique')}
         </h3>
-        <h4 className="font-prata text-[#f3e5ab] text-xl mb-3">
+        <h4 className="font-prata text-[#f0e6d2] text-xl mb-3">
           {t('Something isn\'t working', 'Quelque chose ne fonctionne pas')}
         </h4>
         <p className="font-lato text-neutral-300 text-sm mb-5">
@@ -172,7 +172,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
         </p>
 
         {pbEnvoye ? (
-          <p className="font-lato text-[#c5a059] text-sm">
+          <p className="font-lato text-[#c8aa6e] text-sm">
             {t('Thank you. The report is in our hands.', 'Merci. Le signalement est entre nos mains.')}
           </p>
         ) : !readOnly && (
@@ -182,10 +182,10 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
               onChange={(e) => setTextePb(e.target.value)}
               rows={4}
               placeholder={t('Describe what happened', 'Décrivez ce qui s\'est passé')}
-              className="w-full mb-4 px-4 py-3 rounded-lg bg-[#0a0808]/60 border border-white/15 text-neutral-200 font-lato text-sm focus:outline-none focus:border-[#c5a059]/50 resize-y"
+              className="w-full mb-4 px-4 py-3 rounded-lg bg-[#010a13]/60 border border-white/15 text-neutral-200 font-lato text-sm focus:outline-none focus:border-[#c8aa6e]/50 resize-y"
             />
             <div className="flex items-center gap-3 flex-wrap mb-4">
-              <label className="rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 text-[#f3e5ab] font-cinzel uppercase text-[11px] tracking-widest px-5 py-2 hover:bg-white/5 transition-colors cursor-pointer">
+              <label className="rounded-full border border-[#c8aa6e]/55 bg-[#010a13]/55 text-[#f0e6d2] font-cinzel uppercase text-[11px] tracking-widest px-5 py-2 hover:bg-white/5 transition-colors cursor-pointer">
                 {fichier ? fichier.name : t('Attach a screenshot', 'Joindre une capture')}
                 <input type="file" accept="image/*" className="hidden" onChange={(e) => choisirFichier(e.target.files?.[0] ?? null)} />
               </label>
@@ -198,7 +198,7 @@ export const OngletAide: React.FC<OngletAideProps> = ({ user, memberProfile, lan
             <button
               onClick={envoyerPb}
               disabled={pbEnvoi || !textePb.trim()}
-              className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d4b06a] transition-colors disabled:opacity-40"
+              className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d8bd85] transition-colors disabled:opacity-40"
             >
               {pbEnvoi ? t('Sending…', 'Envoi…') : t('Send the report', 'Envoyer le signalement')}
             </button>

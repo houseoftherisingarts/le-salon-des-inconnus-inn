@@ -79,12 +79,12 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
     <div className="flex flex-col gap-6">
       
       {/* Ce que les autres voient de vous */}
-      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40">
-        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2">
-          <div className="h-px w-10 bg-[#c5a059]" />
+      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40">
+        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2">
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Profile', 'Profil')}
         </h3>
-        <h2 className="font-prata text-[#f3e5ab] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
+        <h2 className="font-prata text-[#f0e6d2] text-[clamp(1.6rem,2.4vw,2.25rem)] leading-[1.1] mb-4">
           {t('What others see of you', 'Ce que les autres voient de vous')}
         </h2>
         <p className="font-lato text-neutral-200 mb-8">
@@ -101,8 +101,8 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
               value={displayName}
               onChange={e => setDisplayName(e.target.value)}
               disabled={readOnly}
-              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors disabled:opacity-50"
-              style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+              className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors disabled:opacity-50"
+              style={{ border: '1px solid rgba(200,170,110,0.3)' }}
             />
           </div>
 
@@ -116,7 +116,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
                 value={memberProfile.email || user.email || ''}
                 disabled
                 className="flex-1 bg-black/30 text-neutral-500 px-4 py-3 rounded-lg font-josefin text-sm cursor-not-allowed"
-                style={{ border: '1px solid rgba(197,160,89,0.15)' }}
+                style={{ border: '1px solid rgba(200,170,110,0.15)' }}
               />
               <span className="font-cinzel text-neutral-600 text-[9px] uppercase tracking-[0.35em] shrink-0">
                 {t('Managed by Google', 'Géré par Google')}
@@ -129,7 +129,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
             <button
               onClick={handleSaveProfile}
               disabled={savingProfile}
-              className="rounded-full bg-[#c5a059] text-[#0a0808] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d4b06a] disabled:opacity-40 transition-colors"
+              className="rounded-full bg-[#c8aa6e] text-[#010a13] font-cinzel font-bold uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-[#d8bd85] disabled:opacity-40 transition-colors"
             >
               {savingProfile ? t('Saving…', 'Sauvegarde…') : t('Save changes', 'Sauvegarder')}
             </button>
@@ -145,9 +145,9 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
       </div>
 
       {/* Coordonnées privées */}
-      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40">
-        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2">
-          <div className="h-px w-10 bg-[#c5a059]" />
+      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40">
+        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2">
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Private details', 'Coordonnées privées')}
         </h3>
         <p className="font-lato text-neutral-200 mb-8">
@@ -164,8 +164,8 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
               value={telephone}
               onChange={e => setTelephone(e.target.value)}
               disabled={readOnly}
-              className="w-full bg-black/40 text-[#f3e5ab] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c5a059] transition-colors disabled:opacity-50"
-              style={{ border: '1px solid rgba(197,160,89,0.3)' }}
+              className="w-full bg-black/40 text-[#f0e6d2] px-4 py-3 rounded-lg font-josefin text-sm focus:outline-none focus:border-[#c8aa6e] transition-colors disabled:opacity-50"
+              style={{ border: '1px solid rgba(200,170,110,0.3)' }}
             />
           </div>
 
@@ -174,7 +174,7 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
             <button
               onClick={handleSaveContact}
               disabled={savingContact}
-              className="rounded-full border border-[#c5a059]/55 bg-[#0a0808]/55 text-[#f3e5ab] font-cinzel uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-white/5 disabled:opacity-40 transition-colors"
+              className="rounded-full border border-[#c8aa6e]/55 bg-[#010a13]/55 text-[#f0e6d2] font-cinzel uppercase text-[12px] tracking-[0.18em] px-6 min-h-[48px] hover:bg-white/5 disabled:opacity-40 transition-colors"
             >
               {savingContact ? t('Saving…', 'Sauvegarde…') : t('Save', 'Enregistrer')}
             </button>
@@ -190,12 +190,12 @@ export const OngletProfil: React.FC<OngletProfilProps> = ({ user, memberProfile,
       </div>
 
       {/* Type d'adhésion */}
-      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c5a059]/40">
-        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059] mb-4 flex items-center gap-2">
-          <div className="h-px w-10 bg-[#c5a059]" />
+      <div className="rounded-[15px] border border-white/15 bg-black/40 backdrop-blur-md p-5 sm:p-7 lg:p-9 transition-colors duration-200 hover:border-[#c8aa6e]/40">
+        <h3 className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c8aa6e] mb-4 flex items-center gap-2">
+          <div className="h-px w-10 bg-[#c8aa6e]" />
           {t('Membership type', 'Type d\'adhésion')}
         </h3>
-        <p className="font-prata text-[#f3e5ab] text-xl">
+        <p className="font-prata text-[#f0e6d2] text-xl">
           {language === 'FR' ? memLabel.fr : memLabel.en}
         </p>
       </div>

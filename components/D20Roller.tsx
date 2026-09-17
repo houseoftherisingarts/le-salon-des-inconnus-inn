@@ -74,7 +74,7 @@ function makeNumberTexture(n: number): THREE.CanvasTexture {
     ctx.textBaseline = 'middle';
     ctx.fillText(String(n), size / 2 + 4, size / 2 + 6);
     // The number itself
-    ctx.fillStyle = n === 20 ? '#f3e5ab' : n === 1 ? '#ee9999' : '#d8c98a';
+    ctx.fillStyle = n === 20 ? '#f0e6d2' : n === 1 ? '#ee9999' : '#d8c98a';
     ctx.fillText(String(n), size / 2, size / 2);
     // Underline marker for 6 and 9 (so they're not ambiguous on a tumbling dice)
     if (n === 6 || n === 9) {
@@ -243,7 +243,7 @@ const Dice: React.FC<{
             </mesh>
             {/* Gold edges: gives the d20 the leather-bound book vibe */}
             <lineSegments geometry={edges}>
-                <lineBasicMaterial color="#c5a059" />
+                <lineBasicMaterial color="#c8aa6e" />
             </lineSegments>
             {/* Number decals: one transparent plane per face, sitting just
                 above the surface and oriented outward. CanvasTexture means
@@ -287,7 +287,7 @@ const Scene: React.FC = () => (
             shadow-camera-bottom={-4}
         />
         {/* Warm rim light suggesting candlelight */}
-        <directionalLight position={[-4, 2, -3]} intensity={0.5} color="#c5a059" />
+        <directionalLight position={[-4, 2, -3]} intensity={0.5} color="#c8aa6e" />
         {/* Felt-table circle */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.2, 0]} receiveShadow>
             <circleGeometry args={[6, 64]} />
@@ -351,8 +351,8 @@ export const D20Roller: React.FC<D20RollerProps> = ({
 
     const tierClass = (tier: D20Outcome['tier'] | null) => {
         switch (tier) {
-            case 'nat-20':    return 'text-[#f3e5ab]';
-            case 'great':     return 'text-[#c5a059]';
+            case 'nat-20':    return 'text-[#f0e6d2]';
+            case 'great':     return 'text-[#c8aa6e]';
             case 'good':      return 'text-amber-300';
             case 'crit-fail': return 'text-rose-400';
             default:          return 'text-neutral-400';
@@ -362,7 +362,7 @@ export const D20Roller: React.FC<D20RollerProps> = ({
     return (
         <div className="relative">
             {/* 3D viewport */}
-            <div className="aspect-square w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1208] via-[#0a0905] to-black border border-[#c5a059]/25 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+            <div className="aspect-square w-full max-w-sm mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1208] via-[#0a0905] to-black border border-[#c8aa6e]/25 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
                 <Canvas
                     shadows
                     camera={{ position: [0, 2.4, 6.2], fov: 38 }}
@@ -393,7 +393,7 @@ export const D20Roller: React.FC<D20RollerProps> = ({
                 <button
                     onClick={triggerRoll}
                     disabled={disabled || rolling}
-                    className="px-10 py-3 border-2 border-[#c5a059] text-[#f3e5ab] font-cinzel text-sm uppercase tracking-[0.4em] hover:bg-[#c5a059] hover:text-[#1a1208] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="px-10 py-3 border-2 border-[#c8aa6e] text-[#f0e6d2] font-cinzel text-sm uppercase tracking-[0.4em] hover:bg-[#c8aa6e] hover:text-[#1a1208] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                     {rolling
                         ? t('Rolling…', 'Lancer en cours…')

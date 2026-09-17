@@ -66,11 +66,11 @@ const MiniAvatar: React.FC<{ name: string; photoURL?: string; size?: number; onC
     <img src={photoURL} alt={name} className={cls} style={{ width: size, height: size }} onClick={onClick} />
   ) : (
     <div
-      className={`rounded-full shrink-0 bg-[#c5a059]/20 flex items-center justify-center border border-[#c5a059]/30 ${onClick ? 'cursor-pointer hover:bg-[#c5a059]/30 transition-colors' : ''}`}
+      className={`rounded-full shrink-0 bg-[#c8aa6e]/20 flex items-center justify-center border border-[#c8aa6e]/30 ${onClick ? 'cursor-pointer hover:bg-[#c8aa6e]/30 transition-colors' : ''}`}
       style={{ width: size, height: size }}
       onClick={onClick}
     >
-      <span className="text-[#c5a059] font-cinzel font-bold leading-none" style={{ fontSize: size * 0.38 }}>
+      <span className="text-[#c8aa6e] font-cinzel font-bold leading-none" style={{ fontSize: size * 0.38 }}>
         {initials}
       </span>
     </div>
@@ -269,7 +269,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
   };
 
   return (
-    <div className={`${integre ? 'flex flex-col h-[min(720px,calc(100svh-220px))]' : 'min-h-screen bg-[#050505] text-white font-lato flex flex-col'}`}>
+    <div className={`${integre ? 'flex flex-col h-[min(720px,calc(100svh-220px))]' : 'min-h-screen bg-[#010a13] text-white font-lato flex flex-col'}`}>
 
       {/* Header */}
       {!integre && (
@@ -292,13 +292,13 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
           <div className="p-4 border-b border-white/5 flex gap-2">
             <button
               onClick={() => { setShowNewDM(true); setShowNewGroup(false); }}
-              className="flex-1 py-1.5 text-[10px] font-cinzel uppercase tracking-widest text-neutral-500 border border-white/8 hover:border-[#c5a059]/40 hover:text-[#c5a059] transition-all"
+              className="flex-1 py-1.5 text-[10px] font-cinzel uppercase tracking-widest text-neutral-500 border border-white/8 hover:border-[#c8aa6e]/40 hover:text-[#c8aa6e] transition-all"
             >
               + DM
             </button>
             <button
               onClick={() => { setShowNewGroup(true); setShowNewDM(false); }}
-              className="flex-1 py-1.5 text-[10px] font-cinzel uppercase tracking-widest text-neutral-500 border border-white/8 hover:border-[#c5a059]/40 hover:text-[#c5a059] transition-all"
+              className="flex-1 py-1.5 text-[10px] font-cinzel uppercase tracking-widest text-neutral-500 border border-white/8 hover:border-[#c8aa6e]/40 hover:text-[#c8aa6e] transition-all"
             >
               + {t('Group', 'Groupe')}
             </button>
@@ -313,7 +313,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                 placeholder={t('Search members…', 'Chercher un membre…')}
                 value={dmSearch}
                 onChange={e => setDmSearch(e.target.value)}
-                className="w-full bg-[#141414] border border-white/10 text-white px-3 py-2 text-xs font-lato focus:outline-none focus:border-[#c5a059]/50 placeholder:text-neutral-700"
+                className="w-full bg-[#141414] border border-white/10 text-white px-3 py-2 text-xs font-lato focus:outline-none focus:border-[#c8aa6e]/50 placeholder:text-neutral-700"
               />
               {dmSearching && <div className="text-[10px] text-neutral-700">{t('Searching…', 'Recherche…')}</div>}
               {dmResults.map(p => (
@@ -341,12 +341,12 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                 placeholder={t('Group name…', 'Nom du groupe…')}
                 value={groupTitle}
                 onChange={e => setGroupTitle(e.target.value)}
-                className="w-full bg-[#141414] border border-white/10 text-white px-3 py-2 text-xs font-lato focus:outline-none focus:border-[#c5a059]/50 placeholder:text-neutral-700"
+                className="w-full bg-[#141414] border border-white/10 text-white px-3 py-2 text-xs font-lato focus:outline-none focus:border-[#c8aa6e]/50 placeholder:text-neutral-700"
               />
               {groupMembers.length > 0 && (
                 <div className="flex flex-wrap gap-1">
                   {groupMembers.map(m => (
-                    <span key={m.uid} className="text-[10px] bg-[#c5a059]/10 text-[#c5a059] px-2 py-0.5 font-cinzel flex items-center gap-1">
+                    <span key={m.uid} className="text-[10px] bg-[#c8aa6e]/10 text-[#c8aa6e] px-2 py-0.5 font-cinzel flex items-center gap-1">
                       {m.displayName}
                       <button onClick={() => setGroupMembers(prev => prev.filter(p => p.uid !== m.uid))} className="hover:text-red-400">×</button>
                     </span>
@@ -358,7 +358,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                 placeholder={t('Add members…', 'Ajouter des membres…')}
                 value={groupSearch}
                 onChange={e => setGroupSearch(e.target.value)}
-                className="w-full bg-[#141414] border border-white/10 text-white px-3 py-2 text-xs font-lato focus:outline-none focus:border-[#c5a059]/50 placeholder:text-neutral-700"
+                className="w-full bg-[#141414] border border-white/10 text-white px-3 py-2 text-xs font-lato focus:outline-none focus:border-[#c8aa6e]/50 placeholder:text-neutral-700"
               />
               {groupResults.filter(p => !groupMembers.some(m => m.uid === p.uid)).map(p => (
                 <button
@@ -374,7 +374,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                 <button
                   onClick={createGroupChat}
                   disabled={!groupTitle.trim() || groupMembers.length === 0}
-                  className="flex-1 py-1.5 text-[10px] font-cinzel uppercase tracking-widest bg-[#c5a059] text-black hover:bg-[#f3e5ab] disabled:opacity-30 transition-all"
+                  className="flex-1 py-1.5 text-[10px] font-cinzel uppercase tracking-widest bg-[#c8aa6e] text-black hover:bg-[#f0e6d2] disabled:opacity-30 transition-all"
                 >
                   {t('Create', 'Créer')}
                 </button>
@@ -401,7 +401,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                   key={conv.id}
                   onClick={() => setActiveConvId(conv.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors border-b border-white/[0.03] ${
-                    isActive ? 'bg-[#c5a059]/8 border-l-2 border-l-[#c5a059]/50' : 'hover:bg-white/[0.03]'
+                    isActive ? 'bg-[#c8aa6e]/8 border-l-2 border-l-[#c8aa6e]/50' : 'hover:bg-white/[0.03]'
                   }`}
                 >
                   <MiniAvatar name={avatar.name} photoURL={avatar.photoURL} size={34} />
@@ -462,7 +462,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                         />
                         <div>
                           <p
-                            className={`text-sm font-cinzel text-white ${otherUid ? 'cursor-pointer hover:text-[#c5a059] transition-colors' : ''}`}
+                            className={`text-sm font-cinzel text-white ${otherUid ? 'cursor-pointer hover:text-[#c8aa6e] transition-colors' : ''}`}
                             onClick={otherUid ? () => onViewProfile(otherUid) : undefined}
                           >
                             {getConvDisplayName(activeConv, user.uid)}
@@ -505,7 +505,7 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                         </div>
                         <div className={`px-3 py-2 text-sm font-lato leading-relaxed ${
                           isMe
-                            ? 'bg-[#c5a059]/15 border border-[#c5a059]/20 text-[#f3e5ab]'
+                            ? 'bg-[#c8aa6e]/15 border border-[#c8aa6e]/20 text-[#f0e6d2]'
                             : 'bg-[#141414] border border-white/8 text-neutral-300'
                         }`}>
                           {msg.text}
@@ -525,12 +525,12 @@ export const MessagingPage: React.FC<MessagingPageProps> = ({
                   onChange={e => setMsgText(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
                   placeholder={t('Write a message…', 'Écrire un message…')}
-                  className="flex-1 bg-[#141414] border border-white/8 text-white px-4 py-2.5 text-sm font-lato focus:outline-none focus:border-[#c5a059]/50 placeholder:text-neutral-700"
+                  className="flex-1 bg-[#141414] border border-white/8 text-white px-4 py-2.5 text-sm font-lato focus:outline-none focus:border-[#c8aa6e]/50 placeholder:text-neutral-700"
                 />
                 <button
                   onClick={handleSend}
                   disabled={!msgText.trim() || sending}
-                  className="px-4 py-2.5 bg-[#c5a059] text-black font-cinzel text-xs uppercase tracking-widest hover:bg-[#f3e5ab] disabled:opacity-30 transition-all shrink-0"
+                  className="px-4 py-2.5 bg-[#c8aa6e] text-black font-cinzel text-xs uppercase tracking-widest hover:bg-[#f0e6d2] disabled:opacity-30 transition-all shrink-0"
                 >
                   {t('Send', 'Envoyer')}
                 </button>
