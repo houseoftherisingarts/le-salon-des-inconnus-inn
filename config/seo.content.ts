@@ -164,7 +164,7 @@ export const SEO_CONTENT: Record<SeoViewKey, PerLanguage<SeoContent>> = {
     FR: {
       h1: "Auberge d'Artistes et d'Entrepreneurs en Outaouais — Maison Favier (Namur, Québec)",
       kicker: "À propos du lieu",
-      sectionTitle: "Une auberge, un manoir, un centre d'artistes",
+      sectionTitle: "Une auberge, un manoir, des artistes",
       paragraphs: [
         "Le Salon des Inconnus est une auberge installée dans la Maison Favier, un manoir victorien bâti en 1898, à Namur, dans la région de la Petite-Nation en Outaouais (Québec). L'établissement combine cinq chambres au manoir, une yourte, un autobus aménagé avec piano, deux mini-maisons en bois (La Bergère, faite à la main, et La Méditante, un éco-gîte hors-réseau au bord d'un ruisseau en forêt), des espaces communs (salon, bibliothèque, cuisine en libre-service, salle de méditation, salle de jeux avec projecteur), un spa et un jacuzzi ouverts en tout temps, ainsi que des jardins, une serre et trois pits à feu.",
         "Le lieu accueille à la fois les voyageurs de passage et une communauté plus durable d'artistes, de musiciens et d'entrepreneurs en résidence. On y propose de la massothérapie, une cuisine signature, des spectacles vivants, un programme de wwoofing et plusieurs événements communautaires comme le Grand Ceilidh de Mai. Namur se situe à environ vingt-cinq minutes du Parc Oméga à Montebello et à trente-cinq minutes du domaine skiable de Mont-Tremblant — un point d'ancrage pratique pour explorer la Petite-Nation.",
