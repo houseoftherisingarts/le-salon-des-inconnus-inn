@@ -729,6 +729,44 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // ── Espace membre · parrainage (mécanisme porté, sans récompense) ──────────
+    // codesParrain : un code personnel par membre, lu par tout membre connecté
+    // (le code ne se réclame qu'après la création du compte). La lecture n'est
+    // pas publique : elle livrerait l'uid de chaque parrain à n'importe qui.
+    match /codesParrain/{code} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn()
+                    && code.matches('^[A-Z0-9]{6,10}$')
+                    && request.resource.data.keys().hasOnly(['uid', 'creeLe'])
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.creeLe == request.time;
+      allow update, delete: if isAdmin();
+    }
+
+    // parrainages : le filleul écrit sa propre entrée à la création du compte,
+    // jamais pour lui-même. Le code doit exister et appartenir au parrainUid.
+    // valide / valideLe sont posés par la fonction, jamais par le client.
+    match /parrainages/{filleulUid} {
+      allow read: if isSelf(filleulUid) || isAdmin()
+                  || (isSignedIn() && resource.data.parrainUid == request.auth.uid);
+      allow create: if isSelf(filleulUid)
+                    && request.resource.data.keys().hasOnly(['parrainUid', 'code', 'filleulNom', 'creeLe'])
+                    && request.resource.data.parrainUid is string
+                    && request.resource.data.parrainUid != request.auth.uid
+                    && request.resource.data.filleulNom is string
+                    && request.resource.data.filleulNom.size() <= 120
+                    && request.resource.data.creeLe == request.time
+                    && exists(/databases/$(database)/documents/codesParrain/$(request.resource.data.code))
+                    && get(/databases/$(database)/documents/codesParrain/$(request.resource.data.code)).data.uid == request.resource.data.parrainUid;
+      allow update, delete: if isAdmin();
+    }
+
+    // parrainagesCompte : compteur écrit par la fonction, lu par le parrain.
+    match /parrainagesCompte/{uid} {
+      allow read: if isSelf(uid) || isAdmin();
+      allow write: if false;
+    }
+
     // ── Puzzle gifts ─────────────────────────────────────────────────────────
     // A member can offer a completed puzzle from their display case to another
     // member. The recipient accepts (puzzle joins their case) or declines

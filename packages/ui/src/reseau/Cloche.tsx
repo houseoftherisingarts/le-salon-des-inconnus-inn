@@ -55,7 +55,9 @@ export const Cloche: React.FC<ClocheProps> = ({ uid, language, onOuvrirOnglet })
                 ? `${n.deNom} ${t('commented on your post', 'a commenté votre billet')}`
                 : n.type === 'vote'
                     ? `${n.deNom} ${n.texte}`
-                    : `${t('New badge', 'Nouveau badge')} : ${n.texte}`,
+                    : n.type === 'parrainage'
+                        ? n.texte
+                        : `${t('New badge', 'Nouveau badge')} : ${n.texte}`,
             cible: 'WALL' as Cible,
             quand: n.creeLe?.toMillis?.() ?? 0,
             lu: n.lu,

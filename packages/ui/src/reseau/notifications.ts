@@ -18,7 +18,7 @@ function db() {
 
 // ── Notifications écrites (commentaire / vote / badge) ────────────────
 
-export type TypeNotification = 'commentaire' | 'vote' | 'badge';
+export type TypeNotification = 'commentaire' | 'vote' | 'badge' | 'parrainage';
 
 export interface ItemNotification {
     id: string;

@@ -179,6 +179,36 @@ async function main() {
     await attenduOk('R-21 c l\'admin lit sejours/A',
         getDoc(doc(dbAdmin(), 'sejours', UID_A)));
 
+    // ── Lot 5 : parrainage (codesParrain / parrainages / parrainagesCompte) ──
+    await attenduOk('R-50 A crée son code codesParrain/ABC123',
+        setDoc(doc(dbA(), 'codesParrain', 'ABC123'), { uid: UID_A, creeLe: serverTimestamp() }));
+    await attenduRefus('R-50 b B crée codesParrain/XYZ789 en posant uid: A',
+        setDoc(doc(dbB(), 'codesParrain', 'XYZ789'), { uid: UID_A, creeLe: serverTimestamp() }));
+    await attenduOk('R-51 B crée parrainages/B avec le code ABC123 de A',
+        setDoc(doc(dbB(), 'parrainages', UID_B), {
+            parrainUid: UID_A, code: 'ABC123', filleulNom: 'Essai B', creeLe: serverTimestamp(),
+        }));
+    await attenduRefus('R-52 A crée parrainages/A en se parrainant lui-même',
+        setDoc(doc(dbA(), 'parrainages', UID_A), {
+            parrainUid: UID_A, code: 'ABC123', filleulNom: 'Essai A', creeLe: serverTimestamp(),
+        }));
+    await attenduRefus('R-53 B réclame un code qui n\'appartient pas au parrainUid',
+        setDoc(doc(dbB(), 'parrainages', UID_B), {
+            parrainUid: UID_G, code: 'ABC123', filleulNom: 'Essai B', creeLe: serverTimestamp(),
+        }));
+    await attenduOk('R-54 le parrain A lit parrainages/B',
+        getDoc(doc(dbA(), 'parrainages', UID_B)));
+    await attenduRefus('R-54 b un tiers (G) lit parrainages/B',
+        getDoc(doc(dbG(), 'parrainages', UID_B)));
+    await attenduRefus('R-55 B pose valide: true sur parrainages/B',
+        updateDoc(doc(dbB(), 'parrainages', UID_B), { valide: true }));
+    await attenduRefus('R-56 A écrit parrainagesCompte/A',
+        setDoc(doc(dbA(), 'parrainagesCompte', UID_A), { n: 3 }));
+    await attenduOk('R-65 B (connecté) lit codesParrain/ABC123',
+        getDoc(doc(dbB(), 'codesParrain', 'ABC123')));
+    await attenduRefus('R-65 b un visiteur anonyme lit codesParrain/ABC123',
+        getDoc(doc(dbAnon(), 'codesParrain', 'ABC123')));
+
     console.log('\n' + resultats.join('\n'));
     console.log(`\n${ok} réussis, ${fail} échoués, sur ${ok + fail} cas.`);
     await Promise.all(apps.map((a) => deleteApp(a).catch(() => {})));

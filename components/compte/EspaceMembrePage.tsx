@@ -11,6 +11,8 @@ const OngletCommunaute = React.lazy(() => import('./onglets/OngletCommunaute').t
 const OngletArtistique = React.lazy(() => import('./onglets/OngletArtistique').then(m => ({ default: m.OngletArtistique })));
 const OngletBillets = React.lazy(() => import('./onglets/OngletBillets').then(m => ({ default: m.OngletBillets })));
 const OngletSejours = React.lazy(() => import('./onglets/OngletSejours').then(m => ({ default: m.OngletSejours })));
+const OngletVivreIci = React.lazy(() => import('./onglets/OngletVivreIci').then(m => ({ default: m.OngletVivreIci })));
+const OngletParrainage = React.lazy(() => import('./onglets/OngletParrainage').then(m => ({ default: m.OngletParrainage })));
 // Import lazy des autres onglets (ajoutés au fil des lots)
 
 interface EspaceMembrePageProps {
@@ -238,7 +240,22 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
                 onNavigate={onNavigate}
               />
             )}
-            {actif !== 'profil' && actif !== 'sejours' && actif !== 'communaute' && actif !== 'artistique' && actif !== 'billets' && (
+            {actif === 'vivre-ici' && (
+              <OngletVivreIci
+                user={user}
+                memberProfile={memberProfile}
+                language={language}
+                onNavigate={onNavigate}
+              />
+            )}
+            {actif === 'parrainage' && (
+              <OngletParrainage
+                user={user}
+                memberProfile={memberProfile}
+                language={language}
+              />
+            )}
+            {actif !== 'profil' && actif !== 'sejours' && actif !== 'communaute' && actif !== 'artistique' && actif !== 'billets' && actif !== 'vivre-ici' && actif !== 'parrainage' && (
               <div className="text-neutral-500 font-lato italic py-10">Onglet en construction...</div>
             )}
           </React.Suspense>
@@ -246,7 +263,7 @@ const EspaceMembrePage: React.FC<EspaceMembrePageProps> = ({
 
         {/* Colonne Rail */}
         <div className="xl:block">
-          <RailMembre language={language} onNavigate={handleNaviguer} />
+          <RailMembre language={language} onNavigate={handleNaviguer} uid={user.uid} />
         </div>
         
       </div>

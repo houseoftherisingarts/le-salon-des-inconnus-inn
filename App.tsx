@@ -79,6 +79,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import type { MemberProfile } from './components/AuthModal';
 import { estAdmin } from './components/AuthModal';
+import { reclaimerCodeParrain } from './components/compte/donnees/parrainage';
 
 // -4dB is approximately 0.63 on the linear 0-1 volume scale
 const TARGET_VOLUME = 0.63;
@@ -586,6 +587,31 @@ const App: React.FC = () => {
     });
     return unsub;
   }, []);
+
+  // ── Parrainage : capturer le code d'invitation porté par l'URL ────────────
+  // Un lien d'invitation pointe vers /compte?parrain=CODE. Le code est retenu
+  // en sessionStorage pour être réclamé au moment où le compte se crée, quel que
+  // soit le chemin (porte de l'espace membre, Creator Studio, retour Google).
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('parrain');
+      if (code) sessionStorage.setItem('codeParrainRetenu', code.trim().toUpperCase());
+    } catch { /* navigation privée */ }
+  }, []);
+
+  // ── Parrainage : réclamer le code retenu au changement d'utilisateur ───────
+  // La réclamation n'a lieu qu'une fois par compte : la règle refuse déjà un
+  // document existant, et le code est retiré du sessionStorage dès l'essai.
+  useEffect(() => {
+    if (!currentUser || !db) return;
+    let code: string | null = null;
+    try { code = sessionStorage.getItem('codeParrainRetenu'); } catch { /* privé */ }
+    if (!code) return;
+    try { sessionStorage.removeItem('codeParrainRetenu'); } catch { /* privé */ }
+    const nom = memberProfile?.displayName || currentUser.displayName || '';
+    void reclaimerCodeParrain(currentUser.uid, nom, code);
+  }, [currentUser?.uid]);
 
   // Subscribe to the current user's curated-artist flag. Lives in a separate
   // admin-only-write subdoc (members/{uid}/admin/flags) so users can't grant

@@ -1003,3 +1003,4 @@ export const stripeCampingWebhook = onRequest(
 // webhook signé qui pose flags.proEnabled, et portail client.
 export { creerAbonnementProfilPro, webhookProfilPro, portailProfilPro } from './profilPro';
 export { compterPlacesCeilidh, mesBillets, mesSejours, lierSejour } from './espaceMembre';
+export { parrainageFilleul } from './parrainage';
