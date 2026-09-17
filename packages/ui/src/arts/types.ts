@@ -1,5 +1,7 @@
 export interface ArtistProfile {
   id: number;
+  /** uid du compte Creator Studio quand l'artiste vient de publicRoster (réel). */
+  uid?: string;
   name: string;
   class: string;
   category: 'MUSIC' | 'VISUAL' | 'DIGITAL' | 'SCULPTURE';

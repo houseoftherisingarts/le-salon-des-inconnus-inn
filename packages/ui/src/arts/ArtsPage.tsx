@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect, useRef, useMemo, createContext, useContext, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { getFirestore, getDocs, collection, query, orderBy } from 'firebase/firestore';
+import { getApp } from 'firebase/app';
 import { ARTISTS_ROSTER } from './roster';
 import { ArtistProfile } from './types';
 import { SiteMap } from './SiteMap';
@@ -157,6 +159,45 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
   
   // Local state for artists to allow adding new ones
   const [artists, setArtists] = useState<ArtistProfile[]>(ARTISTS_ROSTER);
+
+  // « Nos artistes » synchronisé avec le Creator Studio : le registre public vit
+  // dans `publicRoster`, la copie curée qu'Alex promeut depuis l'admin (chaque
+  // entrée porte le `uid` du vrai compte de l'artiste). Dès que la collection a
+  // des entrées, elles remplacent la liste statique ; sinon le seed reste.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const db = getFirestore(getApp());
+        const snap = await getDocs(query(collection(db, 'publicRoster'), orderBy('name')));
+        if (cancelled || snap.empty) return;
+        const mapped: ArtistProfile[] = [];
+        snap.forEach((d) => {
+          const data = d.data() as any;
+          mapped.push({
+            id: 100000 + mapped.length,
+            uid: data.uid || d.id,
+            name: data.name || '',
+            class: data.class || '',
+            category: (data.category as ArtistProfile['category']) || 'VISUAL',
+            avatarUrl: data.avatarUrl || '',
+            galleryImages: Array.isArray(data.galleryImages) ? data.galleryImages : [],
+            location: data.location || '',
+            medium: data.medium || '',
+            subjects: Array.isArray(data.subjects) ? data.subjects : [],
+            currentExpos: data.currentExpos || '',
+            stats: data.stats || { creativity: 0, technique: 0, vision: 0 },
+            bio: data.bio || '',
+            links: data.links || { buy: '#', website: '#', support: '#' },
+          });
+        });
+        if (!cancelled && mapped.length) setArtists(mapped);
+      } catch {
+        /* garde le seed statique : pas d'app Firebase ou lecture refusée */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   // Sync state with initialTargetNode when it changes or on mount
   useEffect(() => {
@@ -472,8 +513,8 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
              onClick={toggleFlip}
           >
               <div className="absolute inset-0 backface-hidden bg-neutral-900 rounded-2xl overflow-hidden border border-white/10 group">
-                  <img src={artist.avatarUrl} alt={artist.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                   <img src={artist.avatarUrl} alt={artist.name} className="w-full h-full object-contain object-center transition-transform duration-700" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
                   <div className="absolute bottom-0 left-0 p-8 w-full">
                       <div className="inline-block px-3 py-1 border border-white/30 rounded-full mb-2 backdrop-blur-sm">
                           <span className="text-[10px] font-lato text-white uppercase tracking-widest">{artist.class}</span>
@@ -653,7 +694,7 @@ export const ArtsPage: React.FC<ArtsPageProps> = ({
                 
                 {/* Front Side */}
                 <div className="absolute inset-0 backface-hidden rounded-xl overflow-hidden border border-white/10 shadow-xl group-hover:border-white/30 transition-colors bg-[#141414]">
-                    <img src={artist.avatarUrl} alt={artist.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80" />
+                    <img src={artist.avatarUrl} alt={artist.name} className="w-full h-full object-contain object-center transition-transform duration-700 opacity-90" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/20 to-transparent" />
                     
                     <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">

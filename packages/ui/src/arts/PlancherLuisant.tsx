@@ -7,15 +7,6 @@ export const useDansLeReflet = () => useContext(DansLeReflet);
 
 type AvecVariables = React.CSSProperties & Record<`--${string}`, string | number>;
 
-// Perspective dessinée d'avance : lattes vers un point de fuite en haut au centre,
-// joints espacés en 1/distance. Peint une fois, aucune couche 3D à composer.
-const LIGNES_SOL = (() => {
-  const d: string[] = [];
-  for (let x = -250; x <= 350; x += 25) d.push(`M50 0L${x} 100`);
-  for (let k = 1; k <= 14; k++) d.push(`M0 ${(100 / (1 + 0.5 * k)).toFixed(2)}H100`);
-  return d.join('');
-})();
-
 const CSS = `
 .pl-scene{position:relative;isolation:isolate;width:100%;background:#050505;
   --_reflet:var(--pl-reflet,clamp(64px,9vw,140px));--_lev0:var(--pl-lev,14px);--_lev:var(--_lev0);
@@ -23,8 +14,6 @@ const CSS = `
   --_flou:1px;--_ombre:.85}
 .pl-fond{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
   background:linear-gradient(to bottom,#0a0808 0%,#0e0b0a var(--pl-horizon,30%),#070606 calc(var(--pl-horizon,30%) + 1px),#050505 72%,#030303 100%)}
-.pl-lignes{position:absolute;left:0;top:var(--pl-horizon,30%);width:100%;height:calc(100% - var(--pl-horizon,30%));
-  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 40%);mask-image:linear-gradient(to bottom,transparent,#000 40%)}
 .pl-horizon{position:absolute;left:0;right:0;top:var(--pl-horizon,30%);height:1px;
   background:linear-gradient(90deg,transparent,rgba(197,160,89,.34) 28%,rgba(243,229,171,.45) 50%,rgba(197,160,89,.34) 72%,transparent)}
 .pl-horizon::after{content:"";position:absolute;left:12%;right:12%;top:-48px;height:96px;
@@ -104,9 +93,6 @@ export function PlancherLuisant({ children, className = '', contenuClassName = '
       {/* React 19 hisse cette feuille dans <head> et la dédoublonne par href. */}
       <style href="inconnus-plancher-luisant" precedence="medium">{CSS}</style>
       <div className="pl-fond" aria-hidden="true">
-        <svg className="pl-lignes" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-          <path d={LIGNES_SOL} fill="none" stroke="#f3e5ab" strokeOpacity="0.12" strokeWidth="1" vectorEffect="non-scaling-stroke" />
-        </svg>
         <div className="pl-horizon" />
         <div className="pl-lustre" />
       </div>
