@@ -411,12 +411,9 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({ language: parentLa
                      <p className="font-cinzel text-fuchsia-300 text-[10px] uppercase tracking-[0.5em] mb-3">
                          Le Salon des Inconnus
                      </p>
-                      <h1 className="font-prata text-[#f3e5ab] text-3xl md:text-4xl mb-1 leading-tight">
-                          House of the Rising Arts
+                      <h1 className="font-prata text-[#f3e5ab] text-3xl md:text-4xl mb-3 leading-tight">
+                          {t('Creator Studio', 'Studio des Créateurs')}
                       </h1>
-                      <p className="font-prata italic text-[#c5a059] text-lg mb-3">
-                          {t('Studio', 'Studio')}
-                      </p>
                      <p className="font-lato text-neutral-400 text-sm leading-relaxed mb-10">
                          {t(
                              "A workspace for artists in residency, performers, and collaborators. Sign in to build your profile, publish writings, and request to be featured across our spaces.",

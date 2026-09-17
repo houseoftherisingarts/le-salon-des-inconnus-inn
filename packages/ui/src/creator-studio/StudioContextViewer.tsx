@@ -94,8 +94,8 @@ const TAB_META: Record<ViewerTab, {
     glowColor: string;
 }> = {
     WELCOME: {
-        titleEn: 'House of the Rising Arts',
-        titleFr: 'House of the Rising Arts',
+        titleEn: 'Creator Studio',
+        titleFr: 'Studio des Créateurs',
         subtitleEn: 'A workspace for artists in residency',
         subtitleFr: 'Un espace de travail pour les artistes en résidence',
         fromColor: '#d946ef',
