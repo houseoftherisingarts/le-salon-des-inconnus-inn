@@ -23,7 +23,6 @@ import {
   INN_HERO_FOCUS,
 } from './InnPage';
 import { RoomOrbProvider } from './RoomOrbModal';
-import GlyphPortal from './GlyphPortal';
 
 const CEILIDH_DOORS_PHOTO = '/media/inn/golden%20drone%20copy.jpg';
 const WWOOFING_DOORS_PHOTO = '/wwoof/bw-6.jpg';
@@ -68,26 +67,24 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const KITCHEN_PHOTO = '/media/Cuisine/Plating%20alexis%20ai%20(1).jpg';
-const MASSAGE_PHOTO = '/media/massage/massage%20andre.jpg';
-const ESPACE_COVER_PHOTO = '/media/Auberge%20photos/jardins%20auberge.jpg';
+const ESPACE_COVER_PHOTO = '/media/inn/maison.jpg';
 
 // 12 spaces shown in the L'Espace 3D deck.
 // FR text restored verbatim from the original SpacesGrid in InnPage.tsx: never paraphrase or
 // re-translate from EN, the FR was the canonical copy and is what visitors will read most.
-const SPACES_DATA: Array<{ titleEn: string; titleFr: string; itemsEn: string[]; itemsFr: string[] }> = [
-  { titleEn: 'Ger (Yurt)',     titleFr: 'Ger (Yourte)',    itemsEn: ['Room for 5', 'Wood stove'],                       itemsFr: ['Chambre pour 5', 'Foyer au Bois'] },
-  { titleEn: 'Bedrooms (5)',   titleFr: 'Chambres (5)',    itemsEn: ['Musician', 'Writer', 'Filmmaker', 'Theatre', 'Tower'], itemsFr: ['Musicienne', 'Écrivaine', 'Cinéaste', 'Théâtre', 'Tour'] },
-  { titleEn: 'Bus',            titleFr: 'Autobus',         itemsEn: ['Room for 5', 'Pellet stove', 'Piano included'],   itemsFr: ['Chambre pour 5', 'Foyer aux granules', 'Piano inclus'] },
-  { titleEn: 'Dining Room',    titleFr: 'Salle à Manger',  itemsEn: ['Bistro tables', 'Low table'],                     itemsFr: ['Tables bistro', 'Table basse'] },
-  { titleEn: 'Main Salon',     titleFr: 'Salon Principal', itemsEn: ['Library', 'Sofas', 'Soft space', 'Music'],        itemsFr: ['Bibliothèque', 'Sofas', 'Espace doux', 'Musique'] },
-  { titleEn: 'Kitchen',        titleFr: 'Cuisine',         itemsEn: ['Self-serve', 'Barista coffee & tea'],             itemsFr: ['Libre Service', 'Café Barista et Thé'] },
-  { titleEn: 'Spa / Jacuzzi',  titleFr: 'Spa / Jacuzzi',   itemsEn: ['Relaxation', 'Open 24/7'],                        itemsFr: ['Espace détente', 'Ouvert 24/7'] },
-  { titleEn: 'Nature',         titleFr: 'Nature',          itemsEn: ['Stream', 'Lake', 'Forest', 'Terrace'],            itemsFr: ['Ruisseau', 'Lac', 'Forêt', 'Terrasse'] },
-  { titleEn: 'Open Space',     titleFr: 'Espace Libre',    itemsEn: ['3 fire pits'],                                    itemsFr: ['3 Pits à Feux'] },
-  { titleEn: 'Balconies',      titleFr: 'Balcons',         itemsEn: ['Around the house', 'Upstairs'],                   itemsFr: ['Autour de la maison', 'À l’étage'] },
-  { titleEn: 'Game Room',      titleFr: 'Salle de Jeux',   itemsEn: ['Projector', 'Meditation room'],                   itemsFr: ['Projecteur', 'Salle de meditation'] },
-  { titleEn: 'Gardens',        titleFr: 'Jardins',         itemsEn: ['Greenhouse', 'Mini house'],                       itemsFr: ['Serre', 'Mini Maison'] },
+const SPACES_DATA: Array<{ titleEn: string; titleFr: string; itemsEn: string[]; itemsFr: string[]; img: string }> = [
+  { titleEn: 'Ger (Yurt)',     titleFr: 'Ger (Yourte)',    itemsEn: ['Room for 5', 'Wood stove'],                       itemsFr: ['Chambre pour 5', 'Foyer au Bois'],           img: '/media/Auberge%20photos/yourte%20coucher%20de%20soleil.jpg' },
+  { titleEn: 'Bedrooms (5)',   titleFr: 'Chambres (5)',    itemsEn: ['Musician', 'Writer', 'Filmmaker', 'Theatre', 'Tower'], itemsFr: ['Musicienne', 'Écrivaine', 'Cinéaste', 'Théâtre', 'Tour'], img: '/media/inn/ecrivaine%20banana.jpg' },
+  { titleEn: 'Bus',            titleFr: 'Autobus',         itemsEn: ['Room for 5', 'Pellet stove', 'Piano included'],   itemsFr: ['Chambre pour 5', 'Foyer aux granules', 'Piano inclus'], img: '/media/Auberge%20photos/bus%20pov%20avant.jpg' },
+  { titleEn: 'Dining Room',    titleFr: 'Salle à Manger',  itemsEn: ['Bistro tables', 'Low table'],                     itemsFr: ['Tables bistro', 'Table basse'],               img: '/media/Auberge%20photos/salle%20a%20manger.jpg' },
+  { titleEn: 'Main Salon',     titleFr: 'Salon Principal', itemsEn: ['Library', 'Sofas', 'Soft space', 'Music'],        itemsFr: ['Bibliothèque', 'Sofas', 'Espace doux', 'Musique'], img: '/media/Auberge%20photos/biblio.jpg' },
+  { titleEn: 'Kitchen',        titleFr: 'Cuisine',         itemsEn: ['Self-serve', 'Barista coffee & tea'],             itemsFr: ['Libre Service', 'Café Barista et Thé'],       img: '/media/Auberge%20photos/cuisine%20grande.jpg' },
+  { titleEn: 'Spa / Jacuzzi',  titleFr: 'Spa / Jacuzzi',   itemsEn: ['Relaxation', 'Open 24/7'],                        itemsFr: ['Espace détente', 'Ouvert 24/7'],              img: '/media/Auberge%20photos/jacuzzi%20ouvert%20ete.jpg' },
+  { titleEn: 'Nature',         titleFr: 'Nature',          itemsEn: ['Stream', 'Lake', 'Forest', 'Terrace'],            itemsFr: ['Ruisseau', 'Lac', 'Forêt', 'Terrasse'],       img: '/media/Auberge%20photos/nature%20coco%20upscale.jpg' },
+  { titleEn: 'Open Space',     titleFr: 'Espace Libre',    itemsEn: ['3 fire pits'],                                    itemsFr: ['3 Pits à Feux'],                              img: '/media/Artistes/aliel%20campfire.jpg' },
+  { titleEn: 'Balconies',      titleFr: 'Balcons',         itemsEn: ['Around the house', 'Upstairs'],                   itemsFr: ['Autour de la maison', 'À l’étage'],           img: '/media/Auberge%20photos/Maison%20main.jpg' },
+  { titleEn: 'Game Room',      titleFr: 'Salle de Jeux',   itemsEn: ['Projector', 'Meditation room'],                   itemsFr: ['Projecteur', 'Salle de meditation'],          img: '/media/Auberge%20photos/jeux%20auberge.jpg' },
+  { titleEn: 'Gardens',        titleFr: 'Jardins',         itemsEn: ['Greenhouse', 'Mini house'],                       itemsFr: ['Serre', 'Mini Maison'],                       img: '/media/Auberge%20photos/jardins%20auberge.jpg' },
 ];
 
 export const InnPageReserveCine: React.FC<Props> = ({
@@ -216,8 +213,14 @@ export const InnPageReserveCine: React.FC<Props> = ({
   };
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
-  // L'Espace: GlyphPortal entry (the word "ESPACE" becomes the door), then a list.
-  const espaceListRef = useRef<HTMLUListElement>(null);
+  // L'Espace: a scroll-pinned sequence where the intro ("L'Inventaire / Douze
+  // espaces") hands the screen to each of the twelve spaces one at a time, the
+  // background photo crossfading to match the space being described.
+  const espaceTrackRef = useRef<HTMLDivElement>(null);
+  const espaceBgRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const espaceLayerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const espaceCounterRef = useRef<HTMLSpanElement>(null);
+  const espaceProgressRef = useRef<HTMLDivElement>(null);
   const [doorsExiting, setDoorsExiting] = useState<null | 'CEILIDH' | 'WWOOFING'>(null);
   const daysToCeilidhDoors = Math.max(0, Math.ceil((CEILIDH_DOORS_DATE.getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
 
@@ -373,24 +376,85 @@ export const InnPageReserveCine: React.FC<Props> = ({
     };
   }, [fitCine, drawCine]);
 
-  // ── L'ESPACE list: each inventory row fades/slides in as it enters the viewport. ──
+  // ── L'ESPACE: scroll-pinned sequence. The tall track pins a 100vh stage while
+  // the page scrolls through it; progress 0→1 drives N beats (intro + 12 spaces).
+  // Each beat crossfades its background photo and hands its copy to the next with
+  // the same rise-in / rise-out animation, so one space "gives way" to the next. ──
   useEffect(() => {
-    const list = espaceListRef.current;
-    if (!list) return;
-    const items = Array.from(list.children) as HTMLElement[];
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            (entry.target as HTMLElement).classList.add('espace-in');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.2 },
-    );
-    items.forEach((it) => io.observe(it));
-    return () => io.disconnect();
+    const root = scrollRef.current;
+    const track = espaceTrackRef.current;
+    if (!root || !track) return;
+    const bgs = espaceBgRefs.current;
+    const layers = espaceLayerRefs.current;
+    const counter = espaceCounterRef.current;
+    const progress = espaceProgressRef.current;
+    const N = SPACES_DATA.length + 1; // intro beat + 12 spaces
+    const seg = 1 / N;
+    let rafTick = 0;
+    let lastP = -1;
+
+    const ease = (v: number) => v * v * (3 - 2 * v); // smoothstep
+
+    const update = () => {
+      rafTick = 0;
+      const rect = track.getBoundingClientRect();
+      const vh = root.clientHeight;
+      const span = track.offsetHeight - vh;
+      const p = Math.min(1, Math.max(0, -rect.top / Math.max(1, span)));
+      if (Math.abs(p - lastP) < 0.001) return;
+      lastP = p;
+
+      // Backgrounds: triangle crossfade centred on each beat, partition-of-unity
+      // so one photo is always visible and neighbours blend without a black gap.
+      for (let i = 0; i < N; i++) {
+        const el = bgs[i];
+        if (!el) continue;
+        const c = i * seg + seg / 2;
+        let v: number;
+        if (i === 0) v = Math.min(1, Math.max(0, 1 - (p - c) / seg));
+        else if (i === N - 1) v = Math.min(1, Math.max(0, (p - (c - seg)) / seg));
+        else v = Math.min(
+          Math.min(1, Math.max(0, (p - (c - seg)) / seg)),
+          Math.min(1, Math.max(0, 1 - (p - c) / seg)),
+        );
+        const o = ease(Math.min(1, Math.max(0, v)));
+        el.style.opacity = o.toFixed(3);
+        el.style.zIndex = o > 0.001 ? '1' : '0';
+      }
+
+      // Copy: rise in over the first 42% of its beat, hold, rise out over the
+      // last 42% — identical motion for every module, intro included.
+      for (let i = 0; i < N; i++) {
+        const el = layers[i];
+        if (!el) continue;
+        const t = Math.min(1, Math.max(0, (p - i * seg) / seg));
+        const inP = Math.min(1, Math.max(0, t / 0.42));
+        const outP = Math.min(1, Math.max(0, (t - 0.58) / 0.42));
+        const o = inP * (1 - outP);
+        el.style.opacity = o.toFixed(3);
+        el.style.transform = `translate3d(0, ${((1 - inP) * 34 - outP * 34).toFixed(1)}px, 0)`;
+        el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+      }
+
+      // Counter: the current space number (01–12) while inside a space beat.
+      if (counter && counter.parentElement) {
+        const idx = Math.min(N - 1, Math.floor(p * N));
+        counter.parentElement.style.opacity = idx >= 1 ? '1' : '0';
+        counter.textContent = String(idx).padStart(2, '0');
+      }
+      if (progress) progress.style.transform = `scaleX(${p.toFixed(4)})`;
+    };
+
+    const onScroll = () => { if (rafTick) return; rafTick = requestAnimationFrame(update); };
+    const onResize = () => { lastP = -1; if (!rafTick) rafTick = requestAnimationFrame(update); };
+    update();
+    root.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    return () => {
+      root.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      if (rafTick) cancelAnimationFrame(rafTick);
+    };
   }, []);
 
   return (
@@ -728,23 +792,23 @@ export const InnPageReserveCine: React.FC<Props> = ({
           </div>
         </LazySection>
 
-        {/* L'Espace: GlyphPortal entry — the word "ESPACE" becomes the door into
-            the twelve-space inventory. The scroll-scrubbed letter portal replaces
-            the earlier words→photo intro; the inventory list follows below. */}
+        {/* L'Espace: a scroll-pinned sequence. The intro ("L'Inventaire / Douze
+            espaces / 12 espaces · 3 maisons") hands the stage to each of the twelve
+            spaces one at a time, the background photo crossfading to match what is
+            being described, all behind a darkening shadow wash for legibility. */}
         <section data-l-espace className="relative bg-[#050505] border-t border-[#c5a059]/10">
-          <GlyphPortal
-            word={t('SPACE', 'ESPACE')}
-            fontFamily="'Cinzel', serif"
-            fontWeight={700}
-            enterLabel={t('Enter', 'Entrer')}
-            style={{
-              '--gp-paper': '#050505',
-              '--gp-ink': '#f3e5ab',
-              '--gp-field': '#c5a059',
-              '--gp-foreground': '#0a0808',
-            }}
-            background={
-              <div style={{ position: 'absolute', inset: 0, transform: 'scale(var(--gp-field-scale,1))', background: '#c5a059' }}>
+          <div
+            ref={espaceTrackRef}
+            className="espace-track"
+            style={{ height: `${(SPACES_DATA.length + 1) * 100}vh` }}
+          >
+            <div className="sticky top-0 h-screen overflow-hidden">
+              {/* Background crossfade: the cover photo, then one per space. */}
+              <div
+                ref={(el) => { espaceBgRefs.current[0] = el; }}
+                className="absolute inset-0 opacity-0"
+                aria-hidden
+              >
                 <img
                   src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1800)}
                   srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
@@ -755,168 +819,151 @@ export const InnPageReserveCine: React.FC<Props> = ({
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
-            }
-            front={
+              {SPACES_DATA.map((space, i) => (
+                <div
+                  key={space.titleEn}
+                  ref={(el) => { espaceBgRefs.current[i + 1] = el; }}
+                  className="absolute inset-0 opacity-0"
+                  aria-hidden
+                >
+                  <img
+                    src={getOptimizedUrl(space.img, 1800)}
+                    srcSet={getSrcSet(space.img)}
+                    sizes="100vw"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+
+              {/* Darkening shadow wash: a bottom-weighted gradient plus a soft
+                  vignette so the cream/gold copy stays readable on any photo. */}
               <div
+                className="absolute inset-0 pointer-events-none z-[5]"
                 style={{
-                  position: 'absolute',
-                  top: 'clamp(96px,13%,112px)',
-                  left: 'clamp(24px,6%,64px)',
-                  right: 'clamp(24px,6%,64px)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 14,
+                  background:
+                    'linear-gradient(to bottom, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.42) 42%, rgba(5,5,5,0.84) 100%)',
                 }}
-              >
-                <div style={{ height: 1, width: 40, background: '#c5a059', flex: '0 0 auto' }} />
-                <span className="font-cinzel text-[12px] uppercase tracking-[0.35em] text-[#c5a059]">
+              />
+              <div
+                className="absolute inset-0 pointer-events-none z-[5]"
+                style={{
+                  background:
+                    'radial-gradient(120% 90% at 50% 45%, transparent 42%, rgba(5,5,5,0.55) 100%)',
+                }}
+              />
+
+              {/* Persistent header: section label + live space counter. */}
+              <div className="absolute top-0 inset-x-0 z-20 flex items-center justify-between px-6 md:px-12 pointer-events-none" style={{ paddingTop: 'clamp(88px, 11%, 112px)' }}>
+                <span
+                  className="font-cinzel uppercase text-[#c5a059]"
+                  style={{ fontSize: '12px', letterSpacing: '0.4em', textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
+                >
                   {t('The Space', "L'Espace")}
                 </span>
-                <div style={{ height: 1, width: 40, background: '#c5a059', flex: '0 0 auto' }} />
-              </div>
-            }
-          >
-            <div style={{ textAlign: 'center', maxWidth: '60ch', margin: '0 auto' }}>
-              <p className="font-cinzel text-[11px] uppercase tracking-[0.4em] mb-5" style={{ color: '#ffffff', textShadow: '0 1px 10px rgba(0,0,0,0.55)' }}>
-                {t('The Inventory', "L'Inventaire")}
-              </p>
-              <h2 className="font-prata" style={{ color: '#ffffff', textShadow: '0 2px 18px rgba(0,0,0,0.55)', fontSize: 'clamp(2rem,5vw,4.25rem)', lineHeight: 0.95, margin: '0 0 16px' }}>
-                {t('Twelve spaces', 'Douze espaces')}
-              </h2>
-              <p className="font-cinzel text-[11px] md:text-sm uppercase tracking-[0.55em]" style={{ color: '#ffffff', fontWeight: 700, textShadow: '0 1px 10px rgba(0,0,0,0.6)', margin: 0 }}>
-                12 {t('spaces', 'espaces')} · 1 {t('house', 'maison')}
-              </p>
-            </div>
-          </GlyphPortal>
-
-          {/* ── Act 2 · the twelve squares, laid over the revealed picture ── */}
-          <div className="relative px-6 md:px-12 pb-20 md:pb-32">
-            <div className="absolute inset-0" aria-hidden>
-              <img
-                src={getOptimizedUrl(ESPACE_COVER_PHOTO, 1800)}
-                srcSet={getSrcSet(ESPACE_COVER_PHOTO)}
-                sizes="100vw"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </div>
-            <ul ref={espaceListRef} className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 max-w-6xl mx-auto">
-              {SPACES_DATA.map((space, i) => (
-                <li
-                  key={i}
-                  className="espace-row relative flex flex-col justify-between min-h-[240px] md:min-h-[264px] p-5 md:p-6 border border-white/10 bg-[#050505]/75 backdrop-blur-sm rounded-[15px] shadow-[0_10px_34px_rgba(0,0,0,0.5)]"
+                <div
+                  className="font-cinzel text-[#f3e5ab] transition-opacity duration-500 tabular-nums"
+                  style={{ fontSize: 'clamp(1.2rem, 2.4vw, 1.9rem)', letterSpacing: '0.18em', textShadow: '0 2px 12px rgba(0,0,0,0.8)', opacity: 0 }}
                 >
-                  <div>
-                    <span className="font-cinzel text-[#c5a059] text-xs md:text-sm tracking-[0.3em] block mb-3">
+                  <span ref={espaceCounterRef}>01</span>
+                  <span className="text-[#c5a059]/60"> / 12</span>
+                </div>
+              </div>
+
+              {/* Copy layers: the intro, then each space. All absolutely stacked
+                  and driven by the same rise-in / rise-out scroll animation. */}
+              <div
+                ref={(el) => { espaceLayerRefs.current[0] = el; }}
+                className="absolute inset-0 z-10 flex items-center justify-center px-6 md:px-12 pointer-events-none opacity-0"
+              >
+                <div className="text-center" style={{ maxWidth: 'min(92vw, 900px)' }}>
+                  <p
+                    className="font-cinzel uppercase mb-5 text-white"
+                    style={{ fontSize: '11px', letterSpacing: '0.4em', textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
+                  >
+                    {t('The Inventory', "L'Inventaire")}
+                  </p>
+                  <h2
+                    className="font-prata text-white"
+                    style={{
+                      fontSize: 'clamp(2.2rem, 6vw, 5rem)',
+                      lineHeight: 0.95,
+                      margin: '0 0 20px',
+                      textShadow: '0 4px 30px rgba(0,0,0,0.85)',
+                    }}
+                  >
+                    {t('Twelve spaces', 'Douze espaces')}
+                  </h2>
+                  <p
+                    className="font-cinzel uppercase text-white"
+                    style={{
+                      fontSize: 'clamp(11px, 1.2vw, 15px)',
+                      letterSpacing: '0.55em',
+                      fontWeight: 700,
+                      textShadow: '0 2px 12px rgba(0,0,0,0.85)',
+                      margin: 0,
+                    }}
+                  >
+                    12 {t('spaces', 'espaces')} · 3 {t('houses', 'maisons')}
+                  </p>
+                </div>
+              </div>
+              {SPACES_DATA.map((space, i) => (
+                <div
+                  key={space.titleEn}
+                  ref={(el) => { espaceLayerRefs.current[i + 1] = el; }}
+                  className="absolute inset-0 z-10 flex items-center justify-center px-6 md:px-12 pointer-events-none opacity-0"
+                >
+                  <div className="text-center" style={{ maxWidth: 'min(92vw, 860px)' }}>
+                    <p
+                      className="font-cinzel mb-4 text-[#c5a059]"
+                      style={{
+                        fontSize: 'clamp(12px, 1.4vw, 16px)',
+                        letterSpacing: '0.4em',
+                        textShadow: '0 2px 12px rgba(0,0,0,0.85)',
+                      }}
+                    >
                       {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <h3 className="font-prata uppercase text-[#f3e5ab] text-xl md:text-2xl leading-[1.1] tracking-[-0.01em]">
+                    </p>
+                    <h3
+                      className="font-prata uppercase text-white"
+                      style={{
+                        fontSize: 'clamp(2.4rem, 7vw, 5.5rem)',
+                        lineHeight: 0.95,
+                        letterSpacing: '-0.01em',
+                        margin: '0 0 26px',
+                        textShadow: '0 4px 32px rgba(0,0,0,0.85)',
+                      }}
+                    >
                       {language === 'EN' ? space.titleEn : space.titleFr}
                     </h3>
+                    <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                      {(language === 'EN' ? space.itemsEn : space.itemsFr).map((item, j) => (
+                        <li
+                          key={j}
+                          className="flex items-center gap-2 font-josefin text-neutral-100"
+                          style={{ fontSize: 'clamp(13px, 1.3vw, 16px)', textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}
+                        >
+                          <span className="inline-block w-1 h-1 rounded-full bg-[#c5a059]" aria-hidden />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="mt-4 space-y-1.5">
-                    {(language === 'EN' ? space.itemsEn : space.itemsFr).map((item, j) => (
-                      <li key={j} className="flex items-baseline gap-2.5 font-josefin text-neutral-300 text-sm md:text-[14px] leading-snug">
-                        <span className="inline-block w-1 h-1 rounded-full bg-[#c5a059]/70 shrink-0 translate-y-[-2px]" aria-hidden />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
+                </div>
               ))}
-            </ul>
-          </div>
-        </section>
 
-        {/* ── 4. CUSTOM SERVICES: Kitchen + Massage half-moon portals ──── */}
-        <section className="cv-auto relative bg-[#050505] py-16 md:py-24 px-3 md:px-6 lg:px-10 border-t border-[#c5a059]/10">
-          <div className="text-center mb-10 md:mb-14">
-            <span className="text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.55em]">
-              {t('Services', 'Les Services')}
-            </span>
-            <h2
-              className="font-cinzel text-white uppercase mt-3 leading-[0.95] tracking-[-0.01em]"
-              style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
-            >
-              {t('Beyond the Stay', "Plus que l'Hébergement")}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-3 max-w-[1500px] mx-auto">
-            {/* Kitchen, left. Now an external link to the chef's own site
-                (mapchef.ca). The internal /cuisine page still exists as an
-                emergency fallback but is excluded from the sitemap. */}
-            <a
-              href="https://mapchef.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="services-portal group relative overflow-hidden border border-[#d4af37]/30 hover:border-[#d4af37] transition-all duration-700 rounded-t-[30px] md:rounded-tr-none md:rounded-bl-[30px] md:rounded-tl-[30px] cursor-pointer min-h-[420px] md:min-h-[560px] text-left block"
-            >
-              <img
-                src={getOptimizedUrl(KITCHEN_PHOTO, 1600)}
-                srcSet={getSrcSet(KITCHEN_PHOTO)}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-60 group-hover:opacity-100 md:group-hover:scale-110 transition-all duration-1000 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/55 to-[#050505]/15" />
-              <div className="relative z-10 h-full min-h-[420px] md:min-h-[560px] flex flex-col justify-end p-10 md:p-16">
-                <span className="text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.55em] mb-3">
-                  {t('Kitchen', 'Cuisine')}
-                </span>
-                <h3 className="font-cinzel text-white text-3xl md:text-5xl uppercase mb-3 leading-tight">
-                  {t('Catering', 'Traiteur')}
-                </h3>
-                <p className="text-neutral-300 text-sm md:text-base font-lato max-w-sm leading-relaxed opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500 mb-5">
-                  {t('Molecular catering & Portuguese bistronomy. Private chef for events.', 'Traiteur moléculaire & bistronomie portugaise. Chef privé pour événements.')}
-                </p>
-                <span className="inline-flex items-center gap-2 text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-80 group-hover:opacity-100 transition-opacity">
-                  {t('Discover', 'Découvrir')}
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </span>
+              {/* Progress line along the bottom edge. */}
+              <div className="absolute bottom-0 inset-x-0 z-20 h-px bg-white/10">
+                <div
+                  ref={espaceProgressRef}
+                  className="h-full w-full origin-left bg-[#c5a059]"
+                  style={{ transform: 'scaleX(0)' }}
+                />
               </div>
-            </a>
-
-            {/* Massage, right. External link to the practitioner's site
-                (salonlenvolee.com). The internal /massage page stays as a
-                fallback and is excluded from the sitemap. */}
-            <a
-              href="https://salonlenvolee.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="services-portal group relative overflow-hidden border border-[#d4af37]/30 hover:border-[#d4af37] transition-all duration-700 rounded-b-[30px] md:rounded-bl-none md:rounded-br-[30px] md:rounded-tr-[30px] cursor-pointer min-h-[420px] md:min-h-[560px] text-left block"
-            >
-              <img
-                src={getOptimizedUrl(MASSAGE_PHOTO, 1600)}
-                srcSet={getSrcSet(MASSAGE_PHOTO)}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-60 group-hover:opacity-100 md:group-hover:scale-110 transition-all duration-1000 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/55 to-[#050505]/15" />
-              <div className="relative z-10 h-full min-h-[420px] md:min-h-[560px] flex flex-col justify-end p-10 md:p-16">
-                <span className="text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.55em] mb-3">
-                  {t('Wellness', 'Bien-être')}
-                </span>
-                <h3 className="font-cinzel text-white text-3xl md:text-5xl uppercase mb-3 leading-tight">
-                  {t('Massage', 'Massothérapie')}
-                </h3>
-                <p className="text-neutral-300 text-sm md:text-base font-lato max-w-sm leading-relaxed opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500 mb-5">
-                  {t('Holistic care, Reiki & deep tissue. Practitioner on site.', 'Soins holistiques, Reiki & tissu profond. Praticien sur place.')}
-                </p>
-                <span className="inline-flex items-center gap-2 text-[#d4af37] font-cinzel text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-80 group-hover:opacity-100 transition-opacity">
-                  {t('Discover', 'Découvrir')}
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </div>
-            </a>
+            </div>
           </div>
         </section>
 
@@ -1068,15 +1115,6 @@ export const InnPageReserveCine: React.FC<Props> = ({
           100% { transform: scale(1.09) translate3d(-1%, -0.6%, 0); }
         }
 
-        /* L'Espace inventory cards: hidden until they scroll into view, then a
-           gentle fade + rise. The IntersectionObserver adds .espace-in once. */
-        .espace-row {
-          opacity: 0;
-          transform: translateY(40px);
-          transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .espace-row.espace-in { opacity: 1; transform: translateY(0); }
-
         /* ── Cinematic INTRO ACT ─────────────────────────────────────────────
            The track holds a sticky 100vh video + an extent spacer that supplies
            the scroll length for the scrub. Total track height = 100vh + extent,
@@ -1100,7 +1138,6 @@ export const InnPageReserveCine: React.FC<Props> = ({
           .rooms-eyebrow, .rooms-title, .rooms-rule { animation: none !important; opacity: 1 !important; transform: none !important; }
           .rooms-rule { width: 80px !important; }
           .rooms-title { -webkit-text-fill-color: #f3e5ab !important; color: #f3e5ab !important; background: none !important; }
-          .espace-row { opacity: 1 !important; transform: none !important; transition: none !important; }
         }
       `}</style>
     </div>
