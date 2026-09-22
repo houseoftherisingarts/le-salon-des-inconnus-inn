@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-22",
+        title_fr: "L'équinoxe",
+        title_en: "The equinox",
+        body_fr: "Aujourd'hui, quelque part dans la grande course de la Terre, le jour et la nuit pèsent exactement le même poids, et dès demain la balance aura penché du côté des soirées longues. J'aime que le calendrier garde une fête pour un équilibre qui ne dure pas : l'équinoxe se traverse comme un col de montagne, un pied encore dans l'été et l'autre déjà dans l'automne, sans qu'on puisse s'y bâtir une maison. Le funambule connaît bien ce genre de point. Son équilibre est fait de petites pertes rattrapées l'une après l'autre, et s'il s'immobilisait pour le conserver, c'est là qu'il tomberait. Nous cherchons pourtant l'équilibre comme un lieu où s'installer, entre le travail et le repos, entre les autres et soi, et nous nous en voulons de ne jamais réussir à y rester. Les saisons suggèrent une autre manière : passer par le point juste assez souvent pour que l'ensemble des jours, lui, soit juste. Quel équilibre est-ce que j'essaie de retenir immobile, alors qu'il me demande d'avancer?",
+        body_en: "Today, somewhere in the Earth's great run, day and night weigh exactly the same, and by tomorrow the scales will already have tipped toward the long evenings. I love that the calendar keeps a feast for a balance that does not last: the equinox is crossed like a mountain pass, one foot still in summer and the other already in autumn, with no room to build a house there. The tightrope walker knows this kind of point well. Their balance is made of small losses caught one after another, and if they stood still to preserve it, that is when they would fall. Yet we look for balance as a place to settle, between work and rest, between others and ourselves, and we blame ourselves for never managing to stay there. The seasons suggest another way: to pass through the true point often enough that the whole of our days comes out true. Which balance am I trying to hold still, when it is asking me to keep moving?",
+    },
+    {
         date: "2026-09-21",
         title_fr: "Le levain",
         title_en: "The starter",
