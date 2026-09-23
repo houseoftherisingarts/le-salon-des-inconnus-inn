@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-23",
+        title_fr: "Le portage",
+        title_en: "The portage",
+        body_fr: "Les canots d'autrefois ne suivaient pas les rivières jusqu'au bout. Là où l'eau devenait impraticable, le voyageur chargeait son canot sur ses épaules et marchait à travers bois jusqu'au prochain plan d'eau, et ce bout de chemin porte un nom : le portage. Nos cartes en gardent des centaines, nommés et transmis comme des choses précieuses, parce que savoir où poser le canot valait souvent plus que savoir pagayer. J'aime qu'un mot existe pour l'endroit exact où le voyage cesse de porter le voyageur et où le voyageur se met à porter le voyage. Les traversées d'une vie ont leurs passages semblables, où l'élan ne suffit plus et où tout pèse son vrai poids sur les épaules. Les vieux itinéraires le disent pourtant : le portage fait partie du trajet, et c'est souvent lui qui relie les deux plus belles eaux. Qu'est-ce que je porte en ce moment, entre deux eaux, en croyant m'être perdu?",
+        body_en: "The canoes of old did not follow the rivers all the way. Where the water became impassable, the traveller lifted their canoe onto their shoulders and walked through the woods to the next stretch of water, and that piece of trail has a name: the portage. Our maps still keep hundreds of them, named and handed down like precious things, because knowing where to set the canoe down was often worth more than knowing how to paddle. I love that a word exists for the exact place where the journey stops carrying the traveller and the traveller begins to carry the journey. The crossings of a life have passages like these, where momentum is no longer enough and everything weighs its true weight on the shoulders. And yet the old routes are clear about it: the portage is part of the way, and it is often the stretch that joins the two most beautiful waters. What am I carrying right now, between two waters, believing I have lost my way?",
+    },
+    {
         date: "2026-09-22",
         title_fr: "L'équinoxe",
         title_en: "The equinox",
