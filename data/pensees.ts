@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-24",
+        title_fr: "Les braises couvertes",
+        title_en: "Banked embers",
+        body_fr: "Le mot couvre-feu faisait peur bien avant de désigner une interdiction. Dans les maisons d'autrefois, il nommait un geste du soir plein de douceur : avant de dormir, la maisonnée couvrait les braises de cendre pour que le feu traverse la nuit sans danger et sans s'éteindre. Au matin, il suffisait d'écarter la cendre et de souffler un peu pour retrouver la flamme, là où un feu laissé à lui-même se serait consumé jusqu'au froid. J'aime que nos ancêtres aient su faire la différence entre éteindre et couvrir, et qu'ils aient confié leur feu au repos plutôt qu'à la vigilance. Nous traitons souvent nos élans comme des feux à entretenir sans relâche, de peur qu'une pause les tue, alors que certains enthousiasmes brûlent tout leur bois en une seule veillée. Les braises couvertes enseignent le contraire : ce qui est protégé pendant la nuit repart au matin plus vite que ce qui a été forcé de briller sans dormir. Quelle flamme aurais-je intérêt à couvrir ce soir, pour la retrouver vivante demain?",
+        body_en: "The word curfew frightened people long before it named a prohibition, yet it was born from a gentle evening gesture: in the houses of old, before going to sleep, the household covered the embers with ash so the fire could cross the night without danger and without going out. In the morning, it took no more than brushing the ash aside and a little breath to find the flame again, where a fire left to itself would have burned down to the cold. I love that our ancestors knew the difference between putting out and covering over, and that they entrusted their fire to rest rather than to watchfulness. We often treat our own drives like fires that must be tended without pause, afraid that a break will kill them, while some enthusiasms burn through all their wood in a single evening. Banked embers teach the opposite: what is sheltered through the night rises again in the morning faster than what was forced to keep shining without sleep. Which flame would I do well to cover tonight, so as to find it alive tomorrow?",
+    },
+    {
         date: "2026-09-23",
         title_fr: "Le portage",
         title_en: "The portage",
