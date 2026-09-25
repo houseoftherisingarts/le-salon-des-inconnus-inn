@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-25",
+        title_fr: "L'étoile Polaire",
+        title_en: "The North Star",
+        body_fr: "Les navigateurs d'autrefois traversaient des océans entiers guidés par une étoile qu'ils n'avaient aucun espoir d'atteindre. L'étoile Polaire ne leur promettait rien; elle se tenait simplement au même point du ciel pendant que tout le reste tournait, et cette fidélité suffisait pour tenir un cap au milieu du noir. Les marins ne confondaient pas l'étoile avec le port : ils lui demandaient la direction, jamais l'arrivée. Je trouve que nous manquons parfois de cette sagesse avec nos idéaux. Nous voulons les atteindre et les posséder, et nous nous décourageons de les voir reculer à mesure que nous avançons, alors que leur travail a toujours été d'orienter la route plutôt que de la terminer. Une vie entière peut se passer à marcher vers une étoile sans que le voyage y perde quoi que ce soit; c'est même souvent le contraire. Quelle étoile me sert de cap, ces temps-ci, sans que j'aie besoin de l'atteindre?",
+        body_en: "The navigators of old crossed entire oceans guided by a star they had no hope of ever reaching. The North Star promised them nothing; it simply held its place in the sky while everything else turned, and that faithfulness was enough to keep a course through the dark. The sailors never mistook the star for the harbour: they asked it for direction, never for arrival. I find we sometimes lack that wisdom with our ideals. We want to reach them and own them, and we grow discouraged watching them recede as we advance, when their work has always been to orient the road rather than to end it. A whole life can be spent walking toward a star without the journey losing anything at all; more often the opposite is true. Which star is setting my course these days, without my needing to reach it?",
+    },
+    {
         date: "2026-09-24",
         title_fr: "Les braises couvertes",
         title_en: "Banked embers",
