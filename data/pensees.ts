@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-26",
+        title_fr: "La rallonge",
+        title_en: "The table leaf",
+        body_fr: "Les vieilles tables de famille cachent presque toutes le même secret : sous le plateau dorment une ou deux planches taillées dans le même bois, ajustées pour glisser sans bruit, et qui attendent parfois des mois qu'une visite les réveille. Le menuisier qui a bâti la table a donc travaillé pour des convives dont personne ne connaissait encore le nom, et il leur a préparé une place bien avant qu'on pense à les inviter. J'aime cette façon de construire, où le meuble le plus stable de la maison porte en lui, dès l'atelier, la possibilité de s'agrandir. Nous dressons souvent nos vies comme des tables à format fixe, taillées exactement à la mesure de ceux qui y mangent déjà. Les rallonges proposent une autre mesure : garder l'espace de l'inconnu pendant qu'on a encore les mains dans le bois, pour que l'accueil soit un geste déjà prêt le jour où quelqu'un frappe. Quelle rallonge est-ce que je garde sous mon plateau, et qu'est-ce que j'attends pour la déplier?",
+        body_en: "Almost every old family table hides the same secret: under the top sleep one or two boards cut from the same wood, fitted to slide without a sound, sometimes waiting months for a visit to wake them. The carpenter who built the table was thus working for guests whose names nobody knew yet, and they prepared their place long before anyone thought of inviting them. I love that way of building, where the steadiest piece of furniture in the house carries within it, from the workshop on, the possibility of growing larger. We often set our lives like fixed-format tables, cut exactly to the measure of those already eating there. The leaves suggest another measure: keeping room for the stranger while our hands are still in the wood, so that welcome is a gesture already prepared on the day someone knocks. Which leaf am I keeping under my tabletop, and what am I waiting for to unfold it?",
+    },
+    {
         date: "2026-09-25",
         title_fr: "L'étoile Polaire",
         title_en: "The North Star",
