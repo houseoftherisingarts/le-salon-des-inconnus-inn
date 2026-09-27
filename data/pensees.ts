@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-27",
+        title_fr: "La chanson à répondre",
+        title_en: "The call-and-response song",
+        body_fr: "Les veillées d'autrefois avaient trouvé la manière la plus simple du monde de faire chanter une pièce pleine d'inconnus. Un seul chanteur portait les couplets, avec leurs histoires longues et leurs mots qu'il fallait connaître, et toute la tablée lui répondait par un refrain assez court pour s'apprendre en une seule écoute. Personne ne demandait aux nouveaux venus s'ils savaient la chanson; au deuxième refrain, ils la savaient, et leur voix comptait autant que celle du chanteur. J'aime cette architecture où la mémoire d'un seul suffit, pourvu que la porte d'entrée reste assez large pour tous les autres. Nous bâtissons souvent nos passions comme des couplets, exigeantes et pleines de détails, puis nous nous étonnons que personne n'ose chanter avec nous. Les vieilles chansons suggèrent d'y tailler un refrain : une phrase simple où l'autre peut poser sa voix dès la première soirée. Quel refrain est-ce que j'offre à ceux qui ne connaissent pas encore mes couplets?",
+        body_en: "The evening gatherings of old found the simplest way in the world to get a room full of strangers singing. A single singer carried the verses, with their long stories and their words you had to know, and the whole table answered with a refrain short enough to be learned in one hearing. Nobody asked the newcomers whether they knew the song; by the second refrain they knew it, and their voice counted as much as the singer's. I love that architecture, where the memory of one person is enough, as long as the doorway stays wide enough for everyone else. We often build our passions like verses, demanding and full of detail, and then wonder why nobody dares to sing along. The old songs suggest carving a refrain into them: one simple line where another voice can land on the very first evening. What refrain am I offering to those who do not yet know my verses?",
+    },
+    {
         date: "2026-09-26",
         title_fr: "La rallonge",
         title_en: "The table leaf",
