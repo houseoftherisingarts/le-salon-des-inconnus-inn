@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-28",
+        title_fr: "Le banc devant la porte",
+        title_en: "The bench by the door",
+        body_fr: "Les vieilles maisons de campagne gardent presque toutes un banc appuyé contre la façade, entre la porte et la fenêtre, tourné vers le chemin. Les bâtisseurs auraient pu l'installer dans la cour, à l'ombre et à l'abri des regards, et ils ont choisi le devant de la maison, face à la route, comme si s'asseoir était d'abord une manière de saluer. Le soir venu, ceux de la maison venaient s'y poser après l'ouvrage, et le passant qui les apercevait savait sans un mot qu'il pouvait ralentir et échanger deux phrases, parfois même rester pour la veillée. Une maison qui garde son banc dehors annonce qu'elle a du temps, et le temps est peut-être la seule richesse qu'un hôte ne peut pas feindre. Nous avons rentré nos bancs depuis, dans des salons tournés vers l'intérieur, devant des écrans qui ne voient jamais personne passer. Le vieux banc de façade pose pourtant encore sa question à qui veut l'entendre : de quel côté de ma maison est-ce que je m'assois, quand la journée se termine?",
+        body_en: "Almost every old country house has kept a bench set against its front wall, between the door and the window, turned toward the road. The builders could have placed it in the yard, in the shade and away from watching eyes, yet they chose the front of the house, facing the road, as if sitting down were first of all a way of greeting. When evening came, the people of the house would settle there after the day's work, and a passerby who caught sight of them knew without a word that they could slow down and trade a few sentences, sometimes even stay for the evening. A house that keeps its bench outside announces that it has time, and time may be the only wealth a host cannot fake. We have since brought our benches indoors, into living rooms turned inward, in front of screens that never see anyone pass. Yet the old bench by the front wall still asks its question to anyone willing to hear it: on which side of my house do I sit, when the day is done?",
+    },
+    {
         date: "2026-09-27",
         title_fr: "La chanson à répondre",
         title_en: "The call-and-response song",
