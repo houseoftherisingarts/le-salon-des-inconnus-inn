@@ -1,116 +1,41 @@
-// PhotoTemplate: photographer's Mind Palace.
-//
-// Three layers, back-to-front, puis les sections du Profil Pro en dessous :
-//   1. Works mosaic, full-bleed, with the RevealWaveImage shader playing
-//      on each tile (B&W dither + flashlight reveal on cursor).
-//   2. Huge name flowing right-to-left in display type, mix-blend screen so
-//      the photos underneath bleed through.
-//   3. Artist cutout, centered, the focal point.
-//
-// Le bloc `fixed inset-0` d'origine verrouillait tout l'écran : ce gabarit
-// est maintenant un vrai site qui défile, le mur de photos n'étant plus que
-// le premier écran (`relative`), les sections suivant en dessous.
+// PhotoTemplate : le gabarit d'espace d'un photographe. L'obturateur s'ouvre
+// sur une photo plein écran, puis les séries défilent de côté, section
+// épinglée sur grand écran et bande unique au téléphone. Les tarifs, la
+// prise de rendez-vous et les autres sections suivent l'ordre et les
+// interrupteurs de l'atelier.
 
 import * as React from 'react';
+import type { SectionId } from '../types';
+import { ordreSections } from '../ordre';
+import type { TemplateProps } from './shared';
 import { EspaceRacine } from './EspaceRacine';
-import { RevealWaveImage } from '../RevealWaveImage';
-import { ArtistCutout, BackToSalonLink, useTexte, type TemplateProps } from './shared';
-import { BottomDock, NameLayer, WorkCountChip } from './stage';
-import { BioSection, ContactSection, LiensSection, OeuvresSection, PiedDePageSection, PriseRendezVousSection } from './sections';
+import {
+    PhotoHero, SeriesSection, TarifsSection, BioSection, PresseSection,
+    PriseRendezVousSection, ContactSection, LiensSection, PiedDePageSection,
+} from './sections';
+
+const SECTIONS: Partial<Record<SectionId, React.FC<TemplateProps>>> = {
+    series: SeriesSection,
+    tarifs: TarifsSection,
+    rendezvous: PriseRendezVousSection,
+    bio: BioSection,
+    presse: PresseSection,
+    contact: ContactSection,
+    liens: LiensSection,
+};
 
 export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDisplayName, language = 'FR' }) => {
-    const t = useTexte(language);
-    const works = config.works ?? [];
-    const displayName = config.displayName || fallbackDisplayName || config.username;
-
-    // Tile count for the mosaic, repeat the user's works if they only have
-    // a few, so the wall reads as full rather than thin. Cap at 12 tiles.
-    const tileCount = Math.min(12, Math.max(works.length, works.length > 0 ? 6 : 0));
-    const tiles = Array.from({ length: tileCount }, (_, i) => works[i % works.length]).filter(Boolean);
-
+    const props = { config, uid, fallbackDisplayName, language };
     return (
         <EspaceRacine famille="photographe" theme={config.theme}>
-        <div className="relative min-h-screen text-[color:var(--es-ink)] overflow-hidden es-body">
-            <BackToSalonLink />
-
-            {/* ── Layer 1 · Back: works mosaic ──────────────────────────── */}
-            <div className="absolute inset-0 z-0">
-                {tiles.length > 0 ? (
-                    <div
-                        className="absolute inset-0 grid gap-[2px]"
-                        style={{
-                            gridTemplateColumns: `repeat(${tiles.length >= 9 ? 4 : 3}, 1fr)`,
-                            gridAutoRows: '1fr',
-                        }}
-                    >
-                        {tiles.map((w, i) => (
-                            <div key={`${w.storagePath}-${i}`} className="relative overflow-hidden">
-                                <RevealWaveImage
-                                    src={w.url}
-                                    revealRadius={0.35}
-                                    revealSoftness={0.5}
-                                    pixelSize={3}
-                                    waveSpeed={0.35 + (i % 3) * 0.05}
-                                    waveFrequency={2.5}
-                                    waveAmplitude={0.14}
-                                    mouseRadius={0.25}
-                                    className="absolute inset-0 w-full h-full"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--es-bg-2)] via-[color:var(--es-tint)] to-[color:var(--es-bg)]" />
-                )}
-                {/* Vignette pulls focus to the centerpiece */}
-                <div
-                    aria-hidden
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                        background:
-                            'radial-gradient(ellipse at center, color-mix(in srgb, var(--es-bg) 0%, transparent) 28%, color-mix(in srgb, var(--es-bg) 65%, transparent) 78%, color-mix(in srgb, var(--es-bg) 92%, transparent) 100%)',
-                    }}
-                />
-            </div>
-
-            {/* ── Layer 2 · Middle: name flowing right-to-left ─────────── */}
-            <div className="absolute inset-0 z-10 pointer-events-none">
-                <NameLayer name={displayName} tagline={config.tagline} medium={config.medium} />
-            </div>
-
-            {/* ── Layer 3 · Front: artist cutout ────────────────────────── */}
-            <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                <ArtistCutout
-                    src={config.hero?.url}
-                    alt={displayName}
-                    className="max-h-[92vh] max-w-[58vw]"
-                />
-            </div>
-
-            <BottomDock config={config} />
-            <WorkCountChip count={works.length} label="photos" />
-
-            {/* Indice de défilement : la mosaïque n'est que le premier écran. */}
-            <a
-                href="#contenu"
-                aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-[color:var(--es-ink-2)] hover:text-[color:var(--es-accent)] transition-colors animate-bounce"
-            >
-                <span className="es-label text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                    <path d="M12 4v16M6 14l6 6 6-6" />
-                </svg>
-            </a>
-        </div>
-
-        <div id="contenu" className="bg-[color:var(--es-bg)]">
-            <OeuvresSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
-            <BioSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
-            <PriseRendezVousSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
-            <ContactSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
-            <LiensSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
-            <PiedDePageSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
-        </div>
+            <PhotoHero config={config} fallbackDisplayName={fallbackDisplayName} language={language} />
+            <main id="contenu">
+                {ordreSections(config, 'photographe').map((id) => {
+                    const Section = SECTIONS[id];
+                    return Section ? <Section key={id} {...props} /> : null;
+                })}
+                <PiedDePageSection {...props} />
+            </main>
         </EspaceRacine>
     );
 };

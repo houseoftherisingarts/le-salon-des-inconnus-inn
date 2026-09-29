@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { lienHttpsValide } from '../../types';
 import { useTexte } from '../shared';
-import { sectionVisible, type SectionProps } from './common';
+import { formatPrixCents, sectionVisible, type SectionProps } from './common';
 
 export const TarifsSection: React.FC<SectionProps> = ({ config, language = 'FR' }) => {
     const t = useTexte(language);
@@ -24,7 +24,7 @@ export const TarifsSection: React.FC<SectionProps> = ({ config, language = 'FR' 
                         return (
                             <li key={x.id} className="border-b border-[color:var(--es-line)] py-7 md:py-9 grid grid-cols-[1fr_auto] gap-x-6 gap-y-3 items-baseline">
                                 <h3 className="es-display text-[color:var(--es-ink)] text-2xl md:text-3xl leading-tight">{x.nom}</h3>
-                                {x.prix && <p className="es-label text-[color:var(--es-accent)] text-lg md:text-xl tracking-[0.06em] tabular-nums text-right">{x.prix}</p>}
+                                {typeof x.prix === 'number' && x.prix > 0 && <p className="es-label text-[color:var(--es-accent)] text-lg md:text-xl tracking-[0.06em] tabular-nums text-right">{formatPrixCents(Math.round(x.prix * 100))}</p>}
                                 {x.description && <p className="es-body col-span-2 md:col-span-1 text-[color:var(--es-ink-2)] text-base md:text-lg leading-relaxed max-w-2xl">{x.description}</p>}
                                 {lien && (
                                     <a

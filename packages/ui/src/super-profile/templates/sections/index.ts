@@ -19,5 +19,8 @@ export { PiedDePageSection } from './PiedDePage';
 export { PeintreHero } from './PeintreHero';
 export { MurOeuvresSection } from './MurOeuvres';
 export { PieceEchelle } from './PieceEchelle';
+export { PhotoHero } from './PhotoHero';
+export { SeriesSection, seriesDe } from './Series';
+export { TarifsSection } from './Tarifs';
 export { sectionVisible, SectionShell, SectionTitle, CARD_GLASS, formatPrixCents, formatDateCourte } from './common';
 export type { SectionProps } from './common';
