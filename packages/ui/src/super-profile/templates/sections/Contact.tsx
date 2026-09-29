@@ -6,10 +6,10 @@ import * as React from 'react';
 import { useTexte } from '../shared';
 import { sectionVisible, SectionShell, type SectionProps } from './common';
 
-export const ContactSection: React.FC<SectionProps> = ({ config, language = 'FR' }) => {
+export const ContactSection: React.FC<SectionProps> = ({ config, uid, language = 'FR' }) => {
     const t = useTexte(language);
     if (!sectionVisible(config, 'contact')) return null;
-    const rendezvousAllume = sectionVisible(config, 'rendezvous');
+    const rendezvousAllume = sectionVisible(config, 'rendezvous') && !!uid;
     const lienExterne = config.links?.booking;
     if (!rendezvousAllume && !lienExterne) return null;
 

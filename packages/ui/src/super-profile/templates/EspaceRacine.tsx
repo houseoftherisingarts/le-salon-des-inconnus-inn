@@ -20,6 +20,7 @@ const STYLE = `
 .es-verre{background:var(--es-glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--es-edge);border-radius:var(--es-radius);}
 @keyframes es-monte{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
 @keyframes es-souffle{0%,100%{transform:scale(1);opacity:.85;}50%{transform:scale(1.06);opacity:1;}}
+@keyframes es-eq{0%,100%{transform:scaleY(.35);}50%{transform:scaleY(1);}}
 @keyframes es-tourne{to{transform:rotate(360deg);}}
 @keyframes es-rideau{from{transform:scaleY(1);}to{transform:scaleY(0);}}
 .es-monte{animation:es-monte .9s cubic-bezier(.2,.7,.2,1) both;}

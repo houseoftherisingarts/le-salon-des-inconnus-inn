@@ -253,3 +253,17 @@ export const pisteStoragePath = (uid: string, pisteId: string, ext: string) =>
     `superProfiles/${uid}/pistes/${pisteId}.${ext}`;
 export const couvertureLivreStoragePath = (uid: string, livreId: string, ext: string) =>
     `members/${uid}/superProfile/livres/${livreId}.${ext}`;
+
+/** Les seuls hôtes de paiement acceptés pour un produit de la Boutique. */
+const HOTES_PAIEMENT = ['buy.stripe.com', 'checkout.stripe.com', 'square.link', 'checkout.square.site', 'zeffy.com', 'www.zeffy.com'];
+
+/** Vrai pour un lien https vers Stripe, Square ou Zeffy, et rien d'autre. */
+export function lienPaiementValide(lien?: string): boolean {
+    if (!lien) return false;
+    try {
+        const u = new URL(lien);
+        return u.protocol === 'https:' && (HOTES_PAIEMENT.includes(u.hostname) || u.hostname.endsWith('.square.site'));
+    } catch {
+        return false;
+    }
+}

@@ -6,6 +6,7 @@
 import * as React from 'react';
 import type { LienEcoute } from '../../types';
 import { useTexte } from '../shared';
+import { ListePistes } from './Pistes';
 import { CARD_GLASS, sectionVisible, SectionShell, SectionTitle, type SectionProps } from './common';
 
 type Embed = { kind: 'iframe'; src: string; titre: string } | { kind: 'lien' };
@@ -102,13 +103,17 @@ const Lecteur: React.FC<{ lien: LienEcoute }> = ({ lien }) => {
 export const EcouteSection: React.FC<SectionProps> = ({ config, language = 'FR' }) => {
     const t = useTexte(language);
     const liens = config.ecoute ?? [];
-    if (!sectionVisible(config, 'ecoute') || liens.length === 0) return null;
+    const pistes = config.pistes ?? [];
+    if (!sectionVisible(config, 'ecoute') || (liens.length === 0 && pistes.length === 0)) return null;
     return (
         <SectionShell eyebrowEn="Listen" eyebrowFr="Écoute" language={language} id="ecoute">
             <SectionTitle>{t('Listen now', 'Écouter maintenant')}</SectionTitle>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {liens.map((l, i) => <Lecteur key={`${l.url}-${i}`} lien={l} />)}
-            </div>
+            <ListePistes pistes={pistes} language={language} />
+            {liens.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {liens.map((l, i) => <Lecteur key={`${l.url}-${i}`} lien={l} />)}
+                </div>
+            )}
         </SectionShell>
     );
 };
