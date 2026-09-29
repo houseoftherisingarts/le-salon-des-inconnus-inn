@@ -1,5 +1,6 @@
 "use strict";
-// profilPro.ts : l'abonnement Stripe du Profil Pro (100 $ CAD par mois).
+// profilPro.ts : l'abonnement Stripe du Profil Pro (80 $ CAD par mois depuis le
+// 29 septembre 2026; 100 $ avant, et les abonnements déjà ouverts gardent ce prix).
 //
 // Le SDK `stripe` n'est pas installé dans ce paquet de fonctions (voir
 // functions/package.json) et stripeCampingWebhook, plus haut dans ce projet,
@@ -50,19 +51,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = void 0;
+exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeFetch = void 0;
 const admin = __importStar(require("firebase-admin"));
 const https_1 = require("firebase-functions/v2/https");
 const crypto = __importStar(require("crypto"));
 const params_1 = require("firebase-functions/params");
 const nodemailer_1 = __importDefault(require("nodemailer"));
+const assistance_1 = require("./assistance");
 if (admin.apps.length === 0) {
     admin.initializeApp();
 }
 const STRIPE_SECRET_KEY = (0, params_1.defineSecret)('STRIPE_SECRET_KEY');
 const STRIPE_WEBHOOK_PRO_SECRET = (0, params_1.defineSecret)('STRIPE_WEBHOOK_PRO_SECRET');
 const PROJET = 'creator-studio-pro';
-const PRIX_CENTS = 10000; // 100,00 $ CAD par mois
+const PRIX_CENTS = 8000; // 80,00 $ CAD par mois (29 septembre 2026; les abonnements déjà ouverts gardent leur prix Stripe)
 // Le Creator Studio vit sur le monolithe (www.lesalondesinconnus.com/creator).
 const BASE_URL = 'https://www.lesalondesinconnus.com';
 const NOM_PRODUIT = 'Profil Pro du Salon des Inconnus';
@@ -106,6 +108,7 @@ async function stripeFetch(secret, methode, chemin, parametres) {
     }
     return corps;
 }
+exports.stripeFetch = stripeFetch;
 /** Vérifie l'en-tête `stripe-signature`, comme stripeCampingWebhook. */
 function verifierSignatureStripe(rawBody, header, secret) {
     const parties = header.split(',').reduce((acc, kv) => {
@@ -256,6 +259,13 @@ exports.webhookProfilPro = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK_PRO
         return;
     }
     const objet = event.data?.object ?? {};
+    // L'assistance « Brancher Stripe avec Alex » passe par le même endpoint :
+    // paiement unique, reconnu par metadata.entite et metadata.produit.
+    if (event.type === 'checkout.session.completed' && (0, assistance_1.estAssistance)(objet)) {
+        await (0, assistance_1.traiterAssistancePayee)(objet);
+        res.status(200).send('OK');
+        return;
+    }
     if (event.type === 'checkout.session.completed') {
         if (objet.metadata?.projet !== PROJET) {
             res.status(200).send('Not this project');

@@ -1,4 +1,5 @@
-// profilPro.ts : l'abonnement Stripe du Profil Pro (100 $ CAD par mois).
+// profilPro.ts : l'abonnement Stripe du Profil Pro (80 $ CAD par mois depuis le
+// 29 septembre 2026; 100 $ avant, et les abonnements déjà ouverts gardent ce prix).
 //
 // Le SDK `stripe` n'est pas installé dans ce paquet de fonctions (voir
 // functions/package.json) et stripeCampingWebhook, plus haut dans ce projet,
@@ -28,6 +29,7 @@ import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import * as crypto from 'crypto';
 import { defineSecret } from 'firebase-functions/params';
 import nodemailer from 'nodemailer';
+import { estAssistance, traiterAssistancePayee } from './assistance';
 
 if (admin.apps.length === 0) {
   admin.initializeApp();
@@ -62,7 +64,7 @@ function versParametresFormulaire(entree: Record<string, unknown>): URLSearchPar
   return params;
 }
 
-async function stripeFetch(
+export async function stripeFetch(
   secret: string,
   methode: 'GET' | 'POST',
   chemin: string,
@@ -251,6 +253,14 @@ export const webhookProfilPro = onRequest(
     }
 
     const objet = event.data?.object ?? {};
+
+    // L'assistance « Brancher Stripe avec Alex » passe par le même endpoint :
+    // paiement unique, reconnu par metadata.entite et metadata.produit.
+    if (event.type === 'checkout.session.completed' && estAssistance(objet)) {
+      await traiterAssistancePayee(objet);
+      res.status(200).send('OK');
+      return;
+    }
 
     if (event.type === 'checkout.session.completed') {
       if (objet.metadata?.projet !== PROJET) { res.status(200).send('Not this project'); return; }

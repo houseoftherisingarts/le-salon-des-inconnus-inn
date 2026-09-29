@@ -16,6 +16,7 @@ import { ProfilProAdminSite } from './ProfilProAdminSite';
 import { ProfilProAdminContenu } from './ProfilProAdminContenu';
 import { ProfilProAdminAbonnement } from './ProfilProAdminAbonnement';
 import { UpsellCard } from './UpsellCard';
+import { AssistanceCard } from './AssistanceCard';
 import type { SuperProfileConfig } from './types';
 
 export interface ProfilProAdminProps {
@@ -175,6 +176,7 @@ export const ProfilProAdmin: React.FC<ProfilProAdminProps> = ({ uid, fallbackDis
             {onglet === 'abonnement' && <ProfilProAdminAbonnement abonnement={abonnement} language={language} />}
 
             <div className="max-w-3xl">
+                <AssistanceCard uid={uid} language={language} />
                 <UpsellCard language={language} />
             </div>
         </div>

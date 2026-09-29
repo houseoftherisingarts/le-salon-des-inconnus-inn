@@ -965,6 +965,7 @@ export const stripeCampingWebhook = onRequest(
 // Les trois fonctions vivent dans ./profilPro : ouverture du Checkout Stripe,
 // webhook signé qui pose flags.proEnabled, et portail client.
 export { creerAbonnementProfilPro, webhookProfilPro, portailProfilPro } from './profilPro';
+export { creerPaiementAssistance } from './assistance';
 export { compterPlacesCeilidh, mesBillets, mesSejours, lierSejour, nettoyerCompteSupprime } from './espaceMembre';
 export { parrainageFilleul } from './parrainage';
 export { onMessageSoutien, onProblemeTechnique, onMessageEntreMembres } from './soutien';
