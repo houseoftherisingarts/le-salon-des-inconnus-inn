@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { ArtsPage, PageMembre, ProfilProPage, RESERVED_SLUGS } from '@inconnus/ui';
+import { ApercuPage, ArtsPage, PageMembre, ProfilProPage, RESERVED_SLUGS, SLUGS_APERCU } from '@inconnus/ui';
 import AlexPage from './AlexPage';
 
 // Les hôtes du Salon lui-même. Tout autre nom d'hôte est le domaine personnel
@@ -140,6 +140,12 @@ export default function App() {
   // Page d'artiste d'Alex : une page pleine, hors du graphe d'ArtsPage.
   if (normalize(window.location.pathname) === '/alex') {
     return <AlexPage />;
+  }
+
+  // /apercu/{slug} : un espace témoin, sans compte et hors des moteurs.
+  const apercu = normalize(window.location.pathname).match(/^\/apercu\/([a-z0-9-]+)$/);
+  if (apercu && SLUGS_APERCU.includes(apercu[1])) {
+    return <ApercuPage slug={apercu[1]} />;
   }
 
   // /{slug} : la page publique d'un Profil Pro (gabarit selon le type

@@ -82,3 +82,24 @@ export type { ProfilProPageProps } from './ProfilProPage';
 export { gabaritPour, PeintreTemplate, MusicienTemplate, PhotoTemplate, VisualArtTemplate, EditorialTemplate } from './templates';
 export * from './templates/sections';
 export type { TemplateProps } from './templates';
+
+// Moteur d'espace : thèmes, ordre des sections, racine, lecteur, ateliers,
+// assistance et espaces témoins.
+export type { ProduitEspace, PisteEspace, ThemeEspace } from './types';
+export { MAX_PRODUITS, MAX_PISTES, MAX_AUDIO_OCTETS, produitStoragePath, pisteStoragePath, lienPaiementValide } from './types';
+export { THEMES, accentValide, resoudreTheme } from './themes';
+export type { PaletteEspace, PaireFonts, ThemeResolu } from './themes';
+export { SECTIONS_PAR_FAMILLE, ordreSections, deplacer } from './ordre';
+export { EspaceRacine } from './templates/EspaceRacine';
+export { LecteurProvider, useLecteur, formatDuree } from './templates/lecteur/LecteurContexte';
+export { LecteurCollant, IconeLecture } from './templates/lecteur/LecteurCollant';
+export { AtelierSections, SECTIONS_ETIQUETTES } from './AtelierSections';
+export { AtelierTheme } from './AtelierTheme';
+export { AtelierProduits } from './AtelierProduits';
+export { AtelierPistes } from './AtelierPistes';
+export { AssistanceCard } from './AssistanceCard';
+export { ouvrirPaiementAssistance, useAssistance } from './assistance';
+export type { StatutAssistance } from './assistance';
+export { APERCUS, SLUGS_APERCU } from './apercus';
+export { ApercuPage } from './ApercuPage';
+export type { ApercuPageProps } from './ApercuPage';

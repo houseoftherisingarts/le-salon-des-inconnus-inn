@@ -321,6 +321,28 @@
           ]
         },
         {
+          "source": "/apercu/**",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        {
+          "source": "/media/apercu/**",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=604800"
+            }
+          ]
+        },
+        {
           "source": "**/*.@(js|mjs|css)",
           "headers": [
             {

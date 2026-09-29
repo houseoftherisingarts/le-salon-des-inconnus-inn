@@ -38,7 +38,7 @@ if (admin.apps.length === 0) {
 const STRIPE_SECRET_KEY = defineSecret('STRIPE_SECRET_KEY');
 const STRIPE_WEBHOOK_PRO_SECRET = defineSecret('STRIPE_WEBHOOK_PRO_SECRET');
 
-const PROJET = 'creator-studio-pro';
+export const PROJET = 'creator-studio-pro';
 const PRIX_CENTS = 8000; // 80,00 $ CAD par mois (29 septembre 2026; les abonnements déjà ouverts gardent leur prix Stripe)
 // Le Creator Studio vit sur le monolithe (www.lesalondesinconnus.com/creator).
 const BASE_URL = 'https://www.lesalondesinconnus.com';
