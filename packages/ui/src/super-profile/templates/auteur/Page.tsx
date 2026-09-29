@@ -34,6 +34,11 @@ export const STYLE_PAGE = `
 .al-folio{margin-top:3cqw;text-align:center;font-family:var(--es-font-label);font-size:clamp(13px,2.3cqw,14px);letter-spacing:.14em;color:var(--es-page-ink-2);font-variant-numeric:tabular-nums;}
 `;
 
+/** Le titre courant de la page témoin : une espace insécable, pour que sa
+ *  ligne ait la hauteur d'un vrai titre (vide, elle s'effondre et la page
+ *  mesurée gagne une ligne que les vraies pages n'ont pas). */
+export const TETE_TEMOIN = '\u00a0';
+
 interface PageProps {
   page?: PageLivre;
   folio?: number;

@@ -12,7 +12,7 @@
 import { useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform, type MotionValue } from 'framer-motion';
 import { Fleche } from './commun';
-import { Page, STYLE_PAGE, usePagination } from './Page';
+import { Page, STYLE_PAGE, TETE_TEMOIN, usePagination } from './Page';
 import type { ExtraitLisible, PageLivre } from './pagination';
 
 const STYLE_LIVRE = `
@@ -118,7 +118,7 @@ export function LivreOuvert({ extraits, nom }: Props) {
           <motion.div className="al-livre" style={{ rotateX: inclinaison, scale: echelle, transformPerspective: 1600 }}>
             {/* La page témoin, invisible, qui sert à la pagination. */}
             <div ref={temoin} aria-hidden className="al-moitie left-1/2" style={{ visibility: 'hidden' }}>
-              <Page cote="droite" tete="" folio={0} className="h-full w-full" />
+              <Page cote="droite" tete={TETE_TEMOIN} folio={0} className="h-full w-full" />
             </div>
 
             <div className="al-moitie left-0" style={{ zIndex: 0 }}>

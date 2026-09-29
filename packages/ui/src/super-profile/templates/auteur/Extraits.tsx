@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { Section, Apparait, Fleche, nomDe, type SectionProps } from './commun';
 import { LivreOuvert } from './LivreOuvert';
-import { Page, STYLE_PAGE, usePagination } from './Page';
+import { Page, STYLE_PAGE, TETE_TEMOIN, usePagination } from './Page';
 import { extraitsLisibles, type ExtraitLisible } from './pagination';
 
 function useMedia(requete: string): boolean {
@@ -73,7 +73,7 @@ function Feuillets({ extraits, nom }: { extraits: ExtraitLisible[]; nom: string 
     <div className="relative -mx-5">
       <style>{STYLE_PAGE + STYLE_FEUILLETS}</style>
       <div ref={temoin} aria-hidden className="al-feuillet pointer-events-none absolute left-0 top-0" style={{ visibility: 'hidden' }}>
-        <Page cote="droite" tete="" folio={0} className="h-full w-full" />
+        <Page cote="droite" tete={TETE_TEMOIN} folio={0} className="h-full w-full" />
       </div>
       <div ref={bande} className="al-bande relative flex snap-x snap-mandatory gap-4 overflow-x-auto py-6" aria-label="Pages des extraits, à faire glisser" data-bande-feuillets>
         {pages.map((p, k) => (
