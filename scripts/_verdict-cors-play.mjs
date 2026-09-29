@@ -16,6 +16,8 @@ const p = await c.newPage();
 const consoleMsgs = [];
 p.on('console', (m) => consoleMsgs.push(m.text()));
 p.on('pageerror', (e) => consoleMsgs.push('pageerror: ' + e.message));
+const audioRequests = [];
+p.on('request', (r) => { if (/\.mp3|\.wav|\.m4a|\.ogg/i.test(r.url())) audioRequests.push(r.url()); });
 
 await p.goto('https://inconnus-salon.web.app/apercu/musicien', { waitUntil: 'networkidle' });
 await p.waitForTimeout(1500);
