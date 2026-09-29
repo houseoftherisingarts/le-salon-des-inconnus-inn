@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+<rect width="600" height="600" fill="#07070b"/>
+<path d="M230 170 C230 90 370 90 370 170" fill="none" stroke="#f5f5f5" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
+<path d="M150 170 H450 L480 520 H120 Z" fill="#111118" stroke="#f5f5f5" stroke-opacity="0.15" stroke-width="2"/>
+<circle cx="300" cy="330" r="86" fill="none" stroke="#ff5c39" stroke-width="6"/>
+<circle cx="300" cy="330" r="60" fill="none" stroke="#ff5c39" stroke-opacity="0.5" stroke-width="2"/>
+<text x="300" y="468" text-anchor="middle" font-family="Georgia, serif" font-size="34" fill="#f5f5f5">Les Lanternes</text></svg>
