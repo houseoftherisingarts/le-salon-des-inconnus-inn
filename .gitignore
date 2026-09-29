@@ -55,3 +55,4 @@ graphify-out/
 
 # Variantes WebP générées par scripts/optimize-images.mjs (npm run build)
 public/_opt
+captures/verdict-salon/
