@@ -1,9 +1,9 @@
 // ProfilProAdminContenu : l'onglet « Œuvres et contenu ». Ce qui s'y édite
-// dépend du type d'artiste : un peintre gère ses œuvres, ses expositions et
-// son atelier ; un musicien, son écoute, ses dates et sa presse ; un
-// écrivain, ses livres. Chaque bloc porte son propre brouillon et son
-// propre bouton d'enregistrement pour rester lisible malgré le nombre de
-// champs.
+// dépend du type d'artiste : un peintre gère ses œuvres, ses expositions,
+// son atelier et sa boutique ; un photographe, ses séries et ses tarifs ; un
+// musicien, son écoute, ses dates et sa presse ; un écrivain, ses livres.
+// Les œuvres, les séries, les tarifs, les pistes et la boutique s'écrivent
+// à chaque geste ; les autres blocs gardent leur bouton d'enregistrement.
 
 import * as React from 'react';
 import { getApp } from 'firebase/app';
@@ -12,13 +12,16 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObjec
 import { familleGabarit } from './artistes';
 import { AtelierPistes } from './AtelierPistes';
 import { AtelierProduits } from './AtelierProduits';
+import { AtelierOeuvres } from './AtelierOeuvres';
+import { AtelierSeries } from './AtelierSeries';
+import { AtelierTarifs } from './AtelierTarifs';
 import {
-    couvertureLivreStoragePath, oeuvreStoragePath,
-    MAX_DATES, MAX_EXPOSITIONS, MAX_LIENS_ECOUTE, MAX_LIVRES, MAX_OEUVRES,
+    couvertureLivreStoragePath,
+    MAX_DATES, MAX_EXPOSITIONS, MAX_LIENS_ECOUTE, MAX_LIVRES,
 } from './types';
 import type {
     AtelierProfilPro, CitationPresse, DateSpectacle, ExpositionProfilPro,
-    LienEcoute, LivreProfilPro, OeuvreProfilPro, SuperProfileConfig,
+    LienEcoute, LivreProfilPro, SuperProfileConfig,
 } from './types';
 
 interface ProfilProAdminContenuProps {
@@ -56,73 +59,6 @@ async function sauverConfig(uid: string, patch: Record<string, unknown>): Promis
     const db = getFirestore(getApp());
     await setDoc(doc(db, 'members', uid, 'superProfile', 'config'), { ...patch, updatedAt: serverTimestamp() }, { merge: true });
 }
-
-// ── Œuvres ───────────────────────────────────────────────────────────────
-
-const BlocOeuvres: React.FC<{ uid: string; valeur: OeuvreProfilPro[]; language: 'EN' | 'FR' }> = ({ uid, valeur, language }) => {
-    const t = (en: string, fr: string) => (language === 'FR' ? fr : en);
-    const [liste, setListe] = React.useState(valeur);
-    const [enCours, setEnCours] = React.useState(false);
-    const [enregistre, setEnregistre] = React.useState(false);
-    const inputRef = React.useRef<HTMLInputElement>(null);
-
-    const televerser = async (file: File) => {
-        const id = newId();
-        const storage = getStorage(getApp());
-        const chemin = oeuvreStoragePath(uid, id, 'jpg');
-        const ref = storageRef(storage, chemin);
-        await uploadBytes(ref, file, { contentType: file.type || 'image/jpeg' });
-        const url = await getDownloadURL(ref);
-        setListe((l) => [...l, { url, storagePath: chemin, statutVente: 'a-vendre' as const }].slice(0, MAX_OEUVRES));
-    };
-
-    const maj = (i: number, patch: Partial<OeuvreProfilPro>) => setListe((l) => l.map((o, idx) => (idx === i ? { ...o, ...patch } : o)));
-    const retirer = async (i: number) => {
-        const o = liste[i];
-        setListe((l) => l.filter((_, idx) => idx !== i));
-        try { await deleteObject(storageRef(getStorage(getApp()), o.storagePath)); } catch { /* déjà partie */ }
-    };
-    const enregistrer = async () => { setEnCours(true); try { await sauverConfig(uid, { oeuvres: liste }); setEnregistre(true); window.setTimeout(() => setEnregistre(false), 2000); } finally { setEnCours(false); } };
-
-    return (
-        <div className={BLOC}>
-            <div className="flex items-center justify-between">
-                <h4 className="font-prata text-[#f3e5ab] text-lg">{t('Works', 'Œuvres')}</h4>
-                <button type="button" onClick={() => inputRef.current?.click()} className="px-4 py-2 border border-white/15 text-neutral-200 hover:border-[#c5a059] font-cinzel text-[13px] uppercase tracking-[0.25em] transition-colors rounded-[10px]">
-                    {t('Add', 'Ajouter')}
-                </button>
-                <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void televerser(f); e.target.value = ''; }} />
-            </div>
-            <div className="space-y-3">
-                {liste.map((o, i) => (
-                    <div key={`${o.storagePath}-${i}`} className="flex gap-3 items-start">
-                        <img src={o.url} alt="" className="w-20 h-20 object-cover rounded-[8px] border border-white/10 shrink-0" />
-                        <div className="flex-1 grid grid-cols-2 gap-2">
-                            <input className={CHAMP} maxLength={150} placeholder={t('Title', 'Titre')} value={o.titre ?? ''} onChange={(e) => maj(i, { titre: e.target.value.slice(0, 150) })} />
-                            <input className={CHAMP} maxLength={120} placeholder={t('Technique', 'Technique')} value={o.technique ?? ''} onChange={(e) => maj(i, { technique: e.target.value.slice(0, 120) })} />
-                            <input className={CHAMP} maxLength={60} placeholder={t('Dimensions', 'Dimensions')} value={o.dimensions ?? ''} onChange={(e) => maj(i, { dimensions: e.target.value.slice(0, 60) })} />
-                            <input className={CHAMP} maxLength={20} placeholder={t('Year', 'Année')} value={o.annee ?? ''} onChange={(e) => maj(i, { annee: e.target.value.slice(0, 20) })} />
-                            <select className={CHAMP} value={o.statutVente ?? 'a-vendre'} onChange={(e) => maj(i, { statutVente: e.target.value as OeuvreProfilPro['statutVente'] })}>
-                                <option value="a-vendre">{t('For sale', 'À vendre')}</option>
-                                <option value="vendu">{t('Sold', 'Vendu')}</option>
-                                <option value="sur-demande">{t('On request', 'Sur demande')}</option>
-                            </select>
-                            {o.statutVente === 'a-vendre' && (
-                                <input
-                                    type="number" min={0} className={CHAMP} placeholder={t('Price ($)', 'Prix ($)')}
-                                    value={o.prixCents ? o.prixCents / 100 : ''}
-                                    onChange={(e) => maj(i, { prixCents: Math.round(Number(e.target.value) * 100) })}
-                                />
-                            )}
-                        </div>
-                        <IconRetirer onClick={() => retirer(i)} label={t('Remove', 'Retirer')} />
-                    </div>
-                ))}
-            </div>
-            <BoutonEnregistrer onClick={enregistrer} enCours={enCours} enregistre={enregistre} language={language} />
-        </div>
-    );
-};
 
 // ── Écoute ───────────────────────────────────────────────────────────────
 
@@ -352,11 +288,15 @@ export const ProfilProAdminContenu: React.FC<ProfilProAdminContenuProps> = ({ ui
                     {t('What you add here appears on your public page as soon as you save it.', 'Ce que vous ajoutez ici apparaît sur votre page publique dès que vous l’enregistrez.')}
                 </p>
             </div>
-            {(famille === 'peintre' || famille === 'photographe' || famille === 'ecrivain') && (
-                <BlocOeuvres uid={uid} valeur={config.oeuvres ?? []} language={language} />
+            {(famille === 'peintre' || famille === 'ecrivain') && (
+                <AtelierOeuvres uid={uid} valeur={config.oeuvres ?? []} language={language} />
             )}
             {famille === 'peintre' && <BlocExpositions uid={uid} valeur={config.expositions ?? []} language={language} />}
             {famille === 'peintre' && <BlocAtelier uid={uid} valeur={config.atelier} language={language} />}
+            {famille === 'peintre' && <AtelierProduits uid={uid} valeur={config.produits ?? []} language={language} />}
+            {famille === 'photographe' && <AtelierSeries uid={uid} valeur={config.series ?? []} language={language} />}
+            {famille === 'photographe' && <AtelierTarifs uid={uid} valeur={config.tarifs ?? []} language={language} />}
+            {(famille === 'peintre' || famille === 'photographe') && <BlocPresse uid={uid} valeur={config.presse ?? []} lienEPK={config.lienEPK} language={language} />}
             {famille === 'musicien' && <AtelierPistes uid={uid} valeur={config.pistes ?? []} language={language} />}
             {famille === 'musicien' && <BlocEcoute uid={uid} valeur={config.ecoute ?? []} language={language} />}
             {famille === 'musicien' && <BlocDates uid={uid} valeur={config.dates ?? []} language={language} />}

@@ -195,10 +195,13 @@ service cloud.firestore {
                 || get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.maestroEnabled == true);
         }
         // Bornes du moteur d'espaces (29 septembre 2026) : douze pistes,
-        // trente produits, un ordre court et un accent #rrggbb ou vide.
+        // trente produits, douze séries, douze tarifs, un ordre court et un
+        // accent #rrggbb ou vide.
         function espaceBorne(d) {
           return (!('pistes' in d) || (d.pistes is list && d.pistes.size() <= 12))
             && (!('produits' in d) || (d.produits is list && d.produits.size() <= 30))
+            && (!('series' in d) || (d.series is list && d.series.size() <= 12))
+            && (!('tarifs' in d) || (d.tarifs is list && d.tarifs.size() <= 12))
             && (!('ordre' in d) || (d.ordre is list && d.ordre.size() <= 16))
             && (!('theme' in d) || d.theme == null
                 || (d.theme is map
