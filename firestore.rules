@@ -187,12 +187,26 @@ service cloud.firestore {
       // La lecture reste publique : c'est ProfilProPage qui refuse d'afficher
       // une page dont `enabled` est faux.
       match /superProfile/{docId} {
+        function espaceOuvert() {
+          return request.auth != null
+            && request.auth.uid == userId
+            && exists(/databases/$(database)/documents/members/$(userId)/admin/flags)
+            && (get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.proEnabled == true
+                || get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.maestroEnabled == true);
+        }
+        // Bornes du moteur d'espaces (29 septembre 2026) : douze pistes,
+        // trente produits, un ordre court et un accent #rrggbb ou vide.
+        function espaceBorne(d) {
+          return (!('pistes' in d) || (d.pistes is list && d.pistes.size() <= 12))
+            && (!('produits' in d) || (d.produits is list && d.produits.size() <= 30))
+            && (!('ordre' in d) || (d.ordre is list && d.ordre.size() <= 16))
+            && (!('theme' in d) || d.theme == null
+                || (d.theme is map
+                    && (!('accent' in d.theme) || (d.theme.accent is string && d.theme.accent.matches('^(#[0-9a-fA-F]{6})?$')))));
+        }
         allow read: if true;
-        allow write: if request.auth != null
-                     && request.auth.uid == userId
-                     && exists(/databases/$(database)/documents/members/$(userId)/admin/flags)
-                     && (get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.proEnabled == true
-                         || get(/databases/$(database)/documents/members/$(userId)/admin/flags).data.maestroEnabled == true);
+        allow create, update: if espaceOuvert() && espaceBorne(request.resource.data);
+        allow delete: if espaceOuvert();
       }
 
       // L'agenda de CET artiste (Profil Pro) : lecture publique, parce que le
@@ -721,6 +735,17 @@ service cloud.firestore {
     match /abonnementsPro/{userId} {
       allow read:  if isAdmin() || (request.auth != null && request.auth.uid == userId);
       allow write: if false;
+    }
+
+    // ── Assistance « Brancher Stripe avec Alex » (80 $, une fois) ─────────
+    // Posée par le webhook Stripe (payee), puis marquée « appel fait » par
+    // l'admin. Le membre lit la sienne; aucun navigateur n'écrit le paiement.
+    match /assistances/{userId} {
+      allow read:   if isAdmin() || (request.auth != null && request.auth.uid == userId);
+      allow update: if isAdmin()
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['statut', 'appelFaitLe'])
+                    && request.resource.data.statut == 'appel-fait';
+      allow create, delete: if false;
     }
 
     // ── Espace membre · séjours (état serveur, jamais écrit par le navigateur)

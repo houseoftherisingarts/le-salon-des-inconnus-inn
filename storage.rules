@@ -92,6 +92,18 @@ service firebase.storage {
     // page. Public read so anonymous visitors can load the page; owner-only
     // write, image MIME types only, 25MB cap (the auto-bg-removal output can
     // be slightly larger than a raw JPG).
+    // ── Pistes audio des espaces (29 septembre 2026) ────────────────────
+    // mp3, m4a, wav, ogg ou flac, 30 Mo au plus. Lecture publique (la page
+    // de l'artiste les joue sans connexion), écriture par le propriétaire.
+    match /superProfiles/{userId}/pistes/{fichier} {
+      allow read:   if true;
+      allow create, update: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.contentType.matches('audio/.*')
+                    && request.resource.size <= 30 * 1024 * 1024;
+      allow delete: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+    }
+
     match /members/{userId}/superProfile/{allPaths=**} {
       allow read:   if true;
       allow write:  if request.auth != null
