@@ -22,8 +22,12 @@ const STRIPE_SECRET_KEY = defineSecret('STRIPE_SECRET_KEY');
 const PRIX_ASSISTANCE_CENTS = 8000; // 80,00 $ CAD, une fois
 const BASE_URL = 'https://www.lesalondesinconnus.com';
 
+// La même porte que l'abonnement (metadata.projet) : le compte Stripe est partagé
+// avec d'autres projets, et rien d'autre que ce projet ne doit entrer ici.
 export function estAssistance(objet: Record<string, any>): boolean {
-  return objet?.metadata?.entite === 'salon' && objet?.metadata?.produit === 'assistance';
+  return objet?.metadata?.projet === PROJET
+    && objet?.metadata?.entite === 'salon'
+    && objet?.metadata?.produit === 'assistance';
 }
 
 export const creerPaiementAssistance = onCall(
