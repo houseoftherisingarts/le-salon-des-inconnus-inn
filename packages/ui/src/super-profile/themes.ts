@@ -8,8 +8,9 @@
 // La palette et la paire « salon » reproduisent le canon d'avant le moteur
 // (Prata, Cinzel, Lato, or #c5a059, crème #f3e5ab, noir #050505), pour
 // qu'un profil existant qui n'a jamais choisi de thème rende à l'identique.
-// Les familles Peintre, Photographe et Écrivain n'ont encore que « salon » :
-// leurs palettes arrivent avec leur gabarit (section 6 du document).
+// Peintre et Photographe portent leurs palettes et paires de la section 6
+// du document; Écrivain n'a encore que « salon ». Le document ne donne que
+// le fond, l'encre et l'accent : le fond 2 est ce fond décalé d'un cran.
 
 import type { FamilleGabarit } from './artistes';
 import type { ThemeEspace } from './types';
@@ -66,10 +67,52 @@ const PAIRES_MUSICIEN: PaireFonts[] = [
     },
 ];
 
+const PALETTES_PEINTRE: PaletteEspace[] = [
+    PALETTE_SALON,
+    { id: 'galerie', nom: 'Galerie', sombre: false, bg: '#f7f4ee', bg2: '#eeeae1', ink: '#1a1815', accent: '#1a1815' },
+    { id: 'lin', nom: 'Lin', sombre: false, bg: '#efe9dd', bg2: '#e5ddcd', ink: '#2b2520', accent: '#8c5a3c' },
+    { id: 'ardoise', nom: 'Ardoise', sombre: true, bg: '#101214', bg2: '#181b1e', ink: '#ecebe6', accent: '#d9c6a2' },
+    { id: 'terre', nom: 'Terre', sombre: true, bg: '#1d1512', bg2: '#281d19', ink: '#f0e4d4', accent: '#c26a3d' },
+    { id: 'sauge', nom: 'Sauge', sombre: false, bg: '#e9ede6', bg2: '#dee4da', ink: '#1f2621', accent: '#4c7a5c' },
+];
+
+const PAIRES_PEINTRE: PaireFonts[] = [
+    PAIRE_SALON,
+    {
+        id: 'galerie', nom: 'Galerie', display: "'Cormorant Garamond', serif", label: "'Manrope', sans-serif", body: "'Manrope', sans-serif",
+        poidsDisplay: 500, poidsLabel: 600, google: 'family=Cormorant+Garamond:wght@500&family=Manrope:wght@400;600',
+    },
+    {
+        id: 'moderne', nom: 'Moderne', display: "'Syne', sans-serif", label: "'Syne', sans-serif", body: "'Work Sans', sans-serif",
+        poidsDisplay: 700, poidsLabel: 600, google: 'family=Syne:wght@600;700&family=Work+Sans:wght@400;500',
+    },
+];
+
+const PALETTES_PHOTOGRAPHE: PaletteEspace[] = [
+    PALETTE_SALON,
+    { id: 'noir', nom: 'Noir', sombre: true, bg: '#0a0a0a', bg2: '#141414', ink: '#f5f5f5', accent: '#f5f5f5' },
+    { id: 'blanc', nom: 'Blanc', sombre: false, bg: '#fbfbfb', bg2: '#f0f0f0', ink: '#111111', accent: '#111111' },
+    { id: 'sepia', nom: 'Sépia', sombre: true, bg: '#14100d', bg2: '#1e1814', ink: '#ecdcc6', accent: '#c79a6b' },
+    { id: 'argent', nom: 'Argent', sombre: false, bg: '#e8e8ea', bg2: '#dcdce0', ink: '#1b1b1f', accent: '#5b6b7b' },
+    { id: 'nuit', nom: 'Nuit', sombre: true, bg: '#0b0f14', bg2: '#121821', ink: '#e6edf3', accent: '#7fb3d5' },
+];
+
+const PAIRES_PHOTOGRAPHE: PaireFonts[] = [
+    PAIRE_SALON,
+    {
+        id: 'editorial', nom: 'Éditorial', display: "'Playfair Display', serif", label: "'Manrope', sans-serif", body: "'Manrope', sans-serif",
+        poidsDisplay: 500, poidsLabel: 600, google: 'family=Playfair+Display:wght@500&family=Manrope:wght@400;600',
+    },
+    {
+        id: 'net', nom: 'Net', display: "'Archivo', sans-serif", label: "'Archivo', sans-serif", body: "'Archivo', sans-serif",
+        poidsDisplay: 600, poidsLabel: 600, google: 'family=Archivo:wght@400;600',
+    },
+];
+
 export const THEMES: Record<FamilleGabarit, { palettes: PaletteEspace[]; fonts: PaireFonts[] }> = {
     musicien: { palettes: PALETTES_MUSICIEN, fonts: PAIRES_MUSICIEN },
-    peintre: { palettes: [PALETTE_SALON], fonts: [PAIRE_SALON] },
-    photographe: { palettes: [PALETTE_SALON], fonts: [PAIRE_SALON] },
+    peintre: { palettes: PALETTES_PEINTRE, fonts: PAIRES_PEINTRE },
+    photographe: { palettes: PALETTES_PHOTOGRAPHE, fonts: PAIRES_PHOTOGRAPHE },
     ecrivain: { palettes: [PALETTE_SALON], fonts: [PAIRE_SALON] },
 };
 

@@ -21,6 +21,8 @@ export const SECTIONS_ETIQUETTES: Record<SectionId, { en: string; fr: string }> 
     boutique: { en: 'Shop', fr: 'Boutique' },
     contact: { en: 'Contact', fr: 'Contact' },
     liens: { en: 'Links', fr: 'Liens' },
+    series: { en: 'Series', fr: 'Séries' },
+    tarifs: { en: 'Rates', fr: 'Tarifs' },
     pied: { en: 'Footer', fr: 'Pied de page' },
 };
 

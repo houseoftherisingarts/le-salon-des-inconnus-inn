@@ -73,6 +73,41 @@ export interface OeuvreProfilPro {
     prixCents?: number;
     statutVente?: 'a-vendre' | 'vendu' | 'sur-demande';
     caption?: string;
+    /** Dimensions réelles en centimètres, facultatives : sans elles, la
+     *  vue « à l'échelle dans une pièce » ne se propose pas. */
+    largeurCm?: number;
+    hauteurCm?: number;
+    /** Lien de vente (Stripe, Square ou Zeffy, voir lienPaiementValide). */
+    lienVente?: string;
+}
+
+/** Une photo d'une série, en webp dans Storage. Largeur et hauteur en
+ *  pixels, lues au dépôt, pour réserver la bonne place avant le chargement. */
+export interface PhotoSerie {
+    id: string;
+    url: string;
+    storagePath: string;
+    largeur?: number;
+    hauteur?: number;
+}
+
+/** Une série du photographe : un titre, quelques mots, sa mosaïque. */
+export interface SeriePhoto {
+    id: string;
+    titre: string;
+    description?: string;
+    photos: PhotoSerie[];
+}
+
+/** Une séance ou un forfait du photographe (section Tarifs). */
+export interface TarifEspace {
+    id: string;
+    nom: string;
+    /** Prix en dollars, pour l'affichage. */
+    prix?: number;
+    description?: string;
+    /** https : page de réservation ou lien de paiement. */
+    lien?: string;
 }
 
 export type PlateformeEcoute = 'spotify' | 'youtube' | 'bandcamp' | 'soundcloud' | 'autre';
@@ -140,6 +175,8 @@ export type SectionId =
     | 'boutique'
     | 'contact'
     | 'liens'
+    | 'series'
+    | 'tarifs'
     | 'pied';
 
 export type SectionsConfig = Partial<Record<SectionId, boolean>>;
@@ -215,6 +252,8 @@ export interface SuperProfileConfig {
     atelier?: AtelierProfilPro;
     produits?: ProduitEspace[];
     pistes?: PisteEspace[];
+    series?: SeriePhoto[];
+    tarifs?: TarifEspace[];
 
     /** Set by serverTimestamp on every save. */
     updatedAt?: any;
@@ -238,6 +277,9 @@ export const MAX_EXPOSITIONS = 12;
 export const MAX_LIVRES = 12;
 export const MAX_PRODUITS = 30;
 export const MAX_PISTES = 12;
+export const MAX_SERIES = 12;
+export const MAX_PHOTOS_SERIE = 30;
+export const MAX_TARIFS = 12;
 export const MAX_AUDIO_OCTETS = 30 * 1024 * 1024;
 
 /** Storage paths used for super-profile assets. */
@@ -251,8 +293,20 @@ export const produitStoragePath = (uid: string, produitId: string) =>
     `members/${uid}/superProfile/produits/${produitId}.webp`;
 export const pisteStoragePath = (uid: string, pisteId: string, ext: string) =>
     `superProfiles/${uid}/pistes/${pisteId}.${ext}`;
+export const photoSerieStoragePath = (uid: string, serieId: string, photoId: string) =>
+    `members/${uid}/superProfile/series/${serieId}/${photoId}.webp`;
 export const couvertureLivreStoragePath = (uid: string, livreId: string, ext: string) =>
     `members/${uid}/superProfile/livres/${livreId}.${ext}`;
+
+/** Vrai pour un lien https, et rien d'autre (tarifs, réservation). */
+export function lienHttpsValide(lien?: string): boolean {
+    if (!lien) return false;
+    try {
+        return new URL(lien).protocol === 'https:';
+    } catch {
+        return false;
+    }
+}
 
 /** Les seuls hôtes de paiement acceptés pour un produit de la Boutique. */
 const HOTES_PAIEMENT = ['buy.stripe.com', 'checkout.stripe.com', 'square.link', 'checkout.square.site', 'zeffy.com', 'www.zeffy.com'];

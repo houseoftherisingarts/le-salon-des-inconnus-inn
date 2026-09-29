@@ -32,8 +32,8 @@ export const LIBELLES_ARTISTE: Record<ArtistType, LibelleArtiste> = {
     },
     photographe: {
         fr: 'Photographe', en: 'Photographer',
-        aideFr: 'Mosaïque de photos qui se révèlent au passage du curseur.',
-        aideEn: 'Photo mosaic that reveals itself as the cursor passes.',
+        aideFr: 'Des séries qui défilent de côté, vos tarifs et la prise de rendez-vous.',
+        aideEn: 'Series that scroll sideways, your rates and appointment booking.',
     },
     sculpteur: {
         fr: 'Sculpteur ou sculptrice', en: 'Sculptor',
@@ -128,14 +128,15 @@ export function sectionsParDefaut(type: ArtistType): SectionsConfig {
         bio: true, rendezvous: true, contact: true, liens: true, pied: true,
         oeuvres: false, ecoute: false, dates: false, presse: false,
         expositions: false, livres: false, atelier: false, boutique: false,
+        series: false, tarifs: false,
     };
     switch (familleGabarit(type)) {
         case 'peintre':
-            return { ...base, oeuvres: true, expositions: true, atelier: true };
+            return { ...base, oeuvres: true, boutique: true, expositions: true, atelier: true, presse: true };
         case 'musicien':
             return { ...base, ecoute: true, dates: true, presse: true, boutique: true };
         case 'photographe':
-            return { ...base, oeuvres: true };
+            return { ...base, series: true, tarifs: true, presse: true };
         case 'ecrivain':
         default:
             return { ...base, oeuvres: true, livres: true };

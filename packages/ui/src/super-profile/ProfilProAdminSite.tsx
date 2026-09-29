@@ -13,6 +13,8 @@ import { HeroPhotoUploader } from './HeroPhotoUploader';
 import type { ArtistType, SuperProfileConfig } from './types';
 import { AtelierSections } from './AtelierSections';
 import { AtelierTheme } from './AtelierTheme';
+import { sauverConfig } from './atelierCommun';
+import { sectionsApresChangement } from './ordre';
 
 interface ProfilProAdminSiteProps {
     uid: string;
@@ -62,9 +64,15 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
         return () => window.clearTimeout(minuterie);
     }, [slug, uid, config.username]);
 
+    // Le type s'écrit au clic, comme l'allure et les sections : la palette,
+    // les polices et les sections de la nouvelle famille s'affichent aussitôt,
+    // et le contenu déjà saisi (bio, œuvres, liens, presse) reste en place.
     const changerType = (nouveauType: ArtistType) => {
+        if (nouveauType === type) return;
+        const ancien = type;
         setType(nouveauType);
-        setModifie(true);
+        if (!config.username) { setModifie(true); return; }
+        void sauverConfig(uid, { type: nouveauType, sections: sectionsApresChangement(config.sections, config.type ?? ancien, nouveauType) });
     };
 
     const enregistrer = async () => {
