@@ -88,8 +88,6 @@ export const PieceEchelle: React.FC<Props> = ({ oeuvre, language, onFermer }) =>
     const xSofa = (W - SOFA_L) / 2;
     const pct = (v: number, total: number) => `${(v / total) * 100}%`;
 
-    const sofa = `M${xSofa + 4},${y(6)} h${SOFA_L - 8} v-4 h-2 v-${SOFA_H - 14} q0,-8 -8,-8 h-${SOFA_L - 20} q-8,0 -8,8 v${SOFA_H - 14} h-2 v4 z`;
-    const bras = (x: number) => `M${x},${y(8)} v-50 q0,-7 7,-7 h6 q7,0 7,7 v50 z`;
     const lienVente = oeuvre.statutVente === 'a-vendre' && lienPaiementValide(oeuvre.lienVente) ? oeuvre.lienVente : null;
     const titre = oeuvre.titre || t('Untitled', 'Sans titre');
 
@@ -135,14 +133,15 @@ export const PieceEchelle: React.FC<Props> = ({ oeuvre, language, onFermer }) =>
 
                         <ellipse cx={W / 2} cy={H + 3} rx={SOFA_L / 2 + 8} ry="5" filter="url(#es-piece-flou)" style={{ fill: 'color-mix(in srgb, var(--es-ink) 30%, transparent)' }} />
                         <g style={{ fill: 'color-mix(in srgb, var(--es-ink) 22%, var(--es-bg-2))' }}>
-                            <path d={sofa} />
-                            <path d={bras(xSofa)} />
-                            <path d={bras(xSofa + SOFA_L - 20)} />
-                            <rect x={xSofa + 14} y={y(6)} width="3" height="6" />
-                            <rect x={xSofa + SOFA_L - 17} y={y(6)} width="3" height="6" />
+                            <rect x={xSofa + 12} y={y(9)} width="3" height="9" />
+                            <rect x={xSofa + SOFA_L - 15} y={y(9)} width="3" height="9" />
+                            <rect x={xSofa + 10} y={y(SOFA_H)} width={SOFA_L - 20} height={SOFA_H - 40} rx="8" />
+                            <rect x={xSofa} y={y(46)} width={SOFA_L} height="38" rx="6" />
+                            <rect x={xSofa} y={y(62)} width="20" height="54" rx="7" />
+                            <rect x={xSofa + SOFA_L - 20} y={y(62)} width="20" height="54" rx="7" />
                         </g>
-                        <line x1={xSofa + 22} y1={y(44)} x2={xSofa + SOFA_L - 22} y2={y(44)} strokeWidth="0.6" style={{ stroke: 'color-mix(in srgb, var(--es-bg) 35%, transparent)' }} />
-                        <line x1={W / 2} y1={y(44)} x2={W / 2} y2={y(SOFA_H - 8)} strokeWidth="0.6" style={{ stroke: 'color-mix(in srgb, var(--es-bg) 35%, transparent)' }} />
+                        <line x1={xSofa + 22} y1={y(46)} x2={xSofa + SOFA_L - 22} y2={y(46)} strokeWidth="0.6" style={{ stroke: 'color-mix(in srgb, var(--es-bg) 35%, transparent)' }} />
+                        <line x1={W / 2} y1={y(46)} x2={W / 2} y2={y(SOFA_H - 6)} strokeWidth="0.6" style={{ stroke: 'color-mix(in srgb, var(--es-bg) 35%, transparent)' }} />
 
                         <g className="es-pose">
                             <rect x={xArt + 1.5} y={y(haut) + 4} width={l} height={h} filter="url(#es-piece-flou)" style={{ fill: 'color-mix(in srgb, var(--es-ink) 35%, transparent)' }} />
