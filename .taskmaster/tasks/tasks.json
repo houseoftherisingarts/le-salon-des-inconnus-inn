@@ -430,11 +430,135 @@
         ],
         "status": "pending",
         "subtasks": []
+      },
+      {
+        "id": 32,
+        "title": "Create themes.ts registry with palettes and font pairs",
+        "description": "Build the central theme registry in packages/ui/src/super-profile/themes.ts with all CSS custom properties (--es-*), palette definitions for Peintre (6) and Photographe (6), and font pair definitions (3 each) with hex values from ESPACES-DESIGN.md sections 6.2 and 6.3",
+        "details": "Create themes.ts exporting: (1) ThemePalette interface with id, nom, sombre boolean, and color tokens (bg, bg2, ink, accent); (2) FontPair interface with id, nom, display, label, body, and weights; (3) familyThemes object mapping 'peintre' and 'photographe' to their respective palettes and fontPairs arrays. Peintre palettes: salon (default), galerie (#f7f4ee/#1a1815/#1a1815), lin (#efe9dd/#2b2520/#8c5a3c), ardoise (#101214/#ecebe6/#d9c6a2), terre (#1d1512/#f0e4d4/#c26a3d), sauge (#e9ede6/#1f2621/#4c7a5c). Peintre font pairs: salon (Prata/Cinzel/Lato, default), galerie (Cormorant Garamond 500/Manrope caps/Manrope), moderne (Syne 700/Syne caps/Work Sans). Photographe palettes: salon (default, current colors), noir (#0a0a0a/#f5f5f5/#f5f5f5), blanc (#fbfbfb/#111111/#111111), sepia (#14100d/#ecdcc6/#c79a6b), argent (#e8e8ea/#1b1b1f/#5b6b7b), nuit (#0b0f14/#e6edf3/#7fb3d5). Photographe font pairs: salon (default), editorial (Playfair Display 500/Manrope caps/Manrope), net (Archivo 600/Archivo caps/Archivo). Include helper function computeThemeVars(palette, fonts, accentOverride?) returning CSS variables object for --es-bg, --es-bg-2, --es-ink, --es-ink-2 (ink at 0.72 opacity), --es-accent, --es-accent-ink, --es-line (accent at 0.28), --es-glass (bg at 0.40), --es-glow (accent at 0.35), --es-font-display, --es-font-label, --es-font-body, --es-radius (15px).",
+        "testStrategy": "Verify all 12 palettes (6 per template) have correct hex values matching ESPACES-DESIGN.md. Confirm computeThemeVars generates all 13 CSS variables. Test accent override recalculates --es-line and --es-glow correctly. Validate font pair names and weights match specification.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Extend SuperProfileConfig with theme, ordre, and artwork dimensions",
+        "description": "Update types.ts to add theme configuration (palette ID, font pair ID, custom accent), section ordering (config.ordre: SectionId[]), and artwork physical dimensions to OeuvreProfilPro (largeurCm, hauteurCm optional fields)",
+        "details": "In packages/ui/src/super-profile/types.ts: (1) Add ThemeConfig interface with paletteId: string, fontPairId: string, accentOverride?: string (hex); (2) Add ordre?: SectionId[] to SuperProfileConfig; (3) Add largeurCm?: number and hauteurCm?: number to OeuvreProfilPro interface; (4) Add new section IDs to SectionId union type: 'boutique', 'galerie', 'series', 'tarifs' (keep existing ones); (5) Add theme?: ThemeConfig to SuperProfileConfig. Document that ordre contains ordered section IDs; missing IDs append in template default order. Hero and footer never move. Update MAX constants if needed for new sections.",
+        "testStrategy": "TypeScript compilation passes. Verify ThemeConfig shape matches themes.ts palette/font pair IDs. Confirm ordre array type accepts all SectionId values. Test OeuvreProfilPro with optional dimension fields compiles. Check backward compatibility: existing configs without theme/ordre still valid.",
+        "priority": "high",
+        "dependencies": [
+          32
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Refactor PeintreTemplate to use CSS custom properties and theme system",
+        "description": "Rewrite PeintreTemplate.tsx to apply theme CSS variables from themes.ts, remove all hardcoded colors, implement section ordering via config.ordre, add boutique section with sale status ribbons, and integrate artwork detail modal with scale-in-room SVG visualization",
+        "details": "In PeintreTemplate.tsx: (1) Import themes registry and computeThemeVars; (2) In component root, compute theme variables from config.theme (default to 'salon' palette and font pair if not set), apply as inline style object with CSS variables on wrapper div; (3) Remove ALL hardcoded hex colors from component and child sections—replace with var(--es-bg), var(--es-ink), var(--es-accent), etc.; (4) Implement section rendering using config.ordre if present, else default order: hero, oeuvres, boutique, expositions, atelier, bio, presse, contact, liens, pied (hero and pied always first/last); (5) Create BoutiqueSection component rendering oeuvres with statutVente='a-vendre' or 'sur-demande', showing price (prixCents/100 formatted), purchase link, and 'Vendu' ribbon for statutVente='vendu'; (6) Enhance OeuvresSection with RevealWaveImage on hover (reuse existing component with mouseRadius and revealRadius tuned for artwork grid), click handler opening modal; (7) Create ArtworkModal component displaying artwork at scale: render SVG room (neutral wall ~3m wide, baseboard, sofa outline 180cm wide as reference), position artwork at real dimensions using largeurCm/hauteurCm if present, overlay dimensions in Outfit tabular-nums font, hide 'view at scale' button if dimensions missing; (8) Load Google Fonts for selected font pair only (display=swap); (9) Respect prefers-reduced-motion: disable RevealWaveImage animation, show static artwork grid.",
+        "testStrategy": "Render with each of 6 Peintre palettes, verify no hardcoded colors remain (inspect DOM). Test section reordering via config.ordre. Verify boutique shows correct sale status and ribbons. Open artwork modal with dimensions, measure SVG elements (sofa should be 180cm, artwork should match largeurCm x hauteurCm). Test without dimensions: modal button hidden. Confirm prefers-reduced-motion removes reveal effect. Validate only selected fonts load (check network requests).",
+        "priority": "high",
+        "dependencies": [
+          32,
+          33
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Create photographer series infrastructure and tariffs section",
+        "description": "Extend types.ts with SeriePhoto interface (id, titre, description, photos array of StoragePhoto with url/storagePath), TarifPhoto interface (nom, prixCents, description, lienReservation), update SuperProfileConfig with series and tarifs arrays, add Storage paths helpers",
+        "details": "In types.ts: (1) Define StoragePhoto interface { url: string; storagePath: string }; (2) Define SeriePhoto interface { id: string; titre: string; description?: string; photos: StoragePhoto[]; ordre: number }; (3) Define TarifPhoto interface { id: string; nom: string; prixCents: number; description?: string; lienReservation?: string; lienPaiement?: string }; (4) Add to SuperProfileConfig: series?: SeriePhoto[], tarifs?: TarifPhoto[]; (5) Add constants MAX_SERIES = 12, MAX_PHOTOS_PER_SERIE = 30; (6) Create storage path helper seriePhotoStoragePath(uid: string, serieId: string, photoId: string, ext: string) => `members/${uid}/superProfile/series/${serieId}/${photoId}.${ext}`. Document that photos are resized to webp in browser before upload (per ESPACES-DESIGN.md section 4). Series render in order by ordre field.",
+        "testStrategy": "TypeScript compiles with new interfaces. Verify SeriePhoto and TarifPhoto shape matches PRD requirements (series with up to 30 photos each, tariffs with pricing and reservation links). Confirm storage path helper generates correct Firebase Storage paths. Test MAX constants enforce limits. Check backward compatibility: configs without series/tarifs remain valid.",
+        "priority": "high",
+        "dependencies": [
+          33
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Refactor PhotoTemplate with theme system, series scroll, and mosaic reveal",
+        "description": "Rewrite PhotoTemplate.tsx to apply CSS custom properties, implement horizontal scroll-linked series, mosaic reveal animation, tariffs section, and rendez-vous module integration, removing all hardcoded colors",
+        "details": "In PhotoTemplate.tsx: (1) Apply theme system identically to PeintreTemplate: compute CSS variables from config.theme (default 'salon'), apply to wrapper, remove all hardcoded colors; (2) Refactor hero section to full-screen photo (first series first photo, or hero.url fallback), overlay title/tagline with glassmorphism card using --es-glass; (3) Create SeriesSection component: on desktop, render each series as pinned section with horizontal scroll tied to vertical scroll (CSS position: sticky, transform: translateX based on scroll progress using Intersection Observer + scroll event, JavaScript-driven); on mobile, render as single horizontal scroll container (overflow-x: auto, no nested scrolling); each photo in mosaic fades in + slight scale (0.95 to 1.0) when entering viewport, stagger by 30-50ms using IntersectionObserver; (4) Create TarifsSection displaying tarifs in card grid (nom, description, prixCents formatted as currency, CTA button linking to lienReservation or lienPaiement); (5) Integrate existing PriseRendezVousSection (already exists per codebase analysis) if config.sections.rendezvous !== false; (6) Implement section ordering via config.ordre (default: hero, series, tarifs, rendezvous, bio, presse, contact, liens, pied); (7) Load selected Google Fonts pair only; (8) Respect prefers-reduced-motion: render series as static grid (no scroll effects, no reveal animations), show all photos without entrance effects.",
+        "testStrategy": "Render with each of 6 Photographe palettes, verify zero hardcoded colors (DOM inspection). Test horizontal scroll-linked series on desktop (pin section, translate on scroll), confirm single-scroll horizontal on mobile (no nested overflow). Verify mosaic reveal: photos fade+scale in on viewport entry, stagger timing 30-50ms. Test tarifs section displays all fields correctly. Confirm rendez-vous module appears when enabled. Test section reordering via config.ordre. Validate prefers-reduced-motion disables all animations, shows static grid. Check only selected fonts load.",
+        "priority": "high",
+        "dependencies": [
+          32,
+          33,
+          35
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Create admin panel controls for palette, font pair, and section ordering",
+        "description": "Extend ProfilProAdminSite or SuperProfileEditor component to add theme selection UI (palette picker showing all family options, font pair picker, custom accent color input with hex validation) and section ordering controls (up/down arrows per section, respecting hero/footer lock)",
+        "details": "In packages/ui/src/super-profile/SuperProfileEditor.tsx or ProfilProAdminSite.tsx (whichever handles content editing): (1) Add theme control panel section displaying current template family (peintre/photographe); (2) Render palette picker as visual grid showing all palettes for current family (6 options), each tile showing palette colors as swatches with nom label, radio selection, default to 'salon'; (3) Add font pair picker as dropdown or radio list showing 3 font pairs for family (nom labels), default to 'salon'; (4) Add custom accent color input: text field accepting hex (#RRGGBB), validate format, color preview swatch beside input, replaces --es-accent when set; (5) Add section ordering UI: for each available section (based on template type), show section name with up/down arrow buttons, disable up on first item, down on last, hero and pied locked (no arrows, always first/last); clicking arrows reorders config.ordre array; (6) When family changes (peintre ↔ photographe ↔ musicien), preserve common content (bio, contact, liens), reset palette/fonts to new family's 'salon' default, show available sections for new family; (7) All changes update config.theme and config.ordre in Firestore immediately or on explicit save; (8) Show live preview link to /apercu/[username] after each theme change.",
+        "testStrategy": "Select each palette for Peintre and Photographe, verify config.theme.paletteId updates. Choose different font pairs, confirm config.theme.fontPairId saves. Enter custom accent hex, validate format enforcement (6-char hex only), verify preview updates. Reorder sections with arrows, check config.ordre array reflects changes, confirm hero/pied never move. Change template family, verify palette/font reset to new family 'salon', content preserved where applicable. Test Firestore write on save, reload admin to confirm persistence.",
+        "priority": "medium",
+        "dependencies": [
+          32,
+          33
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Create apercus.ts demo data and public preview routes",
+        "description": "Build packages/ui/src/super-profile/apercus.ts with fixture data for 4 preview profiles (peintre, peintre-2, photographe, photographe-2), implement /apercu/<template> routes rendering templates with demo content, add noindex meta tags, use existing free images from repository",
+        "details": "Create apercus.ts exporting: (1) apercusData: Record<string, Partial<SuperProfileConfig>> with keys 'peintre', 'peintre-2', 'photographe', 'photographe-2'; (2) Each apercu object includes: fictional artist displayName, tagline, bio, different theme (peintre: salon + another palette, peintre-2: different palette; photographe: salon + another, photographe-2: different); peintre entries have ~8 oeuvres with fictional titles, techniques, dimensions (largeurCm, hauteurCm), mix of statutVente (a-vendre with prixCents, vendu, sur-demande), expositions (2-3 fictional), atelier data; photographe entries have 3-4 series with ~6 photos each, tarifs (3 pricing tiers with descriptions); all use existing free images from repository (search for libre/free images in /public or /src/assets, do NOT generate or fetch external images); (3) In routing (app router or equivalent), add /apercu/:template route accepting params peintre | peintre-2 | photographe | photographe-2, load corresponding apercusData, render appropriate template component with demo config, inject <meta name='robots' content='noindex,nofollow' /> in head; (4) Return 404 for invalid template params. Ensure images referenced in apercusData exist in repo (find placeholder images or reuse existing assets).",
+        "testStrategy": "Navigate to /apercu/peintre, /apercu/peintre-2, /apercu/photographe, /apercu/photographe-2, each loads without errors. Verify each shows different palette (inspect CSS variables), different content (names, artworks, series). Confirm peintre apercus display oeuvres with dimensions, sale status, expositions. Confirm photographe apercus show series with photos, tarifs. Check <meta name='robots'> tag present in rendered HTML. Test invalid route /apercu/invalid returns 404. Validate all image URLs resolve (no broken images).",
+        "priority": "medium",
+        "dependencies": [
+          34,
+          36
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Update Firebase Storage rules for new series and tarifs paths",
+        "description": "Extend firestore.rules and storage.rules to permit authenticated users to read/write their own series photos at members/{uid}/superProfile/series/{serieId}/{photoId}.webp, ensure existing paths remain secure",
+        "details": "In storage.rules (or wherever Firebase Storage security rules are defined): (1) Locate existing rules for members/{uid}/superProfile/* paths (hero, works, oeuvres, livres); (2) Add rule allowing authenticated users to write to members/{uid}/superProfile/series/{serieId}/{photoId} if request.auth.uid == uid, file size <= 10MB (images resized to webp in browser should be under this), file content type is image/webp; (3) Allow public read for members/{uid}/superProfile/series/**; (4) Verify rules for other superProfile paths unchanged; (5) If Firestore rules need updating for series/tarifs subdocuments (unlikely as they're part of config doc), add read/write rules for members/{uid}/superProfile/config allowing user to write their own config. Deploy rules with `firebase deploy --only storage` (per PRD instruction: never deploy without --only).",
+        "testStrategy": "Attempt to upload a webp image to members/{testUid}/superProfile/series/serie-1/photo-1.webp as authenticated user with uid=testUid, verify success. Try same upload as different user, expect permission denied. Test file size > 10MB rejected. Confirm public read access works (unauthenticated fetch of series image URL succeeds). Run `firebase deploy --only storage` and verify rules deploy without errors. Test existing paths (hero, oeuvres) still work as before.",
+        "priority": "medium",
+        "dependencies": [
+          35
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Run boucle-verdict verification and generate delivery report",
+        "description": "Execute tsc and vite build to ensure zero TypeScript errors, deploy to hosting (firebase deploy --only hosting), run boucle-verdict visual verification script on all 4 preview URLs at 1440px and 390px widths (3 rounds max), compile delivery report documenting each PRD requirement status (✅/❌)",
+        "details": "(1) Run `tsc --noEmit` in project root, verify exit code 0 (no type errors); (2) Run `vite build`, confirm successful build output with no errors; (3) Deploy with `firebase deploy --only hosting:salon` (or appropriate hosting target, never deploy all services); (4) Run boucle-verdict script (per RÈGLE -5 from CLAUDE.md): `node ~/.claude/skills/boucle-verdict/scripts/audit.mjs <base-url>/apercu/peintre <output-dir>` for each of 4 preview URLs (peintre, peintre-2, photographe, photographe-2); configure script to capture at 1440x900 (desktop) and 390x844 (mobile) viewports, scroll to key positions (hero, first section, mid-page, footer); run Sonnet verifier agent to check grid (full-width layouts, no hidden elements, titles ≤2 lines, videos embedded, text legible on all backgrounds, wow elements visible and disabled by prefers-reduced-motion); allow up to 3 correction rounds; (5) Generate delivery report listing each of 9 PRD requirements from sections 1-9 with status: ✅ (completed), ❌ (not done), ⏳ (blocked with reason); include URLs of 4 live preview pages, screenshot samples (desktop + mobile per template), notes on any remaining issues after 3 rounds; (6) If changelog exists (CHANGELOG.md or similar), append entry dated 2026-09-29 summarizing delivered features (Peintre and Photographe templates with themes, sections, wow features).",
+        "testStrategy": "Verify tsc passes (exit 0). Confirm vite build completes without errors, dist folder generated. Check Firebase hosting deploy succeeds, all 4 preview URLs accessible and render correctly. Review boucle-verdict output: all critical checks pass (full-width, no occlusion, titles ≤2 lines, readable text, wow visible and motion-safe compliant). Inspect delivery report: all 9 requirements addressed with clear status. If changelog updated, entry dated 2026-09-29 present with accurate summary.",
+        "priority": "high",
+        "dependencies": [
+          34,
+          36,
+          37,
+          38,
+          39
+        ],
+        "status": "pending",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2026-09-29T04:11:59.953Z",
-      "updated": "2026-09-29T04:11:59.953Z",
+      "updated": "2026-09-29T04:20:35.243Z",
       "description": "Tasks for master context"
     }
   }
