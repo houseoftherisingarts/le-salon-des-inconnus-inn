@@ -3,10 +3,12 @@
 //
 // Un seul élément audio vit à la fois (un neuf par piste), et une seule
 // boucle d'animation publie un niveau entre 0 et 1 à qui s'abonne. Quand la
-// piste est servie par le même domaine que la page, ce niveau vient d'un
-// AnalyserNode et suit la vraie musique. Sinon (fichiers de Storage, que le
-// seau ne sert pas avec les en-têtes CORS voulus), le niveau bat un tempo
-// fixe de 96 bpm : le halo vit quand même, sans jamais couper le son.
+// piste est servie par le même domaine que la page, ou par le seau Storage du
+// Salon (qui sert maintenant les en-têtes CORS, d'où crossOrigin posé avant
+// la source), ce niveau vient d'un AnalyserNode et suit la vraie musique.
+// Pour toute autre origine, le niveau bat un tempo fixe de 96 bpm, parce
+// qu'un média crossOrigin sans CORS ne se chargerait pas du tout : le halo
+// vit quand même, sans jamais couper le son.
 // Sous prefers-reduced-motion, la boucle ne démarre pas et rien ne bouge.
 
 import * as React from 'react';
@@ -42,9 +44,12 @@ export function formatDuree(s?: number): string {
     return `${m}:${String(r).padStart(2, '0')}`;
 }
 
-function memeOrigine(url: string): boolean {
+const HOTES_STORAGE = ['le-salon-des-inconnus.firebasestorage.app', 'firebasestorage.googleapis.com'];
+
+function origineAnalysable(url: string): boolean {
     try {
-        return new URL(url, window.location.href).origin === window.location.origin;
+        const u = new URL(url, window.location.href);
+        return u.origin === window.location.origin || HOTES_STORAGE.includes(u.hostname);
     } catch {
         return false;
     }
@@ -71,7 +76,7 @@ export const LecteurProvider: React.FC<{ pistes: PisteEspace[]; children: React.
     const brancherAnalyse = React.useCallback((audio: HTMLAudioElement) => {
         sourceRef.current?.disconnect();
         sourceRef.current = null;
-        if (!memeOrigine(audio.src)) return;
+        if (!origineAnalysable(audio.src)) return;
         try {
             const AC = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
             if (!AC) return;
@@ -111,6 +116,7 @@ export const LecteurProvider: React.FC<{ pistes: PisteEspace[]; children: React.
         }
         const audio = new Audio();
         audio.preload = 'auto';
+        if (origineAnalysable(piste.url)) audio.crossOrigin = 'anonymous';
         audio.src = piste.url;
         const siActif = (fn: () => void) => () => {
             if (audioRef.current === audio) fn();

@@ -12,7 +12,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { CreatorTheme } from './CreatorStudioShell';
 
-const VEXEL_ARTISTE_URL = 'https://vexelwebstudio.com/artiste';
+const VEXEL_ARTISTE_URL = 'https://vexelwebstudio.com/compte?formule=base&origine=creator-studio';
 const SIGIL_VEXEL = '/vexel-sigil.webp';
 
 const HABIT: Record<CreatorTheme, { cadre: string; lueur: string; filet: string; bouton: string }> = {

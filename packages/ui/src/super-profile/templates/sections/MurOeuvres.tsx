@@ -3,10 +3,10 @@
 // Chaque toile est accrochée dans la pénombre, en gris; sous le curseur, un
 // masque radial qui suit la souris lui rend ses couleurs, comme une lampe
 // qu'on promène sur le mur. C'est la révélation de RevealWaveImage (même
-// rayon, même bord adouci), refaite en masque CSS sur deux balises img : le
-// shader WebGL de RevealWaveImage doit lire les pixels de l'image, ce que le
-// bucket Storage refuse faute de CORS, alors qu'une balise img s'affiche
-// toujours. Au toucher, la toile s'éclaire en entier à son arrivée dans la
+// rayon, même bord adouci), refaite en masque CSS sur deux balises img. Le
+// seau Storage sert maintenant le CORS, et le masque reste par choix : il ne
+// coûte aucun contexte WebGL par toile, là où un mur de N toiles en ouvrirait
+// N avec le shader, et il respecte le mouvement réduit. Au toucher, la toile s'éclaire en entier à son arrivée dans la
 // fenêtre, et le doigt qui glisse déplace la lumière. Sous
 // prefers-reduced-motion, le mur est en couleurs, sans masque.
 //
