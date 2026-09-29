@@ -1,8 +1,9 @@
 // Sections.tsx : les sections de lecture du gabarit Auteur (événements et
-// salons, presse, bio). Chacune ne se rend que si elle a de quoi montrer.
+// salons, presse, bio), portées de Vexel Space et branchées sur le document
+// du Profil Pro. Chacune ne se rend que si elle a de quoi montrer.
 
-import { Section, Apparait, Externe, type SectionProps } from './commun';
-import { lienHttpsValide, type Evenement } from '@/espace/types';
+import { Section, Apparait, Externe, nomDe, type SectionProps } from './commun';
+import { lienHttpsValide, type EvenementEspace as Evenement } from '../../types';
 
 /** La date du jour en AAAA-MM-JJ, à l'heure locale. */
 function aujourdhui(): string {
@@ -42,21 +43,14 @@ function Ligne({ e, passe }: { e: Evenement; passe?: boolean }) {
   );
 }
 
-interface EvenementsProps extends SectionProps {
-  /** Le Conférencier reprend la section sous le nom de calendrier. */
-  id?: string;
-  label?: string;
-  titres?: { aVenir: string; passes: string };
-}
-
-export function Evenements({ espace, id = 'evenements', label = 'Événements et salons', titres = { aVenir: 'Où me rencontrer', passes: 'Rencontres passées' } }: EvenementsProps) {
-  const tous = (espace.contenu?.evenements ?? []).filter((e) => e.titre?.trim() && e.date).sort((a, b) => a.date.localeCompare(b.date));
+export function Evenements({ config }: SectionProps) {
+  const tous = (config.evenements ?? []).filter((e) => e.titre?.trim() && e.date).sort((a, b) => a.date.localeCompare(b.date));
   if (!tous.length) return null;
   const jour = aujourdhui();
   const aVenir = tous.filter((e) => e.date >= jour);
   const passes = tous.filter((e) => e.date < jour).reverse().slice(0, 4);
   return (
-    <Section id={id} label={label} titre={aVenir.length ? titres.aVenir : titres.passes} ton="fond">
+    <Section id="evenements" label="Événements et salons" titre={aVenir.length ? 'Où me rencontrer' : 'Rencontres passées'} ton="fond">
       {aVenir.length > 0 && (
         <ul className="border-t border-[color:var(--es-line-fort)]">
           {aVenir.map((e) => <Ligne key={e.id} e={e} />)}
@@ -74,11 +68,14 @@ export function Evenements({ espace, id = 'evenements', label = 'Événements et
   );
 }
 
-export function Presse({ espace }: SectionProps) {
-  const articles = (espace.contenu?.presse ?? []).filter((a) => a.media?.trim() && (a.citation?.trim() || lienHttpsValide(a.lien)));
+export function Presse({ config }: SectionProps) {
+  const articles = (config.presse ?? [])
+    .filter((a) => a.citation?.trim())
+    .map((a, i) => ({ id: String(i), media: a.source?.trim() ?? '', citation: a.citation, lien: a.lienArticle }));
+  const epk = lienHttpsValide(config.lienEPK) ? config.lienEPK : undefined;
   if (!articles.length) return null;
   return (
-    <Section id="presse" label="Presse" titre="On en parle" ton="fond-2">
+    <Section id="presse" label="Presse" titre="On en parle" ton="fond-2" aside={epk && <a href={epk} target="_blank" rel="noopener noreferrer" className="es-bouton-ligne justify-self-start">Dossier de presse <Externe /></a>}>
       <ul className="grid gap-5 md:grid-cols-2">
         {articles.map((a, i) => (
           <li key={a.id} className={i === 0 && articles.length % 2 === 1 ? 'md:col-span-2' : ''}>
@@ -102,21 +99,20 @@ export function Presse({ espace }: SectionProps) {
   );
 }
 
-export function Bio({ espace }: SectionProps) {
-  const c = espace.contenu ?? {};
-  const texte = c.bio?.trim();
+export function Bio({ config, fallbackDisplayName }: SectionProps) {
+  const texte = config.bio?.trim();
   if (!texte) return null;
-  const portrait = c.portrait?.url;
+  const portrait = config.hero?.url;
   return (
     <Section id="bio" label="Bio">
       <div className={`grid items-center gap-12 ${portrait ? 'md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-20' : ''}`}>
         {portrait && (
           <Apparait>
-            <img src={portrait} alt={c.nom ?? ''} loading="lazy" className="aspect-[4/5] w-full rounded-[var(--es-radius)] object-cover" />
+            <img src={portrait} alt={nomDe(config, fallbackDisplayName)} loading="lazy" className="aspect-[4/5] w-full rounded-[var(--es-radius)] object-contain" />
           </Apparait>
         )}
         <Apparait delai={0.1}>
-          <h2 className="es-display max-w-[16ch] text-[clamp(2.1rem,1.4rem+3vw,4.25rem)] leading-[1.02]">{c.nom?.trim() || 'À propos'}</h2>
+          <h2 className="es-display max-w-[16ch] text-[clamp(2.1rem,1.4rem+3vw,4.25rem)] leading-[1.02]">{nomDe(config, fallbackDisplayName)}</h2>
           <div className="mt-8 max-w-[38rem] space-y-5 text-[1.125rem] leading-[1.75] text-[color:var(--es-ink-2)]">
             {texte.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}
           </div>

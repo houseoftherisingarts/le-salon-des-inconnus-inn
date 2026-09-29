@@ -4,7 +4,7 @@
 // commence sur une page neuve. Le résultat suit donc la police, la taille de
 // l'écran et la longueur réelle des mots, là où un compte de caractères mentirait.
 
-import type { Espace } from '@/espace/types';
+import type { LivreProfilPro, SuperProfileConfig } from '../../types';
 
 export interface BlocPage {
   type: 'titre' | 'para';
@@ -33,17 +33,20 @@ export interface ExtraitLisible {
   paragraphes: string[];
 }
 
+/** La clé d'un livre, à laquelle un extrait se rattache : son id, sinon son titre. */
+export const cleLivre = (l: LivreProfilPro) => l.id || l.titre;
+
 /** Les extraits non vides de l'espace, avec le titre de leur livre. */
-export function extraitsLisibles(espace: Espace): ExtraitLisible[] {
-  const livres = espace.contenu?.livres ?? [];
-  return (espace.contenu?.extraits ?? [])
+export function extraitsLisibles(config: SuperProfileConfig): ExtraitLisible[] {
+  const livres = config.livres ?? [];
+  return (config.extraits ?? [])
     .map((x) => {
-      const livre = livres.find((l) => l.id === x.livre);
+      const livre = x.livre ? livres.find((l) => cleLivre(l) === x.livre || l.titre === x.livre) : undefined;
       return {
         id: x.id,
         titre: x.titre?.trim() || livre?.titre || 'Extrait',
         livre: livre?.titre,
-        livreId: livre?.id,
+        livreId: livre ? cleLivre(livre) : undefined,
         paragraphes: (x.texte ?? '').split(/\n+/).map((p) => p.trim()).filter(Boolean),
       };
     })

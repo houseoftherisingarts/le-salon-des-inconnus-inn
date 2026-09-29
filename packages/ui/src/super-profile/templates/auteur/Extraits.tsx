@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
-import { Section, Apparait, Fleche, type SectionProps } from './commun';
+import { Section, Apparait, Fleche, nomDe, type SectionProps } from './commun';
 import { LivreOuvert } from './LivreOuvert';
 import { Page, STYLE_PAGE, usePagination } from './Page';
 import { extraitsLisibles, type ExtraitLisible } from './pagination';
@@ -122,12 +122,12 @@ function Colonnes({ extraits }: { extraits: ExtraitLisible[] }) {
   );
 }
 
-export function Extraits({ espace }: SectionProps) {
-  const extraits = useMemo(() => extraitsLisibles(espace), [espace]);
+export function Extraits({ config, fallbackDisplayName }: SectionProps) {
+  const extraits = useMemo(() => extraitsLisibles(config), [config]);
   const sans = useReducedMotion();
   const mobile = useMedia('(max-width: 767px)');
   if (!extraits.length) return null;
-  const nom = espace.contenu?.nom?.trim() || 'Votre nom';
+  const nom = nomDe(config, fallbackDisplayName);
 
   if (sans) {
     return <Section id="extraits" label="Extraits" titre="Premières pages" ton="fond-2"><Colonnes extraits={extraits} /></Section>;
