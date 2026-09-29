@@ -22,7 +22,7 @@ await p.waitForTimeout(1500);
 await p.screenshot({ path: `${OUT}/musicien-haut.jpg`, quality: 70, type: 'jpeg' });
 
 // trouver et cliquer le bouton de lecture de la première piste
-const playBtn = p.locator('button[aria-label*="ecout" i], button[aria-label*="jouer" i], button[aria-label*="play" i]').first();
+const playBtn = p.locator('button[aria-label*="couter" i], button[aria-label*="ecout" i], button[aria-label*="jouer" i], button[aria-label*="play" i]').first();
 let clicked = false;
 if (await playBtn.count()) {
   await playBtn.click();
