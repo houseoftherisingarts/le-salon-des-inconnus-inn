@@ -97,7 +97,7 @@ export const CollantVexel: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) 
                 <span aria-hidden className="spf-foil-grain" />
                 <img src="/vexel-logo.png" alt="" width={329} height={320} className="relative h-10 w-auto drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
                 <span className="relative flex flex-col leading-none">
-                    <span className="text-[0.625rem] font-semibold uppercase tracking-[0.22em] text-white/70">{t('Site by', 'Site créé par')}</span>
+                    <span className="text-[13px] font-semibold uppercase tracking-[0.16em] text-white/70">{t('Site by', 'Site créé par')}</span>
                     <span className="mt-1 font-prata text-[1.05rem] text-white">Vexel Webstudio</span>
                 </span>
             </button>

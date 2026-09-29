@@ -45,7 +45,7 @@ export const ApercuPage: React.FC<ApercuPageProps> = ({ slug, lienCreer = '/crea
                 className="relative z-[60] bg-[color:var(--es-bg-2)] text-[color:var(--es-ink)] border-b border-[color:var(--es-edge)]"
             >
                 <div className="mx-auto max-w-6xl px-4 md:px-14 min-h-[48px] flex items-center justify-between gap-4 text-[13px]">
-                    <p className="min-w-0 truncate">
+                    <p className="min-w-0 flex-1 truncate">
                         <span className="uppercase tracking-[0.3em] text-[color:var(--es-accent)]">Espace témoin</span>
                         <span className="hidden md:inline text-[color:var(--es-ink-2)]"> · Un artiste inventé, un vrai gabarit, prêt à recevoir votre musique.</span>
                     </p>
