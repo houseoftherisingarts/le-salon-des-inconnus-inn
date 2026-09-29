@@ -1,5 +1,7 @@
-// apercus.ts : les espaces témoins du gabarit Musicien, servis sans compte
-// aux adresses /apercu/musicien et /apercu/musicien-2 (ApercuPage.tsx).
+// apercus.ts : les espaces témoins, servis sans compte à /apercu/{slug}
+// (ApercuPage.tsx). Ceux du gabarit Musicien sont ici, à /apercu/musicien et
+// /apercu/musicien-2; ceux du Peintre et du Photographe viennent de
+// apercusPeintrePhoto.ts.
 //
 // Les deux artistes sont inventés, comme leurs salles, leurs disques et les
 // mots de la presse. Les pistes sont de vrais enregistrements du domaine
@@ -9,6 +11,7 @@
 // encore branché Stripe.
 
 import type { SuperProfileConfig } from './types';
+import { APERCUS_PEINTRE_PHOTO } from './apercusPeintrePhoto';
 
 const MEDIA = '/media/apercu';
 
@@ -88,6 +91,7 @@ export const APERCUS: Record<string, SuperProfileConfig> = {
         ],
         bio: 'Clémence Aubier joue du violon depuis l’âge de six ans et donne aujourd’hui des récitals dans les petites salles du Québec, celles où le public est assez proche pour voir l’archet trembler. Son répertoire va des maîtres baroques aux compositeurs d’ici, et elle aime glisser entre deux mouvements l’histoire de la pièce qu’elle s’apprête à jouer. Elle enseigne aussi, le mardi et le jeudi, à une douzaine d’élèves qui la suivent parfois en tournée.',
     },
+    ...APERCUS_PEINTRE_PHOTO,
 };
 
 export const SLUGS_APERCU = Object.keys(APERCUS);

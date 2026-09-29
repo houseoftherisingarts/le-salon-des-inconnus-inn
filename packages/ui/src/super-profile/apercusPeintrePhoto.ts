@@ -29,7 +29,7 @@ export const APERCUS_PEINTRE_PHOTO: Record<string, SuperProfileConfig> = {
     peintre: {
         enabled: true,
         username: 'solene-dufort',
-        medium: 'painting',
+        medium: 'visual-art',
         type: 'peintre',
         works: [],
         displayName: 'Solène Dufort',
@@ -63,13 +63,13 @@ export const APERCUS_PEINTRE_PHOTO: Record<string, SuperProfileConfig> = {
     'peintre-2': {
         enabled: true,
         username: 'theo-castonguay',
-        medium: 'painting',
+        medium: 'visual-art',
         type: 'peintre',
         works: [],
         displayName: 'Théo Castonguay',
         tagline: 'Des bandes, des cercles et des couleurs franches qui se répondent d’une toile à l’autre.',
         theme: { palette: 'ardoise', fonts: 'moderne' },
-        sections: { ...SECTIONS_APERCU, boutique: false },
+        sections: { ...SECTIONS_APERCU },
         oeuvres: [
             toile('castonguay-rythme', 'Rythme vertical no 3', '2026', 'Acrylique sur toile', 160, 120, 'a-vendre', 6500),
             toile('castonguay-soleil', 'Soleil de plomb', '2025', 'Acrylique sur toile', 100, 100, 'vendu'),
@@ -92,7 +92,7 @@ export const APERCUS_PEINTRE_PHOTO: Record<string, SuperProfileConfig> = {
     photographe: {
         enabled: true,
         username: 'clara-beaudry',
-        medium: 'photography',
+        medium: 'photo',
         type: 'photographe',
         works: [],
         displayName: 'Clara Beaudry',
@@ -103,17 +103,17 @@ export const APERCUS_PEINTRE_PHOTO: Record<string, SuperProfileConfig> = {
             {
                 id: 'fumee', titre: 'Dans la fumée',
                 description: 'Un après-midi de brûlage au bout du terrain. La fumée faisait le tri entre ce qu’on voyait et ce qu’on devinait.',
-                photos: [paysage('nb-8'), paysage('nb-3'), portrait('nb-5'), paysage('nb-11'), photo('nb-feu', 1600, 1200), paysage('nb-9')],
+                photos: [paysage('nb-8'), paysage('nb-3'), portrait('nb-5'), paysage('nb-11'), photo('nb-feu', 1600, 1200)],
             },
             {
                 id: 'remise', titre: 'La vieille remise',
                 description: 'Trois jours pour défaire un bâtiment de 1940, planche par planche, en gardant tout ce qui pouvait resservir.',
-                photos: [paysage('nb-7'), paysage('nb-2'), portrait('nb-1'), paysage('nb-6'), paysage('nb-4')],
+                photos: [paysage('nb-7'), paysage('nb-2'), portrait('nb-1'), paysage('nb-6')],
             },
             {
                 id: 'visages', titre: 'Visages du rang',
                 description: 'Les gens de passage, photographiés là où ils se trouvaient, sans leur demander de bouger.',
-                photos: [paysage('nb-10'), paysage('nb-9'), paysage('nb-8')],
+                photos: [paysage('nb-10'), paysage('nb-9'), paysage('nb-4')],
             },
         ],
         tarifs: [
@@ -129,7 +129,7 @@ export const APERCUS_PEINTRE_PHOTO: Record<string, SuperProfileConfig> = {
     'photographe-2': {
         enabled: true,
         username: 'samuel-aubin',
-        medium: 'photography',
+        medium: 'photo',
         type: 'photographe',
         works: [],
         displayName: 'Samuel Aubin',

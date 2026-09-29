@@ -10,7 +10,16 @@
 import * as React from 'react';
 import { APERCUS } from './apercus';
 import { resoudreTheme } from './themes';
-import { MusicienTemplate } from './templates/MusicienTemplate';
+import { deduireType, familleGabarit, type FamilleGabarit } from './artistes';
+import { gabaritPour } from './templates';
+
+/** Ce que l'aperçu promet, selon la famille du gabarit. */
+const PROMESSE: Record<FamilleGabarit, string> = {
+    musicien: 'Un artiste inventé, un vrai gabarit, prêt à recevoir votre musique.',
+    peintre: 'Un nom inventé, un vrai gabarit, prêt à recevoir vos toiles.',
+    photographe: 'Un nom inventé, un vrai gabarit, prêt à recevoir vos séries.',
+    ecrivain: 'Un nom inventé, un vrai gabarit, prêt à recevoir vos livres.',
+};
 
 export interface ApercuPageProps {
     slug: string;
@@ -20,7 +29,10 @@ export interface ApercuPageProps {
 
 export const ApercuPage: React.FC<ApercuPageProps> = ({ slug, lienCreer = '/createur' }) => {
     const config = APERCUS[slug] ?? APERCUS.musicien;
-    const vars = React.useMemo(() => resoudreTheme('musicien', config.theme).vars, [config.theme]);
+    const type = deduireType(config);
+    const famille = familleGabarit(type);
+    const Gabarit = gabaritPour(type);
+    const vars = React.useMemo(() => resoudreTheme(famille, config.theme).vars, [famille, config.theme]);
 
     React.useEffect(() => {
         document.title = `${config.displayName} · Espace témoin · Le Salon des Inconnus`;
@@ -47,7 +59,7 @@ export const ApercuPage: React.FC<ApercuPageProps> = ({ slug, lienCreer = '/crea
                 <div className="mx-auto max-w-6xl px-4 md:px-14 min-h-[48px] flex items-center justify-between gap-4 text-[13px]">
                     <div className="min-w-0 flex-1 flex items-baseline gap-3">
                         <span className="shrink-0 uppercase tracking-[0.3em] text-[color:var(--es-accent)]">Espace témoin</span>
-                        <p className="hidden md:block min-w-0 truncate text-[color:var(--es-ink-2)]">Un artiste inventé, un vrai gabarit, prêt à recevoir votre musique.</p>
+                        <p className="hidden md:block min-w-0 truncate text-[color:var(--es-ink-2)]">{PROMESSE[famille]}</p>
                     </div>
                     <a
                         href={lienCreer}
@@ -61,7 +73,7 @@ export const ApercuPage: React.FC<ApercuPageProps> = ({ slug, lienCreer = '/crea
                     </a>
                 </div>
             </div>
-            <MusicienTemplate config={config} language="FR" />
+            <Gabarit config={config} language="FR" />
         </>
     );
 };
