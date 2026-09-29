@@ -120,8 +120,8 @@ const Toile: React.FC<{ oeuvre: OeuvreProfilPro; rang: number; language: 'EN' | 
                     onPointerEnter={allumer}
                     onPointerMove={suivre}
                     onPointerLeave={eteindre}
-                    className="es-toile relative overflow-hidden rounded-[4px] shadow-[0_30px_70px_-30px_color-mix(in_srgb,var(--es-ink)_45%,transparent)]"
-                    style={ratio ? { aspectRatio: ratio } : undefined}
+                    className="es-toile relative overflow-hidden rounded-[2px]"
+                    style={{ aspectRatio: ratio, boxShadow: '0 34px 70px -34px color-mix(in srgb, var(--es-ink) 45%, transparent)' }}
                 >
                     <img src={oeuvre.url} alt="" aria-hidden loading="lazy" className={`es-toile-base block w-full ${ratio ? 'h-full object-cover' : 'h-auto'}`} />
                     <img src={oeuvre.url} alt={titre} loading="lazy" className="es-toile-couleur absolute inset-0 w-full h-full object-cover" />
