@@ -55,8 +55,8 @@ export const creerPaiementAssistance = onCall(
           product_data: { name: 'Brancher Stripe avec Alex (appel en tête-à-tête)' },
         },
       }],
-      metadata: { entite: 'salon', produit: 'assistance', uid },
-      payment_intent_data: { metadata: { entite: 'salon', produit: 'assistance', uid } },
+      metadata: { projet: PROJET, entite: 'salon', produit: 'assistance', uid },
+      payment_intent_data: { metadata: { projet: PROJET, entite: 'salon', produit: 'assistance', uid } },
       success_url: `${BASE_URL}/creator?assistance=merci`,
       cancel_url: `${BASE_URL}/creator?assistance=annule`,
     });
