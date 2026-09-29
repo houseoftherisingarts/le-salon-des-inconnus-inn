@@ -245,16 +245,197 @@
         "status": "done",
         "subtasks": [],
         "updatedAt": "2026-09-12T18:37:12.566Z"
+      },
+      {
+        "id": 19,
+        "title": "Create CSS theme token system (--es-* variables)",
+        "description": "Replace hardcoded hex colors throughout super-profile templates with CSS custom properties following the ESPACES-DESIGN.md spec",
+        "details": "Create packages/ui/src/super-profile/themes.ts registry with ThemePalette and FontPair types. Define 13 CSS variables (--es-bg, --es-bg-2, --es-ink, --es-ink-2, --es-accent, --es-accent-ink, --es-line, --es-glass, --es-glow, --es-font-display, --es-font-label, --es-font-body, --es-radius). Add palette \"salon\" as default (matching current canon: #050505 bg, #f3e5ab ink, #c5a059 accent). Load only selected font pair via Google Fonts with display=swap. Update SuperProfileConfig type to include theme: {palette: string, fonts: string, accent?: string}. Remove all hardcoded hex colors from template files except CollantVexel.tsx and PiedDePage.tsx.",
+        "testStrategy": "Verify existing profiles render identically with \"salon\" palette. Validate accent color hex format. Test Google Fonts loads only selected pair. Confirm all sections use CSS variables.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Implement section ordering system",
+        "description": "Add config.ordre array to control section display order with up/down arrows in admin UI",
+        "details": "Extend SuperProfileConfig with ordre: SectionId[] field. Update templates to respect ordre array, appending missing SectionIds in default order. Keep hero and footer fixed. In ProfilProAdminSite.tsx, add up/down arrow buttons next to each section toggle. Implement moveSection(sectionId, direction: 'up'|'down') that updates ordre array. Prevent moving hero or pied sections. Validate ordre contains only valid section IDs for the current template family.",
+        "testStrategy": "Test reordering sections persists and renders correctly. Verify hero/footer stay fixed. Confirm missing sections append in default order. Test section order survives config updates.",
+        "priority": "high",
+        "dependencies": [
+          19
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Build Boutique section with products and payment links",
+        "description": "Create boutique section for products (max 30) with webp images, external payment links, and \"Vendu\" ribbon",
+        "details": "Extend SuperProfileConfig with produits: Produit[] where Produit = {id, nom, description, prix: number, photo: string, photoPath: string, lienPaiement: string (https only), vendu: boolean}. Create templates/sections/Boutique.tsx rendering grid of glass cards. Add \"Vendu\" ribbon overlay when vendu=true. In admin, add product CRUD interface with image upload (convert to webp via browser Canvas API before Storage upload, max 30 products). Validate https URLs for lienPaiement. Store images under superProfiles/{uid}/produits/{id}.webp. Update MAX_PRODUITS = 30 in types.ts.",
+        "testStrategy": "Test adding/editing/removing products. Verify webp conversion in browser. Confirm 30 product limit enforced. Test sold ribbon displays correctly. Validate payment link opens in new tab.",
+        "priority": "high",
+        "dependencies": [
+          19,
+          20
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Implement audio track upload and storage",
+        "description": "Add pistes audio section with file upload (mp3, m4a, wav, ogg, flac, max 12 tracks, 30MB each)",
+        "details": "Extend SuperProfileConfig with pistes: Piste[] where Piste = {id, titre: string, url: string, storagePath: string, duree?: number}. Accept mp3, m4a, wav, ogg, flac formats. Store under superProfiles/{uid}/pistes/{id}.{ext}. Add admin UI for track upload/delete. Calculate duration client-side via Audio API before upload. Update storage.rules to allow audio MIME types under members/{uid}/superProfile/pistes/ with 30MB limit. Update firestore.rules to allow pistes array in config doc. Enforce MAX_PISTES = 12.",
+        "testStrategy": "Test uploading each supported format. Verify 30MB limit enforced. Confirm duration extraction works. Test 12 track limit. Verify Storage rules allow audio files.",
+        "priority": "high",
+        "dependencies": [
+          19
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Update Écoute section to display uploaded tracks with exclusive playback",
+        "description": "Enhance EcouteSection to render uploaded pistes above platform links with global audio exclusivity",
+        "details": "In templates/sections/Ecoute.tsx, render config.pistes before existing platform links. Use native <audio> elements with custom controls. Implement audioExclusif.ts pattern from FMM repo: create singleton AudioManager that pauses other tracks when new one plays. Display track title, play/pause button, and duration. Style with glass morphism cards. If no pistes, fall back to platform links only. Ensure works on mobile Safari.",
+        "testStrategy": "Test multiple tracks - verify only one plays at a time. Confirm pause on new track play. Test on iOS Safari. Verify platform links still work when no tracks uploaded.",
+        "priority": "high",
+        "dependencies": [
+          22
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Create sticky audio player bar with waveform",
+        "description": "Build collapsible sticky player bar at bottom with title, play/pause, next, time, and waveform visualization",
+        "details": "Create LecteurCollant.tsx component appearing when any track plays. Position fixed bottom with glass background (bg-black/40 backdrop-blur-md). Display: current track title, play/pause toggle, skip to next track, current time/duration, fine waveform visualization. Use Web Audio API AnalyserNode for real-time waveform (canvas or SVG). Persist across scroll. Hide when no track playing. Respect prefers-reduced-motion (static waveform). Match --es-glow styling.",
+        "testStrategy": "Test player appears on track play. Verify controls work (play/pause/next). Confirm waveform animates. Test scrolling doesn't hide player. Verify prefers-reduced-motion compliance.",
+        "priority": "medium",
+        "dependencies": [
+          23
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Implement hero glow effect synced to audio amplitude",
+        "description": "Add pulsing --es-glow halo behind hero name that beats with audio amplitude or fixed tempo fallback",
+        "details": "In MusicienTemplate hero, add CSS box-shadow with --es-glow color. When track plays, connect Web Audio AnalyserNode to get frequency data. Map amplitude (0-255) to glow intensity (0.2-0.6 opacity). If CORS blocks analysis, fallback to fixed 96 BPM pulse (625ms interval). Use CSS transitions for smooth animation. Disable animation when prefers-reduced-motion is set. Apply only to Musicien template hero.",
+        "testStrategy": "Test glow pulses with audio playback. Verify fallback tempo works. Confirm CORS failure gracefully falls back. Test prefers-reduced-motion disables effect. Measure performance impact.",
+        "priority": "medium",
+        "dependencies": [
+          23
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Update pricing to $80/month throughout",
+        "description": "Change PRIX_CENTS to 8000 across functions, admin UI, and documentation",
+        "details": "In functions/src/profilPro.ts, set PRIX_CENTS = 8000. Update all UI text in ProfilProPage.tsx, ProfilProAdminAbonnement.tsx showing \"100 $\" to \"80 $\". Update docs/PROFIL-PRO-DIRECTION.md with new pricing. Update UpsellCard.tsx to show \"à partir de 300 $ par mois, spécial 2026\" with strikethrough \"350 $\". Ensure webhook and subscription logic use new price. Update welcome email text.",
+        "testStrategy": "Test creating new subscription charges $80. Verify all UI displays $80. Confirm Stripe session creates with 8000 cents. Test webhook processes $80 subscriptions correctly.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Build Stripe assistance payment system ($80 one-time)",
+        "description": "Add \"Brancher Stripe avec Alex\" card with one-time $80 payment, webhook, and email notification",
+        "details": "Create functions/src/assistance.ts with creerPaiementAssistance Cloud Function (Stripe Checkout mode=payment, 8000 CAD, metadata {entite: 'salon', produit: 'assistance', uid}). Add webhookAssistance to handle checkout.session.completed, write to assistances/{uid} {statut: 'payee', courriel, telephone, nom, payeLe: Timestamp}. Send email to alex@lesalondesinconnus.com via existing Zoho transport. Add AssistanceCard.tsx component displaying payment state (à payer / payée le {date} / appel fait). Show card at bottom of each ProfilProAdmin tab. Update functions/src/index.ts exports.",
+        "testStrategy": "Test payment flow creates Stripe session. Verify webhook writes assistances doc. Confirm email sent to Alex. Test card UI shows correct states. Verify one-time payment (not subscription).",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Create public preview routes /apercu/musicien and /apercu/musicien-2",
+        "description": "Add two public noindex preview routes with fictional musician data and demo audio",
+        "details": "Create packages/ui/src/super-profile/apercus.ts with two complete musician configs (different palettes from ESPACES-DESIGN.md musicien table: 'scene' and 'neon'). Include realistic fictional data: name, tagline, bio, dates, presse quotes, pistes. Add routes in apps/salon routing (exact paths /apercu/musicien, /apercu/musicien-2). Set noindex meta tags. Copy existing mp3 demo file to public/ or generate 30s ambient loop via ffmpeg if none exists. No authentication required. Render using MusicienTemplate with preview data.",
+        "testStrategy": "Test both routes render without login. Verify different palettes applied. Confirm noindex meta tag present. Test audio demo plays. Verify responsive at 1440px and 390px.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          20,
+          21,
+          23,
+          24,
+          25
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Update UpsellCard Vexel link with query params",
+        "description": "Modify UpsellCard button to open vexelwebstudio.com with formule=base&origine=creator-studio params",
+        "details": "In packages/ui/src/super-profile/UpsellCard.tsx, update button href to \"https://vexelwebstudio.com/compte?formule=base&origine=creator-studio\". Ensure opens in same tab (not new window). Update text to \"à partir de 300 $ par mois, spécial 2026\" with \"350 $\" shown strikethrough. Keep existing glass card styling. Position at bottom of admin pages as specified in ESPACES-DESIGN.md section 4.",
+        "testStrategy": "Test link opens with correct query params. Verify pricing text displays correctly. Confirm strikethrough styling on 350$. Test card renders at bottom of admin pages.",
+        "priority": "low",
+        "dependencies": [
+          26
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "Create portable module in ~/Documents/Websites/_vexel-base/modules/espace/",
+        "description": "Copy engine files to portable module with README documenting 4-step porting process",
+        "details": "Create directory ~/Documents/Websites/_vexel-base/modules/espace/. Copy: themes.ts, section ordering logic, Boutique.tsx, pistes types/logic, LecteurCollant.tsx, product/track admin components, apercus.ts, relevant Storage/Firestore rule snippets. Create README.md listing all copied files, identifiers to rename (uid → userId pattern, config path adjustments), and 4 porting steps: 1) Copy files, 2) Rename namespace identifiers, 3) Update Storage/Firestore rules, 4) Import into new project. Model after vexelhotjar module structure.",
+        "testStrategy": "Verify all necessary files copied. Confirm README is clear and complete. Test module can be understood independently. Validate file list matches actual copies.",
+        "priority": "low",
+        "dependencies": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Run verification and deployment pipeline",
+        "description": "Execute tsc/vite build, deploy rules/functions/hosting, run boucle-verdict visual audit, document completion",
+        "details": "Run tsc && vite build to verify no type errors. Deploy Storage rules, Firestore rules (if updated), functions (profilPro, assistance), and hosting. Execute node ~/.claude/skills/boucle-verdict/scripts/audit.mjs on /apercu/musicien and /apercu/musicien-2 at 1440px and 390px viewports. Sonnet verifier reviews screenshots (max 3 rounds). Verify: full-width layout, no overlapping elements, titles ≤2 lines, videos/audio embedded in page, readable text on all backgrounds, wow effects visible and respect prefers-reduced-motion. Generate completion report mapping each PRD requirement to implementation status (✅/❌/⏳). Update changelog if exists.",
+        "testStrategy": "Confirm build succeeds with no errors. Verify all functions deployed. Test rules in production. Review audit screenshots for violations. Validate completion report covers all 11 PRD requirements.",
+        "priority": "high",
+        "dependencies": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "status": "pending",
+        "subtasks": []
       }
     ],
     "metadata": {
-      "version": "1.0.0",
-      "lastModified": "2026-09-12T18:37:12.567Z",
-      "taskCount": 18,
-      "completedCount": 14,
-      "tags": [
-        "master"
-      ]
+      "created": "2026-09-29T04:11:59.953Z",
+      "updated": "2026-09-29T04:11:59.953Z",
+      "description": "Tasks for master context"
     }
   }
 }
