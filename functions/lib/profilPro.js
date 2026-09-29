@@ -51,7 +51,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeFetch = void 0;
+exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeFetch = exports.PROJET = void 0;
 const admin = __importStar(require("firebase-admin"));
 const https_1 = require("firebase-functions/v2/https");
 const crypto = __importStar(require("crypto"));
@@ -63,7 +63,7 @@ if (admin.apps.length === 0) {
 }
 const STRIPE_SECRET_KEY = (0, params_1.defineSecret)('STRIPE_SECRET_KEY');
 const STRIPE_WEBHOOK_PRO_SECRET = (0, params_1.defineSecret)('STRIPE_WEBHOOK_PRO_SECRET');
-const PROJET = 'creator-studio-pro';
+exports.PROJET = 'creator-studio-pro';
 const PRIX_CENTS = 8000; // 80,00 $ CAD par mois (29 septembre 2026; les abonnements déjà ouverts gardent leur prix Stripe)
 // Le Creator Studio vit sur le monolithe (www.lesalondesinconnus.com/creator).
 const BASE_URL = 'https://www.lesalondesinconnus.com';
@@ -189,7 +189,7 @@ exports.creerAbonnementProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET
         const client = await stripeFetch(secret, 'POST', 'customers', {
             email: courriel,
             name: nom,
-            metadata: { uid, projet: PROJET },
+            metadata: { uid, projet: exports.PROJET },
         });
         stripeCustomerId = client.id;
         await refAbonnement.set({ stripeCustomerId, uid }, { merge: true });
@@ -207,8 +207,8 @@ exports.creerAbonnementProfilPro = (0, https_1.onCall)({ secrets: [STRIPE_SECRET
                     product_data: { name: NOM_PRODUIT },
                 },
             }],
-        subscription_data: { metadata: { uid, projet: PROJET } },
-        metadata: { uid, projet: PROJET },
+        subscription_data: { metadata: { uid, projet: exports.PROJET } },
+        metadata: { uid, projet: exports.PROJET },
         success_url: `${BASE_URL}/creator?pro=merci`,
         cancel_url: `${BASE_URL}/creator?pro=annule`,
     });
@@ -267,7 +267,7 @@ exports.webhookProfilPro = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK_PRO
         return;
     }
     if (event.type === 'checkout.session.completed') {
-        if (objet.metadata?.projet !== PROJET) {
+        if (objet.metadata?.projet !== exports.PROJET) {
             res.status(200).send('Not this project');
             return;
         }
@@ -314,7 +314,7 @@ exports.webhookProfilPro = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK_PRO
         return;
     }
     if (event.type === 'customer.subscription.updated' || event.type === 'customer.subscription.deleted') {
-        if (objet.metadata?.projet !== PROJET) {
+        if (objet.metadata?.projet !== exports.PROJET) {
             res.status(200).send('Not this project');
             return;
         }

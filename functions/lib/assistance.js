@@ -44,8 +44,12 @@ if (admin.apps.length === 0) {
 const STRIPE_SECRET_KEY = (0, params_1.defineSecret)('STRIPE_SECRET_KEY');
 const PRIX_ASSISTANCE_CENTS = 8000; // 80,00 $ CAD, une fois
 const BASE_URL = 'https://www.lesalondesinconnus.com';
+// La même porte que l'abonnement (metadata.projet) : le compte Stripe est partagé
+// avec d'autres projets, et rien d'autre que ce projet ne doit entrer ici.
 function estAssistance(objet) {
-    return objet?.metadata?.entite === 'salon' && objet?.metadata?.produit === 'assistance';
+    return objet?.metadata?.projet === profilPro_1.PROJET
+        && objet?.metadata?.entite === 'salon'
+        && objet?.metadata?.produit === 'assistance';
 }
 exports.estAssistance = estAssistance;
 exports.creerPaiementAssistance = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_KEY], invoker: 'public' }, async (request) => {
@@ -71,8 +75,8 @@ exports.creerPaiementAssistance = (0, https_1.onCall)({ secrets: [STRIPE_SECRET_
                     product_data: { name: 'Brancher Stripe avec Alex (appel en tête-à-tête)' },
                 },
             }],
-        metadata: { entite: 'salon', produit: 'assistance', uid },
-        payment_intent_data: { metadata: { entite: 'salon', produit: 'assistance', uid } },
+        metadata: { projet: profilPro_1.PROJET, entite: 'salon', produit: 'assistance', uid },
+        payment_intent_data: { metadata: { projet: profilPro_1.PROJET, entite: 'salon', produit: 'assistance', uid } },
         success_url: `${BASE_URL}/creator?assistance=merci`,
         cancel_url: `${BASE_URL}/creator?assistance=annule`,
     });
@@ -82,6 +86,23 @@ async function traiterAssistancePayee(objet) {
     const uid = objet.metadata?.uid ?? objet.client_reference_id ?? undefined;
     if (!uid) {
         console.error('Assistance payée sans uid, session', objet.id);
+        return;
+    }
+    // checkout.session.completed arrive aussi pour une session non réglée
+    // (paiement différé) : seule une session payée, du bon montant en CAD, compte.
+    if (objet.payment_status !== 'paid') {
+        console.warn('Assistance : session non payée ignorée', objet.id, objet.payment_status);
+        return;
+    }
+    if ((objet.amount_total ?? 0) < PRIX_ASSISTANCE_CENTS || objet.currency !== 'cad') {
+        console.error('Assistance : montant ou devise inattendus', objet.id, objet.amount_total, objet.currency);
+        return;
+    }
+    // Stripe relivre parfois un événement : la même session ne s'écrit qu'une fois,
+    // et un appel déjà fait (statut posé par Alex) ne redescend jamais à « payee ».
+    const ficheRef = admin.firestore().doc(`assistances/${uid}`);
+    const existante = (await ficheRef.get()).data();
+    if (existante?.stripeSessionId === objet.id || existante?.statut === 'appel-fait') {
         return;
     }
     const details = objet.customer_details ?? {};
@@ -94,7 +115,7 @@ async function traiterAssistancePayee(objet) {
         stripeSessionId: objet.id ?? null,
         montant: objet.amount_total ?? PRIX_ASSISTANCE_CENTS,
     };
-    await admin.firestore().doc(`assistances/${uid}`).set(fiche, { merge: true });
+    await ficheRef.set(fiche, { merge: true });
     let nomArtiste = '';
     try {
         const config = await admin.firestore().doc(`members/${uid}/superProfile/config`).get();
