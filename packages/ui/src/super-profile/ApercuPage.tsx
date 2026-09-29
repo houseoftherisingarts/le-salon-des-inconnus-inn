@@ -45,10 +45,10 @@ export const ApercuPage: React.FC<ApercuPageProps> = ({ slug, lienCreer = '/crea
                 className="relative z-[60] bg-[color:var(--es-bg-2)] text-[color:var(--es-ink)] border-b border-[color:var(--es-edge)]"
             >
                 <div className="mx-auto max-w-6xl px-4 md:px-14 min-h-[48px] flex items-center justify-between gap-4 text-[13px]">
-                    <p className="min-w-0 flex-1 truncate">
-                        <span className="uppercase tracking-[0.3em] text-[color:var(--es-accent)]">Espace témoin</span>
-                        <span className="hidden md:inline text-[color:var(--es-ink-2)]"> · Un artiste inventé, un vrai gabarit, prêt à recevoir votre musique.</span>
-                    </p>
+                    <div className="min-w-0 flex-1 flex items-baseline gap-3">
+                        <span className="shrink-0 uppercase tracking-[0.3em] text-[color:var(--es-accent)]">Espace témoin</span>
+                        <p className="hidden md:block min-w-0 truncate text-[color:var(--es-ink-2)]">Un artiste inventé, un vrai gabarit, prêt à recevoir votre musique.</p>
+                    </div>
                     <a
                         href={lienCreer}
                         className="shrink-0 inline-flex items-center gap-2 min-h-[36px] px-4 rounded-full bg-[color:var(--es-accent)] text-[color:var(--es-accent-ink)] uppercase tracking-[0.2em] hover:brightness-110 transition"
