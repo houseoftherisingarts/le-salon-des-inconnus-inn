@@ -40,7 +40,7 @@ await p.screenshot({ path: `${OUT}/musicien-lecture.jpg`, quality: 70, type: 'jp
 const fautesCors = consoleMsgs.filter((t) => /cors|outputs zeroes|blocked/i.test(t));
 
 // fetch CORS depuis la page : une piste locale (même origine) et un objet Storage
-const pisteUrl = await p.evaluate(() => document.querySelector('audio')?.src || null);
+const pisteUrl = audioRequests[0] || null;
 
 const fetchImpl = async (u) => {
   try {
