@@ -3,7 +3,7 @@
 // Palier de base (existant depuis août) : hero plein écran + galerie simple
 // (`works`), gating par `members/{uid}/admin/flags.maestroEnabled`.
 //
-// Profil Pro (100 $/mois, ajouté en septembre) : le même document gagne un
+// Profil Pro (80 $/mois depuis le 29 septembre 2026, ajouté en septembre) : le même document gagne un
 // `type` d'artiste, une liste de sections à éteindre ou allumer, et des
 // contenus enrichis par type (oeuvres, écoute, dates, presse, expositions,
 // livres, atelier). Le gating devient `flags.proEnabled`, avec
@@ -137,11 +137,46 @@ export type SectionId =
     | 'bio'
     | 'atelier'
     | 'rendezvous'
+    | 'boutique'
     | 'contact'
     | 'liens'
     | 'pied';
 
 export type SectionsConfig = Partial<Record<SectionId, boolean>>;
+
+/** Un produit de la section Boutique : vendu par un lien de paiement
+ *  (Stripe, Square ou Zeffy), jamais par un panier du Salon. */
+export interface ProduitEspace {
+    id: string;
+    nom: string;
+    description?: string;
+    /** Prix en dollars, pour l'affichage seulement : le vrai prix vit
+     *  derrière le lien de paiement. */
+    prix?: number;
+    /** Photo en webp, redimensionnée dans le navigateur avant l'envoi. */
+    photo?: { url: string; storagePath: string };
+    /** https vers Stripe, Square ou Zeffy (voir lienPaiementValide). */
+    lien?: string;
+    vendu?: boolean;
+}
+
+/** Une piste audio déposée dans Storage (section Écoute). */
+export interface PisteEspace {
+    id: string;
+    titre: string;
+    url: string;
+    storagePath: string;
+    /** Durée en secondes, lue dans le navigateur au dépôt. */
+    duree?: number;
+}
+
+/** Le thème choisi dans l'atelier (registre : themes.ts). */
+export interface ThemeEspace {
+    palette?: string;
+    fonts?: string;
+    /** Couleur d'accent libre, #rrggbb, qui remplace celle de la palette. */
+    accent?: string;
+}
 
 export interface SuperProfileConfig {
     /** When false, the public route 404s even if the username is claimed. */
@@ -154,6 +189,11 @@ export interface SuperProfileConfig {
     /** Sections allumées ou éteintes. Une clé absente vaut « allumée » si
      *  le contenu de la section existe. */
     sections?: SectionsConfig;
+    /** Ordre des sections choisi dans l'atelier. Les identifiants absents
+     *  s'ajoutent à la suite dans l'ordre par défaut du gabarit (ordre.ts);
+     *  le hero et le pied de page ne bougent jamais. */
+    ordre?: SectionId[];
+    theme?: ThemeEspace;
     hero?: SuperProfileHeroPhoto;
     works: SuperProfileWork[];
     /** Display name shown on the page; defaults to the user's auth displayName. */
@@ -173,6 +213,8 @@ export interface SuperProfileConfig {
     expositions?: ExpositionProfilPro[];
     livres?: LivreProfilPro[];
     atelier?: AtelierProfilPro;
+    produits?: ProduitEspace[];
+    pistes?: PisteEspace[];
 
     /** Set by serverTimestamp on every save. */
     updatedAt?: any;
@@ -194,6 +236,9 @@ export const MAX_DATES = 24;
 export const MAX_LIENS_ECOUTE = 12;
 export const MAX_EXPOSITIONS = 12;
 export const MAX_LIVRES = 12;
+export const MAX_PRODUITS = 30;
+export const MAX_PISTES = 12;
+export const MAX_AUDIO_OCTETS = 30 * 1024 * 1024;
 
 /** Storage paths used for super-profile assets. */
 export const heroStoragePath = (uid: string, ext: 'png' | 'webp' = 'png') =>
@@ -202,5 +247,9 @@ export const workStoragePath = (uid: string, workId: string, ext: string) =>
     `members/${uid}/superProfile/works/${workId}.${ext}`;
 export const oeuvreStoragePath = (uid: string, oeuvreId: string, ext: string) =>
     `members/${uid}/superProfile/oeuvres/${oeuvreId}.${ext}`;
+export const produitStoragePath = (uid: string, produitId: string) =>
+    `members/${uid}/superProfile/produits/${produitId}.webp`;
+export const pisteStoragePath = (uid: string, pisteId: string, ext: string) =>
+    `superProfiles/${uid}/pistes/${pisteId}.${ext}`;
 export const couvertureLivreStoragePath = (uid: string, livreId: string, ext: string) =>
     `members/${uid}/superProfile/livres/${livreId}.${ext}`;
