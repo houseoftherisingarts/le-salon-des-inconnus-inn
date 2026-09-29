@@ -13,7 +13,7 @@ export const SECTIONS_PAR_FAMILLE: Record<FamilleGabarit, SectionId[]> = {
     musicien: ['ecoute', 'dates', 'boutique', 'presse', 'bio', 'rendezvous', 'contact', 'liens'],
     peintre: ['oeuvres', 'boutique', 'expositions', 'atelier', 'bio', 'presse', 'rendezvous', 'contact', 'liens'],
     photographe: ['series', 'tarifs', 'rendezvous', 'bio', 'presse', 'contact', 'liens'],
-    ecrivain: ['livres', 'oeuvres', 'bio', 'rendezvous', 'contact', 'liens'],
+    ecrivain: ['livres', 'extraits', 'evenements', 'presse', 'oeuvres', 'bio', 'rendezvous', 'contact', 'liens'],
 };
 
 export function ordreSections(config: Pick<SuperProfileConfig, 'ordre'>, famille: FamilleGabarit): SectionId[] {

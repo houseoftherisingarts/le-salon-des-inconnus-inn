@@ -145,12 +145,48 @@ export interface ExpositionProfilPro {
     aVenir: boolean;
 }
 
-/** Un livre publié (section Livres). */
+/** Un libraire où se procurer un livre (gabarit Auteur). */
+export interface LibraireLivre {
+    id?: string;
+    nom: string;
+    /** https seulement. */
+    url: string;
+}
+
+/** Un livre publié (section Livres). Les champs après lienAchat viennent
+ *  du gabarit Auteur porté de Vexel Space, et restent facultatifs. */
 export interface LivreProfilPro {
     couvertureUrl?: string;
     couverturePath?: string;
     titre: string;
     lienAchat?: string;
+    /** Identifiant stable, auquel un extrait se rattache. */
+    id?: string;
+    /** Genre, collection ou sous-titre, en une ligne. */
+    mention?: string;
+    annee?: string;
+    resume?: string;
+    libraires?: LibraireLivre[];
+}
+
+/** Un passage à lire dans la page (section Extraits), rattaché à un livre
+ *  (par son id ou son titre) ou libre. Un paragraphe par ligne. */
+export interface ExtraitLivre {
+    id: string;
+    titre?: string;
+    livre?: string;
+    texte: string;
+}
+
+/** Une lecture, une séance de dédicaces, un salon (section Événements). */
+export interface EvenementEspace {
+    id: string;
+    /** 'AAAA-MM-JJ' */
+    date: string;
+    titre: string;
+    lieu?: string;
+    /** https seulement. */
+    lien?: string;
 }
 
 /** L'atelier ou le lieu de travail (section Atelier). */
@@ -177,6 +213,8 @@ export type SectionId =
     | 'liens'
     | 'series'
     | 'tarifs'
+    | 'extraits'
+    | 'evenements'
     | 'pied';
 
 export type SectionsConfig = Partial<Record<SectionId, boolean>>;
@@ -249,6 +287,8 @@ export interface SuperProfileConfig {
     lienEPK?: string;
     expositions?: ExpositionProfilPro[];
     livres?: LivreProfilPro[];
+    extraits?: ExtraitLivre[];
+    evenements?: EvenementEspace[];
     atelier?: AtelierProfilPro;
     produits?: ProduitEspace[];
     pistes?: PisteEspace[];

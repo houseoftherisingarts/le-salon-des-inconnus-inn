@@ -42,8 +42,8 @@ export const LIBELLES_ARTISTE: Record<ArtistType, LibelleArtiste> = {
     },
     ecrivain: {
         fr: 'Écrivain ou écrivaine', en: 'Writer',
-        aideFr: 'Typographie éditoriale, bibliographie et liens d\'achat.',
-        aideEn: 'Editorial typography, bibliography and buy links.',
+        aideFr: 'Vos livres en volume, des premières pages qui se tournent au défilement, vos lectures et vos libraires.',
+        aideEn: 'Your books in 3D, first pages that turn as you scroll, your readings and your booksellers.',
     },
     scene: {
         fr: 'Artiste de scène', en: 'Performing artist',
@@ -128,7 +128,7 @@ export function sectionsParDefaut(type: ArtistType): SectionsConfig {
         bio: true, rendezvous: true, contact: true, liens: true, pied: true,
         oeuvres: false, ecoute: false, dates: false, presse: false,
         expositions: false, livres: false, atelier: false, boutique: false,
-        series: false, tarifs: false,
+        series: false, tarifs: false, extraits: false, evenements: false,
     };
     switch (familleGabarit(type)) {
         case 'peintre':
@@ -139,7 +139,7 @@ export function sectionsParDefaut(type: ArtistType): SectionsConfig {
             return { ...base, series: true, tarifs: true, presse: true };
         case 'ecrivain':
         default:
-            return { ...base, oeuvres: true, livres: true };
+            return { ...base, oeuvres: true, livres: true, extraits: true, evenements: true, presse: true };
     }
 }
 

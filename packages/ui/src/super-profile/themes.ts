@@ -8,8 +8,8 @@
 // La palette et la paire « salon » reproduisent le canon d'avant le moteur
 // (Prata, Cinzel, Lato, or #c5a059, crème #f3e5ab, noir #050505), pour
 // qu'un profil existant qui n'a jamais choisi de thème rende à l'identique.
-// Peintre et Photographe portent leurs palettes et paires de la section 6
-// du document; Écrivain n'a encore que « salon ». Le document ne donne que
+// Peintre, Photographe et Écrivain (le gabarit Auteur porté de Vexel Space)
+// portent leurs palettes et paires de la section 6 du document. Le document ne donne que
 // le fond, l'encre et l'accent : le fond 2 est ce fond décalé d'un cran.
 
 import type { FamilleGabarit } from './artistes';
@@ -109,11 +109,36 @@ const PAIRES_PHOTOGRAPHE: PaireFonts[] = [
     },
 ];
 
+const PALETTES_ECRIVAIN: PaletteEspace[] = [
+    PALETTE_SALON,
+    { id: 'papier', nom: 'Papier', sombre: false, bg: '#f4efe6', bg2: '#ebe6de', ink: '#1e1a16', accent: '#8a2f2a' },
+    { id: 'nuit', nom: 'Nuit', sombre: true, bg: '#12100e', bg2: '#1d1b18', ink: '#efe7d8', accent: '#c8a25c' },
+    { id: 'bleu', nom: 'Bleu', sombre: true, bg: '#0f1a2b', bg2: '#1a2535', ink: '#e9eef6', accent: '#d7b56d' },
+    { id: 'kraft', nom: 'Kraft', sombre: false, bg: '#e7dcc8', bg2: '#dfd5c1', ink: '#2a2118', accent: '#3f5a3a' },
+    { id: 'gris', nom: 'Gris', sombre: false, bg: '#f1f1f1', bg2: '#e8e8e8', ink: '#141414', accent: '#141414' },
+];
+
+const PAIRES_ECRIVAIN: PaireFonts[] = [
+    PAIRE_SALON,
+    {
+        id: 'lettre', nom: 'Lettre', display: "'Cormorant Garamond', serif", label: "'Manrope', sans-serif", body: "'Libre Baskerville', serif",
+        poidsDisplay: 500, poidsLabel: 600, google: 'family=Cormorant+Garamond:wght@500&family=Manrope:wght@500;600&family=Libre+Baskerville:wght@400;700',
+    },
+    {
+        id: 'roman', nom: 'Roman', display: "'Playfair Display', serif", label: "'Manrope', sans-serif", body: "'Manrope', sans-serif",
+        poidsDisplay: 500, poidsLabel: 600, google: 'family=Playfair+Display:wght@500&family=Manrope:wght@400;500;600',
+    },
+    {
+        id: 'net', nom: 'Net', display: "'Fraunces', serif", label: "'Outfit', sans-serif", body: "'Outfit', sans-serif",
+        poidsDisplay: 500, poidsLabel: 500, google: 'family=Fraunces:opsz,wght@9..144,500&family=Outfit:wght@400;500;600',
+    },
+];
+
 export const THEMES: Record<FamilleGabarit, { palettes: PaletteEspace[]; fonts: PaireFonts[] }> = {
     musicien: { palettes: PALETTES_MUSICIEN, fonts: PAIRES_MUSICIEN },
     peintre: { palettes: PALETTES_PEINTRE, fonts: PAIRES_PEINTRE },
     photographe: { palettes: PALETTES_PHOTOGRAPHE, fonts: PAIRES_PHOTOGRAPHE },
-    ecrivain: { palettes: [PALETTE_SALON], fonts: [PAIRE_SALON] },
+    ecrivain: { palettes: PALETTES_ECRIVAIN, fonts: PAIRES_ECRIVAIN },
 };
 
 const HEX = /^#[0-9a-fA-F]{6}$/;
@@ -173,6 +198,8 @@ export function resoudreTheme(famille: FamilleGabarit, theme?: ThemeEspace): The
     // Le texte posé sur l'accent : l'extrême de la palette qui contraste le mieux.
     const [fonce, clair] = luminance(palette.bg) < luminance(palette.ink) ? [palette.bg, palette.ink] : [palette.ink, palette.bg];
     const accentInk = contraste(accent, fonce) >= contraste(accent, clair) ? fonce : clair;
+    // Un accent trop proche du fond (gris : accent = encre) garde sa lisibilité en texte.
+    const accentTexte = contraste(accent, palette.bg) >= 3 ? accent : palette.ink;
 
     const vars: Record<string, string> = {
         '--es-bg': palette.bg,
@@ -189,6 +216,22 @@ export function resoudreTheme(famille: FamilleGabarit, theme?: ThemeEspace): The
         // des fonds de hero (accent fondu dans le fond).
         '--es-edge': palette.sombre ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)',
         '--es-tint': melange(accent, palette.bg, 0.12),
+        // Les jetons du gabarit Auteur (porté de Vexel Space) : un troisième
+        // fond, une encre tertiaire, un filet appuyé, l'accent lisible en
+        // texte, l'ombre, le voile sur photo, et le papier des pages du livre
+        // (papier clair, encre foncée, quel que soit le fond de la page).
+        '--es-bg-3': melange(palette.ink, palette.bg, palette.sombre ? 0.1 : 0.08),
+        '--es-ink-3': rgba(palette.ink, 0.5),
+        '--es-line-fort': rgba(palette.ink, 0.32),
+        '--es-accent-texte': accentTexte,
+        '--es-ombre': palette.sombre ? 'rgba(0, 0, 0, 0.55)' : rgba(palette.ink, 0.16),
+        '--es-voile': rgba(fonce, 0.62),
+        '--es-sur-photo': clair,
+        '--es-page': palette.sombre ? clair : melange('#ffffff', clair, 0.45),
+        '--es-page-ink': fonce,
+        '--es-page-ink-2': rgba(fonce, 0.62),
+        '--es-page-ligne': rgba(fonce, 0.16),
+        '--es-page-ombre': rgba(fonce, palette.sombre ? 0.34 : 0.2),
         '--es-font-display': paire.display,
         '--es-font-label': paire.label,
         '--es-font-body': paire.body,

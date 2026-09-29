@@ -23,6 +23,8 @@ export const SECTIONS_ETIQUETTES: Record<SectionId, { en: string; fr: string }> 
     liens: { en: 'Links', fr: 'Liens' },
     series: { en: 'Series', fr: 'Séries' },
     tarifs: { en: 'Rates', fr: 'Tarifs' },
+    extraits: { en: 'Excerpts', fr: 'Extraits' },
+    evenements: { en: 'Events', fr: 'Événements' },
     pied: { en: 'Footer', fr: 'Pied de page' },
 };
 
