@@ -82,7 +82,7 @@ export const PeintreHero: React.FC<Props> = ({ config, fallbackDisplayName, lang
             <div className="relative z-10 min-h-[100svh] max-w-[1480px] mx-auto px-6 md:px-14 pt-24 pb-24 md:pb-20 grid md:grid-cols-12 gap-10 md:gap-8 items-center">
                 {/* La toile d'ouverture, sous son cône de lumière. */}
                 {toile && (
-                    <figure className="md:col-start-7 md:col-span-6 md:row-start-1 relative flex flex-col items-center">
+                    <figure className="md:col-start-8 md:col-span-5 md:row-start-1 relative flex flex-col items-center">
                         <div
                             aria-hidden
                             className="es-cone absolute left-1/2 -top-24 w-[150%] h-[125%] pointer-events-none"
@@ -121,14 +121,16 @@ export const PeintreHero: React.FC<Props> = ({ config, fallbackDisplayName, lang
                     </figure>
                 )}
 
-                {/* Le nom, la ligne, les gestes. */}
-                <div className={`${toile ? 'md:col-start-1 md:col-span-6 md:row-start-1' : 'md:col-span-10'} relative`} style={{ transform: 'translateY(calc(var(--es-allumage) * -28px))' }}>
+                {/* Le nom, la ligne, les gestes. Le nom prend sept colonnes, la toile cinq : un nom large (Syne 700) tient
+                    dans sa colonne sans passer sous la toile. La taille est plafonnée à
+                    la largeur de la colonne (cqi) pour qu'un nom plus long encore reste chez lui. */}
+                <div className={`${toile ? 'md:col-start-1 md:col-span-7 md:row-start-1' : 'md:col-span-10'} relative [container-type:inline-size]`} style={{ transform: 'translateY(calc(var(--es-allumage) * -28px))' }}>
                     <p className="es-label es-monte text-[13px] uppercase tracking-[0.45em] text-[color:var(--es-accent)] mb-6" style={{ animationDelay: '.9s' }}>
                         {t('Works · Exhibitions · Studio', 'Œuvres · Expositions · Atelier')}
                     </p>
                     <h1
                         className="es-display es-monte leading-[0.95] tracking-tight line-clamp-2"
-                        style={{ fontSize: 'clamp(3rem, 7.4vw, 7.5rem)', animationDelay: '1s', textWrap: 'balance' } as React.CSSProperties}
+                        style={{ fontSize: 'clamp(3rem, min(7.4vw, 15cqi), 7.5rem)', animationDelay: '1s', textWrap: 'balance' } as React.CSSProperties}
                     >
                         {nom}
                     </h1>

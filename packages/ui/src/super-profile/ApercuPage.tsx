@@ -56,14 +56,14 @@ export const ApercuPage: React.FC<ApercuPageProps> = ({ slug, lienCreer = '/crea
                 style={{ ...vars, fontFamily: 'var(--es-font-label)' } as React.CSSProperties}
                 className="relative z-[60] bg-[color:var(--es-bg-2)] text-[color:var(--es-ink)] border-b border-[color:var(--es-edge)]"
             >
-                <div className="mx-auto max-w-6xl px-4 md:px-14 min-h-[48px] flex items-center justify-between gap-4 text-[13px]">
-                    <div className="min-w-0 flex-1 flex items-baseline gap-3">
-                        <span className="shrink-0 uppercase tracking-[0.3em] text-[color:var(--es-accent)]">Espace témoin</span>
+                <div className="mx-auto max-w-6xl px-4 md:px-14 min-h-[48px] py-1.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 text-[13px]">
+                    <div className="min-w-[max-content] md:min-w-0 flex-1 flex items-baseline gap-3">
+                        <span className="shrink-0 uppercase tracking-[0.16em] md:tracking-[0.3em] text-[color:var(--es-accent)]">Espace témoin</span>
                         <p className="hidden md:block min-w-0 truncate text-[color:var(--es-ink-2)]">{PROMESSE[famille]}</p>
                     </div>
                     <a
                         href={lienCreer}
-                        className="shrink-0 inline-flex items-center gap-2 min-h-[36px] px-4 rounded-full bg-[color:var(--es-accent)] text-[color:var(--es-accent-ink)] uppercase tracking-[0.2em] hover:brightness-110 transition"
+                        className="shrink-0 inline-flex items-center gap-2 min-h-[36px] px-3 md:px-4 rounded-full bg-[color:var(--es-accent)] text-[color:var(--es-accent-ink)] uppercase tracking-[0.1em] md:tracking-[0.2em] hover:brightness-110 transition"
                     >
                         Créer le vôtre
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden>
