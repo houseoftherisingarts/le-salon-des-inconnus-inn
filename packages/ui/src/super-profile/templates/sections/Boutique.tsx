@@ -73,7 +73,7 @@ const CarteProduit: React.FC<{ produit: ProduitEspace; language: 'EN' | 'FR'; ra
 
 export const BoutiqueSection: React.FC<SectionProps> = ({ config, language = 'FR' }) => {
     const t = useTexte(language);
-    const produits = config.produits ?? [];
+    const produits = (config.produits ?? []).filter((p) => p.nom?.trim());
     if (!sectionVisible(config, 'boutique') || produits.length === 0) return null;
     return (
         <SectionShell eyebrowEn="Shop" eyebrowFr="Boutique" language={language} id="boutique" tone="graphite">

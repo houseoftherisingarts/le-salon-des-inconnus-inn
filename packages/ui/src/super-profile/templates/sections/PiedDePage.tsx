@@ -5,12 +5,13 @@
 
 import * as React from 'react';
 import { useTexte } from '../shared';
-import { sectionVisible, type SectionProps } from './common';
+import type { SectionProps } from './common';
 import { CollantVexel } from './CollantVexel';
 
-export const PiedDePageSection: React.FC<SectionProps> = ({ config, language = 'FR' }) => {
+// Le pied de page et son collant restent sur tout espace rendu : l'atelier
+// ne l'offre plus comme section à éteindre.
+export const PiedDePageSection: React.FC<SectionProps> = ({ language = 'FR' }) => {
     const t = useTexte(language);
-    if (!sectionVisible(config, 'pied')) return null;
     return (
         <footer className="relative w-full bg-[#050505] border-t border-white/10 px-6 md:px-14 py-14">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">

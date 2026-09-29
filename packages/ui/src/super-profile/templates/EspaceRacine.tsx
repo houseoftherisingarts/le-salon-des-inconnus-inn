@@ -53,6 +53,7 @@ export const EspaceRacine: React.FC<EspaceRacineProps> = ({ famille, theme, clas
         <div
             className={`es-racine ${className ?? ''}`}
             data-palette={resolu.palette.id}
+            data-fonts={resolu.paire.id}
             data-sombre={resolu.palette.sombre ? 'oui' : 'non'}
             style={resolu.vars as React.CSSProperties}
         >

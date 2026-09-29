@@ -23,7 +23,7 @@ export function ordreSections(config: Pick<SuperProfileConfig, 'ordre'>, famille
 }
 
 /** Monte (-1) ou descend (+1) une section d'un cran; renvoie un nouvel ordre. */
-export function deplacer(ordre: SectionId[], id: SectionId, sens: -1 | 1): SectionId[] {
+export function deplacer<T>(ordre: T[], id: T, sens: -1 | 1): T[] {
     const i = ordre.indexOf(id);
     const j = i + sens;
     if (i < 0 || j < 0 || j >= ordre.length) return ordre;

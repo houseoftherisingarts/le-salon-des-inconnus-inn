@@ -10,6 +10,8 @@ import { getApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { familleGabarit } from './artistes';
+import { AtelierPistes } from './AtelierPistes';
+import { AtelierProduits } from './AtelierProduits';
 import {
     couvertureLivreStoragePath, oeuvreStoragePath,
     MAX_DATES, MAX_EXPOSITIONS, MAX_LIENS_ECOUTE, MAX_LIVRES, MAX_OEUVRES,
@@ -355,8 +357,10 @@ export const ProfilProAdminContenu: React.FC<ProfilProAdminContenuProps> = ({ ui
             )}
             {famille === 'peintre' && <BlocExpositions uid={uid} valeur={config.expositions ?? []} language={language} />}
             {famille === 'peintre' && <BlocAtelier uid={uid} valeur={config.atelier} language={language} />}
+            {famille === 'musicien' && <AtelierPistes uid={uid} valeur={config.pistes ?? []} language={language} />}
             {famille === 'musicien' && <BlocEcoute uid={uid} valeur={config.ecoute ?? []} language={language} />}
             {famille === 'musicien' && <BlocDates uid={uid} valeur={config.dates ?? []} language={language} />}
+            {famille === 'musicien' && <AtelierProduits uid={uid} valeur={config.produits ?? []} language={language} />}
             {famille === 'musicien' && <BlocPresse uid={uid} valeur={config.presse ?? []} lienEPK={config.lienEPK} language={language} />}
             {famille === 'ecrivain' && <BlocLivres uid={uid} valeur={config.livres ?? []} language={language} />}
         </div>

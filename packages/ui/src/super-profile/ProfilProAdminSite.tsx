@@ -1,6 +1,7 @@
 // ProfilProAdminSite : l'onglet « Mon site » du back-office. Type d'artiste,
 // adresse, nom, sous-ligne, bio, sections allumées ou éteintes, photo
-// découpée. Porte le même patron de brouillon local + bouton Enregistrer
+// découpée, allure (AtelierTheme) et ordre des sections (AtelierSections).
+// Le texte porte le même patron de brouillon local + bouton Enregistrer
 // que SuperProfileEditor, pour que rien ne s'écrive à chaque frappe.
 
 import * as React from 'react';
@@ -9,7 +10,9 @@ import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { LIBELLES_ARTISTE, ORDRE_TYPES, sectionsParDefaut } from './artistes';
 import { claimUsername, isSlugAvailable, slugifyDisplayName, validateUsername } from './usernames';
 import { HeroPhotoUploader } from './HeroPhotoUploader';
-import type { ArtistType, SectionId, SuperProfileConfig } from './types';
+import type { ArtistType, SuperProfileConfig } from './types';
+import { AtelierSections } from './AtelierSections';
+import { AtelierTheme } from './AtelierTheme';
 
 interface ProfilProAdminSiteProps {
     uid: string;
@@ -20,21 +23,6 @@ interface ProfilProAdminSiteProps {
 
 const CHAMP = 'w-full bg-black/40 border border-white/15 rounded-[15px] px-4 py-3 text-[#f3e5ab] placeholder-neutral-500 outline-none transition-colors focus:border-[#c5a059] font-lato';
 const LABEL = 'font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-2 block';
-
-const SECTIONS_ETIQUETTES: Record<SectionId, { en: string; fr: string }> = {
-    oeuvres: { en: 'Works', fr: 'Œuvres' },
-    ecoute: { en: 'Listen', fr: 'Écoute' },
-    dates: { en: 'Dates', fr: 'Dates' },
-    presse: { en: 'Press', fr: 'Presse' },
-    expositions: { en: 'Exhibitions', fr: 'Expositions' },
-    livres: { en: 'Books', fr: 'Livres' },
-    bio: { en: 'About', fr: 'Démarche' },
-    atelier: { en: 'Studio', fr: 'Atelier' },
-    rendezvous: { en: 'Appointment', fr: 'Rendez-vous' },
-    contact: { en: 'Contact', fr: 'Contact' },
-    liens: { en: 'Links', fr: 'Liens' },
-    pied: { en: 'Footer', fr: 'Pied de page' },
-};
 
 let compteurSlugCheck = 0;
 
@@ -47,7 +35,6 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
     const [displayName, setDisplayName] = React.useState(config.displayName ?? fallbackDisplayName ?? '');
     const [tagline, setTagline] = React.useState(config.tagline ?? '');
     const [bio, setBio] = React.useState(config.bio ?? '');
-    const [sections, setSections] = React.useState(config.sections ?? sectionsParDefaut(config.type ?? 'autre'));
     const [modifie, setModifie] = React.useState(false);
     const [enregistrement, setEnregistrement] = React.useState(false);
     const [enregistre, setEnregistre] = React.useState(false);
@@ -59,7 +46,6 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
         setDisplayName(config.displayName ?? fallbackDisplayName ?? '');
         setTagline(config.tagline ?? '');
         setBio(config.bio ?? '');
-        setSections(config.sections ?? sectionsParDefaut(config.type ?? 'autre'));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [config, modifie]);
 
@@ -78,14 +64,6 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
 
     const changerType = (nouveauType: ArtistType) => {
         setType(nouveauType);
-        // Un profil qui n'a jamais eu de sections choisies reprend les
-        // défauts du nouveau type ; un profil déjà configuré garde ses choix.
-        if (!config.sections) setSections(sectionsParDefaut(nouveauType));
-        setModifie(true);
-    };
-
-    const basculerSection = (id: SectionId) => {
-        setSections((s) => ({ ...s, [id]: s[id] === false ? true : false }));
         setModifie(true);
     };
 
@@ -107,7 +85,9 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
                 displayName: displayName.trim().slice(0, 120),
                 tagline: tagline.trim().slice(0, 200),
                 bio: bio.trim().slice(0, 4000),
-                sections,
+                // Un profil qui n'a jamais eu de sections choisies prend les
+                // défauts de son type; ensuite, l'atelier des sections les écrit.
+                ...(config.sections ? {} : { sections: sectionsParDefaut(type) }),
                 updatedAt: serverTimestamp(),
             }, { merge: true });
             setModifie(false);
@@ -202,27 +182,9 @@ export const ProfilProAdminSite: React.FC<ProfilProAdminSiteProps> = ({ uid, con
                 />
             </div>
 
-            <div>
-                <span className={LABEL}>{t('Sections shown on the page', 'Sections affichées sur la page')}</span>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {(Object.keys(SECTIONS_ETIQUETTES) as SectionId[]).map((id) => {
-                        const allumee = sections[id] !== false;
-                        return (
-                            <button
-                                key={id}
-                                type="button"
-                                onClick={() => basculerSection(id)}
-                                className={`flex items-center justify-between px-4 py-2.5 rounded-[10px] border transition-colors ${
-                                    allumee ? 'border-[#c5a059]/50 bg-[#c5a059]/10 text-[#f3e5ab]' : 'border-white/10 text-neutral-500'
-                                }`}
-                            >
-                                <span className="font-lato text-sm">{language === 'FR' ? SECTIONS_ETIQUETTES[id].fr : SECTIONS_ETIQUETTES[id].en}</span>
-                                <span className="font-cinzel text-[13px] uppercase tracking-[0.2em]">{allumee ? t('On', 'On') : t('Off', 'Off')}</span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
+            <AtelierTheme uid={uid} config={config} type={type} language={language} />
+
+            <AtelierSections uid={uid} config={config} type={type} language={language} />
 
             <div className="flex items-center gap-4">
                 <button

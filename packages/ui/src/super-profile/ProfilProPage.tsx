@@ -113,6 +113,10 @@ export const ProfilProPage: React.FC<ProfilProPageProps> = ({ slug, hostname, la
                             expositions: data.expositions,
                             livres: data.livres,
                             atelier: data.atelier,
+                            ordre: data.ordre,
+                            theme: data.theme,
+                            produits: data.produits,
+                            pistes: data.pistes,
                         },
                         displayName,
                     });
