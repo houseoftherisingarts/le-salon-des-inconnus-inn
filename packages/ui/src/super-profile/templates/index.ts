@@ -10,15 +10,18 @@ import { PeintreTemplate } from './PeintreTemplate';
 import { MusicienTemplate } from './MusicienTemplate';
 import { PhotoTemplate } from './PhotoTemplate';
 import { EditorialTemplate } from './EditorialTemplate';
+import { AuteurTemplate } from './AuteurTemplate';
 
-/** Le composant à monter pour un type d'artiste donné. */
+/** Le composant à monter pour un type d'artiste donné. « Autre pratique »
+ *  partage la famille de l'écrivain mais garde le gabarit éditorial qu'on
+ *  lui promet dans l'atelier. */
 export function gabaritPour(type: ArtistType): React.FC<TemplateProps> {
     switch (familleGabarit(type)) {
         case 'peintre': return PeintreTemplate;
         case 'musicien': return MusicienTemplate;
         case 'photographe': return PhotoTemplate;
         case 'ecrivain':
-        default: return EditorialTemplate;
+        default: return type === 'ecrivain' ? AuteurTemplate : EditorialTemplate;
     }
 }
 
@@ -27,5 +30,6 @@ export { MusicienTemplate } from './MusicienTemplate';
 export { PhotoTemplate } from './PhotoTemplate';
 export { VisualArtTemplate } from './VisualArtTemplate';
 export { EditorialTemplate } from './EditorialTemplate';
+export { AuteurTemplate } from './AuteurTemplate';
 export * from './sections';
 export type { TemplateProps } from './shared';

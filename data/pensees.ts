@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-09-29",
+        title_fr: "La corvée",
+        title_en: "The work bee",
+        body_fr: "Les campagnes d'autrefois avaient un mot pour l'ouvrage trop grand pour une seule famille : la corvée. Quand venait le temps de lever une grange ou de rentrer les récoltes avant la pluie, les voisins arrivaient au matin avec leurs outils, la journée se passait à travailler ensemble et elle se terminait en tablée, en musique et en danse, si bien que les anciens en parlaient comme d'une fête. Le mot a mal vieilli; nous l'employons aujourd'hui pour nommer les tâches qui nous pèsent, comme si le siècle avait gardé l'effort et perdu les voisins. La charge, pourtant, n'a jamais changé de poids. Une grange se lève mal à bras seuls, et la même poutre devient légère le jour où dix mains la prennent en même temps. Je me demande combien de fardeaux de nos vies sont des corvées au sens ancien, qui attendent seulement qu'on ose inviter quelqu'un à les porter. Quelle poutre est-ce que je m'entête à lever seul, quand la fête serait de la lever ensemble?",
+        body_en: "The countryside of old had a word for work too large for a single family: the corvée, cousin to the barn-raising bees of English tradition. When the time came to raise a barn or bring in the harvest before the rain, the neighbours arrived in the morning with their tools, the day was spent working side by side, and it ended in a shared table, music and dancing, so that the elders spoke of it as a feast. The word has aged badly in French; we use it now to name the chores that weigh on us, as if the century had kept the effort and lost the neighbours. And yet the load has never changed its weight. A barn rises poorly by one pair of arms, and the same beam turns light on the day ten hands take hold of it at once. I wonder how many of the burdens in our lives are corvées in the old sense, waiting only for us to dare invite someone to carry them. Which beam am I stubbornly lifting alone, when the feast would be to raise it together?",
+    },
+    {
         date: "2026-09-28",
         title_fr: "Le banc devant la porte",
         title_en: "The bench by the door",

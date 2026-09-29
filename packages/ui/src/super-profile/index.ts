@@ -79,7 +79,7 @@ export { ProfilProAdminAbonnement } from './ProfilProAdminAbonnement';
 export { ProfilProPage } from './ProfilProPage';
 export type { ProfilProPageProps } from './ProfilProPage';
 
-export { gabaritPour, PeintreTemplate, MusicienTemplate, PhotoTemplate, VisualArtTemplate, EditorialTemplate } from './templates';
+export { gabaritPour, PeintreTemplate, MusicienTemplate, PhotoTemplate, VisualArtTemplate, EditorialTemplate, AuteurTemplate } from './templates';
 export * from './templates/sections';
 export type { TemplateProps } from './templates';
 
