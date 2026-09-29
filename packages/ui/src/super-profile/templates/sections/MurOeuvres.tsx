@@ -88,7 +88,7 @@ const Toile: React.FC<{ oeuvre: OeuvreProfilPro; rang: number; language: 'EN' | 
     const t = useTexte(language);
     const cadreRef = React.useRef<HTMLDivElement>(null);
     const echelle = aDimensions(oeuvre);
-    const details = [oeuvre.technique, echelle ? formatCm(oeuvre.largeurCm!, oeuvre.hauteurCm!) : oeuvre.dimensions].filter(Boolean).join(' · ');
+    const details = [oeuvre.technique, echelle ? undefined : oeuvre.dimensions].filter(Boolean).join(' · ');
     const ratio = echelle ? `${oeuvre.largeurCm} / ${oeuvre.hauteurCm}` : undefined;
     const titre = oeuvre.titre || oeuvre.caption || '';
 
@@ -142,10 +142,12 @@ const Toile: React.FC<{ oeuvre: OeuvreProfilPro; rang: number; language: 'EN' | 
                     <button
                         type="button"
                         onClick={onEchelle}
+                        title={t('See it to scale in a room', 'Voir à l’échelle, dans une pièce')}
+                        aria-label={t(`${titre}, to scale`, `${titre}, à l’échelle`)}
                         className="shrink-0 inline-flex items-center gap-2 min-h-[44px] px-4 rounded-full border border-[color:var(--es-line)] es-label text-[13px] uppercase tracking-[0.2em] text-[color:var(--es-ink)] hover:border-[color:var(--es-accent)] hover:text-[color:var(--es-accent)] transition-colors"
                     >
                         <IconeRegle className="w-4 h-4" />
-                        {t('To scale', 'À l’échelle')}
+                        <span className="normal-case tabular-nums tracking-[0.06em]">{formatCm(oeuvre.largeurCm!, oeuvre.hauteurCm!)}</span>
                     </button>
                 )}
             </figcaption>
@@ -171,8 +173,8 @@ export const MurOeuvresSection: React.FC<SectionProps> = ({ config, language = '
                         <h2 className="es-display text-[color:var(--es-ink)] text-4xl md:text-6xl leading-[1.05]">{t('The wall', 'Le mur')}</h2>
                     </div>
                     <p className="es-body text-[15px] text-[color:var(--es-ink-2)] max-w-sm">
-                        <span className="hidden [@media(hover:hover)]:inline">{t('Move over a canvas to light it. Click a work to see it to scale.', 'Promenez la souris sur une toile pour l’éclairer. Un clic la pose à l’échelle, dans une pièce.')}</span>
-                        <span className="[@media(hover:hover)]:hidden">{t('Each canvas lights up as it arrives. Tap one to see it to scale.', 'Chaque toile s’éclaire à son arrivée. Touchez-en une pour la voir à l’échelle.')}</span>
+                        <span className="hidden [@media(hover:hover)]:inline">{t('Move over a canvas to light it. Click a work to see it to scale.', 'Promenez la souris sur une toile pour l’éclairer. Un clic sur ses dimensions la pose à l’échelle, dans une pièce.')}</span>
+                        <span className="[@media(hover:hover)]:hidden">{t('Each canvas lights up as it arrives. Tap one to see it to scale.', 'Chaque toile s’éclaire à son arrivée. Touchez ses dimensions pour la voir à l’échelle, dans une pièce.')}</span>
                     </p>
                 </div>
                 <div ref={murRef} className="columns-1 sm:columns-2 lg:columns-3 gap-8 md:gap-14">

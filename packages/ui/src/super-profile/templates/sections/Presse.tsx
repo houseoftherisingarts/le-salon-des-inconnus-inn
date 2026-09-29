@@ -26,10 +26,10 @@ export const PresseSection: React.FC<SectionProps> = ({ config, language = 'FR' 
                 )}
             </div>
             {citations.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`grid grid-cols-1 gap-4 ${citations.length > 1 ? 'md:grid-cols-2' : ''}`}>
                     {citations.map((c, i) => (
-                        <blockquote key={i} className={`p-6 ${CARD_GLASS}`}>
-                            <p className="es-display text-[color:var(--es-ink)] text-lg leading-snug">&laquo;&nbsp;{c.citation}&nbsp;&raquo;</p>
+                        <blockquote key={i} className={`${citations.length > 1 ? 'p-6' : 'p-8 md:p-12'} ${CARD_GLASS}`}>
+                            <p className={`es-display text-[color:var(--es-ink)] leading-snug ${citations.length > 1 ? 'text-lg' : 'text-2xl md:text-3xl max-w-4xl'}`}>&laquo;&nbsp;{c.citation}&nbsp;&raquo;</p>
                             {(c.source || c.lienArticle) && (
                                 <footer className="mt-4 es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-ink-2)]">
                                     {c.lienArticle ? (

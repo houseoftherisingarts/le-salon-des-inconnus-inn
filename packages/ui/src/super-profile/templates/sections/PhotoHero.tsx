@@ -81,18 +81,18 @@ export const PhotoHero: React.FC<Props> = ({ config, fallbackDisplayName, langua
                 aria-hidden
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                    background: 'linear-gradient(to top, color-mix(in srgb, var(--es-bg) 92%, transparent) 0%, color-mix(in srgb, var(--es-bg) 45%, transparent) 38%, color-mix(in srgb, var(--es-bg) 8%, transparent) 70%, color-mix(in srgb, var(--es-bg) 30%, transparent) 100%)',
+                    background: 'linear-gradient(to top, color-mix(in srgb, var(--es-bg) 97%, transparent) 0%, color-mix(in srgb, var(--es-bg) 88%, transparent) 30%, color-mix(in srgb, var(--es-bg) 55%, transparent) 50%, color-mix(in srgb, var(--es-bg) 0%, transparent) 72%, color-mix(in srgb, var(--es-bg) 25%, transparent) 100%)',
                 }}
             />
             <div aria-hidden className="absolute inset-0 pointer-events-none bg-[color:var(--es-bg)]" style={{ opacity: 'calc(var(--es-allumage) * 0.55)' }} />
 
             {/* Le viseur. */}
-            <div aria-hidden className="absolute inset-5 md:inset-10 pointer-events-none">
+            <div aria-hidden className="absolute inset-x-5 md:inset-x-10 top-20 md:top-24 bottom-5 md:bottom-10 pointer-events-none">
                 <Coin className="left-0 top-0 border-l-2 border-t-2" />
                 <Coin className="right-0 top-0 border-r-2 border-t-2" />
                 <Coin className="left-0 bottom-0 border-l-2 border-b-2" />
                 <Coin className="right-0 bottom-0 border-r-2 border-b-2" />
-                <div className="es-coin absolute right-5 md:right-8 top-16 md:top-6 flex items-center gap-4 es-label text-[13px] tracking-[0.2em] tabular-nums text-[color:var(--es-ink)]">
+                <div className="es-coin absolute right-5 md:right-8 top-5 md:top-6 flex items-center gap-4 es-label text-[13px] tracking-[0.2em] tabular-nums text-[color:var(--es-ink)]">
                     <span className="w-2 h-2 rounded-full bg-[color:var(--es-accent)] animate-pulse" />
                     <span>f/2.8</span>
                     <span>1/250</span>
@@ -106,7 +106,7 @@ export const PhotoHero: React.FC<Props> = ({ config, fallbackDisplayName, langua
                 style={{ transform: 'translateY(calc(var(--es-allumage) * -40px))' }}
             >
                 <div className="max-w-[1480px] mx-auto">
-                    <p className="es-label es-monte text-[13px] uppercase tracking-[0.45em] text-[color:var(--es-accent)] mb-5" style={{ animationDelay: '1s' }}>
+                    <p className="es-label es-monte text-[13px] uppercase tracking-[0.45em] text-[color:var(--es-ink)] mb-5" style={{ animationDelay: '1s' }}>
                         {t('Photography · Series · Sessions', 'Photographie · Séries · Séances')}
                     </p>
                     <h1
