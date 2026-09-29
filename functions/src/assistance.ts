@@ -11,7 +11,7 @@
 import * as admin from 'firebase-admin';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
-import { stripeFetch } from './profilPro';
+import { PROJET, stripeFetch } from './profilPro';
 import { line, notifyAlex } from './courriel';
 
 if (admin.apps.length === 0) {
