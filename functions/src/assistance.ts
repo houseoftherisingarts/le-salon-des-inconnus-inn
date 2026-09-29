@@ -70,6 +70,23 @@ export async function traiterAssistancePayee(objet: Record<string, any>): Promis
     console.error('Assistance payée sans uid, session', objet.id);
     return;
   }
+  // checkout.session.completed arrive aussi pour une session non réglée
+  // (paiement différé) : seule une session payée, du bon montant en CAD, compte.
+  if (objet.payment_status !== 'paid') {
+    console.warn('Assistance : session non payée ignorée', objet.id, objet.payment_status);
+    return;
+  }
+  if ((objet.amount_total ?? 0) < PRIX_ASSISTANCE_CENTS || objet.currency !== 'cad') {
+    console.error('Assistance : montant ou devise inattendus', objet.id, objet.amount_total, objet.currency);
+    return;
+  }
+  // Stripe relivre parfois un événement : la même session ne s'écrit qu'une fois,
+  // et un appel déjà fait (statut posé par Alex) ne redescend jamais à « payee ».
+  const ficheRef = admin.firestore().doc(`assistances/${uid}`);
+  const existante = (await ficheRef.get()).data();
+  if (existante?.stripeSessionId === objet.id || existante?.statut === 'appel-fait') {
+    return;
+  }
   const details = objet.customer_details ?? {};
   const fiche = {
     statut: 'payee',
