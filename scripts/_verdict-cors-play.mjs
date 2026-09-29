@@ -54,12 +54,26 @@ const fetchResult = async (url) => {
 
 const pisteFetch = await fetchResult(pisteUrl);
 
+// objet Storage réel (image de galerie) trouvé sur /apercu/peintre
+const p2 = await c.newPage();
+await p2.goto('https://inconnus-salon.web.app/apercu/peintre', { waitUntil: 'networkidle' });
+await p2.waitForTimeout(1500);
+const storageImgUrl = await p2.evaluate(() => {
+  const imgs = Array.from(document.querySelectorAll('img'));
+  const hit = imgs.find((i) => /firebasestorage/.test(i.src));
+  return hit ? hit.src : null;
+});
+const storageFetch = await fetchResult2(p2, storageImgUrl);
+await p2.close();
+
 const rapport = {
   clicked,
   pisteUrl,
   consoleMsgsCount: consoleMsgs.length,
   fautesCors,
   pisteFetch,
+  storageImgUrl,
+  storageFetch,
 };
 fs.writeFileSync(`${OUT}/rapport-cors-play.json`, JSON.stringify(rapport, null, 2));
 console.log(JSON.stringify(rapport, null, 2));
