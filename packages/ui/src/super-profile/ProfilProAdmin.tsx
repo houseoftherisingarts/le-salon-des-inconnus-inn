@@ -54,8 +54,8 @@ const OffrePage: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => {
                 </h2>
                 <p className="font-lato text-neutral-400 text-base leading-relaxed">
                     {t(
-                        'Your artist page, your own address, appointment booking with a video room, and your back office to run it all. 100 dollars a month before tax, no commitment, cancel anytime from the portal.',
-                        'Votre page d’artiste, votre propre adresse, la prise de rendez-vous avec salle vidéo, et votre back-office pour tout gérer. 100 $ par mois avant taxes, sans engagement, résiliable en tout temps depuis le portail.',
+                        'Your artist page, your own address, appointment booking with a video room, and your back office to run it all. 80 dollars a month before tax, no commitment, cancel anytime from the portal.',
+                        'Votre page d’artiste, votre propre adresse, la prise de rendez-vous avec salle vidéo, et votre back-office pour tout gérer. 80 $ par mois avant taxes, sans engagement, résiliable en tout temps depuis le portail.',
                     )}
                 </p>
             </div>
@@ -87,8 +87,8 @@ const OffrePage: React.FC<{ language: 'EN' | 'FR' }> = ({ language }) => {
                 {erreur && <p role="alert" className="text-sm text-rose-300 font-lato mt-3">{erreur}</p>}
                 <p className="font-lato text-sm text-neutral-500 mt-4 max-w-md">
                     {t(
-                        'Prefer an e-transfer? Send 100 dollars to alex@lesalondesinconnus.com with your artist name in the message, and your Profil Pro turns on the same day.',
-                        'Vous préférez un virement Interac ? Envoyez 100 $ à alex@lesalondesinconnus.com avec votre nom d’artiste en message, et votre Profil Pro s’allume dans la journée.',
+                        'Prefer an e-transfer? Send 80 dollars to alex@lesalondesinconnus.com with your artist name in the message, and your Profil Pro turns on the same day.',
+                        'Vous préférez un virement Interac ? Envoyez 80 $ à alex@lesalondesinconnus.com avec votre nom d’artiste en message, et votre Profil Pro s’allume dans la journée.',
                     )}
                 </p>
             </div>

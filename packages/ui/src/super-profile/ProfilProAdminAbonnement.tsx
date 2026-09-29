@@ -47,7 +47,7 @@ export const ProfilProAdminAbonnement: React.FC<ProfilProAdminAbonnementProps> =
             <div>
                 <h3 className="font-prata text-[#f3e5ab] text-2xl mb-2">{t('Subscription', 'Abonnement')}</h3>
                 <p className="font-lato text-neutral-400 text-sm">
-                    {t('Your Profil Pro plan, 100 dollars a month before tax, cancel anytime from the portal.', 'Votre Profil Pro, 100 $ par mois avant taxes, résiliable en tout temps depuis le portail.')}
+                    {t('Your Profil Pro plan, 80 dollars a month before tax, cancel anytime from the portal.', 'Votre Profil Pro, 80 $ par mois avant taxes, résiliable en tout temps depuis le portail.')}
                 </p>
             </div>
 
