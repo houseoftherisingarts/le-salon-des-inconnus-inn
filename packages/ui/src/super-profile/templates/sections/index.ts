@@ -16,5 +16,8 @@ export { BoutiqueSection } from './Boutique';
 export { MusicienHero } from './MusicienHero';
 export { ListePistes } from './Pistes';
 export { PiedDePageSection } from './PiedDePage';
+export { PeintreHero } from './PeintreHero';
+export { MurOeuvresSection } from './MurOeuvres';
+export { PieceEchelle } from './PieceEchelle';
 export { sectionVisible, SectionShell, SectionTitle, CARD_GLASS, formatPrixCents, formatDateCourte } from './common';
 export type { SectionProps } from './common';

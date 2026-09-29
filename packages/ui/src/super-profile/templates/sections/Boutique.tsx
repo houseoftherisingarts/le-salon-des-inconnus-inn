@@ -4,7 +4,9 @@
 // ou Zeffy, et un produit vendu garde sa place avec un ruban « Vendu ».
 
 import * as React from 'react';
-import { lienPaiementValide, type ProduitEspace } from '../../types';
+import { lienPaiementValide, type OeuvreProfilPro, type ProduitEspace } from '../../types';
+import { deduireType, familleGabarit } from '../../artistes';
+import { formatCm, aDimensions } from './PieceEchelle';
 import { useTexte } from '../shared';
 import { sectionVisible, SectionShell, SectionTitle, type SectionProps } from './common';
 
@@ -14,7 +16,24 @@ function prixTexte(prix?: number): string | null {
     return `${Number.isInteger(arrondi) ? arrondi : arrondi.toLocaleString('fr-CA', { minimumFractionDigits: 2 })} $`;
 }
 
-const CarteProduit: React.FC<{ produit: ProduitEspace; language: 'EN' | 'FR'; rang: number }> = ({ produit, language, rang }) => {
+/** Une toile à vendre (ou vendue) du mur, en produit de la boutique. */
+function oeuvreEnProduit(o: OeuvreProfilPro, i: number): ProduitEspace | null {
+    const vendu = o.statutVente === 'vendu';
+    const achetable = o.statutVente === 'a-vendre' && lienPaiementValide(o.lienVente);
+    if (!vendu && !achetable) return null;
+    const mesures = aDimensions(o) ? formatCm(o.largeurCm!, o.hauteurCm!) : o.dimensions;
+    return {
+        id: `oeuvre-${i}`,
+        nom: o.titre || o.caption || '',
+        description: [o.technique, mesures, o.annee].filter(Boolean).join(' · ') || undefined,
+        prix: typeof o.prixCents === 'number' && o.prixCents > 0 ? o.prixCents / 100 : undefined,
+        photo: { url: o.url, storagePath: o.storagePath },
+        lien: achetable ? o.lienVente : undefined,
+        vendu,
+    };
+}
+
+const CarteProduit: React.FC<{ produit: ProduitEspace; language: 'EN' | 'FR'; rang: number; toile?: boolean }> = ({ produit, language, rang, toile }) => {
     const t = useTexte(language);
     const prix = prixTexte(produit.prix);
     const achetable = !produit.vendu && lienPaiementValide(produit.lien);
@@ -23,13 +42,13 @@ const CarteProduit: React.FC<{ produit: ProduitEspace; language: 'EN' | 'FR'; ra
             className="es-verre group relative overflow-hidden flex flex-col es-monte"
             style={{ animationDelay: `${Math.min(rang, 6) * 90}ms` }}
         >
-            <div className="relative aspect-square overflow-hidden bg-[color:var(--es-bg-2)]">
+            <div className={`relative aspect-square overflow-hidden ${toile ? 'bg-[color:var(--es-bg)]' : 'bg-[color:var(--es-bg-2)]'}`}>
                 {produit.photo?.url ? (
                     <img
                         src={produit.photo.url}
                         alt={produit.nom}
                         loading="lazy"
-                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${produit.vendu ? 'grayscale opacity-70' : ''}`}
+                        className={`absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.04] ${toile ? 'object-contain p-6 md:p-8' : 'object-cover'} ${produit.vendu ? 'grayscale opacity-70' : ''}`}
                     />
                 ) : (
                     <div aria-hidden className="absolute inset-0 flex items-center justify-center bg-[color:var(--es-tint)]">
@@ -73,13 +92,18 @@ const CarteProduit: React.FC<{ produit: ProduitEspace; language: 'EN' | 'FR'; ra
 
 export const BoutiqueSection: React.FC<SectionProps> = ({ config, language = 'FR' }) => {
     const t = useTexte(language);
+    const peintre = familleGabarit(deduireType(config)) === 'peintre';
+    // Chez le peintre, les toiles à vendre du mur passent en tête, avant les
+    // produits (reproductions, carnets); la carte se lit alors en passe-partout.
+    const toiles = peintre ? (config.oeuvres ?? []).map(oeuvreEnProduit).filter((p): p is ProduitEspace => !!p && !!p.nom.trim()) : [];
     const produits = (config.produits ?? []).filter((p) => p.nom?.trim());
-    if (!sectionVisible(config, 'boutique') || produits.length === 0) return null;
+    if (!sectionVisible(config, 'boutique') || toiles.length + produits.length === 0) return null;
     return (
         <SectionShell eyebrowEn="Shop" eyebrowFr="Boutique" language={language} id="boutique" tone="graphite">
-            <SectionTitle>{t('Take the music home', 'La musique chez vous')}</SectionTitle>
+            <SectionTitle>{peintre ? t('Works looking for a wall', 'Des toiles qui cherchent un mur') : t('Take the music home', 'La musique chez vous')}</SectionTitle>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-                {produits.map((p, i) => <CarteProduit key={p.id} produit={p} language={language} rang={i} />)}
+                {toiles.map((p, i) => <CarteProduit key={p.id} produit={p} language={language} rang={i} toile />)}
+                {produits.map((p, i) => <CarteProduit key={p.id} produit={p} language={language} rang={toiles.length + i} />)}
             </div>
         </SectionShell>
     );

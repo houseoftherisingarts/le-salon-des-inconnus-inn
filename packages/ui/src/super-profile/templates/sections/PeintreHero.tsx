@@ -25,6 +25,8 @@ const STYLE_HERO = `
 .es-cone{transform-origin:top center;animation:es-cone 1.1s cubic-bezier(.2,.7,.2,1) .35s both;}
 .es-racine{--es-lumiere:color-mix(in srgb, var(--es-ink) 16%, transparent);}
 .es-racine[data-sombre="non"]{--es-lumiere:color-mix(in srgb, white 80%, transparent);}
+.es-toile-hero{--es-h:44svh;}
+@media (min-width:768px){.es-toile-hero{--es-h:62svh;}}
 @media (prefers-reduced-motion: reduce){.es-salle-noire{display:none;}}
 `;
 
@@ -96,7 +98,7 @@ export const PeintreHero: React.FC<Props> = ({ config, fallbackDisplayName, lang
                             aria-label={peutEchelle ? t('See the work to scale', 'Voir l’œuvre à l’échelle') : undefined}
                             className="es-toile-hero relative block disabled:cursor-default enabled:cursor-zoom-in"
                             style={{
-                                width: `min(100%, calc(62svh * ${ratio}))`,
+                                width: `min(100%, calc(var(--es-h) * ${ratio}))`,
                                 aspectRatio: String(ratio),
                                 transform: 'scale(calc(1 + var(--es-allumage) * 0.035))',
                                 boxShadow: '0 50px 90px -40px color-mix(in srgb, black 70%, transparent), 0 0 120px -20px var(--es-glow)',
