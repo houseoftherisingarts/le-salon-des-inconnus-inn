@@ -97,7 +97,7 @@ export async function traiterAssistancePayee(objet: Record<string, any>): Promis
     stripeSessionId: objet.id ?? null,
     montant: objet.amount_total ?? PRIX_ASSISTANCE_CENTS,
   };
-  await admin.firestore().doc(`assistances/${uid}`).set(fiche, { merge: true });
+  await ficheRef.set(fiche, { merge: true });
 
   let nomArtiste = '';
   try {
