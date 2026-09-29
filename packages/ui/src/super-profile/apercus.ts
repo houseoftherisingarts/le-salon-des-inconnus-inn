@@ -39,11 +39,11 @@ export const APERCUS: Record<string, SuperProfileConfig> = {
             piste('p3', 'Dernier traversier', 4),
         ],
         dates: [
-            { date: '2026-10-17', lieu: 'Le Quai des Brumes', ville: 'Gatineau' },
+            { date: '2026-10-17', lieu: 'Le Quai des Lanternes', ville: 'Gatineau' },
             { date: '2026-11-07', lieu: 'Salle du Vieux Moulin', ville: 'Papineauville' },
             { date: '2026-11-28', lieu: 'Café de la Traverse', ville: 'Rimouski' },
             { date: '2027-01-23', lieu: 'Le Hangar à bateaux', ville: 'Gaspé' },
-            { date: '2027-02-13', lieu: 'Théâtre des Deux Rives', ville: 'Montréal' },
+            { date: '2027-02-13', lieu: 'Théâtre du Pont-Levis', ville: 'Montréal' },
         ],
         produits: [
             produit('v1', 'Route 148, le vinyle', 'Douze chansons pressées sur vinyle rouge, avec les paroles glissées dans la pochette.', 38, 'vermeil-vinyle.svg'),
@@ -52,7 +52,7 @@ export const APERCUS: Record<string, SuperProfileConfig> = {
         ],
         presse: [
             { citation: 'Une guitare qui sent l’asphalte mouillé et une voix qui a dormi dans sa voiture plus souvent qu’à son tour.', source: 'La Gazette des Deux Rives' },
-            { citation: 'Le genre de spectacle où la salle se lève sans que personne ne l’ait demandé.', source: 'Radio Petite-Nation' },
+            { citation: 'Le genre de spectacle où la salle se lève sans que personne ne l’ait demandé.', source: 'Les Ondes de la Nation' },
         ],
         bio: 'Oscar Vermeil a appris la guitare dans le garage de son oncle, entre un moteur de motoneige et une radio qui ne captait que les stations de blues américaines. Ses chansons parlent des routes qu’il a faites pour aller jouer, des villages où il est resté plus longtemps que prévu et des gens qui lui ont offert le café après le spectacle. Il tourne seul ou en trio, avec la même vieille Telecaster et un ampli qui a survécu à trois hivers dans une camionnette.',
     },
@@ -63,7 +63,7 @@ export const APERCUS: Record<string, SuperProfileConfig> = {
         type: 'musicien',
         works: [],
         displayName: 'Clémence Aubier',
-        tagline: 'Violon classique et répertoire de chambre, joué de près, dans des salles où l’on entend le bois.',
+        tagline: 'Violon classique et répertoire de chambre, joué de près, dans des salles où le bois s’entend.',
         theme: { palette: 'vinyle', fonts: 'chaleur' },
         sections: { ...SECTIONS_APERCU },
         pistes: [
@@ -73,8 +73,8 @@ export const APERCUS: Record<string, SuperProfileConfig> = {
         ],
         dates: [
             { date: '2026-10-24', lieu: 'Chapelle Saint-Hubert', ville: 'Montebello' },
-            { date: '2026-12-12', lieu: 'Maison de la culture', ville: 'Sherbrooke' },
-            { date: '2027-01-30', lieu: 'Salle Bourgie des Pins', ville: 'Québec' },
+            { date: '2026-12-12', lieu: 'Maison des Arts du Lac', ville: 'Sherbrooke' },
+            { date: '2027-01-30', lieu: 'Salle des Pins gris', ville: 'Québec' },
             { date: '2027-02-20', lieu: 'Grange des Érables', ville: 'Knowlton' },
         ],
         produits: [
@@ -86,7 +86,7 @@ export const APERCUS: Record<string, SuperProfileConfig> = {
             { citation: 'Elle joue comme si la salle entière retenait le même souffle, et c’est probablement le cas.', source: 'Le Carnet musical de l’Estrie' },
             { citation: 'Un archet précis et généreux, qui laisse la place au silence entre les phrases.', source: 'Revue Contrepoint' },
         ],
-        bio: 'Clémence Aubier joue du violon depuis l’âge de six ans et donne aujourd’hui des récitals dans les petites salles du Québec, celles où le public est assez proche pour voir l’archet trembler. Son répertoire va de Vivaldi aux compositeurs d’ici, et elle aime glisser entre deux mouvements l’histoire de la pièce qu’elle s’apprête à jouer. Elle enseigne aussi, le mardi et le jeudi, à une douzaine d’élèves qui la suivent parfois en tournée.',
+        bio: 'Clémence Aubier joue du violon depuis l’âge de six ans et donne aujourd’hui des récitals dans les petites salles du Québec, celles où le public est assez proche pour voir l’archet trembler. Son répertoire va des maîtres baroques aux compositeurs d’ici, et elle aime glisser entre deux mouvements l’histoire de la pièce qu’elle s’apprête à jouer. Elle enseigne aussi, le mardi et le jeudi, à une douzaine d’élèves qui la suivent parfois en tournée.',
     },
 };
 
