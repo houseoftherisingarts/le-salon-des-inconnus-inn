@@ -40,17 +40,16 @@ const fautesCors = consoleMsgs.filter((t) => /cors|outputs zeroes|blocked/i.test
 // fetch CORS depuis la page : une piste locale (même origine) et un objet Storage
 const pisteUrl = await p.evaluate(() => document.querySelector('audio')?.src || null);
 
-const fetchResult = async (url) => {
-  if (!url) return null;
-  return p.evaluate(async (u) => {
-    try {
-      const r = await fetch(u, { mode: 'cors' });
-      return { ok: r.ok, status: r.status, type: r.headers.get('content-type') };
-    } catch (e) {
-      return { ok: false, error: String(e) };
-    }
-  }, url);
+const fetchImpl = async (u) => {
+  try {
+    const r = await fetch(u, { mode: 'cors' });
+    return { ok: r.ok, status: r.status, type: r.headers.get('content-type') };
+  } catch (e) {
+    return { ok: false, error: String(e) };
+  }
 };
+const fetchResult = async (url) => (url ? p.evaluate(fetchImpl, url) : null);
+const fetchResult2 = async (page, url) => (url ? page.evaluate(fetchImpl, url) : null);
 
 const pisteFetch = await fetchResult(pisteUrl);
 
