@@ -12,7 +12,7 @@ import {
 export const MusicienTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDisplayName, language = 'FR' }) => {
     const fondUrl = config.works?.[0]?.url ?? config.oeuvres?.[0]?.url;
     return (
-        <div className="bg-[#050505] text-white font-lato">
+        <div className="text-[color:var(--es-ink)] es-body">
             <HeroSection
                 config={config}
                 fallbackDisplayName={fallbackDisplayName}

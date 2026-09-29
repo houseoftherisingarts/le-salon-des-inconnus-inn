@@ -32,7 +32,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     const count = countProp ?? (config.oeuvres?.length || config.works?.length || 0);
 
     return (
-        <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
+        <div className="relative min-h-screen text-[color:var(--es-ink)] overflow-hidden es-body">
             <BackToSalonLink />
 
             {/* ── Fond ────────────────────────────────────────────────── */}
@@ -49,8 +49,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         aria-hidden
                         className={
                             ambiance === 'galerie'
-                                ? 'absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1208] to-[#050505]'
-                                : 'absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#050505] to-[#0a0a0a]'
+                                ? 'absolute inset-0 bg-gradient-to-br from-[color:var(--es-bg-2)] via-[color:var(--es-tint)] to-[color:var(--es-bg)]'
+                                : 'absolute inset-0 bg-gradient-to-b from-[color:var(--es-bg-2)] via-[color:var(--es-bg)] to-[color:var(--es-bg-2)]'
                         }
                     />
                 )}
@@ -60,8 +60,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     style={{
                         background:
                             ambiance === 'galerie'
-                                ? 'radial-gradient(ellipse at center, rgba(5,5,5,0.25) 20%, rgba(5,5,5,0.78) 70%, rgba(5,5,5,0.96) 100%)'
-                                : 'linear-gradient(180deg, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.62) 45%, rgba(5,5,5,0.95) 100%)',
+                                ? 'radial-gradient(ellipse at center, color-mix(in srgb, var(--es-bg) 25%, transparent) 20%, color-mix(in srgb, var(--es-bg) 78%, transparent) 70%, color-mix(in srgb, var(--es-bg) 96%, transparent) 100%)'
+                                : 'linear-gradient(180deg, color-mix(in srgb, var(--es-bg) 72%, transparent) 0%, color-mix(in srgb, var(--es-bg) 62%, transparent) 45%, color-mix(in srgb, var(--es-bg) 95%, transparent) 100%)',
                     }}
                 />
             </div>
@@ -83,9 +83,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <a
                 href="#contenu"
                 aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:flex flex-col items-center gap-2 text-neutral-400 hover:text-[#c5a059] transition-colors animate-bounce"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:flex flex-col items-center gap-2 text-[color:var(--es-ink-2)] hover:text-[color:var(--es-accent)] transition-colors animate-bounce"
             >
-                <span className="font-cinzel text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
+                <span className="es-label text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                     <path d="M12 4v16M6 14l6 6 6-6" />
                 </svg>

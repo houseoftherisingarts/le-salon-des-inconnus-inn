@@ -36,12 +36,12 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
                 so the cutout above stays interactive. */}
             <div className="relative w-full pr-[4vw] text-right">
                 {mediumLabel && (
-                    <p className="font-cinzel text-[#c5a059] text-[13px] md:text-[13px] uppercase tracking-[0.5em] mb-3">
+                    <p className="es-label text-[color:var(--es-accent)] text-[13px] md:text-[13px] uppercase tracking-[0.5em] mb-3">
                         {mediumLabel}
                     </p>
                 )}
                 <h1
-                    className="font-prata text-[#f3e5ab] leading-[0.85] tracking-tight"
+                    className="es-display text-[color:var(--es-ink)] leading-[0.85] tracking-tight"
                     style={{
                         fontSize: 'clamp(4rem, 16vw, 18rem)',
                         whiteSpace: 'nowrap',
@@ -54,7 +54,7 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
                 {/* Sur mobile, la découpe couvrirait la sous-ligne : elle descend
                     alors dans le dock du bas (voir BottomDock). */}
                 {tagline && (
-                    <p className="hidden md:block mt-4 font-lato font-light text-neutral-300 text-2xl leading-relaxed pl-[40vw]">
+                    <p className="hidden md:block mt-4 es-body font-light text-[color:var(--es-ink-2)] text-2xl leading-relaxed pl-[40vw]">
                         {tagline}
                     </p>
                 )}
@@ -70,12 +70,12 @@ export const NameLayer: React.FC<NameLayerProps> = ({ name, tagline, medium }) =
 export const BottomDock: React.FC<{ config: SuperProfileConfig }> = ({ config }) => (
     <div className="absolute bottom-8 left-8 right-8 md:right-auto md:max-w-md z-30 pointer-events-auto">
         {config.tagline && (
-            <p className="md:hidden font-lato font-light text-[#f3e5ab] text-lg leading-snug mb-3">
+            <p className="md:hidden es-body font-light text-[color:var(--es-ink)] text-lg leading-snug mb-3">
                 {config.tagline}
             </p>
         )}
         {config.bio && (
-            <p className="font-lato text-neutral-300 text-sm md:text-base leading-relaxed mb-4 max-w-prose">
+            <p className="es-body text-[color:var(--es-ink-2)] text-sm md:text-base leading-relaxed mb-4 max-w-prose">
                 {config.bio}
             </p>
         )}
@@ -91,7 +91,7 @@ export const WorkCountChip: React.FC<{ count: number; label?: string }> = ({ cou
     if (count === 0) return null;
     return (
         <div className="absolute bottom-8 right-8 z-30 pointer-events-none">
-            <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.4em]">
+            <p className="es-label text-[color:var(--es-accent)] text-[13px] uppercase tracking-[0.4em]">
                 {String(count).padStart(2, '0')} {label}
             </p>
         </div>

@@ -12,6 +12,7 @@
 // le premier écran (`relative`), les sections suivant en dessous.
 
 import * as React from 'react';
+import { EspaceRacine } from './EspaceRacine';
 import { RevealWaveImage } from '../RevealWaveImage';
 import { ArtistCutout, BackToSalonLink, useTexte, type TemplateProps } from './shared';
 import { BottomDock, NameLayer, WorkCountChip } from './stage';
@@ -28,8 +29,8 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDi
     const tiles = Array.from({ length: tileCount }, (_, i) => works[i % works.length]).filter(Boolean);
 
     return (
-        <>
-        <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
+        <EspaceRacine famille="photographe" theme={config.theme}>
+        <div className="relative min-h-screen text-[color:var(--es-ink)] overflow-hidden es-body">
             <BackToSalonLink />
 
             {/* ── Layer 1 · Back: works mosaic ──────────────────────────── */}
@@ -59,7 +60,7 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDi
                         ))}
                     </div>
                 ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1208] to-[#050505]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--es-bg-2)] via-[color:var(--es-tint)] to-[color:var(--es-bg)]" />
                 )}
                 {/* Vignette pulls focus to the centerpiece */}
                 <div
@@ -67,7 +68,7 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDi
                     className="absolute inset-0 pointer-events-none"
                     style={{
                         background:
-                            'radial-gradient(ellipse at center, rgba(5,5,5,0) 28%, rgba(5,5,5,0.65) 78%, rgba(5,5,5,0.92) 100%)',
+                            'radial-gradient(ellipse at center, color-mix(in srgb, var(--es-bg) 0%, transparent) 28%, color-mix(in srgb, var(--es-bg) 65%, transparent) 78%, color-mix(in srgb, var(--es-bg) 92%, transparent) 100%)',
                     }}
                 />
             </div>
@@ -93,16 +94,16 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDi
             <a
                 href="#contenu"
                 aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-neutral-400 hover:text-[#c5a059] transition-colors animate-bounce"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-[color:var(--es-ink-2)] hover:text-[color:var(--es-accent)] transition-colors animate-bounce"
             >
-                <span className="font-cinzel text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
+                <span className="es-label text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                     <path d="M12 4v16M6 14l6 6 6-6" />
                 </svg>
             </a>
         </div>
 
-        <div id="contenu" className="bg-[#050505]">
+        <div id="contenu" className="bg-[color:var(--es-bg)]">
             <OeuvresSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <BioSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <PriseRendezVousSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
@@ -110,6 +111,6 @@ export const PhotoTemplate: React.FC<TemplateProps> = ({ config, uid, fallbackDi
             <LiensSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <PiedDePageSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
         </div>
-        </>
+        </EspaceRacine>
     );
 };

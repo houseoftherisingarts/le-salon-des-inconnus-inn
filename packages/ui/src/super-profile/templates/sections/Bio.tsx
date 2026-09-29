@@ -11,7 +11,7 @@ export const BioSection: React.FC<SectionProps> = ({ config, language = 'FR' }) 
     return (
         <SectionShell eyebrowEn="About" eyebrowFr="Démarche" language={language} id="bio" tone="graphite">
             <SectionTitle>{t('The practice', 'La démarche')}</SectionTitle>
-            <p className="font-lato text-neutral-300 text-base md:text-lg leading-relaxed max-w-3xl whitespace-pre-line">
+            <p className="es-body text-[color:var(--es-ink-2)] text-base md:text-lg leading-relaxed max-w-3xl whitespace-pre-line">
                 {config.bio}
             </p>
         </SectionShell>

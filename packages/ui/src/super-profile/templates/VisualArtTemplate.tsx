@@ -10,6 +10,7 @@
 // plus toute la page, les sections communes défilent en dessous.
 
 import * as React from 'react';
+import { EspaceRacine } from './EspaceRacine';
 import { ArtistCutout, BackToSalonLink, useTexte, type TemplateProps } from './shared';
 import { BottomDock, NameLayer, WorkCountChip, deterministicTransform } from './stage';
 import { BioSection, ContactSection, LiensSection, OeuvresSection, PiedDePageSection, PriseRendezVousSection } from './sections';
@@ -20,13 +21,13 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
     const displayName = config.displayName || fallbackDisplayName || config.username;
 
     return (
-        <>
-        <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
+        <EspaceRacine famille="peintre" theme={config.theme}>
+        <div className="relative min-h-screen text-[color:var(--es-ink)] overflow-hidden es-body">
             <BackToSalonLink />
 
             {/* Ambient washes so the dark canvas doesn't read as a void */}
             <div aria-hidden className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute -top-[10%] -left-[10%] w-[55%] h-[55%] bg-[#c5a059]/15 rounded-full blur-[150px]" />
+                <div className="absolute -top-[10%] -left-[10%] w-[55%] h-[55%] bg-[color:var(--es-glow)] rounded-full blur-[150px]" />
                 <div className="absolute -bottom-[15%] -right-[15%] w-[55%] h-[55%] bg-fuchsia-500/10 rounded-full blur-[160px]" />
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay" />
             </div>
@@ -47,7 +48,7 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
                                 minWidth: '160px',
                             }}
                         >
-                            <div className="relative bg-[#0a0a0a] p-2 shadow-2xl border border-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-0 group-hover:z-30">
+                            <div className="relative bg-[color:var(--es-bg-2)] p-2 shadow-2xl border border-[color:var(--es-edge)] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-0 group-hover:z-30">
                                 <img
                                     src={w.url}
                                     alt={w.caption || `Work ${i + 1}`}
@@ -55,7 +56,7 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
                                     loading="lazy"
                                 />
                                 {w.caption && (
-                                    <figcaption className="absolute -bottom-6 left-0 right-0 text-center font-lato text-neutral-400 text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <figcaption className="absolute -bottom-6 left-0 right-0 text-center es-body text-[color:var(--es-ink-2)] text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">
                                         {w.caption}
                                     </figcaption>
                                 )}
@@ -85,16 +86,16 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
             <a
                 href="#contenu"
                 aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 text-neutral-400 hover:text-[#c5a059] transition-colors animate-bounce"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 text-[color:var(--es-ink-2)] hover:text-[color:var(--es-accent)] transition-colors animate-bounce"
             >
-                <span className="font-cinzel text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
+                <span className="es-label text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                     <path d="M12 4v16M6 14l6 6 6-6" />
                 </svg>
             </a>
         </div>
 
-        <div id="contenu" className="bg-[#050505]">
+        <div id="contenu" className="bg-[color:var(--es-bg)]">
             <OeuvresSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <BioSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <PriseRendezVousSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
@@ -102,6 +103,6 @@ export const VisualArtTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
             <LiensSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <PiedDePageSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
         </div>
-        </>
+        </EspaceRacine>
     );
 };

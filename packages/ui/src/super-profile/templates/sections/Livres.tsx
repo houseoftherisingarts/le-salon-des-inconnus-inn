@@ -24,17 +24,17 @@ export const LivresSection: React.FC<SectionProps> = ({ config, language = 'FR' 
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center p-4 text-center">
-                                    <span className="font-prata text-[#f3e5ab] text-sm">{l.titre}</span>
+                                    <span className="es-display text-[color:var(--es-ink)] text-sm">{l.titre}</span>
                                 </div>
                             )}
                         </div>
-                        <p className="font-lato text-sm text-neutral-200 leading-snug">{l.titre}</p>
+                        <p className="es-body text-sm text-[color:var(--es-ink)] leading-snug">{l.titre}</p>
                         {l.lienAchat && (
                             <a
                                 href={l.lienAchat}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#c5a059] hover:text-[#f3e5ab] transition-colors"
+                                className="es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-accent)] hover:text-[color:var(--es-ink)] transition-colors"
                             >
                                 {t('Buy', 'Se procurer')}
                             </a>

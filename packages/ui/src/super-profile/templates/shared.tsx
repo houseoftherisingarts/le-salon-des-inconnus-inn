@@ -11,7 +11,7 @@ interface BackLinkProps {
 export const BackToSalonLink: React.FC<BackLinkProps> = ({ href = '/centre' }) => (
     <a
         href={href}
-        className="absolute top-4 left-4 z-50 inline-flex items-center min-h-[44px] px-4 rounded-full bg-black/45 backdrop-blur-md border border-white/10 font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-300 hover:text-[#c5a059] hover:border-[#c5a059]/50 transition-colors"
+        className="absolute top-4 left-4 z-50 inline-flex items-center min-h-[44px] px-4 rounded-full bg-[color:var(--es-glass)] backdrop-blur-md border border-[color:var(--es-edge)] es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-ink-2)] hover:text-[color:var(--es-accent)] hover:border-[color:var(--es-accent)] transition-colors"
     >
         ← Le Salon des Inconnus
     </a>
@@ -53,7 +53,7 @@ const ICONS = {
     ),
 };
 
-export const SocialLinks: React.FC<SocialLinksProps> = ({ links, accent = '#c5a059', className }) => {
+export const SocialLinks: React.FC<SocialLinksProps> = ({ links, accent = 'var(--es-accent)', className }) => {
     if (!links) return null;
     const entries: Array<[keyof SuperProfileLinks, string]> = [];
     if (links.instagram) entries.push(['instagram', links.instagram]);
@@ -70,7 +70,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({ links, accent = '#c5a0
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label={kind}
-                    className="text-neutral-400 hover:text-[var(--accent)] transition-colors"
+                    className="text-[color:var(--es-ink-2)] hover:text-[var(--accent)] transition-colors"
                     style={{ ['--accent' as any]: accent }}
                 >
                     {ICONS[kind]}
@@ -109,7 +109,7 @@ export const ArtistCutout: React.FC<{
 }> = ({ src, alt, className }) => {
     if (!src) {
         return (
-            <div className={`flex items-center justify-center text-neutral-700 font-cinzel text-[13px] uppercase tracking-[0.3em] ${className ?? ''}`}>
+            <div className={`flex items-center justify-center text-[color:var(--es-ink-2)] es-label text-[13px] uppercase tracking-[0.3em] ${className ?? ''}`}>
                 {alt}
             </div>
         );

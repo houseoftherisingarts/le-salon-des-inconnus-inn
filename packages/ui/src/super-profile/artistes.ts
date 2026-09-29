@@ -127,13 +127,13 @@ export function sectionsParDefaut(type: ArtistType): SectionsConfig {
     const base: SectionsConfig = {
         bio: true, rendezvous: true, contact: true, liens: true, pied: true,
         oeuvres: false, ecoute: false, dates: false, presse: false,
-        expositions: false, livres: false, atelier: false,
+        expositions: false, livres: false, atelier: false, boutique: false,
     };
     switch (familleGabarit(type)) {
         case 'peintre':
             return { ...base, oeuvres: true, expositions: true, atelier: true };
         case 'musicien':
-            return { ...base, ecoute: true, dates: true, presse: true };
+            return { ...base, ecoute: true, dates: true, presse: true, boutique: true };
         case 'photographe':
             return { ...base, oeuvres: true };
         case 'ecrivain':

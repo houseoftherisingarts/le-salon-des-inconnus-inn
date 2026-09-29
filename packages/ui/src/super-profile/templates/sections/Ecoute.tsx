@@ -70,7 +70,7 @@ const Lecteur: React.FC<{ lien: LienEcoute }> = ({ lien }) => {
             return (
                 <div className={`overflow-hidden ${CARD_GLASS}`}>
                     {lien.titre && (
-                        <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-400 px-4 pt-3">
+                        <p className="es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-ink-2)] px-4 pt-3">
                             {lien.titre}
                         </p>
                     )}
@@ -91,10 +91,10 @@ const Lecteur: React.FC<{ lien: LienEcoute }> = ({ lien }) => {
             href={lien.url}
             target="_blank"
             rel="noreferrer noopener"
-            className={`flex items-center justify-between px-5 py-4 ${CARD_GLASS} hover:border-[#c5a059]/50 transition-colors`}
+            className={`flex items-center justify-between px-5 py-4 ${CARD_GLASS} hover:border-[color:var(--es-accent)] transition-colors`}
         >
-            <span className="font-lato text-sm text-neutral-200">{lien.titre || lien.url}</span>
-            <span className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#c5a059]">↗</span>
+            <span className="es-body text-sm text-[color:var(--es-ink)]">{lien.titre || lien.url}</span>
+            <span className="es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-accent)]">↗</span>
         </a>
     );
 };

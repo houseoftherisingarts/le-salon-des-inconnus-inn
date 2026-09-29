@@ -10,6 +10,7 @@
 // que le premier écran. Les écrivains gagnent en plus une section Livres.
 
 import * as React from 'react';
+import { EspaceRacine } from './EspaceRacine';
 import { ArtistCutout, BackToSalonLink, useTexte, type TemplateProps } from './shared';
 import { BottomDock, NameLayer, WorkCountChip } from './stage';
 import { BioSection, ContactSection, LiensSection, LivresSection, OeuvresSection, PiedDePageSection, PriseRendezVousSection } from './sections';
@@ -24,8 +25,8 @@ export const EditorialTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
     const tiles = Array.from({ length: target }, (_, i) => works[i % works.length]).filter(Boolean);
 
     return (
-        <>
-        <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden font-lato">
+        <EspaceRacine famille="ecrivain" theme={config.theme}>
+        <div className="relative min-h-screen text-[color:var(--es-ink)] overflow-hidden es-body">
             <BackToSalonLink />
 
             {/* ── Layer 1 · Back: low-opacity grid of works ─────────────── */}
@@ -44,7 +45,7 @@ export const EditorialTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
                         ))}
                     </div>
                 ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1208]/40 to-[#050505]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--es-bg-2)] via-[color:var(--es-tint)] to-[color:var(--es-bg)]" />
                 )}
                 {/* Editorial wash: pulls the back layer back, lets the type
                     and cutout breathe. */}
@@ -53,7 +54,7 @@ export const EditorialTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
                     className="absolute inset-0 pointer-events-none"
                     style={{
                         background:
-                            'radial-gradient(ellipse at center, rgba(5,5,5,0.45) 20%, rgba(5,5,5,0.78) 65%, rgba(5,5,5,0.94) 100%)',
+                            'radial-gradient(ellipse at center, color-mix(in srgb, var(--es-bg) 45%, transparent) 20%, color-mix(in srgb, var(--es-bg) 78%, transparent) 65%, color-mix(in srgb, var(--es-bg) 94%, transparent) 100%)',
                     }}
                 />
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paisley.png')] opacity-[0.05] pointer-events-none" />
@@ -79,16 +80,16 @@ export const EditorialTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
             <a
                 href="#contenu"
                 aria-label={t('Scroll to see more', 'Faire défiler pour en voir plus')}
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-neutral-400 hover:text-[#c5a059] transition-colors animate-bounce"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-[color:var(--es-ink-2)] hover:text-[color:var(--es-accent)] transition-colors animate-bounce"
             >
-                <span className="font-cinzel text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
+                <span className="es-label text-[13px] uppercase tracking-[0.4em]">{t('Scroll', 'Défiler')}</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                     <path d="M12 4v16M6 14l6 6 6-6" />
                 </svg>
             </a>
         </div>
 
-        <div id="contenu" className="bg-[#050505]">
+        <div id="contenu" className="bg-[color:var(--es-bg)]">
             <LivresSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <OeuvresSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <BioSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
@@ -97,6 +98,6 @@ export const EditorialTemplate: React.FC<TemplateProps> = ({ config, uid, fallba
             <LiensSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
             <PiedDePageSection config={config} uid={uid} fallbackDisplayName={fallbackDisplayName} language={language} />
         </div>
-        </>
+        </EspaceRacine>
     );
 };

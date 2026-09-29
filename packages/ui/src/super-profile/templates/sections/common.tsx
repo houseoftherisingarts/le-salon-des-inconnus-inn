@@ -40,13 +40,13 @@ export const SectionShell: React.FC<SectionShellProps> = ({
     return (
         <section
             id={id}
-            className={`relative w-full border-t border-white/10 px-6 md:px-14 py-16 md:py-24 ${
-                tone === 'graphite' ? 'bg-[#0a0908]' : 'bg-[#050505]'
+            className={`relative w-full border-t border-[color:var(--es-edge)] px-6 md:px-14 py-16 md:py-24 ${
+                tone === 'graphite' ? 'bg-[color:var(--es-bg-2)]' : 'bg-[color:var(--es-bg)]'
             }`}
         >
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14">
-                    <p className="font-cinzel text-[#c5a059] text-[13px] uppercase tracking-[0.4em]">
+                    <p className="es-label text-[color:var(--es-accent)] text-[13px] uppercase tracking-[0.4em]">
                         {t(eyebrowEn, eyebrowFr)}
                     </p>
                     {aside}
@@ -59,7 +59,7 @@ export const SectionShell: React.FC<SectionShellProps> = ({
 
 /** Titre de section, en Prata, jamais plus de deux lignes visuelles (canon). */
 export const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <h2 className="font-prata text-[#f3e5ab] text-3xl md:text-5xl leading-[1.1] mb-10 md:mb-14 max-w-3xl -mt-6">
+    <h2 className="es-display text-[color:var(--es-ink)] text-3xl md:text-5xl leading-[1.1] mb-10 md:mb-14 max-w-3xl -mt-6">
         {children}
     </h2>
 );
@@ -83,4 +83,4 @@ export function formatDateCourte(iso: string, language: 'EN' | 'FR' = 'FR'): str
 }
 
 /** Glassmorphism du canon : verre translucide, coins 15px, filet clair. */
-export const CARD_GLASS = 'bg-black/40 backdrop-blur-md border border-white/15 rounded-[15px]';
+export const CARD_GLASS = 'es-verre';

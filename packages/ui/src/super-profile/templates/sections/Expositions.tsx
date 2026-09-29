@@ -14,13 +14,13 @@ export const ExpositionsSection: React.FC<SectionProps> = ({ config, language = 
 
     const Colonne: React.FC<{ titre: string; items: typeof expos }> = ({ titre, items }) => (
         <div>
-            <p className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-500 mb-4">{titre}</p>
+            <p className="es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-ink-2)] mb-4">{titre}</p>
             <ul className="space-y-4">
                 {items.map((e, i) => (
                     <li key={`${e.titre}-${i}`} className={`p-5 ${CARD_GLASS}`}>
-                        <p className="font-prata text-[#f3e5ab] text-lg leading-snug">{e.titre}</p>
-                        <p className="font-lato text-sm text-neutral-400 mt-1">{e.lieu}</p>
-                        <p className="font-lato text-[13px] text-neutral-500 mt-1">{e.dates}</p>
+                        <p className="es-display text-[color:var(--es-ink)] text-lg leading-snug">{e.titre}</p>
+                        <p className="es-body text-sm text-[color:var(--es-ink-2)] mt-1">{e.lieu}</p>
+                        <p className="es-body text-[13px] text-[color:var(--es-ink-2)] mt-1">{e.dates}</p>
                     </li>
                 ))}
             </ul>

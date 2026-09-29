@@ -10,13 +10,13 @@ import { CARD_GLASS, formatPrixCents, sectionVisible, SectionShell, SectionTitle
 const StatutBadge: React.FC<{ oeuvre: OeuvreProfilPro; language: 'EN' | 'FR' }> = ({ oeuvre, language }) => {
     const t = useTexte(language);
     if (oeuvre.statutVente === 'vendu') {
-        return <span className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-neutral-400">{t('Sold', 'Vendu')}</span>;
+        return <span className="es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-ink-2)]">{t('Sold', 'Vendu')}</span>;
     }
     if (oeuvre.statutVente === 'sur-demande') {
-        return <span className="font-cinzel text-[13px] uppercase tracking-[0.3em] text-[#c5a059]">{t('On request', 'Sur demande')}</span>;
+        return <span className="es-label text-[13px] uppercase tracking-[0.3em] text-[color:var(--es-accent)]">{t('On request', 'Sur demande')}</span>;
     }
     if (typeof oeuvre.prixCents === 'number' && oeuvre.prixCents > 0) {
-        return <span className="font-lato text-sm text-[#c5a059]">{formatPrixCents(oeuvre.prixCents)}</span>;
+        return <span className="es-body text-sm text-[color:var(--es-accent)]">{formatPrixCents(oeuvre.prixCents)}</span>;
     }
     return null;
 };
@@ -44,8 +44,8 @@ const Carte: React.FC<{ oeuvre: OeuvreProfilPro; language: 'EN' | 'FR' }> = ({ o
                     ouvert ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                 }`}
             >
-                {oeuvre.titre && <p className="font-prata text-[#f3e5ab] text-lg leading-tight mb-1">{oeuvre.titre}</p>}
-                {details && <p className="font-lato text-[13px] text-neutral-300 mb-1">{details}</p>}
+                {oeuvre.titre && <p className="es-display text-[color:var(--es-ink)] text-lg leading-tight mb-1">{oeuvre.titre}</p>}
+                {details && <p className="es-body text-[13px] text-[color:var(--es-ink-2)] mb-1">{details}</p>}
                 <StatutBadge oeuvre={oeuvre} language={language} />
             </figcaption>
         </figure>
