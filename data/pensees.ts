@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-01",
+        title_fr: "Le pressoir",
+        title_en: "The cider press",
+        body_fr: "Les faiseurs de cidre d'autrefois ne pressaient jamais une seule variété de pommes. Dans le pressoir d'octobre se rencontraient les douces et les acides, et jusqu'aux amères que personne n'aurait voulu croquer à la main, parce qu'un cidre tiré d'une seule sorte reste plat, aussi belle que soit la pomme. Chaque fruit apporte ce qui manque aux autres, si bien que les pommes les plus ingrates du verger deviennent souvent les plus précieuses une fois sous la meule. J'aime que la recette tienne moins aux fruits eux-mêmes qu'à leur rencontre. Les tablées me semblent obéir à la même loi : une soirée entre gens qui pensent tous pareil retombe vite, tandis que la profondeur vient souvent de l'invité un peu abrupt, ou de l'inconnue dont les questions surprennent. Qui est-ce que j'écarte de mon panier, quand c'est peut-être lui qui manquait à mon cidre?",
+        body_en: "The cider makers of old never pressed a single variety of apple. In the October press, the sweet met the sharp, and even the bitter ones nobody would have wanted to bite into fresh from the branch, because a cider drawn from one kind alone stays flat, however beautiful the apple. Each fruit brings what the others lack, so that the most thankless apples of the orchard often become the most precious once under the millstone. I love that the recipe owes less to the fruits themselves than to their meeting. Tables seem to me to obey the same law: an evening among people who all think alike soon goes quiet, while the depth often comes from the slightly blunt guest, or from the stranger whose questions surprise. Whom am I leaving out of my basket, when they may be exactly what my cider was missing?",
+    },
+    {
         date: "2026-09-29",
         title_fr: "La corvée",
         title_en: "The work bee",
