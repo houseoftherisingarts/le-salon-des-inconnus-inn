@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-02",
+        title_fr: "Le sentier",
+        title_en: "The footpath",
+        body_fr: "Personne ne construit un sentier de forêt. Il naît d'un premier passage qui plie les herbes, puis d'un deuxième qui choisit les mêmes détours, et au fil des saisons la terre se tasse jusqu'à ce que le chemin semble avoir toujours été là. Aucun marcheur ne l'entretient volontairement; chacun le maintient pourtant, du seul fait de passer, et le sentier le plus ancien se referme en quelques étés si plus personne ne l'emprunte. J'aime cette œuvre sans ouvrier, bâtie par des gens qui ne se sont jamais croisés et qui travaillaient seulement à se rendre quelque part. Nos liens me semblent faits de la même matière. Ils tiennent moins aux grandes déclarations qu'aux petits passages répétés, le message bref, la visite sans raison, et ils se referment comme les sentiers, sans drame, par simple absence de pas. Vers qui mène le sentier que je laisse se refermer en ce moment, faute d'y passer?",
+        body_en: "Nobody builds a forest path. It is born of a first passage that bends the grass, then of a second that chooses the same turns, and over the seasons the earth packs down until the way seems to have always been there. No walker maintains it on purpose; yet each one keeps it alive by the mere fact of passing, and the oldest path closes over in a few summers if nobody travels it anymore. I love this work without a workman, built by people who never met and who were only trying to get somewhere. Our bonds seem to me to be made of the same substance. They rest less on grand declarations than on small repeated passages, the brief message, the visit without a reason, and they close over like the paths do, without drama, through the simple absence of footsteps. Toward whom does the path lead that I am letting close over right now, for want of walking it?",
+    },
+    {
         date: "2026-10-01",
         title_fr: "Le pressoir",
         title_en: "The cider press",
