@@ -33,3 +33,19 @@
   .hud-bas .fiches-bascule { border: 1px solid var(--bord); background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
   .hud-bas .fiches-liste { max-height: 22vh; }
 }
+
+/* Le cercle des six fleurs : vert double pour l'harmonie, rouge pour le clash. */
+.fiche-diagramme { flex: none; margin: 2px 0 0; padding: 0 4px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.fiche-diagramme svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; }
+.fiche-diagramme text { font: 700 10.5px/1 var(--sans); fill: var(--texte); letter-spacing: 0.02em; }
+.fiche-diagramme .anneau { fill: none; stroke: rgba(255, 255, 255, 0.35); stroke-width: 1; }
+.fiche-diagramme .anneau.vise { stroke: var(--or); stroke-width: 2.5; }
+.trait-harmonie line { stroke: var(--vert); stroke-width: 2; stroke-linecap: round; }
+.trait-clash { stroke: var(--rouge); stroke-width: 2.2; stroke-linecap: round; }
+.fiche-diagramme .efface { opacity: 0.18; }
+.fiche-diagramme g, .fiche-diagramme line { transition: opacity 0.2s; }
+.fiche-diagramme figcaption { display: flex; justify-content: center; gap: 16px; margin-top: 2px; font: 400 12px/1.2 var(--sans); color: var(--texte-doux); }
+.legende::before { content: ''; display: inline-block; width: 18px; height: 5px; margin-right: 6px; vertical-align: middle; }
+.legende.harmonie::before { border-top: 2px solid var(--vert); border-bottom: 2px solid var(--vert); height: 3px; }
+.legende.clash::before { height: 0; border-top: 2px solid var(--rouge); }
+@media (max-width: 900px) { .hud-bas .fiche-diagramme svg { max-width: 240px; } }

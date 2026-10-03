@@ -3,6 +3,7 @@
 // s'assoit en face du plateau. La dame par défaut; quand le joueur choisit
 // un personnage, celui-ci prend sa place et la dame s'efface.
 
+import { figurinesDessin } from '../jeu/adversaires';
 import * as THREE from 'three';
 import { chargerSculpture } from './sculpture';
 import { BASE, HAUT_CONVIVE, Y_PLANCHER } from './mesures';
@@ -48,7 +49,10 @@ export class Convives {
     const dame = this.groupe.children.find((g) => g.userData.rang === 0);
     if (dame) dame.visible = !id;
     if (!id) return;
-    chargerSculpture(`${BASE}models/convives/${id}.glb`, HAUT_CONVIVE)
+    // Le style choisi d'abord, l'autre jeu de statuettes si le fichier manque.
+    const [un, deux] = figurinesDessin() ? [`${id}2`, id] : [id, `${id}2`];
+    chargerSculpture(`${BASE}models/convives/${un}.glb`, HAUT_CONVIVE)
+      .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb`, HAUT_CONVIVE))
       .then((g) => {
         if (this.idAdversaire !== id) return;
         g.userData.rang = 0;

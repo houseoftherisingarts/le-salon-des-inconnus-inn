@@ -6,6 +6,7 @@
 
 const BASE = import.meta.env.BASE_URL;
 const CLE_SON = 'paisho.son';
+const CLE_VOLUME = 'paisho.volume';
 
 let element: HTMLAudioElement | null = null;
 let voulue = false;
@@ -17,7 +18,7 @@ function creer(): HTMLAudioElement {
   a.src = `${BASE}musique/${opus ? 'iroh.opus' : 'iroh.m4a'}`;
   a.loop = true;
   a.preload = 'auto';
-  a.volume = 0.55;
+  a.volume = volumeSauve();
   return a;
 }
 
@@ -44,6 +45,19 @@ export function couperMusique(oui: boolean): void {
   if (!element) return;
   if (oui) element.pause();
   else essayer();
+}
+
+/** Le volume de la musique, de 0 à 1, gardé d'une visite à l'autre. */
+export function volumeSauve(): number {
+  try {
+    const brut = localStorage.getItem(CLE_VOLUME);
+    const v = Number(brut);
+    return brut !== null && v >= 0 && v <= 1 ? v : 0.55;
+  } catch { return 0.55; }
+}
+export function reglerVolume(v: number): void {
+  if (element) element.volume = v;
+  try { localStorage.setItem(CLE_VOLUME, String(v)); } catch { /* privé */ }
 }
 
 export const sonSauve = (): boolean => { try { return localStorage.getItem(CLE_SON) !== '0'; } catch { return true; } };

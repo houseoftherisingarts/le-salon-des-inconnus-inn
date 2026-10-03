@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { NIVEAUX_POSSIBLES, nomNiveau, type Niveau } from '../moteur/niveaux';
 import { nomDadversaire } from '../scene/noms';
-import { ADVERSAIRES, adversaire, vuDEnFace } from '../jeu/adversaires';
+import { ADVERSAIRES, adversaire, figurinesDessin, nomAdversaire, sauverFigurines, vuDEnFace } from '../jeu/adversaires';
+import Volume from './Volume';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
 import { Lien, amis as lireAmis, garderAmi, idValide, joueurLocal, oublierAmi, sauverJoueur, type Ami, type EtatLien, type Joueur } from '../reseau/pair';
 import { TEXTES, type Langue } from './textes';
@@ -36,7 +37,9 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const niveauJoue: Niveau = perso ? perso.niveau : niveau;
   const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
   // Le personnage choisi prend place en face de la table dès le menu.
-  useEffect(() => { scene.placerAdversaire(perso?.id ?? null); }, [scene, perso]);
+  const [dessin, setDessin] = useState(figurinesDessin);
+  useEffect(() => { scene.placerAdversaire(null); scene.placerAdversaire(perso?.id ?? null); }, [scene, perso, dessin]);
+  const changerFigurines = () => { sauverFigurines(!dessin); setDessin(!dessin); };
   const [cote, setCote] = useState<Camp>('hote');
   const [tourner, setTourner] = useState(true);
   const [joueur, setJoueur] = useState<Joueur>(joueurLocal);
@@ -65,7 +68,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   };
 
   const contreMaison = () => {
-    const nomAdv = perso ? perso.nom : nomDadversaire(fr);
+    const nomAdv = perso ? nomAdversaire(perso, fr) : nomDadversaire(fr);
     onLancer({
       config: {
         mode: 'maison', niveau: niveauJoue, campLocal: cote, tourner: false,
@@ -153,6 +156,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <button type="button" className={`bouton discret ${son ? 'actif' : ''}`} onClick={onSon} aria-pressed={son}>
             {t.son} {son ? '●' : '○'}
           </button>
+          <Volume etiquette={t.volume} />
         </nav>
       </header>
 
@@ -166,9 +170,10 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             <div className="persos" role="radiogroup">
               <button type="button" className={`perso ${adv === 'maison' ? 'choisi' : ''}`} role="radio" aria-checked={adv === 'maison'} onClick={() => choisirAdv('maison')}>{t.maison}</button>
               {ADVERSAIRES.map((a) => (
-                <button key={a.id} type="button" className={`perso ${adv === a.id ? 'choisi' : ''}`} role="radio" aria-checked={adv === a.id} onClick={() => choisirAdv(a.id)} data-test={`adv-${a.id}`}>{a.nom}</button>
+                <button key={a.id} type="button" className={`perso ${adv === a.id ? 'choisi' : ''}`} role="radio" aria-checked={adv === a.id} onClick={() => choisirAdv(a.id)} data-test={`adv-${a.id}`}>{nomAdversaire(a, fr)}</button>
               ))}
             </div>
+            <button type="button" className="bouton discret" onClick={changerFigurines} data-test="figurines">{t.figurines(dessin)}</button>
             {perso && <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>}
           </div>
           <div className="champ">
@@ -227,11 +232,10 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             <div className="persos" role="radiogroup">
               <button type="button" className={`perso ${!joueur.avatar ? 'choisi' : ''}`} role="radio" aria-checked={!joueur.avatar} onClick={() => changerAvatar(undefined)}>{t.sansPersonnage}</button>
               {ADVERSAIRES.map((a) => (
-                <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{a.nom}</button>
+                <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{nomAdversaire(a, fr)}</button>
               ))}
             </div>
           </div>
-          <a className="bouton discret" href="https://www.lesalondesinconnus.com/cafe-jeux/" target="_blank" rel="noreferrer">{t.boutique}</a>
         </article>
 
         <article className="carte verre">

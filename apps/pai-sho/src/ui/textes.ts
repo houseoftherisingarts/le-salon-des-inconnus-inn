@@ -6,6 +6,8 @@
 import type { TypeTuile } from '../jeu/logic';
 
 export type Langue = 'FR' | 'EN';
+/** Le nom par défaut du joueur local, dans les deux langues : il se conjugue à part. */
+const MOI = new Set(['Vous', 'You']);
 
 const FR = {
   titre: 'Pai Sho',
@@ -40,6 +42,8 @@ const FR = {
   reprendre: 'Reprendre la partie',
   tutoriel: 'Tutoriel',
   son: 'Son',
+  volume: 'Volume de la musique',
+  figurines: (dessin: boolean) => `Statuettes : ${dessin ? 'dessin animé' : 'peintes'}`,
   langue: 'English',
   retour: 'Retour',
   votreNom: 'Votre nom',
@@ -82,8 +86,8 @@ const FR = {
   choisirPorte: 'Touchez une porte en surbrillance pour planter',
   ouverture: 'Choisissez la fleur d’ouverture, elle ira dans votre porte.',
   abandonVous: 'Vous avez abandonné la partie.',
-  abandonLui: (nom: string) => `${nom} a abandonné la partie.`,
-  remporte: (nom: string) => `${nom} remporte la partie`,
+  abandonLui: (nom: string) => (MOI.has(nom) ? 'Vous avez abandonné la partie.' : `${nom} a abandonné la partie.`),
+  remporte: (nom: string) => (MOI.has(nom) ? 'Vous remportez la partie' : `${nom} remporte la partie`),
   defaite: 'Défaite',
   joueur1: 'Premier joueur',
   joueur2: 'Second joueur',
@@ -128,6 +132,8 @@ const EN: typeof FR = {
   reprendre: 'Resume the game',
   tutoriel: 'Tutorial',
   son: 'Sound',
+  volume: 'Music volume',
+  figurines: (dessin: boolean) => `Figurines: ${dessin ? 'cartoon' : 'painted'}`,
   langue: 'Français',
   retour: 'Back',
   votreNom: 'Your name',
@@ -170,8 +176,8 @@ const EN: typeof FR = {
   choisirPorte: 'Tap a highlighted gate to plant',
   ouverture: 'Choose your opening flower, it goes into your gate.',
   abandonVous: 'You resigned the game.',
-  abandonLui: (nom: string) => `${nom} resigned the game.`,
-  remporte: (nom: string) => `${nom} wins the game`,
+  abandonLui: (nom: string) => (MOI.has(nom) ? 'You resigned the game.' : `${nom} resigned the game.`),
+  remporte: (nom: string) => (MOI.has(nom) ? 'You win the game' : `${nom} wins the game`),
   defaite: 'Defeat',
   joueur1: 'First player',
   joueur2: 'Second player',
@@ -301,7 +307,8 @@ export const TUTORIEL: Record<Langue, { titre: string; corps: string; ancre?: st
 
 const CLE_LANGUE = 'paisho.langue';
 export function langueSauvee(): Langue {
-  try { return localStorage.getItem(CLE_LANGUE) === 'EN' ? 'EN' : 'FR'; } catch { return 'FR'; }
+  // L'anglais est la langue d'ouverture; le français revient à qui l'a choisi.
+  try { return localStorage.getItem(CLE_LANGUE) === 'FR' ? 'FR' : 'EN'; } catch { return 'EN'; }
 }
 export function sauverLangue(l: Langue): void {
   try { localStorage.setItem(CLE_LANGUE, l); } catch { /* navigation privée */ }

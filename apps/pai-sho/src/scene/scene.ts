@@ -320,7 +320,7 @@ export class ScenePaiSho {
   montrerCibles(points: Pt[], selection: Pt | null): void { this.marques.montrer(points, selection); }
 
   /** Les anneaux d'or des suggestions : les tuiles (ou les cases) qui peuvent former une harmonie. */
-  montrerSuggestions(points: Pt[]): void { this.marques.suggerer(points); }
+  montrerSuggestions(points: Pt[], fort = false): void { this.marques.suggerer(points, fort); }
 
   private survoler(p: Pt | null): void {
     const m = this.marques;

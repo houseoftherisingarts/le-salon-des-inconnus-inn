@@ -79,6 +79,9 @@ const TX = {
     accent: 'Un accent, posé avec le geste de plus',
     base: 'Prend une fleur adverse qui se heurte à elle en se posant dessus.',
     liste: 'Les douze tuiles',
+    diagramme: 'Le cercle des six fleurs : les voisines s’harmonisent, les fleurs qui se font face se heurtent.',
+    harmonie: 'Harmonie',
+    clash: 'Clash',
   },
   EN: {
     titre: 'Harmonies and clashes',
@@ -88,8 +91,65 @@ const TX = {
     accent: 'An accent, placed with the extra action',
     base: 'Captures an opposing flower that clashes with it by landing on it.',
     liste: 'The twelve tiles',
+    diagramme: 'The circle of six flowers: neighbours harmonise, flowers facing each other clash.',
+    harmonie: 'Harmony',
+    clash: 'Clash',
   },
 };
+
+// Le cercle des six fleurs : chaque trait vient du moteur, vert double
+// pour une harmonie, rouge pour un clash.
+const CERCLE: readonly TypeTuile[] = ['R3', 'R4', 'R5', 'W3', 'W4', 'W5'];
+const CX = 130, CY = 116, RAYON = 72, R_TUILE = 24;
+const PLACE = CERCLE.map((_, i) => {
+  const a = ((i * 60 - 60) * Math.PI) / 180;
+  return { x: CX + RAYON * Math.cos(a), y: CY + RAYON * Math.sin(a) };
+});
+const PAIRES = CERCLE.flatMap((a, i) => CERCLE.slice(i + 1).map((b, k) => ({ a, b, i, j: i + 1 + k })));
+
+function Diagramme({ langue, actif }: { langue: Langue; actif: TypeTuile | null }) {
+  const x = TX[langue];
+  const vise = actif && CERCLE.includes(actif) ? actif : null;
+  const trait = ({ a, b, i, j }: (typeof PAIRES)[number]) => {
+    const harmonie = HARMONIE_PAIRE(a, b);
+    if (!harmonie && !CONFLIT_PAIRE(a, b)) return null;
+    const p = PLACE[i], q = PLACE[j];
+    const d = Math.hypot(q.x - p.x, q.y - p.y), ux = (q.x - p.x) / d, uy = (q.y - p.y) / d;
+    const g = R_TUILE + 4;
+    const x1 = p.x + ux * g, y1 = p.y + uy * g, x2 = q.x - ux * g, y2 = q.y - uy * g;
+    const efface = vise && vise !== a && vise !== b ? 'efface' : '';
+    if (!harmonie) return <line key={a + b} className={`trait-clash ${efface}`} x1={x1} y1={y1} x2={x2} y2={y2} />;
+    const nx = -uy * 2.2, ny = ux * 2.2;
+    return (
+      <g key={a + b} className={`trait-harmonie ${efface}`}>
+        <line x1={x1 + nx} y1={y1 + ny} x2={x2 + nx} y2={y2 + ny} />
+        <line x1={x1 - nx} y1={y1 - ny} x2={x2 - nx} y2={y2 - ny} />
+      </g>
+    );
+  };
+  return (
+    <figure className="fiche-diagramme">
+      <svg viewBox="0 0 260 236" role="img" aria-label={x.diagramme}>
+        {PAIRES.map(trait)}
+        {CERCLE.map((t, i) => {
+          const p = PLACE[i];
+          const haut = p.y < CY - 10;
+          return (
+            <g key={t} className={vise && vise !== t && !HARMONIE_PAIRE(vise, t) && !CONFLIT_PAIRE(vise, t) ? 'efface' : ''}>
+              <image href={`${BASE}tuiles/${t}.webp`} x={p.x - R_TUILE} y={p.y - R_TUILE} width={R_TUILE * 2} height={R_TUILE * 2} clipPath="circle(50%)" />
+              <circle cx={p.x} cy={p.y} r={R_TUILE} className={`anneau ${vise === t ? 'vise' : ''}`} />
+              <text x={p.x} y={haut ? p.y - R_TUILE - 6 : p.y + R_TUILE + 12} textAnchor="middle">{NOMS_TUILES[langue][t]}</text>
+            </g>
+          );
+        })}
+      </svg>
+      <figcaption>
+        <span className="legende harmonie">{x.harmonie}</span>
+        <span className="legende clash">{x.clash}</span>
+      </figcaption>
+    </figure>
+  );
+}
 
 function Bulle({ t, langue, ancre }: { t: TypeTuile; langue: Langue; ancre: HTMLElement }) {
   const x = TX[langue];
@@ -160,6 +220,7 @@ export default function Fiches({ langue }: { langue: 'FR' | 'EN' }) {
         <span>{x.titre}</span>
         <span className="fiches-fleche" aria-hidden>{ouvert ? '−' : '+'}</span>
       </button>
+      {ouvert && <Diagramme langue={langue} actif={actif} />}
       {ouvert && (
         <ul className="fiches-liste" aria-label={x.liste} onScroll={() => setActif(null)}>
           {TYPES.map((t) => (

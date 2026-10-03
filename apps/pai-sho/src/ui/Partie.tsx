@@ -22,6 +22,7 @@ import type { Depart } from '../App';
 import { TEXTES, type Langue } from './textes';
 import { Reserve, Journal, PanneauRegles, PanneauBonus } from './Panneaux';
 import Fiches from './Fiches';
+import Volume from './Volume';
 
 type Choix =
   | { type: 'aucun' }
@@ -149,7 +150,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     const nomAdv = config.noms[autre(config.campLocal)];
     scene.placerAdversaire(
       config.mode === 'lecon' ? 'iroh'
-        : config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv)?.id ?? null
+        : config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv || a.nomEN === nomAdv)?.id ?? null
           : config.mode === 'distance' ? config.avatars?.[autre(config.campLocal)] ?? null
             : null,
     );
@@ -170,12 +171,13 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       const g = r('.hud-gauche'), d = r('.hud-droite'), h = r('.hud-haut'), b = r('.hud-bas'), l = r('.lecon-carte');
       if (W <= LARGEUR_TELEPHONE) {
         // Sur le téléphone, la carte de leçon se pose sous la barre du haut.
-        const haut = Math.max(h ? h.bottom : 0, l ? l.bottom : 0) + 4;
+        const haut = Math.max(h ? h.bottom : 0, l ? l.bottom : 0) + 4 + Math.round(H * 0.06);
         scene.cadrer({ gauche: 0, droite: 0, haut, bas: b ? H - b.top + 4 : 0 });
       } else {
         // La carte de leçon ne doit jamais cacher la porte sud : le plateau se loge au-dessus.
+        // Sous la barre du haut, une part de l'écran reste à la personne assise en face.
         scene.cadrer({
-          gauche: g ? g.right + 8 : 0, droite: d ? W - d.left + 8 : 0, haut: h ? h.bottom + 4 : 0, bas: l ? H - l.top + 12 : 16,
+          gauche: g ? g.right + 8 : 0, droite: d ? W - d.left + 8 : 0, haut: (h ? h.bottom + 4 : 0) + Math.round(H * (l ? 0.03 : 0.28)), bas: l ? H - l.top + 12 : 16,
         });
       }
     };
@@ -317,7 +319,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     else if (choix.type === 'aucun') points = harmonieux.filter((c) => c.type === 'deplacer').map((c) => (c as { de: Pt }).de);
     else if (choix.type === 'tuile') points = harmonieux.filter((c) => c.type === 'deplacer' && c.de === choix.de).map((c) => (c as { a: Pt }).a);
     else if (choix.type === 'reserve') points = harmonieux.filter((c) => c.type === 'planter' && c.tuile === choix.tuile).map((c) => (c as { porte: Pt }).porte);
-    scene.montrerSuggestions(points);
+    scene.montrerSuggestions(points, enLecon);
   }, [choix, harmonieux, scene, enLecon]);
   useEffect(() => () => scene.montrerSuggestions([]), [scene]);
 
@@ -443,7 +445,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const mainAuTrait: Camp = config.mode === 'deux' ? etat.tour : config.campLocal;
 
   return (
-    <div className={`hud ${fini ? 'fini' : ''}`}>
+    <div className={`hud ${fini ? 'fini' : ''} ${enLecon ? 'lecon-en-cours' : ''}`}>
       <header className="hud-haut verre">
         {(['hote', 'invite'] as Camp[]).map((c) => (
           <div key={c} className={`joueur ${etat.tour === c && !fini ? 'au-trait' : ''} ${c}`}>
@@ -457,6 +459,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
         ))}
         <p className="statut">{statut}</p>
         <nav className="hud-boutons">
+          <Volume etiquette={t.volume} />
           <button type="button" className="bouton discret" onClick={() => setRegles(true)}>{t.regles}</button>
           <button type="button" className="bouton discret" onClick={onTutoriel}>{t.tutoriel}</button>
           <button type="button" className={`bouton discret ${suggestions ? 'actif' : ''}`} onClick={basculerSuggestions} aria-pressed={suggestions} data-test="suggestions">
