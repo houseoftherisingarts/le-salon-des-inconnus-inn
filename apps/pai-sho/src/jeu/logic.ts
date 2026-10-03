@@ -623,7 +623,7 @@ export function coupEnTexte(c: Coup): string {
 
 function lirePoint(t: string): Pt {
   const [x, y] = t.split(',').map(Number);
-  if (!Number.isInteger(x) || !Number.isInteger(y) || ZONES[indice(x, y)] === 0 || Math.abs(x) > 8 || Math.abs(y) > 8) {
+  if (!Number.isInteger(x) || !Number.isInteger(y) || Math.abs(x) > 8 || Math.abs(y) > 8 || ZONES[indice(x, y)] === 0) {
     throw new Error(`Point illisible : ${t}`);
   }
   return indice(x, y);
