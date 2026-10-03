@@ -12,6 +12,7 @@ import { adaptateurPaiSho } from './cpu';
 import { POINTS, PORTES, ZONES, PORTE, coordX, coordY, estPorte, indice, zone } from './plateau';
 import { choisirAuNiveau, reflechir, type Niveau } from '../moteur/niveaux';
 import { graine, piocher } from '../moteur/hasard';
+import { COUPS_LECON, LECON } from './lecon';
 
 let ok = 0;
 function verifie(cond: unknown, msg: string): void {
@@ -279,6 +280,28 @@ let milieu: EtatPaiSho | null = null;
     verifie(v !== null, `partie niveau ${niveau} terminée`);
     console.log(`niveau ${niveau} contre lui-même : ${e.numero} demi-coups, ${Math.round((performance.now() - debut) / 1000)} s, ${texteVerdict(v, true)}`);
   }
+}
+
+// ── La leçon d'Iroh : la ligne se rejoue et l'élève gagne par l'anneau ──
+{
+  const attendus = LECON.flatMap((x) => [x.coup && { t: x.coup, camp: 'hote' }, x.reponse && { t: x.reponse, camp: 'invite' }])
+    .filter((x): x is { t: string; camp: Camp } => !!x);
+  verifie(attendus.map((x) => x.t).join(' ') === COUPS_LECON.join(' '), 'COUPS_LECON suit LECON');
+  const eleve = LECON.filter((x) => x.coup).length;
+  verifie(eleve >= 10 && eleve <= 18, `leçon : ${eleve} coups de l’élève`);
+  verifie(!LECON[LECON.length - 1].reponse && !!LECON[LECON.length - 1].coup, 'la leçon finit sur le coup gagnant');
+  let e = etatInitial();
+  attendus.forEach(({ t, camp }, k) => {
+    verifie(e.tour === (k % 2 === 0 ? 'hote' : 'invite') && e.tour === camp, `leçon : ${t} joué par ${camp}`);
+    const c = coupDepuisTexte(t);
+    verifie(coupEnTexte(c) === t && coupLegal(e, c), `leçon : ${t} légal`);
+    const n = appliquerCoup(e, c);
+    verifie(n !== e && n.numero === e.numero + 1, `leçon : ${t} accepté`);
+    verifie(k === attendus.length - 1 || !n.verdict, `leçon : pas de fin avant le dernier coup (${t})`);
+    e = n;
+  });
+  verifie(e.captures.hote === 1, 'leçon : une prise');
+  verifie(e.verdict?.type === 'victoire' && e.verdict.camp === 'hote' && e.verdict.raison === 'anneau', `leçon : victoire de l’élève par l’anneau ${JSON.stringify(e.verdict)}`);
 }
 
 verifie(ACCENTS.length === 4, 'quatre accents');

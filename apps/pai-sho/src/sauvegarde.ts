@@ -7,7 +7,7 @@ import { appliquerCoup, etatInitial } from './jeu/arbitre';
 import { coupDepuisTexte, type Camp, type EtatPaiSho } from './jeu/logic';
 import type { Niveau } from './moteur/niveaux';
 
-export type Mode = 'maison' | 'deux' | 'distance';
+export type Mode = 'maison' | 'deux' | 'distance' | 'lecon';
 
 export interface Config {
   mode: Mode;

@@ -69,6 +69,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     });
   };
 
+  // La leçon : Iroh en face, l'élève tient l'hôte et ouvre.
+  const lecon = () => onLancer({
+    config: { mode: 'lecon', niveau: 9, campLocal: 'hote', tourner: false, noms: { hote: monNom, invite: 'Iroh' } },
+  });
+
   const aDeux = () => onLancer({
     config: {
       mode: 'deux', niveau: 1, campLocal: 'hote', tourner,
@@ -181,6 +186,8 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             <span className="petit">{cote === 'hote' ? t.hoteAide : t.inviteAide}</span>
           </div>
           <button type="button" className="bouton or plein" onClick={contreMaison} data-test="contre-maison">{t.jouerMaison}</button>
+          <button type="button" className="bouton plein" onClick={lecon} data-test="lecon">{t.lecon}</button>
+          <span className="petit">{t.leconAide}</span>
         </article>
 
         <Skins langue={langue} scene={scene} />

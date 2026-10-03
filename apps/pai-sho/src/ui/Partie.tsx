@@ -13,6 +13,7 @@ import { choisirCoup } from '../jeu/cpu';
 import { nouveauPenseur, type Penseur } from '../moteur/penseur';
 import { nomNiveau } from '../moteur/niveaux';
 import { ADVERSAIRES } from '../jeu/adversaires';
+import { LECON } from '../jeu/lecon';
 import type { Pt } from '../jeu/plateau';
 import { LARGEUR_TELEPHONE, type ScenePaiSho } from '../scene/scene';
 import { effacerSauvegarde, rejouer, sauver } from '../sauvegarde';
@@ -103,7 +104,17 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const estLocal = useCallback((c: Camp) => config.mode === 'deux' || c === config.campLocal, [config]);
   const fini = etat.verdict !== null || abandon !== null;
   const aMoi = !fini && !occupe && estLocal(etat.tour);
-  const legaux = useMemo(() => (aMoi ? coupsLegaux(etat) : []), [aMoi, etat]);
+  // La leçon d'Iroh : l'étape courante; tant qu'elle attend un coup,
+  // seul ce coup est permis, et il brille en or comme une suggestion.
+  const enLecon = config.mode === 'lecon';
+  const [iLecon, setILecon] = useState(0);
+  const etapeLecon = enLecon ? LECON[Math.min(iLecon, LECON.length - 1)] : null;
+  const coupAttendu = etapeLecon?.coup ?? null;
+  const legaux = useMemo(() => {
+    if (!aMoi) return [];
+    const tous = coupsLegaux(etat);
+    return enLecon ? tous.filter((c) => coupEnTexte(c) === coupAttendu) : tous;
+  }, [aMoi, etat, enLecon, coupAttendu]);
   // Les suggestions : un anneau d'or sur chaque tuile qui peut former une
   // harmonie, puis sur les cases d'arrivée qui la forment une fois la
   // tuile choisie. Le réglage se garde d'une partie à l'autre.
@@ -111,18 +122,18 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const basculerSuggestions = () => {
     setSuggestions((s) => { try { localStorage.setItem(CLE_SUGGESTIONS, s ? '0' : '1'); } catch { /* privé */ } return !s; });
   };
-  const harmonieux = useMemo(() => (suggestions && aMoi ? coupsHarmonieux(etat, legaux) : []), [suggestions, aMoi, etat, legaux]);
+  const harmonieux = useMemo(() => (enLecon ? legaux : suggestions && aMoi ? coupsHarmonieux(etat, legaux) : []), [enLecon, suggestions, aMoi, etat, legaux]);
   const suggerees = useMemo(() => new Set(harmonieux.filter((c) => c.type === 'planter').map((c) => (c as { tuile: TypeTuile }).tuile)), [harmonieux]);
   // Outillage des tests de bout en bout : les coups jouables et l'état,
   // lus par le script de captures pour savoir où cliquer.
   useEffect(() => {
-    (window as unknown as { __partie: unknown }).__partie = { legaux, etat, coups, choix: choix.type };
+    (window as unknown as { __partie: unknown }).__partie = { legaux, etat, coups, choix: choix.type, lecon: iLecon, occupe };
   });
 
   // Encadré dans le café-jeux du Salon, le jeu annonce la fin de chaque
   // partie à la page qui l'héberge, qui verse les pétales.
   useEffect(() => {
-    if (!fini || window.parent === window) return;
+    if (!fini || enLecon || window.parent === window) return;
     const gagnant = abandon ? autre(abandon) : etat.verdict?.type === 'victoire' ? etat.verdict.camp : null;
     window.parent.postMessage({ type: 'paisho:partie', gagnee: gagnant === config.campLocal, contre: config.mode, niveau: config.niveau }, '*');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,7 +147,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     scene.placerConvives(config.mode === 'deux' ? 'hote' : config.campLocal);
     // Le personnage choisi au menu s'assoit en face; à deux ou à distance, la dame reprend sa place.
     const nomAdv = config.noms[autre(config.campLocal)];
-    scene.placerAdversaire(config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv)?.id ?? null : null);
+    scene.placerAdversaire(config.mode === 'lecon' ? 'iroh' : config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv)?.id ?? null : null);
     scene.afficher(initial.etat);
     scene.montrerCibles([], null);
     void scene.tournerVers(cote, 1.6);
@@ -151,19 +162,22 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     const mesurer = () => {
       const W = window.innerWidth, H = window.innerHeight;
       const r = (s: string) => document.querySelector(s)?.getBoundingClientRect();
-      const g = r('.hud-gauche'), d = r('.hud-droite'), h = r('.hud-haut'), b = r('.hud-bas');
+      const g = r('.hud-gauche'), d = r('.hud-droite'), h = r('.hud-haut'), b = r('.hud-bas'), l = r('.lecon-carte');
       if (W <= LARGEUR_TELEPHONE) {
-        scene.cadrer({ gauche: 0, droite: 0, haut: h ? h.bottom + 4 : 0, bas: b ? H - b.top + 4 : 0 });
+        // Sur le téléphone, la carte de leçon se pose sous la barre du haut.
+        const haut = Math.max(h ? h.bottom : 0, l ? l.bottom : 0) + 4;
+        scene.cadrer({ gauche: 0, droite: 0, haut, bas: b ? H - b.top + 4 : 0 });
       } else {
+        // La carte de leçon ne doit jamais cacher la porte sud : le plateau se loge au-dessus.
         scene.cadrer({
-          gauche: g ? g.right + 8 : 0, droite: d ? W - d.left + 8 : 0, haut: h ? h.bottom + 4 : 0, bas: 16,
+          gauche: g ? g.right + 8 : 0, droite: d ? W - d.left + 8 : 0, haut: h ? h.bottom + 4 : 0, bas: l ? H - l.top + 12 : 16,
         });
       }
     };
     const id = window.setTimeout(mesurer, 50);
     window.addEventListener('resize', mesurer);
     return () => { window.clearTimeout(id); window.removeEventListener('resize', mesurer); };
-  }, [scene]);
+  }, [scene, iLecon, fini]);
 
   // ── Jouer un coup ─────────────────────────────────────────────────
   const jouerCoup = useCallback(async (c: Coup, venuDeLoin = false) => {
@@ -180,7 +194,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     setEtat(apres);
     setCoups(liste);
     if (lien && !venuDeLoin) lien.envoyer({ type: 'coup', texte, n: liste.length - 1 });
-    if (config.mode !== 'distance') {
+    if (config.mode !== 'distance' && config.mode !== 'lecon') {
       if (apres.verdict) effacerSauvegarde();
       else sauver(config, liste);
     }
@@ -217,6 +231,20 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     });
     return () => { vivant = false; setReflechit(false); };
   }, [etat, fini, occupe, config, estLocal, jouerCoup]);
+
+  // ── Iroh, pendant la leçon ────────────────────────────────────────
+  // L'élève vient de jouer le coup attendu : Iroh répond après un
+  // souffle, puis la leçon passe à l'étape suivante. À la dernière
+  // étape, sans réponse, la victoire parle d'elle-même.
+  useEffect(() => {
+    if (!enLecon || occupe || fini || !etapeLecon?.coup || etat.tour !== 'invite') return;
+    const reponse = etapeLecon.reponse;
+    if (!reponse) return;
+    const id = window.setTimeout(() => {
+      void jouerCoup(coupDepuisTexte(reponse)).then(() => setILecon((i) => i + 1));
+    }, 900);
+    return () => window.clearTimeout(id);
+  }, [enLecon, occupe, fini, etapeLecon, etat.tour, jouerCoup]);
 
   // ── L'autre joueur, à distance ────────────────────────────────────
   const recevoir = useCallback((m: Message) => {
@@ -279,11 +307,13 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
 
   useEffect(() => {
     let points: Pt[] = [];
-    if (choix.type === 'aucun') points = harmonieux.filter((c) => c.type === 'deplacer').map((c) => (c as { de: Pt }).de);
+    // Pendant la leçon, la tuile et sa case d'arrivée brillent ensemble.
+    if (enLecon) points = harmonieux.flatMap((c) => (c.type === 'planter' ? [c.porte] : [c.de, c.a]));
+    else if (choix.type === 'aucun') points = harmonieux.filter((c) => c.type === 'deplacer').map((c) => (c as { de: Pt }).de);
     else if (choix.type === 'tuile') points = harmonieux.filter((c) => c.type === 'deplacer' && c.de === choix.de).map((c) => (c as { a: Pt }).a);
     else if (choix.type === 'reserve') points = harmonieux.filter((c) => c.type === 'planter' && c.tuile === choix.tuile).map((c) => (c as { porte: Pt }).porte);
     scene.montrerSuggestions(points);
-  }, [choix, harmonieux, scene]);
+  }, [choix, harmonieux, scene, enLecon]);
   useEffect(() => () => scene.montrerSuggestions([]), [scene]);
 
   const annulerBonus = useCallback(() => {
@@ -380,7 +410,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   if (vainqueur && config.mode !== 'deux' && vainqueur !== config.campLocal) titreFin = t.defaite;
 
   let consigne = '';
-  if (aMoi) {
+  if (aMoi && !enLecon) {
     if (choix.type === 'bonus') consigne = choix.tuile ? t.bonusCible : '';
     else if (choix.type === 'reserve') consigne = t.choisirPorte;
     else if (etat.numero === 0) consigne = t.ouverture;
@@ -388,6 +418,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
 
   const statut = config.mode === 'maison'
     ? `${t.niveau} ${config.niveau} · ${nomNiveau(config.niveau, fr)}`
+    : config.mode === 'lecon' ? t.lecon
     : config.mode === 'distance' ? (etatLien === 'connecte' ? t.connecte : etatLien === 'perdu' ? t.perdue : t.partieDistance)
       : t.aDeux;
 
@@ -442,7 +473,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       </aside>
 
       <footer className="hud-bas verre">
-        <div className="bas-reserve">{reserve(mainAuTrait)}<Fiches langue={langue} /></div>
+        <div className="bas-reserve">{reserve(mainAuTrait)}{!enLecon && <Fiches langue={langue} />}</div>
         <div className="bas-boutons">
           <button type="button" className="bouton discret" onClick={() => setJournalOuvert((x) => !x)}>{t.journal}</button>
           <button type="button" className="bouton discret" onClick={() => setRegles(true)}>{t.regles}</button>
@@ -456,6 +487,19 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       </footer>
 
       {consigne && <p className="consigne verre">{consigne}</p>}
+
+      {etapeLecon && !fini && (
+        <aside className="lecon-carte verre" role="status" data-test="lecon-carte">
+          <p className="tuto-sur">{t.lecon} <span>{Math.min(iLecon, LECON.length - 1) + 1} / {LECON.length}</span></p>
+          <h2 className="tuto-titre">{fr ? etapeLecon.titreFR : etapeLecon.titreEN}</h2>
+          <p className="tuto-corps">{fr ? etapeLecon.corpsFR : etapeLecon.corpsEN}</p>
+          <div className="lecon-gestes">
+            {etapeLecon.coup
+              ? <span className="petit">{aMoi ? t.jouezLeCoup : <>{t.reflechit}<i className="points" /></>}</span>
+              : <><span /><button type="button" className="bouton or" onClick={() => setILecon((i) => i + 1)} data-test="lecon-suivant">{t.suivant}</button></>}
+          </div>
+        </aside>
+      )}
 
       {aMoi && choix.type === 'bonus' && !choix.tuile && (
         <PanneauBonus candidats={choix.candidats} langue={langue} onChoisir={choisirBonus} onAnnuler={annulerBonus} />

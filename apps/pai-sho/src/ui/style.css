@@ -267,6 +267,15 @@ img { display: block; }
   margin: 0; padding: 10px 20px; font-size: 15px; color: var(--or-pale);
   max-width: min(520px, calc(100vw - 32px)); text-align: center; pointer-events: none;
 }
+.lecon-carte {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  width: min(480px, calc(100vw - 32px)); padding: 18px 20px; background: var(--verre-fort);
+  animation: monte 0.35s ease-out both; z-index: 4;
+}
+.lecon-carte .tuto-titre { font-size: 20px; }
+.lecon-carte .tuto-corps { font-size: 14.5px; max-height: 32vh; overflow: auto; }
+.lecon-gestes { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
+.lecon-gestes .petit { color: var(--or-pale); }
 .bonus {
   position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
   width: min(460px, calc(100vw - 32px)); padding: 20px; background: var(--verre-fort);
@@ -363,6 +372,10 @@ img { display: block; }
   .bas-boutons { display: flex; gap: 6px; }
   .bas-boutons .bouton { flex: 1; padding: 7px 4px; font-size: 13px; }
   .consigne, .bonus { bottom: auto; top: 70px; }
+  .lecon-carte { bottom: auto; top: 64px; padding: 10px 14px; }
+  .lecon-carte .tuto-titre { font-size: 17px; margin-bottom: 4px; }
+  .lecon-carte .tuto-corps { max-height: 13vh; font-size: 13px; line-height: 1.45; }
+  .lecon-gestes { margin-top: 8px; }
   .consigne { font-size: 13.5px; padding: 8px 14px; }
   .bonus-annuler { bottom: auto; top: 120px; }
   .bandeau { top: 70px; width: calc(100vw - 32px); }

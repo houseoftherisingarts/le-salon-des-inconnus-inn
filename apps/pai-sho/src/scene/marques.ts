@@ -45,8 +45,8 @@ export class Marques {
     this.refus = new THREE.Mesh(geoAnneau, mat(0xd8382a, 0.85));
     this.survol = new THREE.Mesh(geoAnneau, mat(0x9cf5bd, 0.9));
     for (const m of [this.anneau, this.refus, this.survol]) { m.visible = false; m.renderOrder = 3; }
-    const geoSuggestion = new THREE.RingGeometry(0.36 * PAS, 0.44 * PAS, 40).rotateX(-Math.PI / 2);
-    this.suggestionsMesh = new THREE.InstancedMesh(geoSuggestion, mat(OR, 0.7, true), MAX_CIBLES);
+    const geoSuggestion = new THREE.RingGeometry(0.5 * PAS, 0.64 * PAS, 48).rotateX(-Math.PI / 2);
+    this.suggestionsMesh = new THREE.InstancedMesh(geoSuggestion, mat(OR, 0.9, true), MAX_CIBLES);
     this.suggestionsMesh.count = 0;
     this.suggestionsMesh.renderOrder = 2;
     this.suggestionsMesh.frustumCulled = false;
@@ -138,7 +138,7 @@ export class Marques {
     this.matFil.opacity = 0.62 + 0.25 * Math.sin(t * 2.2);
     this.matFilGagnant.opacity = 0.7 + 0.3 * Math.sin(t * 5);
     (this.anneau.material as THREE.MeshBasicMaterial).opacity = 0.75 + 0.25 * Math.sin(t * 4);
-    (this.suggestionsMesh.material as THREE.MeshBasicMaterial).opacity = 0.5 + 0.3 * Math.sin(t * 2.6);
+    (this.suggestionsMesh.material as THREE.MeshBasicMaterial).opacity = 0.7 + 0.3 * Math.sin(t * 2.6);
   }
 
   detruire(): void { for (const x of this.aJeter) x.dispose(); }

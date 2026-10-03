@@ -125,7 +125,7 @@ export default function App() {
     setDepart(d);
     setManche((n) => n + 1);
     setEcran('partie');
-    if (!tutorielVu('paisho')) window.setTimeout(() => setTuto(true), 1600);
+    if (d.config.mode !== 'lecon' && !tutorielVu('paisho')) window.setTimeout(() => setTuto(true), 1600);
   }, []);
 
   const versMenu = useCallback(() => {
