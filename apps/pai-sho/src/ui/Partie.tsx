@@ -87,6 +87,11 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const fini = etat.verdict !== null || abandon !== null;
   const aMoi = !fini && !occupe && estLocal(etat.tour);
   const legaux = useMemo(() => (aMoi ? coupsLegaux(etat) : []), [aMoi, etat]);
+  // Outillage des tests de bout en bout : les coups jouables et l'état,
+  // lus par le script de captures pour savoir où cliquer.
+  useEffect(() => {
+    (window as unknown as { __partie: unknown }).__partie = { legaux, etat, coups, choix: choix.type };
+  });
 
   // ── La mise en place ──────────────────────────────────────────────
   useEffect(() => {
