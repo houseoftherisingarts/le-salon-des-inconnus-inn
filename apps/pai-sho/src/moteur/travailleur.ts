@@ -11,7 +11,7 @@
 // Ce fichier remplit deux offices, et c'est voulu. Il est le travailleur
 // lui-même, celui que Vite charge par
 // `new Worker(new URL('./travailleur.ts', import.meta.url), { type: 'module' })`.
-// Il porte aussi la table des trois plateaux et le repli synchrone, dont
+// Il porte aussi la table des plateaux (le Pai Sho seul) et le repli synchrone, dont
 // le penseur se sert quand aucun travailleur ne démarre. L'écouteur de
 // messages ne s'installe donc qu'à l'intérieur d'un vrai travailleur :
 // importé depuis une page ou depuis le terminal, ce fichier ne fait rien
@@ -20,20 +20,14 @@
 // LE CLONAGE. Tout ce qui traverse la frontière passe par le clonage
 // structuré du navigateur, qui accepte les nombres, les textes, les
 // tableaux et les objets ordinaires, et qui refuse une Map, un Set ou
-// une fonction. Les trois états de jeu s'y prêtent tels quels : le
-// registre des positions vues est un objet ordinaire chez le renard et
-// au tafl, et un tableau de textes à la mérelle. Rien n'a donc besoin
+// une fonction. L'état du Pai Sho s'y prête tel quel : le plateau est
+// un texte, les réserves des objets ordinaires et le registre des
+// positions vues un tableau de textes. Rien n'a donc besoin
 // d'être sérialisé à la main, et le penseur se replie sur le fil
 // principal si un jour un état cessait de passer.
 
-import { adaptateurMerelle, coupSimple } from '../merelle/cpu';
-import type { EtatMerelle } from '../merelle/arbitre';
-import { adaptateurRenard } from '../renard/cpu';
-import type { EtatRenard } from '../renard/arbitre';
-import type { Coup as CoupRenard } from '../renard/logic';
-import { adaptateurTafl, type CpuMove } from '../hnefatafl/cpuPlayer';
-import type { EtatTafl } from '../hnefatafl/arbitre';
-import { REGLE } from '../hnefatafl/gameLogic';
+import { adaptateurPaiSho } from '../jeu/cpu';
+import type { Coup as CoupPaiSho, EtatPaiSho } from '../jeu/logic';
 import { auHasard, graine, piocher } from './hasard';
 import { livreDe } from './livre';
 import { NIVEAUX, choisirAuNiveau, reflechir, type ChoixOptions, type Niveau } from './niveaux';
@@ -41,9 +35,9 @@ import type { Adaptateur, CoupNote } from './types';
 
 // ─── Le protocole ───────────────────────────────────────────────────
 
-/** Les trois plateaux qui savent chercher. Les dés n'ont pas d'arbre à
- *  explorer et répondent en un clin d'œil sur le fil principal. */
-export type JeuPlateau = 'renard' | 'merelle' | 'tafl';
+/** Le seul plateau de cette application. Le type reste une union d'un
+ *  seul membre pour garder le protocole du moteur commun intact. */
+export type JeuPlateau = 'paisho';
 
 export interface OptionsReflexion {
   /** La graine du hasard, quand la partie doit se rejouer à l'identique. */
@@ -56,11 +50,7 @@ export interface DemandeTravailleur extends OptionsReflexion {
   /** Le numéro de la demande. Une réponse qui n'y répond pas est périmée. */
   id: number;
   jeu: JeuPlateau;
-  /**
-   * Le règlement du tafl, qui vit dans une variable de module et se pose
-   * avant de chercher. Le renard et la mérelle portent la leur dans leur
-   * état, et ce champ ne les concerne pas.
-   */
+  /** Le nom de la variante. Le Pai Sho n'en a qu'une : 'skud'. */
   variante: string;
   /** L'état du jeu, en objets simples. */
   etat: unknown;
@@ -93,7 +83,7 @@ export interface ReponseTravailleur {
   erreur?: string;
 }
 
-// ─── La table des trois plateaux ────────────────────────────────────
+// ─── La table des plateaux ──────────────────────────────────────────
 
 /** Un plateau prêt à être cherché : son adaptateur, sa position, son nom
  *  de variante et la façon de rendre un coup au monde extérieur. */
@@ -122,37 +112,13 @@ export function avecPlateau<R>(
   faire: <E, C>(p: Plateau<E, C>) => R,
 ): R {
   switch (jeu) {
-    case 'renard': {
-      const e = etat as EtatRenard;
+    case 'paisho':
       return faire({
-        adaptateur: adaptateurRenard(e.variante),
-        etat: e,
-        variante: e.variante,
-        sortie: (c: CoupRenard) => c,
+        adaptateur: adaptateurPaiSho(),
+        etat: etat as EtatPaiSho,
+        variante: variante || 'skud',
+        sortie: (c: CoupPaiSho) => c,
       });
-    }
-    case 'merelle': {
-      const e = etat as EtatMerelle;
-      return faire({
-        adaptateur: adaptateurMerelle(e.jeu.vol),
-        etat: e,
-        variante: e.jeu.vol ? 'vol' : 'sansVol',
-        // Le moulin voyage avec son retrait dans la recherche, et se
-        // rejoue en deux temps sur le plateau : la page reçoit le coup
-        // seul, et le retrait lui sera demandé au tour suivant.
-        sortie: coupSimple,
-      });
-    }
-    case 'tafl': {
-      const e = etat as EtatTafl;
-      const regleId = variante || REGLE.id;
-      return faire({
-        adaptateur: adaptateurTafl(regleId),
-        etat: e,
-        variante: regleId,
-        sortie: (c: CpuMove) => c,
-      });
-    }
   }
 }
 

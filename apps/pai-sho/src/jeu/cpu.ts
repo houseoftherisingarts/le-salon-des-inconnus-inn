@@ -12,7 +12,7 @@ import { choisirAuNiveau, type ChoixOptions, type Niveau } from '../moteur/nivea
 import type { Adaptateur } from '../moteur/types';
 import {
   TYPES, coupEnTexte, coupsIA, estMediane, harmonies, jouer, tuilesPiegees,
-  type Camp, type Coup, type EtatPaiSho,
+  type Coup, type EtatPaiSho,
 } from './logic';
 import { NB_CASES, POINTS, coordX, coordY, estPorte } from './plateau';
 
@@ -56,9 +56,9 @@ function noterCamps(e: EtatPaiSho): [number, number] {
   for (const i of POINTS) {
     const ch = s[i];
     if (ch === '.' || estPorte(i)) continue;
-    const c = FLEURS_HOTE.includes(ch) ? 0 : FLEURS_INVITE.includes(ch) ? 1 : -1;
+    const c: number = FLEURS_HOTE.includes(ch) ? 0 : FLEURS_INVITE.includes(ch) ? 1 : -1;
     if (c < 0) continue;
-    n[c] += POIDS.enFleur + POIDS.centre * (12 - ECART_CENTRE[i]);
+    n[c as 0 | 1] +=POIDS.enFleur + POIDS.centre * (12 - ECART_CENTRE[i]);
   }
   for (const i of tuilesPiegees(e)) n[s[i] === s[i].toUpperCase() ? 0 : 1] -= POIDS.piegee;
   return n;
@@ -119,5 +119,3 @@ export function choisirCoup(e: EtatPaiSho, niveau: Niveau, o: ChoixOptions = {})
   if (e.verdict) return null;
   return choisirAuNiveau(adaptateurPaiSho(), e, niveau, o);
 }
-
-export type { Camp };
