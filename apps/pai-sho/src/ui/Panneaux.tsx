@@ -47,6 +47,23 @@ export function Reserve({ etat, camp, langue, nom, actif, plantables, choisie, o
   );
 }
 
+/** Traduit la notation du moteur (`R3@0,8`, `0,-7>0,-4+ROCHER@1,2`) en mots. */
+export function coupEnMots(texte: string, langue: Langue): string {
+  const noms = NOMS_TUILES[langue];
+  const nom = (t: string) => noms[t as TypeTuile] ?? t;
+  const fr = langue === 'FR';
+  const [geste, bonus] = texte.split('+');
+  let mots: string;
+  const plante = geste.match(/^([A-Z0-9]+)@(.+)$/);
+  if (plante) mots = fr ? `${nom(plante[1])} plantée en ${plante[2]}` : `${nom(plante[1])} planted at ${plante[2]}`;
+  else mots = geste.replace('>', fr ? ' vers ' : ' to ');
+  if (!bonus) return mots;
+  const b = bonus.match(/^([A-Z0-9]+)@([^>]+)(?:>(.+))?$/);
+  if (!b) return `${mots}, ${bonus}`;
+  const pousse = b[3] ? (fr ? `, poussée vers ${b[3]}` : `, pushed to ${b[3]}`) : '';
+  return `${mots}, ${nom(b[1])} ${fr ? 'en' : 'at'} ${b[2]}${pousse}`;
+}
+
 export function Journal({ coups, langue }: { coups: string[]; langue: Langue }) {
   const t = TEXTES[langue];
   const fin = useRef<HTMLOListElement>(null);
@@ -57,7 +74,7 @@ export function Journal({ coups, langue }: { coups: string[]; langue: Langue }) 
       {coups.length === 0 ? <p className="petit">{t.aucunCoup}</p> : (
         <ol ref={fin} className="journal-liste">
           {coups.map((c, i) => (
-            <li key={i} className={i % 2 === 0 ? 'hote' : 'invite'}><span>{i + 1}.</span> {c}</li>
+            <li key={i} className={i % 2 === 0 ? 'hote' : 'invite'}><span>{i + 1}.</span> {coupEnMots(c, langue)}</li>
           ))}
         </ol>
       )}
