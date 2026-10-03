@@ -109,7 +109,12 @@ export default function App() {
       const centre = toutes.filter((r) => r.right > window.innerWidth / 3 && r.left < (window.innerWidth * 2) / 3);
       const hauts = (centre.length ? centre : toutes).map((r) => r.top);
       if (!tete || !hauts.length) return;
-      scene.cadrer({ gauche: 0, droite: 0, haut: tete.bottom + 8, bas: Math.max(0, window.innerHeight - Math.min(...hauts) + 8) });
+      // La table garde au moins 38 % de la hauteur, quoi que les cartes
+      // prennent : sur une fenêtre basse, elle passe sous le verre plutôt
+      // que de s'enfuir au loin en disque noir.
+      const haut = tete.bottom + 8;
+      const bas = Math.min(window.innerHeight - Math.min(...hauts) + 8, window.innerHeight - haut - window.innerHeight * 0.38);
+      scene.cadrer({ gauche: 0, droite: 0, haut, bas: Math.max(0, bas) });
     };
     const id = window.setTimeout(mesurer, 60);
     window.addEventListener('resize', mesurer);
