@@ -159,8 +159,8 @@ function solDuFond(d: IdDecor, x: number, y: number, l: number, h: number, n: nu
 }
 
 /** Un sol qui porte sa propre lueur : la lanterne n'éclaire que la table. */
-function sol(a: Atelier, carte: THREE.Texture, teinte: number, force: number): void {
-  const m = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, map: carte, emissiveMap: carte, emissive: teinte, emissiveIntensity: force, roughness: 0.95, fog: false });
+function sol(a: Atelier, carte: THREE.Texture, teinte: number, force: number, base = 0x3a3a3a): void {
+  const m = new THREE.MeshStandardMaterial({ color: base, map: carte, emissiveMap: carte, emissive: teinte, emissiveIntensity: force, roughness: 0.95, fog: false });
   a.jet.push(carte, m);
   dalle(a, m, 0, false).receiveShadow = true;
 }
@@ -191,7 +191,7 @@ function taverne(a: Atelier): void {
         x += l;
       }
     }
-  }, 5, 2.3);
+  }, 3.4, 1.6);
   const matMur = new THREE.MeshBasicMaterial({ map: pierre, color: 0x9a7d66, fog: false });
   const matPlafond = a.mat(0x1d120b);
   const matPoutre = a.mat(0x2e1c11);
@@ -200,7 +200,7 @@ function taverne(a: Atelier): void {
   const matCire = a.lumiere(0xf3dfb4);
   a.jet.push(pierre, matMur);
 
-  sol(a, solDuFond('taverne', 0.5, 0.74, 0.11, 0.22, 6), 0x8a7562, 0.9);
+  sol(a, solDuFond('taverne', 0.5, 0.74, 0.11, 0.22, 6), 0xa06a42, 0.75, 0x3a2a1e);
   dalle(a, matPlafond, H, true);
   poutres(a, matPoutre, 6, 7, false);
 
@@ -283,11 +283,11 @@ function taverne(a: Atelier): void {
 
 function salonDeThe(a: Atelier, decoupe: ReturnType<typeof decoupeur>): void {
   const treillis = toile(256, (g) => {
-    g.fillStyle = '#2a160c';
+    g.fillStyle = '#4a2814';
     g.fillRect(0, 0, 256, 256);
     // Un jour chaud derrière le treillis, puis les baguettes de bois par-dessus.
     const jour = g.createRadialGradient(128, 128, 10, 128, 128, 170);
-    jour.addColorStop(0, 'rgba(255, 168, 84, 0.34)');
+    jour.addColorStop(0, 'rgba(255, 176, 96, 0.6)');
     jour.addColorStop(1, 'rgba(255, 168, 84, 0.04)');
     g.fillStyle = jour;
     g.fillRect(0, 0, 256, 256);
@@ -302,16 +302,16 @@ function salonDeThe(a: Atelier, decoupe: ReturnType<typeof decoupeur>): void {
     g.moveTo(76, 180); g.lineTo(40, 216); g.moveTo(180, 180); g.lineTo(216, 216);
     g.stroke();
   }, 15, 7);
-  const matTreillis = new THREE.MeshBasicMaterial({ map: treillis, color: 0xb89a80, fog: false });
-  const matLune = new THREE.MeshBasicMaterial({ color: 0x9a826c, fog: false });
-  const matBois = a.mat(0x2b170e);
-  const matNoir = a.mat(0x170c07);
+  const matTreillis = new THREE.MeshBasicMaterial({ map: treillis, color: 0xffffff, fog: false });
+  const matLune = new THREE.MeshBasicMaterial({ color: 0xd8c0a8, fog: false });
+  const matBois = a.mat(0x5a321c);
+  const matNoir = a.mat(0x2a170e);
   const matBol = a.mat(0x9dc0ad);
   const matTerre = a.mat(0x6a3a22);
   a.jet.push(treillis, matTreillis, matLune);
   decoupe(matLune, 0.16, 0, 0.615, 0.7);
 
-  sol(a, solDuFond('the', 0.235, 0.815, 0.05, 0.07, 9), 0x8a7562, 2.6);
+  sol(a, solDuFond('the', 0.235, 0.815, 0.05, 0.07, 9), 0x8a6248, 3);
   dalle(a, matNoir, H, true);
   poutres(a, matBois, 5, 5, true);
 
@@ -361,7 +361,7 @@ function salonDeThe(a: Atelier, decoupe: ReturnType<typeof decoupeur>): void {
   // Les lanternes de papier pendues aux poutres, rouges et crème.
   const matCorde = a.mat(0x0d0704);
   [[-52, -52, 0], [52, -52, 1], [-52, 52, 1], [52, 52, 0], [0, -62, 1], [0, 62, 0], [-64, 0, 0], [64, 0, 1]].forEach(([x, z, creme], i) => {
-    const y = Y0 + 52 + (i % 3) * 4;
+    const y = Y0 + 44 + (i % 3) * 4;
     const couleur = creme ? 0xf6d99a : 0xe2492c;
     const corps = new THREE.Mesh(a.boule, a.lumiere(couleur));
     corps.scale.set(3.6, 4.6, 3.6);
@@ -422,9 +422,9 @@ function jardinDeThe(a: Atelier, decoupe: ReturnType<typeof decoupeur>): void {
           g.fillRect(x + b, y, 1, 256);
         }
         // Le galon de tissu sur les deux longs côtés, le joint nu au bout.
-        g.fillStyle = '#2f3a2c';
-        g.fillRect(x, y, 512, 7);
-        g.fillRect(x, y + 249, 512, 7);
+        g.fillStyle = '#7d8662';
+        g.fillRect(x, y, 512, 4);
+        g.fillRect(x, y + 252, 512, 4);
         g.fillStyle = 'rgba(70, 58, 32, 0.5)';
         g.fillRect(x, y + 7, 2, 242);
       }
@@ -495,10 +495,10 @@ export function batirSalles(scene: THREE.Scene, gestionnaire: THREE.LoadingManag
         lumiere: (couleur) => { const m = new THREE.MeshBasicMaterial({ color: couleur, fog: false }); aJeter.push(m); return m; },
       };
       // Seule la première salle retient l'écran de chargement.
-      const decoupe = decoupeur(a, d, salles.size ? undefined : gestionnaire);
+      const decoupe = () => decoupeur(a, d, salles.size ? undefined : gestionnaire);
       if (d === 'taverne') taverne(a);
-      else if (d === 'the') salonDeThe(a, decoupe);
-      else jardinDeThe(a, decoupe);
+      else if (d === 'the') salonDeThe(a, decoupe());
+      else jardinDeThe(a, decoupe());
       scene.add(a.g);
       salles.set(d, a.g);
     }
