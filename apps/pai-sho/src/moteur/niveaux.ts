@@ -1,8 +1,9 @@
 // ─── Les dix marches ────────────────────────────────────────────────
 // Alex, 2026-09-01 : trois niveaux ne suffisaient plus. Le plus fort se
 // battait au premier essai, et « facile » jouait n'importe quoi. La
-// force monte maintenant sur dix marches nommées comme les gens d'une
-// maisonnée médiévale, du marmiton au connétable.
+// force monte maintenant sur dix marches. Dans Pai Sho, elles portent
+// des noms du monde d'Avatar, le dernier maître de l'air (Alex, 3
+// octobre 2026), du marchand de choux jusqu'à l'Avatar.
 //
 // Une marche se règle sur trois cadrans, et JAMAIS en cassant la
 // recherche :
