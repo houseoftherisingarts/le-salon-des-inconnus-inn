@@ -170,6 +170,15 @@ img { display: block; }
 .bascule { display: flex; border: 1px solid var(--bord); border-radius: 999px; padding: 3px; background: rgba(0, 0, 0, 0.25); }
 .bascule button { flex: 1; border: 0; background: none; padding: 7px 10px; border-radius: 999px; cursor: pointer; color: var(--texte-doux); }
 .bascule button.choisi { background: rgba(212, 175, 55, 0.2); color: var(--or-pale); font-weight: 700; }
+.persos { display: flex; flex-wrap: wrap; gap: 6px; }
+.perso {
+  border: 1px solid var(--bord); border-radius: 999px; padding: 5px 11px;
+  background: rgba(255, 255, 255, 0.04); cursor: pointer; font-size: 13.5px; color: var(--texte-doux);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.perso:hover { border-color: rgba(212, 175, 55, 0.5); }
+.perso.choisi { background: rgba(212, 175, 55, 0.2); color: var(--or-pale); border-color: rgba(212, 175, 55, 0.5); font-weight: 700; }
+.perso-mot { color: var(--or-pale); }
 .case { display: flex; gap: 10px; align-items: center; cursor: pointer; font-size: 14px; }
 .case input { accent-color: var(--or); width: 17px; height: 17px; }
 .saisie {
