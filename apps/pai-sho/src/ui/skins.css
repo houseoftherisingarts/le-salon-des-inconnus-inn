@@ -1,0 +1,53 @@
+/* ─── Le choix des skins ─────────────────────────────────────────
+   Deux rangées de vignettes dans une carte de verre. La vignette
+   choisie est cerclée d'or ; un skin fermé garde son image, voilée,
+   avec un petit cadenas. Jamais d'italique. */
+
+.carte-skins { gap: 14px; }
+.skin-rangee { display: flex; flex-direction: column; gap: 8px; }
+.skin-grille { display: grid; gap: 10px; }
+.skin-rond { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.skin-paire { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.skin-choix {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 0; border: 0; background: none; cursor: pointer; min-width: 0;
+}
+.skin-choix:disabled { cursor: default; }
+.skin-image {
+  position: relative; display: block; width: 100%;
+  border-radius: 50%; aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 0 1px var(--bord), 0 8px 20px rgba(0, 0, 0, 0.45);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.skin-paire .skin-image { border-radius: 12px; aspect-ratio: 4 / 3; background: rgba(0, 0, 0, 0.22); }
+.skin-image img { width: 100%; height: 100%; object-fit: contain; border-radius: inherit; }
+.skin-choix:hover:not(:disabled) .skin-image { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.55), 0 12px 26px rgba(0, 0, 0, 0.5); }
+.skin-choix.choisi .skin-image {
+  box-shadow: 0 0 0 2px var(--or), 0 0 22px rgba(212, 175, 55, 0.45), 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+.skin-choix:focus-visible { outline: none; }
+.skin-choix:focus-visible .skin-image { outline: 2px solid var(--or); outline-offset: 3px; }
+.skin-choix:disabled img { opacity: 0.5; filter: saturate(0.6); }
+
+.skin-nom {
+  font-size: 12px; line-height: 1.25; text-align: center; color: var(--texte-doux);
+  overflow-wrap: anywhere;
+}
+.skin-choix.choisi .skin-nom { color: var(--or-pale); font-weight: 700; }
+.skin-choix:disabled .skin-nom { opacity: 0.7; }
+
+.skin-cadenas {
+  position: absolute; right: 4%; bottom: 4%;
+  width: 22px; height: 22px; padding: 4px; border-radius: 50%;
+  background: rgba(12, 8, 5, 0.78); border: 1px solid rgba(212, 175, 55, 0.45);
+  fill: var(--or-pale); stroke: var(--or-pale); stroke-width: 1.5;
+}
+.skin-cadenas path { fill: none; }
+
+.skin-mention {
+  display: flex; align-items: center; gap: 8px; margin: 0;
+  font-size: 13px; color: var(--texte-doux); letter-spacing: 0.02em;
+}
+.skin-mention .skin-cadenas { position: static; flex: none; width: 20px; height: 20px; padding: 3px; }
