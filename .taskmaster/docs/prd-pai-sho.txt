@@ -1,0 +1,20 @@
+# PRD : Pai Sho (apps/pai-sho)
+
+## Contexte
+Alex veut un jeu de table en bois en 3D nommé « Pai Sho », bâti sur les règles par défaut du Skud Pai Sho (référence vérifiée : ~/Documents/Onyx/30_library/pai-sho-skud-regles.md), dans l'esprit des jeux 3D du Festival Médiéval (dépôt FMM 2026) dont on réemploie le moteur d'IA, les helpers three.js et la scène de taverne. Programme macOS autonome d'abord (Electron), même code servant une version web rattachée au monorepo du Salon des Inconnus (apps/pai-sho). Aucun Firebase.
+
+## Objectif
+Une application Mac jouable de bout en bout : contre l'ordinateur (dix niveaux), à deux sur le même Mac, ou à distance par identifiant de joueur (PeerJS), dans une taverne en 3D avec plateau et tuiles sculptés (Higgsfield + Meshy).
+
+## Exigences
+1. Moteur de règles complet du Skud par défaut : plateau 249 points, zones, 4 portes, planter/déplacer, conflits illégaux, captures, harmonies, bonus d'harmonie, Lotus, Orchidée, quatre accents (un de chaque par joueur), anneau d'harmonie, fin par dernière fleur et départage par les harmonies médianes, nulles. Tests assert.
+2. IA : adaptateur pour le moteur commun porté de FMM (negamax, dix niveaux, travailleur), évaluation propre au Pai Sho, coups composés, temps bornés.
+3. Multijoueur : même Mac (chacun son tour), et à distance par identifiant de joueur avec PeerJS (WebRTC pair à pair, signalisation publique), nom et identifiant gardés en local, reconnexion simple.
+4. Scène 3D : taverne (salle, table, lanterne, convives), plateau sculpté avec treillis et jardins incrustés exacts, douze tuiles sculptées, érable pour l'hôte et noyer pour l'invité, fils d'harmonie lumineux, halo de conflit, anneau victorieux allumé, caméra et prise souris/trackpad.
+5. Interface : entrée cinématique, menu (maison avec niveau, à deux, à distance, reprendre, tutoriel), bilingue FR/EN, glassmorphism maison, aucun italique, sauvegarde locale de la partie en cours.
+6. Electron : .app et .dmg macOS par electron-builder, icône, fenêtre redimensionnable et plein écran.
+7. Actifs : images Higgsfield, modèles Meshy optimisés (draco, webp), aucun nom ni visuel d'Avatar, de Skud ni de The Garden Gate.
+8. Vérification : typecheck, tests du moteur, parties IA contre IA, captures 1440 et 390 relues par la boucle de verdict, paquet Mac lancé.
+
+## Hors périmètre
+Serveur de jeu, comptes, classement, clavardage, mobile natif, règles optionnelles non par défaut, jeu en réseau derrière NAT symétrique sans TURN.
