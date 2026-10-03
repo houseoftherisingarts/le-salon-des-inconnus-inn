@@ -33,12 +33,34 @@ interface Props {
   onMenu: () => void;
   onNouvelle: () => void;
   onTutoriel: () => void;
+  son: boolean;
+}
+
+// Le toc d'une tuile de bois posée sur le plateau : un bruit bref
+// filtré autour de 900 Hz, sans fichier à charger.
+let audio: AudioContext | null = null;
+function toc(): void {
+  try {
+    audio ??= new AudioContext();
+    const n = Math.floor(audio.sampleRate * 0.09);
+    const tampon = audio.createBuffer(1, n, audio.sampleRate);
+    const d = tampon.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 6);
+    const src = audio.createBufferSource();
+    const filtre = audio.createBiquadFilter();
+    filtre.type = 'bandpass'; filtre.frequency.value = 900; filtre.Q.value = 3;
+    const gain = audio.createGain();
+    gain.gain.value = 0.9;
+    src.buffer = tampon;
+    src.connect(filtre).connect(gain).connect(audio.destination);
+    src.start();
+  } catch { /* pas de son, la partie continue */ }
 }
 
 const autre = (c: Camp): Camp => (c === 'hote' ? 'invite' : 'hote');
 const premierPoint = (b: Bonus): Pt => (b.type === 'accent' ? b.a : b.porte);
 
-export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTutoriel }: Props) {
+export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTutoriel, son }: Props) {
   const t = TEXTES[langue];
   const fr = langue === 'FR';
   const { config, lien } = depart;
@@ -56,6 +78,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const penseur = useRef<Penseur | null>(null);
   const etatRef = useRef(etat);
   const coupsRef = useRef(coups);
+  const sonRef = useRef(son);
+  sonRef.current = son;
   etatRef.current = etat;
   coupsRef.current = coups;
 
@@ -118,6 +142,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       else sauver(config, liste);
     }
     await scene.afficher(apres, c);
+    if (sonRef.current) toc();
     if (config.mode === 'deux' && config.tourner && !apres.verdict) await scene.tournerVers(apres.tour);
     setOccupe(false);
     return true;

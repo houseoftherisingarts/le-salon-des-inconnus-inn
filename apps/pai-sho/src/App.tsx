@@ -34,6 +34,9 @@ export default function App() {
   const [son, setSon] = useState(() => { try { return localStorage.getItem(CLE_SON) !== '0'; } catch { return true; } });
   const [depart, setDepart] = useState<Depart | null>(null);
   const [tuto, setTuto] = useState(false);
+  // Chaque partie lancée porte un numéro neuf : « Nouvelle partie »
+  // remonte la partie de zéro même quand la configuration ne change pas.
+  const [manche, setManche] = useState(0);
   const t = TEXTES[langue];
 
   // La scène, une seule fois. L'entrée en matière attend au moins
@@ -67,6 +70,7 @@ export default function App() {
 
   const lancer = useCallback((d: Depart) => {
     setDepart(d);
+    setManche((n) => n + 1);
     setEcran('partie');
     if (!tutorielVu('paisho')) window.setTimeout(() => setTuto(true), 1600);
   }, []);
@@ -102,13 +106,13 @@ export default function App() {
 
       {ecran === 'partie' && scene && depart && (
         <Partie
-          key={JSON.stringify(depart.config) + (depart.coups?.length ?? 0)}
+          key={manche}
           scene={scene}
           depart={depart}
           langue={langue}
           onMenu={versMenu}
-          onNouvelle={() => setDepart({ config: { ...depart.config }, lien: depart.lien })}
-          onRegles={() => {}}
+          onNouvelle={() => { setDepart({ config: { ...depart.config }, lien: depart.lien }); setManche((n) => n + 1); }}
+          son={son}
           onTutoriel={() => setTuto(true)}
         />
       )}

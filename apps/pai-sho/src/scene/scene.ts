@@ -3,77 +3,32 @@
 // état de partie et des cibles à montrer, elle lui rend des clics sur
 // des points du plateau. Rien ici ne connaît les règles au-delà de la
 // lecture d'un état : c'est l'arbitre qui décide, la scène montre.
-//
-// Repère : un pas de treillis vaut PAS, le point (x, y) du plateau est
-// en (x * PAS, dessus, -y * PAS). L'hôte est assis au sud (+z) et
-// regarde vers la porte du nord.
+// Le repère et les mesures vivent dans mesures.ts.
 
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { decodeurDraco, chargerSculpture } from './sculpture';
+import { chargerSculpture } from './sculpture';
 import { peindreFacePlateau } from './plateauTexture';
-import { ombreDeContact } from './bois';
-import { coordX, coordY, estJouable, indice, type Pt } from '../jeu/plateau';
+import { batirDecor } from './decor';
+import { Marques } from './marques';
+import { brancherGestes } from './gestes';
 import {
-  TYPES, harmonies, tuileEn, type Camp, type Coup, type EtatPaiSho, type Harmonie, type TypeTuile,
+  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_PLATEAU, ECHELLE_TUILE, FOV, HAUT_CONVIVE, PAS,
+  PLATEAU_GLB_BAS, PLATEAU_GLB_DIAMETRE, RAYON_FACE, Y_FACE, Y_PLANCHER, chargerGLB, versMonde,
+  type Cadre,
+} from './mesures';
+import { estJouable, indice, type Pt } from '../jeu/plateau';
+import {
+  TYPES, harmonies, tuileEn, type Camp, type Coup, type EtatPaiSho, type TypeTuile,
 } from '../jeu/logic';
 
-const BASE = import.meta.env.BASE_URL;
-
-// ── Les constantes mesurées ─────────────────────────────────────────
-/** L'écart entre deux lignes du treillis. Tout le reste en découle. */
-export const PAS = 1;
-/** Diamètre des tuiles GLB livrées par Meshy, mesuré sur leur Box3 :
- *  x et z vont de -0.951 à +0.951 sur les douze modèles (2026-10-02).
- *  Les modèles sont déjà couchés dans le plan XZ (l'épaisseur, de 0.34
- *  à 0.74, est en y) : aucune rotation n'est nécessaire. */
-const TUILE_GLB_DIAMETRE = 1.902;
-/** Une tuile couvre 0.82 pas : deux voisines ne se touchent pas. */
-const ECHELLE_TUILE = (0.82 * PAS) / TUILE_GLB_DIAMETRE;
-/** Le plateau GLB : diamètre 1.902 et hauteur 0.412 en unités du modèle
- *  (Box3, y de -0.205 à +0.206). Le dessus plat a été mesuré au rayon
- *  lancé vers le bas : il est à y = PLATEAU_GLB_DESSUS, plat jusqu'au
- *  rayon PLATEAU_GLB_RAYON_PLAT, où commence la bordure de noyer. */
-const PLATEAU_GLB_DIAMETRE = 1.902;
-const PLATEAU_GLB_BAS = -0.205;
-const PLATEAU_GLB_DESSUS = 0.2;
-const PLATEAU_GLB_RAYON_PLAT = 0.86;
-/** Le rayon du disque peint posé sur le dessus. Le point le plus loin
- *  du centre, (8,4), est à 8.94 pas : le disque garde une marge pour la
- *  tuile qui s'y pose. */
-export const RAYON_FACE = 9.75 * PAS;
-const ECHELLE_PLATEAU = RAYON_FACE / PLATEAU_GLB_RAYON_PLAT;
-/** Hauteur du dessus du plateau au-dessus de la table (calculée des mesures). */
-export const DESSUS = (PLATEAU_GLB_DESSUS - PLATEAU_GLB_BAS) * ECHELLE_PLATEAU;
-const Y_FACE = DESSUS + 0.001;
-/** Les convives : hauteur assise et position du plancher sous la table. */
-const HAUT_CONVIVE = 26;
-const Y_PLANCHER = -14;
-const FOV = 38;
-/** Le demi-encombrement à cadrer : le treillis fait 16 pas, la bordure
- *  du plateau ajoute le reste. */
-const DEMI_CADRE = (PLATEAU_GLB_DIAMETRE / 2) * ECHELLE_PLATEAU;
-
-const COULEUR_INVITE = new THREE.Color(0x7a5230);
-const OR = 0xd4af37;
-
-export const versMonde = (p: Pt, y = Y_FACE): THREE.Vector3 =>
-  new THREE.Vector3(coordX(p) * PAS, y, -coordY(p) * PAS);
-
-export interface Cadre { gauche: number; droite: number; haut: number; bas: number }
+export { versMonde, type Cadre } from './mesures';
 
 export interface OptionsScene {
   surProgres?: (fraction: number) => void;
 }
 
 interface ObjetTuile { obj: THREE.Object3D; type: TypeTuile; camp: Camp }
-
-function chargerGLB(url: string, gestionnaire: THREE.LoadingManager): Promise<THREE.Group> {
-  const l = new GLTFLoader(gestionnaire);
-  l.setDRACOLoader(decodeurDraco());
-  return new Promise((ok, ko) => l.load(url, (g) => ok(g.scene), undefined, ko));
-}
 
 export class ScenePaiSho {
   readonly pret: Promise<void>;
@@ -103,21 +58,11 @@ export class ScenePaiSho {
   private prototypes = new Map<string, THREE.Object3D>();
   private tuiles = new Map<Pt, ObjetTuile>();
   private reserves = new THREE.Group();
-  private fils = new THREE.Group();
   private convives = new THREE.Group();
-  private ciblesMesh: THREE.InstancedMesh;
-  private ciblesPts = new Set<Pt>();
-  private anneauSelection: THREE.Mesh;
-  private haloRefus: THREE.Mesh;
-  private haloSurvol: THREE.Mesh;
-  private matFil: THREE.MeshBasicMaterial;
-  private matFilGagnant: THREE.MeshBasicMaterial;
-  private geoFil = new THREE.CylinderGeometry(1, 1, 1, 8, 1, true);
+  private marques = new Marques();
   private plan = new THREE.Plane(new THREE.Vector3(0, 1, 0), -Y_FACE);
   private rayCaster = new THREE.Raycaster();
-  private selection: Pt | null = null;
   private dernierEtat: EtatPaiSho | null = null;
-  private anneauGagnant: Camp | null = null;
 
   constructor(el: HTMLElement, o: OptionsScene = {}) {
     this.el = el;
@@ -135,7 +80,7 @@ export class ScenePaiSho {
     this.scene.background = new THREE.Color(0x0d0805);
     this.scene.fog = new THREE.Fog(0x0d0906, 70, 150);
     this.scene.add(this.racine);
-    this.racine.add(this.reserves, this.fils, this.convives);
+    this.racine.add(this.reserves, this.marques.groupe, this.convives);
 
     // Le chargement : la page suit la progression, et rien ne reste
     // bloqué plus de quinze secondes même si un fichier ne répond pas.
@@ -146,134 +91,31 @@ export class ScenePaiSho {
       window.setTimeout(ok, 15000);
     });
 
-    this.batirSalle();
-    this.batirTable();
-    this.batirLumieres();
+    batirDecor(this.scene, this.racine, this.gestionnaire, this.aJeter);
     const plateauPret = this.batirPlateau();
     const tuilesPretes = this.chargerTuiles();
     this.chargerConvives();
 
-    // Les marques posées sur le treillis.
-    const geoDisque = new THREE.CircleGeometry(0.3 * PAS, 32).rotateX(-Math.PI / 2);
-    const matCible = new THREE.MeshBasicMaterial({ color: 0x6fe39a, transparent: true, opacity: 0.55, depthWrite: false });
-    this.ciblesMesh = new THREE.InstancedMesh(geoDisque, matCible, 260);
-    this.ciblesMesh.count = 0;
-    this.ciblesMesh.renderOrder = 2;
-    this.ciblesMesh.frustumCulled = false;
-    this.racine.add(this.ciblesMesh);
-
-    const geoAnneau = new THREE.RingGeometry(0.44 * PAS, 0.56 * PAS, 48).rotateX(-Math.PI / 2);
-    this.anneauSelection = new THREE.Mesh(geoAnneau, new THREE.MeshBasicMaterial({
-      color: OR, transparent: true, opacity: 0.95, depthWrite: false, blending: THREE.AdditiveBlending,
-    }));
-    this.haloRefus = new THREE.Mesh(geoAnneau, new THREE.MeshBasicMaterial({
-      color: 0xd8382a, transparent: true, opacity: 0.85, depthWrite: false,
-    }));
-    this.haloSurvol = new THREE.Mesh(geoAnneau, new THREE.MeshBasicMaterial({
-      color: 0x9cf5bd, transparent: true, opacity: 0.9, depthWrite: false,
-    }));
-    for (const m of [this.anneauSelection, this.haloRefus, this.haloSurvol]) {
-      m.visible = false; m.renderOrder = 3; this.racine.add(m);
-    }
-    this.matFil = new THREE.MeshBasicMaterial({
-      color: OR, transparent: true, opacity: 0.8, depthWrite: false, blending: THREE.AdditiveBlending,
-    });
-    this.matFilGagnant = this.matFil.clone();
-    this.aJeter.push(geoDisque, matCible, geoAnneau, this.geoFil, this.matFil, this.matFilGagnant,
-      this.anneauSelection.material as THREE.Material, this.haloRefus.material as THREE.Material,
-      this.haloSurvol.material as THREE.Material);
 
     this.pret = Promise.all([pret, plateauPret, tuilesPretes]).then(() => {});
 
     this.observateur = new ResizeObserver(() => this.redimensionner());
     this.observateur.observe(el);
     this.redimensionner();
-    this.brancherGestes();
+    brancherGestes(r.domElement, {
+      survol: (x, y) => this.survoler(this.pointDepuisEcran(x, y)),
+      clic: (x, y) => this.surClic(this.pointDepuisEcran(x, y)),
+      tourner: (dx, dy) => {
+        this.derive = false;
+        this.theta -= dx * 0.006;
+        this.phi = THREE.MathUtils.clamp(this.phi - dy * 0.005, 0.25, 1.32);
+        this.poserCamera();
+      },
+      zoomer: (f) => this.zoomer(f),
+    });
     this.boucle();
   }
 
-  // ── La salle, la table, la lumière ────────────────────────────────
-
-  private texture(url: string, repeter = 1): THREE.Texture {
-    const t = new THREE.TextureLoader(this.gestionnaire).load(url);
-    t.colorSpace = THREE.SRGBColorSpace;
-    if (repeter !== 1) { t.wrapS = THREE.RepeatWrapping; t.repeat.x = repeter; }
-    this.aJeter.push(t);
-    return t;
-  }
-
-  private batirSalle(): void {
-    // La taverne enroulée sur un cylindre ouvert vers l'intérieur,
-    // assombrie pour que la table reste le sujet.
-    const geo = new THREE.CylinderGeometry(95, 95, 80, 64, 1, true);
-    const mat = new THREE.MeshBasicMaterial({
-      map: this.texture(`${BASE}scenes/taverne-salle.jpg`, 3),
-      side: THREE.BackSide, fog: false, depthWrite: false, color: 0x8a7562,
-    });
-    const salle = new THREE.Mesh(geo, mat);
-    salle.position.y = Y_PLANCHER + 34;
-    salle.renderOrder = -1;
-    this.scene.add(salle);
-    const geoSol = new THREE.CircleGeometry(95, 64).rotateX(-Math.PI / 2);
-    const matSol = new THREE.MeshStandardMaterial({ color: 0x1a110a, roughness: 1 });
-    const sol = new THREE.Mesh(geoSol, matSol);
-    sol.position.y = Y_PLANCHER;
-    sol.receiveShadow = true;
-    this.scene.add(sol);
-    this.aJeter.push(geo, mat, geoSol, matSol);
-  }
-
-  private batirTable(): void {
-    const carte = this.texture(`${BASE}textures/table-bois.webp`);
-    carte.wrapS = carte.wrapT = THREE.RepeatWrapping;
-    carte.repeat.set(2, 1.6);
-    const geo = new THREE.BoxGeometry(40, 1.6, 34);
-    const matDessus = new THREE.MeshStandardMaterial({ map: carte, roughness: 0.62, metalness: 0.02, color: 0xb8977a });
-    const matChant = new THREE.MeshStandardMaterial({ color: 0x3a2414, roughness: 0.8 });
-    const table = new THREE.Mesh(geo, [matChant, matChant, matDessus, matChant, matChant, matChant]);
-    table.position.y = -0.8;
-    table.receiveShadow = true;
-    this.racine.add(table);
-    // Quatre pieds sous la table, dans l'ombre.
-    const geoPied = new THREE.BoxGeometry(1.6, -Y_PLANCHER - 1.6, 1.6);
-    for (const [x, z] of [[-17, -14], [17, -14], [-17, 14], [17, 14]]) {
-      const p = new THREE.Mesh(geoPied, matChant);
-      p.position.set(x, (Y_PLANCHER - 1.6) / 2, z);
-      this.racine.add(p);
-    }
-    // L'ombre de contact sous le plateau.
-    const ombre = ombreDeContact(256, 0.7);
-    const geoOmbre = new THREE.PlaneGeometry(RAYON_FACE * 2.7, RAYON_FACE * 2.7).rotateX(-Math.PI / 2);
-    const matOmbre = new THREE.MeshBasicMaterial({ map: ombre, transparent: true, depthWrite: false });
-    const o = new THREE.Mesh(geoOmbre, matOmbre);
-    o.position.y = 0.01;
-    this.racine.add(o);
-    this.aJeter.push(geo, matDessus, matChant, geoPied, ombre, geoOmbre, matOmbre);
-  }
-
-  private batirLumieres(): void {
-    this.scene.add(new THREE.AmbientLight(0xffd2a0, 0.35));
-    this.scene.add(new THREE.HemisphereLight(0xffc98a, 0x1a0d07, 0.7));
-    // La lanterne au-dessus de la table porte les ombres douces.
-    const lanterne = new THREE.SpotLight(0xffc488, 1400, 90, Math.PI / 4.2, 0.6, 2);
-    lanterne.position.set(-3, 30, 6);
-    lanterne.target.position.set(0, 0, 0);
-    lanterne.castShadow = true;
-    lanterne.shadow.mapSize.set(2048, 2048);
-    lanterne.shadow.bias = -0.0004;
-    lanterne.shadow.radius = 4;
-    lanterne.shadow.camera.near = 10;
-    lanterne.shadow.camera.far = 60;
-    this.scene.add(lanterne, lanterne.target);
-    // Deux torches aux murs et une lueur froide pour détacher les volumes.
-    const torcheA = new THREE.PointLight(0xff7a2a, 500, 70, 2);
-    torcheA.position.set(-24, 14, -18);
-    const torcheB = new THREE.PointLight(0xff6a1a, 400, 70, 2);
-    torcheB.position.set(24, 12, 16);
-    const froide = new THREE.PointLight(0x6f86ff, 120, 60, 2);
-    froide.position.set(10, 22, -20);
-    this.scene.add(torcheA, torcheB, froide);
-  }
 
   // ── Le plateau ────────────────────────────────────────────────────
 
@@ -434,8 +276,7 @@ export class ScenePaiSho {
       }
     }
     const v = e.verdict;
-    this.anneauGagnant = v && v.type === 'victoire' && v.raison === 'anneau' ? v.camp : null;
-    this.poserFils(harmonies(e));
+    this.marques.poserFils(harmonies(e), v && v.type === 'victoire' && v.raison === 'anneau' ? v.camp : null);
     this.poserReserves(e);
     return Promise.all(anims).then(() => {});
   }
@@ -472,24 +313,6 @@ export class ScenePaiSho {
     });
   }
 
-  private poserFils(liste: Harmonie[]): void {
-    for (const f of [...this.fils.children]) f.removeFromParent();
-    const haut = new THREE.Vector3(0, 1, 0);
-    for (const h of liste) {
-      const a = versMonde(h.a, Y_FACE + 0.06);
-      const b = versMonde(h.b, Y_FACE + 0.06);
-      const gagnant = this.anneauGagnant === h.camp;
-      const m = new THREE.Mesh(this.geoFil, gagnant ? this.matFilGagnant : this.matFil);
-      const l = a.distanceTo(b);
-      const ep = gagnant ? 0.09 : 0.035;
-      m.scale.set(ep, l, ep);
-      m.position.copy(a).lerp(b, 0.5);
-      m.quaternion.setFromUnitVectors(haut, b.clone().sub(a).normalize());
-      m.renderOrder = 1;
-      this.fils.add(m);
-    }
-  }
-
   /** Les tuiles en main, empilées par type dans le plateau de chaque joueur. */
   private poserReserves(e: EtatPaiSho): void {
     for (const f of [...this.reserves.children]) f.removeFromParent();
@@ -511,26 +334,12 @@ export class ScenePaiSho {
   }
 
   /** Les cibles légales en vert, la tuile choisie cerclée d'or. */
-  montrerCibles(points: Pt[], selection: Pt | null): void {
-    this.ciblesPts = new Set(points);
-    this.selection = selection;
-    const m = new THREE.Matrix4();
-    let n = 0;
-    for (const p of this.ciblesPts) {
-      if (n >= 260) break;
-      const v = versMonde(p, Y_FACE + 0.012);
-      m.makeTranslation(v.x, v.y, v.z);
-      this.ciblesMesh.setMatrixAt(n++, m);
-    }
-    this.ciblesMesh.count = n;
-    this.ciblesMesh.instanceMatrix.needsUpdate = true;
-    if (selection === null) this.anneauSelection.visible = false;
-    else {
-      this.anneauSelection.position.copy(versMonde(selection, Y_FACE + 0.02));
-      this.anneauSelection.visible = true;
-    }
-    this.haloRefus.visible = false;
-    this.haloSurvol.visible = false;
+  montrerCibles(points: Pt[], selection: Pt | null): void { this.marques.montrer(points, selection); }
+
+  private survoler(p: Pt | null): void {
+    const m = this.marques;
+    this.renderer.domElement.style.cursor = p !== null && (m.cibles.has(p) || this.tuiles.has(p)) ? 'pointer' : 'default';
+    m.survoler(p);
   }
 
   // ── La caméra ─────────────────────────────────────────────────────
@@ -585,12 +394,10 @@ export class ScenePaiSho {
 
   /** L'entrée : de la salle entière jusqu'à la table. */
   entree(duree = 2.4): Promise<void> {
-    const r0 = this.zoom;
     this.zoom = 2.6;
     this.phi = 1.25;
     this.theta = -0.9;
     this.poserCamera();
-    void r0;
     return new Promise((ok) => {
       gsap.to(this, {
         zoom: 1, phi: 0.86, theta: -0.25, duration: duree, ease: 'power3.inOut',
@@ -639,77 +446,9 @@ export class ScenePaiSho {
     return { x: r.left + ((v.x + 1) / 2) * r.width, y: r.top + ((1 - v.y) / 2) * r.height };
   }
 
-  private brancherGestes(): void {
-    const c = this.renderer.domElement;
-    const pointeurs = new Map<number, { x: number; y: number }>();
-    let depart: { x: number; y: number } | null = null;
-    let deplace = false;
-    let ecart0 = 0;
-
-    const bas = (e: PointerEvent) => {
-      c.setPointerCapture(e.pointerId);
-      pointeurs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (pointeurs.size === 1) { depart = { x: e.clientX, y: e.clientY }; deplace = false; }
-      if (pointeurs.size === 2) {
-        const [a, b] = [...pointeurs.values()];
-        ecart0 = Math.hypot(a.x - b.x, a.y - b.y);
-      }
-    };
-    const bouge = (e: PointerEvent) => {
-      const avant = pointeurs.get(e.pointerId);
-      if (!avant) { this.survoler(this.pointDepuisEcran(e.clientX, e.clientY)); return; }
-      if (pointeurs.size === 2) {
-        pointeurs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-        const [a, b] = [...pointeurs.values()];
-        const ecart = Math.hypot(a.x - b.x, a.y - b.y);
-        if (ecart0 > 0) this.zoomer(ecart0 / ecart);
-        ecart0 = ecart;
-        deplace = true;
-        return;
-      }
-      const dx = e.clientX - avant.x, dy = e.clientY - avant.y;
-      pointeurs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (depart && Math.hypot(e.clientX - depart.x, e.clientY - depart.y) > 6) deplace = true;
-      if (deplace) {
-        this.derive = false;
-        this.theta -= dx * 0.006;
-        this.phi = THREE.MathUtils.clamp(this.phi - dy * 0.005, 0.25, 1.32);
-        this.poserCamera();
-      }
-    };
-    const haut = (e: PointerEvent) => {
-      const etaitSeul = pointeurs.size === 1;
-      pointeurs.delete(e.pointerId);
-      if (etaitSeul && !deplace) this.surClic(this.pointDepuisEcran(e.clientX, e.clientY));
-      if (pointeurs.size === 0) depart = null;
-    };
-    const molette = (e: WheelEvent) => {
-      e.preventDefault();
-      this.zoomer(Math.exp(e.deltaY * 0.0012));
-    };
-    c.addEventListener('pointerdown', bas);
-    c.addEventListener('pointermove', bouge);
-    c.addEventListener('pointerup', haut);
-    c.addEventListener('pointercancel', haut);
-    c.addEventListener('wheel', molette, { passive: false });
-    c.style.touchAction = 'none';
-  }
-
   private zoomer(f: number): void {
     this.zoom = THREE.MathUtils.clamp(this.zoom * f, 0.45, 1.5);
     this.poserCamera();
-  }
-
-  private survoler(p: Pt | null): void {
-    this.haloRefus.visible = false;
-    this.haloSurvol.visible = false;
-    const actif = this.selection !== null || this.ciblesPts.size > 0;
-    this.renderer.domElement.style.cursor = p !== null && (this.ciblesPts.has(p) || this.tuiles.has(p)) ? 'pointer' : 'default';
-    if (p === null || !actif || p === this.selection) return;
-    const h = this.ciblesPts.has(p) ? this.haloSurvol : this.selection !== null ? this.haloRefus : null;
-    if (!h) return;
-    h.position.copy(versMonde(p, Y_FACE + 0.025));
-    h.visible = true;
   }
 
   // ── La boucle ─────────────────────────────────────────────────────
@@ -719,9 +458,7 @@ export class ScenePaiSho {
     const dt = Math.min(this.horloge.getDelta(), 0.1);
     const t = this.horloge.elapsedTime;
     if (this.derive) { this.theta += dt * 0.05; this.poserCamera(); }
-    this.matFil.opacity = 0.62 + 0.25 * Math.sin(t * 2.2);
-    this.matFilGagnant.opacity = 0.7 + 0.3 * Math.sin(t * 5);
-    (this.anneauSelection.material as THREE.MeshBasicMaterial).opacity = 0.75 + 0.25 * Math.sin(t * 4);
+    this.marques.animer(t);
     this.renderer.render(this.scene, this.camera);
   };
 
@@ -737,6 +474,7 @@ export class ScenePaiSho {
       if (m.isMesh && m.geometry) m.geometry.dispose();
     });
     for (const x of this.aJeter) x.dispose();
+    this.marques.detruire();
     this.renderer.dispose();
     this.renderer.domElement.remove();
   }
