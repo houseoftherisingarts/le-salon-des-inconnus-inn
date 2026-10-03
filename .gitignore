@@ -56,3 +56,7 @@ graphify-out/
 # Variantes WebP générées par scripts/optimize-images.mjs (npm run build)
 public/_opt
 captures/verdict-salon/
+
+# Pai Sho : paquets Mac et captures de vérification (régénérables)
+apps/*/release/
+apps/pai-sho/captures/*.jpg
