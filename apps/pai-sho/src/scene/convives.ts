@@ -1,7 +1,7 @@
-// ─── Les convives : trois spectateurs, et l'adversaire choisi en face ──
-// La dame, le moine et le colporteur s'assoient derrière le plateau. Quand
-// le joueur choisit un personnage, celui-ci prend la place de la dame
-// (rang 0, pile en face) et la dame s'efface le temps de la partie.
+// ─── Le convive d'en face : la dame, ou l'adversaire choisi ───────────
+// Le Pai Sho se joue à deux (Alex, 3 octobre) : une seule personne
+// s'assoit en face du plateau. La dame par défaut; quand le joueur choisit
+// un personnage, celui-ci prend sa place et la dame s'efface.
 
 import * as THREE from 'three';
 import { chargerSculpture } from './sculpture';
@@ -14,7 +14,7 @@ export class Convives {
   private idAdversaire: string | null = null;
 
   charger(gestionnaire: THREE.LoadingManager): void {
-    ['dame', 'moine', 'colporteur'].forEach((nom, i) => {
+    ['dame'].forEach((nom, i) => {
       chargerSculpture(`${BASE}models/convives/${nom}.glb`, HAUT_CONVIVE, gestionnaire)
         .then((g) => {
           g.userData.rang = i;

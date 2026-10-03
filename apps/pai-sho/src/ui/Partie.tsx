@@ -12,6 +12,7 @@ import {
 import { choisirCoup } from '../jeu/cpu';
 import { nouveauPenseur, type Penseur } from '../moteur/penseur';
 import { nomNiveau } from '../moteur/niveaux';
+import { ADVERSAIRES } from '../jeu/adversaires';
 import type { Pt } from '../jeu/plateau';
 import { LARGEUR_TELEPHONE, type ScenePaiSho } from '../scene/scene';
 import { effacerSauvegarde, rejouer, sauver } from '../sauvegarde';
@@ -109,6 +110,9 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     scene.deriver(false);
     const cote = config.mode === 'deux' ? initial.etat.tour : config.campLocal;
     scene.placerConvives(config.mode === 'deux' ? 'hote' : config.campLocal);
+    // Le personnage choisi au menu s'assoit en face; à deux ou à distance, la dame reprend sa place.
+    const nomAdv = config.noms[autre(config.campLocal)];
+    scene.placerAdversaire(config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv)?.id ?? null : null);
     scene.afficher(initial.etat);
     scene.montrerCibles([], null);
     void scene.tournerVers(cote, 1.6);

@@ -1,14 +1,16 @@
 // ─── Le décor : la salle, la table, la lumière ──────────────────────
 
 import * as THREE from 'three';
+import type { IdDecor } from '../skins';
 import { ombreDeContact } from './bois';
 import { BASE, RAYON_FACE, Y_PLANCHER } from './mesures';
 
 type Jetable = { dispose(): void };
 
+/** Bâtit la salle, la table et la lumière; rend la fonction qui change la salle. */
 export function batirDecor(
-  scene: THREE.Scene, racine: THREE.Group, gestionnaire: THREE.LoadingManager, aJeter: Jetable[],
-): void {
+  scene: THREE.Scene, racine: THREE.Group, gestionnaire: THREE.LoadingManager, aJeter: Jetable[], decor: IdDecor,
+): (decor: IdDecor) => void {
   const texture = (url: string, repeter = 1): THREE.Texture => {
     const t = new THREE.TextureLoader(gestionnaire).load(url);
     t.colorSpace = THREE.SRGBColorSpace;
@@ -21,7 +23,7 @@ export function batirDecor(
   // assombrie pour que la table reste le sujet.
   const geoSalle = new THREE.CylinderGeometry(95, 95, 80, 64, 1, true);
   const matSalle = new THREE.MeshBasicMaterial({
-    map: texture(`${BASE}scenes/taverne-salle.jpg`, 3),
+    map: texture(`${BASE}scenes/${decor}-salle.jpg`, 3),
     side: THREE.BackSide, fog: false, depthWrite: false, color: 0x8a7562,
   });
   const salle = new THREE.Mesh(geoSalle, matSalle);
@@ -81,4 +83,14 @@ export function batirDecor(
   const froide = new THREE.PointLight(0x6f86ff, 120, 60, 2);
   froide.position.set(10, 22, -20);
   scene.add(torcheA, torcheB, froide);
+
+  // La salle au choix : la texture se remplace, le cylindre reste.
+  let salleActuelle = decor;
+  return (d: IdDecor) => {
+    if (d === salleActuelle) return;
+    salleActuelle = d;
+    const t = new THREE.TextureLoader().load(`${BASE}scenes/${d}-salle.jpg`, () => { matSalle.map = t; matSalle.needsUpdate = true; });
+    t.colorSpace = THREE.SRGBColorSpace; t.wrapS = THREE.RepeatWrapping; t.repeat.x = 3;
+    aJeter.push(t);
+  };
 }

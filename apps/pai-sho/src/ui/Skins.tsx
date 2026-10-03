@@ -11,8 +11,8 @@ import { logoDe } from '../scene/habillage';
 import { TEINTES_TUILES } from '../scene/matieres';
 import { PAS, RAYON_FACE } from '../scene/mesures';
 import {
-  PLATEAUX, TUILES, choisirSkin, debloques, skinChoisi,
-  type IdPlateau, type IdTuiles, type Skin,
+  DECORS, PLATEAUX, TUILES, choisirSkin, debloques, skinChoisi,
+  type IdDecor, type IdPlateau, type IdTuiles, type Skin,
 } from '../skins';
 import type { Camp } from '../jeu/logic';
 import './skins.css';
@@ -20,8 +20,8 @@ import './skins.css';
 const BASE = import.meta.env.BASE_URL;
 
 const TEXTES = {
-  FR: { titre: 'Plateau et tuiles', plateau: 'Le plateau', tuiles: 'Les tuiles', verrou: 'Au café-jeux du Salon' },
-  EN: { titre: 'Board and tiles', plateau: 'The board', tuiles: 'The tiles', verrou: 'At the Salon’s game café' },
+  FR: { titre: 'Plateau et tuiles', plateau: 'Le plateau', tuiles: 'Les tuiles', salle: 'La salle', verrou: 'Au café-jeux du Salon' },
+  EN: { titre: 'Board and tiles', plateau: 'The board', tuiles: 'The tiles', salle: 'The room', verrou: 'At the Salon’s game café' },
 };
 
 // Les vignettes se peignent une fois par session.
@@ -106,7 +106,7 @@ function Cadenas() {
 interface Choix { id: string; nom: string; ouvert: boolean; image: string | undefined }
 
 function Rangee({ titre, choix, actif, onChoix, verrou, forme }: {
-  titre: string; choix: Choix[]; actif: string; onChoix: (id: string) => void; verrou: string; forme: 'rond' | 'paire';
+  titre: string; choix: Choix[]; actif: string; onChoix: (id: string) => void; verrou: string; forme: 'rond' | 'paire' | 'large';
 }) {
   // Les noms ne tiennent pas sous des vignettes de soixante pixels :
   // seul celui du choix s'affiche, les autres vivent dans l'infobulle.
@@ -168,6 +168,11 @@ export default function Skins({ langue, scene }: { langue: 'FR' | 'EN'; scene: S
         titre={t.tuiles} forme="paire" actif={skin.tuiles} verrou={t.verrou}
         choix={TUILES.map((u) => ({ id: u.id, nom: fr ? u.nomFR : u.nomEN, ouvert: ouverts.has(u.id), image: images[`t:${u.id}`] }))}
         onChoix={(id) => choisir({ ...skin, tuiles: id as IdTuiles })}
+      />
+      <Rangee
+        titre={t.salle} forme="large" actif={skin.decor} verrou={t.verrou}
+        choix={DECORS.map((d) => ({ id: d.id, nom: fr ? d.nomFR : d.nomEN, ouvert: true, image: `${BASE}scenes/${d.id}-salle.jpg` }))}
+        onChoix={(id) => choisir({ ...skin, decor: id as IdDecor })}
       />
       {aVerrou && <p className="skin-mention"><Cadenas />{t.verrou}</p>}
     </article>

@@ -7,14 +7,14 @@
 
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { chargerSculpture } from './sculpture';
+import { Convives } from './convives';
 import { Habillage } from './habillage';
 import { batirDecor } from './decor';
 import { Marques } from './marques';
 import { brancherGestes } from './gestes';
 import {
-  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_TUILE, RELIEF_TUILE, FOV, HAUT_CONVIVE, PAS,
-  Y_FACE, Y_PLANCHER, chargerGLB, versMonde,
+  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_TUILE, RELIEF_TUILE, FOV, PAS,
+  Y_FACE, chargerGLB, versMonde,
   type Cadre,
 } from './mesures';
 import { estJouable, indice, type Pt } from '../jeu/plateau';
@@ -75,7 +75,7 @@ export class ScenePaiSho {
   private prototypes = new Map<string, THREE.Object3D>();
   private tuiles = new Map<Pt, ObjetTuile>();
   private reserves = new THREE.Group();
-  private convives = new THREE.Group();
+  private convives = new Convives();
   private marques = new Marques();
   private plan = new THREE.Plane(new THREE.Vector3(0, 1, 0), -Y_FACE);
   private rayCaster = new THREE.Raycaster();
@@ -101,7 +101,7 @@ export class ScenePaiSho {
     this.scene.background = new THREE.Color(0x0d0805);
     this.scene.fog = new THREE.Fog(0x0d0906, 70, 150);
     this.scene.add(this.racine);
-    this.racine.add(this.reserves, this.marques.groupe, this.convives);
+    this.racine.add(this.reserves, this.marques.groupe, this.convives.groupe);
 
     // Le chargement : la page suit la progression, et rien ne reste
     // bloqué plus de quinze secondes même si un fichier ne répond pas.
@@ -112,12 +112,12 @@ export class ScenePaiSho {
       window.setTimeout(ok, 15000);
     });
 
-    batirDecor(this.scene, this.racine, this.gestionnaire, this.aJeter);
+    this.poserSalle = batirDecor(this.scene, this.racine, this.gestionnaire, this.aJeter, skinChoisi().decor);
     // Le skin choisi s'applique dès le premier chargement.
     this.habillage = new Habillage(r, this.racine, this.gestionnaire, this.marques, skinChoisi());
     const plateauPret = this.habillage.batir();
     const tuilesPretes = this.chargerTuiles();
-    this.chargerConvives();
+    this.convives.charger(this.gestionnaire);
 
 
     this.pret = Promise.all([pret, plateauPret, tuilesPretes]).then(() => {});
@@ -143,7 +143,10 @@ export class ScenePaiSho {
   // ── Le skin ───────────────────────────────────────────────────────
 
   /** Habille le plateau et les tuiles ; les tuiles posées changent sur place. */
+  private poserSalle: (d: Skin['decor']) => void = () => {};
+
   appliquerSkin(s: Skin): void {
+    this.poserSalle(s.decor);
     if (!this.habillage.appliquer(s)) return;
     for (const [t, p] of this.prototypes) this.vetir(p, t.endsWith(':hote') ? 'hote' : 'invite');
     for (const t of this.tuiles.values()) t.obj.removeFromParent();
@@ -202,33 +205,11 @@ export class ScenePaiSho {
     return p ? p.clone(true) : new THREE.Group();
   }
 
-  private chargerConvives(): void {
-    const noms = ['dame', 'moine', 'colporteur'];
-    noms.forEach((nom, i) => {
-      chargerSculpture(`${BASE}models/convives/${nom}.glb`, HAUT_CONVIVE, this.gestionnaire)
-        .then((g) => {
-          g.userData.rang = i;
-          this.convives.add(g);
-          this.placerConvives(this.coteConvives);
-        })
-        .catch(() => { /* la partie se joue aussi sans spectateurs */ });
-    });
-  }
-
-  private coteConvives: Camp = 'hote';
-
   /** Les spectateurs s'assoient en face du joueur `camp`. */
-  placerConvives(camp: Camp): void {
-    this.coteConvives = camp;
-    const base = camp === 'hote' ? Math.PI : 0;
-    const angles = [0, 0.62, -0.62];
-    for (const g of this.convives.children) {
-      const a = base + angles[g.userData.rang as number];
-      const r = 22;
-      g.position.set(Math.sin(a) * r, Y_PLANCHER, Math.cos(a) * r);
-      g.lookAt(0, Y_PLANCHER, 0);
-    }
-  }
+  placerConvives(camp: Camp): void { this.convives.placer(camp); }
+
+  /** Le personnage choisi s'assoit en face du plateau; `null` rend la place à la dame. */
+  placerAdversaire(id: string | null): void { this.convives.adversaire(id); }
 
   // ── L'état de la partie ───────────────────────────────────────────
 

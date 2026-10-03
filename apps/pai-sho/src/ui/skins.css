@@ -8,6 +8,9 @@
 .skin-grille { display: grid; gap: 10px; }
 .skin-rond { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .skin-paire { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.skin-large { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.skin-large .skin-image { border-radius: 12px; aspect-ratio: 16 / 9; }
+.skin-large .skin-image img { object-fit: cover; }
 
 .skin-choix {
   display: block;

@@ -8,7 +8,8 @@
 
 export type IdPlateau = 'bois' | 'vexel' | 'salon';
 export type IdTuiles = 'bois' | 'nacre' | 'obsidienne' | 'cuivre';
-export interface Skin { plateau: IdPlateau; tuiles: IdTuiles }
+export type IdDecor = 'taverne' | 'the';
+export interface Skin { plateau: IdPlateau; tuiles: IdTuiles; decor: IdDecor }
 
 export const PLATEAUX: { id: IdPlateau; nomFR: string; nomEN: string; gratuit: boolean }[] = [
   { id: 'bois', nomFR: 'Érable de taverne', nomEN: 'Tavern maple', gratuit: true },
@@ -23,12 +24,19 @@ export const TUILES: { id: IdTuiles; nomFR: string; nomEN: string; gratuit: bool
   { id: 'cuivre', nomFR: 'Cuivre', nomEN: 'Copper', gratuit: false },
 ];
 
+/** Les salles, toutes offertes : la taverne et le salon de thé (`scenes/<id>-salle.jpg`). */
+export const DECORS: { id: IdDecor; nomFR: string; nomEN: string; gratuit: boolean }[] = [
+  { id: 'taverne', nomFR: 'Taverne', nomEN: 'Tavern', gratuit: true },
+  { id: 'the', nomFR: 'Salon de thé', nomEN: 'Tea house', gratuit: true },
+];
+
 const CLE_SKIN = 'paisho.skin';
 const CLE_DEBLOQUES = 'paisho.debloques';
-const DEFAUT: Skin = { plateau: 'bois', tuiles: 'bois' };
+const DEFAUT: Skin = { plateau: 'bois', tuiles: 'bois', decor: 'taverne' };
 
 const estPlateau = (x: unknown): x is IdPlateau => PLATEAUX.some((p) => p.id === x);
 const estTuiles = (x: unknown): x is IdTuiles => TUILES.some((t) => t.id === x);
+const estDecor = (x: unknown): x is IdDecor => DECORS.some((d) => d.id === x);
 
 /** Les ids débloqués, les gratuits toujours compris. */
 export function debloques(): Set<string> {
@@ -46,8 +54,8 @@ function skinDeLAdresse(): Partial<Skin> {
   try {
     if (!navigator.webdriver && !import.meta.env.DEV) return {};
     const q = new URLSearchParams(window.location.search);
-    const p = q.get('plateau'), t = q.get('tuiles');
-    return { ...(estPlateau(p) ? { plateau: p } : {}), ...(estTuiles(t) ? { tuiles: t } : {}) };
+    const p = q.get('plateau'), t = q.get('tuiles'), d = q.get('decor');
+    return { ...(estPlateau(p) ? { plateau: p } : {}), ...(estTuiles(t) ? { tuiles: t } : {}), ...(estDecor(d) ? { decor: d } : {}) };
   } catch { return {}; }
 }
 
@@ -57,6 +65,7 @@ export function skinChoisi(): Skin {
     const lu = JSON.parse(localStorage.getItem(CLE_SKIN) ?? 'null') as Partial<Skin> | null;
     if (lu && estPlateau(lu.plateau)) s.plateau = lu.plateau;
     if (lu && estTuiles(lu.tuiles)) s.tuiles = lu.tuiles;
+    if (lu && estDecor(lu.decor)) s.decor = lu.decor;
   } catch { /* rien de sauvé */ }
   const ok = debloques();
   if (!ok.has(s.plateau)) s.plateau = 'bois';

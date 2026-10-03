@@ -152,9 +152,13 @@ export class Habillage {
         anisotropy: 0.55, anisotropyMap: this.aniso,
       });
     } else {
-      mat = new THREE.MeshStandardMaterial({
+      // Le bois est verni (Alex, 3 octobre) : une couche claire brillante
+      // par-dessus le grain, qui attrape les lanternes sans blanchir le bois.
+      mat = new THREE.MeshPhysicalMaterial({
         map: face.carte, normalMap: face.normales, normalScale: new THREE.Vector2(0.6, 0.6),
         roughness: id === 'salon' ? 0.5 : 0.55, metalness: 0,
+        clearcoat: 1, clearcoatRoughness: 0.12,
+        envMap: this.reflets(), envMapIntensity: 0.55,
       });
     }
     libere(this.disque.material);
