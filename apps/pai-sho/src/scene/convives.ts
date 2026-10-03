@@ -3,7 +3,7 @@
 // s'assoit en face du plateau. La dame par défaut; quand le joueur choisit
 // un personnage, celui-ci prend sa place et la dame s'efface.
 
-import { figurinesDessin } from '../jeu/adversaires';
+import { adversaire, figurinesDessin } from '../jeu/adversaires';
 import * as THREE from 'three';
 import { chargerSculpture } from './sculpture';
 import { BASE, HAUT_CONVIVE, Y_PLANCHER } from './mesures';
@@ -15,6 +15,11 @@ export class Convives {
   private idAdversaire: string | null = null;
 
   charger(gestionnaire: THREE.LoadingManager): void {
+    // Le personnage gardé au menu s'assoit dès l'ouverture (Iroh sinon),
+    // pour que la dame n'apparaisse pas un instant à sa place.
+    let choisi = 'iroh';
+    try { choisi = localStorage.getItem('paisho.adversaire') ?? 'iroh'; } catch { /* privé */ }
+    this.adversaire(adversaire(choisi) ? choisi : 'iroh');
     ['dame'].forEach((nom, i) => {
       chargerSculpture(`${BASE}models/convives/${nom}.glb`, HAUT_CONVIVE, gestionnaire)
         .then((g) => {

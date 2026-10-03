@@ -39,8 +39,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
   // Le personnage choisi prend place en face de la table dès le menu.
   const [dessin, setDessin] = useState(figurinesDessin);
-  useEffect(() => { scene.placerAdversaire(null); scene.placerAdversaire(perso?.id ?? null); }, [scene, perso, dessin]);
-  const changerFigurines = () => { sauverFigurines(!dessin); setDessin(!dessin); };
+  useEffect(() => { scene.placerAdversaire(perso?.id ?? null); }, [scene, perso]);
+  const changerFigurines = () => {
+    sauverFigurines(!dessin); setDessin(!dessin);
+    scene.placerAdversaire(null); scene.placerAdversaire(perso?.id ?? null);
+  };
   const [cote, setCote] = useState<Camp>('hote');
   const [tourner, setTourner] = useState(true);
   const [joueur, setJoueur] = useState<Joueur>(joueurLocal);

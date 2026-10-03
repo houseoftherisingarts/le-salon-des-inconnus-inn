@@ -62,6 +62,38 @@ function boisBlond(): THREE.CanvasTexture {
   return t;
 }
 
+/** Les dalles de pierre de la taverne, posées en quinconce. */
+function dalles(): THREE.CanvasTexture {
+  const c = document.createElement('canvas');
+  c.width = 512; c.height = 512;
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#17110c';
+  g.fillRect(0, 0, 512, 512);
+  const teintes = ['#6b5a49', '#5e4f41', '#75624e', '#54463a', '#665443'];
+  for (let r = 0; r < 4; r++) {
+    for (let k = -1; k < 3; k++) {
+      const x = k * 256 + (r % 2 ? 128 : 0), y = r * 128;
+      g.fillStyle = teintes[(r * 3 + k * 2 + 5) % teintes.length];
+      g.beginPath();
+      g.roundRect(x + 5, y + 5, 246, 118, 10);
+      g.fill();
+      // L'usure : quelques taches plus sombres et plus claires sur chaque dalle.
+      for (let n = 0; n < 9; n++) {
+        g.fillStyle = n % 2 ? 'rgba(20, 14, 9, 0.16)' : 'rgba(255, 226, 180, 0.07)';
+        g.beginPath();
+        g.ellipse(x + 20 + ((n * 61 + r * 37) % 210), y + 16 + ((n * 29 + k * 17 + 40) % 90), 14 + (n % 4) * 9, 6 + (n % 3) * 5, n, 0, Math.PI * 2);
+        g.fill();
+      }
+    }
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(9, 9);
+  t.anisotropy = 8;
+  return t;
+}
+
 /** Un tatami de paille tressée, bordé de noir sur ses deux longs côtés. */
 function tatami(): THREE.CanvasTexture {
   const c = document.createElement('canvas');
@@ -110,9 +142,18 @@ export function batirDecor(
   salle.renderOrder = -1;
   scene.add(salle);
   const geoSol = new THREE.CircleGeometry(95, 64).rotateX(-Math.PI / 2);
-  const matSol = new THREE.MeshStandardMaterial({ color: 0x1a110a, roughness: 1 });
+  // Le sol se voit jusqu'au mur : il porte sa propre lueur et la brume ne
+  // l'éteint pas, sinon la table flotte sur un disque noir.
+  const pierre = dalles();
+  const matSol = new THREE.MeshStandardMaterial({ map: pierre, emissiveMap: pierre, emissive: 0x4a3828, roughness: 0.95, fog: false });
+  const planches = new THREE.TextureLoader(gestionnaire).load(`${BASE}textures/table-bois.webp`);
+  planches.colorSpace = THREE.SRGBColorSpace;
+  planches.wrapS = planches.wrapT = THREE.RepeatWrapping;
+  planches.repeat.set(7, 9);
+  planches.anisotropy = 8;
+  const matPlancher = new THREE.MeshStandardMaterial({ map: planches, emissiveMap: planches, emissive: 0x5a4632, roughness: 0.8, fog: false });
   const paille = tatami();
-  const matTatami = new THREE.MeshStandardMaterial({ map: paille, roughness: 0.95 });
+  const matTatami = new THREE.MeshStandardMaterial({ map: paille, roughness: 0.95, fog: false });
   const sol = new THREE.Mesh(geoSol, matSol);
   sol.position.y = Y_PLANCHER;
   sol.receiveShadow = true;
@@ -142,7 +183,7 @@ export function batirDecor(
   const o = new THREE.Mesh(geoOmbre, matOmbre);
   o.position.y = 0.01;
   racine.add(o);
-  aJeter.push(geoSalle, matSalle, geoSol, matSol, paille, matTatami, blond, geoTable, matDessus, matChant, geoPied, ombre, geoOmbre, matOmbre);
+  aJeter.push(geoSalle, matSalle, geoSol, matSol, pierre, planches, matPlancher, paille, matTatami, blond, geoTable, matDessus, matChant, geoPied, ombre, geoOmbre, matOmbre);
 
   // La lumière : une lanterne au-dessus de la table porte les ombres
   // douces, deux torches aux murs et une lueur froide détachent les volumes.
@@ -181,7 +222,7 @@ export function batirDecor(
     matChant.color.setHex(a.chant);
     matDessus.map = d === 'jardin' ? blond : carte;
     matDessus.needsUpdate = true;
-    sol.material = d === 'jardin' ? matTatami : matSol;
+    sol.material = d === 'jardin' ? matTatami : d === 'the' ? matPlancher : matSol;
     ambiante.color.setHex(a.ambiante[0]); ambiante.intensity = a.ambiante[1];
     cielSol.color.setHex(a.cielSol[0]); cielSol.groundColor.setHex(a.cielSol[1]); cielSol.intensity = a.cielSol[2];
     lanterne.color.setHex(a.lanterne[0]); lanterne.intensity = a.lanterne[1];
