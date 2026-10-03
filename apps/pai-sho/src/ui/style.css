@@ -144,7 +144,10 @@ img { display: block; }
 .menu-tete { display: flex; align-items: center; gap: 20px; }
 .menu-lotus { width: 72px; height: 72px; border-radius: 50%; filter: drop-shadow(0 0 22px rgba(212, 175, 55, 0.45)); }
 .menu-titre { margin: 0; font: 700 clamp(44px, 6vw, 84px)/0.95 var(--titre); letter-spacing: 0.14em; color: var(--or-pale); text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8); }
+.menu-beta { display: inline-block; vertical-align: middle; margin-left: 10px; padding: 3px 10px; border: 1px solid rgba(212, 175, 55, 0.55); border-radius: 999px; font: 700 12px/1.3 var(--serif); letter-spacing: 0.3em; text-transform: uppercase; color: var(--or-pale); text-shadow: none; }
 .menu-sous { margin: 6px 0 0; font: 400 clamp(15px, 1.4vw, 19px)/1.4 var(--serif); color: var(--texte-doux); max-width: 46ch; }
+.reprendre { display: flex; align-items: center; gap: 14px; margin-left: 36px; padding: 8px 8px 8px 18px; border-radius: 999px; border-color: rgba(212, 175, 55, 0.45); box-shadow: 0 0 30px rgba(212, 175, 55, 0.14); align-self: center; }
+.reprendre .carte-aide { white-space: nowrap; }
 .menu-outils { margin-left: auto; display: flex; gap: 8px; align-self: flex-start; }
 .menu-cartes {
   display: grid; gap: 16px; margin-top: 24px;
@@ -342,6 +345,8 @@ img { display: block; }
 @media (max-width: 900px) {
   body { font-size: 14px; }
   .menu { justify-content: flex-start; padding: 18px 16px 24px; }
+  .menu-tete { flex-wrap: wrap; }
+  .reprendre { margin-left: 0; width: 100%; justify-content: space-between; order: 9; }
   .menu-tete { flex-wrap: wrap; gap: 12px; }
   .menu-lotus { width: 52px; height: 52px; }
   .menu-titre { font-size: 40px; }

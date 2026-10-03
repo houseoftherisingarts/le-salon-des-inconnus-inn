@@ -17,6 +17,8 @@ export interface Config {
   noms: Record<Camp, string>;
   /** À deux sur ce Mac : la table tourne vers le joueur au trait. */
   tourner: boolean;
+  /** À distance : le personnage que chaque camp incarne, tel que VU d'ici (l'autre reçoit un remplaçant s'il a choisi le même). */
+  avatars?: Partial<Record<Camp, string | null>>;
 }
 
 export interface Sauvegarde {

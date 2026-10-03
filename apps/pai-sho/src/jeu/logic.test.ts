@@ -9,6 +9,7 @@ import {
 } from './logic';
 import { appliquerCoup, coupLegal, texteVerdict } from './arbitre';
 import { adaptateurPaiSho } from './cpu';
+import { ADVERSAIRES, vuDEnFace } from './adversaires';
 import { POINTS, PORTES, ZONES, PORTE, coordX, coordY, estPorte, indice, zone } from './plateau';
 import { choisirAuNiveau, reflechir, type Niveau } from '../moteur/niveaux';
 import { graine, piocher } from '../moteur/hasard';
@@ -303,6 +304,13 @@ let milieu: EtatPaiSho | null = null;
   verifie(e.captures.hote === 1, 'leçon : une prise');
   verifie(e.verdict?.type === 'victoire' && e.verdict.camp === 'hote' && e.verdict.raison === 'anneau', `leçon : victoire de l’élève par l’anneau ${JSON.stringify(e.verdict)}`);
 }
+
+// Vu d'en face : l'autre garde son visage, sauf s'il a pris le mien.
+verifie(vuDEnFace(undefined, 'iroh') === null, 'vu d’en face : sans personnage, la dame');
+verifie(vuDEnFace('inconnu', 'iroh') === null, 'vu d’en face : personnage inconnu, la dame');
+verifie(vuDEnFace('katara', 'iroh') === 'katara', 'vu d’en face : personnages différents');
+verifie(vuDEnFace('iroh', 'iroh') !== 'iroh' && ADVERSAIRES.some((a) => a.id === vuDEnFace('iroh', 'iroh')), 'vu d’en face : même personnage, un autre visage');
+verifie(vuDEnFace(ADVERSAIRES[ADVERSAIRES.length - 1].id, ADVERSAIRES[ADVERSAIRES.length - 1].id) === ADVERSAIRES[0].id, 'vu d’en face : le dernier boucle sur le premier');
 
 verifie(ACCENTS.length === 4, 'quatre accents');
 console.log(`Toutes les assertions passent : ${ok}.`);

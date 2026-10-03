@@ -9,7 +9,8 @@ export type Langue = 'FR' | 'EN';
 
 const FR = {
   titre: 'Pai Sho',
-  sousTitre: 'Le jardin de bois de la taverne',
+  sousTitre: 'Qui frappe à la porte du jardin ?',
+  beta: 'Bêta',
   chargement: 'La table se dresse',
   contreMaison: 'Contre la maison',
   contreMaisonAide: 'Un habitué de la taverne prend place en face de vous et joue à la mesure du niveau que vous lui donnez.',
@@ -30,6 +31,11 @@ const FR = {
   aDeuxAide: 'Vous partagez ce Mac avec un ami, et la table se retourne vers celui dont c’est le tour.',
   tourner: 'Tourner la table à chaque tour',
   aDistance: 'À distance',
+  profil: 'Votre profil',
+  profilAide: 'Votre nom, votre identifiant et le personnage qui vous représente en face des autres joueurs.',
+  votrePersonnage: 'Votre personnage',
+  sansPersonnage: 'La dame',
+  boutique: 'Boutique de skins au café-jeux',
   aDistanceAide: 'Ouvrez une table et donnez votre identifiant à l’autre joueur, ou rejoignez la sienne avec le sien.',
   reprendre: 'Reprendre la partie',
   tutoriel: 'Tutoriel',
@@ -91,7 +97,8 @@ const FR = {
 
 const EN: typeof FR = {
   titre: 'Pai Sho',
-  sousTitre: 'The tavern’s wooden garden',
+  sousTitre: 'Who knocks at the garden gate?',
+  beta: 'Beta',
   chargement: 'Setting the table',
   contreMaison: 'Against the house',
   contreMaisonAide: 'A tavern regular takes the seat across from you.',
@@ -112,6 +119,11 @@ const EN: typeof FR = {
   aDeuxAide: 'Share this Mac with a friend, and the table turns toward whoever plays next.',
   tourner: 'Turn the table every move',
   aDistance: 'Remote',
+  profil: 'Your profile',
+  profilAide: 'Your name, your ID and the character who sits across from other players.',
+  votrePersonnage: 'Your character',
+  sansPersonnage: 'The lady',
+  boutique: 'Skin shop at the café-jeux',
   aDistanceAide: 'Open a table and give your player ID to your opponent, or join theirs with their ID.',
   reprendre: 'Resume the game',
   tutoriel: 'Tutorial',

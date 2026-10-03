@@ -12,7 +12,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import { app, db } from '../firebase';
 import { AuthModal, type MemberProfile } from './AuthModal';
 import { SiteFooter } from './SiteFooter';
-import { SKINS_PAI_SHO, JEUX_FESTIVAL, TEXTES, type Skin } from '../data/cafeJeux';
+import { BETA_TOUT_OUVERT, SKINS_PAI_SHO, JEUX_FESTIVAL, TEXTES, type Skin } from '../data/cafeJeux';
 import { petalesPourPartie, lireSolde, ecrireSolde, lireDebloques, ecrireDebloques, CLE_DEBLOQUES } from '../utils/petales';
 
 const PAD = 'px-4 sm:px-6 md:px-12 lg:px-20';
@@ -276,13 +276,14 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
               <strong className="text-[#f3e5ab] text-lg font-bold">{solde}</strong>{t.petales}
             </p>
             <p className="mt-3 font-lato text-[14px] leading-relaxed text-white/65">{t.gain}</p>
+            {BETA_TOUT_OUVERT && <p className="mt-3 rounded-[12px] border border-[#c5a059]/40 bg-[#c5a059]/10 px-3.5 py-2.5 font-lato text-[14px] leading-snug text-[#f3e5ab]">{t.betaOuvert}</p>}
 
             {(['plateau', 'tuiles'] as const).map((type) => (
               <div key={type} className="mt-5">
                 <p className="font-cinzel text-[11px] uppercase tracking-[0.3em] text-[#c5a059] mb-2">{type === 'plateau' ? t.plateaux : t.tuiles}</p>
                 <ul className="flex flex-col gap-2.5">
                   {SKINS_PAI_SHO.filter((s) => s.type === type).map((s) => {
-                    const a = debloques.includes(s.id);
+                    const a = BETA_TOUT_OUVERT || debloques.includes(s.id);
                     const manque = s.petales - solde;
                     return (
                       <li key={s.id} className="rounded-[12px] border border-white/10 bg-white/[0.03] p-3">

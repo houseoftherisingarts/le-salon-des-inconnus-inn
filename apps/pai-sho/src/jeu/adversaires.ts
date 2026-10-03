@@ -28,3 +28,14 @@ export const ADVERSAIRES: readonly Adversaire[] = [
 ];
 
 export const adversaire = (id: string): Adversaire | undefined => ADVERSAIRES.find((a) => a.id === id);
+
+/** À distance, deux joueurs qui ont choisi le même personnage : chacun se
+ *  voit tel qu'il s'est choisi, et voit l'autre sous le personnage suivant.
+ *  Alex, 3 octobre : « moi je vais voir qu'elle a pris Katara, elle va voir
+ *  que j'ai pris un autre ». */
+export function vuDEnFace(autre: string | null | undefined, moi: string | null | undefined): string | null {
+  if (!autre || !adversaire(autre)) return null;
+  if (autre !== moi) return autre;
+  const i = ADVERSAIRES.findIndex((a) => a.id === autre);
+  return ADVERSAIRES[(i + 1) % ADVERSAIRES.length].id;
+}

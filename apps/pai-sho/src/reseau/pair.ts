@@ -10,7 +10,7 @@ import Peer, { type DataConnection } from 'peerjs';
 export const VERSION_PROTOCOLE = 1;
 
 export type Message =
-  | { type: 'bonjour'; nom: string; version: number }
+  | { type: 'bonjour'; nom: string; version: number; avatar?: string }
   | { type: 'pret' }
   | { type: 'coup'; texte: string; n: number }
   | { type: 'resync'; coups: string[] }
@@ -19,7 +19,8 @@ export type Message =
   | { type: 'ping' }
   | { type: 'pong' };
 
-export interface Joueur { id: string; nom: string }
+/** `avatar` : l'identifiant du personnage que ce joueur incarne (src/jeu/adversaires.ts), ou rien. */
+export interface Joueur { id: string; nom: string; avatar?: string }
 
 const CLE_JOUEUR = 'paisho.joueur';
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -183,7 +184,7 @@ export class Lien {
       this.perteDepuis = 0;
       this.dernierSigne = Date.now();
       this.e.surEtat('connecte');
-      c.send({ type: 'bonjour', nom: this.moi.nom, version: VERSION_PROTOCOLE } satisfies Message);
+      c.send({ type: 'bonjour', nom: this.moi.nom, version: VERSION_PROTOCOLE, avatar: this.moi.avatar } satisfies Message);
       window.clearInterval(this.battement);
       this.battement = window.setInterval(() => this.verifierPouls(), BATTEMENT);
     });

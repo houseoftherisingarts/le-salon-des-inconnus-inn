@@ -147,7 +147,12 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     scene.placerConvives(config.mode === 'deux' ? 'hote' : config.campLocal);
     // Le personnage choisi au menu s'assoit en face; à deux ou à distance, la dame reprend sa place.
     const nomAdv = config.noms[autre(config.campLocal)];
-    scene.placerAdversaire(config.mode === 'lecon' ? 'iroh' : config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv)?.id ?? null : null);
+    scene.placerAdversaire(
+      config.mode === 'lecon' ? 'iroh'
+        : config.mode === 'maison' ? ADVERSAIRES.find((a) => a.nom === nomAdv)?.id ?? null
+          : config.mode === 'distance' ? config.avatars?.[autre(config.campLocal)] ?? null
+            : null,
+    );
     scene.afficher(initial.etat);
     scene.montrerCibles([], null);
     void scene.tournerVers(cote, 1.6);

@@ -38,9 +38,13 @@ const estPlateau = (x: unknown): x is IdPlateau => PLATEAUX.some((p) => p.id ===
 const estTuiles = (x: unknown): x is IdTuiles => TUILES.some((t) => t.id === x);
 const estDecor = (x: unknown): x is IdDecor => DECORS.some((d) => d.id === x);
 
+/** Pendant la bêta, rien n'est derrière un paiement : tout est ouvert (Alex, 3 octobre 2026). */
+export const BETA_TOUT_OUVERT = true;
+
 /** Les ids débloqués, les gratuits toujours compris. */
 export function debloques(): Set<string> {
   const s = new Set<string>(['bois']);
+  if (BETA_TOUT_OUVERT) for (const x of [...PLATEAUX, ...TUILES, ...DECORS]) s.add(x.id);
   try {
     const liste: unknown = JSON.parse(localStorage.getItem(CLE_DEBLOQUES) ?? '[]');
     if (Array.isArray(liste)) for (const id of liste) if (typeof id === 'string') s.add(id);

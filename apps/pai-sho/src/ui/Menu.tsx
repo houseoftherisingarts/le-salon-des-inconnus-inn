@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NIVEAUX_POSSIBLES, nomNiveau, type Niveau } from '../moteur/niveaux';
 import { nomDadversaire } from '../scene/noms';
-import { ADVERSAIRES, adversaire } from '../jeu/adversaires';
+import { ADVERSAIRES, adversaire, vuDEnFace } from '../jeu/adversaires';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
 import { Lien, amis as lireAmis, garderAmi, idValide, joueurLocal, oublierAmi, sauverJoueur, type Ami, type EtatLien, type Joueur } from '../reseau/pair';
 import { TEXTES, type Langue } from './textes';
@@ -58,6 +58,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     setJoueur(j);
     sauverJoueur(j);
   };
+  const changerAvatar = (avatar: string | undefined) => {
+    const j = { ...joueur, avatar };
+    setJoueur(j);
+    sauverJoueur(j);
+  };
 
   const contreMaison = () => {
     const nomAdv = perso ? perso.nom : nomDadversaire(fr);
@@ -96,11 +101,14 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
         const enFace = l.idEnFace();
         if (enFace) setAmis(garderAmi(enFace, m.nom, joueur.id));
         const autre = m.nom.trim() || t.adversaire;
+        // Chacun se voit tel qu'il s'est choisi; l'autre, s'il a pris le même, change de visage d'ici.
+        const avatarAutre = vuDEnFace(m.avatar, joueur.avatar);
         onLancer({
           lien: l,
           config: {
             mode: 'distance', niveau: 1, campLocal: camp, tourner: false,
             noms: camp === 'hote' ? { hote: monNom, invite: autre } : { hote: autre, invite: monNom },
+            avatars: camp === 'hote' ? { hote: joueur.avatar ?? null, invite: avatarAutre } : { hote: avatarAutre, invite: joueur.avatar ?? null },
           },
         });
       },
@@ -122,9 +130,23 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
       <header className="menu-tete">
         <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="menu-lotus" />
         <div>
-          <h1 className="menu-titre">{t.titre}</h1>
+          <h1 className="menu-titre">{t.titre} <span className="menu-beta">{t.beta}</span></h1>
           <p className="menu-sous">{t.sousTitre}</p>
         </div>
+        {sauvegarde && (
+          <div className="reprendre verre" data-test="reprendre">
+            <span className="carte-aide">
+              {sauvegarde.noms.hote} · {sauvegarde.noms.invite} · {sauvegarde.coups.length} {fr ? 'coups' : 'moves'}
+            </span>
+            <button
+              type="button"
+              className="bouton or plein"
+              onClick={() => onLancer({ config: configDepuis(sauvegarde), coups: sauvegarde.coups })}
+            >
+              {t.reprendre}
+            </button>
+          </div>
+        )}
         <nav className="menu-outils">
           <button type="button" className="bouton discret" onClick={onTutoriel}>{t.tutoriel}</button>
           <button type="button" className="bouton discret" onClick={onLangue} lang={fr ? 'en' : 'fr'}>{t.langue}</button>
@@ -135,23 +157,6 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
       </header>
 
       <section className="menu-cartes">
-        {sauvegarde && (
-          <article className="carte verre carte-reprendre">
-            <h2 className="carte-titre">{t.reprendre}</h2>
-            <p className="carte-aide">
-              {sauvegarde.noms.hote} · {sauvegarde.noms.invite}
-              <br />
-              {sauvegarde.coups.length} {fr ? 'coups joués' : 'moves played'}
-            </p>
-            <button
-              type="button"
-              className="bouton or plein"
-              onClick={() => onLancer({ config: configDepuis(sauvegarde), coups: sauvegarde.coups })}
-            >
-              {t.reprendre}
-            </button>
-          </article>
-        )}
 
         <article className="carte verre">
           <h2 className="carte-titre">{t.contreMaison}</h2>
@@ -190,6 +195,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <span className="petit">{t.leconAide}</span>
         </article>
 
+
         <Skins langue={langue} scene={scene} />
 
         <article className="carte verre">
@@ -202,9 +208,9 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <button type="button" className="bouton plein" onClick={aDeux} data-test="a-deux">{t.jouerDeux}</button>
         </article>
 
-        <article className="carte verre">
-          <h2 className="carte-titre">{t.aDistance}</h2>
-          <p className="carte-aide">{t.aDistanceAide}</p>
+        <article className="carte verre" data-test="profil">
+          <h2 className="carte-titre">{t.profil}</h2>
+          <p className="carte-aide">{t.profilAide}</p>
           <label className="champ">
             <span className="etiquette">{t.votreNom}</span>
             <input className="saisie" value={joueur.nom} maxLength={24} onChange={(e) => changerNom(e.target.value)} placeholder={t.vous} />
@@ -216,6 +222,21 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
               <button type="button" className="bouton discret" onClick={copier}>{copie ? t.copie : t.copier}</button>
             </div>
           </div>
+          <div className="champ">
+            <span className="etiquette">{t.votrePersonnage}</span>
+            <div className="persos" role="radiogroup">
+              <button type="button" className={`perso ${!joueur.avatar ? 'choisi' : ''}`} role="radio" aria-checked={!joueur.avatar} onClick={() => changerAvatar(undefined)}>{t.sansPersonnage}</button>
+              {ADVERSAIRES.map((a) => (
+                <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{a.nom}</button>
+              ))}
+            </div>
+          </div>
+          <a className="bouton discret" href="https://www.lesalondesinconnus.com/cafe-jeux/" target="_blank" rel="noreferrer">{t.boutique}</a>
+        </article>
+
+        <article className="carte verre">
+          <h2 className="carte-titre">{t.aDistance}</h2>
+          <p className="carte-aide">{t.aDistanceAide}</p>
           <button type="button" className="bouton plein" onClick={() => distance('hote')} disabled={etatLien === 'attente'}>{t.ouvrirTable}</button>
           <label className="champ">
             <span className="etiquette">{t.idAdversaire}</span>

@@ -89,6 +89,9 @@ export const JEUX_FESTIVAL: JeuFestival[] = [
   },
 ];
 
+/** Pendant la bêta, toutes les parures sont ouvertes dans le jeu et la boutique ne vend rien. */
+export const BETA_TOUT_OUVERT = true;
+
 export const TEXTES = {
   FR: {
     eyebrow: 'Le Salon des Inconnus · Café-jeux',
@@ -108,6 +111,7 @@ export const TEXTES = {
     tuiles: 'Tuiles',
     petales: 'pétales',
     possede: 'Dans votre jardin',
+    betaOuvert: 'Pendant la bêta, toutes les parures sont ouvertes dans le jeu. La boutique ouvrira plus tard.',
     manque: (n: number) => `Encore ${n} pétales`,
     carteCompte: 'Le paiement par carte demande un compte du Salon, pour que la parure vous suive d’un appareil à l’autre.',
     merci: (nom: string) => `La parure « ${nom} » est maintenant dans votre jardin et vous attend à la prochaine partie.`,
@@ -142,6 +146,7 @@ export const TEXTES = {
     tuiles: 'Tiles',
     petales: 'petals',
     possede: 'In your garden',
+    betaOuvert: 'During the beta, every finish is open in the game. The shop opens later.',
     manque: (n: number) => `${n} petals to go`,
     carteCompte: 'Paying by card needs a Salon account, so the finish follows you from one device to the next.',
     merci: (nom: string) => `“${nom}” is now in your garden and waits for you at the next game.`,
