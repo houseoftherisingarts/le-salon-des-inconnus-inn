@@ -58,6 +58,7 @@ const crypto = __importStar(require("crypto"));
 const params_1 = require("firebase-functions/params");
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const assistance_1 = require("./assistance");
+const cafeJeux_1 = require("./cafeJeux");
 if (admin.apps.length === 0) {
     admin.initializeApp();
 }
@@ -263,6 +264,12 @@ exports.webhookProfilPro = (0, https_1.onRequest)({ secrets: [STRIPE_WEBHOOK_PRO
     // paiement unique, reconnu par metadata.entite et metadata.produit.
     if (event.type === 'checkout.session.completed' && (0, assistance_1.estAssistance)(objet)) {
         await (0, assistance_1.traiterAssistancePayee)(objet);
+        res.status(200).send('OK');
+        return;
+    }
+    // Les skins du Café-jeux passent aussi par ici (metadata.produit = 'skin').
+    if (event.type === 'checkout.session.completed' && (0, cafeJeux_1.estSkin)(objet)) {
+        await (0, cafeJeux_1.traiterSkinPaye)(objet);
         res.status(200).send('OK');
         return;
     }

@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onMessageEntreMembres = exports.onProblemeTechnique = exports.onMessageSoutien = exports.parrainageFilleul = exports.nettoyerCompteSupprime = exports.lierSejour = exports.mesSejours = exports.mesBillets = exports.compterPlacesCeilidh = exports.creerPaiementAssistance = exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeCampingWebhook = exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
+exports.onMessageEntreMembres = exports.onProblemeTechnique = exports.onMessageSoutien = exports.parrainageFilleul = exports.nettoyerCompteSupprime = exports.lierSejour = exports.mesSejours = exports.mesBillets = exports.compterPlacesCeilidh = exports.creerPaiementSkin = exports.creerPaiementAssistance = exports.portailProfilPro = exports.webhookProfilPro = exports.creerAbonnementProfilPro = exports.stripeCampingWebhook = exports.resetD20Cooldown = exports.rollWeeklyD20 = exports.getRoomSuggestions = exports.getHostawayQuote = exports.getHostawayCalendar = exports.getHostawayAvailability = exports.onConferenceRequest = exports.onProposalRequest = exports.onRsvpInvitation = exports.onNewMember = exports.onShowOffer = exports.onWwooferVisitRequest = exports.onWwooferApplication = exports.onCommunityApplication = exports.createShowTicketPayment = exports.createCeilidhPayment = void 0;
 const admin = __importStar(require("firebase-admin"));
 const functions = __importStar(require("firebase-functions/v1"));
 const https_1 = require("firebase-functions/v2/https");
@@ -812,6 +812,8 @@ Object.defineProperty(exports, "webhookProfilPro", { enumerable: true, get: func
 Object.defineProperty(exports, "portailProfilPro", { enumerable: true, get: function () { return profilPro_1.portailProfilPro; } });
 var assistance_1 = require("./assistance");
 Object.defineProperty(exports, "creerPaiementAssistance", { enumerable: true, get: function () { return assistance_1.creerPaiementAssistance; } });
+var cafeJeux_1 = require("./cafeJeux");
+Object.defineProperty(exports, "creerPaiementSkin", { enumerable: true, get: function () { return cafeJeux_1.creerPaiementSkin; } });
 var espaceMembre_1 = require("./espaceMembre");
 Object.defineProperty(exports, "compterPlacesCeilidh", { enumerable: true, get: function () { return espaceMembre_1.compterPlacesCeilidh; } });
 Object.defineProperty(exports, "mesBillets", { enumerable: true, get: function () { return espaceMembre_1.mesBillets; } });

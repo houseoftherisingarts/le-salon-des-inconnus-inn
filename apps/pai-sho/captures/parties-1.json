@@ -1,0 +1,27 @@
+{
+  "url": "http://localhost:5178/",
+  "date": "2026-10-03T11:56:35.074Z",
+  "modes": {
+    "maison": {
+      "coupsHumains": 9,
+      "coupsTotal": 18
+    },
+    "sauvegarde": {
+      "reprendreVisible": true,
+      "coupsRepris": 18
+    },
+    "verdict": {
+      "visible": true
+    }
+  },
+  "captures": [
+    "menu-1440.jpg",
+    "partie-1440.jpg",
+    "regles-1440.jpg",
+    "verdict-1440.jpg"
+  ],
+  "erreurs": [],
+  "mesures": {
+    "plateau": null
+  }
+}
