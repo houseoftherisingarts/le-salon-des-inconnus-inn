@@ -47,6 +47,39 @@ export function sauverJoueur(j: Joueur): void {
 
 export const idValide = (s: string): boolean => /^paisho-[a-z0-9]{8}$/.test(s.trim().toLowerCase());
 
+// ─── Le carnet d'amis ───────────────────────────────────────────────
+// Aucun serveur à nous : un ami, c'est une personne déjà rencontrée à
+// une table, gardée sur l'appareil avec son identifiant et le nom
+// qu'elle a donné. Le carnet sert à la rejoindre d'un geste.
+
+export interface Ami { id: string; nom: string; vu: number }
+
+const CLE_AMIS = 'paisho.amis';
+const MAX_AMIS = 24;
+
+export function amis(): Ami[] {
+  try {
+    const liste: unknown = JSON.parse(localStorage.getItem(CLE_AMIS) ?? '[]');
+    if (!Array.isArray(liste)) return [];
+    return liste.filter((a): a is Ami => !!a && typeof a === 'object' && idValide(String((a as Ami).id)));
+  } catch { return []; }
+}
+
+/** Garde (ou met à jour) un ami; le plus récent en tête, jamais soi-même. */
+export function garderAmi(id: string, nom: string, moi: string = joueurLocal().id): Ami[] {
+  const propre = id.trim().toLowerCase();
+  if (!idValide(propre) || propre === moi) return amis();
+  const liste = [{ id: propre, nom: nom.trim().slice(0, 24), vu: Date.now() }, ...amis().filter((a) => a.id !== propre)].slice(0, MAX_AMIS);
+  try { localStorage.setItem(CLE_AMIS, JSON.stringify(liste)); } catch { /* navigation privée */ }
+  return liste;
+}
+
+export function oublierAmi(id: string): Ami[] {
+  const liste = amis().filter((a) => a.id !== id);
+  try { localStorage.setItem(CLE_AMIS, JSON.stringify(liste)); } catch { /* navigation privée */ }
+  return liste;
+}
+
 export type EtatLien = 'attente' | 'connexion' | 'connecte' | 'perdu' | 'fini' | 'erreur';
 
 export interface Ecouteurs {
@@ -88,6 +121,9 @@ export class Lien {
     this.e.surEtat('connexion');
     this.creerPeer(() => this.appeler());
   }
+
+  /** L'identifiant de la personne en face, dès qu'on le connaît. */
+  idEnFace(): string | null { return this.vis ?? this.cible; }
 
   envoyer(m: Message): void {
     if (this.conn?.open) this.conn.send(m);

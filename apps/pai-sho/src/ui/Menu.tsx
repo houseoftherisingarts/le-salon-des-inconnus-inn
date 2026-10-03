@@ -5,7 +5,7 @@ import { NIVEAUX_POSSIBLES, nomNiveau, type Niveau } from '../moteur/niveaux';
 import { nomDadversaire } from '../scene/noms';
 import { ADVERSAIRES, adversaire } from '../jeu/adversaires';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
-import { Lien, idValide, joueurLocal, sauverJoueur, type EtatLien, type Joueur } from '../reseau/pair';
+import { Lien, amis as lireAmis, garderAmi, idValide, joueurLocal, oublierAmi, sauverJoueur, type Ami, type EtatLien, type Joueur } from '../reseau/pair';
 import { TEXTES, type Langue } from './textes';
 import type { Camp } from '../jeu/logic';
 import type { Depart } from '../App';
@@ -41,6 +41,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const [tourner, setTourner] = useState(true);
   const [joueur, setJoueur] = useState<Joueur>(joueurLocal);
   const [idAutre, setIdAutre] = useState('');
+  const [amis, setAmis] = useState<Ami[]>(lireAmis);
   const [etatLien, setEtatLien] = useState<EtatLien | null>(null);
   const [erreur, setErreur] = useState('');
   const [copie, setCopie] = useState(false);
@@ -75,7 +76,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     },
   });
 
-  const distance = (camp: Camp) => {
+  const distance = (camp: Camp, id = idAutre) => {
     setErreur('');
     lien.current?.fermer();
     const l = new Lien(joueur, {
@@ -86,6 +87,9 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
       surMessage: (m) => {
         if (m.type !== 'bonjour' || lance.current) return;
         lance.current = true;
+        // La personne en face entre au carnet, sous le nom qu'elle donne.
+        const enFace = l.idEnFace();
+        if (enFace) setAmis(garderAmi(enFace, m.nom, joueur.id));
         const autre = m.nom.trim() || t.adversaire;
         onLancer({
           lien: l,
@@ -98,7 +102,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     });
     lien.current = l;
     if (camp === 'hote') l.ouvrir();
-    else l.rejoindre(idAutre);
+    else l.rejoindre(id);
   };
 
   const copier = () => {
@@ -213,6 +217,23 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
               <button type="button" className="bouton discret" onClick={() => distance('invite')} disabled={!idValide(idAutre) || idAutre.trim() === joueur.id}>{t.rejoindre}</button>
             </div>
           </label>
+          {amis.length > 0 && (
+            <div className="champ">
+              <span className="etiquette">{t.amis}</span>
+              <ul className="amis">
+                {amis.map((a) => (
+                  <li key={a.id}>
+                    <button type="button" className="bouton discret ami" onClick={() => { setIdAutre(a.id); distance('invite', a.id); }} disabled={etatLien === 'attente' || etatLien === 'connexion'} data-test={`ami-${a.id}`}>
+                      <span>{a.nom || t.adversaire}</span>
+                      <code>{a.id}</code>
+                    </button>
+                    <button type="button" className="bouton discret" onClick={() => setAmis(oublierAmi(a.id))} aria-label={`${t.oublier} ${a.nom || a.id}`}>×</button>
+                  </li>
+                ))}
+              </ul>
+              <span className="petit">{t.amisAide}</span>
+            </div>
+          )}
           {etatLien === 'attente' && <p className="etat-lien">{t.attente}</p>}
           {etatLien === 'connexion' && <p className="etat-lien">{t.connexion}</p>}
           {erreur && <p className="etat-lien erreur">{erreur}</p>}

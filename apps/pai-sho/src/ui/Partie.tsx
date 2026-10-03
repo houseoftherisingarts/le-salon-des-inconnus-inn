@@ -277,6 +277,15 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     scene.montrerCibles(ciblesDe(choix), choix.type === 'tuile' ? choix.de : null);
   }, [choix, ciblesDe, scene]);
 
+  useEffect(() => {
+    let points: Pt[] = [];
+    if (choix.type === 'aucun') points = harmonieux.filter((c) => c.type === 'deplacer').map((c) => (c as { de: Pt }).de);
+    else if (choix.type === 'tuile') points = harmonieux.filter((c) => c.type === 'deplacer' && c.de === choix.de).map((c) => (c as { a: Pt }).a);
+    else if (choix.type === 'reserve') points = harmonieux.filter((c) => c.type === 'planter' && c.tuile === choix.tuile).map((c) => (c as { porte: Pt }).porte);
+    scene.montrerSuggestions(points);
+  }, [choix, harmonieux, scene]);
+  useEffect(() => () => scene.montrerSuggestions([]), [scene]);
+
   const annulerBonus = useCallback(() => {
     setChoix({ type: 'aucun' });
     void scene.afficher(etatRef.current);
@@ -387,6 +396,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       etat={etat} camp={c} langue={langue} nom={nom(c)}
       actif={aMoi && etat.tour === c && choix.type !== 'bonus'}
       plantables={plantables}
+      suggerees={suggerees}
       choisie={choix.type === 'reserve' && etat.tour === c ? choix.tuile : null}
       onChoisir={choisirReserve}
     />
@@ -413,6 +423,9 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
         <nav className="hud-boutons">
           <button type="button" className="bouton discret" onClick={() => setRegles(true)}>{t.regles}</button>
           <button type="button" className="bouton discret" onClick={onTutoriel}>{t.tutoriel}</button>
+          <button type="button" className={`bouton discret ${suggestions ? 'actif' : ''}`} onClick={basculerSuggestions} aria-pressed={suggestions} data-test="suggestions">
+            {t.suggestions} {suggestions ? '●' : '○'}
+          </button>
           <button type="button" className="bouton discret" onClick={() => setConfirmer(true)} disabled={fini}>{t.abandonner}</button>
           <button type="button" className="bouton discret" onClick={onMenu}>{t.menu}</button>
         </nav>
@@ -433,6 +446,9 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
         <div className="bas-boutons">
           <button type="button" className="bouton discret" onClick={() => setJournalOuvert((x) => !x)}>{t.journal}</button>
           <button type="button" className="bouton discret" onClick={() => setRegles(true)}>{t.regles}</button>
+          <button type="button" className={`bouton discret ${suggestions ? 'actif' : ''}`} onClick={basculerSuggestions} aria-pressed={suggestions}>
+            {t.suggestions} {suggestions ? '●' : '○'}
+          </button>
           <button type="button" className="bouton discret" onClick={() => setConfirmer(true)} disabled={fini}>{t.abandonner}</button>
           <button type="button" className="bouton discret" onClick={onMenu}>{t.menu}</button>
         </div>
