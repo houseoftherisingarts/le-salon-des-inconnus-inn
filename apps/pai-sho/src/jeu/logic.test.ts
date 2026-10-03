@@ -1,6 +1,6 @@
 // ─── Les tests des règles du Pai Sho ────────────────────────────────
 // Sans cadre de test : des assertions, un compteur, et un code de sortie
-// non nul au premier échec. Lancer avec `npm test` depuis apps/pai-sho.
+// non nul au premier échec (l'exception remonte jusqu'à node). Lancer avec `npm test` depuis apps/pai-sho.
 
 import {
   ACCENTS, CONFLIT_PAIRE, HARMONIE_PAIRE, anneauHarmonie, conflits, coupDepuisTexte, coupEnTexte,
@@ -15,7 +15,7 @@ import { graine, piocher } from '../moteur/hasard';
 
 let ok = 0;
 function verifie(cond: unknown, msg: string): void {
-  if (!cond) { console.error(`ÉCHEC : ${msg}`); process.exit(1); }
+  if (!cond) throw new Error(`ÉCHEC : ${msg}`);
   ok++;
 }
 const P = indice;
