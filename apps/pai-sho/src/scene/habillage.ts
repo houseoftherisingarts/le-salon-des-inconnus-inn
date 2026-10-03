@@ -103,15 +103,15 @@ export class Habillage {
   }
 
   /** La matière d'une tuile pour le skin du moment. `base` est la
-   *  matière du bois, déjà teinte en noyer pour l'invité. */
-  matiereTuile(base: THREE.MeshStandardMaterial, brute: THREE.MeshStandardMaterial, camp: Camp): THREE.Material {
+   *  matière du bois, déjà teinte en noyer pour l'invité ; le skin n'en
+   *  garde que les cartes, jamais la couleur. */
+  matiereTuile(base: THREE.MeshStandardMaterial, camp: Camp): THREE.Material {
     const id = this.skin.tuiles;
     if (id === 'bois') return base;
-    const cle = `${brute.uuid}:${camp}`;
-    let m = this.matsTuiles.get(cle);
+    let m = this.matsTuiles.get(base.uuid);
     if (!m) {
-      m = teinter(brute, TEINTES_TUILES[id][camp], this.reflets());
-      this.matsTuiles.set(cle, m);
+      m = teinter(base, TEINTES_TUILES[id][camp], this.reflets());
+      this.matsTuiles.set(base.uuid, m);
     }
     return m;
   }
