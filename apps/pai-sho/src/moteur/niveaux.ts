@@ -78,11 +78,11 @@ export const NIVEAUX: Record<Niveau, ReglageNiveau> = {
   // partie (banc du Renard, 2026-09-01). Elles cherchent donc à plein
   // régime, et leur maladresse tient à la seule bévue, qui devient
   // rare. La variété vient du tirage entre les coups d'égale valeur.
-  6:  marche(6,  'Chevalier',   'Knight',     4, 0.06,   0, { tempsMs: 350 }),
-  7:  marche(7,  'Banneret',    'Banneret',   5, 0.035,  0, { tempsMs: 600 }),
-  8:  marche(8,  'Capitaine',   'Captain',    6, 0.02,   0, { tempsMs: 1000 }),
-  9:  marche(9,  'Sénéchal',    'Seneschal',  8, 0.008,  0, { tempsMs: 1600 }),
-  10: marche(10, 'Connétable',  'Constable', 14, 0,      0, { tempsMs: 2600, pense: true }),
+  6:  marche(6,  'Agent Dai Li',       'Dai Li agent',          4, 0.06,   0, { tempsMs: 350 }),
+  7:  marche(7,  'Maître du Feu',      'Firebending master',    5, 0.035,  0, { tempsMs: 600 }),
+  8:  marche(8,  'Lotus Blanc',        'White Lotus',           6, 0.02,   0, { tempsMs: 1000 }),
+  9:  marche(9,  'Grand Lotus',        'Grand Lotus',           8, 0.008,  0, { tempsMs: 1600 }),
+  10: marche(10, 'Avatar',             'Avatar',               14, 0,      0, { tempsMs: 2600, pense: true }),
 };
 
 export const nomNiveau = (n: Niveau, fr: boolean): string =>
