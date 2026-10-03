@@ -98,14 +98,18 @@ export default function App() {
   useEffect(() => { sauverSon(son); couperMusique(!son); }, [son]);
 
   // Au menu, le plateau se loge entre le titre et les cartes : il reste
-  // entier à l'écran au lieu de passer sous le verre.
+  // entier à l'écran au lieu de passer sous le verre. Seules les cartes
+  // sous le plateau comptent, celles du tiers central; la grande carte
+  // de gauche peut monter plus haut sans repousser la caméra au loin.
   useEffect(() => {
     if (ecran !== 'menu' || !scene) return;
     const mesurer = () => {
       const tete = document.querySelector('.menu-tete')?.getBoundingClientRect();
-      const cartes = document.querySelector('.menu-cartes')?.getBoundingClientRect();
-      if (!tete || !cartes) return;
-      scene.cadrer({ gauche: 0, droite: 0, haut: tete.bottom + 8, bas: Math.max(0, window.innerHeight - cartes.top + 8) });
+      const toutes = [...document.querySelectorAll('.menu-cartes > *')].map((c) => c.getBoundingClientRect());
+      const centre = toutes.filter((r) => r.right > window.innerWidth / 3 && r.left < (window.innerWidth * 2) / 3);
+      const hauts = (centre.length ? centre : toutes).map((r) => r.top);
+      if (!tete || !hauts.length) return;
+      scene.cadrer({ gauche: 0, droite: 0, haut: tete.bottom + 8, bas: Math.max(0, window.innerHeight - Math.min(...hauts) + 8) });
     };
     const id = window.setTimeout(mesurer, 60);
     window.addEventListener('resize', mesurer);

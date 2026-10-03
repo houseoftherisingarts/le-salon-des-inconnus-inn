@@ -1,0 +1,55 @@
+{
+  "url": "http://localhost:5178/",
+  "date": "2026-10-03T11:46:51.803Z",
+  "modes": {
+    "maison": {
+      "coupsHumains": 9,
+      "coupsTotal": 18
+    },
+    "sauvegarde": {
+      "reprendreVisible": true,
+      "coupsRepris": 18
+    },
+    "verdict": {
+      "visible": true
+    }
+  },
+  "captures": [
+    "menu-1440.jpg",
+    "partie-1440.jpg",
+    "regles-1440.jpg",
+    "verdict-1440.jpg",
+    "skin-vexel-1440.jpg",
+    "skin-vexel-gros-plan-1440.jpg",
+    "skin-salon-1440.jpg",
+    "skin-salon-gros-plan-1440.jpg",
+    "skin-tuiles-1440.jpg",
+    "skin-tuiles-gros-plan-1440.jpg",
+    "skin-tuiles-obsidienne-1440.jpg",
+    "skin-tuiles-obsidienne-gros-plan-1440.jpg",
+    "skin-tuiles-cuivre-1440.jpg",
+    "skin-tuiles-cuivre-gros-plan-1440.jpg",
+    "menu-skins-1440.jpg",
+    "menu-skins-390.jpg"
+  ],
+  "erreurs": [],
+  "mesures": {
+    "plateau": null,
+    "skins-1440": {
+      "x": 388,
+      "y": 535.8125,
+      "l": 324,
+      "h": 316.1875,
+      "lignesTitre": 1,
+      "debord": 0
+    },
+    "skins-390": {
+      "x": 16,
+      "y": 1020.25,
+      "l": 358,
+      "h": 330.0625,
+      "lignesTitre": 1,
+      "debord": 0
+    }
+  }
+}
