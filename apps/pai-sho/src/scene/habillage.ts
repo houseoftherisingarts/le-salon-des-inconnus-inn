@@ -30,6 +30,9 @@ export function logoDe(p: IdPlateau): Promise<HTMLImageElement | null> {
   return l;
 }
 
+/** La matière GLB d'origine de chaque maille du cadre. */
+const bases = new WeakMap<THREE.Object3D, THREE.MeshStandardMaterial>();
+
 const libere = (m: THREE.Material | THREE.Material[]) => (Array.isArray(m) ? m : [m]).forEach((x) => x.dispose());
 
 export class Habillage {
@@ -74,7 +77,7 @@ export class Habillage {
         const m = o as THREE.Mesh;
         if (!m.isMesh) return;
         o.castShadow = true; o.receiveShadow = true;
-        m.userData.base = m.material;
+        bases.set(m, m.material as THREE.MeshStandardMaterial);
       });
       this.racine.add(cadre);
       this.cadre = cadre;
@@ -123,7 +126,7 @@ export class Habillage {
     this.cadre.traverse((o) => {
       const m = o as THREE.Mesh;
       if (!m.isMesh) return;
-      const base = m.userData.base as THREE.MeshStandardMaterial;
+      const base = bases.get(m)!;
       if (id === 'bois') { m.material = base; return; }
       const t = teinter(base, TEINTES_CADRE[id], this.reflets());
       m.material = t;

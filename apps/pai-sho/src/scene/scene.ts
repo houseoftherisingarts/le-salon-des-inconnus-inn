@@ -8,19 +8,20 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { chargerSculpture } from './sculpture';
-import { peindreFacePlateau } from './plateauTexture';
+import { Habillage } from './habillage';
 import { batirDecor } from './decor';
 import { Marques } from './marques';
 import { brancherGestes } from './gestes';
 import {
-  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_PLATEAU, ECHELLE_TUILE, RELIEF_TUILE, FOV, HAUT_CONVIVE, PAS,
-  PLATEAU_GLB_BAS, RAYON_FACE, Y_FACE, Y_PLANCHER, chargerGLB, versMonde,
+  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_TUILE, RELIEF_TUILE, FOV, HAUT_CONVIVE, PAS,
+  Y_FACE, Y_PLANCHER, chargerGLB, versMonde,
   type Cadre,
 } from './mesures';
 import { estJouable, indice, type Pt } from '../jeu/plateau';
 import {
   TYPES, harmonies, tuileEn, type Camp, type Coup, type EtatPaiSho, type TypeTuile,
 } from '../jeu/logic';
+import { skinChoisi, type Skin } from '../skins';
 
 export { versMonde, type Cadre } from './mesures';
 
@@ -79,6 +80,10 @@ export class ScenePaiSho {
   private plan = new THREE.Plane(new THREE.Vector3(0, 1, 0), -Y_FACE);
   private rayCaster = new THREE.Raycaster();
   private dernierEtat: EtatPaiSho | null = null;
+  private habillage: Habillage;
+  /** Le bois d'origine de chaque maille des prototypes (jamais dans
+   *  userData, que chaque clone recopierait en JSON). */
+  private bois = new WeakMap<THREE.Object3D, THREE.MeshStandardMaterial>();
 
   constructor(el: HTMLElement, o: OptionsScene = {}) {
     this.el = el;
@@ -108,7 +113,9 @@ export class ScenePaiSho {
     });
 
     batirDecor(this.scene, this.racine, this.gestionnaire, this.aJeter);
-    const plateauPret = this.batirPlateau();
+    // Le skin choisi s'applique dès le premier chargement.
+    this.habillage = new Habillage(r, this.racine, this.gestionnaire, this.marques, skinChoisi());
+    const plateauPret = this.habillage.batir();
     const tuilesPretes = this.chargerTuiles();
     this.chargerConvives();
 
@@ -133,30 +140,25 @@ export class ScenePaiSho {
   }
 
 
-  // ── Le plateau ────────────────────────────────────────────────────
+  // ── Le skin ───────────────────────────────────────────────────────
 
-  private async batirPlateau(): Promise<void> {
-    const face = peindreFacePlateau(RAYON_FACE, PAS);
-    const geoFace = new THREE.CircleGeometry(RAYON_FACE, 128).rotateX(-Math.PI / 2);
-    const matFace = new THREE.MeshStandardMaterial({
-      map: face.carte, normalMap: face.normales, normalScale: new THREE.Vector2(0.6, 0.6),
-      roughness: 0.55, metalness: 0,
+  /** Habille le plateau et les tuiles ; les tuiles posées changent sur place. */
+  appliquerSkin(s: Skin): void {
+    if (!this.habillage.appliquer(s)) return;
+    for (const [t, p] of this.prototypes) this.vetir(p, t.endsWith(':hote') ? 'hote' : 'invite');
+    for (const t of this.tuiles.values()) t.obj.removeFromParent();
+    this.tuiles.clear();
+    if (this.dernierEtat) this.afficher(this.dernierEtat);
+    this.habillage.oublierAnciennes();
+  }
+
+  /** Chaque maille prend la matière du skin, tirée de son bois d'origine. */
+  private vetir(o: THREE.Object3D, camp: Camp): void {
+    o.traverse((x) => {
+      const m = x as THREE.Mesh;
+      const base = this.bois.get(x);
+      if (m.isMesh && base) m.material = this.habillage.matiereTuile(base, camp);
     });
-    const disque = new THREE.Mesh(geoFace, matFace);
-    disque.position.y = Y_FACE;
-    disque.receiveShadow = true;
-    this.racine.add(disque);
-    this.aJeter.push(face.carte, face.normales, geoFace, matFace);
-
-    try {
-      const cadre = await chargerGLB(`${BASE}models/plateau.glb`, this.gestionnaire);
-      cadre.scale.setScalar(ECHELLE_PLATEAU);
-      cadre.position.y = -PLATEAU_GLB_BAS * ECHELLE_PLATEAU;
-      cadre.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-      this.racine.add(cadre);
-    } catch {
-      // Sans le cadre sculpté, le disque peint reste seul sur la table.
-    }
   }
 
   // ── Les tuiles ────────────────────────────────────────────────────
@@ -184,9 +186,10 @@ export class ScenePaiSho {
           if (!m.isMesh) return;
           const mat = (m.material as THREE.MeshStandardMaterial).clone();
           if (camp === 'invite') mat.color.multiply(COULEUR_INVITE);
-          m.material = mat;
+          this.bois.set(m, mat);
           this.aJeter.push(mat);
         });
+        this.vetir(copie, camp);
         env.add(copie);
         this.prototypes.set(`${t}:${camp}`, env);
       }
@@ -297,7 +300,8 @@ export class ScenePaiSho {
       const m = o as THREE.Mesh;
       if (!m.isMesh) return;
       const liste = (Array.isArray(m.material) ? m.material : [m.material]).map((x) => {
-        const c = x.clone(); c.transparent = true; mats.push(c); return c;
+        // Le clone perd la relecture du skin : on la lui rend.
+        const c = x.clone(); c.onBeforeCompile = x.onBeforeCompile; c.transparent = true; mats.push(c); return c;
       });
       m.material = Array.isArray(m.material) ? liste : liste[0];
     });
@@ -483,6 +487,7 @@ export class ScenePaiSho {
       if (m.isMesh && m.geometry) m.geometry.dispose();
     });
     for (const x of this.aJeter) x.dispose();
+    this.habillage.detruire();
     this.marques.detruire();
     this.renderer.dispose();
     this.renderer.domElement.remove();
