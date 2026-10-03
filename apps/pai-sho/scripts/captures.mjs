@@ -25,13 +25,13 @@ async function capture(page, nom) {
   rapport.captures.push(`${nom}.jpg`);
 }
 
-async function ouvrir(largeur, hauteur, propre = true, nav = navigateur) {
+async function ouvrir(largeur, hauteur, propre = true, nav = navigateur, requete = '') {
   const ctx = await nav.newContext({ viewport: { width: largeur, height: hauteur }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => rapport.erreurs.push(`${largeur}: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error') rapport.erreurs.push(`${largeur} console: ${m.text()}`); });
   if (propre) await page.addInitScript(() => { if (!sessionStorage.getItem('x')) { localStorage.clear(); localStorage.setItem('paisho.tutoriel.paisho', '1'); sessionStorage.setItem('x', '1'); } });
-  await page.goto(URL);
+  await page.goto(URL + requete);
   await page.waitForSelector('.menu', { timeout: 60000 });
   await pause(900);
   return { ctx, page };
@@ -192,6 +192,59 @@ if (SEUL.includes('4')) {
     rapport.modes.distance.etat = [await a.page.textContent('.carte:last-child').catch(() => ''), await b.page.textContent('.carte:last-child').catch(() => '')];
   }
   await a.ctx.close(); await b.ctx.browser().close();
+}
+
+// ── 5. Les skins : plateaux de marque, tuiles, carte du menu ─────────
+// Le skin est forcé par l'adresse, sans toucher au stockage. Le rendu
+// passe par le Chrome du Mac (Metal) : les métaux et l'irisation y
+// sont fidèles, là où le rendu logiciel les aplatit.
+if (SEUL.includes('5')) {
+  const gpu = await chromium.launch({ channel: 'chrome', args: ['--ignore-gpu-blocklist', '--use-angle=metal'] })
+    .catch(() => navigateur);
+  const plans = [
+    ['skin-vexel-1440', '?plateau=vexel&tuiles=bois'],
+    ['skin-salon-1440', '?plateau=salon&tuiles=bois'],
+    ['skin-tuiles-1440', '?plateau=vexel&tuiles=nacre'],
+    ['skin-tuiles-obsidienne-1440', '?plateau=salon&tuiles=obsidienne'],
+    ['skin-tuiles-cuivre-1440', '?plateau=bois&tuiles=cuivre'],
+  ];
+  for (const [nom, q] of plans) {
+    const { ctx, page } = await ouvrir(1440, 900, true, gpu, q);
+    await page.click('[data-test="a-deux"]');
+    await page.waitForSelector('.hud-haut');
+    await pause(2200);
+    for (let i = 0; i < 8; i++) {
+      await page.waitForFunction(() => window.__partie?.legaux.length > 0, null, { timeout: 15000 }).catch(() => {});
+      await pause(200);
+      await jouerUnCoup(page);
+    }
+    await pause(700);
+    await capture(page, nom);
+    // Le gros plan : la molette rapproche la caméra du centre.
+    await page.mouse.move(720, 450);
+    for (let k = 0; k < 6; k++) { await page.mouse.wheel(0, -120); await pause(60); }
+    await pause(400);
+    await capture(page, `${nom.replace('-1440', '')}-gros-plan-1440`);
+    await ctx.close();
+  }
+  for (const [l, h] of [[1440, 900], [390, 844]]) {
+    const { ctx, page } = await ouvrir(l, h, true, gpu, '?plateau=vexel&tuiles=nacre');
+    await page.waitForSelector('.carte-skins', { timeout: 10000 }).catch(() => rapport.erreurs.push(`${l}: carte skins absente du menu`));
+    await pause(800);
+    rapport.mesures[`skins-${l}`] = await page.evaluate(() => {
+      const c = document.querySelector('.carte-skins');
+      if (!c) return null;
+      const r = c.getBoundingClientRect();
+      const titre = c.querySelector('.carte-titre');
+      const lh = titre ? parseFloat(getComputedStyle(titre).lineHeight) : 1;
+      return { x: r.x, y: r.y, l: r.width, h: r.height, lignesTitre: titre ? Math.round(titre.getBoundingClientRect().height / lh) : 0, debord: document.documentElement.scrollWidth - innerWidth };
+    });
+    await page.evaluate(() => document.querySelector('.carte-skins')?.scrollIntoView({ block: 'center' }));
+    await pause(300);
+    await capture(page, `menu-skins-${l}`);
+    await ctx.close();
+  }
+  if (gpu !== navigateur) await gpu.close();
 }
 
 await navigateur.close();
