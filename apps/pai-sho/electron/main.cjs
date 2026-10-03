@@ -35,8 +35,10 @@ app.whenReady().then(() => {
   protocol.handle('app', (requete) => {
     const { pathname } = new URL(requete.url);
     const relatif = decodeURIComponent(pathname).replace(/^\/+/, '') || 'index.html';
-    const fichier = path.normalize(path.join(DIST, relatif));
-    if (!fichier.startsWith(DIST)) return new Response('Interdit', { status: 403 });
+    if (relatif.split(/[\\/]/).includes('..')) return new Response('Interdit', { status: 403 });
+    const base = path.resolve(DIST) + path.sep;
+    const fichier = path.resolve(DIST, relatif);
+    if (!fichier.startsWith(base)) return new Response('Interdit', { status: 403 });
     return net.fetch(pathToFileURL(fichier).toString());
   });
   Menu.setApplicationMenu(Menu.buildFromTemplate([
