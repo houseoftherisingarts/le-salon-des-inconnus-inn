@@ -183,7 +183,7 @@ export default function Menu({ langue, son, onLangue, onSon, onLancer, onTutorie
           <label className="champ">
             <span className="etiquette">{t.idAdversaire}</span>
             <div className="ligne-id">
-              <input className="saisie" value={idAutre} onChange={(e) => setIdAutre(e.target.value)} placeholder="paisho-xxxxxx" spellCheck={false} autoCapitalize="off" />
+              <input className="saisie" value={idAutre} onChange={(e) => setIdAutre(e.target.value)} placeholder="paisho-xxxxxxxx" spellCheck={false} autoCapitalize="off" />
               <button type="button" className="bouton discret" onClick={() => distance('invite')} disabled={!idValide(idAutre) || idAutre.trim() === joueur.id}>{t.rejoindre}</button>
             </div>
           </label>

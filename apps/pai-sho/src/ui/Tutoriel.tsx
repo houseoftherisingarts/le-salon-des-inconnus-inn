@@ -31,7 +31,10 @@ function useRectAncre(nom: string | undefined, actif: boolean): DOMRect | null {
   const [rect, setRect] = useState<DOMRect | null>(null);
   useLayoutEffect(() => {
     if (!actif || !nom) { setRect(null); return; }
-    const el = document.querySelector<HTMLElement>(`[data-tuto="${nom}"]`);
+    // La même ancre peut exister deux fois (panneau de bureau, feuille
+    // mobile) : on prend celle qui se voit.
+    const el = [...document.querySelectorAll<HTMLElement>(`[data-tuto="${nom}"]`)]
+      .find((x) => x.getBoundingClientRect().width > 0);
     if (!el) { setRect(null); return; }
     const mesurer = () => setRect(el.getBoundingClientRect());
     mesurer();

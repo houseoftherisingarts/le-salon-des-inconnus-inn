@@ -25,7 +25,7 @@ const CLE_JOUEUR = 'paisho.joueur';
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
 function nouvelId(): string {
-  const a = new Uint8Array(6);
+  const a = new Uint8Array(8);
   crypto.getRandomValues(a);
   return 'paisho-' + Array.from(a, (b) => ALPHABET[b % ALPHABET.length]).join('');
 }
@@ -34,7 +34,7 @@ function nouvelId(): string {
 export function joueurLocal(): Joueur {
   try {
     const j = JSON.parse(localStorage.getItem(CLE_JOUEUR) ?? 'null') as Joueur | null;
-    if (j && /^paisho-[a-z0-9]{6}$/.test(j.id)) return j;
+    if (j && /^paisho-[a-z0-9]{8}$/.test(j.id)) return j;
   } catch { /* identité illisible : on en refait une */ }
   const j = { id: nouvelId(), nom: '' };
   sauverJoueur(j);
@@ -45,7 +45,7 @@ export function sauverJoueur(j: Joueur): void {
   try { localStorage.setItem(CLE_JOUEUR, JSON.stringify(j)); } catch { /* navigation privée */ }
 }
 
-export const idValide = (s: string): boolean => /^paisho-[a-z0-9]{6}$/.test(s.trim().toLowerCase());
+export const idValide = (s: string): boolean => /^paisho-[a-z0-9]{8}$/.test(s.trim().toLowerCase());
 
 export type EtatLien = 'attente' | 'connexion' | 'connecte' | 'perdu' | 'fini' | 'erreur';
 
@@ -71,6 +71,8 @@ export class Lien {
   private relance = 0;
   private ferme = false;
   private cible: string | null = null;
+  /** L'identifiant de la personne assise en face, côté hôte. */
+  private vis: string | null = null;
 
   constructor(private moi: Joueur, public e: Ecouteurs) {}
 
@@ -106,8 +108,11 @@ export class Lien {
     this.peer = p;
     p.on('open', siOuvert);
     p.on('connection', (c) => {
-      // Une seule table, un seul vis-à-vis : une connexion qui revient
-      // remplace l'ancienne.
+      // Une seule table, un seul vis-à-vis : la table accepte la
+      // première personne qui s'assoit, puis ne reprend que cette
+      // même personne quand elle revient après une coupure.
+      if (this.vis && c.peer !== this.vis) { c.on('open', () => c.close()); return; }
+      this.vis = c.peer;
       this.conn?.close();
       this.brancher(c);
     });

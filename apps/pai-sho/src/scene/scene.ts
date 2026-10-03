@@ -26,7 +26,8 @@ const BASE = import.meta.env.BASE_URL;
 export const PAS = 1;
 /** Diamètre des tuiles GLB livrées par Meshy, mesuré sur leur Box3 :
  *  x et z vont de -0.951 à +0.951 sur les douze modèles (2026-10-02).
- *  Les modèles sont déjà couchés dans le plan XZ, l'épaisseur est en y. */
+ *  Les modèles sont déjà couchés dans le plan XZ (l'épaisseur, de 0.34
+ *  à 0.74, est en y) : aucune rotation n'est nécessaire. */
 const TUILE_GLB_DIAMETRE = 1.902;
 /** Une tuile couvre 0.82 pas : deux voisines ne se touchent pas. */
 const ECHELLE_TUILE = (0.82 * PAS) / TUILE_GLB_DIAMETRE;
@@ -297,14 +298,7 @@ export class ScenePaiSho {
       this.racine.add(cadre);
       this.mesurerPlateau(cadre);
     } catch {
-      // Le cadre manque : un cylindre de noyer le remplace le temps qu'il arrive.
-      const geo = new THREE.CylinderGeometry(DEMI_CADRE, DEMI_CADRE * 1.02, DESSUS, 96);
-      const mat = new THREE.MeshStandardMaterial({ color: 0x4a2c18, roughness: 0.6 });
-      const m = new THREE.Mesh(geo, mat);
-      m.position.y = DESSUS / 2;
-      m.castShadow = m.receiveShadow = true;
-      this.racine.add(m);
-      this.aJeter.push(geo, mat);
+      // Sans le cadre sculpté, le disque peint reste seul sur la table.
     }
   }
 
@@ -331,15 +325,14 @@ export class ScenePaiSho {
     await Promise.all(TYPES.map(async (t) => {
       let modele: THREE.Object3D;
       try {
-        const g = await chargerGLB(`${BASE}models/tuiles/${t}.glb`, this.gestionnaire);
-        g.scale.setScalar(ECHELLE_TUILE);
-        const b = new THREE.Box3().setFromObject(g);
-        const c = b.getCenter(new THREE.Vector3());
-        g.position.set(-c.x, -b.min.y, -c.z);
-        modele = g;
+        modele = await chargerGLB(`${BASE}models/tuiles/${t}.glb`, this.gestionnaire);
       } catch {
-        modele = this.remplacant(t);
+        return;
       }
+      modele.scale.setScalar(ECHELLE_TUILE);
+      const b = new THREE.Box3().setFromObject(modele);
+      const c = b.getCenter(new THREE.Vector3());
+      modele.position.set(-c.x, -b.min.y, -c.z);
       modele.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
       for (const camp of ['hote', 'invite'] as Camp[]) {
         const env = new THREE.Group();
@@ -359,17 +352,6 @@ export class ScenePaiSho {
       }
     }));
     if (this.dernierEtat) this.afficher(this.dernierEtat);
-  }
-
-  /** Le remplaçant d'une tuile dont le modèle n'est pas encore livré. */
-  private remplacant(t: TypeTuile): THREE.Object3D {
-    const geo = new THREE.CylinderGeometry(0.41 * PAS, 0.41 * PAS, 0.18 * PAS, 40);
-    geo.translate(0, 0.09 * PAS, 0);
-    const icone = this.texture(`${BASE}tuiles/${t}.webp`);
-    const bord = new THREE.MeshStandardMaterial({ color: 0xd9b07a, roughness: 0.5 });
-    const dessus = new THREE.MeshStandardMaterial({ map: icone, roughness: 0.5 });
-    this.aJeter.push(geo, bord, dessus);
-    return new THREE.Mesh(geo, [bord, dessus, bord]);
   }
 
   private nouvelleTuile(t: TypeTuile, camp: Camp): THREE.Object3D {
