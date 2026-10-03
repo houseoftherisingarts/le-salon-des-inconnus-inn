@@ -1,0 +1,35 @@
+/* Les fiches des tuiles : du verre sombre, de l'or, jamais d'italique. */
+.fiches { display: flex; flex-direction: column; min-height: 0; flex: 0 1 auto; padding: 6px; overflow: hidden; }
+.fiches-bascule {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  padding: 8px 10px; border: 0; border-radius: 10px; background: transparent; cursor: pointer;
+  font: 700 14px/1.2 var(--titre); letter-spacing: 0.05em; color: var(--or-pale); text-align: left;
+}
+.fiches-bascule:hover { background: rgba(255, 255, 255, 0.06); }
+.fiches-fleche { font: 700 18px/1 var(--sans); color: var(--or); }
+.fiches-liste { list-style: none; margin: 4px 0 0; padding: 0 2px 0 0; overflow-y: auto; min-height: 0; flex: 1 1 auto; scrollbar-width: thin; scrollbar-color: rgba(212, 175, 55, 0.4) transparent; }
+.fiche-ligne {
+  display: flex; align-items: flex-start; gap: 9px; width: 100%; padding: 7px 8px;
+  border: 1px solid transparent; border-radius: 10px; background: transparent; cursor: help;
+  text-align: left; font: 400 13px/1.4 var(--sans); color: var(--texte-doux);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.fiche-ligne img { flex: none; width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255, 255, 255, 0.2); }
+.fiche-ligne:hover, .fiche-ligne.actif { background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.4); color: var(--texte); }
+.fiche-ligne:focus-visible { outline: 2px solid var(--or); outline-offset: 1px; }
+
+.verre.fiche-bulle {
+  position: fixed; z-index: 60; width: 280px; max-width: calc(100vw - 16px); padding: 12px 14px;
+  background: var(--verre-fort); pointer-events: none;
+}
+.fiche-bulle p { margin: 0; }
+.fiche-bulle-nom { font: 700 16px/1.2 var(--titre); letter-spacing: 0.05em; color: var(--or-pale); }
+.fiche-bulle-chiffres { margin-top: 4px !important; font-size: 13px; color: var(--texte-doux); }
+.fiche-bulle-chiffres b { color: var(--or); }
+.fiche-bulle-regle { margin-top: 8px !important; font-size: 13.5px; line-height: 1.45; color: var(--texte); }
+
+@media (max-width: 900px) {
+  .hud-bas .fiches { padding: 0; background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; margin-top: 6px; }
+  .hud-bas .fiches-bascule { border: 1px solid var(--bord); background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
+  .hud-bas .fiches-liste { max-height: 26vh; }
+}

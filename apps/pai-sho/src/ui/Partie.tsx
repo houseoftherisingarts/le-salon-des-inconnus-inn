@@ -19,6 +19,7 @@ import type { EtatLien, Message } from '../reseau/pair';
 import type { Depart } from '../App';
 import { TEXTES, type Langue } from './textes';
 import { Reserve, Journal, PanneauRegles, PanneauBonus } from './Panneaux';
+import Fiches from './Fiches';
 
 type Choix =
   | { type: 'aucun' }
@@ -382,6 +383,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
 
       <aside className="hud-gauche">
         <div data-tuto="reserve">{reserve(basLocal)}</div>
+        <Fiches langue={langue} />
       </aside>
 
       <aside className="hud-droite">
@@ -390,7 +392,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       </aside>
 
       <footer className="hud-bas verre">
-        <div className="bas-reserve">{reserve(mainAuTrait)}</div>
+        <div className="bas-reserve">{reserve(mainAuTrait)}<Fiches langue={langue} /></div>
         <div className="bas-boutons">
           <button type="button" className="bouton discret" onClick={() => setJournalOuvert((x) => !x)}>{t.journal}</button>
           <button type="button" className="bouton discret" onClick={() => setRegles(true)}>{t.regles}</button>

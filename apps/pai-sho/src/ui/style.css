@@ -2,6 +2,22 @@
    Du verre sombre posé sur une taverne vivante. L'accent se porte par
    l'or et le poids, jamais par l'italique. */
 
+/* Les deux polices du jeu, embarquées pour que le programme Mac les
+   ait sans réseau : Avatar Airbender pour les titres, Herculanum pour
+   les textes (Alex, 3 octobre 2026). */
+@font-face {
+  font-family: 'Avatar Airbender';
+  src: url('../polices/avatar-airbender.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Herculanum';
+  src: url('../polices/herculanum.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --fond: #120d0a;
   --or: #d4af37;
