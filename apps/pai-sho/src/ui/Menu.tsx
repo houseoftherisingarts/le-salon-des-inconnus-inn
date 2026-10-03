@@ -34,7 +34,6 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const perso = adversaire(adv);
   const niveauJoue: Niveau = perso ? perso.niveau : niveau;
   const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
-  void scene;
   const [cote, setCote] = useState<Camp>('hote');
   const [tourner, setTourner] = useState(true);
   const [joueur, setJoueur] = useState<Joueur>(joueurLocal);
