@@ -100,12 +100,37 @@ img { display: block; }
   transition: opacity 0.9s ease, visibility 0.9s;
 }
 .rideau.leve { opacity: 0; visibility: hidden; pointer-events: none; }
-.rideau-lotus { width: 96px; height: 96px; border-radius: 50%; filter: drop-shadow(0 0 28px rgba(212, 175, 55, 0.5)); animation: souffle 2.4s ease-in-out infinite; }
-.rideau-titre { margin: 0; font: 700 clamp(36px, 6vw, 64px)/1 var(--titre); letter-spacing: 0.18em; color: var(--or-pale); }
-.rideau-barre { width: min(280px, 70vw); height: 2px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; }
+.rideau-lotus {
+  width: 112px; height: 112px; border-radius: 50%;
+  filter: drop-shadow(0 0 28px rgba(212, 175, 55, 0.5));
+  animation: eclot 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both, souffle 2.4s 1.6s ease-in-out infinite;
+}
+.rideau-titre { margin: 0; font: 400 clamp(44px, 7vw, 84px)/1 var(--titre); letter-spacing: 0.16em; color: var(--or-pale); text-shadow: 0 0 40px rgba(212, 175, 55, 0.35); }
+.rideau-titre span { display: inline-block; opacity: 0; animation: lettre 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.rideau-barre { width: min(280px, 70vw); height: 2px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; opacity: 0; animation: parait 1s 1.8s both; }
 .rideau-barre span { display: block; height: 100%; background: var(--or); box-shadow: 0 0 12px var(--or); transition: width 0.3s; }
-.rideau-texte { margin: 0; color: var(--texte-doux); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; }
+.rideau-texte { margin: 0; color: var(--texte-doux); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; animation: parait 1s 1.8s both; }
 @keyframes souffle { 50% { transform: scale(1.06); filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.7)); } }
+@keyframes eclot { from { opacity: 0; transform: scale(0.55) rotate(-12deg); filter: blur(8px) drop-shadow(0 0 0 rgba(212, 175, 55, 0)); } }
+@keyframes lettre { from { opacity: 0; transform: translateY(14px); filter: blur(8px); } to { opacity: 1; } }
+@keyframes parait { to { opacity: 1; } }
+
+/* ── Les écrans d'entrée, avant la marque ────────────────────────── */
+.prelude {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px; text-align: center;
+  background: radial-gradient(ellipse at 50% 50%, #1a110a 0%, #0a0604 55%, #050302 100%);
+  animation: preludeFondu 4.2s ease-in-out both;
+}
+.prelude p {
+  margin: 0; max-width: 22ch;
+  font: 400 clamp(30px, 5vw, 64px)/1.15 var(--titre);
+  letter-spacing: 0.08em; color: var(--or-pale);
+  text-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
+}
+.prelude small { display: block; margin-top: 18px; font: 400 clamp(13px, 1.3vw, 17px)/1 var(--serif); letter-spacing: 0.34em; text-transform: uppercase; color: var(--texte-doux); }
+@keyframes preludeFondu { 0% { opacity: 0; } 24% { opacity: 1; } 76% { opacity: 1; } 100% { opacity: 0; } }
 
 /* ── Le menu ─────────────────────────────────────────────────────── */
 .menu {
