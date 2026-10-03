@@ -66,11 +66,11 @@ export const NIVEAUX: Record<Niveau, ReglageNiveau> = {
   // nœud dresse une centaine de coups. Un joueur qui choisit la marche
   // la plus basse attend alors plus longtemps que devant le
   // connétable, ce qui n'a aucun sens.
-  1:  marche(1,  'Marmiton',    'Scullion',   1, 0.80, 400, { tempsMs: 150 }),
-  2:  marche(2,  'Vilain',      'Villein',    1, 0.55, 300, { tempsMs: 150 }),
-  3:  marche(3,  'Palefrenier', 'Groom',      2, 0.35, 220, { tempsMs: 250 }),
-  4:  marche(4,  'Écuyer',      'Squire',     2, 0.20, 150, { tempsMs: 250 }),
-  5:  marche(5,  'Sergent',     'Sergeant',   3, 0.10, 100, { tempsMs: 400 }),
+  1:  marche(1,  'Marchand de choux',  'Cabbage merchant',      1, 0.80, 400, { tempsMs: 150 }),
+  2:  marche(2,  'Acolyte de l’Air',   'Air acolyte',           1, 0.55, 300, { tempsMs: 150 }),
+  3:  marche(3,  'Guerrière Kyoshi',   'Kyoshi warrior',        2, 0.35, 220, { tempsMs: 250 }),
+  4:  marche(4,  'Soldat de la Terre', 'Earth Kingdom soldier', 2, 0.20, 150, { tempsMs: 250 }),
+  5:  marche(5,  'Maître de l’Eau',    'Waterbending master',   3, 0.10, 100, { tempsMs: 400 }),
   // À partir du chevalier, la force ne vient plus d'une fenêtre mais
   // de la profondeur. La raison est mesurée, pas théorique : peser
   // exactement chaque coup de la racine coûte si cher que les marches

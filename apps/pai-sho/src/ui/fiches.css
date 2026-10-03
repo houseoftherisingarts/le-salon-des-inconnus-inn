@@ -31,5 +31,5 @@
 @media (max-width: 900px) {
   .hud-bas .fiches { padding: 0; background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; margin-top: 6px; }
   .hud-bas .fiches-bascule { border: 1px solid var(--bord); background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
-  .hud-bas .fiches-liste { max-height: 26vh; }
+  .hud-bas .fiches-liste { max-height: 22vh; }
 }
