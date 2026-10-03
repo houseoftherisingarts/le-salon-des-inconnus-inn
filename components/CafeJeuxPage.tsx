@@ -136,7 +136,7 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
     return () => window.removeEventListener('message', ecouter);
   }, [appliquer, t]);
 
-  // Le jeu peut aussi écrire paisho.debloques : on relit à chaque changement.
+  // Le jeu peut aussi écrire paisho.debloques : la page relit à chaque changement.
   useEffect(() => {
     const relire = (e: StorageEvent) => { if (e.key === CLE_DEBLOQUES) setDebloques(lireDebloques()); };
     window.addEventListener('storage', relire);
@@ -199,7 +199,7 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
         <div className={`relative w-full ${PAD} pb-12 md:pb-20 grid lg:grid-cols-[1.3fr_1fr] gap-8 items-end`}>
           <div className="cj-monte">
             <p className="font-cinzel text-[#c5a059] text-[11px] md:text-xs uppercase tracking-[0.42em]">{t.eyebrow}</p>
-            <h1 className="mt-4 text-[#f3e5ab] leading-[0.95] text-[17vw] sm:text-7xl lg:text-[7.5rem]" style={{ ...PRATA, letterSpacing: '-0.015em' }}>{t.titre}</h1>
+            <h1 className="mt-4 text-[#f3e5ab] leading-[0.95] text-[14vw] sm:text-7xl lg:text-[6rem] xl:text-[7rem]" style={{ ...PRATA, letterSpacing: '-0.015em' }}>{t.titre}</h1>
           </div>
           <div className="cj-monte" style={{ animationDelay: '0.15s' }}>
             <p className="font-lato text-base md:text-lg leading-relaxed text-white/80">{t.lede}</p>

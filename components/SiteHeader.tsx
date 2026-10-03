@@ -11,7 +11,7 @@ import { MUSIC_GENRES } from '../constants';
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type ViewState =
-  | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE'
+  | 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'KITCHEN' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'CAFE_JEUX'
   | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'PENSEES' | 'BLOG' | 'MY_PROFILE' | 'PUBLIC_PROFILE'
   | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'CENTRE_ARTS' | 'MECENE' | 'COMPTE';
 
@@ -70,6 +70,7 @@ const FAIRE: NavItem[] = [
   { view: 'MASSOTHERAPY', label_fr: 'Massothérapie',    label_en: 'Massotherapy',    desc_fr: 'Soins holistiques & reiki',      desc_en: 'Holistic care & reiki',        icon: '✦' },
   { view: 'GUIDE',        label_fr: 'Guide Local',      label_en: 'Local Guide',     desc_fr: 'Quoi faire en Petite-Nation',    desc_en: 'Things to do in Petite-Nation', icon: '🗺️' },
   { view: 'PETITE_MONNAIE', label_fr: 'Petite Monnaie', label_en: 'Petite Monnaie',  desc_fr: 'La monnaie locale de la vallée',  desc_en: "The valley's local currency",  icon: '🪙' },
+  { view: 'CAFE_JEUX',    label_fr: 'Café-jeux',        label_en: 'Games Café',      desc_fr: 'Pai Sho et les jeux du festival', desc_en: 'Pai Sho and the festival games', icon: '🎲' },
   { view: 'EVENTS',       label_fr: 'Événements',       label_en: 'Events',          desc_fr: 'Spectacles & résidences',        desc_en: 'Shows & residencies',          icon: '🌙' },
   { view: 'CEILIDH',      label_fr: 'Ceilidh de Mai',   label_en: 'May Ceilidh',     desc_fr: 'Festival communautaire 2026',    desc_en: 'Community festival 2026',      icon: '🎶' },
   { view: 'WWOOFING',     label_fr: 'Wwoofing',         label_en: 'Wwoofing',        desc_fr: 'Vivez et travaillez sur le domaine', desc_en: 'Live and work on the estate', icon: '🌿' },

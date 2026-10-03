@@ -111,6 +111,10 @@ export const PAGE_META = {
     EN: { title: "Local Guide to Petite-Nation & Outaouais | Le Salon des Inconnus", description: "What to do around the inn: Parc Oméga, Lac-Simon, Montagnes Noires, Mont-Tremblant, Petite-Nation festivals and local food and drink.", keywords: "Guide Outaouais, Things to do Montebello" },
     FR: { title: "Guide local de la Petite-Nation et de l'Outaouais", description: "Quoi faire autour de l'auberge : Parc Oméga, Lac-Simon, Montagnes Noires, Mont-Tremblant, festivals et adresses gourmandes de la Petite-Nation.", keywords: "Guide Outaouais, Quoi faire Montebello" }
   },
+  CAFE_JEUX: {
+    EN: { title: "Games Café · Pai Sho and the Medieval Festival games | Le Salon des Inconnus", description: "Play Pai Sho on a wooden tavern table and the Montpellier Medieval Festival games right in the page, earn petals as you play and unlock new boards and tiles.", keywords: "Pai Sho online, medieval games, Hnefatafl, Nine Men's Morris, Le Salon des Inconnus" },
+    FR: { title: "Café-jeux · Pai Sho et jeux du Festival médiéval | Le Salon des Inconnus", description: "Jouez au Pai Sho sur une table de taverne en bois et aux jeux du Festival médiéval de Montpellier à même la page, gagnez des pétales en jouant et débloquez de nouveaux plateaux et de nouvelles tuiles.", keywords: "Pai Sho en ligne, jeux médiévaux, Hnefatafl, Mérelle, Le Salon des Inconnus" }
+  },
   PETITE_MONNAIE: {
     EN: { title: "La Petite Monnaie · Local Currency of the Petite-Nation | Le Salon des Inconnus", description: "What La Petite Monnaie is, how to get it, and a scroll-through route of the artistic and community merchants of the Petite-Nation that accept it, starting at the inn.", keywords: "Petite Monnaie, monnaie locale Outaouais, Petite-Nation, achat local" },
     FR: { title: "La Petite Monnaie · la monnaie locale de la Petite-Nation | Le Salon des Inconnus", description: "Ce qu'est la Petite Monnaie, comment s'en procurer, et un parcours immersif des commerces artistiques et communautaires de la Petite-Nation qui l'acceptent, au départ de l'auberge.", keywords: "Petite Monnaie, monnaie locale Outaouais, Petite-Nation, achat local, pmonnaie" }
@@ -234,4 +238,5 @@ export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
   CENTRE_ARTS:    `${SITE_URL}/media/centre-arts/og-centre-arts.jpg`,
   MECENE:         `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   CAFE:           `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
+  CAFE_JEUX:      `${SITE_URL}/media/cafe-jeux/pai-sho-partie.webp`,
 };

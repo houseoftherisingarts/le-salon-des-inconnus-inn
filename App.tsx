@@ -13,6 +13,7 @@ const MassotherapyPage  = lazy(() => import('./components/MassotherapyPage').the
 const HostsPage         = lazy(() => import('./components/HostsPage').then(m => ({ default: m.HostsPage })));
 const GuidePage         = lazy(() => import('./components/GuidePage').then(m => ({ default: m.GuidePage })));
 const PetiteMonnaiePage = lazy(() => import('./components/PetiteMonnaiePage').then(m => ({ default: m.PetiteMonnaiePage })));
+const CafeJeuxPage      = lazy(() => import('./components/CafeJeuxPage').then(m => ({ default: m.CafeJeuxPage })));
 const KitchenPage       = lazy(() => import('./components/KitchenPage').then(m => ({ default: m.KitchenPage })));
 const EventsPage        = lazy(() => import('./components/EventsPage').then(m => ({ default: m.EventsPage })));
 const CeilidhPage       = lazy(() => import('./components/CeilidhPage').then(m => ({ default: m.CeilidhPage })));
@@ -193,7 +194,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE' | 'CAMPING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC'
-              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE';
+              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE' | 'CAFE_JEUX';
 
 // Note: SUPER_PROFILE intentionally has no fixed path. Its path is the
 // dynamic slug. We list it here for completeness but handleNavigation never
@@ -231,6 +232,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   CENTRE_ARTS:    '/centre-arts',
   MECENE:         '/mecene',
   CAFE:           '/cafe',
+  CAFE_JEUX:      '/cafe-jeux',
   COMPTE:         '/compte',
   SUPER_PROFILE:  '',
   HIGHS_TEST:     '/highstest',
@@ -869,6 +871,16 @@ const App: React.FC = () => {
           <PetiteMonnaiePage
             onNavigate={() => handleNavigation('INN')}
             language={language}
+          />
+        )}
+
+        {/* VIEW 4c: CAFÉ-JEUX */}
+        {currentView === 'CAFE_JEUX' && (
+          <CafeJeuxPage
+            language={language}
+            onNavigate={(view) => handleNavigation(view as ViewState)}
+            user={currentUser}
+            onUserChange={handleUserChange}
           />
         )}
 
