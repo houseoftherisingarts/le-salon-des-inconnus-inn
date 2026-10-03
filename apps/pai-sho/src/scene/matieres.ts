@@ -143,6 +143,7 @@ export function anisotropieTournee(taille = 256): THREE.DataTexture {
     }
   }
   const t = new THREE.DataTexture(d, taille, taille);
+  t.magFilter = t.minFilter = THREE.LinearFilter;
   t.needsUpdate = true;
   return t;
 }
