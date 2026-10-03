@@ -72,7 +72,7 @@ export class Lien {
   private ferme = false;
   private cible: string | null = null;
 
-  constructor(private moi: Joueur, private e: Ecouteurs) {}
+  constructor(private moi: Joueur, public e: Ecouteurs) {}
 
   /** Côté hôte : la table s'ouvre sous l'identifiant du joueur. */
   ouvrir(): void {
