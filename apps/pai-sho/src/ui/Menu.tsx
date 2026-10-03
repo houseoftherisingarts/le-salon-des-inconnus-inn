@@ -177,6 +177,8 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <button type="button" className="bouton or plein" onClick={contreMaison} data-test="contre-maison">{t.jouerMaison}</button>
         </article>
 
+        <Skins langue={langue} scene={scene} />
+
         <article className="carte verre">
           <h2 className="carte-titre">{t.aDeux}</h2>
           <p className="carte-aide">{t.aDeuxAide}</p>
