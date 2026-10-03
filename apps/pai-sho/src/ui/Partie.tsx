@@ -62,6 +62,21 @@ function toc(): void {
 const autre = (c: Camp): Camp => (c === 'hote' ? 'invite' : 'hote');
 const premierPoint = (b: Bonus): Pt => (b.type === 'accent' ? b.a : b.porte);
 
+const CLE_SUGGESTIONS = 'paisho.suggestions';
+const suggestionsSauvees = (): boolean => { try { return localStorage.getItem(CLE_SUGGESTIONS) !== '0'; } catch { return true; } };
+
+/** Les coups simples (sans bonus) qui font naître une harmonie pour le camp au trait, là où la tuile arrive. */
+function coupsHarmonieux(e: EtatPaiSho, legaux: Coup[]): Coup[] {
+  const bons: Coup[] = [];
+  for (const c of legaux) {
+    if (c.type === 'deplacer' && c.bonus) continue;
+    const arrivee = c.type === 'planter' ? c.porte : c.a;
+    const apres = jouer(e, c);
+    if (harmonies(apres).some((h) => h.camp === e.tour && (h.a === arrivee || h.b === arrivee))) bons.push(c);
+  }
+  return bons;
+}
+
 export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTutoriel, son }: Props) {
   const t = TEXTES[langue];
   const fr = langue === 'FR';
