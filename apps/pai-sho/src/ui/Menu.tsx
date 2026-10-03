@@ -10,6 +10,7 @@ import { TEXTES, type Langue } from './textes';
 import type { Camp } from '../jeu/logic';
 import type { Depart } from '../App';
 import type { ScenePaiSho } from '../scene/scene';
+import Skins from './Skins';
 
 const BASE = import.meta.env.BASE_URL;
 
