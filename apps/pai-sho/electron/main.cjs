@@ -7,6 +7,9 @@ const { pathToFileURL } = require('node:url');
 const DIST = path.join(__dirname, '..', 'dist');
 const DEV = process.env.VITE_DEV_SERVER_URL;
 
+// La musique de fond part dès l'intro, sans attendre un clic.
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
+
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true, stream: true } },
 ]);
