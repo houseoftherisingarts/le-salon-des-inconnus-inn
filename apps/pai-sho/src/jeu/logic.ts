@@ -417,7 +417,12 @@ function bonusPossibles(s: string, me: number, r: Record<TypeTuile, number>, mod
       if (ch === VIDE || estPorte(i)) continue;
       const t = T_DE[ch];
       if (ia && C_DE[ch] === me) continue;
-      if (t > T_ORCHIDEE) { b.push({ type: 'accent', tuile: 'BARQUE', a: i }); continue; }
+      if (t > T_ORCHIDEE) {
+        // Les deux accents quittent la partie : la case libérée peut
+        // ouvrir une ligne entre deux fleurs qui se heurtent.
+        if (!clashPar(poser(s, i, '.'), i)) b.push({ type: 'accent', tuile: 'BARQUE', a: i });
+        continue;
+      }
       for (const v of AUTOUR[i]) {
         if (s.charCodeAt(v) !== VIDE || !peutSeTenir(t, v)) continue;
         const s2 = poser(poser(s, v, s[i]), i, lettre(T_BARQUE, me));
