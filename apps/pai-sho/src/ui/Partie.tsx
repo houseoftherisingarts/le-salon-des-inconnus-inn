@@ -104,6 +104,15 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const fini = etat.verdict !== null || abandon !== null;
   const aMoi = !fini && !occupe && estLocal(etat.tour);
   const legaux = useMemo(() => (aMoi ? coupsLegaux(etat) : []), [aMoi, etat]);
+  // Les suggestions : un anneau d'or sur chaque tuile qui peut former une
+  // harmonie, puis sur les cases d'arrivée qui la forment une fois la
+  // tuile choisie. Le réglage se garde d'une partie à l'autre.
+  const [suggestions, setSuggestions] = useState<boolean>(suggestionsSauvees);
+  const basculerSuggestions = () => {
+    setSuggestions((s) => { try { localStorage.setItem(CLE_SUGGESTIONS, s ? '0' : '1'); } catch { /* privé */ } return !s; });
+  };
+  const harmonieux = useMemo(() => (suggestions && aMoi ? coupsHarmonieux(etat, legaux) : []), [suggestions, aMoi, etat, legaux]);
+  const suggerees = useMemo(() => new Set(harmonieux.filter((c) => c.type === 'planter').map((c) => (c as { tuile: TypeTuile }).tuile)), [harmonieux]);
   // Outillage des tests de bout en bout : les coups jouables et l'état,
   // lus par le script de captures pour savoir où cliquer.
   useEffect(() => {
