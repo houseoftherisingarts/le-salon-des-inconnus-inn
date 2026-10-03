@@ -56,14 +56,15 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     sauverJoueur(j);
   };
 
-  const contreMaison = () => onLancer({
-    config: {
-      mode: 'maison', niveau, campLocal: cote, tourner: false,
-      noms: cote === 'hote'
-        ? { hote: monNom, invite: nomDadversaire(fr) }
-        : { hote: nomDadversaire(fr), invite: monNom },
-    },
-  });
+  const contreMaison = () => {
+    const nomAdv = perso ? perso.nom : nomDadversaire(fr);
+    onLancer({
+      config: {
+        mode: 'maison', niveau: niveauJoue, campLocal: cote, tourner: false,
+        noms: cote === 'hote' ? { hote: monNom, invite: nomAdv } : { hote: nomAdv, invite: monNom },
+      },
+    });
+  };
 
   const aDeux = () => onLancer({
     config: {
