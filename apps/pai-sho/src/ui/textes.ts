@@ -149,6 +149,10 @@ const EN: typeof FR = {
   joueur2: 'Second player',
   partieDistance: 'Remote game',
   maison: 'House',
+  bonneFete: 'Happy birthday Kamy',
+  presentent: 'present',
+  salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
+  choisirAdversaire: 'Choose who sits across from you: the house, at the level you give it, or a character who plays their own way.',
 };
 
 export const TEXTES = { FR, EN };

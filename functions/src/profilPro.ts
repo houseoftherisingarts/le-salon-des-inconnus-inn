@@ -30,6 +30,7 @@ import * as crypto from 'crypto';
 import { defineSecret } from 'firebase-functions/params';
 import nodemailer from 'nodemailer';
 import { estAssistance, traiterAssistancePayee } from './assistance';
+import { estSkin, traiterSkinPaye } from './cafeJeux';
 
 if (admin.apps.length === 0) {
   admin.initializeApp();
@@ -258,6 +259,13 @@ export const webhookProfilPro = onRequest(
     // paiement unique, reconnu par metadata.entite et metadata.produit.
     if (event.type === 'checkout.session.completed' && estAssistance(objet)) {
       await traiterAssistancePayee(objet);
+      res.status(200).send('OK');
+      return;
+    }
+
+    // Les skins du Café-jeux passent aussi par ici (metadata.produit = 'skin').
+    if (event.type === 'checkout.session.completed' && estSkin(objet)) {
+      await traiterSkinPaye(objet);
       res.status(200).send('OK');
       return;
     }
