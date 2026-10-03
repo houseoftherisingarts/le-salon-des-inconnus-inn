@@ -42,7 +42,7 @@ export const ECHELLE_PLATEAU = RAYON_FACE / PLATEAU_GLB_RAYON_PLAT;
 export const DESSUS = (PLATEAU_GLB_DESSUS - PLATEAU_GLB_BAS) * ECHELLE_PLATEAU;
 export const Y_FACE = DESSUS + 0.001;
 /** Les convives : hauteur assise et position du plancher sous la table. */
-export const HAUT_CONVIVE = 21.5;
+export const HAUT_CONVIVE = 26;
 export const Y_PLANCHER = -14;
 export const FOV = 38;
 /** Le demi-encombrement à cadrer : le treillis fait 16 pas, la bordure

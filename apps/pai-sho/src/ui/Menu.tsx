@@ -31,10 +31,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const t = TEXTES[langue];
   const fr = langue === 'FR';
   const [niveau, setNiveau] = useState<Niveau>(3);
-  // « maison » ou l'identifiant d'un personnage; le choix se garde.
-  const [adv, setAdv] = useState<string>(() => { try { return localStorage.getItem(CLE_ADVERSAIRE) ?? 'maison'; } catch { return 'maison'; } });
+  // L'identifiant du personnage d'en face; le choix se garde, Iroh d'abord.
+  const [adv, setAdv] = useState<string>(() => { try { const lu = localStorage.getItem(CLE_ADVERSAIRE); return lu && adversaire(lu) ? lu : 'iroh'; } catch { return 'iroh'; } });
   const perso = adversaire(adv);
-  const niveauJoue: Niveau = perso ? perso.niveau : niveau;
+  const libre = !perso || !!perso.libre;
+  const niveauJoue: Niveau = libre ? niveau : perso.niveau;
   const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
   // Le personnage choisi prend place en face de la table dès le menu.
   const [dessin, setDessin] = useState(figurinesDessin);
@@ -168,20 +169,23 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <div className="champ">
             <span className="etiquette">{t.adversaire}</span>
             <div className="persos" role="radiogroup">
-              <button type="button" className={`perso ${adv === 'maison' ? 'choisi' : ''}`} role="radio" aria-checked={adv === 'maison'} onClick={() => choisirAdv('maison')}>{t.maison}</button>
               {ADVERSAIRES.map((a) => (
                 <button key={a.id} type="button" className={`perso ${adv === a.id ? 'choisi' : ''}`} role="radio" aria-checked={adv === a.id} onClick={() => choisirAdv(a.id)} data-test={`adv-${a.id}`}>{nomAdversaire(a, fr)}</button>
               ))}
             </div>
-            <button type="button" className="bouton discret" onClick={changerFigurines} data-test="figurines">{t.figurines(dessin)}</button>
+            <span className="etiquette">{t.figurines}</span>
+            <div className="bascule" data-test="figurines">
+              <button type="button" className={!dessin ? 'choisi' : ''} onClick={() => dessin && changerFigurines()} aria-pressed={!dessin}>{t.peintes}</button>
+              <button type="button" className={dessin ? 'choisi' : ''} onClick={() => !dessin && changerFigurines()} aria-pressed={dessin}>{t.dessinAnime}</button>
+            </div>
             {perso && <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>}
           </div>
           <div className="champ">
             <span className="etiquette">{t.niveau}</span>
             <div className="niveau">
-              <button type="button" className="rond" aria-label="-" onClick={() => setNiveau((n) => Math.max(1, n - 1) as Niveau)} disabled={!!perso || niveau === 1}>−</button>
+              <button type="button" className="rond" aria-label="-" onClick={() => setNiveau((n) => Math.max(1, n - 1) as Niveau)} disabled={!libre || niveau === 1}>−</button>
               <span className="niveau-nom"><b>{niveauJoue}</b> {nomNiveau(niveauJoue, fr)}</span>
-              <button type="button" className="rond" aria-label="+" onClick={() => setNiveau((n) => Math.min(10, n + 1) as Niveau)} disabled={!!perso || niveau === NIVEAUX_POSSIBLES.length}>+</button>
+              <button type="button" className="rond" aria-label="+" onClick={() => setNiveau((n) => Math.min(10, n + 1) as Niveau)} disabled={!libre || niveau === NIVEAUX_POSSIBLES.length}>+</button>
             </div>
           </div>
           <div className="champ">

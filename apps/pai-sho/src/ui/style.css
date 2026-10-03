@@ -408,3 +408,7 @@ img { display: block; }
 /* Le volume : un curseur d'or, discret à côté du bouton Son. */
 .volume { width: 84px; height: 18px; margin: 0 2px; accent-color: var(--or); cursor: pointer; align-self: center; flex: none; }
 @media (max-width: 900px) { .volume { width: 64px; } }
+
+/* Le menu laisse passer les gestes vers la table entre ses cartes. */
+.menu { pointer-events: none; }
+.menu-tete > *, .menu-cartes > * { pointer-events: auto; }

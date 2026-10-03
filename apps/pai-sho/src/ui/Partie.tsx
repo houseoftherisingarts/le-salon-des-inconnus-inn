@@ -177,7 +177,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
         // La carte de leçon ne doit jamais cacher la porte sud : le plateau se loge au-dessus.
         // Sous la barre du haut, une part de l'écran reste à la personne assise en face.
         scene.cadrer({
-          gauche: g ? g.right + 8 : 0, droite: d ? W - d.left + 8 : 0, haut: (h ? h.bottom + 4 : 0) + Math.round(H * (l ? 0.03 : 0.28)), bas: l ? H - l.top + 12 : 16,
+          gauche: g ? g.right + 8 : 0, droite: d ? W - d.left + 8 : 0, haut: (h ? h.bottom + 4 : 0) + Math.round(H * (l ? 0.03 : 0.33)), bas: l ? H - l.top + 12 : 16,
         });
       }
     };

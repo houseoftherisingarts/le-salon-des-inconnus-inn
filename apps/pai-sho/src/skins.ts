@@ -8,7 +8,7 @@
 
 export type IdPlateau = 'bois' | 'vexel' | 'salon';
 export type IdTuiles = 'bois' | 'nacre' | 'obsidienne' | 'cuivre';
-export type IdDecor = 'taverne' | 'the';
+export type IdDecor = 'taverne' | 'the' | 'jardin';
 export interface Skin { plateau: IdPlateau; tuiles: IdTuiles; decor: IdDecor }
 
 export const PLATEAUX: { id: IdPlateau; nomFR: string; nomEN: string; gratuit: boolean }[] = [
@@ -28,6 +28,7 @@ export const TUILES: { id: IdTuiles; nomFR: string; nomEN: string; gratuit: bool
 export const DECORS: { id: IdDecor; nomFR: string; nomEN: string; gratuit: boolean }[] = [
   { id: 'taverne', nomFR: 'Taverne', nomEN: 'Tavern', gratuit: true },
   { id: 'the', nomFR: 'Salon de thé', nomEN: 'Tea house', gratuit: true },
+  { id: 'jardin', nomFR: 'Jardin de thé', nomEN: 'Tea garden', gratuit: true },
 ];
 
 const CLE_SKIN = 'paisho.skin';
