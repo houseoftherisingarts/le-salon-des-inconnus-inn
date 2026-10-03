@@ -75,7 +75,7 @@ const FR = {
   joueur2: 'Second joueur',
   partieDistance: 'Partie à distance',
   maison: 'Maison',
-  bonneFete: 'Bonne fête Kamy',
+  bonneFete: 'Bonne fete Kamy',
   presentent: 'présentent',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
   choisirAdversaire: 'Choisissez qui s’assoit en face : la maison, au niveau que vous lui donnez, ou un personnage qui joue à sa manière.',
