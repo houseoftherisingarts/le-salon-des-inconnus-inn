@@ -1,4 +1,4 @@
-// Les pétales du Café-jeux : la monnaie que l'on gagne en jouant au Pai Sho et
+// Les pétales du Café-jeux : la monnaie que le joueur gagne en jouant au Pai Sho et
 // qui débloque les parures. Solde et parures vivent dans le localStorage du
 // site (même origine que le jeu encadré, qui lit `paisho.debloques`).
 

@@ -144,13 +144,23 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
 
         <article className="carte verre">
           <h2 className="carte-titre">{t.contreMaison}</h2>
-          <p className="carte-aide">{t.contreMaisonAide}</p>
+          <p className="carte-aide">{t.choisirAdversaire}</p>
+          <div className="champ">
+            <span className="etiquette">{t.adversaire}</span>
+            <div className="persos" role="radiogroup">
+              <button type="button" className={`perso ${adv === 'maison' ? 'choisi' : ''}`} role="radio" aria-checked={adv === 'maison'} onClick={() => choisirAdv('maison')}>{t.maison}</button>
+              {ADVERSAIRES.map((a) => (
+                <button key={a.id} type="button" className={`perso ${adv === a.id ? 'choisi' : ''}`} role="radio" aria-checked={adv === a.id} onClick={() => choisirAdv(a.id)} data-test={`adv-${a.id}`}>{a.nom}</button>
+              ))}
+            </div>
+            {perso && <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>}
+          </div>
           <div className="champ">
             <span className="etiquette">{t.niveau}</span>
             <div className="niveau">
-              <button type="button" className="rond" aria-label="-" onClick={() => setNiveau((n) => Math.max(1, n - 1) as Niveau)} disabled={niveau === 1}>−</button>
-              <span className="niveau-nom"><b>{niveau}</b> {nomNiveau(niveau, fr)}</span>
-              <button type="button" className="rond" aria-label="+" onClick={() => setNiveau((n) => Math.min(10, n + 1) as Niveau)} disabled={niveau === NIVEAUX_POSSIBLES.length}>+</button>
+              <button type="button" className="rond" aria-label="-" onClick={() => setNiveau((n) => Math.max(1, n - 1) as Niveau)} disabled={!!perso || niveau === 1}>−</button>
+              <span className="niveau-nom"><b>{niveauJoue}</b> {nomNiveau(niveauJoue, fr)}</span>
+              <button type="button" className="rond" aria-label="+" onClick={() => setNiveau((n) => Math.min(10, n + 1) as Niveau)} disabled={!!perso || niveau === NIVEAUX_POSSIBLES.length}>+</button>
             </div>
           </div>
           <div className="champ">
