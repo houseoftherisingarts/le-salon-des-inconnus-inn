@@ -3,27 +3,38 @@
 import { useEffect, useRef, useState } from 'react';
 import { NIVEAUX_POSSIBLES, nomNiveau, type Niveau } from '../moteur/niveaux';
 import { nomDadversaire } from '../scene/noms';
+import { ADVERSAIRES, adversaire } from '../jeu/adversaires';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
 import { Lien, idValide, joueurLocal, sauverJoueur, type EtatLien, type Joueur } from '../reseau/pair';
 import { TEXTES, type Langue } from './textes';
 import type { Camp } from '../jeu/logic';
 import type { Depart } from '../App';
+import type { ScenePaiSho } from '../scene/scene';
 
 const BASE = import.meta.env.BASE_URL;
 
 interface Props {
   langue: Langue;
   son: boolean;
+  scene: ScenePaiSho;
   onLangue: () => void;
   onSon: () => void;
   onLancer: (d: Depart) => void;
   onTutoriel: () => void;
 }
 
-export default function Menu({ langue, son, onLangue, onSon, onLancer, onTutoriel }: Props) {
+const CLE_ADVERSAIRE = 'paisho.adversaire';
+
+export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, onTutoriel }: Props) {
   const t = TEXTES[langue];
   const fr = langue === 'FR';
   const [niveau, setNiveau] = useState<Niveau>(3);
+  // « maison » ou l'identifiant d'un personnage; le choix se garde.
+  const [adv, setAdv] = useState<string>(() => { try { return localStorage.getItem(CLE_ADVERSAIRE) ?? 'maison'; } catch { return 'maison'; } });
+  const perso = adversaire(adv);
+  const niveauJoue: Niveau = perso ? perso.niveau : niveau;
+  const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
+  void scene;
   const [cote, setCote] = useState<Camp>('hote');
   const [tourner, setTourner] = useState(true);
   const [joueur, setJoueur] = useState<Joueur>(joueurLocal);
