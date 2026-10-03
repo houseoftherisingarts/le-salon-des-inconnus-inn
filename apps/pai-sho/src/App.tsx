@@ -2,10 +2,16 @@
 // La scène 3D naît une fois et ne meurt qu'à la fermeture. Le menu et
 // la partie sont des panneaux de verre posés sur elle, et passer de
 // l'un à l'autre ne recharge rien.
+//
+// Avant la table, trois écrans d'entrée (Alex, 3 octobre 2026) : « Bonne
+// fête Kamy » dans le programme Mac seulement, puis « Le Salon des
+// Inconnus & Vexel Webstudio présentent », puis l'intro de marque, le
+// titre qui s'écrit lettre à lettre, le lotus blanc et la musique.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ScenePaiSho } from './scene/scene';
 import { TEXTES, langueSauvee, sauverLangue, type Langue } from './ui/textes';
+import { couperMusique, estElectron, jouerMusique, sauverSon, sonSauve } from './audio';
 import Menu from './ui/Menu';
 import Partie from './ui/Partie';
 import Tutoriel, { tutorielVu, marquerTutorielVu } from './ui/Tutoriel';
@@ -15,6 +21,7 @@ import type { Lien } from './reseau/pair';
 const BASE = import.meta.env.BASE_URL;
 
 type Ecran = 'intro' | 'menu' | 'partie';
+type Etape = 'kamy' | 'presentent' | 'marque' | 'fini';
 
 export interface Depart {
   config: Config;
@@ -22,16 +29,25 @@ export interface Depart {
   lien?: Lien;
 }
 
-const CLE_SON = 'paisho.son';
+// `?intro=1` force les trois écrans (captures), `?intro=0` les saute;
+// les tests automatisés (webdriver) vont droit à la marque.
+function etapeInitiale(): Etape {
+  const force = new URLSearchParams(location.search).get('intro');
+  if (force === '1') return 'kamy';
+  if (force === '0' || navigator.webdriver) return 'marque';
+  return estElectron() ? 'kamy' : 'presentent';
+}
 
 export default function App() {
   const conteneur = useRef<HTMLDivElement>(null);
   const [scene, setScene] = useState<ScenePaiSho | null>(null);
   const [progres, setProgres] = useState(0);
+  const [charge, setCharge] = useState(false);
+  const [etape, setEtape] = useState<Etape>(etapeInitiale);
   const [ecran, setEcran] = useState<Ecran>('intro');
   const [rideau, setRideau] = useState(true);
   const [langue, setLangue] = useState<Langue>(langueSauvee);
-  const [son, setSon] = useState(() => { try { return localStorage.getItem(CLE_SON) !== '0'; } catch { return true; } });
+  const [son, setSon] = useState(sonSauve);
   const [depart, setDepart] = useState<Depart | null>(null);
   const [tuto, setTuto] = useState(false);
   // Chaque partie lancée porte un numéro neuf : « Nouvelle partie »
@@ -39,34 +55,47 @@ export default function App() {
   const [manche, setManche] = useState(0);
   const t = TEXTES[langue];
 
-  // La scène, une seule fois. L'entrée en matière attend au moins
-  // 0.8 s de préchargeur et la fin du chargement, puis la caméra
-  // traverse la salle jusqu'à la table.
+  // La scène, une seule fois. Elle charge pendant les écrans d'entrée.
   useEffect(() => {
     const el = conteneur.current!;
     const s = new ScenePaiSho(el, { surProgres: setProgres });
     setScene(s);
     (window as unknown as { __scene: ScenePaiSho }).__scene = s;
     let vivant = true;
-    const minimum = new Promise((ok) => window.setTimeout(ok, 800));
-    Promise.all([s.pret, minimum]).then(() => {
-      if (!vivant) return;
-      setRideau(false);
-      s.entree(2.4).then(() => {
-        if (!vivant) return;
-        setEcran('menu');
-        s.deriver(true);
-      });
-    });
+    s.pret.then(() => { if (vivant) setCharge(true); });
     return () => { vivant = false; s.detruire(); };
   }, []);
+
+  // La marque lance la musique, puis laisse 2,6 s au titre et au lotus.
+  useEffect(() => {
+    if (etape !== 'marque') return;
+    jouerMusique();
+    couperMusique(!son);
+    const id = window.setTimeout(() => setEtape('fini'), 2600);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [etape]);
+
+  // Le rideau se lève quand la table est prête et que l'intro a fini,
+  // puis la caméra traverse la salle jusqu'à la table.
+  useEffect(() => {
+    if (!charge || etape !== 'fini' || !scene) return;
+    let vivant = true;
+    setRideau(false);
+    scene.entree(2.4).then(() => {
+      if (!vivant) return;
+      setEcran('menu');
+      scene.deriver(true);
+    });
+    return () => { vivant = false; };
+  }, [charge, etape, scene]);
 
   useEffect(() => {
     document.documentElement.lang = langue === 'FR' ? 'fr' : 'en';
     sauverLangue(langue);
   }, [langue]);
 
-  useEffect(() => { try { localStorage.setItem(CLE_SON, son ? '1' : '0'); } catch { /* privé */ } }, [son]);
+  useEffect(() => { sauverSon(son); couperMusique(!son); }, [son]);
 
   // Au menu, le plateau se loge entre le titre et les cartes : il reste
   // entier à l'écran au lieu de passer sous le verre.
@@ -96,21 +125,44 @@ export default function App() {
     scene?.deriver(true);
   }, [scene]);
 
+  const marque = etape === 'marque' || etape === 'fini';
+
   return (
     <div className="app">
       <div ref={conteneur} className="scene" />
 
-      <div className={`rideau ${rideau ? '' : 'leve'}`} aria-hidden={!rideau}>
-        <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="rideau-lotus" />
-        <p className="rideau-titre">{t.titre}</p>
-        <div className="rideau-barre"><span style={{ width: `${Math.round(progres * 100)}%` }} /></div>
-        <p className="rideau-texte">{t.chargement}</p>
+      {etape === 'kamy' && (
+        <div className="prelude" onAnimationEnd={() => setEtape('presentent')} data-test="prelude-kamy">
+          <p>{t.bonneFete}</p>
+        </div>
+      )}
+      {etape === 'presentent' && (
+        <div className="prelude" onAnimationEnd={() => setEtape('marque')} data-test="prelude-presentent">
+          <p>{t.salonEtVexel[0]}<br />{t.salonEtVexel[1]}</p>
+          <small>{t.presentent}</small>
+        </div>
+      )}
+
+      <div className={`rideau ${rideau ? '' : 'leve'} ${marque ? 'marque' : ''}`} aria-hidden={!rideau}>
+        {marque && (
+          <>
+            <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="rideau-lotus" />
+            <p className="rideau-titre" aria-label={t.titre}>
+              {[...t.titre].map((c, i) => (
+                <span key={i} style={{ animationDelay: `${0.6 + i * 0.14}s` }}>{c === ' ' ? ' ' : c}</span>
+              ))}
+            </p>
+            <div className="rideau-barre"><span style={{ width: `${Math.round(progres * 100)}%` }} /></div>
+            <p className="rideau-texte">{t.chargement}</p>
+          </>
+        )}
       </div>
 
       {ecran === 'menu' && scene && (
         <Menu
           langue={langue}
           son={son}
+          scene={scene}
           onLangue={() => setLangue((l) => (l === 'FR' ? 'EN' : 'FR'))}
           onSon={() => setSon((x) => !x)}
           onLancer={lancer}
