@@ -124,6 +124,24 @@ service cloud.firestore {
                                  && request.resource.data.telephone.size() <= 40
                                  && request.resource.data.telephone.matches('^[0-9 +().-]*$'))));
       }
+      // Café-jeux : solde de pétales et skins débloqués. Le webhook Stripe
+      // (admin) y ajoute les skins payés; le membre y garde son solde.
+      match /prive/cafeJeux {
+        allow read:  if isSelf(userId) || isAdmin();
+        allow write: if isAdmin()
+                     || (isSelf(userId)
+                         && request.resource.data.keys().hasOnly(['petales', 'skins', 'majLe'])
+                         && (!('petales' in request.resource.data)
+                             || (request.resource.data.petales is int
+                                 && request.resource.data.petales >= 0
+                                 && request.resource.data.petales <= 1000000))
+                         && (!('skins' in request.resource.data)
+                             || (request.resource.data.skins is map
+                                 && request.resource.data.skins.keys().hasOnly(['paiSho'])
+                                 && (!('paiSho' in request.resource.data.skins)
+                                     || (request.resource.data.skins.paiSho is list
+                                         && request.resource.data.skins.paiSho.size() <= 20)))));
+      }
       match /prive/preferences {
         allow read:  if isSelf(userId) || isAdmin();
         allow write: if isAdmin()
