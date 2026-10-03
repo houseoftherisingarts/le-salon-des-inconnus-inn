@@ -17,13 +17,13 @@ const AMBIANCES: Record<IdDecor, {
 }> = {
   taverne: {
     fond: 0x0d0805, salle: 0x8a7562, dessus: 0xb8977a, chant: 0x3a2414,
-    ambiante: [0xffd2a0, 0.35], cielSol: [0xffc98a, 0x1a0d07, 0.7],
-    lanterne: [0xffc488, 1400], torches: [0xff7a2a, 500, 400], froide: 120,
+    ambiante: [0xffd2a0, 0.6], cielSol: [0xffc98a, 0x2a160c, 1.05],
+    lanterne: [0xffc488, 1500], torches: [0xff8a3a, 900, 700], froide: 160,
   },
   the: {
     fond: 0x0d0805, salle: 0x8a7562, dessus: 0xb8977a, chant: 0x3a2414,
-    ambiante: [0xffd2a0, 0.35], cielSol: [0xffc98a, 0x1a0d07, 0.7],
-    lanterne: [0xffc488, 1400], torches: [0xff7a2a, 500, 400], froide: 120,
+    ambiante: [0xffd2a0, 0.6], cielSol: [0xffc98a, 0x2a160c, 1.05],
+    lanterne: [0xffc488, 1500], torches: [0xff8a3a, 900, 700], froide: 160,
   },
   jardin: {
     fond: 0xe6d8bc, salle: 0xffffff, dessus: 0xffffff, chant: 0xc9a56c,
@@ -62,58 +62,73 @@ function boisBlond(): THREE.CanvasTexture {
   return t;
 }
 
-/** Les dalles de pierre de la taverne, posées en quinconce. */
+/** Les pavés de la taverne : sombres, arrondis, luisants, comme ceux du fond. */
 function dalles(): THREE.CanvasTexture {
   const c = document.createElement('canvas');
   c.width = 512; c.height = 512;
   const g = c.getContext('2d')!;
-  g.fillStyle = '#17110c';
+  g.fillStyle = '#0b0908';
   g.fillRect(0, 0, 512, 512);
-  const teintes = ['#6b5a49', '#5e4f41', '#75624e', '#54463a', '#665443'];
-  for (let r = 0; r < 4; r++) {
-    for (let k = -1; k < 3; k++) {
-      const x = k * 256 + (r % 2 ? 128 : 0), y = r * 128;
-      g.fillStyle = teintes[(r * 3 + k * 2 + 5) % teintes.length];
+  const teintes = ['#3b3632', '#33302d', '#443d37', '#2c2927', '#3f3935', '#4a423a'];
+  let n = 0;
+  for (let r = 0; r < 8; r++) {
+    // Chaque rang a ses largeurs : 3, 4 ou 5 pavés, décalés d'un rang à l'autre.
+    const parRang = 3 + ((r * 2 + 1) % 3);
+    const l = 512 / parRang, decal = (r % 2) * l * 0.5;
+    for (let k = -1; k <= parRang; k++) {
+      const x = k * l + decal, y = r * 64;
+      n++;
+      g.fillStyle = teintes[(n * 7 + r) % teintes.length];
       g.beginPath();
-      g.roundRect(x + 5, y + 5, 246, 118, 10);
+      g.roundRect(x + 4, y + 4, l - 8, 56, 16);
       g.fill();
-      // L'usure : quelques taches plus sombres et plus claires sur chaque dalle.
-      for (let n = 0; n < 9; n++) {
-        g.fillStyle = n % 2 ? 'rgba(20, 14, 9, 0.16)' : 'rgba(255, 226, 180, 0.07)';
-        g.beginPath();
-        g.ellipse(x + 20 + ((n * 61 + r * 37) % 210), y + 16 + ((n * 29 + k * 17 + 40) % 90), 14 + (n % 4) * 9, 6 + (n % 3) * 5, n, 0, Math.PI * 2);
-        g.fill();
-      }
+      // Le dessus bombé accroche la lumière des torches.
+      const reflet = g.createLinearGradient(0, y + 4, 0, y + 60);
+      reflet.addColorStop(0, 'rgba(255, 190, 120, 0.16)');
+      reflet.addColorStop(0.5, 'rgba(255, 190, 120, 0)');
+      reflet.addColorStop(1, 'rgba(0, 0, 0, 0.3)');
+      g.fillStyle = reflet;
+      g.beginPath();
+      g.roundRect(x + 4, y + 4, l - 8, 56, 16);
+      g.fill();
     }
   }
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.repeat.set(9, 9);
+  t.repeat.set(11, 11);
   t.anisotropy = 8;
   return t;
 }
 
-/** Un tatami de paille tressée, bordé de noir sur ses deux longs côtés. */
+/** Des tatamis de paille tressée, posés en quinconce, bordés d'un galon sombre. */
 function tatami(): THREE.CanvasTexture {
   const c = document.createElement('canvas');
-  c.width = 256; c.height = 128;
+  c.width = 512; c.height = 512;
   const g = c.getContext('2d')!;
-  g.fillStyle = '#d9c79a';
-  g.fillRect(0, 0, 256, 128);
-  for (let y = 0; y < 128; y += 2) {
-    g.fillStyle = y % 4 ? 'rgba(120, 98, 52, 0.16)' : 'rgba(255, 246, 214, 0.2)';
-    g.fillRect(0, y, 256, 1);
+  // Deux rangs de nattes (256 × 256 chacune dans la texture), le second décalé d'une demi-natte.
+  for (let r = 0; r < 2; r++) {
+    for (let k = -1; k < 2; k++) {
+      const x = k * 512 + r * 256, y = r * 256;
+      g.fillStyle = (k + r) % 2 ? '#d6c592' : '#dccb9a';
+      g.fillRect(x, y, 512, 256);
+      // Le tressage : des brins fins dans le sens court de la natte.
+      for (let b = 0; b < 512; b += 3) {
+        g.fillStyle = b % 6 ? 'rgba(126, 108, 60, 0.13)' : 'rgba(255, 248, 220, 0.16)';
+        g.fillRect(x + b, y, 1, 256);
+      }
+      // Le galon de tissu sur les deux longs côtés, le joint nu au bout.
+      g.fillStyle = '#2f3a2c';
+      g.fillRect(x, y, 512, 7);
+      g.fillRect(x, y + 249, 512, 7);
+      g.fillStyle = 'rgba(70, 58, 32, 0.5)';
+      g.fillRect(x, y + 7, 2, 242);
+    }
   }
-  g.fillStyle = '#4a3c26';
-  g.fillRect(0, 0, 256, 2);
-  g.fillRect(0, 126, 256, 2);
-  g.fillStyle = 'rgba(90, 72, 40, 0.55)';
-  g.fillRect(0, 0, 2, 128);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.repeat.set(10, 20);
+  t.repeat.set(5, 10);
   t.anisotropy = 8;
   return t;
 }
@@ -145,7 +160,7 @@ export function batirDecor(
   // Le sol se voit jusqu'au mur : il porte sa propre lueur et la brume ne
   // l'éteint pas, sinon la table flotte sur un disque noir.
   const pierre = dalles();
-  const matSol = new THREE.MeshStandardMaterial({ map: pierre, emissiveMap: pierre, emissive: 0x4a3828, roughness: 0.95, fog: false });
+  const matSol = new THREE.MeshStandardMaterial({ map: pierre, emissiveMap: pierre, emissive: 0x30261e, roughness: 0.95, fog: false });
   const planches = new THREE.TextureLoader(gestionnaire).load(`${BASE}textures/table-bois.webp`);
   planches.colorSpace = THREE.SRGBColorSpace;
   planches.wrapS = planches.wrapT = THREE.RepeatWrapping;

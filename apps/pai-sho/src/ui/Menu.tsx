@@ -139,11 +139,10 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
         <div>
           <h1 className="menu-titre">{t.titre} <span className="menu-beta">{t.beta}</span></h1>
           <p className="menu-sous">{t.sousTitre}</p>
-        </div>
         {sauvegarde && (
           <div className="reprendre verre" data-test="reprendre">
             <span className="carte-aide">
-              {sauvegarde.noms.hote} · {sauvegarde.noms.invite} · {sauvegarde.coups.length} {fr ? 'coups' : 'moves'}
+              {[sauvegarde.noms.hote, sauvegarde.noms.invite].map((n) => (n === 'Vous' || n === 'You' ? monNom : n)).join(fr ? ' contre ' : ' vs ')} · {sauvegarde.coups.length} {fr ? 'coups' : 'moves'}
             </span>
             <button
               type="button"
@@ -154,6 +153,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             </button>
           </div>
         )}
+        </div>
         <nav className="menu-outils">
           <button type="button" className="bouton discret" onClick={onTutoriel}>{t.tutoriel}</button>
           <button type="button" className="bouton discret" onClick={onLangue} lang={fr ? 'en' : 'fr'}>{t.langue}</button>
@@ -164,7 +164,8 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
         </nav>
       </header>
 
-      <section className="menu-cartes">
+      {/* Un clic sur le titre d'une carte la replie ou la rouvre. */}
+      <section className="menu-cartes" onClick={(e) => (e.target as Element).closest('.carte-titre')?.parentElement?.classList.toggle('fermee')}>
 
         <article className="carte verre">
           <h2 className="carte-titre">{t.contreMaison}</h2>

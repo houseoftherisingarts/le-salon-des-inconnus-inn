@@ -412,3 +412,17 @@ img { display: block; }
 /* Le menu laisse passer les gestes vers la table entre ses cartes. */
 .menu { pointer-events: none; }
 .menu-tete > *, .menu-cartes > * { pointer-events: auto; }
+
+/* Le titre tient sur une ligne, la pilule « Reprendre » se range à gauche sous lui. */
+.menu-titre { white-space: nowrap; }
+.reprendre { margin: 12px 0 0; align-self: flex-start; width: max-content; max-width: 100%; }
+/* Les cartes s'accrochent au bas de l'écran, défilent en dedans et se replient au titre. */
+.carte-titre { display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; }
+.carte-titre::after { content: '−'; font: 700 18px/1 var(--sans); color: var(--or); }
+.carte.fermee .carte-titre::after { content: '+'; }
+.carte.fermee > :not(.carte-titre) { display: none; }
+@media (min-width: 901px) {
+  .menu { overflow: hidden; }
+  .carte { max-height: calc(100vh - 250px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(212, 175, 55, 0.4) transparent; }
+}
+@media (max-width: 900px) { .menu { pointer-events: auto; } }

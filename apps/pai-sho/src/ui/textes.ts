@@ -309,7 +309,9 @@ export const TUTORIEL: Record<Langue, { titre: string; corps: string; ancre?: st
   ],
 };
 
-const CLE_LANGUE = 'paisho.langue';
+// v2 : l'anglais est devenu la langue de départ le 3 octobre; l'ancien
+// choix gardé sous 'paisho.langue' ne compte plus.
+const CLE_LANGUE = 'paisho.langue.v2';
 export function langueSauvee(): Langue {
   // L'anglais est la langue d'ouverture; le français revient à qui l'a choisi.
   try { return localStorage.getItem(CLE_LANGUE) === 'FR' ? 'FR' : 'EN'; } catch { return 'EN'; }
