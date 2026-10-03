@@ -16,7 +16,8 @@
     "mono:dev": "turbo run dev --parallel",
     "mono:build": "turbo run build",
     "mono:lint": "turbo run lint",
-    "mono:deploy": "turbo run build && firebase deploy --only hosting"
+    "mono:deploy": "turbo run build && firebase deploy --only hosting",
+    "jeux:pai-sho": "npm -w @inconnus/pai-sho run build && node scripts/copier-pai-sho.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
