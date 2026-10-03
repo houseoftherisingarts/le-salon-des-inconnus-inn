@@ -108,22 +108,25 @@ interface Choix { id: string; nom: string; ouvert: boolean; image: string | unde
 function Rangee({ titre, choix, actif, onChoix, verrou, forme }: {
   titre: string; choix: Choix[]; actif: string; onChoix: (id: string) => void; verrou: string; forme: 'rond' | 'paire';
 }) {
+  // Les noms ne tiennent pas sous des vignettes de soixante pixels :
+  // seul celui du choix s'affiche, les autres vivent dans l'infobulle.
+  const nom = choix.find((c) => c.id === actif)?.nom ?? '';
   return (
     <div className="skin-rangee">
-      <span className="etiquette">{titre}</span>
+      <span className="etiquette">{titre} <b className="skin-actif">{nom}</b></span>
       <div className={`skin-grille skin-${forme}`}>
         {choix.map((c) => (
           <button
             key={c.id} type="button" disabled={!c.ouvert}
             className={`skin-choix ${c.id === actif ? 'choisi' : ''}`}
-            aria-pressed={c.id === actif} title={c.ouvert ? c.nom : `${c.nom} · ${verrou}`}
+            aria-pressed={c.id === actif} aria-label={c.ouvert ? c.nom : `${c.nom} · ${verrou}`}
+            title={c.ouvert ? c.nom : `${c.nom} · ${verrou}`}
             onClick={() => onChoix(c.id)}
           >
             <span className="skin-image">
               {c.image && <img src={c.image} alt="" />}
               {!c.ouvert && <Cadenas />}
             </span>
-            <span className="skin-nom">{c.nom}</span>
           </button>
         ))}
       </div>

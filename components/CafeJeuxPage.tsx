@@ -63,7 +63,7 @@ const CadreJeu: React.FC<{ src: string; titre: string; fr: boolean; iframeRef?: 
         </div>
       </div>
       <iframe ref={iframeRef} src={src} title={titre}
-        className={plein ? 'flex-1 w-full' : 'w-full h-[78vh] sm:h-auto sm:aspect-[16/10]'}
+        className={plein ? 'flex-1 w-full' : 'w-full h-[78vh] lg:h-[82vh] max-h-[920px]'}
         allow="fullscreen; autoplay" style={{ border: 0, background: '#0a0808' }} />
     </div>
   );
@@ -189,11 +189,13 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
 
       {/* ── Hero : la taverne plein écran, qui s'allume au premier défilement ── */}
       <header ref={hero} className="relative h-[100svh] min-h-[560px] overflow-hidden flex items-end" style={{ ['--p' as string]: 0 }}>
-        <div className="absolute inset-0" style={{ filter: 'brightness(calc(0.62 + var(--p) * 0.5)) saturate(calc(0.9 + var(--p) * 0.35))' }}>
-          <img src="/media/cafe-jeux/pai-sho-partie.webp" alt="" className="cj-burns absolute inset-0 w-full h-full object-cover"
-            style={{ animation: 'cjBurns 22s ease-in-out infinite alternate', objectPosition: '50% 40%' }} />
+        <div className="absolute inset-0" style={{ filter: 'brightness(calc(0.85 + var(--p) * 0.5)) saturate(calc(0.95 + var(--p) * 0.3))' }}>
+          <img src="/media/cafe-jeux/taverne-hero.webp" alt="" className="cj-burns absolute inset-0 w-full h-full object-cover"
+            style={{ animation: 'cjBurns 22s ease-in-out infinite alternate', objectPosition: '50% 20%' }} />
         </div>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,8,8,0.55) 0%, rgba(10,8,8,0.1) 35%, rgba(10,8,8,0.88) 82%, #0a0808 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,8,8,0.45) 0%, rgba(10,8,8,0) 30%, rgba(10,8,8,0.35) 62%, rgba(10,8,8,0.92) 88%, #0a0808 100%)' }} />
+        {/* Mobile : le texte descend sur le plateau, un voile plus dense le garde lisible. */}
+        <div className="absolute inset-0 sm:hidden" style={{ background: 'linear-gradient(180deg, transparent 18%, rgba(10,8,8,0.82) 46%, rgba(10,8,8,0.9) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(60% 50% at 50% 45%, rgba(220,150,70, calc(var(--p) * 0.22)), transparent 70%)' }} />
 
         <div className={`relative w-full ${PAD} pb-12 md:pb-20 grid lg:grid-cols-[1.3fr_1fr] gap-8 items-end`}>
@@ -218,10 +220,10 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
 
       {/* ── Fiche Pai Sho : le jeu encadré et sa boutique ── */}
       <section id="pai-sho" className={`relative ${PAD} pt-16 md:pt-24 pb-16 scroll-mt-20`}>
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-end mb-8 md:mb-10">
+        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6 lg:gap-16 items-end mb-8 md:mb-10">
           <div>
             <p className="font-cinzel text-[#c5a059] text-[11px] md:text-xs uppercase tracking-[0.42em]">{t.paiEyebrow}</p>
-            <h2 className="mt-3 text-[#f3e5ab] text-4xl md:text-6xl leading-[1.02]" style={PRATA}>{t.paiTitre}</h2>
+            <h2 className="mt-3 text-[#f3e5ab] text-4xl md:text-[3.4rem] leading-[1.04]" style={PRATA}>{t.paiTitre}</h2>
           </div>
           <p className="font-lato text-base md:text-lg leading-relaxed text-white/75">{t.paiTexte}</p>
         </div>
@@ -233,16 +235,14 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
           </div>
         )}
 
-        <div className="grid xl:grid-cols-[minmax(0,1fr)_380px] gap-6 items-start">
+        <div className="grid xl:grid-cols-[minmax(0,1fr)_340px] gap-6 items-start">
           <CadreJeu src={PAI_SHO_SRC} titre={t.cadreTitre} fr={fr} iframeRef={paiSho} />
 
           <aside className={`${VERRE} p-5 md:p-6`}>
-            <div className="flex items-baseline justify-between gap-3">
-              <h3 className="text-[#f3e5ab] text-2xl" style={PRATA}>{t.boutique}</h3>
-              <p className="font-lato text-sm text-white/70 whitespace-nowrap">
-                <strong className="text-[#f3e5ab] text-lg font-bold mr-1">{solde}</strong>{t.petales}
-              </p>
-            </div>
+            <h3 className="text-[#f3e5ab] text-2xl" style={PRATA}>{t.boutique}</h3>
+            <p className="mt-2 inline-flex items-baseline gap-1.5 rounded-full border border-[#c5a059]/40 bg-[#c5a059]/10 px-3.5 py-1 font-lato text-sm text-white/75">
+              <strong className="text-[#f3e5ab] text-lg font-bold">{solde}</strong>{t.petales}
+            </p>
             <p className="mt-3 font-lato text-[14px] leading-relaxed text-white/65">{t.gain}</p>
 
             {(['plateau', 'tuiles'] as const).map((type) => (
@@ -289,10 +289,10 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
 
       {/* ── Les jeux du festival ── */}
       <section className={`relative ${PAD} pt-12 md:pt-20 pb-20`}>
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-end mb-8 md:mb-10">
+        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6 lg:gap-16 items-end mb-8 md:mb-10">
           <div>
             <p className="font-cinzel text-[#c5a059] text-[11px] md:text-xs uppercase tracking-[0.42em]">{t.fmmEyebrow}</p>
-            <h2 className="mt-3 text-[#f3e5ab] text-4xl md:text-6xl leading-[1.02]" style={PRATA}>{t.fmmTitre}</h2>
+            <h2 className="mt-3 text-[#f3e5ab] text-4xl md:text-[3.4rem] leading-[1.04]" style={PRATA}>{t.fmmTitre}</h2>
           </div>
           <p className="font-lato text-base md:text-lg leading-relaxed text-white/75">{t.fmmTexte}</p>
         </div>

@@ -1,0 +1,38 @@
+{
+  "url": "http://localhost:5179/essai-skins.html",
+  "date": "2026-10-03T11:28:34.141Z",
+  "modes": {},
+  "captures": [
+    "skin-vexel-1440.jpg",
+    "skin-vexel-gros-plan-1440.jpg",
+    "skin-salon-1440.jpg",
+    "skin-salon-gros-plan-1440.jpg",
+    "skin-tuiles-1440.jpg",
+    "skin-tuiles-gros-plan-1440.jpg",
+    "skin-tuiles-obsidienne-1440.jpg",
+    "skin-tuiles-obsidienne-gros-plan-1440.jpg",
+    "skin-tuiles-cuivre-1440.jpg",
+    "skin-tuiles-cuivre-gros-plan-1440.jpg",
+    "menu-skins-1440.jpg",
+    "menu-skins-390.jpg"
+  ],
+  "erreurs": [],
+  "mesures": {
+    "skins-1440": {
+      "x": 1068,
+      "y": 463.8125,
+      "l": 324,
+      "h": 388.1875,
+      "lignesTitre": 1,
+      "debord": 0
+    },
+    "skins-390": {
+      "x": 16,
+      "y": 1712.375,
+      "l": 358,
+      "h": 387.0625,
+      "lignesTitre": 1,
+      "debord": 0
+    }
+  }
+}

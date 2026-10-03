@@ -220,10 +220,11 @@ if (SEUL.includes('5')) {
     }
     await pause(700);
     await capture(page, nom);
-    // Le gros plan : la molette rapproche la caméra du centre.
-    await page.mouse.move(720, 450);
-    for (let k = 0; k < 6; k++) { await page.mouse.wheel(0, -120); await pause(60); }
-    await pause(400);
+    // Le gros plan : la caméra s'approche du centre (champ privé, lu
+    // ici comme outillage seulement).
+    await pause(1800); // le demi-tour vers le joueur au trait finit d'abord
+    await page.evaluate(() => { const s = window.__scene; s.zoom = 0.7; s.poserCamera(); });
+    await pause(300);
     await capture(page, `${nom.replace('-1440', '')}-gros-plan-1440`);
     await ctx.close();
   }

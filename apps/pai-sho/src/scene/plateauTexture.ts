@@ -51,8 +51,8 @@ function acierBrosse(S: number): HTMLCanvasElement {
   // la lumière couchée sur un disque passé au tour.
   const eventail = g.createConicGradient(0.5, S / 2, S / 2);
   const arrets: Array<[number, string]> = [
-    [0, 'rgba(255,255,255,0.10)'], [0.12, 'rgba(0,0,0,0.10)'], [0.25, 'rgba(255,255,255,0.02)'],
-    [0.5, 'rgba(255,255,255,0.12)'], [0.62, 'rgba(0,0,0,0.12)'], [0.75, 'rgba(255,255,255,0.02)'], [1, 'rgba(255,255,255,0.10)'],
+    [0, 'rgba(255,255,255,0.06)'], [0.12, 'rgba(0,0,0,0.12)'], [0.25, 'rgba(255,255,255,0.02)'],
+    [0.5, 'rgba(255,255,255,0.07)'], [0.62, 'rgba(0,0,0,0.12)'], [0.75, 'rgba(255,255,255,0.02)'], [1, 'rgba(255,255,255,0.06)'],
   ];
   for (const [p, col] of arrets) eventail.addColorStop(p, col);
   g.fillStyle = eventail;
@@ -79,11 +79,11 @@ const PALETTES: Record<IdPlateau, Palette> = {
   },
   vexel: {
     fond: acierBrosse,
-    rouge: 'rgba(160, 36, 44, 0.42)', ivoire: 'rgba(228, 234, 242, 0.20)',
-    filet: '#dfe5ec', ombreFilet: 'rgba(6, 8, 10, 0.75)', treillisAlpha: 0.85,
+    rouge: 'rgba(122, 26, 34, 0.40)', ivoire: 'rgba(228, 234, 242, 0.13)',
+    filet: '#d6dde6', ombreFilet: 'rgba(6, 8, 10, 0.6)', treillisAlpha: 0.6,
     porte: '#4e1218', porteBord: '#cfd6de', perle: '#eef2f6',
     brunissage: 'rgba(4,6,8,0.55)',
-    logo: { teinte: '#c4ccd6', alpha: 0.26, pas: 7.4 },
+    logo: { teinte: '#dde3ea', alpha: 0.62, pas: 8.4 },
     irise: true,
   },
   salon: {
@@ -92,7 +92,7 @@ const PALETTES: Record<IdPlateau, Palette> = {
     filet: '#4a2e18', treillisAlpha: 0.85, porte: '#c5a059', porteBord: '#4a2e18', perle: '#3b2414',
     brunissage: 'rgba(110,72,36,0.20)',
     // La marqueterie du Salon : le logo découpé dans un placage de noyer.
-    logo: { teinte: (S) => grainDeBois({ taille: S, fond: '#6e4426', veine: '#3a2212', fibres: 260, noeuds: 1, force: 1.4 }), alpha: 0.42, pas: 11.5 },
+    logo: { teinte: (S) => grainDeBois({ taille: S, fond: '#6e4426', veine: '#3a2212', fibres: 260, noeuds: 1, force: 1.4 }), alpha: 0.36, pas: 11.5 },
   },
 };
 
@@ -186,8 +186,8 @@ export function toileFace(
   // large, puis le trait clair par-dessus.
   if (P.ombreFilet) {
     g.strokeStyle = P.ombreFilet;
-    g.lineWidth = px * 0.1; losange(g);
-    treillis(g, px * 0.085);
+    g.lineWidth = px * 0.085; losange(g);
+    treillis(g, px * 0.07);
   }
   // Le filet qui borde le losange, un peu plus épais que le treillis.
   g.strokeStyle = P.filet;
@@ -246,7 +246,7 @@ export function toileFace(
   rg.fillStyle = '#fff';
   rg.fillRect(0, 0, R, R);
   rg.scale(R / S, R / S);
-  if (forme) rg.drawImage(silhouette(forme, cote, '#c8c8c8'), S / 2 - cote / 2, S / 2 - cote / 2);
+  if (forme) rg.drawImage(silhouette(forme, cote, '#b4b4b4'), S / 2 - cote / 2, S / 2 - cote / 2);
   rg.strokeStyle = '#555';
   treillis(rg, px * 0.05);
   rg.lineWidth = px * 0.07;

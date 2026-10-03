@@ -148,8 +148,8 @@ export class Habillage {
       mat = new THREE.MeshPhysicalMaterial({
         map: face.carte, normalMap: face.normales, normalScale: new THREE.Vector2(0.7, 0.7),
         roughnessMap: face.rugosite, roughness: 1, metalness: 0.88,
-        envMap: this.reflets(), envMapIntensity: 0.6,
-        anisotropy: 0.7, anisotropyMap: this.aniso,
+        envMap: this.reflets(), envMapIntensity: 0.38,
+        anisotropy: 0.55, anisotropyMap: this.aniso,
       });
     } else {
       mat = new THREE.MeshStandardMaterial({

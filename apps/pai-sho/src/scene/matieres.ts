@@ -94,13 +94,13 @@ export const TEINTES_TUILES: Record<Exclude<IdTuiles, 'bois'>, Record<Camp, Tein
       metalIncruste: 1, rugositeIncruste: 0.28, irise: 1, vernis: 0.7, reflets: 0.8 },
   },
   obsidienne: {
-    hote: { sombre: '#2a282e', clair: '#6e6a75', incruste: '#dfe3ea', metal: 0, rugosite: 0.14,
-      metalIncruste: 1, rugositeIncruste: 0.25, vernis: 1, reflets: 0.9 },
+    hote: { sombre: '#141317', clair: '#3e3a45', incruste: '#dfe3ea', metal: 0, rugosite: 0.16,
+      metalIncruste: 1, rugositeIncruste: 0.25, vernis: 1, reflets: 0.55 },
     invite: { sombre: '#040406', clair: '#18171d', incruste: '#d8ae48', metal: 0, rugosite: 0.12,
       metalIncruste: 1, rugositeIncruste: 0.28, vernis: 1, reflets: 0.9 },
   },
   cuivre: {
-    hote: { sombre: '#8a4a2a', clair: '#f0a678', incruste: '#2c1a12', metal: 1, rugosite: 0.3,
+    hote: { sombre: '#7a3e20', clair: '#df8c58', incruste: '#2c1a12', metal: 1, rugosite: 0.3,
       metalIncruste: 0.2, rugositeIncruste: 0.6, reflets: 0.9 },
     invite: { sombre: '#2e1a10', clair: '#6e4128', incruste: '#e8c270', metal: 1, rugosite: 0.34,
       metalIncruste: 1, rugositeIncruste: 0.3, reflets: 0.9 },
@@ -110,7 +110,7 @@ export const TEINTES_TUILES: Record<Exclude<IdTuiles, 'bois'>, Record<Camp, Tein
 /** Le cadre sculpté : la même relecture, sans feuille d'or. */
 export const TEINTES_CADRE: Record<Exclude<IdPlateau, 'bois'>, Teinte> = {
   vexel: { sombre: '#101216', clair: '#9aa4b0', metal: 0.9, rugosite: 0.36, reflets: 0.65, plage: [0.1, 0.95] },
-  salon: { sombre: '#8a6440', clair: '#f3e0bc', metal: 0, rugosite: 0.6, plage: [0.1, 0.95] },
+  salon: { sombre: '#7e6246', clair: '#efe3cc', metal: 0, rugosite: 0.6, plage: [0.1, 0.95] },
 };
 
 /** La salle neutre que les métaux reflètent, préfiltrée une fois. */

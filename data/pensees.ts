@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-03",
+        title_fr: "Le blanc du papier",
+        title_en: "The white of the paper",
+        body_fr: "Les aquarellistes apprennent tôt que le plus beau blanc de leur tableau ne sortira jamais d'un tube. La lumière d'une aquarelle vient du papier lui-même, et le peintre doit décider avant la première touche quels endroits resteront vierges, parce qu'un blanc noyé sous la couleur ne se rattrape pas. Les maîtres appellent ces zones des réserves, et ils les défendent du pinceau pendant tout l'ouvrage, si bien que la partie la plus lumineuse du tableau est souvent celle où rien n'a été peint. J'aime qu'un art entier repose ainsi sur la discipline de ne pas faire. Nous remplissons nos journées comme des débutants couvrent leur feuille, par peur du vide, et nous nous demandons ensuite où la lumière est partie. Les réserves suggèrent l'inverse : choisir tôt les heures et les silences qu'aucun projet n'aura le droit de couvrir, parce que c'est par là que le reste s'éclaire. Quel coin de ma semaine est-ce que je garde en réserve, pour que la lumière ait un endroit où passer?",
+        body_en: "Watercolour painters learn early that the finest white in their picture will never come out of a tube. The light of a watercolour comes from the paper itself, and the painter must decide before the first stroke which places will stay untouched, because a white drowned under colour can never be won back. The masters call these areas reserves, and they defend them from the brush through the whole painting, so that the most luminous part of the picture is often the one where nothing was painted at all. I love that an entire art rests this way upon the discipline of not doing. We fill our days the way beginners cover their sheet, out of fear of the empty space, and then wonder where the light has gone. The reserves suggest the opposite: choosing early the hours and the silences that no project will be allowed to cover, because that is where everything else takes its light. Which corner of my week am I keeping in reserve, so that the light has somewhere to come through?",
+    },
+    {
         date: "2026-10-02",
         title_fr: "Le sentier",
         title_en: "The footpath",

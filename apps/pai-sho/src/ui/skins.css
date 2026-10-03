@@ -10,7 +10,7 @@
 .skin-paire { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 .skin-choix {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  display: block;
   padding: 0; border: 0; background: none; cursor: pointer; min-width: 0;
 }
 .skin-choix:disabled { cursor: default; }
@@ -31,12 +31,7 @@
 .skin-choix:focus-visible .skin-image { outline: 2px solid var(--or); outline-offset: 3px; }
 .skin-choix:disabled img { opacity: 0.5; filter: saturate(0.6); }
 
-.skin-nom {
-  font-size: 12px; line-height: 1.25; text-align: center; color: var(--texte-doux);
-  overflow-wrap: anywhere;
-}
-.skin-choix.choisi .skin-nom { color: var(--or-pale); font-weight: 700; }
-.skin-choix:disabled .skin-nom { opacity: 0.7; }
+.skin-actif { margin-left: 6px; font-weight: 700; color: var(--or-pale); letter-spacing: 0.08em; }
 
 .skin-cadenas {
   position: absolute; right: 4%; bottom: 4%;
