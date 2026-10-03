@@ -5,10 +5,11 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
-export function chargerSculpture(url: string, hauteur: number): Promise<THREE.Group> {
-  const draco = new DRACOLoader();
-  draco.setDecoderPath('/draco/');
-  const loader = new GLTFLoader();
+export function chargerSculpture(url: string, hauteur: number, gestionnaire?: THREE.LoadingManager): Promise<THREE.Group> {
+  const draco = new DRACOLoader(gestionnaire);
+  // Chemin relatif au document : le même build sert sous app://jeu/ (Electron) et sur le web.
+  draco.setDecoderPath(`${import.meta.env.BASE_URL}draco/`);
+  const loader = new GLTFLoader(gestionnaire);
   loader.setDRACOLoader(draco);
   return new Promise((resolve, reject) => {
     loader.load(url, (gltf) => {
