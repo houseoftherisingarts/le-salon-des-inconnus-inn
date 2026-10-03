@@ -83,12 +83,15 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
   const [authOuverte, setAuthOuverte] = useState(false);
   const [paiement, setPaiement] = useState<string | null>(null);
   const [jeuFmm, setJeuFmm] = useState<string | null>(null);
+  // Skin payé par carte en attente de la confirmation du webhook.
+  const [aVerifier, setAVerifier] = useState<Skin | null>(null);
 
   // Synchronise état, localStorage et (si connecté) members/{uid}/prive/cafeJeux.
   const pousser = useCallback((petales: number, ids: string[]) => {
     if (!user || !db) return;
     void setDoc(doc(db, 'members', user.uid, 'prive', 'cafeJeux'), {
-      petales, skins: { paiSho: arrayUnion(...ids) }, majLe: serverTimestamp(),
+      // skins.paiSho appartient au webhook seul; le client garde ses parures en pétales à part.
+      petales, skinsPetales: arrayUnion(...ids), majLe: serverTimestamp(),
     }, { merge: true }).catch(() => { /* le local fait foi jusqu'au prochain passage */ });
   }, [user]);
 
@@ -105,22 +108,51 @@ export const CafeJeuxPage: React.FC<Props> = ({ language, onNavigate, user, onUs
     getDoc(doc(db, 'members', user.uid, 'prive', 'cafeJeux')).then((snap) => {
       const d = snap.data() ?? {};
       const distant = Number.isInteger(d.petales) ? d.petales as number : 0;
-      const ids = Array.isArray(d.skins?.paiSho) ? (d.skins.paiSho as unknown[]).filter((x): x is string => typeof x === 'string') : [];
+      const liste = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
+      const ids = [...liste(d.skins?.paiSho), ...liste(d.skinsPetales)];
       appliquer(Math.max(lireSolde(), distant), [...lireDebloques(), ...ids]);
     }).catch(() => { /* hors ligne : le local reste */ });
   }, [user?.uid]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Retour de Stripe : ?achat=ok&skin=x
+  // Retour de Stripe : ?achat=ok&skin=x ne débloque rien. Seul le webhook écrit
+  // skins.paiSho; la page relit ce champ et débloque quand l'id y paraît.
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     const skin = SKINS_PAI_SHO.find((s) => s.id === q.get('skin'));
     if (q.get('achat') === 'ok' && skin) {
-      appliquer(lireSolde(), [...lireDebloques(), skin.id]);
-      setAnnonce(t.merci(skin.nom[L]));
+      setAVerifier(skin);
       history.replaceState(history.state, '', '/cafe-jeux');
       window.setTimeout(() => document.getElementById('pai-sho')?.scrollIntoView({ behavior: 'smooth' }), 400);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!aVerifier) return;
+    if (!user || !db) { setAnnonce(t.verifConnexion); return; }
+    setAnnonce(t.verifEnCours);
+    const ref = doc(db, 'members', user.uid, 'prive', 'cafeJeux');
+    let essais = 0;
+    let fini = false;
+    const verifier = async () => {
+      essais += 1;
+      try {
+        const paye = (await getDoc(ref)).data()?.skins?.paiSho;
+        if (!fini && Array.isArray(paye) && paye.includes(aVerifier.id)) {
+          fini = true; window.clearInterval(minuterie);
+          appliquer(lireSolde(), [...lireDebloques(), aVerifier.id]);
+          setAnnonce(t.merci(aVerifier.nom[L])); setAVerifier(null);
+          return;
+        }
+      } catch { /* réseau : on retente au prochain tour */ }
+      if (!fini && essais >= 15) {
+        fini = true; window.clearInterval(minuterie);
+        setAnnonce(t.verifPlusTard); setAVerifier(null);
+      }
+    };
+    const minuterie = window.setInterval(verifier, 2000);
+    void verifier();
+    return () => { fini = true; window.clearInterval(minuterie); };
+  }, [aVerifier, user?.uid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Fin de partie annoncée par le cadre Pai Sho.
   useEffect(() => {

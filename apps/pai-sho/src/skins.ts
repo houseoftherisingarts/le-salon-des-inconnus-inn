@@ -40,9 +40,11 @@ export function debloques(): Set<string> {
   return s;
 }
 
-/** Le skin forcé par l'adresse, pour les captures. */
+/** Le skin forcé par l'adresse, pour les captures et le développement
+ *  seulement : en production, l'adresse ne déverrouille rien. */
 function skinDeLAdresse(): Partial<Skin> {
   try {
+    if (!navigator.webdriver && !import.meta.env.DEV) return {};
     const q = new URLSearchParams(window.location.search);
     const p = q.get('plateau'), t = q.get('tuiles');
     return { ...(estPlateau(p) ? { plateau: p } : {}), ...(estTuiles(t) ? { tuiles: t } : {}) };

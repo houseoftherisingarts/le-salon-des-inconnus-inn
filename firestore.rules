@@ -124,23 +124,22 @@ service cloud.firestore {
                                  && request.resource.data.telephone.size() <= 40
                                  && request.resource.data.telephone.matches('^[0-9 +().-]*$'))));
       }
-      // Café-jeux : solde de pétales et skins débloqués. Le webhook Stripe
-      // (admin) y ajoute les skins payés; le membre y garde son solde.
+      // Café-jeux : solde de pétales et parures. skins.paiSho (parures payées)
+      // n'est écrit que par le webhook Stripe via l'Admin SDK, qui passe outre
+      // les règles : le membre ne peut jamais y toucher. Ses parures achetées en
+      // pétales vont dans skinsPetales (monnaie cosmétique, décision prise).
       match /prive/cafeJeux {
-        allow read:  if isSelf(userId) || isAdmin();
-        allow write: if isAdmin()
-                     || (isSelf(userId)
-                         && request.resource.data.keys().hasOnly(['petales', 'skins', 'majLe'])
-                         && (!('petales' in request.resource.data)
-                             || (request.resource.data.petales is int
-                                 && request.resource.data.petales >= 0
-                                 && request.resource.data.petales <= 1000000))
-                         && (!('skins' in request.resource.data)
-                             || (request.resource.data.skins is map
-                                 && request.resource.data.skins.keys().hasOnly(['paiSho'])
-                                 && (!('paiSho' in request.resource.data.skins)
-                                     || (request.resource.data.skins.paiSho is list
-                                         && request.resource.data.skins.paiSho.size() <= 20)))));
+        allow read:  if request.auth != null && request.auth.uid == userId;
+        allow write: if request.auth != null && request.auth.uid == userId
+                     && request.resource.data.keys().hasOnly(['petales', 'skinsPetales', 'majLe', 'skins'])
+                     && !request.resource.data.diff(resource == null ? {} : resource.data).affectedKeys().hasAny(['skins'])
+                     && (!('petales' in request.resource.data)
+                         || (request.resource.data.petales is int
+                             && request.resource.data.petales >= 0
+                             && request.resource.data.petales <= 1000000))
+                     && (!('skinsPetales' in request.resource.data)
+                         || (request.resource.data.skinsPetales is list
+                             && request.resource.data.skinsPetales.size() <= 20));
       }
       match /prive/preferences {
         allow read:  if isSelf(userId) || isAdmin();

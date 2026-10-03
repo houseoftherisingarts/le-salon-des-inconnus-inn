@@ -103,7 +103,7 @@ export class Marques {
   adapterAuFond(clair: boolean): void {
     const ors = [this.matFil, this.matFilGagnant, this.anneau.material as THREE.MeshBasicMaterial];
     for (const m of ors) {
-      m.color.setHex(clair ? 0x8a6410 : OR);
+      m.color.setHex(clair ? 0xa8740a : OR);
       m.blending = clair ? THREE.NormalBlending : THREE.AdditiveBlending;
       m.needsUpdate = true;
     }
