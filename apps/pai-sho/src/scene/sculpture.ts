@@ -5,12 +5,21 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
+// Un seul décodeur draco pour toute l'application : chaque DRACOLoader
+// ouvre ses propres travailleurs, et seize pièces en ouvraient soixante.
+let draco: DRACOLoader | null = null;
+export function decodeurDraco(): DRACOLoader {
+  if (!draco) {
+    draco = new DRACOLoader();
+    // Chemin relatif au document : le même build sert sous app://jeu/ (Electron) et sur le web.
+    draco.setDecoderPath(`${import.meta.env.BASE_URL}draco/`);
+  }
+  return draco;
+}
+
 export function chargerSculpture(url: string, hauteur: number, gestionnaire?: THREE.LoadingManager): Promise<THREE.Group> {
-  const draco = new DRACOLoader(gestionnaire);
-  // Chemin relatif au document : le même build sert sous app://jeu/ (Electron) et sur le web.
-  draco.setDecoderPath(`${import.meta.env.BASE_URL}draco/`);
   const loader = new GLTFLoader(gestionnaire);
-  loader.setDRACOLoader(draco);
+  loader.setDRACOLoader(decodeurDraco());
   return new Promise((resolve, reject) => {
     loader.load(url, (gltf) => {
       const modele = gltf.scene;

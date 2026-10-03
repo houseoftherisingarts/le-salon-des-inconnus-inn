@@ -148,7 +148,7 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
 
 // ── Les accents ─────────────────────────────────────────────────────
 {
-  const base = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(-2, -2, 'R5'), g(5, -3, 'W4')]);
+  const base = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(-2, -2, 'R5'), g(5, -3, 'W4'), g(1, 0, 'R5')]);
   const mv = { type: 'deplacer' as const, de: P(3, 6), a: P(3, 7) };
   const legaux = coupsLegaux(base).map(coupEnTexte);
   const roc = jouer(base, { ...mv, bonus: { type: 'accent', tuile: 'ROCHER', a: P(0, 5) } });
@@ -159,8 +159,8 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
   verifie(legaux.includes('3,6>3,7+ROUE@-2,-1'), 'roue légale');
   const roue = jouer(base, { ...mv, bonus: { type: 'accent', tuile: 'ROUE', a: P(-2, -1) } });
   verifie(tuileEn(roue, P(-3, -2))?.type === 'R5' && tuileEn(roue, P(-2, -2)) === null, 'la roue tourne dans le sens horaire');
-  // En (-1,-2), la rose en (-2,-2) (ouest) irait au nord-ouest (-2,-1)… rouge sur rouge, légal; en (-2,-3) elle irait en (-1,-2)? non : du nord au nord-est (-1,-2), rouge. On teste donc le jardin blanc :
-  verifie(!legaux.includes('3,6>3,7+ROUE@-3,-1'), 'la roue ne pousse pas une rouge en jardin blanc');
+  // Une roue au centre pousserait la fleur rouge de (1,0) en (1,-1), jardin blanc pur.
+  verifie(!legaux.includes('3,6>3,7+ROUE@0,0'), 'la roue ne pousse pas une rouge en jardin blanc');
   const avecRocher = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(-2, -2, 'R5'), g(0, 0, 'ROCHER')]);
   verifie(!coupsLegaux(avecRocher).map(coupEnTexte).includes('3,6>3,7+ROUE@-1,-1'), 'pas de roue à côté d’un rocher');
   const barque = jouer(base, { ...mv, bonus: { type: 'accent', tuile: 'BARQUE', a: P(5, -3), vers: P(6, -3) } });
@@ -180,7 +180,9 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
   verifie(!anneauHarmonie(etatDepuis([h(0, 0, 'R3'), h(4, 0, 'R4'), h(4, 4, 'R3'), h(0, 4, 'R4')]), 'hote'), 'une tuile sur le centre');
   verifie(!anneauHarmonie(etatDepuis([h(1, 1, 'R3'), h(5, 1, 'R4'), h(5, 5, 'R3'), h(1, 5, 'R4')]), 'hote'), 'un anneau à côté du centre');
   const six = [h(-3, 3, 'R3'), h(0, 3, 'R4'), h(0, 5, 'R3'), h(4, 5, 'R4'), h(4, -2, 'R3'), h(-3, -2, 'R4')];
-  verifie(!anneauHarmonie(etatDepuis(six), 'hote'), 'chaîne ouverte : pas d’anneau');
+  verifie(anneauHarmonie(etatDepuis(six), 'hote'), 'anneau de six tuiles, non rectangulaire');
+  const ouverte = [...six.slice(0, 5), h(-3, -2, 'R3')];
+  verifie(!anneauHarmonie(etatDepuis(ouverte), 'hote'), 'chaîne ouverte : pas d’anneau');
   const presque = etatDepuis([h(-3, 3, 'R3'), h(3, 3, 'R4'), h(3, -3, 'R3'), h(-4, -3, 'R4')]);
   const fin = simples(presque, P(-4, -3)).find((c) => c.a === P(-3, -3));
   verifie(fin, 'le coup qui ferme l’anneau existe');
@@ -227,7 +229,10 @@ let milieu: EtatPaiSho | null = null;
         const anciennes = new Set(avant.filter((x) => x.camp === e.tour).map((x) => cle(x.a === c.de ? c.a : x.a, x.b === c.de ? c.a : x.b)));
         const neuve = apres.some((x) => x.camp === e.tour && !anciennes.has(cle(x.a, x.b)));
         const offert = tous.some((d) => d.type === 'deplacer' && d.de === c.de && d.a === c.a && d.bonus);
-        verifie(neuve === offert, `bonus cohérent pour ${coupEnTexte(c)}`);
+        // Rocher et renouée se posent toujours quelque part : tant que l'un
+        // des deux reste en main, une harmonie nouvelle offre un bonus.
+        const toujours = e.reserve[e.tour].ROCHER > 0 || e.reserve[e.tour].RENOUEE > 0;
+        verifie(offert ? neuve : !(neuve && toujours), `bonus cohérent pour ${coupEnTexte(c)}`);
       }
       const c = piocher(alea, tous);
       e = appliquerCoup(e, c);
