@@ -95,6 +95,22 @@ export class Marques {
     }
   }
 
+  /**
+   * Sur un plateau pâle, l'or additif se perd dans le bois clair : les
+   * fils et l'anneau passent alors en or bruni, posé sans addition, et
+   * les cibles prennent un vert plus profond.
+   */
+  adapterAuFond(clair: boolean): void {
+    const ors = [this.matFil, this.matFilGagnant, this.anneau.material as THREE.MeshBasicMaterial];
+    for (const m of ors) {
+      m.color.setHex(clair ? 0x8a6410 : OR);
+      m.blending = clair ? THREE.NormalBlending : THREE.AdditiveBlending;
+      m.needsUpdate = true;
+    }
+    (this.ciblesMesh.material as THREE.MeshBasicMaterial).color.setHex(clair ? 0x23874c : 0x6fe39a);
+    (this.survol.material as THREE.MeshBasicMaterial).color.setHex(clair ? 0x23874c : 0x9cf5bd);
+  }
+
   /** Le souffle des fils et de l'anneau, à chaque trame. */
   animer(t: number): void {
     this.matFil.opacity = 0.62 + 0.25 * Math.sin(t * 2.2);
