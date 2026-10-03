@@ -50,4 +50,6 @@ export const sonSauve = (): boolean => { try { return localStorage.getItem(CLE_S
 export const sauverSon = (oui: boolean): void => { try { localStorage.setItem(CLE_SON, oui ? '1' : '0'); } catch { /* privé */ } };
 
 /** Le programme Mac se reconnaît à son agent utilisateur. */
-export const estElectron = (): boolean => /Electron/i.test(navigator.userAgent);
+// Le programme Mac sert le jeu sous app:// ; l'agent utilisateur ne porte
+// pas toujours « Electron » une fois le paquet signé par electron-builder.
+export const estElectron = (): boolean => /Electron/i.test(navigator.userAgent) || location.protocol === 'app:';
