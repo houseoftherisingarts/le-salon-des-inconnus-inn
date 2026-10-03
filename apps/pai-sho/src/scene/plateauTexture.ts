@@ -87,12 +87,14 @@ const PALETTES: Record<IdPlateau, Palette> = {
     irise: true,
   },
   salon: {
-    fond: (S) => grainDeBois({ taille: S, fond: '#ead5ad', veine: '#b88c5c', fibres: 480, noeuds: 2, ondulation: 12, force: 1.0 }),
-    rouge: 'rgba(186, 96, 74, 0.30)', ivoire: 'rgba(255, 252, 244, 0.60)',
-    filet: '#4a2e18', treillisAlpha: 0.85, porte: '#c5a059', porteBord: '#4a2e18', perle: '#3b2414',
-    brunissage: 'rgba(110,72,36,0.20)',
-    // La marqueterie du Salon : le logo découpé dans un placage de noyer.
-    logo: { teinte: (S) => grainDeBois({ taille: S, fond: '#6e4426', veine: '#3a2212', fibres: 260, noeuds: 1, force: 1.4 }), alpha: 0.36, pas: 11.5 },
+    // Cerisier sombre (Alex, 3 octobre) : le champ en cerisier foncé, les
+    // jardins et le logo en érable teinté, les filets en laiton pour rester lisibles.
+    fond: (S) => grainDeBois({ taille: S, fond: '#5b2314', veine: '#260c06', fibres: 520, noeuds: 2, ondulation: 13, force: 1.3 }),
+    rouge: 'rgba(120, 14, 10, 0.50)', ivoire: 'rgba(196, 132, 72, 0.50)',
+    filet: '#e0bd7c', treillisAlpha: 0.8, porte: '#c5a059', porteBord: '#e0bd7c', perle: '#ecd6a4',
+    brunissage: 'rgba(16,4,2,0.55)',
+    // La marqueterie du Salon : le logo découpé dans un placage d'érable.
+    logo: { teinte: (S) => grainDeBois({ taille: S, fond: '#b9783e', veine: '#6e3a18', fibres: 260, noeuds: 1, force: 1.3 }), alpha: 0.55, pas: 11.5 },
   },
 };
 

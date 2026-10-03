@@ -165,7 +165,7 @@ export class Habillage {
     for (const t of this.textures) t.dispose();
     this.textures = [face.carte, face.normales, ...(face.rugosite ? [face.rugosite] : [])];
     this.disque.material = mat;
-    this.marques.adapterAuFond(id === 'salon');
+    this.marques.adapterAuFond(false);
   }
 
   detruire(): void {

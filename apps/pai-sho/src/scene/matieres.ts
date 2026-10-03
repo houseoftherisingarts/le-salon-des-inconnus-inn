@@ -110,7 +110,7 @@ export const TEINTES_TUILES: Record<Exclude<IdTuiles, 'bois'>, Record<Camp, Tein
 /** Le cadre sculpté : la même relecture, sans feuille d'or. */
 export const TEINTES_CADRE: Record<Exclude<IdPlateau, 'bois'>, Teinte> = {
   vexel: { sombre: '#101216', clair: '#9aa4b0', metal: 0.9, rugosite: 0.36, reflets: 0.65, plage: [0.1, 0.95] },
-  salon: { sombre: '#7e6246', clair: '#efe3cc', metal: 0, rugosite: 0.6, plage: [0.1, 0.95] },
+  salon: { sombre: '#1e0a06', clair: '#8a4526', metal: 0, rugosite: 0.5, plage: [0.1, 0.95] },
 };
 
 /** La salle neutre que les métaux reflètent, préfiltrée une fois. */

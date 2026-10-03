@@ -31,6 +31,11 @@ const AMBIANCES: Record<IdDecor, {
     ambiante: [0xfff3df, 0.95], cielSol: [0xfff7ea, 0xcbb690, 1.25],
     lanterne: [0xfff0d6, 1100], torches: [0xffe0b0, 110, 90], froide: 40,
   },
+  sakura: {
+    fond: 0xa9d8fd, dessus: 0xffffff, chant: 0xc9a56c,
+    ambiante: [0xfff3ea, 1], cielSol: [0xeaf4ff, 0x9cc070, 1.3],
+    lanterne: [0xfff4e0, 1100], torches: [0xffe0c0, 110, 90], froide: 40,
+  },
 };
 
 /** Un dessus de table en bois blond, à larges planches et au fil discret. */
@@ -129,16 +134,17 @@ export function batirDecor(
 
   const ambiance = (d: IdDecor) => {
     const a = AMBIANCES[d];
+    const jour = d === 'jardin' || d === 'sakura';
     scene.background = new THREE.Color(a.fond);
     if (scene.fog instanceof THREE.Fog) {
       scene.fog.color.setHex(a.fond);
       // Au grand jour, la brume recule pour ne pas voiler la table.
-      scene.fog.near = d === 'jardin' ? 130 : 70;
-      scene.fog.far = d === 'jardin' ? 260 : 150;
+      scene.fog.near = jour ? 130 : 70;
+      scene.fog.far = jour ? 260 : 150;
     }
     matDessus.color.setHex(a.dessus);
     matChant.color.setHex(a.chant);
-    matDessus.map = d === 'jardin' ? blond : carte;
+    matDessus.map = jour ? blond : carte;
     matDessus.needsUpdate = true;
     montrerSalle(d);
     ambiante.color.setHex(a.ambiante[0]); ambiante.intensity = a.ambiante[1];
