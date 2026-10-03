@@ -72,7 +72,7 @@ export default function Menu({ langue, son, onLangue, onSon, onLancer, onTutorie
       surMessage: (m) => {
         if (m.type !== 'bonjour' || lance.current) return;
         lance.current = true;
-        const autre = m.nom.trim() || (camp === 'hote' ? t.invite : t.hote);
+        const autre = m.nom.trim() || t.adversaire;
         onLancer({
           lien: l,
           config: {
@@ -152,7 +152,7 @@ export default function Menu({ langue, son, onLangue, onSon, onLancer, onTutorie
             </div>
             <span className="petit">{cote === 'hote' ? t.hoteAide : t.inviteAide}</span>
           </div>
-          <button type="button" className="bouton or plein" onClick={contreMaison} data-test="contre-maison">{t.jouer}</button>
+          <button type="button" className="bouton or plein" onClick={contreMaison} data-test="contre-maison">{t.jouerMaison}</button>
         </article>
 
         <article className="carte verre">
@@ -162,7 +162,7 @@ export default function Menu({ langue, son, onLangue, onSon, onLancer, onTutorie
             <input type="checkbox" checked={tourner} onChange={(e) => setTourner(e.target.checked)} />
             <span>{t.tourner}</span>
           </label>
-          <button type="button" className="bouton or plein" onClick={aDeux}>{t.jouer}</button>
+          <button type="button" className="bouton plein" onClick={aDeux} data-test="a-deux">{t.jouerDeux}</button>
         </article>
 
         <article className="carte verre">
@@ -179,7 +179,7 @@ export default function Menu({ langue, son, onLangue, onSon, onLancer, onTutorie
               <button type="button" className="bouton discret" onClick={copier}>{copie ? t.copie : t.copier}</button>
             </div>
           </div>
-          <button type="button" className="bouton or plein" onClick={() => distance('hote')} disabled={etatLien === 'attente'}>{t.ouvrirTable}</button>
+          <button type="button" className="bouton plein" onClick={() => distance('hote')} disabled={etatLien === 'attente'}>{t.ouvrirTable}</button>
           <label className="champ">
             <span className="etiquette">{t.idAdversaire}</span>
             <div className="ligne-id">

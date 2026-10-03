@@ -17,16 +17,22 @@ export const PAS = 1;
  *  Les modèles sont déjà couchés dans le plan XZ (l'épaisseur, de 0.34
  *  à 0.74, est en y) : aucune rotation n'est nécessaire. */
 const TUILE_GLB_DIAMETRE = 1.902;
-/** Une tuile couvre 0.82 pas : deux voisines ne se touchent pas. */
-export const ECHELLE_TUILE = (0.82 * PAS) / TUILE_GLB_DIAMETRE;
+/** Une tuile couvre 0.9 pas : deux voisines ne se touchent pas, et à
+ *  0.82 elles se lisaient comme des pions plats sur les captures. */
+export const ECHELLE_TUILE = (0.9 * PAS) / TUILE_GLB_DIAMETRE;
+/** Le relief sculpté est accentué en hauteur pour se lire de loin. */
+export const RELIEF_TUILE = 1.35;
 /** Le plateau GLB : diamètre 1.902 et hauteur 0.412 en unités du modèle
- *  (Box3, y de -0.205 à +0.206). Le dessus plat a été mesuré au rayon
- *  lancé vers le bas : il est à y = PLATEAU_GLB_DESSUS, plat jusqu'au
- *  rayon PLATEAU_GLB_RAYON_PLAT, où commence la bordure de noyer. */
+ *  (Box3, y de -0.205 à +0.206). Le dessus a été mesuré le 2026-10-02 par
+ *  des rayons lancés vers le bas, tous les 0.005 de rayon et sur huit
+ *  angles : il est plat entre y = 0.1693 et y = 0.1716 jusqu'au rayon
+ *  0.860, puis la bordure monte d'un coup à 0.190 dès 0.865 (crête à
+ *  0.204 vers 0.90). Le disque peint se pose juste au-dessus du point
+ *  plat le plus haut et s'arrête au pied de la bordure. */
 export const PLATEAU_GLB_DIAMETRE = 1.902;
 export const PLATEAU_GLB_BAS = -0.205;
-const PLATEAU_GLB_DESSUS = 0.2;
-const PLATEAU_GLB_RAYON_PLAT = 0.86;
+const PLATEAU_GLB_DESSUS = 0.172;
+const PLATEAU_GLB_RAYON_PLAT = 0.862;
 /** Le rayon du disque peint posé sur le dessus. Le point le plus loin
  *  du centre, (8,4), est à 8.94 pas : le disque garde une marge pour la
  *  tuile qui s'y pose. */

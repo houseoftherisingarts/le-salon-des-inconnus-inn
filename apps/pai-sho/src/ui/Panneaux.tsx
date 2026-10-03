@@ -19,8 +19,7 @@ export function Reserve({ etat, camp, langue, nom, actif, plantables, choisie, o
     <section className={`reserve verre ${camp} ${actif ? 'active' : ''}`} aria-label={`${t.enMain} · ${nom}`}>
       <h3 className="panneau-titre">
         <span className={`pastille ${camp}`} aria-hidden />
-        {nom}
-        <span className="panneau-sous">{t.enMain}</span>
+        <span className="panneau-nom">{nom}</span>
       </h3>
       <ul className="reserve-grille">
         {TYPES.map((ty) => {

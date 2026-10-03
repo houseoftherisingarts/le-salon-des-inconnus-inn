@@ -13,7 +13,7 @@ import { choisirCoup } from '../jeu/cpu';
 import { nouveauPenseur, type Penseur } from '../moteur/penseur';
 import { nomNiveau } from '../moteur/niveaux';
 import type { Pt } from '../jeu/plateau';
-import type { ScenePaiSho } from '../scene/scene';
+import { LARGEUR_TELEPHONE, type ScenePaiSho } from '../scene/scene';
 import { effacerSauvegarde, rejouer, sauver } from '../sauvegarde';
 import type { EtatLien, Message } from '../reseau/pair';
 import type { Depart } from '../App';
@@ -114,7 +114,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       const W = window.innerWidth, H = window.innerHeight;
       const r = (s: string) => document.querySelector(s)?.getBoundingClientRect();
       const g = r('.hud-gauche'), d = r('.hud-droite'), h = r('.hud-haut'), b = r('.hud-bas');
-      if (W <= 760) {
+      if (W <= LARGEUR_TELEPHONE) {
         scene.cadrer({ gauche: 0, droite: 0, haut: h ? h.bottom + 4 : 0, bas: b ? H - b.top + 4 : 0 });
       } else {
         scene.cadrer({
@@ -329,6 +329,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     texteFin = texteVerdict(etat.verdict, fr) ?? '';
   }
   const vainqueur = abandon ? autre(abandon) : etat.verdict?.type === 'victoire' ? etat.verdict.camp : null;
+  // Le joueur seul devant son écran qui perd lit « Défaite », pas « Victoire ».
+  if (vainqueur && config.mode !== 'deux' && vainqueur !== config.campLocal) titreFin = t.defaite;
 
   let consigne = '';
   if (aMoi) {
@@ -351,7 +353,10 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       onChoisir={choisirReserve}
     />
   );
-  const basLocal: Camp = config.mode === 'deux' ? etat.tour : config.campLocal;
+  // À deux, les panneaux de côté gardent l'ordre de la barre du haut
+  // (l'hôte à gauche) ; la feuille du téléphone montre la main au trait.
+  const basLocal: Camp = config.mode === 'deux' ? 'hote' : config.campLocal;
+  const mainAuTrait: Camp = config.mode === 'deux' ? etat.tour : config.campLocal;
 
   return (
     <div className={`hud ${fini ? 'fini' : ''}`}>
@@ -385,7 +390,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       </aside>
 
       <footer className="hud-bas verre">
-        <div className="bas-reserve">{reserve(basLocal)}</div>
+        <div className="bas-reserve">{reserve(mainAuTrait)}</div>
         <div className="bas-boutons">
           <button type="button" className="bouton discret" onClick={() => setJournalOuvert((x) => !x)}>{t.journal}</button>
           <button type="button" className="bouton discret" onClick={() => setRegles(true)}>{t.regles}</button>
@@ -429,7 +434,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
         <div className="voile verdict">
           <div className="dialogue verre">
             <h2 className="dialogue-titre">{titreFin}</h2>
-            {vainqueur && <p className="verdict-nom">{nom(vainqueur)}</p>}
+            {vainqueur && <p className="verdict-nom">{t.remporte(nom(vainqueur))}</p>}
             <p className="dialogue-texte">{texteFin}</p>
             <div className="dialogue-gestes">
               <button type="button" className="bouton discret" onClick={onMenu}>{t.menu}</button>

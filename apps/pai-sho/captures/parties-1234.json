@@ -1,0 +1,46 @@
+{
+  "url": "http://localhost:5178/",
+  "date": "2026-10-03T03:41:38.974Z",
+  "modes": {
+    "maison": {
+      "coupsHumains": 9,
+      "coupsTotal": 18
+    },
+    "sauvegarde": {
+      "reprendreVisible": true,
+      "coupsRepris": 18
+    },
+    "verdict": {
+      "visible": true
+    },
+    "deux": {
+      "coups": 7
+    },
+    "mobile": {
+      "coups": 4
+    },
+    "distance": {
+      "connecte": true,
+      "coups": 4,
+      "journaux": [
+        4,
+        4
+      ]
+    }
+  },
+  "captures": [
+    "menu-1440.jpg",
+    "partie-1440.jpg",
+    "regles-1440.jpg",
+    "verdict-1440.jpg",
+    "deux-1440.jpg",
+    "menu-390.jpg",
+    "partie-390.jpg",
+    "distance-invite-800.jpg"
+  ],
+  "erreurs": [],
+  "mesures": {
+    "plateau": null,
+    "debordementMenu": 0
+  }
+}

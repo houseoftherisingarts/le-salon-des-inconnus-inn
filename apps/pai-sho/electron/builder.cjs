@@ -2,6 +2,8 @@
 module.exports = {
   appId: 'com.inconnus.paisho',
   productName: 'Pai Sho',
+  // Version exacte exigée par electron-builder (il télécharge le binaire de cette version).
+  electronVersion: '38.8.6',
   directories: { output: 'release', buildResources: 'electron' },
   files: ['dist/**', 'electron/main.cjs', 'package.json'],
   asar: true,

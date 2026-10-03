@@ -68,6 +68,21 @@ export default function App() {
 
   useEffect(() => { try { localStorage.setItem(CLE_SON, son ? '1' : '0'); } catch { /* privé */ } }, [son]);
 
+  // Au menu, le plateau se loge entre le titre et les cartes : il reste
+  // entier à l'écran au lieu de passer sous le verre.
+  useEffect(() => {
+    if (ecran !== 'menu' || !scene) return;
+    const mesurer = () => {
+      const tete = document.querySelector('.menu-tete')?.getBoundingClientRect();
+      const cartes = document.querySelector('.menu-cartes')?.getBoundingClientRect();
+      if (!tete || !cartes) return;
+      scene.cadrer({ gauche: 0, droite: 0, haut: tete.bottom + 8, bas: Math.max(0, window.innerHeight - cartes.top + 8) });
+    };
+    const id = window.setTimeout(mesurer, 60);
+    window.addEventListener('resize', mesurer);
+    return () => { window.clearTimeout(id); window.removeEventListener('resize', mesurer); };
+  }, [ecran, scene]);
+
   const lancer = useCallback((d: Depart) => {
     setDepart(d);
     setManche((n) => n + 1);
@@ -78,7 +93,6 @@ export default function App() {
   const versMenu = useCallback(() => {
     setEcran('menu');
     setDepart(null);
-    scene?.cadrer({ gauche: 0, droite: 0, haut: 0, bas: 0 });
     scene?.deriver(true);
   }, [scene]);
 

@@ -13,8 +13,8 @@ import { batirDecor } from './decor';
 import { Marques } from './marques';
 import { brancherGestes } from './gestes';
 import {
-  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_PLATEAU, ECHELLE_TUILE, FOV, HAUT_CONVIVE, PAS,
-  PLATEAU_GLB_BAS, PLATEAU_GLB_DIAMETRE, RAYON_FACE, Y_FACE, Y_PLANCHER, chargerGLB, versMonde,
+  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_PLATEAU, ECHELLE_TUILE, RELIEF_TUILE, FOV, HAUT_CONVIVE, PAS,
+  PLATEAU_GLB_BAS, RAYON_FACE, Y_FACE, Y_PLANCHER, chargerGLB, versMonde,
   type Cadre,
 } from './mesures';
 import { estJouable, indice, type Pt } from '../jeu/plateau';
@@ -24,9 +24,24 @@ import {
 
 export { versMonde, type Cadre } from './mesures';
 
+// Les mouvements finissent à l'heure même quand une trame tarde (machine
+// lente, rendu logiciel) : sans cela, gsap étire le temps et l'entrée
+// en matière peut durer une minute.
+gsap.ticker.lagSmoothing(0);
+
 export interface OptionsScene {
   surProgres?: (fraction: number) => void;
 }
+
+/** L'inclinaison de jeu : 0.72 rad depuis la verticale. À 0.86, le
+ *  plateau mesuré sur les captures 1440 et 390 laissait un grand vide
+ *  sous la table ; plus droit, il remplit la zone libre en hauteur. */
+const PHI_JEU = 0.72;
+/** Sur téléphone, le plateau tient en largeur : il se redresse encore
+ *  (0.58) pour qu'il gagne en hauteur et comble la zone libre. */
+const PHI_TELEPHONE = 0.58;
+/** Sous cette largeur, l'interface passe à la feuille du bas. */
+export const LARGEUR_TELEPHONE = 900;
 
 interface ObjetTuile { obj: THREE.Object3D; type: TypeTuile; camp: Camp }
 
@@ -40,14 +55,15 @@ export class ScenePaiSho {
   private scene = new THREE.Scene();
   private camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 400);
   private gestionnaire = new THREE.LoadingManager();
-  private horloge = new THREE.Clock();
+  private horloge = new THREE.Timer();
   private raf = 0;
   private observateur: ResizeObserver;
   private aJeter: { dispose(): void }[] = [];
 
   // Caméra sphérique.
   private theta = 0;
-  private phi = 0.86;
+  private phi = PHI_JEU;
+  private phiJeu = (): number => (this.el.clientWidth <= LARGEUR_TELEPHONE ? PHI_TELEPHONE : PHI_JEU);
   private rayon = 30;
   private zoom = 1;
   private cadre: Cadre = { gauche: 0, droite: 0, haut: 0, bas: 0 };
@@ -69,7 +85,7 @@ export class ScenePaiSho {
     const r = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     r.shadowMap.enabled = true;
-    r.shadowMap.type = THREE.PCFSoftShadowMap;
+    r.shadowMap.type = THREE.PCFShadowMap;
     r.outputColorSpace = THREE.SRGBColorSpace;
     r.toneMapping = THREE.ACESFilmicToneMapping;
     r.toneMappingExposure = 1.1;
@@ -138,27 +154,9 @@ export class ScenePaiSho {
       cadre.position.y = -PLATEAU_GLB_BAS * ECHELLE_PLATEAU;
       cadre.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
       this.racine.add(cadre);
-      this.mesurerPlateau(cadre);
     } catch {
       // Sans le cadre sculpté, le disque peint reste seul sur la table.
     }
-  }
-
-  /** Outil de calibrage : lance des rayons vers le bas sur le cadre et
-   *  publie la hauteur du dessus selon le rayon. Les nombres obtenus
-   *  sont figés plus haut ; la fonction reste pour le prochain modèle. */
-  private mesurerPlateau(cadre: THREE.Object3D): void {
-    const rc = new THREE.Raycaster();
-    const mesures: { r: number; y: number | null }[] = [];
-    cadre.updateMatrixWorld(true);
-    const rmax = (PLATEAU_GLB_DIAMETRE / 2) * ECHELLE_PLATEAU;
-    for (let k = 0; k <= 40; k++) {
-      const r = (rmax * k) / 40;
-      rc.set(new THREE.Vector3(r, 50, 0.01), new THREE.Vector3(0, -1, 0));
-      const h = rc.intersectObject(cadre, true)[0];
-      mesures.push({ r: r / ECHELLE_PLATEAU, y: h ? h.point.y / ECHELLE_PLATEAU + PLATEAU_GLB_BAS : null });
-    }
-    (window as unknown as { __mesurePlateau: unknown }).__mesurePlateau = mesures;
   }
 
   // ── Les tuiles ────────────────────────────────────────────────────
@@ -171,7 +169,7 @@ export class ScenePaiSho {
       } catch {
         return;
       }
-      modele.scale.setScalar(ECHELLE_TUILE);
+      modele.scale.set(ECHELLE_TUILE, ECHELLE_TUILE * RELIEF_TUILE, ECHELLE_TUILE);
       const b = new THREE.Box3().setFromObject(modele);
       const c = b.getCenter(new THREE.Vector3());
       modele.position.set(-c.x, -b.min.y, -c.z);
@@ -351,10 +349,13 @@ export class ScenePaiSho {
     const libreH = Math.max(120, H - this.cadre.haut - this.cadre.bas);
     const t = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
     // Le plateau penché se raccourcit en hauteur, mais son bord proche
-    // grossit avec la perspective : 0.92 et 1.12 ont été mesurés sur les
+    // grossit avec la perspective : 0.92 et 1.2 ont été mesurés sur les
+    // captures ; sur téléphone, plus redressé, 1.1 dans les deux sens
+    // laisse une marge autour de la bordure.
     // captures pour garder une marge égale tout autour.
-    const rV = (DEMI_CADRE * 0.92) / (t * (libreH / H));
-    const rH = (DEMI_CADRE * 1.12) / (t * (libreW / H));
+    const tel = W <= LARGEUR_TELEPHONE;
+    const rV = (DEMI_CADRE * (tel ? 1.1 : 0.92)) / (t * (libreH / H));
+    const rH = (DEMI_CADRE * (tel ? 1.1 : 1.2)) / (t * (libreW / H));
     return Math.max(rV, rH);
   }
 
@@ -366,11 +367,17 @@ export class ScenePaiSho {
       r * Math.sin(this.phi) * Math.cos(this.theta),
     );
     this.camera.lookAt(0, 0.4, 0);
+    // Les matrices suivent tout de suite : un clic ou une mesure qui
+    // tombe entre deux trames lit la caméra telle qu'elle est.
+    this.camera.updateMatrixWorld();
   }
 
   private redimensionner(): void {
     const W = this.el.clientWidth, H = this.el.clientHeight;
     if (!W || !H) return;
+    // Sur téléphone, la main se lit dans la feuille du bas : les piles
+    // posées sur la table n'y seraient que des miettes.
+    this.reserves.visible = W > LARGEUR_TELEPHONE;
     this.renderer.setSize(W, H);
     this.camera.aspect = W / H;
     // Le décalage de la vue centre le plateau dans la zone que les
@@ -400,7 +407,7 @@ export class ScenePaiSho {
     this.poserCamera();
     return new Promise((ok) => {
       gsap.to(this, {
-        zoom: 1, phi: 0.86, theta: -0.25, duration: duree, ease: 'power3.inOut',
+        zoom: 1, phi: this.phiJeu(), theta: -0.25, duration: duree, ease: 'power3.inOut',
         onUpdate: () => this.poserCamera(), onComplete: () => ok(),
       });
     });
@@ -419,7 +426,7 @@ export class ScenePaiSho {
     if (d < -Math.PI) d += Math.PI * 2;
     return new Promise((ok) => {
       gsap.to(this, {
-        theta: this.theta + d, phi: 0.86, zoom: 1, duration: duree, ease: 'power2.inOut',
+        theta: this.theta + d, phi: this.phiJeu(), zoom: 1, duration: duree, ease: 'power2.inOut',
         onUpdate: () => this.poserCamera(), onComplete: () => ok(),
       });
     });
@@ -455,8 +462,9 @@ export class ScenePaiSho {
 
   private boucle = (): void => {
     this.raf = requestAnimationFrame(this.boucle);
+    this.horloge.update();
     const dt = Math.min(this.horloge.getDelta(), 0.1);
-    const t = this.horloge.elapsedTime;
+    const t = this.horloge.getElapsed();
     if (this.derive) { this.theta += dt * 0.05; this.poserCamera(); }
     this.marques.animer(t);
     this.renderer.render(this.scene, this.camera);
@@ -467,6 +475,7 @@ export class ScenePaiSho {
 
   detruire(): void {
     cancelAnimationFrame(this.raf);
+    this.horloge.dispose();
     this.observateur.disconnect();
     gsap.killTweensOf(this);
     this.scene.traverse((o) => {

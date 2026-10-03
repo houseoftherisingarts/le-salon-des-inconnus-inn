@@ -13,18 +13,20 @@ const SORTIE = path.resolve(ici, '../captures');
 mkdirSync(SORTIE, { recursive: true });
 
 const rapport = { url: URL, date: new Date().toISOString(), modes: {}, captures: [], erreurs: [], mesures: {} };
-const navigateur = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+const ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+const navigateur = await chromium.launch({ args: ARGS });
 
+const SEUL = process.env.SEUL ?? '1234';
 const pause = (ms) => new Promise((r) => setTimeout(r, ms));
 async function capture(page, nom) {
   await page.evaluate(() => window.__scene?.rendre());
   const f = path.join(SORTIE, `${nom}.jpg`);
-  await page.screenshot({ path: f, type: 'jpeg', quality: 82 });
+  await page.screenshot({ path: f, type: 'jpeg', quality: 82, animations: 'disabled' });
   rapport.captures.push(`${nom}.jpg`);
 }
 
-async function ouvrir(largeur, hauteur, propre = true) {
-  const ctx = await navigateur.newContext({ viewport: { width: largeur, height: hauteur }, deviceScaleFactor: 1 });
+async function ouvrir(largeur, hauteur, propre = true, nav = navigateur) {
+  const ctx = await nav.newContext({ viewport: { width: largeur, height: hauteur }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => rapport.erreurs.push(`${largeur}: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error') rapport.erreurs.push(`${largeur} console: ${m.text()}`); });
@@ -57,8 +59,8 @@ async function jouerUnCoup(page, { bonus = false } = {}) {
   else if (deps.length && avant.numero > 3) c = deps[Math.floor(Math.random() * deps.length)];
   else c = avant.legaux.find((x) => x.type === 'planter') ?? avant.legaux[0];
   if (c.type === 'planter') {
-    const zone = (await page.$('.hud-bas .bas-reserve')) && (await page.isVisible('.hud-bas')) ? '.hud-bas' : '.hud-gauche';
-    await page.click(`${zone} .jeton[data-tuile="${c.tuile}"]`);
+    const zones = (await page.isVisible('.hud-bas')) ? ['.hud-bas'] : ['.hud-gauche', '.hud-droite'];
+    await page.click(zones.map((z) => `${z} .jeton[data-tuile="${c.tuile}"]:enabled`).join(', '));
     await cliquerPoint(page, c.porte);
   } else {
     await cliquerPoint(page, c.de);
@@ -73,6 +75,7 @@ async function jouerUnCoup(page, { bonus = false } = {}) {
   }
   await page.waitForFunction((n) => window.__partie && window.__partie.coups.length > n, avant.coups, { timeout: 8000 }).catch(() => {});
   const apres = await partie(page);
+  if (apres.coups <= avant.coups) rapport.erreurs.push(`coup refusé : ${JSON.stringify(c)} choix=${apres.choix} n=${avant.numero}`);
   return apres.coups > avant.coups;
 }
 
@@ -85,7 +88,7 @@ async function attendreMonTour(page, n) {
 }
 
 // ── 1. Bureau : menu, mesure du plateau, partie contre la maison ─────
-{
+if (SEUL.includes('1')) {
   const { ctx, page } = await ouvrir(1440, 900);
   rapport.mesures.plateau = await page.evaluate(() => window.__mesurePlateau ?? null);
   await capture(page, 'menu-1440');
@@ -127,20 +130,20 @@ async function attendreMonTour(page, n) {
 }
 
 // ── 2. À deux sur le même Mac ────────────────────────────────────────
-{
+if (SEUL.includes('2')) {
   const { ctx, page } = await ouvrir(1440, 900);
-  await page.click('.carte:has(.case) .bouton.or');
+  await page.click('[data-test="a-deux"]');
   await page.waitForSelector('.hud-haut');
   await pause(2200);
   let n = 0;
-  for (let i = 0; i < 6; i++) { if (await jouerUnCoup(page)) n++; await pause(1700); }
+  for (let i = 0; i < 7; i++) { await page.waitForFunction(() => window.__partie?.legaux.length > 0, null, { timeout: 15000 }).catch(() => {}); await pause(300); if (await jouerUnCoup(page)) n++; }
   rapport.modes.deux = { coups: n };
   await capture(page, 'deux-1440');
   await ctx.close();
 }
 
 // ── 3. Téléphone ─────────────────────────────────────────────────────
-{
+if (SEUL.includes('3')) {
   const { ctx, page } = await ouvrir(390, 844);
   rapport.mesures.debordementMenu = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   await capture(page, 'menu-390');
@@ -159,10 +162,10 @@ async function attendreMonTour(page, n) {
   await ctx.close();
 }
 
-// ── 4. À distance : deux pages, l'une ouvre la table, l'autre la rejoint ─
-{
-  const a = await ouvrir(1024, 700);
-  const b = await ouvrir(1024, 700);
+// ── 4. À distance : deux navigateurs, l'un ouvre la table, l'autre la rejoint ─
+if (SEUL.includes('4')) {
+  const a = await ouvrir(800, 600);
+  const b = await ouvrir(800, 600, true, await chromium.launch({ args: ARGS }));
   const id = await a.page.textContent('code.id');
   await a.page.click('text=' + (await a.page.evaluate(() => document.documentElement.lang === 'fr' ? 'Ouvrir une table' : 'Open a table')));
   await pause(2500);
@@ -184,13 +187,13 @@ async function attendreMonTour(page, n) {
     }
     rapport.modes.distance.coups = n;
     rapport.modes.distance.journaux = [(await partie(a.page)).coups, (await partie(b.page)).coups];
-    await capture(b.page, 'distance-invite-1024');
+    await capture(b.page, 'distance-invite-800');
   } else {
     rapport.modes.distance.etat = [await a.page.textContent('.carte:last-child').catch(() => ''), await b.page.textContent('.carte:last-child').catch(() => '')];
   }
-  await a.ctx.close(); await b.ctx.close();
+  await a.ctx.close(); await b.ctx.browser().close();
 }
 
 await navigateur.close();
-writeFileSync(path.join(SORTIE, 'parties.json'), JSON.stringify(rapport, null, 2));
+writeFileSync(path.join(SORTIE, `parties-${SEUL}.json`), JSON.stringify(rapport, null, 2));
 console.log(JSON.stringify({ ...rapport, mesures: { ...rapport.mesures, plateau: rapport.mesures.plateau?.filter((_, i) => i % 2 === 0) } }, null, 1));
