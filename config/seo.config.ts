@@ -238,5 +238,5 @@ export const OG_IMAGES: Partial<Record<ViewKey, string>> = {
   CENTRE_ARTS:    `${SITE_URL}/media/centre-arts/og-centre-arts.jpg`,
   MECENE:         `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
   CAFE:           `${SITE_URL}/media/Financement%20Artistique/centered%20copy.jpg`,
-  CAFE_JEUX:      `${SITE_URL}/media/cafe-jeux/pai-sho-partie.webp`,
+  CAFE_JEUX:      `${SITE_URL}/media/cafe-jeux/og-cafe-jeux.jpg`,
 };

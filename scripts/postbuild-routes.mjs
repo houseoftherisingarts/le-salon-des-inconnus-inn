@@ -82,6 +82,13 @@ const ROUTES = [
     image: 'https://www.lesalondesinconnus.com/media/Financement%20Artistique/centered%20copy.jpg',
     url: 'https://www.lesalondesinconnus.com/cafe',
   },
+  {
+    path: "cafe-jeux",
+    title: "Café-jeux · Pai Sho et jeux du Festival médiéval | Le Salon des Inconnus",
+    description: "Jouez au Pai Sho sur une table de taverne en bois et aux jeux du Festival médiéval de Montpellier à même la page, gagnez des pétales en jouant et débloquez de nouveaux plateaux et de nouvelles tuiles.",
+    image: 'https://www.lesalondesinconnus.com/media/cafe-jeux/og-cafe-jeux.jpg',
+    url: 'https://www.lesalondesinconnus.com/cafe-jeux',
+  },
 ];
 
 const src = readFileSync(join(root, 'dist/index.html'), 'utf8');
