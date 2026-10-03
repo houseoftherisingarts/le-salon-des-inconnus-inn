@@ -94,6 +94,15 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     (window as unknown as { __partie: unknown }).__partie = { legaux, etat, coups, choix: choix.type };
   });
 
+  // Encadré dans le café-jeux du Salon, le jeu annonce la fin de chaque
+  // partie à la page qui l'héberge, qui verse les pétales.
+  useEffect(() => {
+    if (!fini || window.parent === window) return;
+    const gagnant = abandon ? autre(abandon) : etat.verdict?.type === 'victoire' ? etat.verdict.camp : null;
+    window.parent.postMessage({ type: 'paisho:partie', gagnee: gagnant === config.campLocal, contre: config.mode, niveau: config.niveau }, '*');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fini]);
+
   // ── La mise en place ──────────────────────────────────────────────
   useEffect(() => {
     penseur.current = nouveauPenseur();
