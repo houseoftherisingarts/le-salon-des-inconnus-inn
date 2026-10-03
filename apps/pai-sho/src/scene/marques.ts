@@ -18,6 +18,8 @@ export class Marques {
   private anneau: THREE.Mesh;
   private refus: THREE.Mesh;
   private survol: THREE.Mesh;
+  /** Les suggestions : un anneau d'or fin sur chaque tuile ou case qui peut former une harmonie. */
+  private suggestionsMesh: THREE.InstancedMesh;
   private fils = new THREE.Group();
   private geoFil = new THREE.CylinderGeometry(1, 1, 1, 8, 1, true);
   private matFil = new THREE.MeshBasicMaterial({
@@ -43,8 +45,14 @@ export class Marques {
     this.refus = new THREE.Mesh(geoAnneau, mat(0xd8382a, 0.85));
     this.survol = new THREE.Mesh(geoAnneau, mat(0x9cf5bd, 0.9));
     for (const m of [this.anneau, this.refus, this.survol]) { m.visible = false; m.renderOrder = 3; }
-    this.groupe.add(this.ciblesMesh, this.anneau, this.refus, this.survol, this.fils);
-    this.aJeter = [geoDisque, matCible, geoAnneau, this.geoFil, this.matFil, this.matFilGagnant,
+    const geoSuggestion = new THREE.RingGeometry(0.36 * PAS, 0.44 * PAS, 40).rotateX(-Math.PI / 2);
+    this.suggestionsMesh = new THREE.InstancedMesh(geoSuggestion, mat(OR, 0.7, true), MAX_CIBLES);
+    this.suggestionsMesh.count = 0;
+    this.suggestionsMesh.renderOrder = 2;
+    this.suggestionsMesh.frustumCulled = false;
+    this.groupe.add(this.ciblesMesh, this.suggestionsMesh, this.anneau, this.refus, this.survol, this.fils);
+    this.aJeter = [geoDisque, matCible, geoAnneau, geoSuggestion, this.suggestionsMesh.material as THREE.Material,
+      this.geoFil, this.matFil, this.matFilGagnant,
       this.anneau.material as THREE.Material, this.refus.material as THREE.Material,
       this.survol.material as THREE.Material];
   }
@@ -64,6 +72,19 @@ export class Marques {
     this.anneau.visible = selection !== null;
     if (selection !== null) this.anneau.position.copy(versMonde(selection, Y_FACE + 0.02));
     this.refus.visible = this.survol.visible = false;
+  }
+
+  /** Les anneaux de suggestion, sur les tuiles qui peuvent former une harmonie ou sur leurs cases d'arrivée. */
+  suggerer(points: Pt[]): void {
+    const m = new THREE.Matrix4();
+    let n = 0;
+    for (const p of new Set(points)) {
+      if (n >= MAX_CIBLES) break;
+      const v = versMonde(p, Y_FACE + 0.016);
+      this.suggestionsMesh.setMatrixAt(n++, m.makeTranslation(v.x, v.y, v.z));
+    }
+    this.suggestionsMesh.count = n;
+    this.suggestionsMesh.instanceMatrix.needsUpdate = true;
   }
 
   /** Vert sur une cible, rouge ailleurs quand une tuile est choisie. */
@@ -101,7 +122,8 @@ export class Marques {
    * les cibles prennent un vert plus profond.
    */
   adapterAuFond(clair: boolean): void {
-    const ors = [this.matFil, this.matFilGagnant, this.anneau.material as THREE.MeshBasicMaterial];
+    const ors = [this.matFil, this.matFilGagnant, this.anneau.material as THREE.MeshBasicMaterial,
+      this.suggestionsMesh.material as THREE.MeshBasicMaterial];
     for (const m of ors) {
       m.color.setHex(clair ? 0xa8740a : OR);
       m.blending = clair ? THREE.NormalBlending : THREE.AdditiveBlending;
@@ -116,6 +138,7 @@ export class Marques {
     this.matFil.opacity = 0.62 + 0.25 * Math.sin(t * 2.2);
     this.matFilGagnant.opacity = 0.7 + 0.3 * Math.sin(t * 5);
     (this.anneau.material as THREE.MeshBasicMaterial).opacity = 0.75 + 0.25 * Math.sin(t * 4);
+    (this.suggestionsMesh.material as THREE.MeshBasicMaterial).opacity = 0.5 + 0.3 * Math.sin(t * 2.6);
   }
 
   detruire(): void { for (const x of this.aJeter) x.dispose(); }

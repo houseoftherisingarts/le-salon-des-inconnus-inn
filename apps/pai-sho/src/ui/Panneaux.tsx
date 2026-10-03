@@ -9,9 +9,9 @@ import { NOMS_TUILES, REGLES, TEXTES, type Langue } from './textes';
 const BASE = import.meta.env.BASE_URL;
 const icone = (t: TypeTuile) => `${BASE}tuiles/${t}.webp`;
 
-export function Reserve({ etat, camp, langue, nom, actif, plantables, choisie, onChoisir }: {
+export function Reserve({ etat, camp, langue, nom, actif, plantables, suggerees, choisie, onChoisir }: {
   etat: EtatPaiSho; camp: Camp; langue: Langue; nom: string; actif: boolean;
-  plantables: Set<TypeTuile>; choisie: TypeTuile | null; onChoisir: (t: TypeTuile) => void;
+  plantables: Set<TypeTuile>; suggerees?: Set<TypeTuile>; choisie: TypeTuile | null; onChoisir: (t: TypeTuile) => void;
 }) {
   const t = TEXTES[langue];
   const noms = NOMS_TUILES[langue];
@@ -29,7 +29,7 @@ export function Reserve({ etat, camp, langue, nom, actif, plantables, choisie, o
             <li key={ty}>
               <button
                 type="button"
-                className={`jeton ${n === 0 ? 'vide' : ''} ${jouable ? 'jouable' : ''} ${choisie === ty ? 'choisi' : ''}`}
+                className={`jeton ${n === 0 ? 'vide' : ''} ${jouable ? 'jouable' : ''} ${jouable && suggerees?.has(ty) ? 'suggere' : ''} ${choisie === ty ? 'choisi' : ''}`}
                 disabled={!jouable}
                 onClick={() => onChoisir(ty)}
                 title={noms[ty]}

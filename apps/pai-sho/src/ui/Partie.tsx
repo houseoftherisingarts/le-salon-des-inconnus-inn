@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { appliquerCoup, coupLegal, texteVerdict, TEXTES_ARBITRE } from '../jeu/arbitre';
 import {
-  coupDepuisTexte, coupEnTexte, coupsLegaux, jouer,
+  coupDepuisTexte, coupEnTexte, coupsLegaux, harmonies, jouer,
   type Bonus, type Camp, type Coup, type EtatPaiSho, type TypeTuile,
 } from '../jeu/logic';
 import { choisirCoup } from '../jeu/cpu';

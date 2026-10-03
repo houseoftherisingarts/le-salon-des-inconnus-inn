@@ -319,6 +319,9 @@ export class ScenePaiSho {
   /** Les cibles légales en vert, la tuile choisie cerclée d'or. */
   montrerCibles(points: Pt[], selection: Pt | null): void { this.marques.montrer(points, selection); }
 
+  /** Les anneaux d'or des suggestions : les tuiles (ou les cases) qui peuvent former une harmonie. */
+  montrerSuggestions(points: Pt[]): void { this.marques.suggerer(points); }
+
   private survoler(p: Pt | null): void {
     const m = this.marques;
     this.renderer.domElement.style.cursor = p !== null && (m.cibles.has(p) || this.tuiles.has(p)) ? 'pointer' : 'default';
