@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { NIVEAUX_POSSIBLES, nomNiveau, type Niveau } from '../moteur/niveaux';
 import { nomDadversaire } from '../scene/noms';
-import { ADVERSAIRES, adversaire, figurinesDessin, nomAdversaire, sauverFigurines, vuDEnFace } from '../jeu/adversaires';
+import { ADVERSAIRES, ECHELONS, adversaire, figurinesDessin, nomAdversaire, sauverFigurines, vuDEnFace } from '../jeu/adversaires';
+import { adversaireOuvert, avatarOuvert, estBattu, prochainDefi, toutBattu } from '../jeu/progression';
 import Volume from './Volume';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
 import { Lien, amis as lireAmis, garderAmi, idValide, joueurLocal, oublierAmi, sauverJoueur, type Ami, type EtatLien, type Joueur } from '../reseau/pair';
@@ -32,9 +33,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const fr = langue === 'FR';
   const [niveau, setNiveau] = useState<Niveau>(3);
   // L'identifiant du personnage d'en face; le choix se garde, Iroh d'abord.
-  const [adv, setAdv] = useState<string>(() => { try { const lu = localStorage.getItem(CLE_ADVERSAIRE); return lu && adversaire(lu) ? lu : 'iroh'; } catch { return 'iroh'; } });
-  const perso = adversaire(adv);
-  const libre = !perso || !!perso.libre;
+  // L'identifiant du personnage d'en face; le choix se garde s'il est encore ouvert, sinon le prochain défi.
+  const [adv, setAdv] = useState<string>(() => { try { const lu = localStorage.getItem(CLE_ADVERSAIRE); return lu && adversaire(lu) && adversaireOuvert(lu) ? lu : prochainDefi(); } catch { return prochainDefi(); } });
+  const perso = adversaire(adv) ?? ADVERSAIRES[0];
+  // Toute l'échelle vaincue : le niveau se règle à la main, entraînement libre.
+  const libre = toutBattu();
   const niveauJoue: Niveau = libre ? niveau : perso.niveau;
   const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
   // Le personnage choisi prend place en face de la table dès le menu.
@@ -75,7 +78,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     const nomAdv = perso ? nomAdversaire(perso, fr) : nomDadversaire(fr);
     onLancer({
       config: {
-        mode: 'maison', niveau: niveauJoue, campLocal: cote, tourner: false,
+        mode: 'maison', niveau: niveauJoue, campLocal: cote, tourner: false, adversaire: perso.id, tempsMs: libre ? undefined : perso.tempsMs,
         noms: cote === 'hote' ? { hote: monNom, invite: nomAdv } : { hote: nomAdv, invite: monNom },
       },
     });
@@ -172,11 +175,30 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <p className="carte-aide">{t.choisirAdversaire}</p>
           <div className="champ">
             <span className="etiquette">{t.adversaire}</span>
-            <div className="persos" role="radiogroup">
-              {ADVERSAIRES.map((a) => (
-                <button key={a.id} type="button" className={`perso ${adv === a.id ? 'choisi' : ''}`} role="radio" aria-checked={adv === a.id} onClick={() => choisirAdv(a.id)} data-test={`adv-${a.id}`}>{nomAdversaire(a, fr)}</button>
-              ))}
-            </div>
+            <ol className="echelle" role="radiogroup" data-test="echelle">
+              {ECHELONS.map((e, i) => {
+                const ouvert = adversaireOuvert(e[0]);
+                return (
+                  <li key={i} className={`echelon ${ouvert ? '' : 'ferme'}`}>
+                    <span className="echelon-no">{i + 1}</span>
+                    {e.map((id, j) => {
+                      const a = adversaire(id);
+                      if (!a) return null;
+                      return (
+                        <span key={id} className="echelon-paire">
+                          {j > 0 && <span className="echelon-ou">{fr ? 'ou' : 'or'}</span>}
+                          <button type="button" className={`perso ${adv === id ? 'choisi' : ''} ${estBattu(id) ? 'battu' : ''}`} role="radio" aria-checked={adv === id} disabled={!ouvert} onClick={() => choisirAdv(id)} data-test={`adv-${id}`}>
+                            {ouvert ? nomAdversaire(a, fr) : '🔒 ' + nomAdversaire(a, fr)}{estBattu(id) && <i className="coche" aria-label={fr ? 'vaincu' : 'beaten'}> ✓</i>}
+                          </button>
+                        </span>
+                      );
+                    })}
+                  </li>
+                );
+              })}
+              <li className="echelon ferme korra" data-test="korra"><span className="echelon-no">✦</span><span className="petit">{t.korraBientot}</span></li>
+            </ol>
+            <span className="petit">{libre ? t.entrainement : t.echelleAide}</span>
             <span className="etiquette">{t.figurines}</span>
             <div className="bascule" data-test="figurines">
               <button type="button" className={!dessin ? 'choisi' : ''} onClick={() => dessin && changerFigurines()} aria-pressed={!dessin}>{t.peintes}</button>
@@ -184,14 +206,14 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             </div>
             {perso && <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>}
           </div>
-          <div className="champ">
+          {libre && <div className="champ">
             <span className="etiquette">{t.niveau}</span>
             <div className="niveau">
               <button type="button" className="rond" aria-label="-" onClick={() => setNiveau((n) => Math.max(1, n - 1) as Niveau)} disabled={!libre || niveau === 1}>−</button>
               <span className="niveau-nom"><b>{niveauJoue}</b> {nomNiveau(niveauJoue, fr)}</span>
               <button type="button" className="rond" aria-label="+" onClick={() => setNiveau((n) => Math.min(10, n + 1) as Niveau)} disabled={!libre || niveau === NIVEAUX_POSSIBLES.length}>+</button>
             </div>
-          </div>
+          </div>}
           <div className="champ">
             <span className="etiquette">{t.votreCote}</span>
             <div className="bascule">
@@ -240,7 +262,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             <div className="persos" role="radiogroup">
               <button type="button" className={`perso ${!joueur.avatar ? 'choisi' : ''}`} role="radio" aria-checked={!joueur.avatar} onClick={() => changerAvatar(undefined)}>{t.sansPersonnage}</button>
               {ADVERSAIRES.map((a) => (
-                <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{nomAdversaire(a, fr)}</button>
+                <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} disabled={!avatarOuvert(a.id)} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{avatarOuvert(a.id) ? '' : '🔒 '}{nomAdversaire(a, fr)}</button>
               ))}
             </div>
           </div>

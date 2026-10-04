@@ -23,6 +23,8 @@ import { NOMS_TUILES, TEXTES, type Langue } from './textes';
 import { Reserve, Journal, PanneauRegles, PanneauBonus } from './Panneaux';
 import Fiches from './Fiches';
 import Volume from './Volume';
+import Deblocage from './Deblocage';
+import { enregistrerVictoire, type Deblocage as Gain } from '../jeu/progression';
 
 type Choix =
   | { type: 'aucun' }
@@ -96,6 +98,9 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const [confirmer, setConfirmer] = useState(false);
   const [etatLien, setEtatLien] = useState<EtatLien>(lien ? 'connecte' : 'fini');
   const [journalOuvert, setJournalOuvert] = useState(false);
+  // Ce que la victoire contre la maison vient d'ouvrir, montré avant le verdict.
+  const [gain, setGain] = useState<Gain | null>(null);
+  const inscrit = useRef(false);
   const penseur = useRef<Penseur | null>(null);
   const etatRef = useRef(etat);
   const coupsRef = useRef(coups);
@@ -224,13 +229,13 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     const p = penseur.current;
     if (!p) return;
     if (estLocal(etat.tour)) {
-      p.anticiper('paisho', 'defaut', etat, config.niveau);
+      p.anticiper('paisho', 'defaut', etat, config.niveau, { tempsMs: config.tempsMs });
       return;
     }
     let vivant = true;
     setReflechit(true);
     const debut = performance.now();
-    p.demanderCoup<Coup>('paisho', 'defaut', etat, config.niveau).then(async (c) => {
+    p.demanderCoup<Coup>('paisho', 'defaut', etat, config.niveau, { tempsMs: config.tempsMs }).then(async (c) => {
       if (!vivant) return;
       // Le repli : si le travailleur n'a rien rendu, la machine
       // réfléchit ici même plutôt que de laisser la partie en plan.
@@ -419,6 +424,13 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     texteFin = texteVerdict(etat.verdict, fr) ?? '';
   }
   const vainqueur = abandon ? autre(abandon) : etat.verdict?.type === 'victoire' ? etat.verdict.camp : null;
+  // Une victoire contre un adversaire de l'échelle s'inscrit une fois, au moment où elle tombe.
+  useEffect(() => {
+    if (inscrit.current || !vainqueur || config.mode !== 'maison' || !config.adversaire || vainqueur !== config.campLocal) return;
+    inscrit.current = true;
+    const g = enregistrerVictoire(config.adversaire);
+    if (g) setGain(g);
+  }, [vainqueur, config]);
   // Le joueur seul devant son écran qui perd lit « Défaite », pas « Victoire ».
   if (vainqueur && config.mode !== 'deux' && vainqueur !== config.campLocal) titreFin = t.defaite;
 
@@ -543,7 +555,9 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
         </div>
       )}
 
-      {fini && !occupe && (
+      {fini && !occupe && gain && <Deblocage gain={gain} langue={langue} son={son} onFermer={() => setGain(null)} />}
+
+      {fini && !occupe && !gain && (
         <div className="voile verdict">
           <div className="dialogue verre">
             <h2 className="dialogue-titre">{titreFin}</h2>

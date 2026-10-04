@@ -4,7 +4,7 @@
 // Quand une marche s'ouvre en même temps, un second tableau montre les
 // deux nouveaux adversaires en silhouette.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { adversaire, figurinesDessin, nomAdversaire } from '../jeu/adversaires';
 import type { Deblocage as Gain } from '../jeu/progression';
@@ -119,24 +119,27 @@ export default function Deblocage({ gain, langue, son, onFermer }: Props) {
   const t = TEXTES[langue];
   const fr = langue === 'FR';
   // Tableau 0 : le personnage gagné. Tableau 1 : la marche ouverte.
-  const tableaux: Array<{ titre: string; ids: string[]; ombre: boolean; sous: string }> = [];
-  if (gain.avatars.length) {
-    const p = adversaire(gain.perso);
-    tableaux.push({
-      titre: t.debloque, ids: gain.avatars, ombre: false,
-      sous: gain.honneur ? t.irohHonneur : p ? nomAdversaire(p, fr) : gain.perso,
-    });
-  }
-  if (gain.defis.length) {
-    tableaux.push({
-      titre: t.nouveauxDefis, ids: gain.defis, ombre: true,
-      sous: gain.defis.map((id) => { const a = adversaire(id); return a ? nomAdversaire(a, fr) : id; }).join(fr ? ' et ' : ' and '),
-    });
-  }
+  const tableaux = useMemo(() => {
+    const l: Array<{ titre: string; ids: string[]; ombre: boolean; sous: string }> = [];
+    if (gain.avatars.length) {
+      const p = adversaire(gain.perso);
+      l.push({
+        titre: t.debloque, ids: gain.avatars, ombre: false,
+        sous: gain.honneur ? t.irohHonneur : p ? nomAdversaire(p, fr) : gain.perso,
+      });
+    }
+    if (gain.defis.length) {
+      l.push({
+        titre: t.nouveauxDefis, ids: gain.defis, ombre: true,
+        sous: gain.defis.map((id) => { const a = adversaire(id); return a ? nomAdversaire(a, fr) : id; }).join(fr ? ' et ' : ' and '),
+      });
+    }
+    return l;
+  }, [gain, t, fr]);
   const [i, setI] = useState(0);
   useEffect(() => { if (son) gong(); }, [i, son]);
   const tableau = tableaux[i];
-  if (!tableau) { onFermer(); return null; }
+  if (!tableau) return null;
   const suivant = () => { if (i + 1 < tableaux.length) setI(i + 1); else onFermer(); };
   return (
     <button type="button" className="debloque" onClick={suivant} data-test="debloque" key={i}>

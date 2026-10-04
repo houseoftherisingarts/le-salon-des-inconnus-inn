@@ -21,6 +21,8 @@ export interface Config {
   avatars?: Partial<Record<Camp, string | null>>;
   /** Contre la maison : l'adversaire de l'échelle, pour inscrire la victoire. */
   adversaire?: string;
+  /** Un temps de réflexion propre au personnage, par-dessus celui du niveau. */
+  tempsMs?: number;
 }
 
 export interface Sauvegarde {

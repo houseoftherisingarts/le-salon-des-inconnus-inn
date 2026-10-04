@@ -1,7 +1,7 @@
-// ─── Le convive d'en face : la dame, ou l'adversaire choisi ───────────
+// ─── Le convive d'en face : l'adversaire choisi ─────────────────────
 // Le Pai Sho se joue à deux (Alex, 3 octobre) : une seule personne
-// s'assoit en face du plateau. La dame par défaut; quand le joueur choisit
-// un personnage, celui-ci prend sa place et la dame s'efface.
+// s'assoit en face du plateau, le personnage choisi. Les gens de la
+// taverne sont partis le 4 octobre; sans personnage, la chaise reste vide.
 
 import { adversaire, figurinesDessin } from '../jeu/adversaires';
 import * as THREE from 'three';
@@ -14,22 +14,11 @@ export class Convives {
   private cote: Camp = 'hote';
   private idAdversaire: string | null = null;
 
-  charger(gestionnaire: THREE.LoadingManager): void {
-    // Le personnage gardé au menu s'assoit dès l'ouverture (Iroh sinon),
-    // pour que la dame n'apparaisse pas un instant à sa place.
+  charger(_gestionnaire: THREE.LoadingManager): void {
+    // Le personnage gardé au menu s'assoit dès l'ouverture (Iroh sinon).
     let choisi = 'iroh';
     try { choisi = localStorage.getItem('paisho.adversaire') ?? 'iroh'; } catch { /* privé */ }
     this.adversaire(adversaire(choisi) ? choisi : 'iroh');
-    ['dame'].forEach((nom, i) => {
-      chargerSculpture(`${BASE}models/convives/${nom}.glb`, HAUT_CONVIVE, gestionnaire)
-        .then((g) => {
-          g.userData.rang = i;
-          g.visible = !(i === 0 && this.idAdversaire);
-          this.groupe.add(g);
-          this.placer(this.cote);
-        })
-        .catch(() => { /* la partie se joue aussi sans spectateurs */ });
-    });
   }
 
   /** Les spectateurs s'assoient en face du joueur `camp`. */
@@ -45,14 +34,12 @@ export class Convives {
     }
   }
 
-  /** Le personnage `id` (fichier models/convives/<id>.glb) s'assoit en face; `null` rend sa place à la dame. */
+  /** Le personnage `id` (fichier models/convives/<id>.glb) s'assoit en face; `null` vide la chaise. */
   adversaire(id: string | null): void {
     if (id === this.idAdversaire) return;
     this.idAdversaire = id;
     const ancien = this.groupe.children.find((g) => g.userData.perso);
     if (ancien) this.groupe.remove(ancien);
-    const dame = this.groupe.children.find((g) => g.userData.rang === 0);
-    if (dame) dame.visible = !id;
     if (!id) return;
     // Le style choisi d'abord, l'autre jeu de statuettes si le fichier manque.
     const [un, deux] = figurinesDessin() ? [`${id}2`, id] : [id, `${id}2`];
@@ -70,6 +57,6 @@ export class Convives {
         this.groupe.add(g);
         this.placer(this.cote);
       })
-      .catch(() => { if (dame) dame.visible = true; });
+      .catch(() => { /* la chaise reste vide */ });
   }
 }
