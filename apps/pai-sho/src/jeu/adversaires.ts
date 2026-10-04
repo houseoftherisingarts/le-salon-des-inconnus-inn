@@ -30,6 +30,7 @@ export const ADVERSAIRES: readonly Adversaire[] = [
   { id: 'azula',  nom: 'Azula',  niveau: 8,  motFR: 'Tu as déjà perdu, tu ne le sais pas encore.',             motEN: 'You have already lost, you just don’t know it yet.' },
   { id: 'bumi',   nom: 'Bumi',   niveau: 10, motFR: 'Le bon coup est rarement celui que tu attends.',          motEN: 'The right move is rarely the one you expect.' },
   { id: 'kyoshi', nom: 'Guerrière Kyoshi', nomEN: 'Kyoshi Warrior', niveau: 6, motFR: 'L’éventail d’abord, la victoire ensuite.', motEN: 'The fan first, the win after.' },
+  { id: 'chou', nom: 'Le marchand de choux', nomEN: 'The cabbage merchant', niveau: 2, motFR: 'Jouez doucement, j’ai déjà perdu assez de choux cette année.', motEN: 'Play gently, I have lost enough cabbages this year.' },
   // Les gens de la maison, à la fin de la liste (Alex, 3 octobre).
   { id: 'taverniere', nom: 'La dame de la taverne', nomEN: 'The tavern lady', niveau: 2, motFR: 'Une partie, puis je retourne à mes chopes.', motEN: 'One game, then back to my mugs.' },
   { id: 'colporteur', nom: 'Le colporteur', nomEN: 'The peddler', niveau: 1, motFR: 'Si je gagne, vous m’achetez quelque chose.', motEN: 'If I win, you buy something from me.' },
