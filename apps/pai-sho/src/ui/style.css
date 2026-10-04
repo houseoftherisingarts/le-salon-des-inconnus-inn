@@ -510,7 +510,7 @@ img { display: block; }
 .niveau-persos { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; }
 .niveau-carte.ferme .perso { opacity: 0.75; }
 /* La case figurine : un carré de verre sombre, la statuette photographiée dedans, le nom dessous. */
-.niveau-perso { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 10px 7px; min-width: 96px; }
+.niveau-perso { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 10px 7px; min-width: 96px; border-radius: 16px; }
 .niveau-vignette { width: 76px; height: 76px; border-radius: 12px; object-fit: cover; object-position: center top; background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.18), rgba(0, 0, 0, 0.5) 70%); border: 1px solid rgba(255, 255, 255, 0.12); display: block; }
 .perso.choisi .niveau-vignette { border-color: rgba(212, 175, 55, 0.7); box-shadow: 0 0 18px rgba(212, 175, 55, 0.35); }
 .niveau-carte.ferme .niveau-vignette { filter: saturate(0.55) brightness(0.8); }

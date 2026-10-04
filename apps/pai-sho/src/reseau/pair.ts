@@ -141,7 +141,18 @@ export class Lien {
   }
 
   private creerPeer(siOuvert: () => void): void {
-    const p = new Peer(this.moi.id);
+    // STUN seul ne passe pas les routeurs stricts ni le cellulaire : un
+    // relais TURN public (Open Relay, gratuit) prend le relais quand le
+    // lien direct échoue, sinon la table s'ouvre mais personne n'arrive.
+    const p = new Peer(this.moi.id, {
+      config: {
+        iceServers: [
+          { urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302'] },
+          { urls: 'stun:openrelay.metered.ca:80' },
+          { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp'], username: 'openrelayproject', credential: 'openrelayproject' },
+        ],
+      },
+    });
     this.peer = p;
     p.on('open', siOuvert);
     p.on('connection', (c) => {

@@ -1,0 +1,16 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+const page = await b.newPage({ viewport: { width: 1440, height: 900 } });
+const logs = []; page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') logs.push(m.text().slice(0, 160)); });
+page.on('pageerror', (e) => logs.push('PAGEERROR ' + e.message.slice(0, 160)));
+const reseau = []; page.on('request', (r) => { if (/peerjs|peer|stun|turn/i.test(r.url())) reseau.push(r.method() + ' ' + r.url().slice(0, 120)); });
+page.on('websocket', (ws) => { reseau.push('WS ' + ws.url().slice(0, 120)); ws.on('close', () => reseau.push('WS close')); ws.on('socketerror', (e) => reseau.push('WS error ' + e)); ws.on('framereceived', (f) => reseau.push('WS <- ' + String(f.payload).slice(0, 100))); });
+await page.goto(process.argv[2] + '?intro=0', { waitUntil: 'domcontentloaded', timeout: 120000 });
+await page.evaluate(() => { localStorage.setItem('paisho.tutoriel.paisho', '1'); });
+const porte = page.locator('[data-test=porte]'); if (await porte.count()) await porte.click();
+await page.waitForSelector('[data-test=niveaux]', { timeout: 90000 });
+await page.waitForTimeout(1200);
+await page.getByRole('button', { name: /Open a table|Ouvrir une table/ }).click();
+await page.waitForTimeout(12000);
+console.log(JSON.stringify({ etat: await page.locator('.etat-lien').allTextContents(), logs: logs.slice(0, 12), reseau: reseau.slice(0, 20) }, null, 1));
+await b.close();
