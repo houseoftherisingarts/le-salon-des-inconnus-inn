@@ -22,11 +22,11 @@ export interface Adversaire {
 
 // L'échelle d'Alex (4 octobre 2026) : on débloque les adversaires en
 // gagnant, « comme Super Smash ». Douze marches, deux figures par marche
-// pour deux montées différentes, Bumi avant-dernier, Iroh du Royaume de
-// la Terre en dernier. Les gens de la taverne sont partis.
+// pour deux montées différentes (Iroh seul en bas, le Boulder retiré par
+// Alex), Bumi avant-dernier, Iroh du Royaume de la Terre en dernier. Les
+// gens de la taverne sont partis.
 export const ADVERSAIRES: readonly Adversaire[] = [
   { id: 'iroh',    nom: 'Iroh, maître de thé', nomEN: 'Iroh, tea master', niveau: 1, motFR: 'Le thé d’abord. Le jeu vient tout seul ensuite.', motEN: 'Tea first. The game follows on its own.' },
-  { id: 'boulder', nom: 'Le Boulder', nomEN: 'The Boulder', niveau: 1, motFR: 'Le Boulder ne perd jamais. Le Boulder apprend seulement les règles.', motEN: 'The Boulder never loses. The Boulder is only learning the rules.' },
   { id: 'chou',    nom: 'Le marchand de choux', nomEN: 'The cabbage merchant', niveau: 2, motFR: 'Jouez doucement, j’ai déjà perdu assez de choux cette année.', motEN: 'Play gently, I have lost enough cabbages this year.' },
   { id: 'jet',     nom: 'Jet', niveau: 2, motFR: 'Les règles, c’est pour ceux qui ont peur de perdre.', motEN: 'Rules are for people afraid of losing.' },
   { id: 'aang',    nom: 'Aang', niveau: 3, motFR: 'On joue d’abord, on s’inquiète après.', motEN: 'Play first, worry later.' },
@@ -52,7 +52,7 @@ export const ADVERSAIRES: readonly Adversaire[] = [
 
 /** Les douze marches de l'échelle, dans l'ordre de la montée. */
 export const ECHELONS: readonly (readonly string[])[] = [
-  ['iroh', 'boulder'], ['chou', 'jet'], ['aang', 'sokka'], ['katara', 'mai'], ['kyoshi', 'tylee'], ['zhao', 'jeongjeong'],
+  ['iroh'], ['chou', 'jet'], ['aang', 'sokka'], ['katara', 'mai'], ['kyoshi', 'tylee'], ['zhao', 'jeongjeong'],
   ['zuko', 'longfeng'], ['pakku', 'piandao'], ['toph', 'hama'], ['azula', 'wanshitong'], ['bumi', 'ozai'], ['irohek'],
 ];
 

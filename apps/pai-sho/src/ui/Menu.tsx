@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NIVEAUX_POSSIBLES, nomNiveau, type Niveau } from '../moteur/niveaux';
 import { nomDadversaire } from '../scene/noms';
 import { ADVERSAIRES, ECHELONS, adversaire, figurinesDessin, nomAdversaire, sauverFigurines, vuDEnFace } from '../jeu/adversaires';
-import { adversaireOuvert, avatarOuvert, estBattu, prochainDefi, toutBattu } from '../jeu/progression';
+import { adversaireOuvert, avatarOuvert, battus, echelonDe, estBattu, prochainDefi, toutBattu } from '../jeu/progression';
 import Volume from './Volume';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
 import { Lien, amis as lireAmis, garderAmi, idValide, joueurLocal, oublierAmi, sauverJoueur, type Ami, type EtatLien, type Joueur } from '../reseau/pair';
@@ -32,12 +32,18 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const t = TEXTES[langue];
   const fr = langue === 'FR';
   const [niveau, setNiveau] = useState<Niveau>(3);
-  // L'identifiant du personnage d'en face; le choix se garde, Iroh d'abord.
-  // L'identifiant du personnage d'en face; le choix se garde s'il est encore ouvert, sinon le prochain défi.
-  const [adv, setAdv] = useState<string>(() => { try { const lu = localStorage.getItem(CLE_ADVERSAIRE); return lu && adversaire(lu) && adversaireOuvert(lu) ? lu : prochainDefi(); } catch { return prochainDefi(); } });
+  // L'identifiant du personnage d'en face; le choix se garde, sinon le prochain défi.
+  // Toute statuette se regarde; seuls les adversaires ouverts se jouent.
+  const [adv, setAdv] = useState<string>(() => { try { const lu = localStorage.getItem(CLE_ADVERSAIRE); return lu && adversaire(lu) ? lu : prochainDefi(); } catch { return prochainDefi(); } });
   const perso = adversaire(adv) ?? ADVERSAIRES[0];
+  const advOuvert = adversaireOuvert(perso.id);
   // Toute l'échelle vaincue : le niveau se règle à la main, entraînement libre.
   const libre = toutBattu();
+  // Où en est la montée : le niveau le plus haut déjà ouvert, et le compte des vaincus.
+  let marcheCourante = 0;
+  ECHELONS.forEach((e, i) => { if (adversaireOuvert(e[0])) marcheCourante = i; });
+  const nbBattus = battus().filter((id) => adversaire(id)).length;
+  const [niveauxOuverts, setNiveauxOuverts] = useState(false);
   const niveauJoue: Niveau = libre ? niveau : perso.niveau;
   const choisirAdv = (id: string) => { setAdv(id); try { localStorage.setItem(CLE_ADVERSAIRE, id); } catch { /* privé */ } };
   // Le personnage choisi prend place en face de la table dès le menu.
@@ -175,36 +181,23 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <p className="carte-aide">{t.choisirAdversaire}</p>
           <div className="champ">
             <span className="etiquette">{t.adversaire}</span>
-            <ol className="echelle" role="radiogroup" data-test="echelle">
-              {ECHELONS.map((e, i) => {
-                const ouvert = adversaireOuvert(e[0]);
-                return (
-                  <li key={i} className={`echelon ${ouvert ? '' : 'ferme'}`}>
-                    <span className="echelon-no">{i + 1}</span>
-                    <span className="echelon-choix">{e.map((id, j) => {
-                      const a = adversaire(id);
-                      if (!a) return null;
-                      return (
-                        <span key={id} className="echelon-paire">
-                          {j > 0 && <span className="echelon-ou">{fr ? 'ou' : 'or'}</span>}
-                          <button type="button" className={`perso ${adv === id ? 'choisi' : ''} ${estBattu(id) ? 'battu' : ''}`} role="radio" aria-checked={adv === id} disabled={!ouvert} onClick={() => choisirAdv(id)} data-test={`adv-${id}`}>
-                            {ouvert ? nomAdversaire(a, fr) : '🔒 ' + nomAdversaire(a, fr)}{estBattu(id) && <i className="coche" aria-label={fr ? 'vaincu' : 'beaten'}> ✓</i>}
-                          </button>
-                        </span>
-                      );
-                    })}</span>
-                  </li>
-                );
-              })}
-              <li className="echelon ferme korra" data-test="korra"><span className="echelon-no">✦</span><span className="petit">{t.korraBientot}</span></li>
-            </ol>
+            <div className="progres" data-test="progres">
+              <span className="petit">{t.progres(marcheCourante + 1, ECHELONS.length, nbBattus, ADVERSAIRES.length)}</span>
+              <span className="progres-barre"><span style={{ width: `${Math.round((nbBattus / ADVERSAIRES.length) * 100)}%` }} /></span>
+            </div>
+            <div className="defi" data-test="defi">
+              <span className="defi-niveau">{t.niveau} {echelonDe(perso.id) + 1}</span>
+              <span className="defi-nom">{nomAdversaire(perso, fr)}</span>
+            </div>
+            <button type="button" className="bouton plein" onClick={() => setNiveauxOuverts(true)} data-test="niveaux">{t.niveaux}</button>
             <span className="petit">{libre ? t.entrainement : t.echelleAide}</span>
             <span className="etiquette">{t.figurines}</span>
             <div className="bascule" data-test="figurines">
               <button type="button" className={!dessin ? 'choisi' : ''} onClick={() => dessin && changerFigurines()} aria-pressed={!dessin}>{t.peintes}</button>
               <button type="button" className={dessin ? 'choisi' : ''} onClick={() => !dessin && changerFigurines()} aria-pressed={dessin}>{t.dessinAnime}</button>
             </div>
-            {perso && <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>}
+            <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>
+            {!advOuvert && <span className="petit verrou-mot" data-test="verrou">{t.verrouille(ECHELONS.findIndex((e) => e.includes(perso.id)))}</span>}
           </div>
           {libre && <div className="champ">
             <span className="etiquette">{t.niveau}</span>
@@ -225,7 +218,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             </div>
             <span className="petit">{cote === 'hote' ? t.hoteAide : t.inviteAide}</span>
           </div>
-          <button type="button" className="bouton or plein" onClick={contreMaison} data-test="contre-maison">{t.jouerMaison}</button>
+          <button type="button" className="bouton or plein" onClick={contreMaison} disabled={!advOuvert} data-test="contre-maison">{t.jouerMaison}</button>
           <button type="button" className="bouton plein" onClick={lecon} data-test="lecon">{t.lecon}</button>
           <span className="petit">{t.leconAide}</span>
         </article>
@@ -301,6 +294,53 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           {erreur && <p className="etat-lien erreur">{erreur}</p>}
         </article>
       </section>
+
+      {niveauxOuverts && (
+        <div className="voile niveaux-voile" onClick={() => setNiveauxOuverts(false)} data-test="niveaux-ecran">
+          <section className="niveaux" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={t.niveaux}>
+            <header className="niveaux-tete">
+              <div>
+                <h2 className="niveaux-titre">{t.niveaux}</h2>
+                <p className="petit">{t.progres(marcheCourante + 1, ECHELONS.length, nbBattus, ADVERSAIRES.length)}</p>
+                <span className="progres-barre"><span style={{ width: `${Math.round((nbBattus / ADVERSAIRES.length) * 100)}%` }} /></span>
+              </div>
+              <button type="button" className="bouton discret" onClick={() => setNiveauxOuverts(false)}>{t.fermer}</button>
+            </header>
+            <ol className="niveaux-grille" data-test="echelle">
+              {ECHELONS.map((e, i) => {
+                const ouvert = adversaireOuvert(e[0]);
+                const vaincue = e.some(estBattu);
+                const courante = i === marcheCourante && !libre;
+                return (
+                  <li key={i} className={`niveau-carte verre ${ouvert ? '' : 'ferme'} ${courante ? 'courante' : ''} ${vaincue ? 'vaincue' : ''} ${i === ECHELONS.length - 1 ? 'sommet' : ''}`}>
+                    <span className="niveau-no">{t.niveau} {i + 1}{vaincue && <i className="coche"> ✓</i>}</span>
+                    {!ouvert && <span className="niveau-moteur">🔒 {fr ? 'Verrouillé' : 'Locked'}</span>}
+                    {courante && <span className="ici">{t.iciVous}</span>}
+                    <span className="niveau-persos">
+                      {e.map((id, j) => {
+                        const a = adversaire(id);
+                        if (!a) return null;
+                        return (
+                          <span key={id} className="echelon-paire">
+                            {j > 0 && <span className="echelon-ou">{fr ? 'ou' : 'or'}</span>}
+                            <button type="button" className={`perso ${adv === id ? 'choisi' : ''} ${estBattu(id) ? 'battu' : ''}`} onClick={() => { choisirAdv(id); setNiveauxOuverts(false); }} data-test={`adv-${id}`}>
+                              {nomAdversaire(a, fr)}{estBattu(id) && <i className="coche"> ✓</i>}
+                            </button>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </li>
+                );
+              })}
+              <li className="niveau-carte verre ferme korra" data-test="korra">
+                <span className="niveau-no">✦ Korra</span>
+                <span className="petit">{t.korraBientot}</span>
+              </li>
+            </ol>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
