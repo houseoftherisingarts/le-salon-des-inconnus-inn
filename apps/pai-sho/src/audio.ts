@@ -18,7 +18,7 @@ function creer(): HTMLAudioElement {
   a.src = `${BASE}musique/${opus ? 'iroh.opus' : 'iroh.m4a'}`;
   // Un navigateur qui se dit capable puis échoue à décoder : l'autre format prend le relais, une fois.
   a.addEventListener('error', () => { a.src = `${BASE}musique/${opus ? 'iroh.m4a' : 'iroh.opus'}`; essayer(); }, { once: true });
-  a.loop = true;
+  a.loop = false;
   a.preload = 'auto';
   a.volume = volumeSauve();
   return a;
