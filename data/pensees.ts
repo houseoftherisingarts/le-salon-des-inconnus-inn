@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-04",
+        title_fr: "Les outardes d'octobre",
+        title_en: "The October geese",
+        body_fr: "Ces jours-ci, les grands voiliers d'outardes traversent le ciel en pointe de flèche, et ce dessin qui semble si bien commandé repose sur un arrangement plus humble. Chaque oiseau vole dans le remous de celui qui le précède, où l'air porte un peu mieux, si bien que la volée entière se repose sur les ailes de celui qui ouvre le chemin. Lui seul n'a pas d'appui, et quand la fatigue vient, il se laisse glisser dans le rang sans cérémonie pendant qu'un autre prend la pointe, de sorte que la flèche garde sa forme alors que sa tête change sans cesse. Personne ne préside ce relais; la volée avance parce que chacun accepte tour à tour de porter et d'être porté. Nous nous épuisons souvent à tenir la pointe de nos projets par devoir ou par orgueil, comme si céder la place trahissait la direction, alors que les outardes franchissent des continents précisément parce qu'aucune d'elles ne s'y entête. Dans quel vol est-ce que je m'obstine à rester en tête, quand le voyage serait mieux servi si je me laissais porter un moment?",
+        body_en: "These days, the great flocks of wild geese cross the sky in an arrowhead, and that pattern which looks so firmly commanded rests on a humbler arrangement. Each bird flies in the wake of the one ahead, where the air carries a little better, so that the whole flock rests on the wings of the one opening the way. That bird alone has no support, and when tiredness comes, it slips back into the line without ceremony while another takes the point, so that the arrow keeps its shape though its tip changes constantly. Nobody presides over this relay; the flock advances because each bird agrees, turn by turn, to carry and to be carried. We often wear ourselves out holding the point of our projects out of duty or pride, as if yielding the place would betray the direction, when the geese cross continents precisely because none of them insists on it. In which flight am I stubbornly staying at the head, when the journey would be better served if I let myself be carried for a while?",
+    },
+    {
         date: "2026-10-03",
         title_fr: "Le blanc du papier",
         title_en: "The white of the paper",
