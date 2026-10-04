@@ -221,9 +221,16 @@ export class ScenePaiSho {
   afficher(e: EtatPaiSho, coup?: Coup): Promise<void> {
     this.dernierEtat = e;
     const anims: Promise<void>[] = [];
+    // La tuile du bonus attend que le déplacement soit fini : posée en même
+    // temps, elle tombait dans la porte que l'autre n'avait pas encore quittée.
+    let retard = 0;
     if (coup?.type === 'deplacer') {
       const mobile = this.tuiles.get(coup.de);
       if (mobile) {
+        if (coup.bonus) {
+          const de = versMonde(coup.de), a = versMonde(coup.a);
+          retard = 0.68 + Math.hypot(a.x - de.x, a.z - de.z) * 0.035 + 0.15;
+        }
         const prise = this.tuiles.get(coup.a);
         if (prise) { this.tuiles.delete(coup.a); anims.push(this.effacer(prise.obj)); }
         this.tuiles.delete(coup.de);
@@ -251,8 +258,9 @@ export class ScenePaiSho {
         this.tuiles.set(p, { obj, type: vrai.type, camp: vrai.camp });
         if (coup) {
           obj.position.set(cible.x, cible.y + 2.2, cible.z);
+          obj.visible = retard === 0;
           anims.push(new Promise((ok) => {
-            gsap.to(obj.position, { y: cible.y, duration: 0.45, ease: 'bounce.out', onComplete: () => ok() });
+            gsap.to(obj.position, { y: cible.y, duration: 0.45, delay: retard, ease: 'bounce.out', onStart: () => { obj.visible = true; }, onComplete: () => ok() });
           }));
         } else obj.position.copy(cible);
       }
