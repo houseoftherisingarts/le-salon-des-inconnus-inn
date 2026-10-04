@@ -29,13 +29,18 @@ export interface Depart {
   lien?: Lien;
 }
 
+// `?pour=zach` : la table offerte à Zach Burnham, l'auteur du Skud Pai
+// Sho. « Hello Zach » remplace « Bonne fête Kamy », sur le web aussi, et
+// « Zach's Skud » coiffe le titre de la marque.
+const ZACH = new URLSearchParams(location.search).get('pour') === 'zach';
+
 // `?intro=1` force les trois écrans (captures), `?intro=0` les saute;
 // les tests automatisés (webdriver) vont droit à la marque.
 function etapeInitiale(): Etape {
   const force = new URLSearchParams(location.search).get('intro');
   if (force === '1') return 'kamy';
   if (force === '0' || navigator.webdriver) return 'marque';
-  return estElectron() ? 'kamy' : 'presentent';
+  return estElectron() || ZACH ? 'kamy' : 'presentent';
 }
 
 export default function App() {
@@ -142,7 +147,7 @@ export default function App() {
 
       {etape === 'kamy' && (
         <div className="prelude" onAnimationEnd={() => setEtape('presentent')} data-test="prelude-kamy">
-          <p>{t.bonneFete}</p>
+          <p className={ZACH ? 'salut' : undefined}>{ZACH ? 'Hello Zach' : t.bonneFete}</p>
         </div>
       )}
       {etape === 'presentent' && (
@@ -156,6 +161,7 @@ export default function App() {
         {marque && (
           <>
             <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="rideau-lotus" />
+            {ZACH && <p className="rideau-surtitre">Zach's <b>Skud</b></p>}
             <p className="rideau-titre" aria-label={t.titre}>
               {[...t.titre].map((c, i) => (
                 <span key={i} style={{ animationDelay: `${0.6 + i * 0.14}s` }}>{c === ' ' ? ' ' : c}</span>
