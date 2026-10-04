@@ -16,6 +16,8 @@ function creer(): HTMLAudioElement {
   const a = new Audio();
   const opus = a.canPlayType('audio/ogg; codecs=opus') !== '';
   a.src = `${BASE}musique/${opus ? 'iroh.opus' : 'iroh.m4a'}`;
+  // Un navigateur qui se dit capable puis échoue à décoder : l'autre format prend le relais, une fois.
+  a.addEventListener('error', () => { a.src = `${BASE}musique/${opus ? 'iroh.m4a' : 'iroh.opus'}`; essayer(); }, { once: true });
   a.loop = true;
   a.preload = 'auto';
   a.volume = volumeSauve();

@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ScenePaiSho } from './scene/scene';
 import { TEXTES, langueSauvee, sauverLangue, type Langue } from './ui/textes';
-import { couperMusique, estElectron, jouerMusique, sauverSon, sonSauve } from './audio';
+import { couperMusique, estElectron, jouerMusique, reglerVolume, sauverSon, sonSauve, volumeSauve } from './audio';
 import Menu from './ui/Menu';
 import Partie from './ui/Partie';
 import Tutoriel, { tutorielVu, marquerTutorielVu } from './ui/Tutoriel';
@@ -164,7 +164,15 @@ export default function App() {
           className="prelude porte"
           data-test="porte"
           autoFocus
-          onClick={() => { jouerMusique(); couperMusique(!son); setEtape(apresPorte); }}
+          onClick={() => {
+            // Entrer, c'est demander la musique : un son coupé ou un volume à zéro
+            // gardés d'une autre visite ne laissent pas la table muette.
+            setSon(true);
+            if (volumeSauve() < 0.05) reglerVolume(0.55);
+            jouerMusique();
+            couperMusique(false);
+            setEtape(apresPorte);
+          }}
         >
           <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="rideau-lotus" />
           <small>{t.entrer}</small>
