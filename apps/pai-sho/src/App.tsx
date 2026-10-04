@@ -32,7 +32,10 @@ export interface Depart {
 // `?pour=zach` : la table offerte à Zach Burnham, l'auteur du Skud Pai
 // Sho. « Hello Zach » remplace « Bonne fête Kamy », sur le web aussi, et
 // « Zach's Skud » coiffe le titre de la marque.
-const ZACH = new URLSearchParams(location.search).get('pour') === 'zach';
+const POUR = new URLSearchParams(location.search).get('pour');
+const ZACH = POUR === 'zach';
+// `?pour=kamy` : le cadeau de Kamy joué dans le navigateur, avec son salut.
+const KAMY = POUR === 'kamy';
 
 // `?intro=1` force les trois écrans (captures), `?intro=0` les saute;
 // les tests automatisés (webdriver) vont droit à la marque.
@@ -40,7 +43,7 @@ function etapeInitiale(): Etape {
   const force = new URLSearchParams(location.search).get('intro');
   if (force === '1') return 'kamy';
   if (force === '0' || navigator.webdriver) return 'marque';
-  return estElectron() || ZACH ? 'kamy' : 'presentent';
+  return estElectron() || ZACH || KAMY ? 'kamy' : 'presentent';
 }
 
 export default function App() {
