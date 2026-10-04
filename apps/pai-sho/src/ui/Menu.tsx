@@ -323,8 +323,10 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
                         return (
                           <span key={id} className="echelon-paire">
                             {j > 0 && <span className="echelon-ou">{fr ? 'ou' : 'or'}</span>}
-                            <button type="button" className={`perso ${adv === id ? 'choisi' : ''} ${estBattu(id) ? 'battu' : ''}`} onClick={() => { choisirAdv(id); setNiveauxOuverts(false); }} data-test={`adv-${id}`}>
-                              {nomAdversaire(a, fr)}{estBattu(id) && <i className="coche"> ✓</i>}
+                            <button type="button" className={`perso niveau-perso ${adv === id ? 'choisi' : ''} ${estBattu(id) ? 'battu' : ''}`} onClick={() => { choisirAdv(id); setNiveauxOuverts(false); }} data-test={`adv-${id}`}>
+                              {/* La figurine photographiée par scripts/vignettes.mjs, dans le style choisi. */}
+                              <img className="niveau-vignette" src={`${BASE}models/convives/vignettes/${id}${dessin ? '2' : ''}.webp`} alt="" loading="lazy" />
+                              <span>{nomAdversaire(a, fr)}{estBattu(id) && <i className="coche"> ✓</i>}</span>
                             </button>
                           </span>
                         );

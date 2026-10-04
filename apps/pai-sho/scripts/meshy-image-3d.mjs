@@ -45,7 +45,13 @@ async function sculpter({ id, url }) {
   }
 }
 
+// Meshy refuse au-delà de trois tâches en attente : trois ouvriers piochent dans la file.
 const liste = JSON.parse(readFileSync(process.argv[2], 'utf8'));
-const resultats = await Promise.allSettled(liste.map(sculpter));
-resultats.forEach((r, i) => { if (r.status === 'rejected') console.error(`ÉCHEC ${liste[i].id} : ${r.reason.message}`); });
-if (resultats.some((r) => r.status === 'rejected')) process.exit(1);
+const file = [...liste];
+const echecs = [];
+await Promise.all(Array.from({ length: 3 }, async () => {
+  for (let e = file.shift(); e; e = file.shift()) {
+    try { await sculpter(e); } catch (err) { echecs.push(e.id); console.error(`ÉCHEC ${e.id} : ${err.message}`); }
+  }
+}));
+if (echecs.length) process.exit(1);
