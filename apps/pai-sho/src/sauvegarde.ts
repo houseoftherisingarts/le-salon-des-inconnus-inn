@@ -19,6 +19,8 @@ export interface Config {
   tourner: boolean;
   /** À distance : le personnage que chaque camp incarne, tel que VU d'ici (l'autre reçoit un remplaçant s'il a choisi le même). */
   avatars?: Partial<Record<Camp, string | null>>;
+  /** Contre la maison : l'adversaire de l'échelle, pour inscrire la victoire. */
+  adversaire?: string;
 }
 
 export interface Sauvegarde {
@@ -29,6 +31,7 @@ export interface Sauvegarde {
   tourner: boolean;
   coups: string[];
   date: string;
+  adversaire?: string;
 }
 
 const CLE = 'paisho.partie';
@@ -36,7 +39,7 @@ const CLE = 'paisho.partie';
 export function sauver(c: Config, coups: string[]): void {
   const s: Sauvegarde = {
     mode: c.mode, niveau: c.niveau, camps: { local: c.campLocal }, noms: c.noms,
-    tourner: c.tourner, coups, date: new Date().toISOString(),
+    tourner: c.tourner, coups, date: new Date().toISOString(), adversaire: c.adversaire,
   };
   try { localStorage.setItem(CLE, JSON.stringify(s)); } catch { /* navigation privée */ }
 }
@@ -53,7 +56,7 @@ export function effacerSauvegarde(): void {
 }
 
 export const configDepuis = (s: Sauvegarde): Config => ({
-  mode: s.mode, niveau: s.niveau, campLocal: s.camps.local, noms: s.noms, tourner: s.tourner ?? true,
+  mode: s.mode, niveau: s.niveau, campLocal: s.camps.local, noms: s.noms, tourner: s.tourner ?? true, adversaire: s.adversaire,
 });
 
 /** Rejoue une liste de coups. Rend l'état atteint et les coups gardés. */

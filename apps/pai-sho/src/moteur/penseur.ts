@@ -84,7 +84,7 @@ export class Penseur {
       this.attente = { id, tenir: (coup) => tenir(coup as C | null), repli };
     });
     try {
-      w.postMessage({ id, jeu, variante, etat, niveau, graine: o.graine, noeudsMax: o.noeudsMax });
+      w.postMessage({ id, jeu, variante, etat, niveau, graine: o.graine, noeudsMax: o.noeudsMax, tempsMs: o.tempsMs });
     } catch {
       // L'état n'a pas passé le clonage structuré. Le coup se calcule
       // ici plutôt que de laisser la page sans réponse, et le
@@ -112,7 +112,7 @@ export class Penseur {
     const w = this.ouvrir();
     if (!w) return;
     try {
-      w.postMessage({ id: 0, jeu, variante, etat, niveau, graine: o.graine, anticipation: true });
+      w.postMessage({ id: 0, jeu, variante, etat, niveau, graine: o.graine, tempsMs: o.tempsMs, anticipation: true });
     } catch {
       // L'état ne se clone pas : tant pis pour l'avance, la partie
       // continue sans elle.

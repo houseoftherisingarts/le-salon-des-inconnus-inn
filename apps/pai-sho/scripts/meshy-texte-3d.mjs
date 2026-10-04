@@ -41,5 +41,12 @@ async function sculpter({ id, prompt }) {
   execFileSync('npx', ['-y', '@gltf-transform/cli', 'optimize', brut, final, '--compress', 'draco', '--texture-compress', 'webp', '--texture-size', '1024'], { stdio: 'ignore' });
   console.log(`${id} : ${final} (vignette ${t.thumbnail_url})`);
 }
-const liste = JSON.parse(readFileSync(process.argv[2], 'utf8'));
-await Promise.all(liste.map((f) => sculpter(f).catch((e) => console.error(`${f.id} : raté, ${e.message}`))));
+// Meshy refuse plus de quelques tâches en attente : trois à la fois, et
+// une figurine déjà sculptée (fichier présent) n'est pas refaite.
+import { existsSync } from 'node:fs';
+const liste = JSON.parse(readFileSync(process.argv[2], 'utf8')).filter((f) => !existsSync(path.join(SORTIE, `${f.id}.glb`)));
+const file = [...liste];
+async function ouvrier() {
+  for (let f = file.shift(); f; f = file.shift()) await sculpter(f).catch((e) => console.error(`${f.id} : raté, ${e.message}`));
+}
+await Promise.all([ouvrier(), ouvrier(), ouvrier()]);

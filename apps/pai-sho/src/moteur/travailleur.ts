@@ -44,6 +44,8 @@ export interface OptionsReflexion {
   graine?: number;
   /** Plafond de nœuds, quand l'appelant veut une réponse bornée. */
   noeudsMax?: number;
+  /** Un temps de réflexion imposé, à la place de celui du niveau. */
+  tempsMs?: number;
 }
 
 export interface DemandeTravailleur extends OptionsReflexion {
@@ -130,6 +132,7 @@ function optionsDe(
     alea: o.graine === undefined ? auHasard : graine(o.graine),
     livre: livreDe(jeu, variante),
     noeudsMax: o.noeudsMax,
+    tempsMs: o.tempsMs,
     arret,
   };
 }

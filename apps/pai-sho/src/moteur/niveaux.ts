@@ -98,6 +98,8 @@ export interface ChoixOptions {
   arret?: () => boolean;
   /** Plafond de nœuds : le banc d'essai en a besoin pour rester égal. */
   noeudsMax?: number;
+  /** Un temps de réflexion imposé, à la place de celui du niveau. */
+  tempsMs?: number;
 }
 
 /** La recherche brute, sans le tempérament du niveau. */
@@ -111,7 +113,7 @@ export function reflechir<E, C>(
     // reproductibilité, et c'est le cas de tous les bancs d'essai. Une
     // horloge par-dessus rendrait le résultat dépendant de la charge de
     // la machine, donc deux tournois ne seraient plus comparables.
-    tempsMs: o.noeudsMax === undefined ? r.tempsMs : undefined,
+    tempsMs: o.noeudsMax === undefined ? o.tempsMs ?? r.tempsMs : undefined,
     quiescence: r.quiescence,
     livre: r.livre ? o.livre : undefined,
     arret: o.arret,
