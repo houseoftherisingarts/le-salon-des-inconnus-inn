@@ -181,7 +181,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
                 return (
                   <li key={i} className={`echelon ${ouvert ? '' : 'ferme'}`}>
                     <span className="echelon-no">{i + 1}</span>
-                    {e.map((id, j) => {
+                    <span className="echelon-choix">{e.map((id, j) => {
                       const a = adversaire(id);
                       if (!a) return null;
                       return (
@@ -192,7 +192,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
                           </button>
                         </span>
                       );
-                    })}
+                    })}</span>
                   </li>
                 );
               })}

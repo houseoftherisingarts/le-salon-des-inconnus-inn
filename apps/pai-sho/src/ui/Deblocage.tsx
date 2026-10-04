@@ -51,8 +51,9 @@ function Figurines({ ids, ombre }: { ids: string[]; ombre?: boolean }) {
     rendu.outputColorSpace = THREE.SRGBColorSpace;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-    camera.position.set(0, 6.5, 24);
-    camera.lookAt(0, 5.5, 0);
+    // La figurine fait 9 de haut et se tient à y = 2,5 : le titre, en bas de l'écran, reste sous ses pieds.
+    camera.position.set(0, 7.5, 24);
+    camera.lookAt(0, 6.6, 0);
     scene.add(new THREE.HemisphereLight(0xfff1dc, 0x2a1a0a, ombre ? 0.2 : 1.1));
     const lampe = new THREE.SpotLight(0xffe9c4, ombre ? 0 : 900, 80, 0.5, 0.8);
     lampe.position.set(6, 22, 14);
@@ -62,11 +63,11 @@ function Figurines({ ids, ombre }: { ids: string[]; ombre?: boolean }) {
     scene.add(dore);
     const groupes: THREE.Group[] = [];
     let vivant = true;
-    const ecart = 7.5;
+    const ecart = 6.5;
     ids.forEach((id, i) => {
       const [un, deux] = figurinesDessin() ? [`${id}2`, id] : [id, `${id}2`];
-      chargerSculpture(`${BASE}models/convives/${un}.glb`, 12)
-        .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb`, 12))
+      chargerSculpture(`${BASE}models/convives/${un}.glb`, 9)
+        .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb`, 9))
         .then((g) => {
           if (!vivant) return;
           g.traverse((o) => {
@@ -76,7 +77,7 @@ function Figurines({ ids, ombre }: { ids: string[]; ombre?: boolean }) {
             else { m.metalness = 0; m.roughness = 0.72; m.metalnessMap = null; m.roughnessMap = null; m.needsUpdate = true; }
           });
           g.position.x = (i - (ids.length - 1) / 2) * ecart;
-          g.position.y = -6;
+          g.position.y = -3;
           g.userData.phase = i * 1.3;
           scene.add(g);
           groupes.push(g);
@@ -97,9 +98,10 @@ function Figurines({ ids, ombre }: { ids: string[]; ombre?: boolean }) {
       if (!vivant) return;
       const t = (performance.now() - debut) / 1000;
       for (const g of groupes) {
-        g.rotation.y = ombre ? 0 : t * 0.55 + (g.userData.phase as number);
+        // Elle regarde la salle et se balance à peine, comme sur son socle.
+        g.rotation.y = ombre ? 0 : Math.sin(t * 0.7 + (g.userData.phase as number)) * 0.5;
         // Elle monte du sol en une seconde et demie, puis flotte à peine.
-        g.position.y = -6 + Math.min(1, t / 1.5) ** 0.6 * 6 + Math.sin(t * 1.2) * 0.12 - 6;
+        g.position.y = -3 + Math.min(1, t / 1.5) ** 0.6 * 5.5 + Math.sin(t * 1.2) * 0.12;
       }
       rendu.render(scene, camera);
       trame = requestAnimationFrame(boucle);

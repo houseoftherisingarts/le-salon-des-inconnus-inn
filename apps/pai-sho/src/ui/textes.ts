@@ -36,7 +36,7 @@ const FR = {
   profil: 'Votre profil',
   profilAide: 'Votre nom, votre identifiant et le personnage qui vous représente en face des autres joueurs.',
   votrePersonnage: 'Votre personnage',
-  sansPersonnage: 'La dame',
+  sansPersonnage: 'Sans visage',
   boutique: 'Boutique de skins au café-jeux',
   aDistanceAide: 'Ouvrez une table et donnez votre identifiant à l’autre joueur, ou rejoignez la sienne avec le sien.',
   reprendre: 'Reprendre la partie',
@@ -110,7 +110,7 @@ const FR = {
   presentent: 'présentent',
   entrer: 'Entrer',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
-  choisirAdversaire: 'Choisissez qui s’assoit en face. Chaque personnage joue à sa manière, et la dame au thé joue au niveau que vous lui donnez.',
+  choisirAdversaire: 'Montez l’échelle : chaque marche offre deux adversaires, et chaque victoire ouvre la suivante. Tout en haut, Iroh attend.',
 };
 
 const EN: typeof FR = {
@@ -140,7 +140,7 @@ const EN: typeof FR = {
   profil: 'Your profile',
   profilAide: 'Your name, your ID and the character who sits across from other players.',
   votrePersonnage: 'Your character',
-  sansPersonnage: 'The lady',
+  sansPersonnage: 'No face yet',
   boutique: 'Skin shop at the café-jeux',
   aDistanceAide: 'Open a table and give your player ID to your opponent, or join theirs with their ID.',
   reprendre: 'Resume the game',
@@ -212,7 +212,7 @@ const EN: typeof FR = {
   presentent: 'present',
   entrer: 'Enter',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
-  choisirAdversaire: 'Choose who sits across from you. Each character plays their own way, and the tea lady plays at the level you give her.',
+  choisirAdversaire: 'Climb the ladder: every rung offers two opponents, and every win opens the next one. At the top, Iroh is waiting.',
 };
 
 export const TEXTES = { FR, EN };
