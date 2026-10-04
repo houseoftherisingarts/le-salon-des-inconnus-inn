@@ -1,6 +1,6 @@
 // ─── La musique de fond ─────────────────────────────────────────────
-// « Tea with Uncle Iroh », coupée à trois minutes et demie et jouée en
-// boucle dès l'intro de marque (Alex, 3 octobre 2026). Le programme
+// « Tea with Uncle Iroh », l'heure entière jouée d'un bout à l'autre dès
+// l'intro de marque, sans boucle (Alex, 4 octobre 2026). Le programme
 // Mac l'autorise sans geste; sur le web, le navigateur peut refuser
 // l'autoplay, alors la lecture repart au premier geste de la personne.
 
