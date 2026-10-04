@@ -42,7 +42,7 @@ export const nomAdversaire = (a: Adversaire, fr: boolean): string => (fr ? a.nom
 // Deux jeux de statuettes : les peintes du premier jour (style 1) et
 // celles du dessin animé (style 2, par défaut). Fichier <id>2.glb.
 const CLE_FIGURINES = 'paisho.figurines';
-export const figurinesDessin = (): boolean => { try { return localStorage.getItem(CLE_FIGURINES) !== '1'; } catch { return true; } };
+export const figurinesDessin = (): boolean => { try { return localStorage.getItem(CLE_FIGURINES) === '2'; } catch { return false; } };
 export const sauverFigurines = (dessin: boolean): void => { try { localStorage.setItem(CLE_FIGURINES, dessin ? '2' : '1'); } catch { /* privé */ } };
 
 export const adversaire = (id: string): Adversaire | undefined => ADVERSAIRES.find((a) => a.id === id);

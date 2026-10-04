@@ -34,7 +34,7 @@ export const DECORS: { id: IdDecor; nomFR: string; nomEN: string; gratuit: boole
 
 const CLE_SKIN = 'paisho.skin';
 const CLE_DEBLOQUES = 'paisho.debloques';
-const DEFAUT: Skin = { plateau: 'bois', tuiles: 'bois', decor: 'taverne' };
+const DEFAUT: Skin = { plateau: 'bois', tuiles: 'bois', decor: 'the' };
 
 const estPlateau = (x: unknown): x is IdPlateau => PLATEAUX.some((p) => p.id === x);
 const estTuiles = (x: unknown): x is IdTuiles => TUILES.some((t) => t.id === x);
