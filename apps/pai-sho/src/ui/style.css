@@ -134,6 +134,10 @@ img { display: block; }
   text-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
 }
 .prelude small { display: block; margin-top: 18px; font: 400 clamp(13px, 1.3vw, 17px)/1 var(--serif); letter-spacing: 0.34em; text-transform: uppercase; color: var(--texte-doux); }
+/* La porte : elle attend le geste, sans fondu de sortie. */
+.prelude.porte { animation: parait 0.8s both; opacity: 0; border: 0; outline: none; width: 100%; cursor: pointer; gap: 6px; }
+.prelude.porte small { color: var(--or-pale); font-size: clamp(15px, 1.5vw, 20px); }
+.prelude.porte:focus-visible small { text-decoration: underline; text-underline-offset: 6px; }
 @keyframes preludeFondu { 0% { opacity: 0; } 24% { opacity: 1; } 76% { opacity: 1; } 100% { opacity: 0; } }
 
 /* ── Le menu ─────────────────────────────────────────────────────── */

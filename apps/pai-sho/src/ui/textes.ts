@@ -97,6 +97,7 @@ const FR = {
   maison: 'Maison',
   bonneFete: 'Bonne fete Kamy',
   presentent: 'présentent',
+  entrer: 'Entrer',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
   choisirAdversaire: 'Choisissez qui s’assoit en face. Chaque personnage joue à sa manière, et la dame au thé joue au niveau que vous lui donnez.',
 };
@@ -189,6 +190,7 @@ const EN: typeof FR = {
   maison: 'House',
   bonneFete: 'Happy birthday Kamy',
   presentent: 'present',
+  entrer: 'Enter',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
   choisirAdversaire: 'Choose who sits across from you. Each character plays their own way, and the tea lady plays at the level you give her.',
 };

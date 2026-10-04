@@ -21,7 +21,7 @@ import type { Lien } from './reseau/pair';
 const BASE = import.meta.env.BASE_URL;
 
 type Ecran = 'intro' | 'menu' | 'partie';
-type Etape = 'kamy' | 'presentent' | 'marque' | 'fini';
+type Etape = 'porte' | 'kamy' | 'presentent' | 'marque' | 'fini';
 
 export interface Depart {
   config: Config;
@@ -43,8 +43,11 @@ function etapeInitiale(): Etape {
   const force = new URLSearchParams(location.search).get('intro');
   if (force === '1') return 'kamy';
   if (force === '0' || navigator.webdriver) return 'marque';
-  return estElectron() || ZACH || KAMY ? 'kamy' : 'presentent';
+  // Sur le web, une porte d'abord : le navigateur ne laisse partir la
+  // musique qu'après un geste, et ce geste la lance sous les écrans d'entrée.
+  return estElectron() ? 'kamy' : 'porte';
 }
+const apresPorte: Etape = ZACH || KAMY ? 'kamy' : 'presentent';
 
 export default function App() {
   const conteneur = useRef<HTMLDivElement>(null);
@@ -74,7 +77,14 @@ export default function App() {
     return () => { vivant = false; s.detruire(); };
   }, []);
 
-  // La marque lance la musique, puis laisse 2,6 s au titre et au lotus.
+  // Le programme Mac joue sans geste : la musique part dès le premier écran.
+  useEffect(() => {
+    if (!estElectron()) return;
+    jouerMusique();
+    couperMusique(!sonSauve());
+  }, []);
+
+  // La marque lance la musique (si elle ne joue pas déjà), puis laisse 2,6 s au titre et au lotus.
   useEffect(() => {
     if (etape !== 'marque') return;
     jouerMusique();
@@ -148,6 +158,18 @@ export default function App() {
     <div className="app">
       <div ref={conteneur} className="scene" />
 
+      {etape === 'porte' && (
+        <button
+          type="button"
+          className="prelude porte"
+          data-test="porte"
+          autoFocus
+          onClick={() => { jouerMusique(); couperMusique(!son); setEtape(apresPorte); }}
+        >
+          <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="rideau-lotus" />
+          <small>{t.entrer}</small>
+        </button>
+      )}
       {etape === 'kamy' && (
         <div className="prelude" onAnimationEnd={() => setEtape('presentent')} data-test="prelude-kamy">
           <p className={ZACH ? 'salut' : undefined}>{ZACH ? 'Hello Zach' : t.bonneFete}</p>
