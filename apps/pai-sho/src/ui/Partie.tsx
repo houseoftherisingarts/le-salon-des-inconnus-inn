@@ -19,7 +19,7 @@ import { LARGEUR_TELEPHONE, type ScenePaiSho } from '../scene/scene';
 import { effacerSauvegarde, rejouer, sauver } from '../sauvegarde';
 import type { EtatLien, Message } from '../reseau/pair';
 import type { Depart } from '../App';
-import { TEXTES, type Langue } from './textes';
+import { NOMS_TUILES, TEXTES, type Langue } from './textes';
 import { Reserve, Journal, PanneauRegles, PanneauBonus } from './Panneaux';
 import Fiches from './Fiches';
 import Volume from './Volume';
@@ -89,6 +89,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const [choix, setChoix] = useState<Choix>({ type: 'aucun' });
   const [occupe, setOccupe] = useState(false);
   const [reflechit, setReflechit] = useState(false);
+  // La prime d'harmonie de l'adversaire, affichée jusqu'au coup suivant.
+  const [prime, setPrime] = useState('');
   const [abandon, setAbandon] = useState<Camp | null>(null);
   const [regles, setRegles] = useState(false);
   const [confirmer, setConfirmer] = useState(false);
@@ -200,6 +202,10 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     setOccupe(true);
     setEtat(apres);
     setCoups(liste);
+    // L'avis reste jusqu'au coup suivant.
+    const bonus = c.type === 'deplacer' ? c.bonus : undefined;
+    const adverse = !(config.mode === 'deux' || avant.tour === config.campLocal);
+    setPrime(bonus && adverse ? t.primeAdverse(config.noms[avant.tour], NOMS_TUILES[langue][bonus.tuile].toLowerCase()) : '');
     if (lien && !venuDeLoin) lien.envoyer({ type: 'coup', texte, n: liste.length - 1 });
     if (config.mode !== 'distance' && config.mode !== 'lecon') {
       if (apres.verdict) effacerSauvegarde();
@@ -210,7 +216,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     if (config.mode === 'deux' && config.tourner && !apres.verdict) await scene.tournerVers(apres.tour);
     setOccupe(false);
     return true;
-  }, [scene, lien, config]);
+  }, [scene, lien, config, t, langue]);
 
   // ── La maison ─────────────────────────────────────────────────────
   useEffect(() => {
@@ -416,7 +422,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   // Le joueur seul devant son écran qui perd lit « Défaite », pas « Victoire ».
   if (vainqueur && config.mode !== 'deux' && vainqueur !== config.campLocal) titreFin = t.defaite;
 
-  let consigne = '';
+  let consigne = prime;
   if (aMoi && !enLecon) {
     if (choix.type === 'bonus') consigne = choix.tuile ? t.bonusCible : '';
     else if (choix.type === 'reserve') consigne = t.choisirPorte;

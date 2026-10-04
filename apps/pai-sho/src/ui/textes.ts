@@ -70,6 +70,9 @@ const FR = {
   reflechit: 'réfléchit',
   enMain: 'En main',
   journal: 'Les coups',
+  // L'adversaire forme une harmonie et prend sa prime : le dire, sinon le
+  // geste de plus passe pour une tricherie (Alex, 4 octobre 2026).
+  primeAdverse: (nom: string, tuile: string) => `${nom} forme une harmonie et, en prime, pose ${tuile}.`,
   aucunCoup: 'Aucun coup joué pour l’instant.',
   abandonner: 'Abandonner',
   confirmerAbandon: 'Abandonner la partie ?',
@@ -163,6 +166,7 @@ const EN: typeof FR = {
   reflechit: 'is thinking',
   enMain: 'In hand',
   journal: 'Moves',
+  primeAdverse: (nom: string, tuile: string) => `${nom} forms a harmony and, as a bonus, places ${tuile}.`,
   aucunCoup: 'No move played yet.',
   abandonner: 'Resign',
   confirmerAbandon: 'Resign this game?',
