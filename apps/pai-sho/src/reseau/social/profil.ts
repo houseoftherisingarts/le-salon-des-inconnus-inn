@@ -8,6 +8,7 @@
 import { doc, getFirestore, increment, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { DECORS } from '../../skins';
+import { app } from '../../firebase';
 
 export interface ProfilJeu {
   avatar?: string;
@@ -39,7 +40,7 @@ export async function majProfilJeu(uid: string, p: Pick<ProfilJeu, 'avatar' | 'b
 
 /** Une partie à distance finie compte au bilan, si le joueur est connecté. */
 export function compterPartieEnLigne(gagnee: boolean): void {
-  const u = getAuth().currentUser;
+  const u = app && getAuth().currentUser;
   if (!u) return;
   void setDoc(ref(u.uid), gagnee ? { victoires: increment(1) } : { defaites: increment(1) }, { merge: true }).catch(() => {});
 }
