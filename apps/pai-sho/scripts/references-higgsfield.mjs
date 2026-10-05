@@ -77,19 +77,27 @@ const uuid = (t) => t.match(/[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9
 const urlImage = (t) => t.match(/https?:\/\/[^\s"'\\)]+\.(?:png|jpe?g|webp)(?:\?[^\s"'\\)]*)?/i)?.[0] ?? t.match(/https?:\/\/[^\s"'\\)]+/)?.[0];
 
 // ─── La boucle ──────────────────────────────────────────────────────
-const fichier = path.join(ici, `refs3-${style}.json`);
+const fichier = path.join(ici, process.env.SORTIE ?? `refs3-${style}.json`);
 const sortie = existsSync(fichier) ? JSON.parse(readFileSync(fichier, 'utf8')) : [];
 const suffixe = style === 'dessin' ? '2' : '';
 await ouvrir();
+const importer = async (url) => {
+  const media = uuid(await outil('media_import_url', { url, type: 'image' }));
+  if (!media) throw new Error(`aucun media_id rendu pour ${url}`);
+  return { value: media, role: 'image_references' };
+};
+const mediaGabarit = gabarit ? await importer(gabarit) : null;
 for (const id of ids) {
   const cible = id + suffixe;
   if (sortie.find((e) => e.id === cible)) { console.log(cible, 'déjà'); continue; }
   const src = wiki[CLE[id]]; if (!src) { console.log(id, 'SANS IMAGE WIKI'); continue; }
   try {
-    const media = uuid(await outil('media_import_url', { url: src, type: 'image' }));
-    if (!media) throw new Error('aucun media_id rendu');
+    // Une image « <nom> corps » dans references-public.json complète le portrait (Toph).
+    const medias = [await importer(src)];
+    if (wiki[`${CLE[id]} corps`]) medias.push(await importer(wiki[`${CLE[id]} corps`]));
+    if (mediaGabarit) medias.push(mediaGabarit);
     // JOB=<id> dans l'environnement reprend une tâche déjà lancée au lieu d'en payer une autre.
-    const lancement = process.env.JOB ?? await outil('generate_image', { params: { model: 'nano_banana_pro', prompt, aspect_ratio: '3:4', resolution: '1k', medias: [{ value: media, role: 'image_references' }] } });
+    const lancement = process.env.JOB ?? await outil('generate_image', { params: { model: process.env.MODELE ?? 'nano_banana_pro', prompt, aspect_ratio: '3:4', resolution: '1k', medias } });
     const job = uuid(lancement);
     if (!job) throw new Error(`aucun job_id : ${lancement.slice(0, 200)}`);
     let url = null;
