@@ -116,6 +116,21 @@ const FR = {
   entrer: 'Entrer',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
   choisirAdversaire: 'Montez l’échelle : chaque marche offre deux adversaires, et chaque victoire ouvre la suivante. Tout en haut, Iroh attend.',
+  // La campagne, le nom et la communauté (Alex, 4 octobre 2026).
+  campagne: 'Campagne',
+  affronter: (nom: string) => `Affronter ${nom}`,
+  campagneFinie: (nom: string) => `Campagne terminée : vous rejouez ${nom}.`,
+  choisirUnAdversaire: 'Choisir un adversaire',
+  choisirUnAdversaireAide: 'Rejouez un adversaire déjà ouvert, comme on choisit une arène.',
+  choisirNom: 'Choisissez votre nom',
+  choisirNomAide: 'Il s’affiche en face de chaque adversaire, ici comme à distance.',
+  valider: 'Valider',
+  modifierNom: 'Modifier votre nom',
+  votreAvatar: 'Votre avatar',
+  avatarAucun: 'Battez un adversaire pour pouvoir porter ses traits.',
+  communaute: 'Communauté',
+  communauteAide: 'Votre profil, vos amis et le jeu à distance.',
+  ouvrir: 'Ouvrir',
 };
 
 const EN: typeof FR = {
@@ -223,6 +238,20 @@ const EN: typeof FR = {
   entrer: 'Enter',
   salonEtVexel: ['Le Salon des Inconnus', '& Vexel Webstudio'],
   choisirAdversaire: 'Climb the ladder: every rung offers two opponents, and every win opens the next one. At the top, Iroh is waiting.',
+  campagne: 'Campaign',
+  affronter: (nom: string) => `Face ${nom}`,
+  campagneFinie: (nom: string) => `Campaign complete, you replay ${nom}.`,
+  choisirUnAdversaire: 'Choose an opponent',
+  choisirUnAdversaireAide: 'Replay any opponent you have already unlocked, like picking a stage.',
+  choisirNom: 'Choose your name',
+  choisirNomAide: 'It shows across from every opponent, here and in remote play.',
+  valider: 'Confirm',
+  modifierNom: 'Edit your name',
+  votreAvatar: 'Your avatar',
+  avatarAucun: 'Beat an opponent to wear their likeness.',
+  communaute: 'Community',
+  communauteAide: 'Your profile, your friends and remote play.',
+  ouvrir: 'Open',
 };
 
 export const TEXTES = { FR, EN };

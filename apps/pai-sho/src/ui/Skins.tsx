@@ -4,7 +4,7 @@
 // de la scène, en petit, et la tuile est la vignette du lotus relue
 // comme le shader la relit. Ce qu'on voit ici est donc ce qu'on aura.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import type { ScenePaiSho } from '../scene/scene';
 import { toileFace } from '../scene/plateauTexture';
 import { logoDe } from '../scene/habillage';
@@ -20,8 +20,8 @@ import './skins.css';
 const BASE = import.meta.env.BASE_URL;
 
 const TEXTES = {
-  FR: { titre: 'Plateau et tuiles', plateau: 'Le plateau', tuiles: 'Les tuiles', salle: 'La salle', verrou: 'Au café-jeux du Salon' },
-  EN: { titre: 'Board and tiles', plateau: 'The board', tuiles: 'The tiles', salle: 'The room', verrou: 'At the Salon’s game café' },
+  FR: { titre: 'Plateau et style', plateau: 'Le plateau', tuiles: 'Les tuiles', salle: 'La salle', verrou: 'Au café-jeux du Salon' },
+  EN: { titre: 'Board and style', plateau: 'The board', tuiles: 'The tiles', salle: 'The room', verrou: 'At the Salon’s game café' },
 };
 
 // Les vignettes se peignent une fois par session.
@@ -134,7 +134,8 @@ function Rangee({ titre, choix, actif, onChoix, verrou, forme }: {
   );
 }
 
-export default function Skins({ langue, scene }: { langue: 'FR' | 'EN'; scene: ScenePaiSho }) {
+/** `children` : les rangées que le menu ajoute sous la salle (l'avatar, le style des statuettes). */
+export default function Skins({ langue, scene, children }: { langue: 'FR' | 'EN'; scene: ScenePaiSho; children?: ReactNode }) {
   const t = TEXTES[langue];
   const fr = langue === 'FR';
   const [skin, setSkin] = useState<Skin>(skinChoisi);
@@ -174,6 +175,7 @@ export default function Skins({ langue, scene }: { langue: 'FR' | 'EN'; scene: S
         choix={DECORS.map((d) => ({ id: d.id, nom: fr ? d.nomFR : d.nomEN, ouvert: true, image: `${BASE}scenes/${d.id}-salle.jpg` }))}
         onChoix={(id) => choisir({ ...skin, decor: id as IdDecor })}
       />
+      {children}
       {aVerrou && <p className="skin-mention"><Cadenas />{t.verrou}</p>}
     </article>
   );
