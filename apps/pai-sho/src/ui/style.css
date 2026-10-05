@@ -158,6 +158,8 @@ img { display: block; }
 .reprendre { display: flex; align-items: center; gap: 14px; margin-left: 36px; padding: 8px 8px 8px 18px; border-radius: 999px; border-color: rgba(212, 175, 55, 0.45); box-shadow: 0 0 30px rgba(212, 175, 55, 0.14); align-self: center; }
 .reprendre .carte-aide { white-space: nowrap; }
 .menu-outils { margin-left: auto; display: flex; gap: 8px; align-self: flex-start; }
+/* Les boutons d'en-tête passent devant la scène 3D : verre sombre pour rester lisibles sur Iroh. */
+.menu-outils .bouton { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(212, 175, 55, 0.35); }
 .menu-cartes {
   display: grid; gap: 16px; margin-top: 24px;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
