@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client';
+import './firebase';
 import App from './App';
 import './ui/style.css';
 // Après la feuille unique, pour que ses retouches l'emportent à égalité.
 import './ui/campagne.css';
+import './ui/communaute.css';
 
 // Dans la coquille Electron, les trois feux de la fenêtre macOS se posent
 // en haut à gauche par-dessus la page : la feuille leur laisse la place.

@@ -7,7 +7,15 @@ import { ADVERSAIRES, ECHELONS, adversaire, figurinesDessin, nomAdversaire, sauv
 import { adversaireOuvert, avatarOuvert, battus, echelonDe, estBattu, prochainDefi, toutBattu } from '../jeu/progression';
 import Volume from './Volume';
 import { configDepuis, lireSauvegarde } from '../sauvegarde';
-import { Lien, amis as lireAmis, garderAmi, idValide, joueurLocal, oublierAmi, sauverJoueur, type Ami, type EtatLien, type Joueur } from '../reseau/pair';
+import { Lien, garderAmi, joueurLocal, sauverJoueur, type EtatLien, type Joueur } from '../reseau/pair';
+import { rafraichirCompte, renommerCompte, useCompte } from '../reseau/social/compte';
+import { LIEN_MS, quitterFile, retirerTable } from '../reseau/social/defis';
+import { majProfilJeu } from '../reseau/social/profil';
+import { useSocial } from '../reseau/social/useSocial';
+import Communaute from './communaute/Communaute';
+import { DefiRecu, type JeuDistance } from './communaute/Defis';
+import type { Defi } from '../reseau/social/defis';
+import { Visage } from './communaute/Visage';
 import { TEXTES, type Langue } from './textes';
 import type { Camp } from '../jeu/logic';
 import type { Depart } from '../App';
@@ -61,21 +69,33 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const [cote, setCote] = useState<Camp>('hote');
   const [tourner, setTourner] = useState(true);
   const [joueur, setJoueur] = useState<Joueur>(joueurLocal);
-  const [idAutre, setIdAutre] = useState('');
-  const [amis, setAmis] = useState<Ami[]>(lireAmis);
   const [etatLien, setEtatLien] = useState<EtatLien | null>(null);
   const [erreur, setErreur] = useState('');
-  const [copie, setCopie] = useState(false);
+  const [essai, setEssai] = useState<string | null>(null);
+  const [defiVu, setDefiVu] = useState<string | null>(null);
   const lien = useRef<Lien | null>(null);
+  const delai = useRef(0);
   const lance = useRef(false);
   const sauvegarde = lireSauvegarde();
-  const monNom = joueur.nom.trim() || t.vous;
+  // Connecté, le nom du compte remplace le nom de l'appareil partout : menu, écran VS, « bonjour ».
+  const compte = useCompte();
+  const uid = compte.user?.uid;
+  const social = useSocial(uid);
+  const monNom = (uid && compte.nom) || joueur.nom.trim() || t.vous;
   const vignette = (id: string) => `${BASE}models/convives/vignettes/${id}${dessin ? '2' : ''}.webp`;
 
-  // Un lien ouvert puis abandonné au menu se ferme proprement.
-  useEffect(() => () => { if (!lance.current) lien.current?.fermer(); }, []);
+  // Un lien ouvert puis abandonné au menu se ferme proprement, et la table
+  // publiée ou la place en file s'effacent avec lui (onglet fermé compris).
+  const uidRef = useRef(uid);
+  uidRef.current = uid;
+  const effacer = () => { const u = uidRef.current; if (u) { void quitterFile(u).catch(() => {}); void retirerTable(u).catch(() => {}); } };
+  useEffect(() => {
+    window.addEventListener('beforeunload', effacer);
+    return () => { window.removeEventListener('beforeunload', effacer); window.clearTimeout(delai.current); if (!lance.current) { lien.current?.fermer(); effacer(); } };
+  }, []);
 
   const changerNom = (nom: string) => {
+    if (uid) { void renommerCompte(nom).catch(() => {}); setNomOuvert(false); return; }
     const j = { ...joueur, nom: nom.slice(0, 16) };
     setJoueur(j);
     sauverJoueur(j);
@@ -85,6 +105,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     const j = { ...joueur, avatar };
     setJoueur(j);
     sauverJoueur(j);
+    if (uid) { void majProfilJeu(uid, { avatar: avatar ?? '' }).catch(() => {}); rafraichirCompte(); }
   };
 
   // Campagne ou adversaire choisi : l'écran « VS » d'abord, la partie ensuite.
@@ -113,10 +134,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
     },
   });
 
-  const distance = (camp: Camp, id = idAutre) => {
-    setErreur('');
+  const distance = (camp: Camp, id = '') => {
+    setErreur(''); setEssai(null);
+    window.clearTimeout(delai.current);
     lien.current?.fermer();
-    const l = new Lien(joueur, {
+    const l = new Lien({ ...joueur, nom: monNom }, {
       surEtat: (e, detail) => {
         setEtatLien(e);
         if (e === 'erreur') setErreur(detail === 'id' ? t.erreurId : t.erreurReseau);
@@ -124,9 +146,11 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
       surMessage: (m) => {
         if (m.type !== 'bonjour' || lance.current) return;
         lance.current = true;
+        window.clearTimeout(delai.current);
+        effacer();
         // La personne en face entre au carnet, sous le nom qu'elle donne.
         const enFace = l.idEnFace();
-        if (enFace) setAmis(garderAmi(enFace, m.nom, joueur.id));
+        if (enFace) garderAmi(enFace, m.nom, joueur.id);
         const autre = m.nom.trim() || t.adversaire;
         // Chacun se voit tel qu'il s'est choisi; l'autre, s'il a pris le même, change de visage d'ici.
         const avatarAutre = vuDEnFace(m.avatar, joueur.avatar);
@@ -141,16 +165,34 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
       },
     });
     lien.current = l;
-    if (camp === 'hote') l.ouvrir();
-    else l.rejoindre(id);
+    if (camp === 'hote') { l.ouvrir(); return; }
+    l.rejoindre(id);
+    // Sans relais TURN, certains réseaux ne laissent pas passer le lien : au bout de 20 secondes, on le dit et on offre un nouvel essai.
+    delai.current = window.setTimeout(() => {
+      if (lance.current || lien.current !== l) return;
+      l.fermer(); lien.current = null; setEtatLien(null);
+      setErreur(t.social.lienLent); setEssai(id);
+    }, LIEN_MS);
   };
 
-  const copier = () => {
-    navigator.clipboard?.writeText(joueur.id).then(() => {
-      setCopie(true);
-      window.setTimeout(() => setCopie(false), 1600);
-    }).catch(() => {});
+  const jeu: JeuDistance = {
+    peerId: joueur.id,
+    etat: etatLien,
+    erreur,
+    ouvrir: () => distance('hote'),
+    rejoindre: (id) => distance('invite', id.trim()),
+    fermer: () => {
+      if (lance.current) return;
+      window.clearTimeout(delai.current);
+      lien.current?.fermer(); lien.current = null;
+      setEtatLien(null); setErreur('');
+      if (uid) void retirerTable(uid).catch(() => {});
+    },
   };
+  // Le défi reçu se fige à l'ouverture : accepté, il quitte la liste des défis en attente, mais le dialogue doit rester jusqu'au lien.
+  const [defiRecu, setDefiRecu] = useState<Defi | null>(null);
+  const prochainDefiRecu = social.defis.find((d) => d.id !== defiVu);
+  useEffect(() => { if (!defiRecu && prochainDefiRecu) setDefiRecu(prochainDefiRecu); }, [defiRecu, prochainDefiRecu]);
 
   return (
     <div className="menu">
@@ -272,7 +314,16 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
 
         <article className="carte verre" data-test="communaute">
           <h2 className="carte-titre">{t.communaute}</h2>
-          <p className="carte-aide">{t.communauteAide}</p>
+          {uid ? (
+            <div className="communaute-resume" data-test="communaute-resume">
+              <Visage avatar={joueur.avatar} vignette={vignette} />
+              <div>
+                <span className="joueur-nom">{monNom}</span>
+                <span className="petit">{t.social.amisEnLigne(social.amis.filter((a) => a.enLigne).length)}</span>
+                {social.nonLus.length > 0 && <span className="petit non-lus">{t.social.nonLus(social.nonLus.length)}</span>}
+              </div>
+            </div>
+          ) : <p className="carte-aide">{t.social.porteAide}</p>}
           <button type="button" className="bouton plein" onClick={() => setCommunauteOuverte(true)} data-test="communaute-ouvrir">{t.ouvrir}</button>
         </article>
       </section>
@@ -327,85 +378,21 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
         </div>
       )}
 
-      {communauteOuverte && (
-        <div className="voile niveaux-voile" onClick={() => setCommunauteOuverte(false)} data-test="communaute-ecran">
-          <section className="niveaux" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={t.communaute}>
-            <header className="niveaux-tete">
-              <div>
-                <h2 className="niveaux-titre">{t.communaute}</h2>
-                <p className="petit">{t.communauteAide}</p>
-              </div>
-              <button type="button" className="bouton discret" onClick={() => setCommunauteOuverte(false)}>{t.fermer}</button>
-            </header>
-            <div className="communaute-grille">
-              <article className="carte verre" data-test="profil">
-                <h2 className="carte-titre">{t.profil}</h2>
-                <p className="carte-aide">{t.profilAide}</p>
-                <div className="champ">
-                  <span className="etiquette">{t.votreNom}</span>
-                  <div className="joueur-ligne">
-                    <span className="joueur-nom">{monNom}</span>
-                    <button type="button" className="bouton discret crayon" onClick={() => setNomOuvert(true)} aria-label={t.modifierNom} title={t.modifierNom}>✎</button>
-                  </div>
-                </div>
-                <div className="champ">
-                  <span className="etiquette">{t.votreId}</span>
-                  <div className="ligne-id">
-                    <code className="id">{joueur.id}</code>
-                    <button type="button" className="bouton discret" onClick={copier}>{copie ? t.copie : t.copier}</button>
-                  </div>
-                </div>
-                <div className="champ">
-                  <span className="etiquette">{t.votrePersonnage}</span>
-                  <div className="persos" role="radiogroup">
-                    <button type="button" className={`perso ${!joueur.avatar ? 'choisi' : ''}`} role="radio" aria-checked={!joueur.avatar} onClick={() => changerAvatar(undefined)}>{t.sansPersonnage}</button>
-                    {/* Seuls les visages gagnés s'affichent; l'échelle montre les autres. */}
-                    {ADVERSAIRES.filter((a) => avatarOuvert(a.id)).map((a) => (
-                      <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{nomAdversaire(a, fr)}</button>
-                    ))}
-                  </div>
-                  {!ADVERSAIRES.some((a) => avatarOuvert(a.id)) && <span className="petit">{t.avatarAucun}</span>}
-                </div>
-              </article>
 
-              <article className="carte verre">
-                <h2 className="carte-titre">{t.aDistance}</h2>
-                <p className="carte-aide">{t.aDistanceAide}</p>
-                <button type="button" className="bouton plein" onClick={() => distance('hote')} disabled={etatLien === 'attente'}>{t.ouvrirTable}</button>
-                <label className="champ">
-                  <span className="etiquette">{t.idAdversaire}</span>
-                  <div className="ligne-id">
-                    <input className="saisie" value={idAutre} onChange={(e) => setIdAutre(e.target.value)} placeholder="paisho-xxxxxxxx" spellCheck={false} autoCapitalize="off" />
-                    <button type="button" className="bouton discret" onClick={() => distance('invite')} disabled={!idValide(idAutre) || idAutre.trim() === joueur.id}>{t.rejoindre}</button>
-                  </div>
-                </label>
-                {/* Le carnet reste visible, même vide : il dit à quoi il servira. */}
-                <div className="champ">
-                  <span className="etiquette">{t.amis}</span>
-                  {amis.length > 0 && <ul className="amis">
-                    {amis.map((a) => (
-                      <li key={a.id}>
-                        <button type="button" className="bouton discret ami" onClick={() => { setIdAutre(a.id); distance('invite', a.id); }} disabled={etatLien === 'attente' || etatLien === 'connexion'} data-test={`ami-${a.id}`}>
-                          <span>{a.nom || t.adversaire}</span>
-                          <code>{a.id}</code>
-                        </button>
-                        <button type="button" className="bouton discret" onClick={() => setAmis(oublierAmi(a.id))} aria-label={`${t.oublier} ${a.nom || a.id}`}>×</button>
-                      </li>
-                    ))}
-                  </ul>}
-                  <span className="petit">{t.amisAide}</span>
-                </div>
-                {etatLien === 'attente' && <p className="etat-lien">{t.attente}</p>}
-                {etatLien === 'connexion' && <p className="etat-lien">{t.connexion}</p>}
-                {erreur && <p className="etat-lien erreur">{erreur}</p>}
-              </article>
-            </div>
-          </section>
-        </div>
+      {communauteOuverte && (
+        <Communaute langue={langue} compte={compte} social={social} jeu={jeu} joueur={joueur} monNom={monNom}
+          battus={nbBattus} total={ADVERSAIRES.length} vignette={vignette} onAvatar={changerAvatar}
+          peutReessayer={!!essai} onReessayer={() => essai && distance('invite', essai)}
+          onFermer={() => setCommunauteOuverte(false)} />
       )}
 
-      {(nomOuvert || !joueur.nom.trim()) && (
-        <ChoixNom langue={langue} initial={joueur.nom} onValider={changerNom} onFermer={joueur.nom.trim() ? () => setNomOuvert(false) : undefined} />
+      {defiRecu && (
+        <DefiRecu key={defiRecu.id} langue={langue} defi={defiRecu} jeu={jeu} onFermer={() => { setDefiVu(defiRecu.id); setDefiRecu(null); }} />
+      )}
+
+      {(nomOuvert || (!joueur.nom.trim() && !(uid && compte.nom))) && (
+        <ChoixNom langue={langue} initial={uid ? monNom : joueur.nom} max={uid ? 24 : 16} onValider={changerNom}
+          onFermer={joueur.nom.trim() || uid ? () => setNomOuvert(false) : undefined} />
       )}
 
       {vs && (

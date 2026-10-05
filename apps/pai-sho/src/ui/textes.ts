@@ -4,6 +4,7 @@
 // l'autre.
 
 import type { TypeTuile } from '../jeu/logic';
+import { SOCIAL_EN, SOCIAL_FR } from './communaute/textes-social';
 
 export type Langue = 'FR' | 'EN';
 /** Le nom par défaut du joueur local, dans les deux langues : il se conjugue à part. */
@@ -131,6 +132,7 @@ const FR = {
   communaute: 'Communauté',
   communauteAide: 'Votre profil, vos amis et le jeu à distance.',
   ouvrir: 'Ouvrir',
+  social: SOCIAL_FR,
 };
 
 const EN: typeof FR = {
@@ -252,6 +254,7 @@ const EN: typeof FR = {
   communaute: 'Community',
   communauteAide: 'Your profile, your friends and remote play.',
   ouvrir: 'Open',
+  social: SOCIAL_EN,
 };
 
 export const TEXTES = { FR, EN };

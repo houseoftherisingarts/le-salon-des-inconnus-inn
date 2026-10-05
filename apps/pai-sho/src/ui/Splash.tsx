@@ -53,20 +53,20 @@ export default function Splash({ joueur, imageJoueur, adversaire, imageAdversair
 }
 
 /** Le nom du joueur, de 2 à 16 caractères; sans annulation à la première visite. */
-export function ChoixNom({ langue, initial, onValider, onFermer }: {
-  langue: Langue; initial: string; onValider: (nom: string) => void; onFermer?: () => void;
+export function ChoixNom({ langue, initial, onValider, onFermer, max = 16 }: {
+  langue: Langue; initial: string; onValider: (nom: string) => void; onFermer?: () => void; max?: number;
 }) {
   const t = TEXTES[langue];
-  const [nom, setNom] = useState(initial.slice(0, 16));
+  const [nom, setNom] = useState(initial.slice(0, max));
   const propre = nom.trim();
-  const valide = propre.length >= 2 && propre.length <= 16;
+  const valide = propre.length >= 2 && propre.length <= max;
   return createPortal(
     <div className="voile nom-voile" data-test="choix-nom" onClick={onFermer}>
       <form className="dialogue verre" role="dialog" aria-modal="true" aria-labelledby="choix-nom-titre"
         onClick={(e) => e.stopPropagation()} onSubmit={(e) => { e.preventDefault(); if (valide) onValider(propre); }}>
         <h2 className="dialogue-titre" id="choix-nom-titre">{t.choisirNom}</h2>
         <p className="dialogue-texte">{t.choisirNomAide}</p>
-        <input className="saisie nom-saisie" value={nom} maxLength={16} minLength={2} autoFocus required
+        <input className="saisie nom-saisie" value={nom} maxLength={max} minLength={2} autoFocus required
           onChange={(e) => setNom(e.target.value)} aria-label={t.votreNom} data-test="nom-saisie" />
         <div className="dialogue-gestes">
           <button type="submit" className="bouton or plein" disabled={!valide} data-test="nom-valider">{t.valider}</button>

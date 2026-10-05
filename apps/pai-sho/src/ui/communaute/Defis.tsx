@@ -104,7 +104,11 @@ export function DefiRecu({ langue, defi, jeu, onFermer }: { langue: Langue; defi
     jeu.rejoindre(defi.peerId);
   };
   const lent = accepteLe > 0 && maintenant - accepteLe > LIEN_MS;
-  useEffect(() => () => { if (accepteLe) jeu.fermer(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [accepteLe]);
+  const perime = !accepteLe && maintenant - (defi.createdAt?.toMillis?.() ?? maintenant) > DEFI_MS;
+  useEffect(() => { if (perime) onFermer(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [perime]);
+  const rejoint = useRef(false);
+  rejoint.current = accepteLe > 0;
+  useEffect(() => () => { if (rejoint.current) jeu.fermer(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
   return (
     <Cadre test="defi-recu" titre={t.defiRecu(defi.nomDe)} texte={lent ? t.lienLent : jeu.erreur || (accepteLe ? TEXTES[langue].connexion : t.defiRecuAide)}>
       {!accepteLe && <button type="button" className="bouton discret" onClick={() => { void repondreDefi(defi.id, 'declined').catch(() => {}); onFermer(); }}>{t.refuser}</button>}

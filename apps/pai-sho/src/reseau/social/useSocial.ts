@@ -101,7 +101,8 @@ export function useSocial(uid: string | undefined): Social {
     recues: enAttente.filter((l) => l.requestedBy !== uid).map((l) => ({ uid: l.requestedBy, nom: nomDans(l, l.requestedBy) })).filter((r) => !bloques.includes(r.uid)),
     envoyees: enAttente.filter((l) => l.requestedBy === uid).map((l) => { const a = autreDe(l, uid); return { uid: a, nom: nomDans(l, a) }; }),
     bloques,
-    tables: Object.values(tables).filter((t): t is TableOuverte => !!t && acceptes.includes(t.uid)),
+    // Une table ne paraît que si son hôte bat encore du pouls : une table laissée par un onglet fermé s'efface d'elle-même.
+    tables: Object.values(tables).filter((t): t is TableOuverte => !!t && amis.some((a) => a.uid === t.uid && a.enLigne)),
     nonLus,
     defis: defis.filter((d) => !bloques.includes(d.from) && maintenant - (d.createdAt?.toMillis?.() ?? maintenant) < DEFI_MS),
     salons,
