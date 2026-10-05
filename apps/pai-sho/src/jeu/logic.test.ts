@@ -210,6 +210,57 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
   verifie(egal.verdict?.type === 'nulle' && egal.verdict.raison === 'medianes', 'égalité aux médianes : nulle');
 }
 
+// ── Audit du 5 octobre 2026 contre la référence ─────────────────────
+{
+  const bonusDe = (e: EtatPaiSho, de: number, a: number) =>
+    coupsLegaux(e).some((c) => c.type === 'deplacer' && c.de === de && c.a === a && c.bonus);
+  // Huit accents par camp, deux de chaque.
+  const e0 = etatInitial();
+  verifie((['hote', 'invite'] as Camp[]).every((c) => ACCENTS.every((t) => e0.reserve[c][t] === 2)), 'deux accents de chaque sorte');
+  // Ni spéciale ni accent ne se plante en tour normal.
+  verifie(coupsLegaux(etatDepuis([])).every((c) => c.type !== 'planter' || ['R3', 'R4', 'R5', 'W3', 'W4', 'W5'].includes(c.tuile)),
+    'seules les fleurs de base se plantent en tour normal');
+  // Lotus : tous les jardins, jamais une porte.
+  const lc = vers(etatDepuis([h(0, 0, 'LOTUS')]), P(0, 0));
+  verifie(lc.has(P(1, 1)) && lc.has(P(1, -1)) && lc.has(P(-1, 1)) && lc.has(P(0, 2)), 'le lotus va en jardin rouge, blanc et neutre');
+  const lp = vers(etatDepuis([h(1, 7, 'LOTUS')]), P(1, 7));
+  verifie(!lp.has(P(0, 8)) && lp.has(P(1, 8)), 'le lotus ne s’arrête pas sur une porte');
+  // Lotus : harmonie avec les fleurs des deux camps, au propriétaire de la fleur.
+  const la = harmonies(etatDepuis([h(-3, 7, 'R3'), g(0, 7, 'LOTUS')]));
+  verifie(la.length === 1 && la[0].camp === 'hote', 'le lotus adverse s’harmonise avec ma fleur, à mon compte');
+  verifie(harmonies(etatDepuis([h(-3, 7, 'LOTUS'), g(3, 7, 'LOTUS')])).length === 0, 'deux lotus ne s’harmonisent pas');
+  verifie(harmonies(etatDepuis([h(-3, 7, 'LOTUS'), h(3, 7, 'ORCHIDEE')])).length === 0, 'lotus et orchidée ne s’harmonisent pas');
+  // Pas de fuite entre camps, même à travers un lotus.
+  const fuite = harmonies(etatDepuis([h(-3, 7, 'R3'), h(0, 7, 'LOTUS'), g(3, 7, 'R4')]));
+  verifie(fuite.length === 2 && !fuite.some((x) => (x.a === P(-3, 7) && x.b === P(3, 7)) || (x.a === P(3, 7) && x.b === P(-3, 7))),
+    'le lotus ne relie pas deux fleurs de camps différents');
+  const mixte = etatDepuis([h(-3, 3, 'R3'), h(3, 3, 'R4'), h(3, -3, 'R3'), g(-3, -3, 'R4')]);
+  verifie(!anneauHarmonie(mixte, 'hote') && !anneauHarmonie(mixte, 'invite'), 'pas d’anneau avec une fleur adverse');
+  const viaLotus = etatDepuis([h(-3, 3, 'R3'), h(3, 3, 'R4'), h(3, -3, 'R3'), g(-3, -3, 'LOTUS')]);
+  verifie(anneauHarmonie(viaLotus, 'hote') && !anneauHarmonie(viaLotus, 'invite'), 'le lotus adverse sert de maillon à mon anneau');
+  // Tout accent entre deux fleurs bloque la ligne (livret p.10); hors ligne, roue et barque n'annulent rien.
+  verifie(harmonies(etatDepuis([h(-3, 7, 'R3'), g(0, 7, 'ROUE'), h(3, 7, 'R4')])).length === 0, 'une roue entre deux bloque');
+  verifie(harmonies(etatDepuis([h(-3, 7, 'R3'), g(0, 7, 'BARQUE'), h(3, 7, 'R4')])).length === 0, 'une barque entre deux bloque');
+  verifie(harmonies(etatDepuis([h(-3, 7, 'R3'), g(0, 6, 'ROUE'), h(3, 7, 'R4')])).length === 1, 'une roue hors ligne n’annule rien');
+  // Le bonus d'harmonie.
+  verifie(bonusDe(etatDepuis([g(0, 7, 'LOTUS'), h(3, 6, 'R3')]), P(3, 6), P(3, 7)), 'bonus : harmonie avec le lotus adverse');
+  verifie(bonusDe(etatDepuis([h(-3, 7, 'R3'), h(0, 7, 'R5'), g(3, 7, 'LOTUS')]), P(0, 7), P(0, 6)),
+    'bonus : la tuile qui part libère une paire (via le lotus adverse)');
+  verifie(bonusDe(etatDepuis([h(4, -5, 'R3'), g(5, -6, 'W3'), h(5, -2, 'R4')]), P(4, -5), P(5, -6)), 'bonus : une prise qui tombe en harmonie');
+  verifie(!bonusDe(etatDepuis([g(-3, 7, 'R3'), h(0, 6, 'LOTUS')]), P(0, 6), P(0, 7)), 'pas de bonus pour une harmonie qui revient à l’adversaire');
+  verifie(bonusDe(etatDepuis([h(-3, 7, 'R3'), h(3, 7, 'R4'), g(4, 6, 'RENOUEE')]), P(3, 7), P(2, 7)),
+    'bonus : sortir de la renouée rend une harmonie qui n’existait pas en début de tour');
+  // Orchidée.
+  verifie(vers(etatDepuis([h(4, -5, 'ORCHIDEE'), h(-7, 2, 'LOTUS'), g(5, -6, 'R4')]), P(4, -5)).has(P(5, -6)), 'orchidée sauvage : elle prend une fleur');
+  verifie(vers(etatDepuis([h(4, -5, 'R3'), g(5, -6, 'ORCHIDEE'), g(-7, 2, 'LOTUS')]), P(4, -5)).has(P(5, -6)), 'orchidée sauvage : vulnérable');
+  verifie(!vers(etatDepuis([h(4, -5, 'R3'), g(5, -6, 'ORCHIDEE')]), P(4, -5)).has(P(5, -6)), 'orchidée sage : imprenable');
+  const piegee = etatDepuis([g(2, -6, 'ORCHIDEE'), h(3, -6, 'R5'), h(-3, 7, 'R3'), h(3, 6, 'R4')]);
+  verifie(coupsLegaux(piegee).map(coupEnTexte).some((x) => x.startsWith('3,6>3,7+BARQUE@3,-6>')), 'la barque déplace une fleur piégée');
+  // Roue : jamais à côté d'une tuile en porte.
+  const porteRoue = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(0, 8, 'R3')]);
+  verifie(!coupsLegaux(porteRoue).map(coupEnTexte).some((x) => x.endsWith('+ROUE@1,7')), 'la roue ne sort pas une tuile de sa porte');
+}
+
 // ── Parties au hasard : aller-retour du texte et contrôles croisés ──
 let milieu: EtatPaiSho | null = null;
 {
