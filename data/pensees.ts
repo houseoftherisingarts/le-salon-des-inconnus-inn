@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-05",
+        title_fr: "Le la du hautbois",
+        title_en: "The oboe's A",
+        body_fr: "Avant un concert, l'orchestre offre toujours un moment que peu de gens écoutent comme de la musique. Le hautbois donne un la, un seul, et des dizaines d'instruments s'en approchent par petites corrections, dans un désordre qui ressemble à tout sauf à ce qui s'en vient. Aucun musicien ne s'accorde sur son voisin; chacun se règle sur la même note commune, et ce détour par une référence partagée leur permet ensuite de jouer ensemble sans passer la soirée à se surveiller. J'aime que les plus grands ensembles du monde commencent en admettant tout haut qu'ils ne sont pas prêts, et qu'ils prennent devant tout le monde la minute qu'il faut pour le devenir. Nous entrons souvent dans nos journées et nos rencontres sans que personne donne le la, chacun encore réglé sur son propre instrument de la veille, et le désordre qui suit n'étonne que nous. Les musiciens savent pourtant que l'accord ne coûte qu'une note, pourvu qu'on accepte de l'écouter avant de jouer. Sur quelle note commune pourrions-nous nous accorder, avant d'attaquer la première mesure?",
+        body_en: "Before a concert, the orchestra always offers a moment that few people listen to as music. The oboe gives an A, a single note, and dozens of instruments draw toward it through small corrections, in a disorder that sounds like anything but what is coming. No musician tunes to their neighbour; each settles on the same shared note, and that detour through a common reference is what lets them play together afterward without spending the evening watching one another. I love that the greatest ensembles in the world begin by admitting out loud that they are not ready, and that they take, in front of everyone, the minute it takes to become so. We often walk into our days and our meetings without anyone giving the pitch, each of us still set to our own instrument from the night before, and the disorder that follows surprises nobody but us. Yet musicians know that the tuning costs only one note, provided we agree to listen to it before playing. What shared note could we tune to, before striking up the first bar?",
+    },
+    {
         date: "2026-10-04",
         title_fr: "Les outardes d'octobre",
         title_en: "The October geese",
