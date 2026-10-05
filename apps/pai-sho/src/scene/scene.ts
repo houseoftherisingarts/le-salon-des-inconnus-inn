@@ -13,7 +13,7 @@ import { batirDecor } from './decor';
 import { Marques } from './marques';
 import { brancherGestes } from './gestes';
 import {
-  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_TUILE, RELIEF_TUILE, FOV, PAS,
+  BASE, COULEUR_INVITE, DEMI_CADRE, ECHELLE_TUILE, RELIEF_TUILE, TUILE_GLB_HAUTEUR_MIN, FOV, PAS,
   Y_FACE, chargerGLB, versMonde,
   type Cadre,
 } from './mesures';
