@@ -175,6 +175,12 @@ export class ScenePaiSho {
         return;
       }
       modele.scale.set(ECHELLE_TUILE, ECHELLE_TUILE * RELIEF_TUILE, ECHELLE_TUILE);
+      // Les GLB de Meshy n'ont pas tous la même épaisseur (le rhododendron et le
+      // lotus sortaient en galettes) : les plus minces sont relevés au plancher commun.
+      const brut = new THREE.Box3().setFromObject(modele);
+      const hauteur = brut.max.y - brut.min.y;
+      const plancher = TUILE_GLB_HAUTEUR_MIN * ECHELLE_TUILE * RELIEF_TUILE;
+      if (hauteur < plancher) modele.scale.y *= plancher / hauteur;
       const b = new THREE.Box3().setFromObject(modele);
       const c = b.getCenter(new THREE.Vector3());
       modele.position.set(-c.x, -b.min.y, -c.z);
