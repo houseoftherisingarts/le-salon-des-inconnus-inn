@@ -1,0 +1,74 @@
+/* ─── La campagne, l'avatar, la communauté et l'écran « VS » ───────
+   Importée par Splash.tsx; la feuille unique dépasse déjà 500 lignes. */
+
+/* ── La campagne, l'avatar et la communauté ──────────────────────── */
+.joueur-ligne { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.joueur-nom { font: 700 18px/1.2 var(--titre); letter-spacing: 0.06em; color: var(--or-pale); overflow-wrap: anywhere; }
+.crayon { padding: 4px 10px; font-size: 15px; line-height: 1; }
+.campagne-finie { color: var(--or-pale); }
+.carte-campagne > .bouton.discret { width: 100%; }
+.avatar-actuel { align-self: flex-start; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 12px; }
+.avatar-actuel:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
+.avatar-actuel .niveau-vignette { width: 64px; height: 64px; border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 0 16px rgba(212, 175, 55, 0.25); }
+.avatar-vide { display: flex; align-items: center; justify-content: center; font: 700 22px/1 var(--titre); color: var(--texte-doux); }
+.avatar-choix { display: flex; flex-wrap: wrap; gap: 6px; }
+.avatar-choix .niveau-perso { min-width: 84px; font-size: 12.5px; }
+.avatar-choix .niveau-vignette { width: 56px; height: 56px; }
+.communaute-grille { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+.communaute-grille .carte-titre { cursor: default; }
+.communaute-grille .carte-titre::after { content: none; }
+.nom-voile { z-index: 60; pointer-events: auto; background: rgba(5, 3, 2, 0.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.nom-saisie { width: 100%; margin-top: 12px; text-align: center; font: 700 20px/1.3 var(--titre); letter-spacing: 0.06em; }
+
+/* ── L'écran « VS », façon Smash ─────────────────────────────────── */
+.vs {
+  position: fixed; inset: 0; z-index: 80; border: 0; padding: 0; margin: 0; cursor: pointer; pointer-events: auto;
+  display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; color: var(--texte);
+  background: #0a0604; animation: fondu 0.25s ease both;
+}
+.vs-cote { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(14px, 2.4vh, 28px); padding: clamp(24px, 5vw, 80px); min-width: 0; text-align: center; }
+/* Les deux moitiés se coupent en biais, comme les cartes de Smash. */
+.vs-joueur {
+  background: linear-gradient(150deg, #5a4214 0%, #2b1d08 55%, #140c04 100%);
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); margin-right: -6vw;
+  box-shadow: inset -2px 0 0 rgba(240, 217, 138, 0.6);
+  animation: vsGauche 0.45s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+.vs-adversaire {
+  background: radial-gradient(ellipse at 50% 40%, #2a1a0c 0%, #0d0805 70%);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%); margin-left: -6vw;
+  animation: vsDroite 0.45s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+.vs-nom {
+  font: 700 clamp(30px, 4.6vw, 72px)/1.05 var(--titre); letter-spacing: 0.06em; color: var(--or-pale);
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.45), 0 4px 24px rgba(0, 0, 0, 0.9);
+  max-width: 11ch; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.vs-adversaire .vs-nom { color: #fff; font-size: clamp(26px, 3.6vw, 58px); max-width: 14ch; }
+.vs-vignette {
+  width: clamp(140px, 26vmin, 300px); aspect-ratio: 1; border-radius: 15px; object-fit: cover; object-position: center top;
+  border: 1px solid rgba(240, 217, 138, 0.55); background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.22), rgba(0, 0, 0, 0.55) 70%);
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.3), 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+.vs-mot {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  font: 700 clamp(72px, 11vw, 168px)/1 var(--titre); letter-spacing: 0.04em; color: var(--or);
+  text-shadow: 0 0 40px rgba(212, 175, 55, 0.8), 0 0 4px #fff, 0 8px 30px rgba(0, 0, 0, 0.9);
+  animation: vsClaque 0.55s cubic-bezier(0.2, 1.5, 0.3, 1) 0.3s both; pointer-events: none;
+}
+@keyframes vsGauche { from { transform: translateX(-40%); opacity: 0; } }
+@keyframes vsDroite { from { transform: translateX(40%); opacity: 0; } }
+@keyframes vsClaque { from { opacity: 0; transform: translate(-50%, -50%) scale(2.6) rotate(-8deg); } }
+/* Au téléphone, l'un au-dessus de l'autre, le VS sur la couture. */
+@media (max-width: 720px) {
+  .vs { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .vs-joueur { clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); margin: 0 0 -6vh; }
+  .vs-adversaire { clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%); margin: -6vh 0 0; }
+  .vs-vignette { width: clamp(110px, 22vh, 200px); }
+  .vs-nom { max-width: 14ch; }
+  .vs-mot { font-size: clamp(64px, 20vw, 110px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vs, .vs-joueur, .vs-adversaire, .vs-mot { animation: none; }
+}

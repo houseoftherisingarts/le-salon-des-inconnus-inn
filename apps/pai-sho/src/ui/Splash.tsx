@@ -8,6 +8,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { TEXTES, type Langue } from './textes';
+import './campagne.css';
 
 const DUREE_MS = 1800;
 

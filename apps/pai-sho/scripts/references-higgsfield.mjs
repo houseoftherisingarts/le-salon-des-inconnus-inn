@@ -11,7 +11,9 @@ import os from 'node:os'; import path from 'node:path'; import { fileURLToPath }
 const ici = path.dirname(fileURLToPath(import.meta.url));
 const maison = os.homedir();
 const MCP = 'https://mcp.higgsfield.ai/mcp';
-const wiki = JSON.parse(readFileSync(path.join(ici, 'references-wiki.json'), 'utf8'));
+// Fandom refuse le robot de Higgsfield (403) : les mêmes images, recopiées dans
+// le seau Firebase du Salon (references-public.json), passent à sa place.
+const wiki = { ...JSON.parse(readFileSync(path.join(ici, 'references-wiki.json'), 'utf8')), ...JSON.parse(readFileSync(path.join(ici, 'references-public.json'), 'utf8')) };
 const CLE = { mai: 'Mai', chou: 'Cabbage merchant', tylee: 'Ty Lee', jet: 'Jet', zhao: 'Zhao', jeongjeong: 'Jeong Jeong', longfeng: 'Long Feng', pakku: 'Pakku', piandao: 'Piandao', hama: 'Hama', wanshitong: 'Wan Shi Tong', ozai: 'Ozai', irohek: 'Iroh EK' };
 const style = process.argv[2];
 const ids = process.argv[3] === 'tous' ? Object.keys(CLE) : process.argv[3].split(',');
