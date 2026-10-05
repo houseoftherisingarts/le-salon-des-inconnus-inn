@@ -43,8 +43,8 @@ export class Convives {
     if (!id) return;
     // Le style choisi d'abord, l'autre jeu de statuettes si le fichier manque.
     const [un, deux] = figurinesDessin() ? [`${id}2`, id] : [id, `${id}2`];
-    chargerSculpture(`${BASE}models/convives/${un}.glb`, HAUT_CONVIVE)
-      .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb`, HAUT_CONVIVE))
+    chargerSculpture(`${BASE}models/convives/${un}.glb?v=${__BUILD__}`, HAUT_CONVIVE)
+      .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb?v=${__BUILD__}`, HAUT_CONVIVE))
       .then((g) => {
         if (this.idAdversaire !== id) return;
         g.userData.rang = 0;
