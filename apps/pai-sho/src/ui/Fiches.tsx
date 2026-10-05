@@ -220,7 +220,7 @@ export function FicheTuile({ t, langue, proprio }: { t: TypeTuile; langue: Langu
   const base = (BASES as readonly TypeTuile[]).includes(t);
   const interdit = base ? x.interdit(ROUGES.includes(t)) : portee ? x.aucun : x.accent;
   return (
-    <aside key={t} className="verre fiche-plateau" role="status" style={{ bottom: bas }} data-test="fiche-plateau">
+    <aside key={t} className="verre fiche-plateau" role="status" style={pose} data-test="fiche-plateau">
       <img src={`${BASE}tuiles/${t}.webp`} alt="" />
       <div>
         <p className="fiche-bulle-nom">{NOMS_TUILES[langue][t]} <span className="fiche-proprio">· {proprio}</span></p>
