@@ -86,8 +86,8 @@ const ECLAIR_LARGE = '62,0 42,100';
 const ECLAIR_HAUT = '0,58 100,42';
 
 // Les particules de feu de la couture : position le long du trait (--t), dérive et retard fixés une fois.
-const ETINCELLES = Array.from({ length: 46 }, (_, i) => ({
-  t: ((i * 61 + 7) % 100) / 100, dx: ((i * 23) % 11) - 5, d: ((i * 0.53) % 2.4), v: 1.6 + (i % 6) * 0.35, s: 2 + (i % 4) * 1.5,
+const ETINCELLES = Array.from({ length: 70 }, (_, i) => ({
+  t: ((i * 61 + 7) % 100) / 100, dx: ((i * 23) % 11) - 5, d: ((i * 0.53) % 2.4), v: 1.6 + (i % 6) * 0.35, s: 3 + (i % 4) * 1.6,
 }));
 
 // Une poignée de braises qui montent : positions et retards fixés une fois.

@@ -180,8 +180,8 @@
   .vs-cote { box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.7); }
   /* Le joueur à droite sous sa bannière du coin gauche, l'adversaire à gauche sous le VS,
      sa bannière dans le coin du bas à droite : les têtes et les bannières ne se croisent pas. */
-  .vs-perso { height: 50vh; }
-  .vs-joueur .vs-perso { bottom: auto; top: 9vh; left: auto; right: -10vw; }
+  .vs-perso { height: 46vh; }
+  .vs-joueur .vs-perso { bottom: auto; top: 8vh; left: auto; right: -9vw; }
   .vs-adversaire .vs-perso { height: 52vh; bottom: -8vh; right: auto; left: -22vw; }
   .vs-calli { font-size: min(21vh, 40vw); color: rgba(255, 246, 226, 0.2); }
   .vs-joueur .vs-calli { top: 11vh; left: -4vw; }
