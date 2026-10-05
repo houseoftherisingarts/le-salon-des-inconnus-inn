@@ -25,6 +25,7 @@ import Fiches from './Fiches';
 import Volume from './Volume';
 import Deblocage from './Deblocage';
 import { enregistrerVictoire, type Deblocage as Gain } from '../jeu/progression';
+import { compterPartieEnLigne } from '../reseau/social/profil';
 
 type Choix =
   | { type: 'aucun' }
@@ -430,6 +431,13 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     inscrit.current = true;
     const g = enregistrerVictoire(config.adversaire);
     if (g) setGain(g);
+  }, [vainqueur, config]);
+  // Une partie à distance gagnée ou perdue compte une fois au bilan du compte.
+  const compte = useRef(false);
+  useEffect(() => {
+    if (compte.current || !vainqueur || config.mode !== 'distance') return;
+    compte.current = true;
+    compterPartieEnLigne(vainqueur === config.campLocal);
   }, [vainqueur, config]);
   // Le joueur seul devant son écran qui perd lit « Défaite », pas « Victoire ».
   if (vainqueur && config.mode !== 'deux' && vainqueur !== config.campLocal) titreFin = t.defaite;

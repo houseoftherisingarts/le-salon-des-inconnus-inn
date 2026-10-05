@@ -69,3 +69,17 @@ export async function inviterAuSalon(id: string, autre: { uid: string; nom: stri
 export async function quitterSalon(id: string, uid: string): Promise<void> {
   await updateDoc(doc(getFirestore(), 'salons', id), { members: arrayRemove(uid) });
 }
+
+export interface ConversationJeu { id: string; autreUid: string; autreNom: string; quand: number; nonLu: boolean }
+
+/** Tous mes fils à deux, le plus récent en tête (le tri se fait ici : la
+ *  requête reste sur un seul champ, sans index composite). */
+export function suivreConversations(uid: string, cb: (c: ConversationJeu[]) => void): Unsubscribe {
+  const q = query(collection(getFirestore(), 'conversations'), where('members', 'array-contains', uid));
+  return onSnapshot(q, (s) => cb(s.docs.map((d) => {
+    const c = d.data() as { members?: string[]; memberProfiles?: Record<string, { displayName?: string }>; lastMessageAt?: Timestamp; lastReadAt?: Record<string, Timestamp> };
+    const autreUid = (c.members ?? []).find((m) => m !== uid) ?? '';
+    const quand = c.lastMessageAt?.toMillis?.() ?? 0;
+    return { id: d.id, autreUid, autreNom: c.memberProfiles?.[autreUid]?.displayName || '…', quand, nonLu: quand > (c.lastReadAt?.[uid]?.toMillis?.() ?? 0) };
+  }).filter((c) => c.autreUid).sort((a, b) => b.quand - a.quand)), () => cb([]));
+}

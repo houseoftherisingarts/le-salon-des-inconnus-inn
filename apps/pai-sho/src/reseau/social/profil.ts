@@ -5,7 +5,9 @@
 // bannière (une des salles du jeu), la campagne et le bilan en ligne.
 // La photo du compte Salon n'est jamais remplacée par une statuette.
 
-import { doc, getFirestore, increment, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore';
+import {
+  collection, doc, getDocs, getFirestore, increment, limit, onSnapshot, query, setDoc, where, type Unsubscribe,
+} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { DECORS } from '../../skins';
 import { app } from '../../firebase';
@@ -43,4 +45,18 @@ export function compterPartieEnLigne(gagnee: boolean): void {
   const u = app && getAuth().currentUser;
   if (!u) return;
   void setDoc(ref(u.uid), gagnee ? { victoires: increment(1) } : { defaites: increment(1) }, { merge: true }).catch(() => {});
+}
+
+/** Cherche des membres par le début de leur nom (tel que tapé, puis avec
+ *  une majuscule) : Firestore ne sait pas ignorer la casse. */
+export async function chercherMembres(texte: string, moi: string): Promise<{ uid: string; nom: string }[]> {
+  const q = texte.trim().slice(0, 24);
+  if (q.length < 2) return [];
+  const formes = [...new Set([q, q[0].toUpperCase() + q.slice(1), q.toLowerCase()])];
+  const vus = new Map<string, string>();
+  for (const f of formes) {
+    const s = await getDocs(query(collection(getFirestore(), 'members'), where('displayName', '>=', f), where('displayName', '<=', f + '\uf8ff'), limit(10)));
+    s.docs.forEach((d) => { if (d.id !== moi) vus.set(d.id, String(d.data().displayName ?? '')); });
+  }
+  return [...vus].map(([uid, nom]) => ({ uid, nom })).slice(0, 12);
 }

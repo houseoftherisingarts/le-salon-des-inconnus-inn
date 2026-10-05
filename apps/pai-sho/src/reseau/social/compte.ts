@@ -86,4 +86,3 @@ export async function deconnecter(): Promise<void> {
   await logout();
 }
 
-export const estElectronUA = (): boolean => navigator.userAgent.includes('Electron');
