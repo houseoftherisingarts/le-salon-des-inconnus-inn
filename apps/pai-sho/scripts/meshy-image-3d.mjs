@@ -11,7 +11,8 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const ici = path.dirname(fileURLToPath(import.meta.url));
-const SORTIE = path.resolve(ici, '../public/models/convives');
+// SORTIE=public/models/tuiles dans l'environnement pour sculpter une tuile.
+const SORTIE = path.resolve(ici, '..', process.env.SORTIE ?? 'public/models/convives');
 mkdirSync(SORTIE, { recursive: true });
 
 const cle = readFileSync(path.join(os.homedir(), '.claude/keys.env'), 'utf8').match(/MESHY_API_KEY=([^\s"']+)/)?.[1];
