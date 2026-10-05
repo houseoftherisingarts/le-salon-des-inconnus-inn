@@ -7,8 +7,8 @@
 // première visite, et sert partout, à distance comme contre la maison.
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { TEXTES, type Langue } from './textes';
-import './campagne.css';
 
 const DUREE_MS = 1800;
 
@@ -32,10 +32,14 @@ export default function Splash({ joueur, imageJoueur, adversaire, imageAdversair
     return () => { window.clearTimeout(minuterie); window.removeEventListener('keydown', passer); };
   }, []);
 
-  return (
+  // Hors du menu : son animation d'entrée ferait de lui le cadre des éléments fixes.
+  return createPortal(
     <button type="button" className="vs" onClick={passer} data-test="vs" aria-label={`${joueur} VS ${adversaire}`}>
       <span className="vs-cote vs-joueur">
-        {imageJoueur && <img className="vs-vignette" src={imageJoueur} alt="" />}
+        {/* Sans visage choisi, le lotus du jeu tient la place, même poids que l'adversaire. */}
+        {imageJoueur
+          ? <img className="vs-vignette" src={imageJoueur} alt="" />
+          : <span className="vs-vignette vs-lotus"><img src={`${import.meta.env.BASE_URL}tuiles/LOTUS.webp`} alt="" /></span>}
         <span className="vs-nom">{joueur}</span>
       </span>
       <span className="vs-cote vs-adversaire">
@@ -43,7 +47,8 @@ export default function Splash({ joueur, imageJoueur, adversaire, imageAdversair
         <span className="vs-nom">{adversaire}</span>
       </span>
       <span className="vs-mot" aria-hidden="true">VS</span>
-    </button>
+    </button>,
+    document.body,
   );
 }
 
@@ -55,7 +60,7 @@ export function ChoixNom({ langue, initial, onValider, onFermer }: {
   const [nom, setNom] = useState(initial.slice(0, 16));
   const propre = nom.trim();
   const valide = propre.length >= 2 && propre.length <= 16;
-  return (
+  return createPortal(
     <div className="voile nom-voile" data-test="choix-nom" onClick={onFermer}>
       <form className="dialogue verre" role="dialog" aria-modal="true" aria-labelledby="choix-nom-titre"
         onClick={(e) => e.stopPropagation()} onSubmit={(e) => { e.preventDefault(); if (valide) onValider(propre); }}>
@@ -67,6 +72,7 @@ export function ChoixNom({ langue, initial, onValider, onFermer }: {
           <button type="submit" className="bouton or plein" disabled={!valide} data-test="nom-valider">{t.valider}</button>
         </div>
       </form>
-    </div>
+    </div>,
+    document.body,
   );
 }

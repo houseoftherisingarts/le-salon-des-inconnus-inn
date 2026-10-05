@@ -1,5 +1,5 @@
 /* ─── La campagne, l'avatar, la communauté et l'écran « VS » ───────
-   Importée par Splash.tsx; la feuille unique dépasse déjà 500 lignes. */
+   Importée par main.tsx après style.css; la feuille unique dépasse déjà 500 lignes. */
 
 /* ── La campagne, l'avatar et la communauté ──────────────────────── */
 .joueur-ligne { display: flex; align-items: center; gap: 8px; min-width: 0; }
@@ -10,7 +10,8 @@
 .avatar-actuel { align-self: flex-start; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 12px; }
 .avatar-actuel:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
 .avatar-actuel .niveau-vignette { width: 64px; height: 64px; border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 0 16px rgba(212, 175, 55, 0.25); }
-.avatar-vide { display: flex; align-items: center; justify-content: center; font: 700 22px/1 var(--titre); color: var(--texte-doux); }
+.avatar-vide { display: flex; align-items: center; justify-content: center; }
+.avatar-vide img { width: 72%; height: 72%; border-radius: 50%; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5)); }
 .avatar-choix { display: flex; flex-wrap: wrap; gap: 6px; }
 .avatar-choix .niveau-perso { min-width: 84px; font-size: 12.5px; }
 .avatar-choix .niveau-vignette { width: 56px; height: 56px; }
@@ -26,7 +27,7 @@
   display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; color: var(--texte);
   background: #0a0604; animation: fondu 0.25s ease both;
 }
-.vs-cote { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(14px, 2.4vh, 28px); padding: clamp(24px, 5vw, 80px); min-width: 0; text-align: center; }
+.vs-cote { position: relative; padding-inline: clamp(24px, 7vw, 120px) !important; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(14px, 2.4vh, 28px); padding: clamp(24px, 5vw, 80px); min-width: 0; text-align: center; }
 /* Les deux moitiés se coupent en biais, comme les cartes de Smash. */
 .vs-joueur {
   background: linear-gradient(150deg, #5a4214 0%, #2b1d08 55%, #140c04 100%);
@@ -40,12 +41,14 @@
   animation: vsDroite 0.45s cubic-bezier(0.2, 0.9, 0.2, 1) both;
 }
 .vs-nom {
-  font: 700 clamp(30px, 4.6vw, 72px)/1.05 var(--titre); letter-spacing: 0.06em; color: var(--or-pale);
+  font: 700 clamp(24px, 3vw, 46px)/1.1 var(--titre); letter-spacing: 0.06em; color: var(--or-pale);
   text-shadow: 0 0 30px rgba(212, 175, 55, 0.45), 0 4px 24px rgba(0, 0, 0, 0.9);
-  max-width: 11ch; overflow-wrap: anywhere;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  max-width: 100%; overflow-wrap: break-word;
 }
-.vs-adversaire .vs-nom { color: #fff; font-size: clamp(26px, 3.6vw, 58px); max-width: 14ch; }
+.vs-adversaire .vs-nom { color: #fff; }
+.vs-nom { text-transform: uppercase; font-size: clamp(24px, 3vw, 46px); }
+.vs-vignette.vs-lotus { display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 45%, rgba(240, 217, 138, 0.35), rgba(60, 40, 10, 0.6) 70%); }
+.vs-lotus img { width: 62%; height: 62%; border-radius: 50%; filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)); }
 .vs-vignette {
   width: clamp(140px, 26vmin, 300px); aspect-ratio: 1; border-radius: 15px; object-fit: cover; object-position: center top;
   border: 1px solid rgba(240, 217, 138, 0.55); background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.22), rgba(0, 0, 0, 0.55) 70%);
@@ -63,12 +66,38 @@
 /* Au téléphone, l'un au-dessus de l'autre, le VS sur la couture. */
 @media (max-width: 720px) {
   .vs { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-  .vs-joueur { clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); margin: 0 0 -6vh; }
+  .vs-joueur { clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); margin: 0 0 -6vh; box-shadow: none; }
   .vs-adversaire { clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%); margin: -6vh 0 0; }
   .vs-vignette { width: clamp(110px, 22vh, 200px); }
-  .vs-nom { max-width: 14ch; }
   .vs-mot { font-size: clamp(64px, 20vw, 110px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .vs, .vs-joueur, .vs-adversaire, .vs-mot { animation: none; }
 }
+/* La table est cachée sous le VS : on ne la compose plus, l'animation part tout de suite. */
+body:has(.vs) .app { visibility: hidden; }
+
+/* Les titres accentués : Cinzel du début à la fin (voir main.tsx). */
+.titre-accent { font-family: 'Cinzel', Georgia, serif !important; }
+
+/* Les cartes du menu passent par-dessus la table et son reflet : un verre plus sombre garde les textes lisibles. */
+.menu-cartes > .carte { background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2); }
+/* Au téléphone, la première carte commence juste sous la table. */
+@media (max-width: 460px) { .menu-cartes { margin-top: 33vh; } }
+
+/* L'écran des niveaux : des cases de même largeur, les verrouillées lisibles, rien de vide. */
+.niveaux { padding-bottom: 56px; -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 40px), transparent); }
+.niveau-carte.ferme { opacity: 1; }
+.niveau-carte.ferme .perso { opacity: 1; }
+.niveau-carte.ferme .niveau-no, .niveau-carte.ferme .niveau-moteur { color: var(--texte-doux); }
+.niveau-carte.ferme .niveau-vignette { filter: saturate(0.55) brightness(0.8); }
+/* Des cases toutes pareilles : le carré de la statuette, puis deux lignes réservées au nom. */
+.niveaux-grille { grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+@media (max-width: 720px) { .niveaux-grille { grid-template-columns: 1fr; } }
+.niveau-persos { flex: 1; flex-wrap: nowrap; align-items: center; justify-content: center; }
+.niveau-perso { width: 128px; height: 138px; min-width: 0; flex: none; justify-content: flex-start; }
+.niveau-perso > span { width: 100%; height: 2.5em; text-align: center; font-size: 12px; line-height: 1.25; overflow-wrap: break-word; }
+
+/* La communauté : deux colonnes de même hauteur. */
+.communaute-grille { align-items: stretch; }
+.communaute-grille .carte > .bouton.plein { margin-top: 0; }

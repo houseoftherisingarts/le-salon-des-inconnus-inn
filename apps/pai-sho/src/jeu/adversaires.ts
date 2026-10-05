@@ -47,7 +47,7 @@ export const ADVERSAIRES: readonly Adversaire[] = [
   { id: 'wanshitong', nom: 'Wan Shi Tong', niveau: 8, motFR: 'Je connais dix mille parties. Celle-ci ne m’apprendra rien.', motEN: 'I know ten thousand games. This one will teach me nothing.' },
   { id: 'bumi',    nom: 'Bumi', niveau: 9, motFR: 'Le bon coup est rarement celui que tu attends.', motEN: 'The right move is rarely the one you expect.' },
   { id: 'ozai',    nom: 'Seigneur du Feu Ozai', nomEN: 'Fire Lord Ozai', niveau: 9, motFR: 'Agenouillez-vous, et la partie sera courte.', motEN: 'Kneel, and the game will be short.' },
-  { id: 'irohek',  nom: 'Iroh du Royaume de la Terre', nomEN: 'Iroh of the Earth Kingdom', niveau: 10, motFR: 'Vous êtes venu de loin. Voyons jusqu’où.', motEN: 'You have come far. Let us see how far.' },
+  { id: 'irohek',  nom: 'Iroh, Royaume de la Terre', nomEN: 'Iroh, Earth Kingdom', niveau: 10, motFR: 'Vous êtes venu de loin. Voyons jusqu’où.', motEN: 'You have come far. Let us see how far.' },
 ];
 
 /** Les douze marches de l'échelle, dans l'ordre de la montée. */

@@ -191,13 +191,13 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <div className="skin-rangee" data-test="avatar">
             <span className="etiquette">{t.votreAvatar} <b className="skin-actif">{joueur.avatar && adversaire(joueur.avatar) ? nomAdversaire(adversaire(joueur.avatar)!, fr) : t.sansPersonnage}</b></span>
             <button type="button" className="avatar-actuel" onClick={() => setAvatarsOuverts((x) => !x)} aria-expanded={avatarsOuverts} aria-label={t.votreAvatar} data-test="avatar-ouvrir">
-              {joueur.avatar ? <img className="niveau-vignette" src={vignette(joueur.avatar)} alt="" /> : <span className="niveau-vignette avatar-vide">?</span>}
+              {joueur.avatar ? <img className="niveau-vignette" src={vignette(joueur.avatar)} alt="" /> : <span className="niveau-vignette avatar-vide"><img src={`${BASE}tuiles/LOTUS.webp`} alt="" /></span>}
             </button>
             {/* Seuls les visages gagnés se portent; le reste attend à l'échelle. */}
             {avatarsOuverts && (
               <div className="avatar-choix">
                 <button type="button" className={`perso niveau-perso ${!joueur.avatar ? 'choisi' : ''}`} onClick={() => { changerAvatar(undefined); setAvatarsOuverts(false); }}>
-                  <span className="niveau-vignette avatar-vide">?</span><span>{t.sansPersonnage}</span>
+                  <span className="niveau-vignette avatar-vide"><img src={`${BASE}tuiles/LOTUS.webp`} alt="" /></span><span>{t.sansPersonnage}</span>
                 </button>
                 {ADVERSAIRES.filter((a) => avatarOuvert(a.id)).map((a) => (
                   <button key={a.id} type="button" className={`perso niveau-perso ${joueur.avatar === a.id ? 'choisi' : ''}`} onClick={() => { changerAvatar(a.id); setAvatarsOuverts(false); }} data-test={`porter-${a.id}`}>
@@ -232,7 +232,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             <span className="defi-niveau">{t.niveau} {echelonDe(enCampagne.id) + 1}</span>
             <span className="defi-nom">{nomAdversaire(enCampagne, fr)}</span>
           </div>
-          <span className="petit perso-mot">« {fr ? perso.motFR : perso.motEN} »</span>
+          <span className="petit perso-mot">«&nbsp;{fr ? perso.motFR : perso.motEN}&nbsp;»</span>
           {!advOuvert && <span className="petit verrou-mot" data-test="verrou">{t.verrouille(ECHELONS.findIndex((e) => e.includes(perso.id)))}</span>}
           {libre && <div className="champ">
             <span className="etiquette">{t.niveau}</span>
@@ -308,7 +308,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
                             {j > 0 && <span className="echelon-ou">{fr ? 'ou' : 'or'}</span>}
                             <button type="button" className={`perso niveau-perso ${adv === id ? 'choisi' : ''} ${estBattu(id) ? 'battu' : ''}`} onClick={() => { setAdv(id); setNiveauxOuverts(false); if (ouvert) contre(a); }} data-test={`adv-${id}`}>
                               {/* La figurine photographiée par scripts/vignettes.mjs, dans le style choisi. */}
-                              <img className="niveau-vignette" src={vignette(id)} alt="" loading="lazy" />
+                              <img className="niveau-vignette" src={vignette(id)} alt="" />
                               <span>{nomAdversaire(a, fr)}{estBattu(id) && <i className="coche"> ✓</i>}</span>
                             </button>
                           </span>
@@ -359,10 +359,12 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
                   <span className="etiquette">{t.votrePersonnage}</span>
                   <div className="persos" role="radiogroup">
                     <button type="button" className={`perso ${!joueur.avatar ? 'choisi' : ''}`} role="radio" aria-checked={!joueur.avatar} onClick={() => changerAvatar(undefined)}>{t.sansPersonnage}</button>
-                    {ADVERSAIRES.map((a) => (
-                      <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} disabled={!avatarOuvert(a.id)} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{avatarOuvert(a.id) ? '' : '🔒 '}{nomAdversaire(a, fr)}</button>
+                    {/* Seuls les visages gagnés s'affichent; l'échelle montre les autres. */}
+                    {ADVERSAIRES.filter((a) => avatarOuvert(a.id)).map((a) => (
+                      <button key={a.id} type="button" className={`perso ${joueur.avatar === a.id ? 'choisi' : ''}`} role="radio" aria-checked={joueur.avatar === a.id} onClick={() => changerAvatar(a.id)} data-test={`avatar-${a.id}`}>{nomAdversaire(a, fr)}</button>
                     ))}
                   </div>
+                  {!ADVERSAIRES.some((a) => avatarOuvert(a.id)) && <span className="petit">{t.avatarAucun}</span>}
                 </div>
               </article>
 
@@ -377,23 +379,22 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
                     <button type="button" className="bouton discret" onClick={() => distance('invite')} disabled={!idValide(idAutre) || idAutre.trim() === joueur.id}>{t.rejoindre}</button>
                   </div>
                 </label>
-                {amis.length > 0 && (
-                  <div className="champ">
-                    <span className="etiquette">{t.amis}</span>
-                    <ul className="amis">
-                      {amis.map((a) => (
-                        <li key={a.id}>
-                          <button type="button" className="bouton discret ami" onClick={() => { setIdAutre(a.id); distance('invite', a.id); }} disabled={etatLien === 'attente' || etatLien === 'connexion'} data-test={`ami-${a.id}`}>
-                            <span>{a.nom || t.adversaire}</span>
-                            <code>{a.id}</code>
-                          </button>
-                          <button type="button" className="bouton discret" onClick={() => setAmis(oublierAmi(a.id))} aria-label={`${t.oublier} ${a.nom || a.id}`}>×</button>
-                        </li>
-                      ))}
-                    </ul>
-                    <span className="petit">{t.amisAide}</span>
-                  </div>
-                )}
+                {/* Le carnet reste visible, même vide : il dit à quoi il servira. */}
+                <div className="champ">
+                  <span className="etiquette">{t.amis}</span>
+                  {amis.length > 0 && <ul className="amis">
+                    {amis.map((a) => (
+                      <li key={a.id}>
+                        <button type="button" className="bouton discret ami" onClick={() => { setIdAutre(a.id); distance('invite', a.id); }} disabled={etatLien === 'attente' || etatLien === 'connexion'} data-test={`ami-${a.id}`}>
+                          <span>{a.nom || t.adversaire}</span>
+                          <code>{a.id}</code>
+                        </button>
+                        <button type="button" className="bouton discret" onClick={() => setAmis(oublierAmi(a.id))} aria-label={`${t.oublier} ${a.nom || a.id}`}>×</button>
+                      </li>
+                    ))}
+                  </ul>}
+                  <span className="petit">{t.amisAide}</span>
+                </div>
                 {etatLien === 'attente' && <p className="etat-lien">{t.attente}</p>}
                 {etatLien === 'connexion' && <p className="etat-lien">{t.connexion}</p>}
                 {erreur && <p className="etat-lien erreur">{erreur}</p>}

@@ -146,7 +146,8 @@ img { display: block; }
   display: flex; flex-direction: column; justify-content: space-between;
   padding: clamp(20px, 3.5vw, 48px);
   overflow-y: auto;
-  animation: monte 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  /* « backwards » : l'entrée finie, le menu ne garde aucune transformation et ses voiles fixes couvrent bien l'écran. */
+  animation: monte 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
   background: linear-gradient(180deg, rgba(10, 6, 3, 0.55) 0%, rgba(10, 6, 3, 0) 30%, rgba(10, 6, 3, 0) 55%, rgba(10, 6, 3, 0.7) 100%);
 }
 .menu-tete { display: flex; align-items: center; gap: 20px; }

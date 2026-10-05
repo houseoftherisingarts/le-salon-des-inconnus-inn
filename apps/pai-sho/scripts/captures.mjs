@@ -30,7 +30,7 @@ async function ouvrir(largeur, hauteur, propre = true, nav = navigateur, requete
   const page = await ctx.newPage();
   page.on('pageerror', (e) => rapport.erreurs.push(`${largeur}: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error') rapport.erreurs.push(`${largeur} console: ${m.text()}`); });
-  if (propre) await page.addInitScript(() => { if (!sessionStorage.getItem('x')) { localStorage.clear(); localStorage.setItem('paisho.tutoriel.paisho', '1'); sessionStorage.setItem('x', '1'); } });
+  if (propre) await page.addInitScript(() => { if (!sessionStorage.getItem('x')) { localStorage.clear(); localStorage.setItem('paisho.tutoriel.paisho', '1'); localStorage.setItem('paisho.joueur', JSON.stringify({ id: 'paisho-capture1', nom: 'Capture' })); sessionStorage.setItem('x', '1'); } });
   await page.goto(URL + requete);
   await page.waitForSelector('.menu', { timeout: 60000 });
   await pause(900);
@@ -93,6 +93,8 @@ if (SEUL.includes('1')) {
   rapport.mesures.plateau = await page.evaluate(() => window.__mesurePlateau ?? null);
   await capture(page, 'menu-1440');
   await page.click('[data-test="contre-maison"]');
+  // L'écran « Nom VS Adversaire » se passe d'un clic, comme le ferait un joueur pressé.
+  await page.click('[data-test="vs"]', { timeout: 5000 }).catch(() => {});
   await page.waitForSelector('.hud-haut');
   await pause(2200);
   let joues = 0;
@@ -148,6 +150,8 @@ if (SEUL.includes('3')) {
   rapport.mesures.debordementMenu = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   await capture(page, 'menu-390');
   await page.click('[data-test="contre-maison"]');
+  // L'écran « Nom VS Adversaire » se passe d'un clic, comme le ferait un joueur pressé.
+  await page.click('[data-test="vs"]', { timeout: 5000 }).catch(() => {});
   await page.waitForSelector('.hud-haut');
   await pause(2200);
   let joues = 0;
