@@ -66,8 +66,8 @@ function Figurines({ ids, ombre }: { ids: string[]; ombre?: boolean }) {
     const ecart = 6.5;
     ids.forEach((id, i) => {
       const [un, deux] = figurinesDessin() ? [`${id}2`, id] : [id, `${id}2`];
-      chargerSculpture(`${BASE}models/convives/${un}.glb`, 9)
-        .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb`, 9))
+      chargerSculpture(`${BASE}models/convives/${un}.glb?v=${__BUILD__}`, 9)
+        .catch(() => chargerSculpture(`${BASE}models/convives/${deux}.glb?v=${__BUILD__}`, 9))
         .then((g) => {
           if (!vivant) return;
           g.traverse((o) => {
