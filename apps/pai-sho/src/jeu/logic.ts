@@ -338,8 +338,10 @@ export function conflits(e: EtatPaiSho): [Pt, Pt][] {
 
 // ─── L'état ─────────────────────────────────────────────────────────
 
+// Décision d'Alex (5 oct. 2026) : chaque camp garde ses huit accents,
+// deux de chaque, sans le choix de quatre sur huit du livret.
 const reserveInitiale = (): Record<TypeTuile, number> => ({
-  R3: 3, R4: 3, R5: 3, W3: 3, W4: 3, W5: 3, LOTUS: 1, ORCHIDEE: 1, ROCHER: 1, ROUE: 1, RENOUEE: 1, BARQUE: 1,
+  R3: 3, R4: 3, R5: 3, W3: 3, W4: 3, W5: 3, LOTUS: 1, ORCHIDEE: 1, ROCHER: 2, ROUE: 2, RENOUEE: 2, BARQUE: 2,
 });
 
 const clePosition = (cases: string, tour: Camp): string => cases + (tour === 'hote' ? 'H' : 'I');

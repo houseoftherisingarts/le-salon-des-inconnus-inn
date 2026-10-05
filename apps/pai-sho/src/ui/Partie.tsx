@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { appliquerCoup, coupLegal, texteVerdict, TEXTES_ARBITRE } from '../jeu/arbitre';
 import {
-  coupDepuisTexte, coupEnTexte, coupsLegaux, harmonies, jouer,
+  coupDepuisTexte, coupEnTexte, coupsLegaux, harmonies, jouer, tuileEn,
   type Bonus, type Camp, type Coup, type EtatPaiSho, type TypeTuile,
 } from '../jeu/logic';
 import { choisirCoup } from '../jeu/cpu';
@@ -21,7 +21,7 @@ import type { EtatLien, Message } from '../reseau/pair';
 import type { Depart } from '../App';
 import { NOMS_TUILES, TEXTES, type Langue } from './textes';
 import { Reserve, Journal, PanneauRegles, PanneauBonus } from './Panneaux';
-import Fiches from './Fiches';
+import Fiches, { FicheTuile } from './Fiches';
 import Volume from './Volume';
 import Deblocage from './Deblocage';
 import { enregistrerVictoire, type Deblocage as Gain } from '../jeu/progression';
@@ -99,6 +99,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   const [confirmer, setConfirmer] = useState(false);
   const [etatLien, setEtatLien] = useState<EtatLien>(lien ? 'connecte' : 'fini');
   const [journalOuvert, setJournalOuvert] = useState(false);
+  // La tuile cliquée sur le plateau, dont la fiche s'affiche.
+  const [vue, setVue] = useState<Pt | null>(null);
   // Ce que la victoire contre la maison vient d'ouvrir, montré avant le verdict.
   const [gain, setGain] = useState<Gain | null>(null);
   const inscrit = useRef(false);
@@ -204,6 +206,7 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     etatRef.current = apres;
     coupsRef.current = liste;
     setChoix({ type: 'aucun' });
+    setVue(null);
     scene.montrerCibles([], null);
     setOccupe(true);
     setEtat(apres);
@@ -350,6 +353,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
   }, [choix, jouerCoup]);
 
   const clic = useCallback((p: Pt | null) => {
+    // Toute tuile cliquée montre sa fiche, à son tour ou non; ailleurs, la fiche se ferme.
+    setVue(p !== null && tuileEn(etatRef.current, p) ? p : null);
     if (!aMoi) return;
     if (choix.type === 'bonus') {
       if (!choix.tuile || p === null || !ciblesDe(choix).includes(p)) return;
@@ -449,6 +454,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
     else if (etat.numero === 0) consigne = t.ouverture;
   }
 
+  const tuileVue = vue !== null ? tuileEn(etat, vue) : null;
+
   const statut = config.mode === 'maison'
     ? `${t.niveau} ${config.niveau} · ${nomNiveau(config.niveau, fr)}`
     : config.mode === 'lecon' ? t.lecon
@@ -521,6 +528,8 @@ export default function Partie({ scene, depart, langue, onMenu, onNouvelle, onTu
       </footer>
 
       {consigne && <p className="consigne verre">{consigne}</p>}
+
+      {tuileVue && !etapeLecon && !fini && <FicheTuile t={tuileVue.type} langue={langue} proprio={nom(tuileVue.camp)} />}
 
       {etapeLecon && !fini && (
         <aside className="lecon-carte verre" role="status" data-test="lecon-carte">
