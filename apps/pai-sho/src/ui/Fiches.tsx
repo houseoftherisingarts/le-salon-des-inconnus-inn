@@ -196,6 +196,34 @@ function Bulle({ t, langue, ancre }: { t: TypeTuile; langue: Langue; ancre: HTML
   );
 }
 
+/** La fiche d'une tuile cliquée sur le plateau : son nom, à qui elle
+ *  est, et ce qu'elle fait, avec les mêmes textes que les bulles. Posée
+ *  au-dessus de la main du téléphone, ou en bas de l'écran ailleurs. */
+export function FicheTuile({ t, langue, proprio }: { t: TypeTuile; langue: Langue; proprio: string }) {
+  const x = TX[langue];
+  const [bas, setBas] = useState(22);
+  useLayoutEffect(() => {
+    const r = document.querySelector('.hud-bas')?.getBoundingClientRect();
+    setBas(r && r.height > 0 ? window.innerHeight - r.top + 10 : 22);
+  }, [t]);
+  const portee = PORTEE[t];
+  const base = (BASES as readonly TypeTuile[]).includes(t);
+  const interdit = base ? x.interdit(ROUGES.includes(t)) : portee ? x.aucun : x.accent;
+  return (
+    <aside key={t} className="verre fiche-plateau" role="status" style={{ bottom: bas }} data-test="fiche-plateau">
+      <img src={`${BASE}tuiles/${t}.webp`} alt="" />
+      <div>
+        <p className="fiche-bulle-nom">{NOMS_TUILES[langue][t]} <span className="fiche-proprio">· {proprio}</span></p>
+        <p className="fiche-bulle-chiffres">
+          {portee ? <b>{x.portee(portee)}</b> : null}
+          {portee ? ' · ' : ''}{interdit}
+        </p>
+        <p className="fiche-bulle-regle">{base ? phrase(t, langue) : REGLE[langue][t]}</p>
+      </div>
+    </aside>
+  );
+}
+
 export default function Fiches({ langue }: { langue: 'FR' | 'EN' }) {
   const x = TX[langue];
   const [ouvert, setOuvert] = useState(() => window.innerWidth >= 1100);
