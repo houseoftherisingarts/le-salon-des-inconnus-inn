@@ -34,12 +34,13 @@ function useHorloge(): number {
   return n;
 }
 
-function Cadre({ titre, texte, children, test }: { titre: string; texte: ReactNode; children: ReactNode; test: string }) {
+function Cadre({ nom, titre, texte, children, test }: { nom?: string; titre: string; texte: ReactNode; children: ReactNode; test: string }) {
   return createPortal(
     <div className="voile nom-voile defi-voile" data-test={test}>
       <section className="dialogue verre defi-dialogue" role="dialog" aria-modal="true" aria-labelledby={`${test}-titre`}>
         <img src={`${BASE}tuiles/LOTUS.webp`} alt="" className="defi-lotus" />
-        <h2 className="dialogue-titre" id={`${test}-titre`}>{titre}</h2>
+        {/* Le nom sur sa ligne, en or et en Cinzel; le verbe dessous. */}
+        <h2 className="dialogue-titre defi-titre" id={`${test}-titre`}>{nom && <span className="nom-joueur defi-nom">{nom}</span>}<span>{titre}</span></h2>
         <p className="dialogue-texte">{texte}</p>
         <div className="dialogue-gestes">{children}</div>
       </section>
@@ -83,7 +84,7 @@ export function DefiEnvoye({ langue, uid, monNom, ami, jeu, onFermer }: {
 
   const fin = echec || (statut === 'declined' ? t.defiRefuse(ami.nom) : expire ? t.defiExpire : lent ? t.lienLent : jeu.erreur);
   return (
-    <Cadre test="defi-envoye" titre={t.defiEnvoye(ami.nom)}
+    <Cadre test="defi-envoye" nom={ami.nom} titre={t.defiEnvoye}
       texte={fin || (accepteLe ? TEXTES[langue].connexion : `${t.defiAttente} ${mmss(DEFI_MS - (maintenant - depart))}`)}>
       <button type="button" className="bouton discret" onClick={() => { if (id && statut === 'pending') void repondreDefi(id, 'expired').catch(() => {}); onFermer(); }}>
         {fin ? TEXTES[langue].fermer : TEXTES[langue].annuler}
@@ -110,7 +111,7 @@ export function DefiRecu({ langue, defi, jeu, onFermer }: { langue: Langue; defi
   rejoint.current = accepteLe > 0;
   useEffect(() => () => { if (rejoint.current) jeu.fermer(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
   return (
-    <Cadre test="defi-recu" titre={t.defiRecu(defi.nomDe)} texte={lent ? t.lienLent : jeu.erreur || (accepteLe ? TEXTES[langue].connexion : t.defiRecuAide)}>
+    <Cadre test="defi-recu" nom={defi.nomDe} titre={t.defiRecu} texte={lent ? t.lienLent : jeu.erreur || (accepteLe ? TEXTES[langue].connexion : t.defiRecuAide)}>
       {!accepteLe && <button type="button" className="bouton discret" onClick={() => { void repondreDefi(defi.id, 'declined').catch(() => {}); onFermer(); }}>{t.refuser}</button>}
       {!accepteLe && <button type="button" className="bouton or" onClick={accepter} data-test="defi-accepter">{t.accepter}</button>}
       {accepteLe > 0 && <button type="button" className="bouton discret" onClick={onFermer}>{TEXTES[langue].fermer}</button>}

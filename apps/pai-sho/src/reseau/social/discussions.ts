@@ -6,8 +6,8 @@
 // messages, propres au jeu. Les règles bornent le texte à 2 000 signes.
 
 import {
-  addDoc, arrayRemove, arrayUnion, collection, doc, getFirestore, limitToLast, onSnapshot,
-  orderBy, query, serverTimestamp, setDoc, updateDoc, where, type Timestamp, type Unsubscribe,
+  addDoc, arrayRemove, arrayUnion, collection, doc, getCountFromServer, getFirestore, limitToLast, onSnapshot,
+  orderBy, query, serverTimestamp, setDoc, Timestamp, updateDoc, where, type Unsubscribe,
 } from 'firebase/firestore';
 
 export const TEXTE_MAX = 2000;
@@ -70,7 +70,7 @@ export async function quitterSalon(id: string, uid: string): Promise<void> {
   await updateDoc(doc(getFirestore(), 'salons', id), { members: arrayRemove(uid) });
 }
 
-export interface ConversationJeu { id: string; autreUid: string; autreNom: string; quand: number; nonLu: boolean }
+export interface ConversationJeu { id: string; autreUid: string; autreNom: string; quand: number; lu: number; nonLu: boolean }
 
 /** Tous mes fils à deux, le plus récent en tête (le tri se fait ici : la
  *  requête reste sur un seul champ, sans index composite). */
@@ -80,6 +80,13 @@ export function suivreConversations(uid: string, cb: (c: ConversationJeu[]) => v
     const c = d.data() as { members?: string[]; memberProfiles?: Record<string, { displayName?: string }>; lastMessageAt?: Timestamp; lastReadAt?: Record<string, Timestamp> };
     const autreUid = (c.members ?? []).find((m) => m !== uid) ?? '';
     const quand = c.lastMessageAt?.toMillis?.() ?? 0;
-    return { id: d.id, autreUid, autreNom: c.memberProfiles?.[autreUid]?.displayName || '…', quand, nonLu: quand > (c.lastReadAt?.[uid]?.toMillis?.() ?? 0) };
+    const lu = c.lastReadAt?.[uid]?.toMillis?.() ?? 0;
+    return { id: d.id, autreUid, autreNom: c.memberProfiles?.[autreUid]?.displayName || '…', quand, lu, nonLu: quand > lu };
   }).filter((c) => c.autreUid).sort((a, b) => b.quand - a.quand)), () => cb([]));
+}
+
+/** Le nombre de messages arrivés dans un fil depuis ma dernière lecture. */
+export async function compterNonLus(id: string, depuis: number): Promise<number> {
+  const q = query(collection(getFirestore(), 'conversations', id, 'messages'), where('createdAt', '>', Timestamp.fromMillis(depuis)));
+  return (await getCountFromServer(q)).data().count;
 }

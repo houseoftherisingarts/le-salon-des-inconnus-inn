@@ -1,7 +1,7 @@
 /* ─── La Communauté : verre sombre et chaud, or, coins de 15 px ─────── */
 
-.communaute .communaute-grille { grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
-.communaute .carte { background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-radius: var(--rayon); min-width: 0; }
+.communaute .communaute-grille { grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); align-items: start; }
+.communaute .carte { padding: 18px; background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-radius: var(--rayon); min-width: 0; }
 
 /* Les dialogues passent devant la section (z 40) et le voile des noms. */
 .porte-compte, .editeur, .fil, .defi-dialogue { background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-radius: var(--rayon); }
@@ -9,6 +9,7 @@
 .porte-compte { display: flex; flex-direction: column; gap: 12px; text-align: left; }
 .porte-compte .dialogue-titre, .porte-compte .dialogue-texte { text-align: center; }
 .porte-liens { display: flex; justify-content: space-between; gap: 4px 16px; flex-wrap: wrap; }
+.porte-liens .bouton.lien { display: inline-block; min-height: 44px; padding: 12px 8px; }
 @media (max-width: 600px) { .porte-liens { justify-content: center; } }
 .rangee-boutons { display: flex; gap: 8px; flex-wrap: wrap; }
 .rangee-boutons .bouton { flex: 1 1 auto; }
@@ -29,7 +30,7 @@
 
 /* Le profil */
 .profil-carte { padding-top: 0; overflow: hidden; }
-.profil-banniere { height: 120px; margin: 0 -22px; background: center / cover no-repeat; border-bottom: 1px solid var(--bord); mask-image: linear-gradient(#000 55%, transparent); -webkit-mask-image: linear-gradient(#000 55%, transparent); }
+.profil-banniere { height: 120px; margin: 0 -18px; background: center / cover no-repeat; border-bottom: 1px solid var(--bord); mask-image: linear-gradient(#000 55%, transparent); -webkit-mask-image: linear-gradient(#000 55%, transparent); }
 .profil-entete { display: flex; align-items: flex-end; gap: 14px; margin-top: -46px; position: relative; }
 .profil-qui { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding-bottom: 4px; }
 .profil-nom { margin: 0; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -45,7 +46,7 @@
 .editeur-visages .perso.niveau-perso { width: auto; height: auto; min-width: 0; padding: 4px; border-radius: 14px; }
 .editeur-bannieres { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .editeur-banniere { position: relative; height: 72px; border-radius: 12px; border: 1px solid var(--bord); background: center / cover no-repeat; cursor: pointer; overflow: hidden; padding: 0; }
-.editeur-banniere span { position: absolute; inset: auto 0 0; padding: 4px 8px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.85)); font: 600 12px/1.3 var(--sans); color: var(--texte); text-align: left; letter-spacing: 0.04em; }
+.editeur-banniere span { position: absolute; inset: auto 0 0; padding: 18px 8px 5px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.75)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 4px #000; font: 600 12px/1.3 var(--sans); color: var(--texte); text-align: left; letter-spacing: 0.04em; }
 .editeur-banniere.choisi { border-color: var(--or); box-shadow: 0 0 0 1px var(--or), 0 0 18px rgba(212, 175, 55, 0.35); }
 
 /* Les listes */
@@ -89,15 +90,37 @@
 @media (prefers-reduced-motion: reduce) { .defi-lotus { animation: none; } }
 .defi-dialogue .dialogue-texte { font-variant-numeric: tabular-nums; }
 
+/* Le titre d'un défi : le nom en or sur sa ligne, le verbe dessous. */
+.defi-titre { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.defi-nom { color: var(--or); overflow-wrap: anywhere; }
+
+/* Rejoindre avec un code : un bouton secondaire, en contour, sous le champ s'il manque de place. */
+.ligne-code { flex-wrap: wrap; }
+.ligne-code .saisie { flex: 1 1 180px; min-width: 0; }
+.ligne-code .bouton { flex: 1 1 auto; }
+.bouton.contour { background: transparent; border-color: rgba(212, 175, 55, 0.55); color: var(--or-pale); }
+
+/* Tout ce qu'un joueur a tapé (noms, salons) s'écrit en Cinzel : la police d'affiche a un « A » à elle. */
+.nom-joueur { font-family: 'Cinzel', Georgia, serif !important; letter-spacing: 0.02em; }
+
+/* Au menu : les cartes ne touchent plus le bas de l'écran; la colonne défile. */
+@media (min-width: 901px) { .menu { overflow-y: auto; padding-bottom: 48px; } }
+
 /* Au menu : le résumé de la Communauté */
 .communaute-resume { display: flex; align-items: center; gap: 12px; }
 .communaute-resume > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .communaute-resume .joueur-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .communaute-resume .non-lus { color: var(--or-pale); }
 
+/* Au téléphone, chaque cible fait 44 px. */
+@media (max-width: 460px) {
+  .communaute :is(.bouton, .saisie), :is(.porte-compte, .editeur, .fil, .defi-dialogue, .nom-voile .dialogue) :is(.bouton, .saisie) { min-height: 44px; }
+}
+
 @media (max-width: 600px) {
   .communaute .communaute-grille { gap: 12px; }
-  .profil-banniere { margin: 0 -18px; height: 100px; }
+  .communaute .carte { padding: 16px; }
+  .profil-banniere { margin: 0 -16px; height: 100px; }
   .fil { padding: 16px; height: calc(100vh - 24px); }
   .bulle { max-width: 92%; }
   .editeur-visages .niveau-vignette { width: 52px; height: 52px; }

@@ -158,7 +158,9 @@ service cloud.firestore {
       // salle), jamais une adresse; le bilan reste un entier borné.
       match /paisho/profil {
         allow read:  if isSignedIn();
-        allow write: if isSelf(userId)
+        // Le joueur efface son propre profil de jeu (fermeture de compte).
+        allow delete: if isSelf(userId);
+        allow create, update: if isSelf(userId)
                      && request.resource.data.keys().hasOnly(['avatar', 'banniere', 'battus', 'victoires', 'defaites'])
                      && (!('avatar' in request.resource.data) || (request.resource.data.avatar is string && request.resource.data.avatar.matches('^[a-z0-9]{0,32}$')))
                      && (!('banniere' in request.resource.data) || request.resource.data.banniere in ['taverne', 'the', 'jardin', 'sakura'])

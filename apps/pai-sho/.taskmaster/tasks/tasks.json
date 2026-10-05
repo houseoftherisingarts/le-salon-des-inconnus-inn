@@ -9,9 +9,9 @@
         "testStrategy": "Run `npm install` successfully. Start dev server, open browser console, verify no Firebase initialization errors. Check that firestore instance connects to le-salon-des-inconnus project.",
         "priority": "high",
         "dependencies": [],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [],
-        "updatedAt": "2026-10-05T05:21:35.863Z"
+        "updatedAt": "2026-10-05T06:32:17.623Z"
       },
       {
         "id": "2",
@@ -23,8 +23,9 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:21.610Z"
       },
       {
         "id": "3",
@@ -36,8 +37,9 @@
         "dependencies": [
           "2"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:25.384Z"
       },
       {
         "id": "4",
@@ -49,8 +51,9 @@
         "dependencies": [
           "3"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:29.390Z"
       },
       {
         "id": "5",
@@ -62,8 +65,9 @@
         "dependencies": [
           "4"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:33.176Z"
       },
       {
         "id": "6",
@@ -75,8 +79,9 @@
         "dependencies": [
           "5"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:37.028Z"
       },
       {
         "id": "7",
@@ -88,8 +93,9 @@
         "dependencies": [
           "6"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:40.868Z"
       },
       {
         "id": "8",
@@ -101,8 +107,9 @@
         "dependencies": [
           "7"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:44.832Z"
       },
       {
         "id": "9",
@@ -114,8 +121,9 @@
         "dependencies": [
           "8"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:48.743Z"
       },
       {
         "id": "10",
@@ -127,15 +135,16 @@
         "dependencies": [
           "9"
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-10-05T06:32:52.556Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-05T05:21:35.863Z",
+      "lastModified": "2026-10-05T06:32:52.556Z",
       "taskCount": 10,
-      "completedCount": 0,
+      "completedCount": 10,
       "tags": [
         "master"
       ]

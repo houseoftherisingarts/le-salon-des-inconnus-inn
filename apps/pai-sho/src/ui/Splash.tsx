@@ -40,7 +40,7 @@ export default function Splash({ joueur, imageJoueur, adversaire, imageAdversair
         {imageJoueur
           ? <img className="vs-vignette" src={imageJoueur} alt="" />
           : <span className="vs-vignette vs-lotus"><img src={`${import.meta.env.BASE_URL}tuiles/LOTUS.webp`} alt="" /></span>}
-        <span className="vs-nom">{joueur}</span>
+        <span className="vs-nom nom-joueur">{joueur}</span>
       </span>
       <span className="vs-cote vs-adversaire">
         <img className="vs-vignette" src={imageAdversaire} alt="" />

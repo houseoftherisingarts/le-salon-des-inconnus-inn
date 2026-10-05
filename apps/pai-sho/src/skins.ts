@@ -27,9 +27,9 @@ export const TUILES: { id: IdTuiles; nomFR: string; nomEN: string; gratuit: bool
 /** Les salles, toutes offertes : la taverne et le salon de thé (`scenes/<id>-salle.jpg`). */
 export const DECORS: { id: IdDecor; nomFR: string; nomEN: string; gratuit: boolean }[] = [
   { id: 'taverne', nomFR: 'Taverne', nomEN: 'Tavern', gratuit: true },
-  { id: 'the', nomFR: 'Salon de thé', nomEN: 'Tea house', gratuit: true },
-  { id: 'jardin', nomFR: 'Jardin de thé', nomEN: 'Tea garden', gratuit: true },
-  { id: 'sakura', nomFR: 'Jardin des cerisiers', nomEN: 'Cherry blossom garden', gratuit: true },
+  { id: 'the', nomFR: 'Pavillon zen', nomEN: 'Tea house', gratuit: true },
+  { id: 'jardin', nomFR: 'Jardin japonais', nomEN: 'Tea garden', gratuit: true },
+  { id: 'sakura', nomFR: 'Cerisiers', nomEN: 'Cherry blossoms', gratuit: true },
 ];
 
 const CLE_SKIN = 'paisho.skin';

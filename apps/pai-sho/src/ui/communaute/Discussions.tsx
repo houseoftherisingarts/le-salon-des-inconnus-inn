@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { marquerConversationLue, ouvrirConversation } from '@inconnus/ui/reseau';
 import {
-  NOM_SALON_MAX, TEXTE_MAX, creerSalon, envoyerMessage, inviterAuSalon, quitterSalon, suivreConversations, suivreMessages,
+  NOM_SALON_MAX, TEXTE_MAX, compterNonLus, creerSalon, envoyerMessage, inviterAuSalon, quitterSalon, suivreConversations, suivreMessages,
   type ConversationJeu, type Fil, type MessageFil,
 } from '../../reseau/social/discussions';
 import type { Social } from '../../reseau/social/useSocial';
@@ -21,23 +21,34 @@ export function MessagesCarte({ langue, uid, monNom, social, onOuvrir }: {
   const [creation, setCreation] = useState(false);
   useEffect(() => suivreConversations(uid, setFils), [uid]);
   const visibles = fils.filter((f) => !social.bloques.includes(f.autreUid));
+  // Un vrai compte par fil, jamais un point seul : zéro ne montre rien.
+  const [comptes, setComptes] = useState<Record<string, number>>({});
+  const cle = visibles.filter((f) => f.nonLu).map((f) => `${f.id}:${f.quand}:${f.lu}`).join('|');
+  useEffect(() => {
+    let vivant = true;
+    const nonLus = visibles.filter((f) => f.nonLu);
+    void Promise.all(nonLus.map((f) => compterNonLus(f.id, f.lu).catch(() => 1).then((n) => [f.id, n] as const)))
+      .then((l) => { if (vivant) setComptes(Object.fromEntries(l)); });
+    return () => { vivant = false; };
+  }, [cle]); // eslint-disable-line react-hooks/exhaustive-deps
+  const total = visibles.reduce((n, f) => n + (f.nonLu ? comptes[f.id] ?? 0 : 0), 0);
 
   return (
     <article className="carte verre messages-carte" data-test="messages">
-      <h2 className="carte-titre">{t.messages}{social.nonLus.length > 0 && <b className="pastille">{social.nonLus.length}</b>}</h2>
+      <h2 className="carte-titre">{t.messages}{total > 0 && <b className="pastille">{total}</b>}</h2>
       <ul className="liste-sociale">
         {visibles.map((f) => (
           <li key={f.id}>
             <button type="button" className={`fil-ligne ${f.nonLu ? 'non-lu' : ''}`} onClick={() => onOuvrir({ type: 'dm', id: f.id, titre: f.autreNom, autreUid: f.autreUid })} data-test={`fil-${f.autreUid}`}>
-              <span className="ligne-nom">{f.autreNom}</span>
-              {f.nonLu && <i className="point-or" aria-label="•" />}
+              <span className="ligne-nom nom-joueur">{f.autreNom}</span>
+              {f.nonLu && (comptes[f.id] ?? 0) > 0 && <b className="pastille">{comptes[f.id]}</b>}
             </button>
           </li>
         ))}
         {social.salons.map((s) => (
           <li key={s.id}>
             <button type="button" className="fil-ligne salon" onClick={() => onOuvrir({ type: 'salon', id: s.id, titre: s.nom })} data-test={`salon-${s.id}`}>
-              <span className="ligne-nom">#{' '}{s.nom}</span>
+              <span className="ligne-nom nom-joueur">#{' '}{s.nom}</span>
               <span className="petit">{t.membres(s.members.length)}</span>
             </button>
           </li>
@@ -74,7 +85,7 @@ function CreerGroupe({ langue, uid, monNom, social, onFermer, onCree }: {
           {social.amis.length ? (
             <div className="persos">
               {social.amis.map((a) => (
-                <button key={a.uid} type="button" className={`perso ${choisis.has(a.uid) ? 'choisi' : ''}`} aria-pressed={choisis.has(a.uid)}
+                <button key={a.uid} type="button" className={`perso nom-joueur ${choisis.has(a.uid) ? 'choisi' : ''}`} aria-pressed={choisis.has(a.uid)}
                   onClick={() => setChoisis((s) => { const n = new Set(s); if (n.has(a.uid)) n.delete(a.uid); else n.add(a.uid); return n; })}>{a.nom}</button>
               ))}
             </div>
@@ -134,7 +145,7 @@ export function FilOuvert({ langue, uid, monNom, fil, social, onFermer }: {
     <div className="voile nom-voile" onClick={onFermer}>
       <section className="dialogue verre fil" role="dialog" aria-modal="true" aria-labelledby="fil-titre" onClick={(e) => e.stopPropagation()} data-test="fil">
         <header className="fil-tete">
-          <h2 className="dialogue-titre" id="fil-titre">{fil.type === 'salon' ? `# ${fil.titre}` : fil.titre}</h2>
+          <h2 className="dialogue-titre nom-joueur" id="fil-titre">{fil.type === 'salon' ? `# ${fil.titre}` : fil.titre}</h2>
           <button type="button" className="bouton discret" onClick={onFermer}>{TEXTES[langue].fermer}</button>
         </header>
         {salon && (
@@ -152,7 +163,7 @@ export function FilOuvert({ langue, uid, monNom, fil, social, onFermer }: {
         <div className="fil-messages" data-test="fil-messages">
           {messages.map((m) => (
             <p key={m.id} className={`bulle ${m.uid === uid ? 'moi' : ''}`}>
-              {m.uid !== uid && fil.type === 'salon' && <b>{m.displayName || '…'}</b>}
+              {m.uid !== uid && fil.type === 'salon' && <b className="nom-joueur">{m.displayName || '…'}</b>}
               <span>{m.text}</span>
             </p>
           ))}

@@ -132,7 +132,9 @@ export default function App() {
       // que de s'enfuir au loin en disque noir.
       const haut = tete.bottom + 8;
       const bas = Math.min(window.innerHeight - Math.min(...hauts) + 8, window.innerHeight - haut - window.innerHeight * 0.38);
-      scene.cadrer({ gauche: 0, droite: 0, haut, bas: Math.max(0, bas) });
+      // Sur grand écran, le plateau glisse de 8 % vers la droite : la carte de la campagne, à gauche, ne mord plus sur son rebord.
+      const gauche = window.innerWidth >= 1200 ? window.innerWidth * 0.16 : 0;
+      scene.cadrer({ gauche, droite: 0, haut, bas: Math.max(0, bas) });
     };
     const id = window.setTimeout(mesurer, 60);
     window.addEventListener('resize', mesurer);

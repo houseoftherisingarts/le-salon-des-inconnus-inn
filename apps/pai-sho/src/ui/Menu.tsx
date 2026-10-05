@@ -263,7 +263,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           <h2 className="carte-titre">{t.campagne}</h2>
           <p className="carte-aide">{t.choisirAdversaire}</p>
           <div className="joueur-ligne">
-            <span className="joueur-nom">{monNom}</span>
+            <span className="joueur-nom nom-joueur">{monNom}</span>
             <button type="button" className="bouton discret crayon" onClick={() => setNomOuvert(true)} aria-label={t.modifierNom} title={t.modifierNom} data-test="modifier-nom">✎</button>
           </div>
           <div className="progres" data-test="progres">
@@ -318,7 +318,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
             <div className="communaute-resume" data-test="communaute-resume">
               <Visage avatar={joueur.avatar} vignette={vignette} />
               <div>
-                <span className="joueur-nom">{monNom}</span>
+                <span className="joueur-nom nom-joueur">{monNom}</span>
                 <span className="petit">{t.social.amisEnLigne(social.amis.filter((a) => a.enLigne).length)}</span>
                 {social.nonLus.length > 0 && <span className="petit non-lus">{t.social.nonLus(social.nonLus.length)}</span>}
               </div>

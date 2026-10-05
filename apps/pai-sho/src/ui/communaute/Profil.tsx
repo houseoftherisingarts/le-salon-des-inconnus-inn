@@ -43,7 +43,7 @@ export function ProfilCarte({ langue, uid, nom, avatar, battus, total, vignette,
       <div className="profil-entete">
         <Visage avatar={avatar} vignette={vignette} grand />
         <div className="profil-qui">
-          <h2 className="carte-titre profil-nom">{nom}</h2>
+          <h2 className="carte-titre profil-nom nom-joueur">{nom}</h2>
           <span className="petit">{t.statCampagne(battus, total)}</span>
         </div>
       </div>

@@ -101,9 +101,9 @@ export default function Communaute(p: Props) {
             </div>
             <label className="champ">
               <span className="etiquette">{t.idAdversaire}</span>
-              <div className="ligne-id">
+              <div className="ligne-id ligne-code">
                 <input className="saisie" value={idAutre} onChange={(e) => setIdAutre(e.target.value)} placeholder="paisho-xxxxxxxx" spellCheck={false} autoCapitalize="off" />
-                <button type="button" className="bouton discret" onClick={() => jeu.rejoindre(idAutre)} disabled={!idValide(idAutre) || idAutre.trim() === joueur.id}>{t.rejoindre}</button>
+                <button type="button" className="bouton contour" onClick={() => jeu.rejoindre(idAutre)} disabled={!idValide(idAutre) || idAutre.trim() === joueur.id} data-test="rejoindre-code">{s.rejoindreCode}</button>
               </div>
             </label>
             {/* Déconnecté, le carnet de l'appareil garde les joueurs rencontrés; connecté, les amis du compte le remplacent. */}

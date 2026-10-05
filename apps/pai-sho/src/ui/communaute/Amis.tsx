@@ -31,6 +31,8 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
   const [ouvert, setOuvert] = useState<string | null>(null);
   const [aSignaler, setASignaler] = useState<{ uid: string; nom: string } | null>(null);
   const connus = new Set(social.liens.flatMap((l) => l.uids));
+  // Ni les amis déjà liés ni les joueurs réduits au silence : « personne » ne paraît qu'après une vraie recherche vide.
+  const nouveaux = trouves?.filter((r) => !connus.has(r.uid) && !social.bloques.includes(r.uid)) ?? null;
 
   const chercher = async (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +46,7 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
 
       {social.tables.map((tb) => (
         <div key={tb.uid} className="table-ouverte" data-test={`table-${tb.uid}`}>
-          <span>{t.tableDe(tb.nom)}</span>
+          <span><b className="nom-joueur">{tb.nom}</b> {t.tableSuite}</span>
           <button type="button" className="bouton or" disabled={occupe} onClick={() => onRejoindre(tb.peerId)}>{TEXTES[langue].rejoindre}</button>
         </div>
       ))}
@@ -55,7 +57,7 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
           <ul className="liste-sociale">
             {social.recues.map((r) => (
               <li key={r.uid} data-test={`demande-${r.uid}`}>
-                <span className="ligne-nom">{r.nom}</span>
+                <span className="ligne-nom nom-joueur">{r.nom}</span>
                 <button type="button" className="bouton or" onClick={() => void accepterAmitie(uid, r.uid)} data-test="accepter-ami">{t.accepter}</button>
                 <button type="button" className="bouton discret" onClick={() => void retirerAmitie(uid, r.uid)}>{t.refuser}</button>
               </li>
@@ -69,7 +71,7 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
           <li key={a.uid} className="ami-ligne">
             <button type="button" className="ami-qui" onClick={() => setOuvert(ouvert === a.uid ? null : a.uid)} aria-expanded={ouvert === a.uid}>
               <Visage avatar={a.avatar} vignette={vignette} enLigne={a.enLigne} />
-              <span className="ligne-nom">{a.nom}</span>
+              <span className="ligne-nom nom-joueur">{a.nom}</span>
               <span className="petit">{a.enLigne ? t.enLigne : t.horsLigne}</span>
             </button>
             <div className="ami-gestes">
@@ -87,7 +89,7 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
         ))}
         {social.envoyees.map((e) => (
           <li key={e.uid} className="ami-ligne attente">
-            <span className="ligne-nom">{e.nom}</span>
+            <span className="ligne-nom nom-joueur">{e.nom}</span>
             <span className="petit">{t.enAttente}</span>
             <button type="button" className="bouton discret" onClick={() => void retirerAmitie(uid, e.uid)}>{TEXTES[langue].annuler}</button>
           </li>
@@ -98,23 +100,20 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
       <form className="champ" onSubmit={chercher}>
         <span className="etiquette">{t.chercherJoueur}</span>
         <div className="ligne-id">
-          <input className="saisie" value={texte} onChange={(e) => setTexte(e.target.value)} maxLength={24} placeholder={t.nomJoueur} data-test="chercher" />
+          <input className="saisie" value={texte} onChange={(e) => { setTexte(e.target.value); setTrouves(null); }} maxLength={24} placeholder={t.nomJoueur} data-test="chercher" />
           <button type="submit" className="bouton discret" disabled={texte.trim().length < 2}>{t.chercher}</button>
         </div>
       </form>
-      {trouves && (
+      {nouveaux && (nouveaux.length ? (
         <ul className="liste-sociale" data-test="resultats">
-          {trouves.filter((r) => !social.bloques.includes(r.uid)).map((r) => (
+          {nouveaux.map((r) => (
             <li key={r.uid}>
-              <span className="ligne-nom">{r.nom}</span>
-              {connus.has(r.uid)
-                ? <span className="petit">{t.dejaLie}</span>
-                : <button type="button" className="bouton" onClick={() => { ajouter(r); setTrouves((l) => { const reste = l?.filter((x) => x.uid !== r.uid) ?? []; return reste.length ? reste : null; }); }} data-test={`ajouter-${r.uid}`}>{t.ajouter}</button>}
+              <span className="ligne-nom nom-joueur">{r.nom}</span>
+              <button type="button" className="bouton" onClick={() => { ajouter(r); setTexte(''); setTrouves(null); }} data-test={`ajouter-${r.uid}`}>{t.ajouter}</button>
             </li>
           ))}
-          {!trouves.length && <li className="petit">{t.aucunResultat}</li>}
         </ul>
-      )}
+      ) : <p className="petit" data-test="aucun">{t.aucunResultat}</p>)}
 
       {social.bloques.length > 0 && (
         <details className="bloques">
