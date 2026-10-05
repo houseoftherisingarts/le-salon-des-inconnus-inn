@@ -43,6 +43,11 @@
   .hud-bas .fiches { padding: 0; background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; margin-top: 6px; }
   .hud-bas .fiches-bascule { border: 1px solid var(--bord); background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
   .hud-bas .fiches-liste { max-height: 22vh; }
+  /* Au téléphone la fiche d'une tuile se serre : elle est devant le convive, au-dessus du plateau. */
+  .verre.fiche-plateau { padding: 8px 12px; gap: 10px; }
+  .fiche-plateau img { width: 36px; height: 36px; }
+  .fiche-plateau .fiche-bulle-regle { margin-top: 4px !important; line-height: 1.3; }
+  .fiche-plateau .fiche-bulle-chiffres { margin-top: 2px !important; }
 }
 
 /* Le cercle des six fleurs : vert double pour l'harmonie, rouge pour le clash. */
