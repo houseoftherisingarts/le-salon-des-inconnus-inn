@@ -203,9 +203,14 @@ export function FicheTuile({ t, langue, proprio }: { t: TypeTuile; langue: Langu
   const x = TX[langue];
   const [bas, setBas] = useState(22);
   useLayoutEffect(() => {
+    // Au-dessus de la feuille du téléphone, et d'une consigne posée en bas.
+    const H = window.innerHeight;
     const r = document.querySelector('.hud-bas')?.getBoundingClientRect();
-    setBas(r && r.height > 0 ? window.innerHeight - r.top + 10 : 22);
-  }, [t]);
+    const c = document.querySelector('.consigne')?.getBoundingClientRect();
+    let b = r && r.height > 0 ? H - r.top + 10 : 22;
+    if (c && c.top > H / 2) b = Math.max(b, H - c.top + 10);
+    setBas(b);
+  });
   const portee = PORTEE[t];
   const base = (BASES as readonly TypeTuile[]).includes(t);
   const interdit = base ? x.interdit(ROUGES.includes(t)) : portee ? x.aucun : x.accent;
