@@ -197,8 +197,8 @@ function Bulle({ t, langue, ancre }: { t: TypeTuile; langue: Langue; ancre: HTML
 }
 
 /** La fiche d'une tuile cliquée sur le plateau : son nom, à qui elle
- *  est, et ce qu'elle fait, avec les mêmes textes que les bulles. Posée
- *  au-dessus de la main du téléphone, ou en bas de l'écran ailleurs. */
+ *  est, et ce qu'elle fait, avec les mêmes textes que les bulles. Sous la
+ *  barre du haut au téléphone, en bas de l'écran ailleurs. */
 export function FicheTuile({ t, langue, proprio }: { t: TypeTuile; langue: Langue; proprio: string }) {
   const x = TX[langue];
   const [pose, setPose] = useState<{ bottom?: number; top?: number }>({ bottom: 34 });
