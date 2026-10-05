@@ -2,7 +2,6 @@
 
 .communaute .communaute-grille { grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
 .communaute .carte { background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-radius: var(--rayon); min-width: 0; }
-.communaute-grille .carte.fermee > :not(.carte-titre) { display: flex; }
 
 /* Les dialogues passent devant la section (z 40) et le voile des noms. */
 .porte-compte, .editeur, .fil, .defi-dialogue { background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-radius: var(--rayon); }
