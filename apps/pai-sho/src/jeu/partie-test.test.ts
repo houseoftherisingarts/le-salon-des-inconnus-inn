@@ -508,4 +508,5 @@ for (const [nom, f] of scenarios) {
 
 console.log(`\n${controles} contrôles, ${echecs.length} échec(s)`);
 for (const m of echecs.slice(0, 40)) console.log('  - ' + m);
-if (echecs.length) process.exit(1);
+// Pas de types Node dans ce tsconfig : la sortie se fait par une exception, comme logic.test.ts.
+if (echecs.length) throw new Error(`${echecs.length} échec(s)`);
