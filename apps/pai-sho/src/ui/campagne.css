@@ -52,12 +52,12 @@
 .vs-joueur {
   --fond: var(--vs-or); --lueur: var(--vs-or-lueur); --vs-x: 40%;
   /* Le même tracé que l'éclair (ECLAIR_LARGE dans Splash.tsx), pour qu'aucun bord droit ne dépasse. */
-  clip-path: polygon(0 0, 62% 0, 58% 12%, 63% 20%, 54% 33%, 59% 42%, 49% 55%, 55% 63%, 45% 76%, 50% 85%, 42% 100%, 0 100%);
+  clip-path: polygon(0 0, 62% 0, 42% 100%, 0 100%);
   animation: vsGauche 0.4s cubic-bezier(0.2, 0.9, 0.2, 1) both;
 }
 .vs-adversaire {
   --fond: var(--vs-fond); --lueur: var(--vs-lueur); --vs-x: 60%;
-  clip-path: polygon(62% 0, 100% 0, 100% 100%, 42% 100%, 50% 85%, 45% 76%, 55% 63%, 49% 55%, 59% 42%, 54% 33%, 63% 20%, 58% 12%);
+  clip-path: polygon(62% 0, 100% 0, 100% 100%, 42% 100%);
   animation: vsDroite 0.4s cubic-bezier(0.2, 0.9, 0.2, 1) both;
 }
 /* Les personnages : ancrés au sol, 92 % de la hauteur, légèrement hors cadre, un zoom lent pendant l'écran. */
@@ -118,7 +118,20 @@
 .vs-eclair polyline { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
 .vs-eclair-halo { stroke: #ff8c00; stroke-width: 40px; opacity: 0.35; }
 .vs-eclair-lueur { stroke: #ffb02e; stroke-width: 18px; opacity: 0.65; }
-.vs-eclair-coeur { stroke: #fff; stroke-width: 6px; animation: vsEclat 1.2s ease-out 0.7s both; }
+.vs-eclair-coeur { stroke: #fff; stroke-width: 4px; animation: vsEclat 1.2s ease-out 0.7s both; }
+/* Les particules de feu de la couture : nées sur la diagonale, elles montent en dérivant et s'éteignent. */
+.vs-etincelles { position: absolute; inset: 0; pointer-events: none; }
+.vs-etincelles i {
+  position: absolute; left: calc((62 - 20 * var(--t)) * 1%); top: calc(var(--t) * 100%);
+  border-radius: 50%; background: #fff2c0; opacity: 0.9;
+  box-shadow: 0 0 6px #ffb02e, 0 0 14px #ff6a1a, 0 0 24px rgba(255, 106, 26, 0.6);
+  animation-name: vsEtincelle; animation-timing-function: ease-out; animation-iteration-count: infinite;
+}
+@keyframes vsEtincelle {
+  0% { opacity: 0; transform: translate(0, 0) scale(1); }
+  12% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), -22vh) scale(0.3); }
+}
 /* Les braises : des points d'or qui montent lentement sur tout l'écran. */
 .vs-braises { position: absolute; inset: 0; pointer-events: none; }
 .vs-braises i {
@@ -149,14 +162,15 @@
 @keyframes vsBanniere { from { opacity: 0; transform: skewX(-14deg) translateY(-24px); } }
 @keyframes vsTrace { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
 @keyframes vsTraceHaut { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
-@keyframes vsEclat { 0% { stroke: #fff; stroke-width: 12px; } 100% { stroke: #fff6d6; stroke-width: 6px; } }
+@keyframes vsEclat { 0% { stroke: #fff; stroke-width: 10px; } 100% { stroke: #fff6d6; stroke-width: 4px; } }
 @keyframes vsBraise { 0% { opacity: 0; transform: translateY(0) } 15% { opacity: 1 } 100% { opacity: 0; transform: translateY(-105vh) translateX(6vw) } }
 @keyframes vsLotus { from { opacity: 0; transform: translate(-50%, -50%) rotate(-30deg) scale(0.7); } 40% { opacity: 0.36; } }
 @keyframes vsClaque { from { opacity: 0; transform: translate(-50%, -50%) rotate(14deg) scale(3); } }
 /* Au téléphone : le joueur en haut, l'adversaire en bas, la couture en biais, les bannières dans les coins. */
 @media (max-width: 720px) {
-  .vs-joueur { clip-path: polygon(0 0, 100% 0, 100% 42%, 80% 49%, 66% 46%, 52% 54%, 40% 50%, 26% 58%, 14% 55%, 0 58%); }
-  .vs-adversaire { clip-path: polygon(0 58%, 14% 55%, 26% 58%, 40% 50%, 52% 54%, 66% 46%, 80% 49%, 100% 42%, 100% 100%, 0 100%); }
+  .vs-joueur { clip-path: polygon(0 0, 100% 0, 100% 42%, 0 58%); }
+  .vs-adversaire { clip-path: polygon(0 58%, 100% 42%, 100% 100%, 0 100%); }
+  .vs-etincelles i { left: calc(var(--t) * 100%); top: calc((58 - 16 * var(--t)) * 1%); }
   .vs-joueur, .vs-adversaire { --vs-x: 50%; }
   .vs-cote::before { background:
     radial-gradient(ellipse 80% 45% at 50% var(--vs-y, 30%), var(--lueur) 0%, transparent 60%),
@@ -186,7 +200,7 @@
   .vs-mot { top: 50%; font-size: clamp(80px, 24vw, 120px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vs, .vs-joueur, .vs-adversaire, .vs-mot, .vs-perso, .vs-banniere, .vs-lotus, .vs-eclair, .vs-eclair polyline, .vs-braises i, .vs-calli, .vs-encre path { animation: none; }
+  .vs, .vs-joueur, .vs-adversaire, .vs-mot, .vs-perso, .vs-banniere, .vs-lotus, .vs-eclair, .vs-eclair polyline, .vs-braises i, .vs-etincelles i, .vs-calli, .vs-encre path { animation: none; }
   .vs-encre path { stroke-dashoffset: 0; }
 }
 /* La table est cachée sous le VS : on ne la compose plus, l'animation part tout de suite. */

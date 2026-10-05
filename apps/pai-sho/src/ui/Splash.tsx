@@ -79,10 +79,16 @@ interface PropsVs {
   onFin: () => void;
 }
 
-// Le tracé de la couture, en écran large (haut en bas) et au téléphone (gauche à droite).
-// Les clip-path des deux moitiés (campagne.css) suivent les mêmes points : à changer ensemble.
-const ECLAIR_LARGE = '62,0 58,12 63,20 54,33 59,42 49,55 55,63 45,76 50,85 42,100';
-const ECLAIR_HAUT = '0,58 14,55 26,58 40,50 52,54 66,46 80,49 100,42';
+// La couture : une diagonale nette (Alex, 5 octobre : « enlever la forme d'éclair, une
+// diagonale clean avec des fire particles »), en écran large (haut en bas) et au téléphone
+// (gauche à droite). Les clip-path des deux moitiés (campagne.css) suivent les mêmes points.
+const ECLAIR_LARGE = '62,0 42,100';
+const ECLAIR_HAUT = '0,58 100,42';
+
+// Les particules de feu de la couture : position le long du trait (--t), dérive et retard fixés une fois.
+const ETINCELLES = Array.from({ length: 46 }, (_, i) => ({
+  t: ((i * 61 + 7) % 100) / 100, dx: ((i * 23) % 11) - 5, d: ((i * 0.53) % 2.4), v: 1.6 + (i % 6) * 0.35, s: 2 + (i % 4) * 1.5,
+}));
 
 // Une poignée de braises qui montent : positions et retards fixés une fois.
 const BRAISES = Array.from({ length: 22 }, (_, i) => ({
@@ -139,6 +145,11 @@ export default function Splash({ langue, joueur, imageJoueur, idJoueur, adversai
           <polyline key={`c${i}`} className={`vs-eclair-coeur ${i ? 'vs-eclair-haut' : 'vs-eclair-large'}`} points={pts} />,
         ])}
       </svg>
+      <span className="vs-etincelles" aria-hidden="true">
+        {ETINCELLES.map((e, i) => (
+          <i key={i} style={{ '--t': e.t, '--dx': `${e.dx}vw`, animationDelay: `${e.d}s`, animationDuration: `${e.v}s`, width: e.s, height: e.s } as React.CSSProperties} />
+        ))}
+      </span>
       <span className="vs-braises" aria-hidden="true">
         {BRAISES.map((b, i) => (
           <i key={i} style={{ '--i': i, left: `${b.x}%`, animationDelay: `${b.d}s`, animationDuration: `${b.t}s`, width: b.s, height: b.s } as React.CSSProperties} />
