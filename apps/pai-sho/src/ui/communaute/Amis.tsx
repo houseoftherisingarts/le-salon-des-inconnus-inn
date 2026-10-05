@@ -109,7 +109,7 @@ export function AmisCarte({ langue, uid, monNom, social, vignette, occupe, onEcr
               <span className="ligne-nom">{r.nom}</span>
               {connus.has(r.uid)
                 ? <span className="petit">{t.dejaLie}</span>
-                : <button type="button" className="bouton" onClick={() => { ajouter(r); setTrouves((l) => l?.filter((x) => x.uid !== r.uid) ?? null); }} data-test={`ajouter-${r.uid}`}>{t.ajouter}</button>}
+                : <button type="button" className="bouton" onClick={() => { ajouter(r); setTrouves((l) => { const reste = l?.filter((x) => x.uid !== r.uid) ?? []; return reste.length ? reste : null; }); }} data-test={`ajouter-${r.uid}`}>{t.ajouter}</button>}
             </li>
           ))}
           {!trouves.length && <li className="petit">{t.aucunResultat}</li>}

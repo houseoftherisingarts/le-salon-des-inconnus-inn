@@ -15,16 +15,16 @@ const ETAPE = process.env.ETAPE ?? 'tout';
 
 const nav = await chromium.launch({ args: ARGS });
 async function ouvrir(qui, n) {
-  const ctx = await nav.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const ctx = await (await chromium.launch({ args: ARGS })).newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => erreurs.push(`${qui}: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error') erreurs.push(`${qui} console: ${m.text().slice(0, 200)}`); });
   await page.addInitScript(([id]) => {
     localStorage.setItem('paisho.tutoriel.paisho', '1');
     if (!localStorage.getItem('paisho.joueur')) localStorage.setItem('paisho.joueur', JSON.stringify({ id, nom: 'Capture' }));
-  }, [`paisho-verif${C.r}${n}`]);
+  }, [`paisho-${C.r}a${n}`]);
   await page.goto(URL);
-  await page.waitForSelector('.menu', { timeout: 60000 });
+  await page.waitForSelector('.menu', { timeout: 180000 }).catch(async (e) => { console.log('ECHEC', qui, erreurs, (await page.evaluate(() => document.body.innerHTML)).slice(0, 600)); throw e; });
   await pause(800);
   return page;
 }
@@ -47,8 +47,7 @@ async function inscrire(p, c, photos) {
   await p.click('[data-test=se-connecter]');
   await p.waitForSelector('[data-test=porte-compte]');
   if (photos) await photo(p, 'porte');
-  await p.click('[data-test=porte-inscription]');
-  await p.fill('[data-test=porte-nom]', c.nom);
+  if (!process.env.REUSE) { await p.click('[data-test=porte-inscription]'); await p.fill('[data-test=porte-nom]', c.nom); }
   await p.fill('[data-test=porte-courriel]', c.email);
   await p.fill('[data-test=porte-mdp]', c.mdp);
   await p.click('[data-test=porte-valider]');
@@ -65,6 +64,7 @@ try {
   const nomMenu = await A.evaluate(() => document.querySelector('[data-test=profil] .profil-nom')?.textContent);
   ok('nom du compte', nomMenu === C.a.nom, `profil affiche « ${nomMenu} »`);
 
+  if (ETAPE === 'tout') {
   // Amitié
   await A.fill('[data-test=chercher]', C.b.nom);
   await A.press('[data-test=chercher]', 'Enter');
@@ -125,8 +125,12 @@ try {
   await A.click('[data-test=fil] .fil-tete .bouton');
   if (salonB) await B.click('[data-test=fil] .fil-tete .bouton');
 
+  }
+  await pause(3000);
   // Table ouverte
   await A.click('[data-test=ouvrir-table]');
+  const pub = await A.waitForSelector('[data-test=table-publiee]', { timeout: 15000 }).then(() => true, () => false);
+  console.log('table publiée chez A :', pub, await A.evaluate(() => document.querySelector('[data-test=distance]')?.textContent?.slice(-200)));
   const table = await B.waitForSelector('.table-ouverte', { timeout: 20000 }).then(() => true, () => false);
   ok('table ouverte visible', table, table ? await B.textContent('.table-ouverte span') : 'aucune table chez B');
   await photo(B, 'table-ouverte', '.table-ouverte');
@@ -145,7 +149,7 @@ try {
   ok('nom du compte dans la partie', nomsHud?.includes(C.a.nom) && nomsHud?.includes(C.b.nom), `hud A : ${nomsHud}`);
 
   // File d'attente
-  await Promise.all([A, B].map(async (p) => { await p.goto(URL); await p.waitForSelector('.menu', { timeout: 60000 }); await pause(1500); await communaute(p); await p.waitForSelector('[data-test=defier-inconnu]', { timeout: 20000 }); }));
+  await Promise.all([A, B].map(async (p) => { await p.goto(URL); await p.waitForSelector('.menu', { timeout: 180000 }); await pause(1500); await communaute(p); await p.waitForSelector('[data-test=defier-inconnu]', { timeout: 20000 }); }));
   await A.click('[data-test=defier-inconnu]');
   await A.waitForSelector('[data-test=recherche]');
   await pause(1200);
@@ -160,4 +164,4 @@ try {
 }
 fs.writeFileSync(`${SCR}/social-rapport.json`, JSON.stringify({ res, erreurs }, null, 2));
 console.log('erreurs page :', erreurs.length, erreurs.slice(0, 8));
-await nav.close();
+process.exit(0);

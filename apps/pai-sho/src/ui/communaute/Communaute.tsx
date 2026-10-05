@@ -70,7 +70,7 @@ export default function Communaute(p: Props) {
           {uid ? (
             <>
               <ProfilCarte langue={langue} uid={uid} nom={monNom} avatar={joueur.avatar} battus={p.battus} total={p.total} vignette={p.vignette} onAvatar={p.onAvatar} />
-              <AmisCarte langue={langue} uid={uid} monNom={monNom} social={social} vignette={p.vignette} occupe={occupe}
+              <AmisCarte langue={langue} uid={uid} monNom={monNom} social={social} vignette={p.vignette} occupe={jeu.etat === 'connexion'}
                 onEcrire={(a) => setFil({ type: 'dm', id: [uid, a.uid].sort().join('__'), titre: a.nom, autreUid: a.uid })}
                 onDefier={setDefie} onRejoindre={jeu.rejoindre} />
               <MessagesCarte langue={langue} uid={uid} monNom={monNom} social={social} onOuvrir={setFil} />

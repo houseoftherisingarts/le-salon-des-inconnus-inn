@@ -30,7 +30,7 @@ export function MessagesCarte({ langue, uid, monNom, social, onOuvrir }: {
           <li key={f.id}>
             <button type="button" className={`fil-ligne ${f.nonLu ? 'non-lu' : ''}`} onClick={() => onOuvrir({ type: 'dm', id: f.id, titre: f.autreNom, autreUid: f.autreUid })} data-test={`fil-${f.autreUid}`}>
               <span className="ligne-nom">{f.autreNom}</span>
-              {f.nonLu && <b className="pastille">•</b>}
+              {f.nonLu && <i className="point-or" aria-label="•" />}
             </button>
           </li>
         ))}
@@ -124,6 +124,8 @@ export function FilOuvert({ langue, uid, monNom, fil, social, onFermer }: {
     try {
       await envoyerMessage(fil, uid, monNom, texte);
       setTexte('');
+      // Mon propre message avance l'heure du fil : il ne doit pas compter comme non lu chez moi.
+      if (fil.type === 'dm') void marquerConversationLue(fil.id, uid).catch(() => {});
     } catch { setErreur(t.envoiRefuse); }
   };
 

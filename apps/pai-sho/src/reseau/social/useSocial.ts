@@ -5,7 +5,7 @@
 // Communauté du menu et la section entière lisent la même chose.
 
 import { useEffect, useState } from 'react';
-import { doc, getFirestore, onSnapshot, type Timestamp } from 'firebase/firestore';
+import { doc, getFirestore, onSnapshot, type DocumentReference, type DocumentSnapshot, type Timestamp, type Unsubscribe } from 'firebase/firestore';
 import {
   suivreBlocages, suivreMesAmities, suivreMessagesNonLus,
   type Amitie, type ConversationNonLue,
@@ -43,6 +43,20 @@ const VIDE: Social = { liens: [], amis: [], recues: [], envoyees: [], bloques: [
 const autreDe = (l: Amitie, moi: string) => l.uids.find((u) => u !== moi) ?? '';
 const nomDans = (l: Amitie, uid: string) => l.profiles?.[uid]?.displayName || '…';
 
+/** L'amitié qu'on vient d'accepter paraît ici avant d'être écrite au
+ *  serveur : la première lecture peut être refusée par la règle, et un
+ *  onSnapshot refusé meurt. On réessaie donc toutes les 4 secondes. */
+function suivreObstine(ref: DocumentReference, cb: (s: DocumentSnapshot) => void): Unsubscribe {
+  let fin: Unsubscribe = () => {};
+  let minuterie = 0;
+  let vivant = true;
+  const brancher = () => {
+    fin = onSnapshot(ref, cb, () => { if (vivant) minuterie = window.setTimeout(brancher, 4000); });
+  };
+  brancher();
+  return () => { vivant = false; window.clearTimeout(minuterie); fin(); };
+}
+
 export function useSocial(uid: string | undefined): Social {
   const [liens, setLiens] = useState<Amitie[]>([]);
   const [bloques, setBloques] = useState<string[]>([]);
@@ -74,10 +88,10 @@ export function useSocial(uid: string | undefined): Social {
     if (!uid || !cle) { setPresences({}); setTables({}); return; }
     const db = getFirestore();
     const fins = cle.split(',').flatMap((a) => [
-      onSnapshot(doc(db, 'presence', a), (s) => setPresences((p) => ({ ...p, [a]: (s.data() as Presence) ?? {} })), () => {}),
-      onSnapshot(doc(db, 'salles-ouvertes', a), (s) => setTables((t) => ({
+      suivreObstine(doc(db, 'presence', a), (s) => setPresences((p) => ({ ...p, [a]: (s.data() as Presence) ?? {} }))),
+      suivreObstine(doc(db, 'salles-ouvertes', a), (s) => setTables((t) => ({
         ...t, [a]: s.exists() ? { uid: a, peerId: String(s.data().peerId), nom: String(s.data().nom ?? '') } : null,
-      })), () => {}),
+      }))),
     ]);
     return () => fins.forEach((f) => f());
   }, [uid, cle]);
