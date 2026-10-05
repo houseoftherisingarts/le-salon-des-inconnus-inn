@@ -26,7 +26,7 @@ window.rendre = (id, fond, taille = 256, cadre = 1.85) => new Promise((ok, ko) =
     const taille = boite.getSize(new THREE.Vector3()); const centre = boite.getCenter(new THREE.Vector3());
     s.position.sub(centre);
     const h = Math.max(taille.x, taille.y, taille.z);
-    camera.position.set(0, h * 0.04, h * 1.85); camera.lookAt(0, 0, 0);
+    camera.position.set(0, h * 0.04, h * cadre); camera.lookAt(0, 0, 0);
     scene.background = fond ? new THREE.Color(fond) : null;
     scene.add(s); rendu.render(scene, camera); scene.remove(s);
     ok(canvas.toDataURL('image/webp', 0.86));
