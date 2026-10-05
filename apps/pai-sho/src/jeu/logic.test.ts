@@ -156,8 +156,9 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
   const roc = jouer(base, { ...mv, bonus: { type: 'accent', tuile: 'ROCHER', a: P(0, 5) } });
   verifie(tuileEn(roc, P(0, 5))?.type === 'ROCHER' && roc.reserve.hote.ROCHER === 1, 'le rocher est posé');
   // Le second rocher reste offert après la pose du premier.
-  const roc2 = { ...roc, tour: 'hote' as Camp };
-  verifie(coupsLegaux(roc2).some((c) => c.type === 'deplacer' && c.bonus?.tuile === 'ROCHER'), 'le second rocher est offert');
+  const roc2 = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), h(-6, -6, 'ROCHER')]);
+  verifie(roc2.reserve.hote.ROCHER === 1 && coupsLegaux(roc2).some((c) => c.type === 'deplacer' && c.bonus?.tuile === 'ROCHER'),
+    'le second rocher est offert');
   verifie(harmonies(jouer(base, { ...mv, bonus: { type: 'accent', tuile: 'ROCHER', a: P(6, 7) } })).length === 0, 'le rocher posé annule');
   verifie(harmonies(jouer(base, { ...mv, bonus: { type: 'accent', tuile: 'RENOUEE', a: P(-4, 6) } })).length === 0, 'la renouée posée annule');
   // La roue en (-2,-1) : la rose d'en face en (-2,-2), au sud, passe au sud-ouest (-3,-2).
