@@ -81,7 +81,7 @@ export function suivrePlace(uid: string, cb: (p: Place | null) => void): Unsubsc
  * une transaction : deux joueurs ne peuvent pas prendre le même. Rend le
  * joueur pris (dont on rejoint la table), ou null.
  */
-export async function apparier(uid: string, nom: string, peerId: string, bloques: string[]): Promise<Place | null> {
+export async function apparier(uid: string, nom: string, bloques: string[]): Promise<Place | null> {
   const s = await getDocs(query(collection(db(), 'file-attente'), orderBy('createdAt', 'asc'), limit(20)));
   const mienne = s.docs.find((d) => d.id === uid);
   const avant = ms(mienne?.data().createdAt as Timestamp | undefined);
@@ -101,7 +101,6 @@ export async function apparier(uid: string, nom: string, peerId: string, bloques
       if (pris) { await quitterFile(uid); return p; }
     } catch { /* pris par un autre entre-temps : le suivant */ }
   }
-  void peerId;
   return null;
 }
 
