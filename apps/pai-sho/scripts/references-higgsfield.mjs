@@ -98,7 +98,7 @@ for (const id of ids) {
     if (wiki[`${CLE[id]} corps`]) medias.push(await importer(wiki[`${CLE[id]} corps`]));
     if (mediaGabarit) medias.push(mediaGabarit);
     // JOB=<id> dans l'environnement reprend une tâche déjà lancée au lieu d'en payer une autre.
-    const lancement = process.env.JOB ?? await outil('generate_image', { params: { model: process.env.MODELE ?? 'nano_banana_pro', prompt, aspect_ratio: '3:4', resolution: '1k', medias } });
+    const lancement = process.env.JOB ?? await outil('generate_image', { params: { model: process.env.MODELE ?? 'nano_banana_pro', prompt: process.env.PROMPT ?? prompt, aspect_ratio: process.env.FORMAT ?? '3:4', resolution: '1k', medias } });
     const job = uuid(lancement);
     if (!job) throw new Error(`aucun job_id : ${lancement.slice(0, 200)}`);
     let url = null;
