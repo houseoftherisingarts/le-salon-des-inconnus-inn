@@ -14,7 +14,7 @@ await page.goto('http://localhost:5178/scripts/vignettes.html', { waitUntil: 'do
 await page.waitForFunction(() => typeof window.rendre === 'function', null, { timeout: 120000 });
 for (const id of IDS) {
   try {
-    const png = await page.evaluate((i) => window.rendre(i, null, 1024, 1.45), id);
+    const png = await page.evaluate((i) => window.rendre(i, null, 1024, 1.6), id);
     writeFileSync(`${OUT}/${id}.webp`, Buffer.from(png.split(',')[1], 'base64'));
     console.log(id, 'ok');
   } catch (e) { console.log('échec', id, String(e).slice(0, 80)); }
