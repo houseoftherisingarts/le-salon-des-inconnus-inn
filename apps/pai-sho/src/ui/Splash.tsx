@@ -18,7 +18,7 @@ const NATIONS: Record<string, [string, string]> = {
   feu: ['#5a0f0d', '#ff5a3c'],
   eau: ['#0c2a52', '#4aa3ff'],
   terre: ['#183a16', '#8fd36b'],
-  air: ['#5a3a08', '#ffc14d'],
+  air: ['#a4480c', '#ffa030'],
   esprit: ['#1a1038', '#9d7bff'],
 };
 const NATION_PAR_ID: Record<string, keyof typeof NATIONS> = {
@@ -41,6 +41,11 @@ interface PropsVs {
   niveau?: number;
   onFin: () => void;
 }
+
+// Le tracé de la couture, en écran large (haut en bas) et au téléphone (gauche à droite).
+// Les clip-path des deux moitiés (campagne.css) suivent les mêmes points : à changer ensemble.
+const ECLAIR_LARGE = '62,0 58,12 63,20 54,33 59,42 49,55 55,63 45,76 50,85 42,100';
+const ECLAIR_HAUT = '0,58 14,55 26,58 40,50 52,54 66,46 80,49 100,42';
 
 // Une poignée de braises qui montent : positions et retards fixés une fois.
 const BRAISES = Array.from({ length: 22 }, (_, i) => ({
@@ -84,12 +89,16 @@ export default function Splash({ langue, joueur, imageJoueur, adversaire, idAdve
       </span>
       {/* L'éclair de la couture : un trait brisé, tracé en 0,4 s, qui flashe blanc puis reste d'or. */}
       <svg className="vs-eclair" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <polyline className="vs-eclair-large" points="62,0 55,22 60,34 48,52 54,64 42,82 46,100" pathLength={100} />
-        <polyline className="vs-eclair-haut" points="0,58 18,54 30,57 48,49 62,52 80,44 100,42" pathLength={100} />
+        {/* Trois traits par éclair : le halo large, la lueur, puis le cœur blanc; le flou se fait sur le svg, Chrome rogne les filtres posés sur un trait. */}
+        {[ECLAIR_LARGE, ECLAIR_HAUT].map((pts, i) => [
+          <polyline key={`h${i}`} className={`vs-eclair-halo ${i ? 'vs-eclair-haut' : 'vs-eclair-large'}`} points={pts} />,
+          <polyline key={`l${i}`} className={`vs-eclair-lueur ${i ? 'vs-eclair-haut' : 'vs-eclair-large'}`} points={pts} />,
+          <polyline key={`c${i}`} className={`vs-eclair-coeur ${i ? 'vs-eclair-haut' : 'vs-eclair-large'}`} points={pts} />,
+        ])}
       </svg>
       <span className="vs-braises" aria-hidden="true">
         {BRAISES.map((b, i) => (
-          <i key={i} style={{ left: `${b.x}%`, animationDelay: `${b.d}s`, animationDuration: `${b.t}s`, width: b.s, height: b.s }} />
+          <i key={i} style={{ '--i': i, left: `${b.x}%`, animationDelay: `${b.d}s`, animationDuration: `${b.t}s`, width: b.s, height: b.s } as React.CSSProperties} />
         ))}
       </span>
       <img className="vs-lotus" src={`${base}tuiles/LOTUS.webp`} alt="" aria-hidden="true" />
