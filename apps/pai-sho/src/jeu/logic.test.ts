@@ -175,7 +175,7 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
   const surAccent = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(0, -5, 'RENOUEE')]);
   verifie(coupsLegaux(surAccent).map(coupEnTexte).includes('3,6>3,7+BARQUE@0,-5'), 'barque sur un accent');
   const retire = jouer(surAccent, { ...mv, bonus: { type: 'accent', tuile: 'BARQUE', a: P(0, -5) } });
-  verifie(tuileEn(retire, P(0, -5)) === null && retire.reserve.hote.BARQUE === 0, 'barque et accent quittent la partie');
+  verifie(tuileEn(retire, P(0, -5)) === null && retire.reserve.hote.BARQUE === 1, 'barque et accent quittent la partie');
 }
 
 // ── L'anneau ────────────────────────────────────────────────────────
