@@ -13,8 +13,8 @@ import {
 import type { Social } from '../../reseau/social/useSocial';
 import { TEXTES, type Langue } from '../textes';
 
-export function MessagesCarte({ langue, uid, social, onOuvrir }: {
-  langue: Langue; uid: string; social: Social; onOuvrir: (f: Fil) => void;
+export function MessagesCarte({ langue, uid, monNom, social, onOuvrir }: {
+  langue: Langue; uid: string; monNom: string; social: Social; onOuvrir: (f: Fil) => void;
 }) {
   const t = TEXTES[langue].social;
   const [fils, setFils] = useState<ConversationJeu[]>([]);
@@ -45,18 +45,17 @@ export function MessagesCarte({ langue, uid, social, onOuvrir }: {
       </ul>
       {!visibles.length && !social.salons.length && <p className="petit">{t.messagesVide}</p>}
       <button type="button" className="bouton plein" onClick={() => setCreation(true)} data-test="creer-groupe">{t.creerGroupe}</button>
-      {creation && <CreerGroupe langue={langue} uid={uid} social={social} onFermer={() => setCreation(false)} onCree={(f) => { setCreation(false); onOuvrir(f); }} />}
+      {creation && <CreerGroupe langue={langue} uid={uid} monNom={monNom} social={social} onFermer={() => setCreation(false)} onCree={(f) => { setCreation(false); onOuvrir(f); }} />}
     </article>
   );
 }
 
-function CreerGroupe({ langue, uid, social, onFermer, onCree }: {
-  langue: Langue; uid: string; social: Social; onFermer: () => void; onCree: (f: Fil) => void;
+function CreerGroupe({ langue, uid, monNom, social, onFermer, onCree }: {
+  langue: Langue; uid: string; monNom: string; social: Social; onFermer: () => void; onCree: (f: Fil) => void;
 }) {
   const t = TEXTES[langue].social;
   const [nom, setNom] = useState('');
   const [choisis, setChoisis] = useState<Set<string>>(new Set());
-  const monNom = social.amis.length ? '' : '';
   const creer = async () => {
     const invites = social.amis.filter((a) => choisis.has(a.uid)).map((a) => ({ uid: a.uid, nom: a.nom }));
     const id = await creerSalon(uid, monNom, nom, invites);
@@ -102,7 +101,19 @@ export function FilOuvert({ langue, uid, monNom, fil, social, onFermer }: {
   const bas = useRef<HTMLDivElement>(null);
   const salon = fil.type === 'salon' ? social.salons.find((s) => s.id === fil.id) : undefined;
 
-  useEffect(() => suivreMessages(fil, setMessages), [fil.type, fil.id]);
+  // Un fil à deux s'ouvre (ou se crée) avant d'être lu : la règle des
+  // messages lit la liste des membres du fil, qui doit donc exister.
+  const [pret, setPret] = useState(fil.type === 'salon');
+  useEffect(() => {
+    if (fil.type !== 'dm' || !fil.autreUid) { setPret(true); return; }
+    let vivant = true;
+    ouvrirConversation(uid, monNom, null, fil.autreUid, fil.titre, null)
+      .then((id) => { if (!vivant) return; if (id) setPret(true); else setErreur(t.envoiRefuse); })
+      .catch(() => { if (vivant) setErreur(t.envoiRefuse); });
+    return () => { vivant = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fil.type, fil.id]);
+  useEffect(() => (pret ? suivreMessages(fil, setMessages) : undefined), [pret, fil.type, fil.id]);
   useEffect(() => {
     bas.current?.scrollIntoView({ block: 'end' });
     if (fil.type === 'dm' && messages.length) void marquerConversationLue(fil.id, uid).catch(() => {});
@@ -111,11 +122,6 @@ export function FilOuvert({ langue, uid, monNom, fil, social, onFermer }: {
   const envoyer = async () => {
     setErreur('');
     try {
-      if (fil.type === 'dm' && fil.autreUid) {
-        // Le fil se crée (ou se rafraîchit) ici; refusé si l'un a fait taire l'autre.
-        const id = await ouvrirConversation(uid, monNom, null, fil.autreUid, fil.titre, null);
-        if (!id) { setErreur(t.envoiRefuse); return; }
-      }
       await envoyerMessage(fil, uid, monNom, texte);
       setTexte('');
     } catch { setErreur(t.envoiRefuse); }
@@ -155,7 +161,7 @@ export function FilOuvert({ langue, uid, monNom, fil, social, onFermer }: {
         <form className="fil-saisie" onSubmit={(e) => { e.preventDefault(); if (texte.trim()) void envoyer(); }}>
           <textarea className="saisie" rows={2} value={texte} maxLength={TEXTE_MAX} placeholder={t.ecrireMessage} onChange={(e) => setTexte(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (texte.trim()) void envoyer(); } }} data-test="fil-saisie" />
-          <button type="submit" className="bouton or" disabled={!texte.trim()} data-test="fil-envoyer">{t.envoyer}</button>
+          <button type="submit" className="bouton or" disabled={!texte.trim() || !pret} data-test="fil-envoyer">{t.envoyer}</button>
         </form>
       </section>
     </div>,
