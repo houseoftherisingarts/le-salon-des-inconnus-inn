@@ -84,9 +84,11 @@ for (const id of ids) {
     const job = uuid(lancement);
     if (!job) throw new Error(`aucun job_id : ${lancement.slice(0, 200)}`);
     let url = null;
-    for (let essai = 0; essai < 6 && !url; essai++) {
-      const attente = await outil('jobs_wait', { jobs: [job], timeout_seconds: 120 });
+    // jobs_wait plafonne à quinze secondes par appel : on rappelle jusqu'à cinq minutes.
+    for (let essai = 0; essai < 20 && !url; essai++) {
+      const attente = await outil('jobs_wait', { jobs: [{ job_id: job }], timeout_seconds: 15 });
       url = urlImage(attente);
+      if (/failed|error|nsfw|rejected/i.test(attente) && !url) throw new Error(attente.slice(0, 200));
     }
     if (!url) throw new Error('aucune URL d’image après l’attente');
     sortie.push({ id: cible, url });
