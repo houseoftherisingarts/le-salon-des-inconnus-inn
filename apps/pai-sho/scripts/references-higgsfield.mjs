@@ -14,13 +14,21 @@ const MCP = 'https://mcp.higgsfield.ai/mcp';
 // Fandom refuse le robot de Higgsfield (403) : les mêmes images, recopiées dans
 // le seau Firebase du Salon (references-public.json), passent à sa place.
 const wiki = { ...JSON.parse(readFileSync(path.join(ici, 'references-wiki.json'), 'utf8')), ...JSON.parse(readFileSync(path.join(ici, 'references-public.json'), 'utf8')) };
-const CLE = { mai: 'Mai', chou: 'Cabbage merchant', tylee: 'Ty Lee', jet: 'Jet', zhao: 'Zhao', jeongjeong: 'Jeong Jeong', longfeng: 'Long Feng', pakku: 'Pakku', piandao: 'Piandao', hama: 'Hama', wanshitong: 'Wan Shi Tong', ozai: 'Ozai', irohek: 'Iroh EK' };
+const CLE = { mai: 'Mai', chou: 'Cabbage merchant', tylee: 'Ty Lee', jet: 'Jet', zhao: 'Zhao', jeongjeong: 'Jeong Jeong', longfeng: 'Long Feng', pakku: 'Pakku', piandao: 'Piandao', hama: 'Hama', wanshitong: 'Wan Shi Tong', ozai: 'Ozai', irohek: 'Iroh EK', toph: 'Toph' };
 const style = process.argv[2];
 const ids = process.argv[3] === 'tous' ? Object.keys(CLE) : process.argv[3].split(',');
+// GABARIT=<url> ajoute une seconde référence : la figurine peinte d'Iroh, dont
+// la matière, la pose et le fond doivent être copiés (5 octobre 2026 : le style
+// « peint » par prompt seul rendait du dessin animé pour Mai, Ty Lee, Zhao,
+// Long Feng, Piandao et Ozai). MODELE=<nom> change le modèle d'image;
+// SORTIE=<fichier> change le fichier de résultats.
+const gabarit = process.env.GABARIT;
 const fini = style === 'peint'
   ? 'Hand-painted resin tabletop figurine finish, soft matte surfaces, realistic sculpted volumes that keep the character’s exact proportions from the show (adult body, normal head size, no chibi).'
   : 'Cel-shaded collectible figurine in the exact 2D art style of the show (flat colours, clean dark outlines), keeping the character’s exact proportions from the show (normal head size, no chibi).';
-const prompt = `Turn the character in the reference image into a figurine of exactly this character: same face, same eyes, same hairstyle, same outfit, same colours and same accessories as in the reference, nothing redesigned. ${fini} The figurine sits comfortably on a small wooden tavern stool, hands resting on the knees, facing straight at the camera, full body visible from head to feet, nothing cropped. Plain uniform light grey background, soft even studio light, no shadows on the ground, no text, no letters, no logo.`;
+const prompt = gabarit
+  ? `Two reference images. The FIRST image shows the character: make a figurine of exactly this character, same face, same eyes, same hairstyle, same outfit, same colours and same accessories, nothing redesigned. The SECOND image shows a finished hand-painted resin tabletop figurine of a different character: copy its material, finish, sculpted volumes, pose, wooden stool, lighting and plain light grey background exactly, but do not copy its character. ${fini} The figurine sits comfortably on the small wooden stool, hands resting on the knees, facing straight at the camera, full body visible from head to feet, nothing cropped. Plain uniform light grey background, soft even studio light, no shadows on the ground, no text, no letters, no logo.`
+  : `Turn the character in the reference image into a figurine of exactly this character: same face, same eyes, same hairstyle, same outfit, same colours and same accessories as in the reference, nothing redesigned. ${fini} The figurine sits comfortably on a small wooden tavern stool, hands resting on the knees, facing straight at the camera, full body visible from head to feet, nothing cropped. Plain uniform light grey background, soft even studio light, no shadows on the ground, no text, no letters, no logo.`;
 
 // ─── Le jeton, rafraîchi quand Higgsfield répond 401 ────────────────
 const cheminJeton = path.join(maison, '.claude/higgsfield-oauth.json');
