@@ -252,8 +252,8 @@ verifie(HARMONIE_PAIRE('LOTUS', 'W4') && !HARMONIE_PAIRE('LOTUS', 'LOTUS') && !H
     'bonus : sortir de la renouée rend une harmonie qui n’existait pas en début de tour');
   // Orchidée.
   verifie(vers(etatDepuis([h(4, -5, 'ORCHIDEE'), h(-7, 2, 'LOTUS'), g(5, -6, 'R4')]), P(4, -5)).has(P(5, -6)), 'orchidée sauvage : elle prend une fleur');
-  verifie(vers(etatDepuis([h(4, -5, 'R3'), g(5, -6, 'ORCHIDEE'), g(-7, 2, 'LOTUS')]), P(4, -5)).has(P(5, -6)), 'orchidée sauvage : vulnérable');
-  verifie(!vers(etatDepuis([h(4, -5, 'R3'), g(5, -6, 'ORCHIDEE')]), P(4, -5)).has(P(5, -6)), 'orchidée sage : imprenable');
+  verifie(vers(etatDepuis([h(3, -5, 'R3'), g(5, -6, 'ORCHIDEE'), g(-7, 2, 'LOTUS')]), P(3, -5)).has(P(5, -6)), 'orchidée sauvage : vulnérable');
+  verifie(!vers(etatDepuis([h(3, -5, 'R3'), g(5, -6, 'ORCHIDEE')]), P(3, -5)).has(P(5, -6)), 'orchidée sage : imprenable');
   const piegee = etatDepuis([g(2, -6, 'ORCHIDEE'), h(3, -6, 'R5'), h(-3, 7, 'R3'), h(3, 6, 'R4')]);
   verifie(coupsLegaux(piegee).map(coupEnTexte).some((x) => x.startsWith('3,6>3,7+BARQUE@3,-6>')), 'la barque déplace une fleur piégée');
   // Roue : jamais à côté d'une tuile en porte.

@@ -90,7 +90,8 @@ const mediaGabarit = gabarit ? await importer(gabarit) : null;
 for (const id of ids) {
   const cible = id + suffixe;
   if (sortie.find((e) => e.id === cible)) { console.log(cible, 'déjà'); continue; }
-  const src = wiki[CLE[id]]; if (!src) { console.log(id, 'SANS IMAGE WIKI'); continue; }
+  // REF=<url> et PROMPT=<texte> servent à une image hors personnages (une tuile, par exemple).
+  const src = process.env.REF ?? wiki[CLE[id]]; if (!src) { console.log(id, 'SANS IMAGE WIKI'); continue; }
   try {
     // Une image « <nom> corps » dans references-public.json complète le portrait (Toph).
     const medias = [await importer(src)];
