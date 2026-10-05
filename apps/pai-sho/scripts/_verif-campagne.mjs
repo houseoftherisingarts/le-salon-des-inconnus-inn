@@ -32,7 +32,7 @@ for (const [nom, vp, avatar] of [['1440', { width: 1440, height: 900 }, false], 
   await page.click('[data-test=niveaux]');
   await page.waitForTimeout(400);
   await page.screenshot({ path: `${OUT}niveaux-${nom}.png` });
-  await page.click(avatar ? '[data-test=adv-irohek]' : '[data-test=adv-iroh]');
+  await page.click(avatar ? '[data-test=adv-irohek]' : '[data-test=adv-jet]');
   console.log(nom, 'VS après un adversaire verrouillé :', await page.locator('[data-test=vs]').count());
   if (avatar) await page.click('[data-test=niveaux]'), await page.click('[data-test=adv-sokka]');
   else await page.click('[data-test=contre-maison]');

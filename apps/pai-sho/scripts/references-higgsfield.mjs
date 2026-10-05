@@ -80,15 +80,18 @@ for (const id of ids) {
   try {
     const media = uuid(await outil('media_import_url', { url: src, type: 'image' }));
     if (!media) throw new Error('aucun media_id rendu');
-    const lancement = await outil('generate_image', { params: { model: 'nano_banana_pro', prompt, aspect_ratio: '3:4', resolution: '1k', medias: [{ value: media, role: 'image_references' }] } });
+    // JOB=<id> dans l'environnement reprend une tâche déjà lancée au lieu d'en payer une autre.
+    const lancement = process.env.JOB ?? await outil('generate_image', { params: { model: 'nano_banana_pro', prompt, aspect_ratio: '3:4', resolution: '1k', medias: [{ value: media, role: 'image_references' }] } });
     const job = uuid(lancement);
     if (!job) throw new Error(`aucun job_id : ${lancement.slice(0, 200)}`);
     let url = null;
-    // jobs_wait plafonne à quinze secondes par appel : on rappelle jusqu'à cinq minutes.
+    // jobs_wait plafonne à quinze secondes par appel : on rappelle jusqu'à cinq minutes,
+    // puis show_generation_by_ids donne l'adresse du résultat.
     for (let essai = 0; essai < 20 && !url; essai++) {
       const attente = await outil('jobs_wait', { jobs: [{ index: 0, job_id: job }], timeout_seconds: 15 });
       url = urlImage(attente);
-      if (/failed|error|nsfw|rejected/i.test(attente) && !url) throw new Error(attente.slice(0, 200));
+      if (/,failed,|failed: [1-9]|errors: [1-9]/.test(attente)) throw new Error(attente.slice(0, 200));
+      if (!url && /all_terminal: true/.test(attente)) url = urlImage(await outil('show_generation_by_ids', { jobs: [{ index: 0, job_id: job }] }));
     }
     if (!url) throw new Error('aucune URL d’image après l’attente');
     sortie.push({ id: cible, url });
