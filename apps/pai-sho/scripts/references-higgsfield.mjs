@@ -6,9 +6,9 @@
 // Écrit refs3-<style>.json à côté : [{ id, url }], à passer à meshy-image-3d.mjs
 // (l'id porte déjà le suffixe 2 pour le style dessin).
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import os from 'node:os'; import path from 'node:path';
+import os from 'node:os'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 
-const ici = path.dirname(new URL(import.meta.url).pathname);
+const ici = path.dirname(fileURLToPath(import.meta.url));
 const maison = os.homedir();
 const MCP = 'https://mcp.higgsfield.ai/mcp';
 const wiki = JSON.parse(readFileSync(path.join(ici, 'references-wiki.json'), 'utf8'));
