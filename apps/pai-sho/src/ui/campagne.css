@@ -64,13 +64,32 @@
 .vs-perso {
   position: absolute; bottom: -10vh; height: 100vh; width: auto; max-width: none;
   filter: drop-shadow(0 0 18px rgba(255, 210, 120, 0.5)) drop-shadow(0 0 44px color-mix(in srgb, var(--lueur) 55%, transparent)) drop-shadow(0 30px 40px rgba(0, 0, 0, 0.7));
-  animation: vsZoom 2.6s ease-out both;
+  animation: vsZoom 5.6s ease-out both;
 }
 /* L'image carrée déborde du bord de 10vw : le personnage tombe au centre de sa moitié, la tête sous la bannière, loin de la couture. */
 .vs-joueur .vs-perso { left: -4vw; transform-origin: 50% 100%; }
 .vs-adversaire .vs-perso { right: -4vw; transform-origin: 50% 100%; }
 /* La tuile du lotus sans son rebord de pierre : un emblème d'or, pas une pièce de monnaie. */
-.vs-perso-lotus { height: 58vh; bottom: 12vh; left: 6vw !important; clip-path: circle(40%); filter: sepia(0.5) saturate(1.8) contrast(1.1) drop-shadow(0 0 60px rgba(255, 215, 106, 0.7)) drop-shadow(0 30px 40px rgba(0, 0, 0, 0.7)); }
+.vs-perso-lotus { height: 36vh; bottom: 22vh; left: 12vw !important; clip-path: circle(40%); filter: sepia(0.5) saturate(1.8) contrast(1.1) drop-shadow(0 0 60px rgba(255, 215, 106, 0.7)) drop-shadow(0 30px 40px rgba(0, 0, 0, 0.7)); }
+/* La calligraphie du générique derrière le personnage, et les coups de pinceau de son élément. */
+.vs-calli {
+  position: absolute; top: 6vh; writing-mode: vertical-rl; pointer-events: none;
+  font: 400 min(38vh, 26vw)/0.92 'Calligraphie', 'Kaiti SC', 'STKaiti', serif; letter-spacing: 0.06em;
+  color: rgba(255, 246, 226, 0.26); text-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+  animation: vsCalli 0.7s ease-out 0.45s both;
+}
+.vs-joueur .vs-calli { left: 2vw; }
+.vs-adversaire .vs-calli { right: 2vw; }
+/* L'encre reste du côté de la calligraphie : elle s'efface avant le personnage et le VS (le miroir de l'adversaire retourne aussi le masque). */
+.vs-encre { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.34; mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 38%, transparent 62%); mask-image: linear-gradient(90deg, #000 0%, #000 38%, transparent 62%); }
+.vs-adversaire .vs-encre { transform: scaleX(-1); }
+.vs-encre path {
+  fill: none; stroke: #fff2d6; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: vsEncre 0.9s ease-out 0.6s both;
+}
+.vs-encre .plein { fill: #fff2d6; fill-opacity: 0.7; stroke: none; stroke-dasharray: none; animation: vsEncrePlein 0.6s ease-out 0.8s both; }
 /* La bannière du nom : une dalle en biais, l'étiquette au-dessus du nom, dans le coin du haut. */
 .vs-banniere {
   position: absolute; top: clamp(18px, 4vh, 44px); display: flex; flex-direction: column; gap: 2px;
@@ -83,7 +102,7 @@
 .vs-banniere > * { transform: skewX(14deg); display: block; }
 .vs-joueur .vs-banniere { left: clamp(16px, 3vw, 48px); }
 .vs-adversaire .vs-banniere { right: clamp(16px, 3vw, 48px); text-align: right; border-right: 0; border-left: 3px solid var(--lueur); }
-.vs-tag { font: 700 clamp(15px, 1.1vw, 16px)/1 var(--serif); letter-spacing: 0.18em; text-transform: uppercase; color: #f0d27a; }
+.vs-tag { font: 700 clamp(16px, 1.15vw, 17px)/1 var(--serif); letter-spacing: 0.12em; text-transform: uppercase; color: #f0d27a; }
 .vs-nom {
   /* Cinzel pour les deux noms : la police display a un A stylisé qui rend « AANG » illisible en petit. */
   font: 700 clamp(22px, 3.2vw, 52px)/1.05 'Cinzel', Georgia, serif; letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
@@ -112,7 +131,7 @@
   position: absolute; left: 50%; top: 46%; width: min(58vh, 50vw); transform: translate(-50%, -50%) rotate(-8deg);
   opacity: 0.3; mix-blend-mode: screen; pointer-events: none;
   -webkit-mask-image: radial-gradient(circle, #000 38%, transparent 68%); mask-image: radial-gradient(circle, #000 38%, transparent 68%);
-  animation: vsLotus 2.6s ease-out both;
+  animation: vsLotus 5.6s ease-out both;
 }
 .vs-mot {
   position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%) rotate(-6deg);
@@ -121,6 +140,9 @@
   text-shadow: 0 0 24px #ffb300, 0 0 80px rgba(212, 175, 55, 0.7), 0 6px 0 #5a3a08, 0 14px 30px rgba(0, 0, 0, 0.9);
   animation: vsClaque 0.5s cubic-bezier(0.2, 1.6, 0.3, 1) 0.55s both;
 }
+@keyframes vsCalli { from { opacity: 0; clip-path: inset(0 0 100% 0); } to { opacity: 1; clip-path: inset(0); } }
+@keyframes vsEncre { to { stroke-dashoffset: 0; } }
+@keyframes vsEncrePlein { from { opacity: 0; transform: scale(0.9); } }
 @keyframes vsGauche { from { transform: translateX(-30%); opacity: 0; } }
 @keyframes vsDroite { from { transform: translateX(30%); opacity: 0; } }
 @keyframes vsZoom { from { transform: scale(1.1); } to { transform: scale(1.0); } }
@@ -147,6 +169,10 @@
   .vs-perso { height: 50vh; }
   .vs-joueur .vs-perso { bottom: auto; top: 9vh; left: auto; right: -10vw; }
   .vs-adversaire .vs-perso { height: 52vh; bottom: -8vh; right: auto; left: -22vw; }
+  .vs-calli { font-size: min(21vh, 40vw); color: rgba(255, 246, 226, 0.2); }
+  .vs-joueur .vs-calli { top: 11vh; left: -4vw; }
+  .vs-adversaire .vs-calli { top: auto; bottom: 9vh; right: -4vw; }
+  .vs-encre { -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 28%, transparent 50%); mask-image: linear-gradient(90deg, #000 0%, #000 28%, transparent 50%); }
   .vs-perso-lotus { height: min(26vh, 190px); top: 14vh; right: 12vw !important; left: auto !important; bottom: auto; }
   /* La bannière prend la largeur du nom : jamais de mot coupé; la tête du personnage commence plus bas. */
   .vs-banniere { max-width: calc(100vw - 24px); padding: 8px 18px 10px 14px; }
@@ -160,7 +186,8 @@
   .vs-mot { top: 50%; font-size: clamp(80px, 24vw, 120px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vs, .vs-joueur, .vs-adversaire, .vs-mot, .vs-perso, .vs-banniere, .vs-lotus, .vs-eclair, .vs-eclair polyline, .vs-braises i { animation: none; }
+  .vs, .vs-joueur, .vs-adversaire, .vs-mot, .vs-perso, .vs-banniere, .vs-lotus, .vs-eclair, .vs-eclair polyline, .vs-braises i, .vs-calli, .vs-encre path { animation: none; }
+  .vs-encre path { stroke-dashoffset: 0; }
 }
 /* La table est cachée sous le VS : on ne la compose plus, l'animation part tout de suite. */
 body:has(.vs) .app { visibility: hidden; }

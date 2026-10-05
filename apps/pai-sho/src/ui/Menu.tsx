@@ -402,6 +402,7 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
           langue={langue}
           joueur={monNom}
           imageJoueur={joueur.avatar && adversaire(joueur.avatar) ? grand(joueur.avatar) : undefined}
+          idJoueur={joueur.avatar && adversaire(joueur.avatar) ? joueur.avatar : undefined}
           adversaire={nomAdversaire(vs.perso, fr)}
           idAdversaire={vs.perso.id}
           imageAdversaire={grand(vs.perso.id)}

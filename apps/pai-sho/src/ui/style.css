@@ -17,6 +17,13 @@
   font-weight: 400;
   font-display: block;
 }
+/* Les douze caractères de l'écran VS (Ma Shan Zheng, OFL, sous-ensemble de 4 Ko). */
+@font-face {
+  font-family: 'Calligraphie';
+  src: url('../polices/calligraphie.woff') format('woff');
+  font-weight: 400;
+  font-display: block;
+}
 
 :root {
   --fond: #120d0a;
