@@ -9,7 +9,7 @@
 .porte-compte { display: flex; flex-direction: column; gap: 12px; text-align: left; }
 .porte-compte .dialogue-titre, .porte-compte .dialogue-texte { text-align: center; }
 .porte-liens { display: flex; justify-content: space-between; gap: 4px 16px; flex-wrap: wrap; }
-.porte-liens .bouton.lien { display: inline-block; min-height: 44px; padding: 12px 8px; }
+.porte-liens .bouton.lien { display: inline-block; min-height: 44px; padding: 10px 14px; border-color: rgba(212, 175, 55, 0.3); background: rgba(255, 255, 255, 0.03); }
 @media (max-width: 600px) { .porte-liens { justify-content: center; } }
 .rangee-boutons { display: flex; gap: 8px; flex-wrap: wrap; }
 .rangee-boutons .bouton { flex: 1 1 auto; }

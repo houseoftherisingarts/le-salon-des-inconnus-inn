@@ -122,23 +122,27 @@ export default function App() {
   useEffect(() => {
     if (ecran !== 'menu' || !scene) return;
     const mesurer = () => {
+      const W = window.innerWidth, H = window.innerHeight;
       const tete = document.querySelector('.menu-tete')?.getBoundingClientRect();
       const toutes = [...document.querySelectorAll('.menu-cartes > *')].map((c) => c.getBoundingClientRect());
-      const centre = toutes.filter((r) => r.right > window.innerWidth / 3 && r.left < (window.innerWidth * 2) / 3);
-      const hauts = (centre.length ? centre : toutes).map((r) => r.top);
+      // Sur grand écran, les cartes hautes de gauche (style, campagne) forment une colonne :
+      // le plateau se loge à leur droite au lieu de passer sous leur verre.
+      const hautes = W >= 1200 ? toutes.filter((r) => r.top < H * 0.45 && r.left < W / 2) : [];
+      const gauche = hautes.length ? Math.max(...hautes.map((r) => r.right)) + 16 : 0;
+      const sous = gauche ? toutes.filter((r) => r.left >= gauche - 16) : toutes.filter((r) => r.right > W / 3 && r.left < (W * 2) / 3);
+      const hauts = (sous.length ? sous : toutes).map((r) => r.top);
       if (!tete || !hauts.length) return;
       // La table garde au moins 38 % de la hauteur, quoi que les cartes
       // prennent : sur une fenêtre basse, elle passe sous le verre plutôt
       // que de s'enfuir au loin en disque noir.
       const haut = tete.bottom + 8;
-      const bas = Math.min(window.innerHeight - Math.min(...hauts) + 8, window.innerHeight - haut - window.innerHeight * 0.38);
-      // Sur grand écran, le plateau glisse de 8 % vers la droite : la carte de la campagne, à gauche, ne mord plus sur son rebord.
-      const gauche = window.innerWidth >= 1200 ? window.innerWidth * 0.16 : 0;
+      const bas = Math.min(H - Math.min(...hauts) + 8, H - haut - H * 0.38);
       scene.cadrer({ gauche, droite: 0, haut, bas: Math.max(0, bas) });
     };
-    const id = window.setTimeout(mesurer, 60);
+    // Une mesure tôt, une autre quand l'entrée du menu (0,9 s) a fini de faire monter les cartes.
+    const ids = [60, 1000].map((ms) => window.setTimeout(mesurer, ms));
     window.addEventListener('resize', mesurer);
-    return () => { window.clearTimeout(id); window.removeEventListener('resize', mesurer); };
+    return () => { ids.forEach((i) => window.clearTimeout(i)); window.removeEventListener('resize', mesurer); };
   }, [ecran, scene]);
 
   const lancer = useCallback((d: Depart) => {
