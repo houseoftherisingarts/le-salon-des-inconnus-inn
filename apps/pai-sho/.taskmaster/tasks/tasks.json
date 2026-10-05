@@ -1,0 +1,139 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Add @inconnus/ui dependency and Firebase configuration",
+        "description": "Install the social kit package, configure Firebase environment variables, and verify connection to the shared Firestore instance",
+        "details": "Add `\"@inconnus/ui\": \"*\"` to apps/pai-sho/package.json dependencies. Copy Firebase config from apps/salon/.env.local to apps/pai-sho/.env.local (VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID, etc.). Import Firebase and initialize the app in a new src/firebase.ts file: `import { initializeApp } from 'firebase/app'; import { getAuth } from 'firebase/auth'; import { getFirestore } from 'firebase/firestore';`. The config object reads from import.meta.env.VITE_FIREBASE_*. Export `auth` and `db` instances. Test connection by running the dev server and checking for Firebase errors in console. Never commit .env.local.",
+        "testStrategy": "Run `npm install` successfully. Start dev server, open browser console, verify no Firebase initialization errors. Check that firestore instance connects to le-salon-des-inconnus project.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement authentication UI in Community section",
+        "description": "Build sign-in/sign-up UI using @inconnus/ui auth helpers, integrate with existing local player name flow",
+        "details": "Import { loginWithGoogle, loginWithEmail, signUpWithEmail, ensureMember, subscribeToAuthState } from '@inconnus/ui'. In Menu.tsx Community section (communauteOuverte dialog), add auth state tracking with useState<User | null>(null). Use useEffect to subscribe to auth changes: `subscribeToAuthState(auth, (user) => { setAuthUser(user); if (user) ensureMember(db, user); })`. When signed out, show sign-in card with email/password fields and Google button. On sign-up, use the existing joueur.nom as the display name (updateProfile after createUserWithEmailAndPassword). For Google: wrap signInWithPopup in try/catch, show error if popup blocked. Test in Electron: if popup fails (window.paisho?.electron), hide Google button. When signed in, replace joueur.nom display everywhere (menu, VS splash, PeerJS bonjour) with auth.currentUser.displayName. Keep local PeerJS id unchanged. Add French/English text keys to src/ui/textes.ts: connexion, inscription, courriel, motDePasse, seConnecter, creerCompte, dejaCompte, pasDeCompte, deconnexion.",
+        "testStrategy": "Sign up with email/password, verify ensureMember writes to members/{uid}. Sign in with Google (web build), verify displayName shows in menu. Sign out, verify local name returns. Test Electron build: email works, Google hidden or functional. Check that display name persists across page refresh.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Build profile screen with avatar, banner, bio, and stats",
+        "description": "Create profile UI showing banner, avatar (from unlocked figurines), bio, campaign progress, and online record",
+        "details": "In Community dialog, add a Profile card. Display: banner image (boards from Skins or uploaded), avatar (selected from ADVERSAIRES where avatarOuvert(id), using existing vignette system), display name (read-only, from auth), bio textarea (2-200 chars), campaign progress (marcheCourante, nbBattus from existing progression), wins/losses (new fields). Store profile at members/{uid} (shared: displayName, photoURL, bio; Firestore rules allow owner write, any read) and members/{uid}/paisho/profil (avatar: string, banner: string, wins: number, losses: number; rules: owner writes, signed-in reads). Use getMembre, majMembre from @inconnus/ui/reseau/membres. Avatar picker: reuse existing avatarsOuverts logic from Menu.tsx line 197-209, filter ADVERSAIRES.filter(a => avatarOuvert(a.id)). Banner picker: list boards from Skins, show thumbnail, or allow upload (check if @inconnus/ui/images exports uploadImage; if so, upload to Storage, save URL). Add profile to textes.ts: banniere, biographie, victoires, defaites, recordEnLigne, progressionCampagne, modifierProfil. Display in glassmorphism card (rounded-[15px], bg-black/40 backdrop-blur-md border-white/15), Cinzel for display name.",
+        "testStrategy": "Create profile, set avatar (iroh), write bio, verify writes to members/{uid} and members/{uid}/paisho/profil. Sign in as different user, view first user's profile, verify read access. Check that campaign progress and record display correctly. Test banner upload if implemented. Verify 1440 and 390px layouts with boucle-verdict (banner scales, bio wraps, stats stack on mobile).",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement friends system with requests and presence",
+        "description": "Build friend list, add/accept/remove requests, show online presence through heartbeat",
+        "details": "Import { demanderAmitie, accepterAmitie, retirerAmitie, suivreMesAmities } from '@inconnus/ui/reseau/amities'. Add Friends card to Community. Use suivreMesAmities(db, uid, callback) to subscribe to friendships collection (docs keyed uidA_uidB, fields: uids array, status 'pending'|'accepted'). Display accepted friends in list, pending requests separately. Member search: text input, button to search by display name using listerMembres(db, { displayName }) (implement filter client-side if needed, or add query param). Add friend button calls demanderAmitie(db, myUid, theirUid), shows 'pending'. Accept/refuse buttons on incoming requests. Remove button calls retirerAmitie. Online presence: create presence/{uid} collection (lastSeen: timestamp). In useEffect when signed in, set interval 30s to update presence: `setDoc(doc(db, 'presence', uid), { lastSeen: serverTimestamp() }, { merge: true })`. For each friend, subscribe to their presence doc, show green dot if lastSeen < 2 minutes ago. Merge with local amis carnet: when signed in, hide local carnet; when signed out, show paisho.amis as before. Add Firestore rules for presence (owner writes, friends read). Add to textes.ts: amis, rechercherMembre, demanderEnAmi, accepter, refuser, enlever, enLigne, horsligne, enAttente, demandes.",
+        "testStrategy": "Two accounts: user A sends friend request to user B, verify pending status in friendships collection. User B accepts, verify status becomes 'accepted', both see each other in friends list. User A updates presence, verify user B sees online indicator within 30s. User A removes friend, verify doc deleted. Sign out, verify local paisho.amis carnet still works. Test member search with partial name match.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Create chat system with DMs and group rooms",
+        "description": "Build one-to-one chat through conversations, group chat rooms with create/invite/leave, unread badges",
+        "details": "Import { ouvrirConversation, suivreMessagesNonLus, marquerConversationLue } from '@inconnus/ui/reseau/dms', { suivreNotifications } from notifications. Add Chat card in Community. List conversations: query conversations where members array-contains uid, order by last message timestamp. Show unread count via suivreMessagesNonLus(db, uid). Click friend to ouvrirConversation(db, [myUid, friendUid]), open chat UI. Messages: text input (max 2000 chars), send button writes to messages subcollection with { uid, texte, createdAt: serverTimestamp() }. Display messages with sender's displayName and avatar (from members/{uid}). Mark read on open: marquerConversationLue(db, convId, uid). Group rooms: new collection salons/{salonId} (name, owner uid, members: uid[], createdAt), messages subcollection same structure. Create group: dialog with name input, friend checkboxes, write salon doc. Invite: add uid to members array. Leave: remove uid from members. List salons where members array-contains uid. Firestore rules for salons: members read/write messages, owner writes salon doc, members read. Notifications: on new message in conversation/salon, write to notifications/{recipientUid}/items if sender !== recipient. Display Cloche component (from @inconnus/ui if available) with unread count. Add to textes.ts: discussion, discussions, salons, nouveauSalon, nomDuSalon, inviter, quitter, envoyer, nonLu, marquerLu, creerGroupe.",
+        "testStrategy": "Two users: A sends message to B, verify message doc created, B sees unread badge, opens chat, sees message, badge clears. Create group room with A and B, A posts, B receives. A leaves group, verify A cannot see new messages from B. Test 2000 char limit. Check that rules prevent stranger from reading conversation. Test unread count updates in real-time.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement friend challenges with notifications and expiry",
+        "description": "Allow challenging a friend to a game, send notification, accept opens PeerJS connection, challenges expire after 2 minutes",
+        "details": "Add 'Challenge a friend' button in Friends list. Click creates defis/{defiId} document (from: uid, to: uid, status: 'pending', createdAt: serverTimestamp(), peerId: joueur.id from PeerJS). Write notification to notifications/{toUid}/items. Recipient sees notification (bell icon or toast), clicks to view challenge, shows challenger's name and Accept/Decline buttons. Accept: update status to 'accepted', call existing distance('invite', challengerPeerId) to open PeerJS link. Decline: update status to 'declined'. Expiry: on write, set setTimeout 2 minutes to check if still pending, then update to 'expired' and show 'Challenge expired' to both. Use onSnapshot to subscribe to defis where to === uid and status === 'pending', display in UI. Firestore rules: challenger writes, recipient updates status, both read. Add to textes.ts: defier, defiEnvoye, defiRecu, accepterDefi, refuserDefi, defiExpire, defiEnCours.",
+        "testStrategy": "User A challenges user B, verify defi doc created and notification sent. User B sees challenge, accepts, verify PeerJS connection opens and game starts. Test decline: status updates, no game starts. Wait 2 minutes on pending challenge, verify auto-expires. Test that expired challenge cannot be accepted.",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Build matchmaking queue with pairing logic and timeout",
+        "description": "Random matchmaking through file-attente, pair with oldest waiting player, 90s timeout, show TURN limitation message if connection fails",
+        "details": "Add 'Challenge a random stranger' button in Community. Click writes file-attente/{uid} (peerId: joueur.id, createdAt: serverTimestamp(), rating: optional). Use onSnapshot to listen to file-attente, filter out own uid. If another doc exists with createdAt older than own: attempt transaction to delete both docs and create defis/{defiId} (from: myUid, to: otherUid, status: 'accepted', peerId: myPeerId, otherPeerId). Both clients detect defi creation, call distance() with the peer's peerId. Timeout: setTimeout 90s, if still in queue (doc still exists), delete own doc and show 'No opponent found, try again'. TURN limitation: after calling distance(), if PeerJS connection doesn't open within 20s (etatLien still 'connexion'), show message 'Connection failed. TURN relay not yet configured. Retry or try friend challenges.' with Retry button (clears and re-queues). Firestore rules: any signed-in user writes/deletes own file-attente doc, reads all. Add to textes.ts: rechercherAdversaire, rechercheEnCours, adversaireTrouve, aucunAdversaire, reessayer, limiteTURN.",
+        "testStrategy": "Two users click matchmaking simultaneously, verify both enter queue, older one pairs with newer, both docs deleted, defi created, PeerJS opens, game starts. Single user queues, wait 90s, verify timeout and doc deletion. Test transaction race condition: three users queue, verify only one pair forms. Simulate TURN failure (block STUN in browser), verify 20s timeout shows message.",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Add open rooms with friend visibility",
+        "description": "Host publishes room to salles-ouvertes, friends see 'X has an open table' with Join button, remove entry when game starts or host leaves",
+        "details": "In remote play card, when user clicks 'Open a table' (ouvrirTable) and is signed in, write salles-ouvertes/{uid} (peerId: joueur.id, hostName: displayName, createdAt: serverTimestamp()). Show 'Table open' with copy link button (existing logic). When PeerJS connection opens (surMessage type 'bonjour'), delete salles-ouvertes/{uid}. If host closes menu without starting game, delete doc in cleanup. In Friends list, subscribe to salles-ouvertes where uid in friends list, show 'X has an open table' with Join button. Click Join calls distance('invite', room.peerId). Firestore rules: owner writes/deletes own doc, friends read (check if members/{uid}/friendships exists with other uid). Add to textes.ts: tableOuverte, rejoindreLaTable, aUneTableOuverte.",
+        "testStrategy": "User A (signed in) opens table, verify salles-ouvertes doc created. User B (friend of A) sees 'A has an open table', clicks Join, verify PeerJS connects. User A starts game, verify doc deleted. User A opens table then closes menu, verify doc cleaned up. Non-friend cannot see A's room (rules test).",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Update main menu Community card with auth status, friends online, unread count",
+        "description": "Show signed-in state in Community card: avatar, display name, online friends count, unread badge; signed-out shows 'Sign in to find friends'",
+        "details": "In Menu.tsx, the Community card (line 273) currently shows static text. Replace with: if signed in (authUser), show small avatar (from joueur.avatar or default), displayName, 'X friends online' (count friends with presence lastSeen < 2min), unread messages badge (from suivreMessagesNonLus). If signed out, show 'Sign in to find friends' (textes.ts: seConnecterPourAmis). Use existing glassmorphism card style. Avatar: 48px circle, vignette image or Lotus default. Friends online: small text, green dot if count > 0. Unread: red badge number. Already done: 'Your profile' square removed from main menu (per brief). Verify textes.ts keys exist: amisEnLigne(count), messagesNonLus(count).",
+        "testStrategy": "Sign in, verify Community card shows avatar and name. Have 2 friends, one online (presence updated), verify 'X friends online' shows correct count. Send message to user, verify unread badge appears. Sign out, verify 'Sign in to find friends' shows. Test at 1440 and 390 with boucle-verdict (card layout, text wraps, badge position).",
+        "priority": "low",
+        "dependencies": [
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Add moderation, rate limits, and Electron compatibility",
+        "description": "Implement block/report through moderation.ts, enforce char limits and rate limits in rules, test Electron sign-in flows",
+        "details": "Import { bloquerMembre, signalerContenu } from '@inconnus/ui/reseau/moderation'. Add Block and Report buttons in profile/chat context menus. Block: writes blocages/{myUid}/bloquesIds/{theirUid}, updates Firestore security rules to prevent blocked uid from reading my conversations, challenging me, or seeing my presence. Report: writes signalements/{signalementId} (reporterId, reportedUid, type: 'message'|'profile', contentId, raison, createdAt). Rate limits: Firestore rules enforce max 100 messages per user per hour (check createdAt count in last hour, reject if > 100), max 50 friend requests per day. Client validation: cap displayName 2-24 chars, bio 2-200 chars, message text 2000 chars. Electron: test email sign-in (works everywhere). Test Google sign-in with signInWithPopup; if it fails (popup blocked in Electron), detect via window.paisho?.electron or try/catch, hide Google button or show fallback. Add to textes.ts: bloquer, debloquer, signaler, raisonSignalement, spam, harassment, inappropriate, limite. Deploy Firestore rules: add presence/{uid}, salons/{salonId}, defis/{defiId}, file-attente/{uid}, salles-ouvertes/{uid}, blocages/{uid}/bloquesIds, signalements rules to firestore.rules at monorepo root. Run `npx firebase deploy --only firestore:rules`. Test with rules simulator: stranger cannot read conversation, non-member cannot write salon message, only owner writes members/{uid}/paisho/profil.",
+        "testStrategy": "User A blocks user B, verify B cannot send message or challenge A. User A reports user B's message, verify signalement doc created. Test rate limit: send 101 messages in one hour, verify 101st rejected. Test char limits: 2001-char message rejected, 25-char displayName rejected. Electron build: email sign-in works, Google button hidden or functional. Deploy rules, run simulator tests, verify all pass.",
+        "priority": "high",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2026-10-05T05:17:01.907Z",
+      "updated": "2026-10-05T05:17:01.907Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
