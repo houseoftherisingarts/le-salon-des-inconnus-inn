@@ -82,9 +82,9 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
   const uid = compte.user?.uid;
   const social = useSocial(uid);
   const monNom = (uid && compte.nom) || joueur.nom.trim() || t.vous;
-  const vignette = (id: string) => `${BASE}models/convives/vignettes/${id}${dessin ? '2' : ''}.webp`;
+  const vignette = (id: string) => `${BASE}models/convives/vignettes/${id}${dessin ? '2' : ''}.webp?v=${__BUILD__}`;
   /** Le grand portrait (1024 px, fond transparent) de l'écran VS. */
-  const grand = (id: string) => `${BASE}models/convives/grands/${id}${dessin ? '2' : ''}.webp`;
+  const grand = (id: string) => `${BASE}models/convives/grands/${id}${dessin ? '2' : ''}.webp?v=${__BUILD__}`;
 
   // Un lien ouvert puis abandonné au menu se ferme proprement, et la table
   // publiée ou la place en file s'effacent avec lui (onglet fermé compris).
