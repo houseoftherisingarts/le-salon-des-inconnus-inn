@@ -9,7 +9,8 @@
     ".": "./src/index.ts",
     "./arts": "./src/arts/ArtsPage.tsx",
     "./collant": "./src/super-profile/templates/sections/CollantVexel.tsx",
-    "./ecosysteme": "./src/ecosysteme/PiedEcosysteme.tsx"
+    "./ecosysteme": "./src/ecosysteme/PiedEcosysteme.tsx",
+    "./reseau": "./src/reseau/index.ts"
   },
   "peerDependencies": {
     "react": "^19.0.0",

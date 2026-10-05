@@ -15,6 +15,7 @@
     "dist:mac": "npm run build && electron-builder --mac --config electron/builder.cjs"
   },
   "dependencies": {
+    "@inconnus/ui": "*",
     "gsap": "^3.15.0",
     "peerjs": "^1.5.4",
     "react": "^19.2.0",
