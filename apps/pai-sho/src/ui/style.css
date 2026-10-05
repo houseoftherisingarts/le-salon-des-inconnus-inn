@@ -455,13 +455,13 @@ img { display: block; }
 .echelon.courante .echelon-no { padding-left: 4px; }
 .echelon.vaincue .echelon-no { color: var(--or-pale); }
 .ici { width: 100%; font: 700 11px/1 var(--serif); letter-spacing: 0.3em; text-transform: uppercase; color: var(--or-pale); }
-.echelon-niv { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--texte-doux); min-width: 38px; }
+.echelon-niv { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--texte-doux); min-width: 38px; }
 .echelon.ferme .echelon-niv { opacity: 0.6; }
 .echelon { display: grid; grid-template-columns: 22px 1fr; align-items: center; gap: 6px; }
 .echelon-choix { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .echelon-no { width: 22px; flex: none; font: 700 12px/1 var(--serif); letter-spacing: 0.08em; color: var(--or); text-align: right; }
 .echelon-paire { display: inline-flex; align-items: center; gap: 6px; }
-.echelon-ou { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--texte-doux); }
+.echelon-ou { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--texte-doux); }
 .echelon.ferme .perso { opacity: 0.42; }
 .echelon.ferme .perso.choisi { opacity: 0.85; }
 .verrou-mot { color: var(--texte-doux); }

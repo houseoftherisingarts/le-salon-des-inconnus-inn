@@ -15,7 +15,7 @@ const TOUS = ['iroh', 'chou', 'jet', 'aang', 'sokka', 'katara', 'mai', 'kyoshi',
 
 async function capture(page, nom) {
   await page.evaluate(() => window.__scene?.rendre());
-  await page.screenshot({ path: path.join(SORTIE, `${nom}.jpg`), type: 'jpeg', quality: 82, animations: 'disabled' });
+  await page.screenshot({ path: path.join(SORTIE, `${nom}.jpg`), type: 'jpeg', quality: 82, animations: 'disabled', timeout: 0 });
   rapport.captures.push(`${nom}.jpg`);
 }
 async function ouvrir(w, h) {
@@ -40,23 +40,18 @@ async function cliquerPoint(page, pt) {
   await pause(250);
 }
 
-for (const [w, h, nom] of [[1440, 900, 'bureau'], [390, 844, 'mobile']]) {
+const VUES = process.env.VUES === 'mobile' ? [[390, 844, 'mobile']] : [[1440, 900, 'bureau'], [390, 844, 'mobile']];
+for (const [w, h, nom] of VUES) {
   const { ctx, page } = await ouvrir(w, h);
-  // Statuette de Mai (peinte) en face.
-  await page.click('[data-test="adv-mai"]').catch(async () => {
-    await page.click('[data-test="niveaux"]'); await pause(400); await page.click('[data-test="adv-mai"]');
-  });
-  await pause(4000);
-  await capture(page, `${nom}-menu-mai`);
   // Écran des niveaux : les vignettes.
   await page.click('[data-test="niveaux"]');
   await pause(1200);
   await capture(page, `${nom}-niveaux`);
   rapport.mesures[`${nom}-vignettes`] = await page.$$eval('.niveau-perso img', (l) => l.map((i) => `${i.getAttribute('src')?.split('/').pop()} ${i.naturalWidth}x${i.naturalHeight}`));
-  await page.click('[data-test="niveaux-ecran"] .bouton.discret').catch(() => {});
-  await pause(300);
-  // Partie contre Mai : quelques coups, puis clic sur une tuile adverse.
-  await page.click('[data-test="contre-maison"]');
+  // Choisir Mai lance la partie : écran VS avec la statuette peinte, puis la table.
+  await page.click('[data-test="adv-mai"]');
+  await pause(3500);
+  await capture(page, `${nom}-vs-mai`);
   await page.click('[data-test="vs"]', { timeout: 6000 }).catch(() => {});
   await page.waitForSelector('.hud-haut', { timeout: 30000 });
   await pause(1500);
@@ -65,7 +60,7 @@ for (const [w, h, nom] of [[1440, 900, 'bureau'], [390, 844, 'mobile']]) {
     const coup = await page.evaluate(() => { const p = window.__partie; if (!p || p.etat.tour !== 'hote') return null; const c = p.legaux.find((x) => x.type === 'planter') ?? p.legaux.find((x) => x.type === 'deplacer' && !x.bonus) ?? p.legaux[0]; return c; });
     if (!coup) { await pause(1500); continue; }
     if (coup.type === 'planter') {
-      await page.click(`.jeton[data-tuile="${coup.tuile}"]:enabled`).catch(() => {});
+      await page.locator(`.jeton[data-tuile="${coup.tuile}"]:enabled:visible`).first().click({ timeout: 8000 }).catch(() => {});
       await pause(200);
       await cliquerPoint(page, coup.porte);
     } else { await cliquerPoint(page, coup.de); await cliquerPoint(page, coup.a); }
@@ -78,7 +73,7 @@ for (const [w, h, nom] of [[1440, 900, 'bureau'], [390, 844, 'mobile']]) {
   await capture(page, `${nom}-partie`);
   const adverse = await page.evaluate(() => { const e = window.__partie.etat; for (let i = 0; i < 289; i++) { const t = window.__partie.tuileEn?.(i); if (t && t.camp === 'invite') return i; } return null; });
   const cible = adverse ?? await page.evaluate(() => { const e = window.__partie.etat.cases; for (let i = 0; i < e.length; i++) if (e[i] !== '.' && e[i] !== ' ') return i; return null; });
-  if (cible !== null) { await cliquerPoint(page, cible); await pause(700); await capture(page, `${nom}-fiche-tuile`); }
+  if (cible !== null) { await page.evaluate((p) => window.__scene.surClic(p), cible); await pause(900); await capture(page, `${nom}-fiche-tuile`); }
   rapport.mesures[`${nom}-fiche`] = await page.$eval('.fiche-plateau', (f) => ({ texte: f.innerText, rect: f.getBoundingClientRect().toJSON(), police: getComputedStyle(f).fontSize })).catch((e) => `absente: ${e.message.slice(0, 80)}`);
   rapport.mesures[`${nom}-deborde`] = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
   await ctx.close();

@@ -225,7 +225,7 @@ body:has(.vs) .app { visibility: hidden; }
 @media (max-width: 720px) { .niveaux-grille { grid-template-columns: 1fr; } }
 .niveau-persos { flex: 1; flex-wrap: nowrap; align-items: center; justify-content: center; }
 .niveau-perso { width: 128px; height: 138px; min-width: 0; flex: none; justify-content: flex-start; }
-.niveau-perso > span { width: 100%; height: 2.5em; text-align: center; font-size: 12px; line-height: 1.25; overflow-wrap: break-word; }
+.niveau-perso > span { width: 100%; height: 2.5em; text-align: center; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
 
 /* La communauté : deux colonnes de même hauteur. */
 .communaute-grille { align-items: stretch; }

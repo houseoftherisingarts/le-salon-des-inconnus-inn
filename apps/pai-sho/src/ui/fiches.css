@@ -24,9 +24,9 @@
 }
 .fiche-bulle p { margin: 0; }
 .fiche-bulle-nom { font: 700 16px/1.2 var(--titre); letter-spacing: 0.05em; color: var(--or-pale); }
-.fiche-bulle-chiffres { margin-top: 4px !important; font-size: 13px; color: var(--texte-doux); }
+.fiche-bulle-chiffres { margin-top: 4px !important; font-size: 13.5px; color: var(--texte-doux); }
 .fiche-bulle-chiffres b { color: var(--or); }
-.fiche-bulle-regle { margin-top: 8px !important; font-size: 13.5px; line-height: 1.45; color: var(--texte); }
+.fiche-bulle-regle { margin-top: 8px !important; font-size: 14px; line-height: 1.45; color: var(--texte); }
 
 /* La fiche d'une tuile cliquée sur le plateau. */
 .verre.fiche-plateau {

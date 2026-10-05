@@ -201,15 +201,20 @@ function Bulle({ t, langue, ancre }: { t: TypeTuile; langue: Langue; ancre: HTML
  *  au-dessus de la main du téléphone, ou en bas de l'écran ailleurs. */
 export function FicheTuile({ t, langue, proprio }: { t: TypeTuile; langue: Langue; proprio: string }) {
   const x = TX[langue];
-  const [bas, setBas] = useState(22);
+  const [pose, setPose] = useState<{ bottom?: number; top?: number }>({ bottom: 34 });
   useLayoutEffect(() => {
-    // Au-dessus de la feuille du téléphone, et d'une consigne posée en bas.
     const H = window.innerHeight;
     const r = document.querySelector('.hud-bas')?.getBoundingClientRect();
+    if (r && r.height > 0) {
+      // Au téléphone, sous la barre du haut, devant le convive : au-dessus
+      // de la main, la fiche cachait le bas du plateau (verdict du 5 octobre).
+      const h = document.querySelector('.hud-haut')?.getBoundingClientRect();
+      setPose({ top: (h ? h.bottom : 0) + 10 });
+      return;
+    }
+    // Au bureau, en bas de l'écran, au-dessus d'une consigne posée en bas.
     const c = document.querySelector('.consigne')?.getBoundingClientRect();
-    let b = r && r.height > 0 ? H - r.top + 10 : 22;
-    if (c && c.top > H / 2) b = Math.max(b, H - c.top + 10);
-    setBas(b);
+    setPose({ bottom: c && c.top > H / 2 ? Math.max(34, H - c.top + 10) : 34 });
   });
   const portee = PORTEE[t];
   const base = (BASES as readonly TypeTuile[]).includes(t);
