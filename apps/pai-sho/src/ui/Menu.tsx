@@ -399,10 +399,13 @@ export default function Menu({ langue, son, scene, onLangue, onSon, onLancer, on
 
       {vs && (
         <Splash
+          langue={langue}
           joueur={monNom}
-          imageJoueur={joueur.avatar && adversaire(joueur.avatar) ? vignette(joueur.avatar) : undefined}
+          imageJoueur={joueur.avatar && adversaire(joueur.avatar) ? grand(joueur.avatar) : undefined}
           adversaire={nomAdversaire(vs.perso, fr)}
-          imageAdversaire={vignette(vs.perso.id)}
+          idAdversaire={vs.perso.id}
+          imageAdversaire={grand(vs.perso.id)}
+          niveau={vs.perso.niveau}
           onFin={() => onLancer(vs.depart)}
         />
       )}
