@@ -305,7 +305,7 @@ scenario('lotus : jardin rouge, jardin blanc, neutre, jamais une porte', () => {
   verifie(c.size === 12, `lotus au centre : 12 arrivées, trouvé ${c.size}`);
   const n = arrivees(etatDepuis([h(3, 3, 'LOTUS')]), 3, 3);
   verifie(n.has(a(4, 4)), 'lotus vers un point neutre pur (4,4)');
-  verifie(n.has(a(2, 2)) && n.has(a(3, 4)) && n.has(a(1, 3)) === false, 'distance 2 seulement');
+  verifie(n.has(a(2, 2)) && n.has(a(3, 4)) && n.has(a(0, 3)) === false, 'distance 2 seulement');
   const p = arrivees(etatDepuis([h(7, 1, 'LOTUS')]), 7, 1);
   verifie(!p.has(a(8, 0)), 'pas de lotus sur la porte (8,0)');
   verifie(p.has(a(7, 0)) && p.has(a(8, 1)), 'cases voisines de la porte permises');
@@ -410,7 +410,9 @@ scenario('barque : pousse une fleur d’une case, retire l’accent visé avec e
   verifie(!POINTS.some((i) => tuileEn(m, i)?.type === 'BARQUE' || tuileEn(m, i)?.type === 'ROCHER'), 'ni barque ni rocher sur le plateau');
   verifie(m.reserve.hote.BARQUE === 1 && m.reserve.invite.ROCHER === 1, 'les deux ont quitté la réserve pour de bon');
   // jamais un clash par la barque
-  const clash = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(0, 3, 'R3'), g(-5, 3, 'W3')]);
+  const clash = etatDepuis([h(-3, 7, 'R3'), h(3, 6, 'R4'), g(0, 3, 'R3'), g(-5, 2, 'W3')]);
+  verifie(!textes(clash).has(`${mv}+BARQUE@0,3>0,2`), 'barque : pousser R3 en (0,2) créerait un clash avec W3 (-5,2)');
+  verifie([...textes(clash)].some((t) => t.includes('+BARQUE@')), 'des barques restent possibles');
   for (const x of [...textes(clash)].filter((t) => t.includes('+BARQUE@'))) verifie(conflits(joue(clash, x)).length === 0, `barque sans clash : ${x}`);
 });
 
@@ -432,7 +434,12 @@ scenario('orchidée sauvage : prend et se fait prendre; sans lotus en fleur, ni 
   verifie(!arrivees(enPorte, 4, -5).has(a(5, -6)), 'lotus en porte (en croissance) : l’orchidée n’est pas sauvage');
   const duel = etatDepuis([h(4, -5, 'ORCHIDEE'), g(4, -2, 'ORCHIDEE'), g(-7, 2, 'LOTUS')], 'invite');
   verifie(arrivees(duel, 4, -2).has(a(4, -5)), 'orchidée sauvage adverse prend une orchidée non sauvage');
-  verifie(!arrivees({ ...duel, tour: 'hote' }, 4, -5).has(a(4, -2)), 'l’orchidée non sauvage ne prend pas l’orchidée sauvage');
+});
+
+// Référence §8 : « sans lotus en fleur, l'orchidée ne peut pas prendre ». Le moteur laisse pourtant une orchidée non sauvage prendre une orchidée sauvage.
+scenario('orchidée non sauvage ne prend pas une orchidée sauvage (écart possible du moteur)', () => {
+  const duel = etatDepuis([h(4, -5, 'ORCHIDEE'), g(4, -2, 'ORCHIDEE'), g(-7, 2, 'LOTUS')], 'hote');
+  verifie(!arrivees(duel, 4, -5).has(a(4, -2)), 'l’orchidée non sauvage ne prend pas l’orchidée sauvage');
 });
 
 scenario('orchidée : piège les voisines, mais pas depuis une porte', () => {
@@ -490,7 +497,9 @@ scenario('chaque bonus se joue au moins une fois : lotus, orchidée, fleur de ba
     ['+BARQUE@0,5', (n) => tuileEn(n, a(0, 5)) === null],
   ];
   for (const [b, ok] of essais) { const n = joue(e, mv + b); verifie(ok(n), `effet de ${b}`); verifie(n.tour === 'invite', `${b} passe la main`); }
-  verifie(!textes(e).has(`${mv}+LOTUS@0,8`) && !textes(e).has(`${mv}+LOTUS@0,-8`) === false, 'lotus : portes ouvertes seulement (0,-8 libre, 0,8 libre)');
+  for (const p of ['8,0', '-8,0', '0,8', '0,-8']) verifie(textes(e).has(`${mv}+LOTUS@${p}`), `lotus plantable en porte ouverte ${p}`);
+  const pleine = etatDepuis([...dep, g(8, 0, 'R3')]);
+  verifie(!textes(pleine).has(`${mv}+LOTUS@8,0`) && textes(pleine).has(`${mv}+LOTUS@-8,0`), 'porte occupée : refusée, les autres restent');
 });
 
 for (const [nom, f] of scenarios) {

@@ -171,9 +171,11 @@ function piegeesPar(s: string, victime: number): Set<Pt> | null {
 
 function peutPrendre(ta: number, ca: number, tb: number, cb: number, sauvageA: boolean, sauvageB: boolean): boolean {
   if (ca === cb || ta > T_ORCHIDEE || tb > T_ORCHIDEE) return false;
-  if (ta === T_ORCHIDEE && sauvageA) return true;
+  // Une orchidée ne prend que sauvage, et alors elle prend tout; sans lotus
+  // épanoui elle ne prend rien, même pas une orchidée sauvage (règle §8).
+  if (ta === T_ORCHIDEE) return sauvageA;
   if (tb === T_ORCHIDEE) return sauvageB;
-  if (ta === T_ORCHIDEE || ta === T_LOTUS || tb === T_LOTUS) return false;
+  if (ta === T_LOTUS || tb === T_LOTUS) return false;
   return clashT(ta, tb);
 }
 
