@@ -22,6 +22,10 @@ const TUILE_GLB_DIAMETRE = 1.902;
 export const ECHELLE_TUILE = (0.9 * PAS) / TUILE_GLB_DIAMETRE;
 /** Le relief sculpté est accentué en hauteur pour se lire de loin. */
 export const RELIEF_TUILE = 1.35;
+/** Hauteur GLB minimale d'une tuile (disque et relief) : W3 fait 0.44, le
+ *  rhododendron 0.355 et le lotus 0.338 étaient des galettes à côté des autres
+ *  (mesure du 2026-10-05); scene.ts étire en y ce qui est plus mince. */
+export const TUILE_GLB_HAUTEUR_MIN = 0.44;
 /** Le plateau GLB : diamètre 1.902 et hauteur 0.412 en unités du modèle
  *  (Box3, y de -0.205 à +0.206). Le dessus a été mesuré le 2026-10-02 par
  *  des rayons lancés vers le bas, tous les 0.005 de rayon et sur huit
