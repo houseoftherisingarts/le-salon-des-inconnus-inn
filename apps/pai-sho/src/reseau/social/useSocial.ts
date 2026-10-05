@@ -11,7 +11,7 @@ import {
   type Amitie, type ConversationNonLue,
 } from '@inconnus/ui/reseau';
 import { EN_LIGNE_MS } from './compte';
-import { suivreDefisRecus, type Defi } from './defis';
+import { DEFI_MS, suivreDefisRecus, type Defi } from './defis';
 import { suivreMesSalons, type Salon } from './discussions';
 
 export interface Presence { vu?: Timestamp | null; nom?: string; avatar?: string }
@@ -103,7 +103,7 @@ export function useSocial(uid: string | undefined): Social {
     bloques,
     tables: Object.values(tables).filter((t): t is TableOuverte => !!t && acceptes.includes(t.uid)),
     nonLus,
-    defis: defis.filter((d) => !bloques.includes(d.from)),
+    defis: defis.filter((d) => !bloques.includes(d.from) && maintenant - (d.createdAt?.toMillis?.() ?? maintenant) < DEFI_MS),
     salons,
   };
 }
