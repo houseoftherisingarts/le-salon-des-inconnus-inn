@@ -86,7 +86,7 @@ for (const id of ids) {
     let url = null;
     // jobs_wait plafonne à quinze secondes par appel : on rappelle jusqu'à cinq minutes.
     for (let essai = 0; essai < 20 && !url; essai++) {
-      const attente = await outil('jobs_wait', { jobs: [{ job_id: job }], timeout_seconds: 15 });
+      const attente = await outil('jobs_wait', { jobs: [{ index: 0, job_id: job }], timeout_seconds: 15 });
       url = urlImage(attente);
       if (/failed|error|nsfw|rejected/i.test(attente) && !url) throw new Error(attente.slice(0, 200));
     }
