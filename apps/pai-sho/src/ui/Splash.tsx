@@ -84,7 +84,8 @@ export default function Splash({ langue, joueur, imageJoueur, adversaire, idAdve
       </span>
       {/* L'éclair de la couture : un trait brisé, tracé en 0,4 s, qui flashe blanc puis reste d'or. */}
       <svg className="vs-eclair" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <polyline points="62,0 55,22 60,34 48,52 54,64 42,82 46,100" pathLength={100} />
+        <polyline className="vs-eclair-large" points="62,0 55,22 60,34 48,52 54,64 42,82 46,100" pathLength={100} />
+        <polyline className="vs-eclair-haut" points="0,58 18,54 30,57 48,49 62,52 80,44 100,42" pathLength={100} />
       </svg>
       <span className="vs-braises" aria-hidden="true">
         {BRAISES.map((b, i) => (

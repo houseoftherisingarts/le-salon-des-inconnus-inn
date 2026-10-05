@@ -16,7 +16,7 @@ const lampe = new THREE.DirectionalLight(0xffe9c4, 2.2); lampe.position.set(3, 6
 const dore = new THREE.DirectionalLight(0xd4af37, 0.8); dore.position.set(-4, 2, 3); scene.add(dore);
 const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
 // `taille` : le côté du rendu (256 pour les vignettes, 1024 pour les grands
-// portraits de l'écran VS); `cadre` resserre la caméra (1.85 vignette, 1.6 portrait).
+// portraits de l'écran VS); `cadre` resserre la caméra (1.85 vignette, 2.2 portrait).
 window.rendre = (id, fond, taille = 256, cadre = 1.85) => new Promise((ok, ko) => {
   rendu.setSize(taille, taille, false);
   loader.load(`/models/convives/${id}.glb`, (g) => {
