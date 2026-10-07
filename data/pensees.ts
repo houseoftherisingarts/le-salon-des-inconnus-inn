@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-07",
+        title_fr: "Le centre du tour",
+        title_en: "Centering the clay",
+        body_fr: "Le potier commence toujours par un geste que personne ne remarque dans la pièce finie. Avant de monter le moindre bol, il doit centrer sa motte d'argile au milieu du tour, et ce centrage demande souvent plus de patience que la forme elle-même, parce qu'une motte décentrée amplifie son défaut à chaque rotation jusqu'à ce que tout vacille. Les mains n'y parviennent pas par la force; elles tiennent la terre avec une fermeté tranquille et laissent la roue faire le travail, si bien que les vieux potiers disent qu'on ne centre pas l'argile sans se centrer soi-même. Les apprentis veulent sauter cette étape pour arriver aux belles formes, et leurs premières pièces leur enseignent vite que rien de droit ne s'élève d'un centre qui tremble. J'aime que ce métier place l'invisible au commencement, et qu'il fasse du calme la condition de tout le reste. Nous lançons pourtant nos journées comme des mottes posées de travers, en comptant sur la vitesse pour corriger ce que le départ a manqué. Qu'est-ce que je gagnerais à centrer, ce matin, avant de laisser tourner la roue?",
+        body_en: "The potter always begins with a gesture that nobody notices in the finished piece. Before raising the smallest bowl, they must centre the lump of clay in the middle of the wheel, and that centering often asks for more patience than the shape itself, because an off-centre lump amplifies its flaw with every rotation until the whole thing wobbles. The hands do not manage it by force; they hold the clay with a quiet firmness and let the wheel do the work, so that the old potters say you cannot centre the clay without centering yourself. Apprentices want to skip this step to get to the beautiful shapes, and their first pieces soon teach them that nothing straight rises from a trembling centre. I love that this craft places the invisible at the very beginning, and that it makes calm the condition of everything else. Yet we launch our days like lumps set down crooked, counting on speed to correct what the start has missed. What would I gain by centering, this morning, before letting the wheel turn?",
+    },
+    {
         date: "2026-10-06",
         title_fr: "La patine",
         title_en: "The patina",
