@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-09",
+        title_fr: "Le levain",
+        title_en: "The sourdough starter",
+        body_fr: "Les maisons d'autrefois gardaient sur une tablette de la cuisine un pot où vivait le levain, une pâte simple de farine et d'eau que l'on nourrissait chaque jour et qui faisait lever tous les pains de la maison. Certains levains traversaient les générations, transmis d'une cuisine à l'autre comme un héritage, et quand une voisine perdait le sien, on lui en donnait une poignée sans que le pot en souffre, parce qu'un levain partagé se refait en quelques jours de soins. J'aime qu'une richesse pareille ait existé, vivante, impossible à entasser, et qui demandait pour durer exactement deux gestes : la nourrir et la donner. Un levain oublié au fond du froid s'endort, et un levain jalousement gardé ne vaut pas plus que celui du voisin, puisque sa valeur tient toute dans la pâte qu'il soulève et dans les mains auxquelles il passe. Nous tenons souvent nos savoirs et nos élans comme des provisions, à l'abri, en attendant le bon moment pour les sortir. Les vieux pots de levain racontent une autre économie, où ce qui est donné repousse et où ce qui dort trop longtemps s'éteint doucement. Qu'est-ce que je garde au frais depuis trop longtemps, qui ne demande qu'une poignée donnée pour se remettre à lever?",
+        body_en: "The houses of old kept a jar on a kitchen shelf where the starter lived, a simple paste of flour and water that was fed every day and that raised every loaf in the house. Some starters crossed the generations, handed from one kitchen to the next like an inheritance, and when a neighbour lost theirs, a handful was given over without the jar suffering for it, because a shared starter rebuilds itself in a few days of care. I love that such a wealth once existed, alive, impossible to hoard, asking exactly two gestures in order to last: feed it and give it away. A starter forgotten in the back of the cold falls asleep, and a starter jealously guarded is worth no more than the neighbour's, since its whole value lies in the dough it lifts and in the hands it passes through. We often hold our skills and our enthusiasms like provisions, safely stored, waiting for the right moment to bring them out. The old jars of starter tell of another economy, where what is given grows back and what sleeps too long fades quietly. What have I been keeping in the cold too long, that asks only for a handful given away to begin rising again?",
+    },
+    {
         date: "2026-10-07",
         title_fr: "Le centre du tour",
         title_en: "Centering the clay",
