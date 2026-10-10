@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-10",
+        title_fr: "Le vitrail",
+        title_en: "The stained glass",
+        body_fr: "Vu de la rue, un vitrail ne montre presque rien. Le passant qui longe une vieille église aperçoit des plombs gris et des verres éteints, et il faudrait le lui dire pour qu'il devine que ces fenêtres ternes comptent parmi les plus belles choses que des mains humaines aient faites. Toute leur splendeur est tournée vers le dedans, parce qu'un vitrail a besoin que la lumière le traverse vers celui qui regarde, et elle ne le traverse dans le bon sens que pour celui qui est entré. Les maîtres verriers acceptaient donc de travailler des années à une œuvre que la rue ne verrait jamais, confiants que la beauté se révélerait à quiconque pousserait la porte. J'aime que l'éclat le plus somptueux du monde demande ce petit geste de confiance : entrer. Les gens me semblent faits comme ces fenêtres, ternes pour qui les longe et flamboyants pour qui prend la peine de franchir leur seuil. Combien de vitraux est-ce que je longe chaque jour, en les prenant pour du verre gris?",
+        body_en: "Seen from the street, a stained glass window shows almost nothing. The passerby walking along an old church sees grey lead and lifeless panes, and someone would have to tell them that these dull windows count among the most beautiful things human hands have ever made. All their splendour is turned inward, because a stained glass window needs the light to cross it toward the one who is looking, and it only crosses the right way for those who have come inside. The master glaziers therefore accepted to labour for years on a work the street would never see, trusting that the beauty would reveal itself to anyone who pushed the door open. I love that the most sumptuous brilliance in the world asks for that small gesture of trust: stepping in. People seem to me to be made like those windows, dull to whoever walks past and blazing for whoever takes the trouble to cross their threshold. How many stained glass windows do I walk past each day, mistaking them for grey glass?",
+    },
+    {
         date: "2026-10-09",
         title_fr: "Le levain",
         title_en: "The sourdough starter",
