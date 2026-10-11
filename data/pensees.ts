@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-11",
+        title_fr: "Annoncer aux abeilles",
+        title_en: "Telling the bees",
+        body_fr: "Les campagnes d'autrefois gardaient une coutume étrange envers leurs ruches : la maisonnée annonçait aux abeilles ses grandes nouvelles. Un mariage, une naissance, un deuil, et quelqu'un descendait au jardin frapper doucement sur le bois des ruches pour le dire aux ouvrières, parfois en nouant un ruban noir au toit quand la maison pleurait. La croyance voulait qu'une ruche tenue à l'écart des nouvelles se laisse dépérir ou quitte les lieux, comme si le miel exigeait d'être de la famille. Ce que les abeilles comprenaient restera leur secret; le geste, lui, travaillait sur ceux qui le faisaient, puisqu'il obligeait la maison à mettre ses joies et ses peines en mots et à les porter jusqu'au fond du jardin. J'aime qu'une tradition entière repose sur l'idée qu'aucun habitant de la maison n'est trop petit pour être tenu au courant. Nous croyons souvent épargner les autres en gardant les grandes nouvelles pour nous, alors que le silence voyage presque toujours plus loin que la confidence ne l'aurait fait. À qui est-ce que je dois une nouvelle, que je garde depuis trop longtemps loin du jardin?",
+        body_en: "The countryside of old kept a strange custom toward its hives: the household told the bees its great news. A wedding, a birth, a death, and someone would walk down to the garden to knock gently on the wood of the hives and tell the workers, sometimes tying a black ribbon to the roof when the house was in mourning. The belief held that a hive kept out of the news would let itself waste away or leave the place altogether, as if the honey demanded to be part of the family. What the bees understood will remain their secret; the gesture, though, worked on those who performed it, since it obliged the house to put its joys and sorrows into words and to carry them all the way to the bottom of the garden. I love that an entire tradition rests on the idea that no inhabitant of the house is too small to be kept informed. We often believe we are sparing others by keeping our great news to ourselves, when silence almost always travels farther than the confidence would have. To whom do I owe a piece of news that I have kept too long away from the garden?",
+    },
+    {
         date: "2026-10-10",
         title_fr: "Le vitrail",
         title_en: "The stained glass",
