@@ -69,7 +69,7 @@ PHASES_TEXTE = {
         plus_value="Le domaine passe d'auberge à destination. L'accès aux bains se vend 250 jours par année, l'hiver devient une saison pleine, et le prix des chambres monte de 184 $ à 235 $ la nuit en trois ans parce que l'accès au parcours thermal est compris.",
     ),
     2: dict(
-        intro="La maison est la phase qui tient la promesse. Un client qui sort d'un bain de cèdre à 40 °C et qui remonte dans une salle de bain des années soixante-dix ne revient pas; le même client, dans une pièce d'ardoise et de cèdre avec une douche à l'italienne, publie la photo. Les vingt fenêtres de bois sur mesure rendent au manoir son dessin d'origine, coupent la facture de chauffage et mettent l'intérieur au niveau de ce que le domaine offre dehors.",
+        intro="La maison est la phase qui tient la promesse. Un client qui sort d'un bain de cèdre à 40 °C et qui remonte dans une salle de bain d'un autre âge ne revient pas; le même client, dans une pièce d'ardoise et de cèdre avec une douche à l'italienne, publie la photo. Les vingt fenêtres de bois sur mesure rendent au manoir son dessin d'origine, coupent la facture de chauffage et mettent l'intérieur au niveau de ce que le domaine offre dehors.",
         plus_value="Chaque dollar de cette phase entre dans la valeur du bâtiment, évaluée autour de 750 000 $ aujourd'hui. Des salles de bain et des fenêtres neuves sur un manoir de 1900 se retrouvent dans le prix de l'immeuble, dans la note des avis et dans le tarif des chambres.",
     ),
     3: dict(
