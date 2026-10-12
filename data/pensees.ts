@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-12",
+        title_fr: "Les braises sous la cendre",
+        title_en: "The banked embers",
+        body_fr: "Dans les maisons d'autrefois, le feu ne mourait jamais tout à fait. Le soir venu, on ne l'éteignait pas : on le couvrait, en ramenant la cendre sur les braises pour qu'elles dorment au chaud jusqu'au matin, et la première tâche du jour consistait à souffler doucement sur ce cœur rouge pour rendre la flamme à la maison. Rallumer un feu de rien demandait du temps et de la chance, tandis qu'une braise bien couvée repartait en quelques souffles, si bien que les familles veillaient sur ce petit noyau de chaleur comme sur une provision plus précieuse que le bois lui-même. J'aime que la sagesse de ces maisons ait tenu dans un geste du soir, celui de ne pas tout éteindre et de garder au creux de l'âtre un cœur discret qui attend son heure. Nous traitons souvent nos élans avec moins d'égards, en les laissant brûler jusqu'au bout ou en les noyant dès qu'ils encombrent, comme s'il n'existait rien entre le brasier et le seau d'eau. Un projet mis en pause ou une amitié d'une autre saison survit pourtant très bien à l'hiver, pourvu qu'on le couvre au lieu de l'éteindre. Quelle braise est-ce que je garde sous la cendre en ce moment, qui ne demanderait que quelques souffles pour reprendre?",
+        body_en: "In the houses of old, the fire never quite died. When evening came, it was not put out but covered: the ash was drawn back over the embers so they would sleep warm until morning, and the first task of the day was to blow gently on that red heart to give the flame back to the house. Lighting a fire from nothing took time and luck, while a well-banked ember came back in a few breaths, so that families watched over that small core of warmth as over a provision more precious than the wood itself. I love that the wisdom of those houses rested on an evening gesture, that of not putting everything out, and of keeping in the hollow of the hearth a quiet heart biding its time. We often treat our own enthusiasms with less regard, letting them burn to the end or drowning them the moment they are in the way, as if nothing existed between the blaze and the bucket of water. Yet a project set aside or a friendship from another season survives the winter very well, provided we bank it instead of putting it out. Which ember am I keeping under the ash right now, that would ask only a few breaths to catch again?",
+    },
+    {
         date: "2026-10-11",
         title_fr: "Annoncer aux abeilles",
         title_en: "Telling the bees",
