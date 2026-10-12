@@ -64,14 +64,14 @@ tr.sous td{color:#5a4a30;font-size:10.2pt}
 .gain{border:1px solid var(--filet);padding:9pt 10pt;background:rgba(255,255,255,.28);font-size:10.2pt;line-height:1.35}
 .gain .k{font-family:Cinzel,serif;font-size:7.2pt;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4pt}
 .gain .v{font-family:Prata,serif;font-size:16pt;color:var(--titre);margin-bottom:3pt}
-.scen{border:1px solid var(--filet);padding:10pt 11pt;background:rgba(255,255,255,.28);font-size:10.4pt}
+.scen{border:1px solid var(--filet);padding:8pt 9pt;background:rgba(255,255,255,.28);font-size:9.9pt;line-height:1.35}
 .scen.reco{border:2px solid var(--or)}
 .scen .n{font-family:Cinzel,serif;font-size:10pt;letter-spacing:.1em;color:var(--titre)}
-.scen .s{font-family:Prata,serif;font-size:18pt;color:var(--titre);margin:3pt 0 5pt}
+.scen .s{font-family:Prata,serif;font-size:16pt;color:var(--titre);margin:2pt 0 3pt}
 .scen ul{margin:0 0 6pt;padding-left:12pt}
 .scen .r{display:grid;grid-template-columns:1fr 1fr;gap:4pt 8pt;border-top:.5px solid var(--filet2);padding-top:6pt;margin-top:6pt}
 .scen .r b{display:block;font-family:Prata,serif;font-weight:400;font-size:12pt;color:var(--encre)}
-.scen .r span{font-family:Cinzel,serif;font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.scen .r span{font-family:Cinzel,serif;font-size:6.8pt;letter-spacing:.08em;white-space:nowrap;text-transform:uppercase;color:var(--accent)}
 .jalons{display:grid;grid-template-columns:repeat(4,1fr);gap:9pt;margin:8pt 0 14pt}
 .jalon{border-top:2px solid var(--or);padding-top:7pt;font-size:10.2pt;line-height:1.35}
 .jalon .q{font-family:Cinzel,serif;font-size:7.4pt;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
@@ -90,13 +90,16 @@ tr.sous td{color:#5a4a30;font-size:10.2pt}
 .sites b{font-family:Cinzel,serif;font-weight:400;font-size:8.4pt;letter-spacing:.1em;color:var(--titre);display:block;margin-top:5pt}
 .sites span{font-size:9.6pt;color:#5a4a30;display:block;line-height:1.3}
 .sites u{font-family:Lato,sans-serif;font-size:8.4pt;color:var(--accent);text-decoration:none;display:block;margin-top:2pt}
-.couv{display:flex;flex-direction:column;justify-content:space-between;text-align:center;padding:1.3in .9in 1in}
+.couv{display:flex;flex-direction:column;justify-content:space-between;text-align:center;padding:.95in .9in .85in}
 .couv img.crest{width:.9in;margin:0 auto 18pt}
 .couv h1{font-size:34pt;margin-top:14pt}
 .couv .sous{font-size:14.5pt;max-width:5.4in;margin:18pt auto 0;text-align:center;color:#4a3a20}
 .couv .bas{font-family:Cinzel,serif;font-size:8.4pt;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);line-height:2}
-.couv .photo{width:100%;height:3.3in;object-fit:cover;border:1px solid var(--filet);margin:26pt 0 0}
-.noir .plein{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.couv .photo{width:100%;height:2.05in;object-fit:cover;border:1px solid var(--filet);margin:14pt 0 0}
+.noir .plein{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6}
+.noir .voile-noir{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,9,.15) 0%,rgba(13,11,9,.35) 40%,rgba(13,11,9,.92) 72%,rgba(13,11,9,.97) 100%)}
+.noir .texte{z-index:1}
+.page.noir .folio{color:#f3e5ab;z-index:1}
 .noir .texte{position:absolute;left:.9in;right:.9in;bottom:1.1in}
 .noir .grand{font-family:Prata,serif;font-size:72pt;line-height:1;letter-spacing:-.02em;color:#f3e5ab}
 .noir .grand small{font-size:.32em;color:#c5a059;margin-left:.1em}
@@ -104,6 +107,10 @@ tr.sous td{color:#5a4a30;font-size:10.2pt}
 .noir p{color:rgba(251,247,239,.85);text-align:left;font-size:13pt;max-width:5.6in}
 .noir .eyebrow{color:#c5a059}
 """
+
+def gros(svg):
+    """Les SVG sont dessinés à 1200 unités; imprimés sur 7 pouces, leurs étiquettes doivent grossir."""
+    return svg.replace('font-size="13.5"', 'font-size="20"').replace('font-size="13"', 'font-size="19"').replace('viewBox="0 0 1200 ', 'viewBox="-48 0 1248 ')
 
 def folio(n):
     return f'<div class="folio">Le Mini-Spa des Inconnus · Plan d\'affaires · {n}</div>'
@@ -116,7 +123,7 @@ def page(contenu, n, cls=""):
 
 def couverture():
     return f'''<div class="couv" style="height:100%">
-<div><img class="crest" src="_crest.png" alt=""><p class="eyebrow">{e(C.HERO["eyebrow"])}</p><h1>{e(C.HERO["titre"])}</h1><p class="sous">{e(C.HERO["sous"])}</p>
+<div><img class="crest" src="_crest.png" alt=""><p class="eyebrow">Namur, Petite-Nation, Outaouais</p><h1>{e(C.HERO["titre"])}</h1><p class="sous">{e(C.HERO["sous"])}</p>
 <img class="photo" src="media/apres-ete.jpg" alt=""></div>
 <div class="bas">Le Salon des Inconnus · 9380-0589 Québec inc.<br>Plan d'affaires présenté à la Banque de développement du Canada et à Tourisme Outaouais<br>Octobre 2026</div>
 </div>'''
@@ -134,28 +141,30 @@ def sommaire():
 
 def auberge():
     A = C.AUJOURDHUI
-    svg, leg = G.mensuel(G.CLAIR, 1200, 330)
+    svg, leg = gros(G.mensuel(G.CLAIR, 1200, 250)[0]), G.mensuel(G.CLAIR, 1200, 250)[1]
     return f'''<p class="eyebrow">{e(A["eyebrow"])}</p><h2>{e(A["titre"])}</h2><div class="filet"></div>
 {ps(A["prose"])}
 <div class="fig"><h3>{e(A["graphique"]["titre"])}</h3><div class="s">{e(A["graphique"]["sous"])}</div>{svg}{G.legende_html(leg)}</div>
-<div class="paire" style="margin-top:8pt"><div><img src="media/salle.jpg" alt=""><div class="cap"><b>Le manoir</b>La salle à manger</div></div><div><img src="media/hemerocales.jpg" alt=""><div class="cap"><b>Le domaine</b>Les jardins, l'été</div></div></div>'''
+<div class="paire" style="margin-top:2pt;margin-bottom:0"><div><img src="media/salle.jpg" alt="" style="aspect-ratio:2/1"><div class="cap"><b>Le manoir</b>La salle à manger</div></div><div><img src="media/hemerocales.jpg" alt="" style="aspect-ratio:2/1"><div class="cap"><b>Le domaine</b>Les jardins, l'été</div></div></div>'''
 
 def rupture():
-    return f'''<img class="plein" src="media/apres-hiver.jpg" alt="">
+    return f'''<img class="plein" src="media/apres-hiver.jpg" alt=""><div class="voile-noir"></div>
 <div class="texte"><p class="eyebrow">Le projet</p><div class="grand">{e(C.PROJET["grand"])}</div><h2>{e(C.PROJET["titre"])}</h2><p>Deux bains chauds de cèdre, un bain froid, un sauna sec, un sauna vapeur à l'eucalyptus, quatre salles de bain façon spa, vingt fenêtres de bois et un pavillon quatre saisons. Les bains ouvrent au public en novembre 2027.</p></div>'''
 
 def avant_apres_pages():
     A = C.AVANT_APRES
     pages = []
     items = A["items"]
-    for bloc in (items[:3], items[3:]):
+    for ib, bloc in enumerate((items[:3], items[3:])):
         paires = "".join(f'<div class="paire"><div><img src="media/avant-{k}.jpg" alt=""><div class="cap"><b>Aujourd\'hui</b>{e(av)}</div></div><div><img src="media/apres-{k}.jpg" alt=""><div class="cap"><b>{e(ph)}</b>{e(ap)}</div></div></div>' for k, av, ap, ph in bloc)
-        entete = f'<p class="eyebrow">{e(A["eyebrow"])}</p><h2>{e(A["titre"])}</h2><div class="filet"></div><p>{e(A["lead"])}</p>' if bloc is items[:3] else f'<p class="eyebrow">{e(A["eyebrow"])}</p><h2>{e(A["titre"])}, suite</h2><div class="filet"></div>'
+        entete = f'<p class="eyebrow">{e(A["eyebrow"])}</p><h2>{e(A["titre"])}</h2><div class="filet"></div><p>{e(A["lead"])}</p>' if ib == 0 else f'<p class="eyebrow">{e(A["eyebrow"])}</p><h2>{e(A["titre"])}, suite</h2><div class="filet"></div>'
         pages.append(entete + paires)
     return pages
 
 def phase_page(p):
     t = C.PHASES_TEXTE[p["id"]]; r = R[p["id"]]
+    cle = {2: ("bain", "Une salle de bain façon spa"), 3: ("jardins", "Les jardins et le pavillon")}.get(p["id"])
+    paire = f'<div class="paire" style="margin-top:12pt"><div><img src="media/avant-{cle[0]}.jpg" alt=""><div class="cap"><b>Aujourd\'hui</b></div></div><div><img src="media/apres-{cle[0]}.jpg" alt=""><div class="cap"><b>{e(cle[1])}</b></div></div></div>' if cle else ""
     lignes = "".join(f'<tr><td>{e(n)}{f"<small>{e(d)}</small>" if d else ""}</td><td class="n">{argent(c)}</td></tr>' for n, d, c in p["postes"])
     return f'''<p class="eyebrow">Phase {p["id"]} · {e(p["annee"])}</p><h2>{e(p["nom"])} · {argent(p["cout"])}</h2><div class="filet"></div>
 <p>{e(t["intro"])}</p>
@@ -164,7 +173,7 @@ def phase_page(p):
 <div class="gain"><div class="k">Revenus additionnels à maturité</div><div class="v">{argent(r["revenus"])} / an</div>{e(r["texte"])}</div>
 <div class="gain"><div class="k">Contribution annuelle</div><div class="v">{argent(r["contribution"])}</div>après les charges propres à la phase, soit un retour sur l'investissement en {str(r["retour_ans"]).replace(".", ",")} ans</div>
 <div class="gain"><div class="k">Plus-value</div>{e(t["plus_value"])}</div>
-</div>'''
+</div>{paire}'''
 
 def marche():
     Ma = C.MARCHE
@@ -173,7 +182,7 @@ def marche():
 
 def chiffres():
     Ch = C.CHIFFRES
-    svg1, l1 = G.revenus_empiles(G.CLAIR, 1200, 380); svg2, l2 = G.ebitda_dette(G.CLAIR, 1200, 330)
+    svg1, l1 = G.revenus_empiles(G.CLAIR, 1200, 430); svg2, l2 = G.ebitda_dette(G.CLAIR, 1200, 380); svg1, svg2 = gros(svg1), gros(svg2)
     return f'''<p class="eyebrow">{e(Ch["eyebrow"])}</p><h2>{e(Ch["titre"])}</h2><div class="filet"></div><p>{e(Ch["lead"])}</p>
 <div class="fig"><h3>{e(Ch["graphique1"]["titre"])}</h3><div class="s">{e(Ch["graphique1"]["sous"])}</div>{svg1}{G.legende_html(l1)}</div>
 <div class="fig"><h3>{e(Ch["graphique2"]["titre"])}</h3><div class="s">{e(Ch["graphique2"]["sous"])}</div>{svg2}{G.legende_html(l2)}</div>'''
@@ -201,13 +210,13 @@ def financement():
         reco = s["nom"] == "Le plan complet"
         cartes.append(f'''<div class="scen {"reco" if reco else ""}"><div class="n">{e(s["nom"])}{" · recommandé" if reco else ""}</div><div class="s">{argent(s["montant"])}</div>
 <ul><li>Prêt BDC de {argent(s["bdc"])}</li><li>Tourisme Outaouais, {argent(s["pdto"])}</li><li>Mise de fonds de {argent(s["mise"])}</li></ul>{e(s["note"])}
-<div class="r"><div><b>{argent(s["revenus_an3"])}</b><span>Revenus, an 3</span></div><div><b>{argent(s["flux_an3"])}</b><span>Flux libre, an 3</span></div><div><b>{str(s["dscr_an3"]).replace(".", ",")}×</b><span>Couverture, an 3</span></div><div><b>{argent(s["revenus_an5"])}</b><span>Revenus, an 5</span></div></div></div>''')
+<div class="r"><div><b>{argent(s["revenus_an3"])}</b><span>Revenus an 3</span></div><div><b>{argent(s["flux_an3"])}</b><span>Flux an 3</span></div><div><b>{str(s["dscr_an3"]).replace(".", ",")}×</b><span>Couverture an 3</span></div><div><b>{argent(s["revenus_an5"])}</b><span>Revenus an 5</span></div></div></div>''')
     montage = "".join(f'<tr><td>{e(n)}<small>{e(d)}</small></td><td class="n">{e(v)}</td></tr>' for n, v, d in F["montage"])
     prose = [p.replace(str(P[1]["dscr"]), str(P[1]["dscr"]).replace(".", ",")).replace(str(P[2]["dscr"]), str(P[2]["dscr"]).replace(".", ",")) for p in F["prose"]]
     return f'''<p class="eyebrow">{e(F["eyebrow"])}</p><h2>{e(F["titre"])}</h2><div class="filet"></div><p>{e(F["lead"])}</p>
-<div class="cartes" style="margin-bottom:12pt">{"".join(cartes)}</div>
+<div class="cartes" style="margin-bottom:9pt;margin-top:4pt">{"".join(cartes)}</div>
 <h3>{e(F["montage_titre"])}</h3><table><tbody>{montage}<tr class="total"><td>Total du projet</td><td class="n">{argent(M["TOTAL"])}</td></tr></tbody></table>
-<div style="height:8pt"></div>{ps(prose)}'''
+{ps(prose)}'''
 
 def partenaires_calendrier():
     Pa, Ca = C.PARTENAIRES, C.CALENDRIER

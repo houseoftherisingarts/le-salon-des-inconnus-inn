@@ -34,7 +34,7 @@ def aujourdhui():
     A = C.AUJOURDHUI
     tuiles = "".join(f'<div class="verre tuile rev"><div class="chiffre">{e(v)}</div><div class="etiquette">{e(l)}</div><div class="note">{e(n)}</div></div>' for v, l, n in A["tuiles"])
     svg, leg = G.mensuel()
-    mos = [("salle.jpg", "La salle à manger", "l"), ("biblio.jpg", "La bibliothèque", "h"), ("hemerocales.jpg", "Les hémérocalles", ""), ("yourte.jpg", "La yourte", ""), ("cuisine.jpg", "La grande cuisine", ""), ("barista.jpg", "Le café", ""), ("drone.jpg", "Le domaine vu du ciel", "l")]
+    mos = [("salle.jpg", "La salle à manger", "l"), ("biblio.jpg", "La bibliothèque", "h"), ("hemerocales.jpg", "Les hémérocalles", ""), ("yourte.jpg", "La yourte", ""), ("drone.jpg", "Le domaine vu du ciel", "l"), ("cuisine.jpg", "La grande cuisine", "h"), ("barista.jpg", "Le café", ""), ("projecteur.jpg", "La salle de projection", "")]
     mosaique = "".join(f'<figure class="{c}"><img src="media/{f}" alt="{e(t)}" loading="lazy"><figcaption>{e(t)}</figcaption></figure>' for f, t, c in mos)
     return f'''<section id="auberge">
   <div class="col">
@@ -97,7 +97,7 @@ def phases():
 </div>''')
     return f'''<section id="phases">
   <div class="col">
-    <div class="titre rev"><p class="eyebrow">Les trois phases</p><h2>Chaque phase a son coût, sa plus-value et son rendement</h2><p class="lead">Les estimations viennent des prix publiés en 2026 par les fabricants et les entrepreneurs du Québec; trois soumissions par poste les remplaceront avant le chantier. Chaque phase porte 10 % d'imprévus.</p></div>
+    <div class="titre rev"><p class="eyebrow">Les trois phases</p><h2>Trois phases, chacune rentable</h2><p class="lead">Les estimations viennent des prix publiés en 2026 par les fabricants et les entrepreneurs du Québec; trois soumissions par poste les remplaceront avant le chantier. Chaque phase porte 10 % d'imprévus.</p></div>
     <div class="onglets rev">{onglets}</div>
     {"".join(blocs)}
   </div>
@@ -153,7 +153,7 @@ def financement():
   <p class="eyebrow" style="margin-bottom:6px">{e(ph)}</p><h3>{e(s["nom"])}</h3><div class="somme">{argent(s["montant"])}</div>
   <ul><li>Prêt BDC de {argent(s["bdc"])}</li><li>Tourisme Outaouais, {argent(s["pdto"])}</li><li>Mise de fonds de {argent(s["mise"])}</li></ul>
   <p class="muted" style="font-size:14.5px">{e(s["note"])}</p>
-  <div class="rendement"><div><b>{argent(s["revenus_an3"])}</b><span>Revenus, an 3</span></div><div><b>{argent(s["flux_an3"])}</b><span>Flux libre, an 3</span></div><div><b>{str(s["dscr_an3"]).replace(".", ",")}×</b><span>Couverture, an 3</span></div><div><b>{argent(s["revenus_an5"])}</b><span>Revenus, an 5</span></div></div>
+  <div class="rendement"><div><b>{argent(s["revenus_an3"])}</b><span>Revenus, an 3</span></div><div><b>{argent(s["flux_an3"])}</b><span>Flux libre, an 3</span></div><div><b>{str(s["dscr_an3"]).replace(".", ",")}×</b><span>Couverture, an 3</span></div><div><b>{argent(s["revenus_an5"])}</b><span>Revenus, an 5</span></div></div>
 </div>''')
     montage = "".join(f'<tr><td>{e(n)}<small>{e(d)}</small></td><td>{e(v)}</td></tr>' for n, v, d in F["montage"])
     prose = [p.replace(str(P[1]["dscr"]), str(P[1]["dscr"]).replace(".", ",")).replace(str(P[2]["dscr"]), str(P[2]["dscr"]).replace(".", ",")) for p in F["prose"]]
@@ -168,14 +168,14 @@ def financement():
 
 def partenaires():
     Pa = C.PARTENAIRES
-    sites = "".join(f'<a class="site" href="{u}" target="_blank" rel="noopener"><img src="media/{img}" alt="{e(t)}" loading="lazy"><div class="l"><b>{e(t)}</b><span>{e(d)}</span><u>{e(u.replace("https://", ""))}</u></div></a>' for t, d, u, img in Pa["sites"])
+    sites = "".join(f'<a class="site" href="{u}" target="_blank" rel="noopener"><img src="media/{img}" alt="{e(t)}" loading="lazy"><div class="l"><b>{e(t)}</b><span>{e(d)}</span><u>{e(u.replace("https://", "").replace("www.", ""))}</u></div></a>' for t, d, u, img in Pa["sites"])
     mc = Pa["mapchef"]
     return f'''<section id="partenaires">
   <div class="col">
     <div class="titre rev"><p class="eyebrow">{e(Pa["eyebrow"])}</p><h2>{e(Pa["titre"])}</h2></div>
     <div class="deux rev">
       <div><a class="site" href="{mc["url"]}" target="_blank" rel="noopener"><img src="media/{mc["image"]}" alt="Le site MapChef"><div class="l"><b>{e(mc["titre"])}</b><span>{e(mc["prose"])}</span><u>mapchef.ca</u></div></a></div>
-      <div><div class="verre carte" style="height:100%"><h3>{e(Pa["outaouais"]["titre"])}</h3><p style="font-size:16px;color:var(--texte)">{e(Pa["outaouais"]["prose"])}</p><div class="src"><a href="https://www.tourismeoutaouais.com" target="_blank" rel="noopener">tourismeoutaouais.com</a></div></div></div>
+      <div><a class="site" href="https://www.tourismeoutaouais.com" target="_blank" rel="noopener"><img src="media/drone.jpg" alt="Le domaine vu du ciel" loading="lazy"><div class="l"><b>{e(Pa["outaouais"]["titre"])}</b><span>{e(Pa["outaouais"]["prose"])}</span><u>tourismeoutaouais.com</u></div></a></div>
     </div>
     <div style="height:40px"></div>
     <p class="eyebrow rev">Nos adresses</p>

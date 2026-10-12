@@ -6,4 +6,7 @@ Allow: /
 # consigne ici pour les robots qui n'executent pas le JS.
 Disallow: /catalogue
 
+# Plan d'affaires du Mini-Spa : acces reserve a la banque, hors index.
+Disallow: /plan-spa
+
 Sitemap: https://www.lesalondesinconnus.com/sitemap.xml

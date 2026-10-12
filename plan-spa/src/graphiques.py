@@ -28,16 +28,16 @@ def mensuel(th=SOMBRE, w=1200, h=380):
     out = [f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="Revenus mensuels 2025-2026" data-chart="mensuel">']
     for t in range(0, vmax + 1, 5000):
         y = mt + ph - ph * t / vmax
-        out.append(f'<g class="axe"><line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="{th["grille"]}"/><text x="{ml-8}" y="{y+4:.1f}" text-anchor="end" fill="{th["axe"]}" font-size="11.5" font-family="{th["police"]}">{k(t)}</text></g>')
+        out.append(f'<g class="axe"><line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="{th["grille"]}"/><text x="{ml-8}" y="{y+4:.1f}" text-anchor="end" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">{k(t)}</text></g>')
     for i, (c, v) in enumerate(zip(cles, vals)):
         an, mo = c.split("-"); couleur = th["accent"] if an == "2026" else th["muet"]
         bh = ph * v / vmax; x = ml + i * bw + bw * 0.18; y = mt + ph - bh; ww = bw * 0.64
         out.append(f'<rect class="bar" x="{x:.1f}" y="{y:.1f}" width="{ww:.1f}" height="{bh:.1f}" rx="3" fill="{couleur}" data-tip="{NOMS_MOIS[int(mo)-1]}{"" if False else ""} {an} · {argent(v)}"><title>{c} : {argent(v)}</title></rect>')
-        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+18}" text-anchor="middle" fill="{th["axe"]}" font-size="11" font-family="{th["police"]}">{NOMS_MOIS[int(mo)-1]}</text>')
+        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+18}" text-anchor="middle" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">{NOMS_MOIS[int(mo)-1]}</text>')
         if v >= 13000:
-            out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="12" font-family="{th["police"]}">{k(v)}</text>')
+            out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["police"]}">{k(v)}</text>')
         if mo == "01":
-            out.append(f'<text x="{ml + i*bw + 2:.1f}" y="{h-6}" fill="{th["texte"]}" font-size="11.5" font-family="Cinzel, serif" letter-spacing="2">{an}</text>')
+            out.append(f'<text x="{ml + i*bw + 2:.1f}" y="{h-6}" fill="{th["texte"]}" font-size="13.5" font-family="Cinzel, serif" letter-spacing="2">{an}</text>')
     out.append("</svg>")
     legende = [("2026", th["accent"]), ("2025", th["muet"])]
     return "".join(out), legende
@@ -50,7 +50,7 @@ def revenus_empiles(th=SOMBRE, w=1200, h=420):
     out = [f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="Revenus projetés par source" data-chart="revenus">']
     for t in range(0, vmax + 1, 200000):
         y = mt + ph - ph * t / vmax
-        out.append(f'<g class="axe"><line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="{th["grille"]}"/><text x="{ml-8}" y="{y+4:.1f}" text-anchor="end" fill="{th["axe"]}" font-size="11.5" font-family="{th["police"]}">{k(t)}</text></g>')
+        out.append(f'<g class="axe"><line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="{th["grille"]}"/><text x="{ml-8}" y="{y+4:.1f}" text-anchor="end" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">{k(t)}</text></g>')
     for i, r in enumerate(rows):
         x = ml + i * bw + bw * 0.22; ww = bw * 0.56; cum = 0
         for j, (cle, nom) in enumerate(SOURCES):
@@ -61,7 +61,7 @@ def revenus_empiles(th=SOMBRE, w=1200, h=420):
             out.append(f'<rect class="bar" x="{x:.1f}" y="{y+1:.1f}" width="{ww:.1f}" height="{max(bh-2,0):.1f}" rx="{3 if j==len(SOURCES)-1 or cum+v==r["revenus"] else 0}" fill="{th["serie"][j]}" data-tip="{r["annee"]} · {nom} · {argent(v)}"><title>{r["annee"]} {nom} : {argent(v)}</title></rect>')
             cum += v
         out.append(f'<text x="{x+ww/2:.1f}" y="{mt + ph - ph*cum/vmax - 8:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13" font-family="Prata, serif">{argent(cum)}</text>')
-        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="12" font-family="Cinzel, serif" letter-spacing="2">{r["annee"]}</text>')
+        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Cinzel, serif" letter-spacing="2">{r["annee"]}</text>')
     out.append("</svg>")
     legende = [(nom, th["serie"][j]) for j, (cle, nom) in enumerate(SOURCES)]
     return "".join(out), legende
@@ -73,15 +73,15 @@ def ebitda_dette(th=SOMBRE, w=1200, h=360):
     out = [f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="Bénéfice d\'exploitation et service de la dette" data-chart="dette">']
     for t in range(0, vmax + 1, 100000):
         y = mt + ph - ph * t / vmax
-        out.append(f'<g class="axe"><line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="{th["grille"]}"/><text x="{ml-8}" y="{y+4:.1f}" text-anchor="end" fill="{th["axe"]}" font-size="11.5" font-family="{th["police"]}">{k(t)}</text></g>')
+        out.append(f'<g class="axe"><line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="{th["grille"]}"/><text x="{ml-8}" y="{y+4:.1f}" text-anchor="end" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">{k(t)}</text></g>')
     for i, r in enumerate(rows):
         x0 = ml + i * bw + bw * 0.16; ww = bw * 0.32
         for j, (v, c, nom) in enumerate([(r["ebitda"], c1, "Bénéfice d'exploitation"), (r["service_total"], c2, "Service de la dette")]):
             bh = ph * v / vmax; x = x0 + j * (ww + 4); y = mt + ph - bh
             out.append(f'<rect class="bar" x="{x:.1f}" y="{y:.1f}" width="{ww:.1f}" height="{bh:.1f}" rx="3" fill="{c}" data-tip="{r["annee"]} · {nom} · {argent(v)}"><title>{r["annee"]} {nom} : {argent(v)}</title></rect>')
-            out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="12" font-family="{th["police"]}">{k(v)}</text>')
-        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="12" font-family="Cinzel, serif" letter-spacing="2">{r["annee"]}</text>')
-        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-4}" text-anchor="middle" fill="{th["axe"]}" font-size="11" font-family="{th["police"]}">couverture {str(r["dscr"]).replace(".", ",")}×</text>')
+            out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["police"]}">{k(v)}</text>')
+        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Cinzel, serif" letter-spacing="2">{r["annee"]}</text>')
+        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-4}" text-anchor="middle" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">couverture {str(r["dscr"]).replace(".", ",")}×</text>')
     out.append("</svg>")
     return "".join(out), [("Bénéfice d'exploitation", c1), ("Service de la dette", c2)]
 

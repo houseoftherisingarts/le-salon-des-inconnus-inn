@@ -60,3 +60,6 @@ captures/verdict-salon/
 # Pai Sho : paquets Mac et captures de vérification (régénérables)
 apps/*/release/
 apps/pai-sho/captures/*.jpg
+
+__pycache__/
+.bdt-salt
