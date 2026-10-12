@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#0a0808">
+<title>__TITRE__</title>
+<link rel="icon" href="__LOGO__">
+<style>
+@font-face{font-family:'Cinzel';font-style:normal;font-weight:400 700;font-display:block;src:url(data:font/woff2;base64,__F_CINZEL__) format('woff2')}
+@font-face{font-family:'Lato';font-style:normal;font-weight:300;font-display:swap;src:url(data:font/woff2;base64,__F_LATO300__) format('woff2')}
+@font-face{font-family:'Lato';font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff2;base64,__F_LATO400__) format('woff2')}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:#0a0808;
+  color:#efe6d6;
+  font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+:root{
+  --or:#c9a227;
+  --or-clair:#e3c568;
+  --nuit:#0a0808;
+  --texte:#efe6d6;
+  --doux:rgba(239,230,214,.52);
+  --tres-doux:rgba(239,230,214,.34);
+  --sortie:cubic-bezier(.16,1,.3,1);
+}
+
+/* ---------- fonds ---------- */
+.fond{position:fixed;inset:0;pointer-events:none}
+.fond-braise{
+  background:
+    radial-gradient(130% 86% at 50% 2%, rgba(201,162,39,.10) 0%, rgba(201,162,39,.028) 38%, transparent 70%),
+    radial-gradient(90% 60% at 50% 108%, rgba(120,70,20,.16) 0%, transparent 60%),
+    #0a0808;
+}
+.fond-vignette{
+  background:radial-gradient(78% 62% at 50% 46%, transparent 42%, rgba(0,0,0,.62) 100%);
+}
+.fond-grain{
+  background-image:url("__GRAIN__");
+  background-size:180px 180px;
+  opacity:.05;
+  mix-blend-mode:overlay;
+}
+
+/* ---------- scene ---------- */
+.scene{
+  position:relative;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:44px 22px calc(30px + env(safe-area-inset-bottom));
+  transition:opacity .5s var(--sortie), transform .5s var(--sortie), filter .5s var(--sortie);
+}
+.scene.partir{opacity:0;transform:translateY(-10px) scale(1.012);filter:blur(6px)}
+
+.embleme{position:relative;display:flex;align-items:center;justify-content:center}
+.halo{
+  position:absolute;
+  width:min(640px,96vw);
+  height:min(640px,96vw);
+  border-radius:50%;
+  background:radial-gradient(closest-side, rgba(201,162,39,.24) 0%, rgba(201,162,39,.115) 26%, rgba(201,162,39,.045) 48%, rgba(201,162,39,.012) 68%, transparent 84%);
+  filter:blur(30px);
+  opacity:0;
+  animation:halo-allumer 2.6s var(--sortie) .12s forwards, halo-respirer 11s ease-in-out 3s infinite;
+}
+.crest{
+  position:relative;
+  display:block;
+  height:136px;
+  width:auto;
+  filter:drop-shadow(0 0 14px rgba(227,197,104,.4)) drop-shadow(0 0 40px rgba(201,162,39,.3)) drop-shadow(0 10px 30px rgba(0,0,0,.55));
+}
+
+.trait{
+  width:min(238px,62vw);
+  height:1px;
+  margin:26px 0 22px;
+  background:linear-gradient(90deg, transparent, rgba(201,162,39,.75) 18%, rgba(240,214,140,1) 50%, rgba(201,162,39,.75) 82%, transparent);
+  box-shadow:0 0 12px rgba(201,162,39,.45);
+  transform:scaleX(0);
+  transform-origin:50% 50%;
+  opacity:0;
+}
+
+.marque{
+  margin:0;
+  max-width:100%;
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:600;
+  font-size:clamp(14px,1.35vw,18px);
+  letter-spacing:.44em;
+  text-indent:.44em;
+  line-height:1.5;
+  text-align:center;
+  color:var(--texte);
+  text-shadow:0 1px 20px rgba(201,162,39,.16);
+}
+.surtitre{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  justify-content:center;
+  gap:.55em;
+  margin:14px 0 0;
+  max-width:100%;
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  text-align:center;
+  color:var(--or);
+}
+.surtitre span{display:block;text-indent:.3em}
+.logo-client{
+  display:block;
+  margin:18px auto 0;
+  width:clamp(150px,15vw,210px);
+  height:auto;
+  opacity:.92;
+  filter:drop-shadow(0 2px 12px rgba(0,0,0,.5));
+}
+body.compact .logo-client{width:130px;margin-top:12px}
+
+/* ---------- carte de verre ---------- */
+.carte{
+  position:relative;
+  width:min(422px,100%);
+  margin-top:38px;
+  padding:26px 28px 26px;
+  border-radius:15px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.062) 0%, rgba(255,255,255,.022) 46%, rgba(255,255,255,.008) 100%),
+    radial-gradient(120% 90% at 50% -18%, rgba(201,162,39,.10), transparent 62%),
+    rgba(0,0,0,.40);
+  -webkit-backdrop-filter:blur(22px) saturate(125%);
+  backdrop-filter:blur(22px) saturate(125%);
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 30px 80px -24px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.carte::before{
+  content:"";
+  position:absolute;
+  top:-1px;left:16%;right:16%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(201,162,39,.55), transparent);
+  pointer-events:none;
+}
+.carte.secouer{animation:secousse .42s cubic-bezier(.36,.07,.19,.97)}
+
+.libelle{
+  display:block;
+  font-size:10.5px;
+  font-weight:400;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--tres-doux);
+  margin-bottom:11px;
+}
+.champ{
+  position:relative;
+  border-radius:12px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.13);
+  transition:border-color .35s var(--sortie), box-shadow .35s var(--sortie), background-color .35s var(--sortie);
+}
+.champ:focus-within{
+  border-color:rgba(201,162,39,.6);
+  background:rgba(255,255,255,.065);
+  box-shadow:0 0 0 1px rgba(201,162,39,.22), 0 6px 26px -12px rgba(201,162,39,.55), inset 0 0 26px -16px rgba(227,197,104,.7);
+}
+.champ input{
+  width:100%;
+  height:50px;
+  padding:0 16px;
+  border:0;
+  background:transparent;
+  color:var(--texte);
+  font-family:inherit;
+  font-size:15px;
+  font-weight:400;
+  letter-spacing:.06em;
+  outline:none;
+  border-radius:12px;
+}
+.champ input::placeholder{color:rgba(239,230,214,.3);letter-spacing:.04em}
+
+.entrer{
+  width:100%;
+  height:48px;
+  margin-top:14px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(180deg,#d9b64e 0%,#c9a227 48%,#a9861c 100%);
+  color:#17120a;
+  font-family:'Lato',sans-serif;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-indent:.22em;
+  text-transform:uppercase;
+  cursor:pointer;
+  box-shadow:0 10px 24px -16px rgba(201,162,39,.85), inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(0,0,0,.18);
+  transition:transform .3s var(--sortie), box-shadow .3s var(--sortie), filter .3s var(--sortie);
+}
+.entrer:hover{transform:translateY(-1px);box-shadow:0 16px 32px -16px rgba(201,162,39,.95), inset 0 1px 0 rgba(255,255,255,.4);filter:brightness(1.06)}
+.entrer:active{transform:translateY(0);filter:brightness(.96)}
+.entrer:focus-visible{outline:2px solid rgba(227,197,104,.9);outline-offset:3px}
+.entrer[disabled]{opacity:.55;cursor:default;transform:none}
+
+.message{
+  max-width:100%;
+  min-height:18px;
+  margin:15px 0 0;
+  font-size:12.5px;
+  font-weight:300;
+  letter-spacing:.03em;
+  text-align:center;
+  color:rgba(226,138,110,.95);
+  opacity:0;
+  transition:opacity .3s var(--sortie);
+}
+.message.visible{opacity:1}
+.message.calme{color:var(--doux)}
+
+.note{
+  margin:22px 0 0;
+  max-width:100%;
+  font-size:11px;
+  font-weight:300;
+  letter-spacing:.075em;
+  text-align:center;
+  color:var(--tres-doux);
+}
+.note b{font-weight:400;color:rgba(201,162,39,.78)}
+
+/* ---------- cascade d'entree ---------- */
+.arrive{opacity:0;transform:translateY(16px);filter:blur(7px)}
+.pret .arrive{animation:arriver 1.15s var(--sortie) forwards}
+.pret .a1{animation-delay:.06s}
+.pret .a2{animation-delay:.34s}
+.pret .a3{animation-delay:.5s}
+.pret .a4{animation-delay:.72s}
+.pret .a5{animation-delay:.94s}
+.pret .trait{animation:tracer 1.25s var(--sortie) .46s forwards}
+
+@keyframes arriver{to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes tracer{0%{opacity:0;transform:scaleX(0)}18%{opacity:1}100%{opacity:1;transform:scaleX(1)}}
+@keyframes halo-allumer{to{opacity:1}}
+@keyframes halo-respirer{0%,100%{opacity:.95;transform:scale(1)}50%{opacity:.62;transform:scale(1.055)}}
+@keyframes secousse{
+  0%{transform:translateX(0)}
+  16%{transform:translateX(-6px)}
+  34%{transform:translateX(5px)}
+  52%{transform:translateX(-3px)}
+  72%{transform:translateX(2px)}
+  100%{transform:translateX(0)}
+}
+
+/* ---------- compact (back-office) ---------- */
+body.compact .crest{height:88px}
+body.compact .trait{margin:20px 0 16px;width:min(170px,52vw)}
+body.compact .marque{font-size:clamp(12px,1.05vw,14px);letter-spacing:.4em;text-indent:.4em}
+body.compact .surtitre{margin-top:11px;font-size:10px}
+body.compact .carte{margin-top:28px;width:min(378px,100%);padding:22px 24px 22px}
+body.compact .halo{width:min(460px,88vw);height:min(460px,88vw)}
+body.compact .note{margin-top:18px}
+
+/* ---------- mobile ---------- */
+@media (max-width:560px){
+  .crest{height:112px}
+  .marque{font-size:12.5px;letter-spacing:.34em;text-indent:.34em}
+  .surtitre{font-size:10px;letter-spacing:.24em;text-indent:.24em}
+  .carte{margin-top:30px;padding:22px 20px 22px}
+  .trait{margin:22px 0 18px}
+  .note{margin-top:18px;font-size:10.5px}
+}
+@media (max-width:430px){
+  .marque{font-size:11.5px;letter-spacing:.26em;text-indent:.26em}
+  .surtitre{flex-direction:column;gap:.4em;font-size:9.5px;letter-spacing:.2em}
+  .surtitre .point{display:none}
+  .note{font-size:10px;letter-spacing:.04em;line-height:1.65}
+}
+@media (max-height:620px){
+  .crest{height:88px}
+  .carte{margin-top:24px}
+  .trait{margin:18px 0 14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .arrive,.pret .arrive{animation:none!important;opacity:1;transform:none;filter:none}
+  .trait,.pret .trait{animation:none!important;opacity:1;transform:scaleX(1)}
+  .halo{animation:none!important;opacity:1}
+  .carte.secouer{animation:none!important}
+  .scene{transition:opacity .25s linear}
+}
+</style>
+</head>
+<body class="__CLASSE__">
+<div class="fond fond-braise"></div>
+<div class="fond fond-vignette"></div>
+<div class="fond fond-grain"></div>
+
+<main class="scene" id="scene">
+  <div class="embleme arrive a1">
+    <div class="halo" aria-hidden="true"></div>
+    <img class="crest" src="__LOGO__" alt="Emblème du Salon des Inconnus" width="90" height="256">
+  </div>
+
+  <div class="trait" aria-hidden="true"></div>
+
+  <h1 class="marque arrive a2">LE SALON DES INCONNUS</h1>
+  <p class="surtitre arrive a3"><span>__SUR_A__</span><span class="point" aria-hidden="true">·</span><span>__SUR_B__</span></p>
+  <img class="logo-client arrive a3" src="__LOGO_BDT__" alt="Construction BDT">
+
+  <form class="carte arrive a4" id="carte" autocomplete="off" novalidate>
+    <label class="libelle" for="mdp">__LIBELLE__</label>
+    <div class="champ">
+      <input id="mdp" name="mdp" type="password" placeholder="Mot de passe"
+             autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false">
+    </div>
+    <button class="entrer" type="submit" id="entrer">Entrer</button>
+  </form>
+
+  <p class="message" id="message" role="status" aria-live="polite"></p>
+
+  <p class="note arrive a5">Préparé par <b>Vexel</b>, le studio web du Salon des Inconnus</p>
+</main>
+
+<noscript>
+  <p style="text-align:center;color:#efe6d6;font-family:sans-serif;padding:24px">
+    Cette page a besoin de JavaScript pour ouvrir la démonstration. Merci de l'activer, puis de recharger.
+  </p>
+</noscript>
+
+<script src="__PAYLOAD__"></script>
+<script>
+(function(){
+  "use strict";
+
+  var AUTO = __AUTO__;                 /* le back-office tente l'ouverture seul */
+  var CLE_SESSION = "bdt_k";           /* cle derivee, en hexadecimal */
+  var CLE_SEL     = "bdt_s";           /* sel qui a servi a la deriver */
+  var CLE_PASSE   = "bdt_p";           /* passphrase canonique, secours si le sel differe */
+  var ITERATIONS  = 200000;
+
+  var scene   = document.getElementById("scene");
+  var carte   = document.getElementById("carte");
+  var champ   = document.getElementById("mdp");
+  var bouton  = document.getElementById("entrer");
+  var message = document.getElementById("message");
+  var charge  = window.__BDT_PAYLOAD__ || null;
+  var occupe  = false;
+
+  requestAnimationFrame(function(){ document.body.classList.add("pret"); });
+
+  /* ---------- utilitaires ---------- */
+  function normaliser(v){ return String(v).replace(/\s+/g," ").trim().toLowerCase(); }
+
+  function hexVersOctets(hex){
+    var n = hex.length / 2, u = new Uint8Array(n);
+    for (var i = 0; i < n; i++) u[i] = parseInt(hex.substr(i*2, 2), 16);
+    return u;
+  }
+  function octetsVersHex(u){
+    var s = "";
+    for (var i = 0; i < u.length; i++) s += ("0" + u[i].toString(16)).slice(-2);
+    return s;
+  }
+  function b64VersOctets(b64){
+    var brut = atob(b64), u = new Uint8Array(brut.length);
+    for (var i = 0; i < brut.length; i++) u[i] = brut.charCodeAt(i);
+    return u;
+  }
+
+  function deriver(passe, selHex){
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(passe), "PBKDF2", false, ["deriveBits"])
+      .then(function(base){
+        return crypto.subtle.deriveBits(
+          {name:"PBKDF2", salt: hexVersOctets(selHex), iterations: ITERATIONS, hash:"SHA-256"},
+          base, 256);
+      })
+      .then(function(bits){ return new Uint8Array(bits); });
+  }
+
+  function ouvrir(octetsCle){
+    return crypto.subtle.importKey("raw", octetsCle, {name:"AES-GCM"}, false, ["decrypt"])
+      .then(function(cle){
+        return crypto.subtle.decrypt(
+          {name:"AES-GCM", iv: hexVersOctets(charge.iv)}, cle, b64VersOctets(charge.ct));
+      })
+      .then(function(clair){ return new TextDecoder().decode(clair); });
+  }
+
+  function garder(octetsCle, passe){
+    try{
+      sessionStorage.setItem(CLE_SESSION, octetsVersHex(octetsCle));
+      sessionStorage.setItem(CLE_SEL, charge.salt);
+      if (passe) sessionStorage.setItem(CLE_PASSE, passe);
+    }catch(e){}
+  }
+
+  function dire(texte, calme){
+    message.textContent = texte;
+    message.classList.toggle("calme", !!calme);
+    message.classList.toggle("visible", !!texte);
+  }
+
+  function refuser(){
+    dire("Ce n'est pas le bon mot de passe.");
+    carte.classList.remove("secouer");
+    void carte.offsetWidth;
+    carte.classList.add("secouer");
+    champ.value = "";
+    champ.focus();
+  }
+
+  function afficherPage(html){
+    scene.classList.add("partir");
+    setTimeout(function(){
+      document.open();
+      document.write(html);
+      document.close();
+    }, 520);
+  }
+
+  /* ---------- soumission ---------- */
+  carte.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if (occupe) return;
+
+    if (!charge){
+      dire("La démonstration n'est pas disponible pour le moment.");
+      return;
+    }
+    var passe = normaliser(champ.value);
+    if (!passe){
+      dire("Entrez le mot de passe pour continuer.", true);
+      champ.focus();
+      return;
+    }
+
+    occupe = true;
+    bouton.disabled = true;
+    dire("Ouverture…", true);
+
+    deriver(passe, charge.salt)
+      .then(function(octetsCle){
+        return ouvrir(octetsCle).then(function(html){
+          garder(octetsCle, passe);
+          afficherPage(html);
+        });
+      })
+      .catch(function(){
+        occupe = false;
+        bouton.disabled = false;
+        refuser();
+      });
+  });
+
+  champ.addEventListener("input", function(){
+    if (message.classList.contains("visible") && !occupe) dire("");
+  });
+
+  /* ---------- ouverture automatique (back-office) ---------- */
+  function tenterSession(){
+    if (!charge) return Promise.reject();
+
+    var cleGardee = null, selGarde = null, passeGardee = null;
+    try{
+      cleGardee   = sessionStorage.getItem(CLE_SESSION);
+      selGarde    = sessionStorage.getItem(CLE_SEL);
+      passeGardee = sessionStorage.getItem(CLE_PASSE);
+    }catch(e){}
+
+    if (cleGardee && (!selGarde || selGarde === charge.salt)){
+      return ouvrir(hexVersOctets(cleGardee));
+    }
+    if (passeGardee){
+      return deriver(passeGardee, charge.salt).then(function(octetsCle){
+        return ouvrir(octetsCle).then(function(html){
+          garder(octetsCle, passeGardee);
+          return html;
+        });
+      });
+    }
+    return Promise.reject();
+  }
+
+  if (AUTO){
+    var aUneSession = false;
+    try{ aUneSession = !!(sessionStorage.getItem(CLE_SESSION) || sessionStorage.getItem(CLE_PASSE)); }catch(e){}
+    if (aUneSession){
+      occupe = true;
+      bouton.disabled = true;
+      dire("Ouverture de la session…", true);
+      tenterSession().then(function(html){
+        afficherPage(html);
+      }).catch(function(){
+        occupe = false;
+        bouton.disabled = false;
+        dire("");
+        champ.focus();
+      });
+    } else {
+      setTimeout(function(){ champ.focus(); }, 1100);
+    }
+  } else {
+    setTimeout(function(){ champ.focus(); }, 1250);
+  }
+})();
+</script>
+</body>
+</html>
