@@ -7,7 +7,10 @@ RACINE = PLAN.parent
 DIST = PLAN / "dist"
 PUB = RACINE / "public" / "plan-spa"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-MDP = "Mini-Spa 2027"
+# Le mot de passe ne vit pas dans le dépôt : variable PLAN_SPA_MDP ou fichier plan-spa/.mdp (ignoré par git).
+MDP = os.environ.get("PLAN_SPA_MDP") or ((PLAN / ".mdp").read_text().strip() if (PLAN / ".mdp").exists() else None)
+if not MDP:
+    sys.exit("Mot de passe absent : exporte PLAN_SPA_MDP ou écris-le dans plan-spa/.mdp")
 
 import page, pdf
 

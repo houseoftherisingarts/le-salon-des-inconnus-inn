@@ -63,3 +63,4 @@ apps/pai-sho/captures/*.jpg
 
 __pycache__/
 .bdt-salt
+plan-spa/.mdp
