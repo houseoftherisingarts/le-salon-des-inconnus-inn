@@ -65,7 +65,7 @@ const smoothstep = (a: number, b: number, x: number) => {
 // even when scroll is still, so the world breathes; scroll adds extra
 // forward momentum via uProgress.
 // ─────────────────────────────────────────────────────────────────────────
-function CosmicTunnel({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
+export function CosmicTunnel({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
     const matRef = useRef<THREE.ShaderMaterial>(null);
     const { size } = useThree();
     const uniforms = useMemo(() => ({
