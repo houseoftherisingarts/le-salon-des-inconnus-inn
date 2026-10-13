@@ -55,7 +55,7 @@ const SuperProfilePage  = lazy(() => import('./components/SuperProfilePage').the
 // /highstest: premium cinematic intro to the Creator Studio. Test bed for
 // the "in your face $10k website" feel. Lazy-loaded; pulls three.js + Lenis.
 const HighsTestPage     = lazy(() => import('./components/HighsTestPage').then(m => ({ default: m.HighsTestPage })));
-const BoutiquePage      = lazy(() => import('./components/boutique/BoutiquePage').then(m => ({ default: m.BoutiquePage })));
+const AppStore          = lazy(() => import('./components/appstore/AppStore').then(m => ({ default: m.AppStore })));
 
 // Suspense fallback shown briefly while a page chunk loads on navigation.
 const PageLoader: React.FC = () => (
@@ -234,7 +234,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   MECENE:         '/mecene',
   CAFE:           '/cafe',
   CAFE_JEUX:      '/cafe-jeux',
-  BOUTIQUE:       '/boutique',
+  BOUTIQUE:       '/appstore',
   COMPTE:         '/compte',
   SUPER_PROFILE:  '',
   HIGHS_TEST:     '/highstest',
@@ -292,6 +292,8 @@ const pathToView = (pathname: string): ViewState => {
   if (PATH_VIEWS[normalized]) return PATH_VIEWS[normalized];
   if (normalized === '/tools' || normalized === '/outils') return 'DOWNLOAD';
   if (normalized === '/coffre') return 'COFFRE';
+  // L'ancienne adresse de l'App Store (13 octobre 2026).
+  if (normalized === '/boutique') return 'BOUTIQUE';
   if (normalized === '/profil' || normalized === '/messages') return 'COMPTE';
   // Ancienne adresse du Creator Studio sur inconnus-salon (liens de courriel déjà envoyés).
   if (normalized === '/createur') return 'CREATOR_STUDIO';
@@ -1151,14 +1153,15 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 14b: /boutique, l'App Store du Creator Studio (même boutique que
-            vexelwebstudio.com/boutique, aux thèmes du studio). */}
+        {/* VIEW 14b: /appstore, l'App Store du Creator Studio (le même que
+            vexelwebstudio.com/appstore; components/appstore/ est recopié de vexel-site). */}
         {currentView === 'BOUTIQUE' && (
-          <BoutiquePage
-            currentUser={currentUser ? { uid: currentUser.uid } : null}
-            onRequestSignIn={() => setCreatorAuthOpen(true)}
-            onEnterStudio={() => handleNavigation('CREATOR_STUDIO')}
-            onBack={() => handleNavigation('INN')}
+          <AppStore
+            marque="creator"
+            connecte={!!currentUser}
+            seConnecter={() => setCreatorAuthOpen(true)}
+            ouvrirStudio={() => handleNavigation('CREATOR_STUDIO')}
+            accueil={{ libelle: 'Le Salon des Inconnus', aller: () => handleNavigation('INN') }}
           />
         )}
 
