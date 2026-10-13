@@ -56,7 +56,7 @@ AVANT_APRES = dict(
     items=[
         ("hiver", "Le bain à remous actuel, hiver 2026", "Deux bains de cèdre sous pavillon, bain froid de pierre, passerelles", "Phase 1"),
         ("ete", "Le jardin derrière la maison, été 2026", "Le parcours thermal en été, hamacs et chaises longues", "Phases 1 et 3"),
-        ("bain", "Une salle de bain partagée du manoir", "La même pièce façon spa : ardoise, cèdre, douche à l'italienne", "Phase 2"),
+        ("bain", "Une salle de bain partagée du manoir", "La même pièce façon spa : douche vitrée, carrelage vert, murs blancs", "Phase 2"),
         ("saunas", "La clairière de la yourte", "Le sauna finlandais et le sauna vapeur à l'eucalyptus", "Phase 1"),
         ("jardins", "Les jardins et les hémérocalles", "Le pavillon quatre saisons et les aires de détente", "Phase 3"),
         ("maison", "La façade, automne 2026", "Vingt fenêtres de bois neuves, la maison éclairée à l'heure bleue", "Phase 2"),
@@ -69,7 +69,7 @@ PHASES_TEXTE = {
         plus_value="Le domaine passe d'auberge à destination. L'accès aux bains se vend 250 jours par année, l'hiver devient une saison pleine, et le prix des chambres monte de 184 $ à 235 $ la nuit en trois ans parce que l'accès au parcours thermal est compris.",
     ),
     2: dict(
-        intro="La maison est la phase qui tient la promesse. Un client qui sort d'un bain de cèdre à 40 °C et qui remonte dans une salle de bain d'un autre âge ne revient pas; le même client, dans une pièce d'ardoise et de cèdre avec une douche à l'italienne, publie la photo. Les vingt fenêtres de bois sur mesure rendent au manoir son dessin d'origine, coupent la facture de chauffage et mettent l'intérieur au niveau de ce que le domaine offre dehors.",
+        intro="La maison est la phase qui tient la promesse. Un client qui sort d'un bain de cèdre à 40 °C et qui remonte dans une salle de bain d'un autre âge ne revient pas; le même client, dans une pièce blanche et calme, avec une douche vitrée et un carrelage neuf, publie la photo. Les vingt fenêtres de bois sur mesure rendent au manoir son dessin d'origine, coupent la facture de chauffage et mettent l'intérieur au niveau de ce que le domaine offre dehors.",
         plus_value="Chaque dollar de cette phase entre dans la valeur du bâtiment, évaluée autour de 750 000 $ aujourd'hui. Des salles de bain et des fenêtres neuves sur un manoir de 1900 se retrouvent dans le prix de l'immeuble, dans la note des avis et dans le tarif des chambres.",
     ),
     3: dict(
