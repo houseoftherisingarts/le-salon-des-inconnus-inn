@@ -14,7 +14,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CosmicTunnel } from '../HighsTestPage';
 import {
-  BOUTIQUE, COURRIEL, CREATOR_STUDIO, RAYONS, formatPrix, produitsDuRayon,
+  ADHESIONS, ADHESION_MIN, BOUTIQUE, COURRIEL, CREATOR_STUDIO, RAYONS, formatPrix, produitsDuRayon,
   type Produit, type Rayon, type RayonId,
 } from './donnees';
 
@@ -266,6 +266,16 @@ function SectionRayon({ rayon, currentUser, onRequestSignIn, onEnterStudio }: {
             ))}
           </h2>
           <p className={`mt-6 max-w-[46ch] leading-relaxed ${th.texte}`}>{rayon.intro}</p>
+          {rayon.id === 'abonnement' && (
+            <ul aria-label="Les paliers de membre du Creator Studio" className="mt-7 flex flex-wrap gap-2">
+              {ADHESIONS.map((a) => (
+                <li key={a.id} className="flex min-w-[7.5rem] flex-col gap-0.5 rounded-[12px] border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md">
+                  <span className="font-cinzel text-[12px] font-bold uppercase tracking-[0.18em] text-purple-300">{a.nom}</span>
+                  <span className="font-lato text-[14px] font-bold tabular-nums text-white">{a.prix ? `${formatPrix(a.prix)} / mois` : 'le réseau'}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           {rayon.id === 'payant' && (
             <div role="group" aria-label="Façon de payer" className="mt-8 inline-flex gap-1 rounded-full border border-[#c8aa6e]/45 bg-[#091428]/70 p-1">
               {(['unique', 'mensuel'] as const).map((m) => (
@@ -360,7 +370,12 @@ function Prix({ produit: p, rayon, mode }: { produit: Produit; rayon: Rayon; mod
   const base = 'font-lato font-bold tabular-nums';
   const clair = rayon.id === 'payant' ? 'text-[#f0e6d2]' : 'text-white';
   if (rayon.id === 'gratuit') return <span className={`${base} text-[17px] ${clair}`}>Gratuit</span>;
-  if (rayon.id === 'abonnement') return <span className={`${base} text-[17px] ${clair}`}>Inclus</span>;
+  if (rayon.id === 'abonnement')
+    return (
+      <span className={`${base} text-[17px] ${clair}`}>
+        Inclus <span className="text-[13px] font-normal text-white/60">dès {formatPrix(ADHESION_MIN)} par mois</span>
+      </span>
+    );
   const montant = p.prix?.[mode];
   if (montant == null) return <span className={`${base} text-[13px] text-[#cdbe91]/75`}>Prix annoncé à la sortie</span>;
   return (

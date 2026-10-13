@@ -56,7 +56,7 @@ export const RAYONS: Rayon[] = [
     etiquette: 'Rayon 01 · Gratuit avec un compte',
     titre: ['Ouvert à tous,', 'sans carte'],
     intro:
-      'Ces programmes ne vous demandent qu’un compte, que vous ouvrez en une minute avec votre adresse Google ou votre courriel, et ils restent à vous sans frais aussi longtemps que vous voudrez vous en servir.',
+      'Ces programmes ne vous demandent qu’un compte, le même compte gratuit qui vous ouvre le réseau du Creator Studio, et ils restent à vous sans frais aussi longtemps que vous voudrez vous en servir.',
   },
   {
     id: 'abonnement',
@@ -64,7 +64,7 @@ export const RAYONS: Rayon[] = [
     etiquette: 'Rayon 02 · Inclus avec le Creator Studio',
     titre: ['Compris dans', 'l’abonnement'],
     intro:
-      'Les outils de ce rayon s’ouvrent avec l’abonnement mensuel du Creator Studio, et ce seul abonnement les donne tous, y compris ceux qui sortiront de l’atelier au fil des mois.',
+      'Le réseau du Creator Studio reste gratuit pour tout le monde, et les outils de ce rayon s’ouvrent avec l’un de ses trois abonnements de membre, qui les donnent tous, y compris ceux qui sortiront de l’atelier au fil des mois.',
   },
   {
     id: 'payant',
@@ -75,6 +75,18 @@ export const RAYONS: Rayon[] = [
       'Chacun de ces programmes s’achète une fois pour toutes ou se paie au mois, selon ce qui convient à votre entreprise, et chaque fiche dit franchement où il en est, déjà en service chez un client ou encore à l’établi.',
   },
 ];
+
+/* Les paliers de membre du Creator Studio (ArtistHub.tsx, onglet STORE) : le gratuit ouvre le
+   réseau et le rayon 01, chacun des trois payants ouvre aussi le rayon 02. */
+export type Adhesion = { id: string; nom: string; prix: number };
+export const ADHESIONS: Adhesion[] = [
+  { id: 'gratuit', nom: 'Gratuit', prix: 0 },
+  { id: 'initiate', nom: 'Initiate', prix: 4 },
+  { id: 'artisan', nom: 'Artisan', prix: 18 },
+  { id: 'maestro', nom: 'Maestro', prix: 48 },
+];
+/** le premier palier payant, celui qui ouvre le rayon 02 */
+export const ADHESION_MIN = Math.min(...ADHESIONS.filter((a) => a.prix > 0).map((a) => a.prix));
 
 export const PRODUITS: Produit[] = [
   {
@@ -129,6 +141,18 @@ export const PRODUITS: Produit[] = [
       'La distribution et ses heures d’appel, l’équipe, les accessoires, le découpage des scènes et des plans et la météo du lieu de tournage tiennent sur une feuille que vous partagez par un lien à tout le plateau.',
     etat: 'Dans le Creator Studio',
     lien: CREATOR_STUDIO,
+  },
+  {
+    /* l'outil bâti pour One Grand Film dans Google AI Studio (« Vexel - OGF Timeline ») */
+    id: 'trame',
+    rayon: 'abonnement',
+    nom: 'La Trame',
+    ligne: 'Votre film, scène par scène, sur la ligne du temps',
+    texte:
+      'Chaque personnage a sa rangée et chaque scène sa carte, avec sa durée, son émotion et son action, si bien que vous déplacez les scènes d’un acte à l’autre, gardez les autres en réserve sur un banc à part et voyez la durée du film changer à mesure.',
+    etat: 'À l’établi',
+    image: `${IMG}/studio/app-trame.webp`,
+    alt: 'Le tableau de La Trame, une rangée par personnage et une carte par scène',
   },
   {
     id: 'guilde',
