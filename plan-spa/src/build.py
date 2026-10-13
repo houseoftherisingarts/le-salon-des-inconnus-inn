@@ -7,10 +7,6 @@ RACINE = PLAN.parent
 DIST = PLAN / "dist"
 PUB = RACINE / "public" / "plan-spa"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-# Le mot de passe ne vit pas dans le dépôt : variable PLAN_SPA_MDP ou fichier plan-spa/.mdp (ignoré par git).
-MDP = os.environ.get("PLAN_SPA_MDP") or ((PLAN / ".mdp").read_text().strip() if (PLAN / ".mdp").exists() else None)
-if not MDP:
-    sys.exit("Mot de passe absent : exporte PLAN_SPA_MDP ou écris-le dans plan-spa/.mdp")
 
 import page, pdf
 
@@ -34,27 +30,16 @@ def main():
                         "--virtual-time-budget=8000", f"--print-to-pdf={out}", (DIST / "pdf.html").as_uri()], capture_output=True, text=True)
     print("pdf", out.exists(), out.stat().st_size if out.exists() else r.stderr[-400:])
 
-    # Porte + chiffrement
-    r = subprocess.run([sys.executable, str(SRC / "_encrypt.py"), str(DIST / "index.html"), str(PUB / "plan.enc.js"), "-p", MDP], capture_output=True, text=True)
-    print("enc", r.returncode, r.stdout.strip()[-200:], r.stderr.strip()[-300:])
-    tpl = (SRC / "_gate-tpl.html").read_text(encoding="utf-8")
-    b64 = lambda p, mime: f"data:{mime};base64," + base64.b64encode(p.read_bytes()).decode()
-    grain = "data:image/svg+xml;base64," + base64.b64encode(b'<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(#n)" opacity=".5"/></svg>').decode()
-    lignes = [l for l in tpl.splitlines(True) if "logo-client" not in l]
-    tpl = "".join(lignes)
-    for k, v in {"__TITRE__": "Le Mini-Spa des Inconnus · Plan d'affaires", "__CLASSE__": "spa", "__SUR_A__": "Plan d'affaires",
-                 "__SUR_B__": "Le Mini-Spa des Inconnus", "__LIBELLE__": "Accès réservé", "__PAYLOAD__": "plan.enc.js", "__AUTO__": "false",
-                 "__F_CINZEL__": base64.b64encode((SRC / "fonts" / "cinzel.woff2").read_bytes()).decode(),
-                 "__LOGO__": b64(SRC / "_crest.png", "image/png"), "__GRAIN__": grain}.items():
-        tpl = tpl.replace(k, v)
-    reste = [k for k in ("__TITRE__","__CLASSE__","__SUR_A__","__SUR_B__","__LIBELLE__","__PAYLOAD__","__AUTO__","__F_CINZEL__","__LOGO__","__LOGO_BDT__","__GRAIN__") if k in tpl]
-    (PUB / "index.html").write_text(tpl, encoding="utf-8")
+    # Page servie telle quelle, sans mot de passe (ordre d'Alex du 13 octobre 2026); noindex + robots suffisent.
+    (PUB / "index.html").write_text(page.page(), encoding="utf-8")
+    for vieux in ("plan.enc.js", ".bdt-salt"):
+        (PUB / vieux).unlink(missing_ok=True)
     shutil.copy(SRC / "style.css", PUB / "style.css")
     for d in ("fonts", "media"):
         if (PUB / d).exists(): shutil.rmtree(PUB / d)
     shutil.copytree(SRC / "fonts", PUB / "fonts")
     shutil.copytree(PLAN / "media", PUB / "media")
-    print("porte ok, placeholders restants:", reste)
+    print("public ok", PUB / "index.html")
 
 if __name__ == "__main__":
     main()
