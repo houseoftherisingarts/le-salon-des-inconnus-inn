@@ -55,6 +55,7 @@ const SuperProfilePage  = lazy(() => import('./components/SuperProfilePage').the
 // /highstest: premium cinematic intro to the Creator Studio. Test bed for
 // the "in your face $10k website" feel. Lazy-loaded; pulls three.js + Lenis.
 const HighsTestPage     = lazy(() => import('./components/HighsTestPage').then(m => ({ default: m.HighsTestPage })));
+const BoutiquePage      = lazy(() => import('./components/boutique/BoutiquePage').then(m => ({ default: m.BoutiquePage })));
 
 // Suspense fallback shown briefly while a page chunk loads on navigation.
 const PageLoader: React.FC = () => (
@@ -194,7 +195,7 @@ const useIdlePreloader = (assets: string[], shouldStart: boolean) => {
 type ViewState = 'INN' | 'INN_TEST2' | 'INN_TEST3' | 'INN_RESERVE_CINE' | 'MASSOTHERAPY' | 'HOSTS' | 'GUIDE' | 'PETITE_MONNAIE' | 'KITCHEN' | 'EVENTS' | 'CEILIDH' | 'WWOOFING' | 'PPS' | 'COMMUNITY' | 'DONATION' | 'PENSEES' | 'BLOG' | 'INVITATION' | 'ENTREPRISES' | 'FORFAITS' | 'CATALOGUE' | 'CAMPING'
               | 'MY_PROFILE' | 'PUBLIC_PROFILE' | 'MESSAGING' | 'ADMIN' | 'CREATOR_STUDIO' | 'DOWNLOAD' | 'COFFRE'
               | 'SUPER_PROFILE' | 'HIGHS_TEST' | 'CALLSHEET_PUBLIC'
-              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE' | 'CAFE_JEUX';
+              | 'CENTRE_ARTS' | 'MECENE' | 'CAFE' | 'COMPTE' | 'CAFE_JEUX' | 'BOUTIQUE';
 
 // Note: SUPER_PROFILE intentionally has no fixed path. Its path is the
 // dynamic slug. We list it here for completeness but handleNavigation never
@@ -233,6 +234,7 @@ const VIEW_PATHS: Record<ViewState, string> = {
   MECENE:         '/mecene',
   CAFE:           '/cafe',
   CAFE_JEUX:      '/cafe-jeux',
+  BOUTIQUE:       '/boutique',
   COMPTE:         '/compte',
   SUPER_PROFILE:  '',
   HIGHS_TEST:     '/highstest',
@@ -365,7 +367,7 @@ const App: React.FC = () => {
   // échouent parfois (ERR_BLOCKED_BY_ORB) avant de laisser voir le profil
   // ou la page « introuvable » en dessous.
   const isArtsView = currentView in ARTS_NODE_BY_VIEW;
-  const isStandalonePage = currentView === 'COMPTE' || currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE' || isArtsView;
+  const isStandalonePage = currentView === 'COMPTE' || currentView === 'BOUTIQUE' || currentView === 'COFFRE' || currentView === 'DOWNLOAD' || currentView === 'SUPER_PROFILE' || isArtsView;
 
   // Trigger Background Loading when initial loading finishes
   useIdlePreloader(DEFERRED_ASSETS, !isLoading && !isStandalonePage);
@@ -1144,6 +1146,17 @@ const App: React.FC = () => {
             using brand palette + 3D particle field + scroll-driven panels. */}
         {currentView === 'HIGHS_TEST' && (
           <HighsTestPage
+            onEnterStudio={() => handleNavigation('CREATOR_STUDIO')}
+            onBack={() => handleNavigation('INN')}
+          />
+        )}
+
+        {/* VIEW 14b: /boutique, l'App Store du Creator Studio (même boutique que
+            vexelwebstudio.com/boutique, aux thèmes du studio). */}
+        {currentView === 'BOUTIQUE' && (
+          <BoutiquePage
+            currentUser={currentUser ? { uid: currentUser.uid } : null}
+            onRequestSignIn={() => setCreatorAuthOpen(true)}
             onEnterStudio={() => handleNavigation('CREATOR_STUDIO')}
             onBack={() => handleNavigation('INN')}
           />

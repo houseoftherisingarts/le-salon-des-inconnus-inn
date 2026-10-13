@@ -31,7 +31,7 @@ export const RESERVED_SLUGS: ReadonlySet<string> = new Set([
     'alex', 'alextstlaurent', 'salondesinconnus', 'lesalondesinconnus',
     // Platform terms
     'about', 'contact', 'terms', 'privacy', 'help', 'support', 'blog',
-    'store', 'shop', 'search', 'home', 'index', 'app', 'www', 'mail',
+    'store', 'shop', 'boutique', 'search', 'home', 'index', 'app', 'www', 'mail',
     'maestro', 'artiste', 'artist', 'tier',
 ]);
 

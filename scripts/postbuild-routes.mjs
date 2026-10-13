@@ -89,6 +89,13 @@ const ROUTES = [
     image: 'https://www.lesalondesinconnus.com/media/cafe-jeux/og-cafe-jeux.jpg',
     url: 'https://www.lesalondesinconnus.com/cafe-jeux',
   },
+  {
+    path: "boutique",
+    title: "La boutique du Creator Studio | Le Salon des Inconnus",
+    description: "Les jeux, les outils et les programmes du studio en trois rayons : gratuits avec un compte, inclus avec l’abonnement du Creator Studio, ou à l’achat, une fois ou au mois.",
+    image: 'https://www.lesalondesinconnus.com/media/cafe-jeux/og-cafe-jeux.jpg',
+    url: 'https://www.lesalondesinconnus.com/boutique',
+  },
 ];
 
 const src = readFileSync(join(root, 'dist/index.html'), 'utf8');

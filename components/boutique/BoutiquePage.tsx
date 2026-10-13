@@ -88,15 +88,16 @@ const THEMES: Record<RayonId, {
 const PILULE = 'inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 font-lato text-[14px] font-bold transition-[opacity,transform] duration-150 hover:opacity-90 active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
 
 export function BoutiquePage({ currentUser, onRequestSignIn, onEnterStudio, onBack }: BoutiquePageProps) {
+  /* la racine de l'app est figée à la hauteur de l'écran : la page défile dans son propre conteneur */
+  const defileur = useRef<HTMLDivElement>(null);
   useEffect(() => {
     document.title = `${BOUTIQUE.titre} · Creator Studio | Le Salon des Inconnus`;
-    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
+    <div ref={defileur} data-defileur="" className="h-screen overflow-y-auto overscroll-contain bg-[#050505] text-white [-webkit-overflow-scrolling:touch]">
       {/* le chrome du haut : retour au Salon, entrée du studio */}
-      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 px-4 py-4 md:px-10">
+      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 border-b border-white/10 bg-[#050505]/70 px-4 py-3 backdrop-blur-md md:px-10">
         <button onClick={onBack} className={`${PILULE} border border-white/15 bg-black/40 text-white backdrop-blur-md`}>
           <span aria-hidden>←</span>
           <span className="hidden sm:inline">Le Salon des Inconnus</span>
@@ -108,7 +109,7 @@ export function BoutiquePage({ currentUser, onRequestSignIn, onEnterStudio, onBa
         </button>
       </header>
 
-      <Hero />
+      <Hero defileur={defileur} />
 
       <main id="rayons">
         {RAYONS.map((r) => (
@@ -135,7 +136,7 @@ export function BoutiquePage({ currentUser, onRequestSignIn, onEnterStudio, onBa
 // passe de la veilleuse à la pleine lumière et accélère; plus bas, le titre
 // grossit et s'efface au moment où le rayon gratuit arrive.
 // ─────────────────────────────────────────────────────────────────────────
-function Hero() {
+function Hero({ defileur }: { defileur: React.RefObject<HTMLDivElement> }) {
   const section = useRef<HTMLElement>(null);
   const scene = useRef<HTMLDivElement>(null);
   const titre = useRef<HTMLDivElement>(null);
@@ -159,7 +160,7 @@ function Hero() {
 
       gsap.timeline({
         scrollTrigger: {
-          trigger: el, start: 'top top', end: 'bottom bottom', scrub: 0.6,
+          trigger: el, scroller: defileur.current, start: 'top top', end: 'bottom bottom', scrub: 0.6,
           onUpdate: (s) => { progres.current = s.progress; },
         },
       })
@@ -245,12 +246,12 @@ function SectionRayon({ rayon, currentUser, onRequestSignIn, onEnterStudio }: {
   const [mode, setMode] = useState<Mode>('unique');
 
   return (
-    <section id={rayon.id} aria-labelledby={`${rayon.id}-titre`} className={`relative scroll-mt-20 overflow-hidden ${th.fond}`}>
+    <section id={rayon.id} aria-labelledby={`${rayon.id}-titre`} className={`relative scroll-mt-16 overflow-clip ${th.fond}`}>
       <div aria-hidden className={`pointer-events-none absolute inset-0 ${th.halo}`} />
       <div aria-hidden className={`absolute inset-x-0 top-0 h-px ${th.degrade} opacity-60`} />
 
       <div className="relative grid gap-12 px-5 py-24 md:px-12 md:py-32 lg:grid-cols-12 lg:gap-10 xl:px-20">
-        <div className="lg:col-span-4 lg:sticky lg:top-28 lg:self-start">
+        <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
           <span
             aria-hidden
             className="block font-sans text-[clamp(5rem,16vw,9.5rem)] font-black leading-[0.8] tabular-nums text-transparent"
@@ -259,7 +260,7 @@ function SectionRayon({ rayon, currentUser, onRequestSignIn, onEnterStudio }: {
             {rayon.numero}
           </span>
           <p className={`mt-6 font-cinzel text-[12px] uppercase tracking-[0.32em] ${th.etiquette}`}>{rayon.etiquette}</p>
-          <h2 id={`${rayon.id}-titre`} className={`mt-4 text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.02] ${th.titre}`}>
+          <h2 id={`${rayon.id}-titre`} className={`mt-4 text-[clamp(2.2rem,9vw,4rem)] leading-[1.02] lg:whitespace-nowrap lg:text-[3.1vw] ${th.titre}`}>
             {rayon.titre.map((l) => (
               <span key={l} className={`block bg-clip-text text-transparent ${th.degrade}`}>{l}</span>
             ))}
@@ -282,17 +283,17 @@ function SectionRayon({ rayon, currentUser, onRequestSignIn, onEnterStudio }: {
           )}
         </div>
 
-        <ul className="grid gap-5 sm:grid-cols-2 lg:col-span-8 xl:gap-6">
+        <ul className="grid gap-5 sm:grid-cols-2 lg:col-span-7 xl:gap-6">
           {produits.map((p, i) => (
             <motion.li
               key={p.id}
-              className="flex"
+              className={`flex ${seule(i, produits.length) ? 'sm:col-span-2' : ''}`}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -10% 0px' }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: (i % 2) * 0.09 }}
             >
-              <Fiche produit={p} rayon={rayon} mode={mode} currentUser={currentUser} onRequestSignIn={onRequestSignIn} onEnterStudio={onEnterStudio} />
+              <Fiche large={seule(i, produits.length)} produit={p} rayon={rayon} mode={mode} currentUser={currentUser} onRequestSignIn={onRequestSignIn} onEnterStudio={onEnterStudio} />
             </motion.li>
           ))}
         </ul>
@@ -301,7 +302,11 @@ function SectionRayon({ rayon, currentUser, onRequestSignIn, onEnterStudio }: {
   );
 }
 
-function Fiche({ produit: p, rayon, mode, currentUser, onRequestSignIn, onEnterStudio }: {
+/* une fiche seule sur la dernière rangée prend les deux colonnes plutôt que de laisser un trou */
+const seule = (i: number, n: number) => n % 2 === 1 && i === n - 1;
+
+function Fiche({ large, produit: p, rayon, mode, currentUser, onRequestSignIn, onEnterStudio }: {
+  large: boolean;
   produit: Produit;
   rayon: Rayon;
   mode: Mode;
@@ -313,9 +318,9 @@ function Fiche({ produit: p, rayon, mode, currentUser, onRequestSignIn, onEnterS
   return (
     <article
       aria-labelledby={`bq-${p.id}`}
-      className={`flex w-full flex-col rounded-[15px] border bg-black/40 p-3 pb-5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 motion-reduce:hover:translate-y-0 ${th.carte}`}
+      className={`group flex w-full flex-col rounded-[15px] border bg-black/40 p-3 pb-5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 motion-reduce:hover:translate-y-0 ${th.carte}`}
     >
-      <div className="relative aspect-[16/10] overflow-hidden rounded-[10px] bg-black">
+      <div className={`relative overflow-hidden rounded-[10px] bg-black ${large ? 'aspect-[16/10] sm:aspect-[21/8]' : 'aspect-[16/10]'}`}>
         {p.image ? (
           <img src={p.image} alt={p.alt ?? ''} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105" />
         ) : (
