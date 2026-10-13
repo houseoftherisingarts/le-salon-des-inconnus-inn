@@ -23,7 +23,7 @@ PHASES = [
         ("Imprévus (10 %)", "", 25600),
     ]),
     dict(id=2, nom="La maison", annee="2027-2028", postes=[
-        ("Quatre salles de bain façon spa", "Douche italienne, pierre, bois, robinetterie chaude", 88000),
+        ("Quatre salles de bain façon spa", "Douche vitrée, carrelage neuf, murs blancs, robinetterie chaude", 88000),
         ("Vingt fenêtres de bois sur mesure, pose en cadre complet", "Menuiserie de restauration, verre à haut rendement", 32000),
         ("Imprévus (10 %)", "", 12000),
     ]),
