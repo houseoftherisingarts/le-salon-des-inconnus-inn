@@ -164,6 +164,7 @@ export const PRODUITS: Produit[] = [
     etat: 'En service chez une première entreprise',
     image: `${IMG}/studio/app-employe.webp`,
     alt: 'Le bureau des employés IA de La Guilde',
+    prix: { unique: 20, mensuel: 20 },
   },
   {
     id: 'guichet',
@@ -175,6 +176,7 @@ export const PRODUITS: Produit[] = [
     etat: 'En démonstration',
     image: `${IMG}/studio/cap-soumission.webp`,
     alt: 'Un dossier client ouvert dans Le Guichet',
+    prix: { unique: 20, mensuel: 20 },
   },
   {
     id: 'sillage',
@@ -186,6 +188,7 @@ export const PRODUITS: Produit[] = [
     etat: 'En service sur un site client',
     image: `${IMG}/studio/analytics-vexel-chaleur.webp`,
     alt: 'La carte de chaleur des clics mesurée par Sillage',
+    prix: { unique: 20, mensuel: 20 },
   },
   {
     id: 'grimoire',
@@ -195,6 +198,7 @@ export const PRODUITS: Produit[] = [
     texte:
       'Les tâches deviennent des quêtes, les habitudes des hauts faits et les gens que vous croisez des personnages avec leur fiche, dans un carnet qui donne envie d’être ouvert chaque matin.',
     etat: 'À l’établi',
+    prix: { unique: 20, mensuel: 20 },
   },
 ];
 
