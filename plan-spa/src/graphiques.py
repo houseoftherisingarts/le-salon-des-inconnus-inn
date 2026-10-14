@@ -5,7 +5,7 @@ import json
 from modele import M
 
 SOMBRE = dict(serie=["#b58c2f", "#1fa39b", "#b5602c", "#7d6bd0", "#6f9a3c"], axe="rgba(251,247,239,.38)", grille="rgba(255,255,255,.08)",
-              texte="#f3e5ab", accent="#c5a059", muet="#5f574a", police="Schibsted Grotesk, Lato, sans-serif", etiquette="Schibsted Grotesk, Lato, sans-serif", etiquette_graisse="600", etiquette_espace="1.5", chiffre="Schibsted Grotesk, Lato, sans-serif", chiffre_graisse="700")
+              texte="#f3e5ab", accent="#c5a059", muet="#5f574a", police="Inter, Lato, sans-serif", etiquette="Inter, Lato, sans-serif", etiquette_graisse="500", etiquette_espace="1.8", chiffre="Inter, Lato, sans-serif", chiffre_graisse="500")
 CLAIR = dict(serie=["#9a7224", "#0a9189", "#9c4f22", "#6a56c2", "#5e8530"], axe="#8A6B33", grille="rgba(42,31,14,.12)",
              texte="#2A1F0E", accent="#B08A3E", muet="#cbbb95", police="Lato, sans-serif", etiquette="Cinzel, serif", etiquette_graisse="400", etiquette_espace="2", chiffre="Prata, serif", chiffre_graisse="400")
 

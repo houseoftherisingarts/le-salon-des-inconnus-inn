@@ -108,7 +108,7 @@ def phases():
 
 def marche():
     Ma = C.MARCHE
-    cartes = "".join(f'<div class="verre carte {"reco" if "Inconnus" in t else ""}"><h3>{e(t)}</h3><div class="chiffre" style="font-family:var(--display);font-weight:800;letter-spacing:-.03em;font-size:30px;color:var(--or-2);margin-bottom:10px">{e(prix)}</div><p>{e(d)}</p><div class="src"><a href="{u}" target="_blank" rel="noopener">{e(lab)}</a></div></div>' for t, prix, d, lab, u in Ma["cartes"])
+    cartes = "".join(f'<div class="verre carte {"reco" if "Inconnus" in t else ""}"><h3>{e(t)}</h3><div class="chiffre" style="font-family:var(--display);font-weight:500;letter-spacing:-.035em;font-size:30px;color:var(--or-2);margin-bottom:10px">{e(prix)}</div><p>{e(d)}</p><div class="src"><a href="{u}" target="_blank" rel="noopener">{e(lab)}</a></div></div>' for t, prix, d, lab, u in Ma["cartes"])
     return f'''<section id="marche">
   <div class="col">
     <div class="titre rev"><p class="eyebrow">{e(Ma["eyebrow"])}</p><h2>{e(Ma["titre"])}</h2></div>
@@ -277,9 +277,9 @@ def page():
 <style>
 .phases-cartes{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}}
 .phase-carte{{border:1px solid #c9a565;border-radius:15px;padding:24px 26px;background:rgba(255,255,255,.35)}}
-.phase-carte .num{{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a6b33}}
-.phase-carte .nom{{font-family:var(--display);font-weight:700;letter-spacing:-.02em;font-size:24px;color:var(--encre);margin:8px 0 10px}}
-.phase-carte .somme{{font-family:var(--display);font-weight:800;font-size:34px;color:#6b4e1f;letter-spacing:-.03em;font-variant-numeric:tabular-nums}}
+.phase-carte .num{{font-family:var(--display);font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a6b33}}
+.phase-carte .nom{{font-family:var(--display);font-weight:500;letter-spacing:-.025em;font-size:24px;color:var(--encre);margin:8px 0 10px}}
+.phase-carte .somme{{font-family:var(--display);font-weight:500;font-size:34px;color:#6b4e1f;letter-spacing:-.03em;font-variant-numeric:tabular-nums}}
 .phase-carte .an{{font-size:13px;color:#8a6b33;margin-top:6px}}
 .carte.reco{{border-color:var(--or);box-shadow:0 0 0 1px var(--or)}}
 @media (max-width:720px){{.phases-cartes{{grid-template-columns:1fr}}}}

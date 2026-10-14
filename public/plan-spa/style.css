@@ -322,7 +322,7 @@ section{scroll-margin-top:84px;padding:clamp(64px,7.5vw,112px) 0}
 
 
 /* ---- Passe éditoriale du 14 octobre 2026 : Cormorant pour tout ce qui se lit, Lato pour l'interface, Prata et Cinzel inchangés ---- */
-@font-face{font-family:'Schibsted Grotesk';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/schibsted.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter.woff2) format('woff2')}
 :root{--lecture:'Schibsted Grotesk','Lato',system-ui,sans-serif;--interface:'Lato',system-ui,sans-serif}
 body{font-kerning:normal;text-rendering:optimizeLegibility}
 h1,h2,h3,.display,.citation{text-wrap:balance}
@@ -440,3 +440,26 @@ body{font-family:var(--lecture)}
   .fig{overflow:visible}
   .fig-corps{margin:0 -26px;padding:0 26px}
 }
+
+/* ---- Inter, ordre d'Alex du 14 octobre 2026 : « un autre font, plus proche de Krystine ». Inter est la sans serif du magazine crème de krystinestlaurent.ca (graisses 300 à 500). Même esprit ici : titres en 500 serrés, chiffres en 500, étiquettes en 500, lecture en 400. ---- */
+:root{--lecture:'Inter','Lato',system-ui,sans-serif;--interface:'Inter','Lato',system-ui,sans-serif;--display:'Inter','Lato',system-ui,sans-serif}
+body{font-family:var(--lecture);font-feature-settings:"cv11","ss01","calt"}
+h1,h2,h3,.display{font-weight:500;letter-spacing:-.03em;line-height:1.02;font-feature-settings:"cv11","ss01"}
+h1{font-weight:500;letter-spacing:-.035em;line-height:.98}
+h2{font-weight:500;letter-spacing:-.028em}
+h3{font-weight:500;letter-spacing:-.02em}
+.citation{font-weight:400;letter-spacing:-.015em;line-height:1.28}
+.jalon .t,.site .l b,.scen .rendement b{font-weight:500;letter-spacing:-.012em}
+.prose.lettrine>p:first-child::first-letter{font-weight:500;font-size:3.7em;line-height:.8;padding:.06em .12em 0 0}
+.prose,.lead,.hero .sous,.gain p,.carte p,.jalon p,.risque p,.scen ul,.scen .note,.scen>p,.fig .fig-sous,table.postes,table.fin{font-weight:400;letter-spacing:-.006em}
+.hero .sous,.lead{font-weight:400;letter-spacing:-.012em}
+.tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.rupture .grand,.puce b,.onglets button b,table.postes tr.total td,table.fin tr.total td{font-weight:500;letter-spacing:-.03em;font-feature-settings:"tnum","cv11","ss01"}
+.tuile .chiffre,.phase .montant,.scen .somme,.rupture .grand{font-weight:500;letter-spacing:-.04em}
+table.postes tr.total td,table.fin tr.total td{font-weight:500;letter-spacing:-.012em}
+.eyebrow,#pre .marque .nom,header.barre .logo,header.barre nav a,header.barre .pdf,.hero .defile,.tuile .etiquette,.mosaique figcaption,.compare .tag,.compare-legende b,.onglets button,.phase .montant small,table.postes th,table.fin th,.gain .k,.scen .badge,.scen .rendement span,.site .l u,.jalon .q,.risque .k,.citation + .sig,footer .marque b,footer .k,.btn,.puce,.phase .montant small,.gain .v small,.tuile .chiffre small,.rupture .grand small,.scen .somme small{font-weight:500;letter-spacing:.18em;font-size:11.5px}
+.eyebrow,header.barre .logo,#pre .marque .nom,footer .marque b{letter-spacing:.22em}
+/* Retouches après verdict Inter : DÉFILER plus franc, chiffres des tuiles qui respirent, titres de cartes en 600, Petite-Nation insécable */
+.hero .defile{color:var(--creme);opacity:.72}
+.tuile .chiffre{font-size:clamp(36px,3.3vw,52px)}
+.tuile{padding-right:24px}
+.carte h3,.scen h3,.gain h3,.risque h3,.phase h3{font-weight:600}
