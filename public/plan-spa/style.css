@@ -377,3 +377,7 @@ table.postes tr.total td,table.fin tr.total td,.rupture .grand{letter-spacing:.0
 .tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.puce b{word-spacing:.3em;letter-spacing:.05em}
 .onglets button b{font-size:16.5px;word-spacing:.32em;letter-spacing:.07em}
 table.postes tr.total td,table.fin tr.total td{word-spacing:.22em;letter-spacing:.035em}
+
+/* Tour 5 : « 5 acres » garde une espace de mot normale ; les pastilles de phase respirent encore un peu */
+.tuile .chiffre.mot{word-spacing:normal}
+.onglets button b{word-spacing:.48em;letter-spacing:.09em}

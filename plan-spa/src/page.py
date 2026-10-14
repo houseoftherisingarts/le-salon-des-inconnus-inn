@@ -35,7 +35,7 @@ def hero():
 
 def aujourdhui():
     A = C.AUJOURDHUI
-    tuiles = "".join(f'<div class="verre tuile rev"><div class="chiffre">{e(v)}</div><div class="etiquette">{e(l)}</div><div class="note">{e(n)}</div></div>' for v, l, n in A["tuiles"])
+    tuiles = "".join(f'<div class="verre tuile rev"><div class="chiffre{" mot" if any(ch.isalpha() for ch in v) else ""}">{e(v)}</div><div class="etiquette">{e(l)}</div><div class="note">{e(n)}</div></div>' for v, l, n in A["tuiles"])
     svg, leg = G.mensuel()
     mos = [("salle.jpg", "La salle à manger", "l"), ("biblio.jpg", "La bibliothèque", "h"), ("hemerocales.jpg", "Les hémérocalles", ""), ("yourte.jpg", "La yourte", ""), ("drone.jpg", "Le domaine vu du ciel", "l"), ("cuisine.jpg", "La grande cuisine", "h"), ("barista.jpg", "Le café", ""), ("projecteur.jpg", "La salle de projection", "")]
     mosaique = "".join(f'<figure class="{c}"><img src="media/{f}" alt="{e(t)}" loading="lazy"><figcaption>{e(t)}</figcaption></figure>' for f, t, c in mos)
