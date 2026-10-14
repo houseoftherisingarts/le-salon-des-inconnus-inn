@@ -118,6 +118,7 @@ CHIFFRES = dict(
     lead="Les projections partent des chiffres réels de 2026 et avancent avec des hypothèses prudentes, écrites noir sur blanc. L'année 2027 est l'année du chantier : les bains ouvrent en novembre, et la BDC ne demande que les intérêts pendant les travaux.",
     hypotheses=[
         ("Nuits vendues", f"{T['nuits']} aujourd'hui, 720 en 2027, 1 050 en 2029, 1 200 en 2031, soit 37 % d'occupation sur neuf unités"),
+        ("Hébergement 2027", "150 388 $, le scénario réaliste du prévisionnel de Premium Booking, qui gère l'auberge depuis octobre 2026 (son scénario optimiste monte à 165 427 $); dès 2028, le modèle du plan dépasse ce prévisionnel et c'est lui qui compte"),
         ("Prix moyen de la nuit", f"{T['adr']} $ aujourd'hui, 235 $ en 2029 avec l'accès aux bains compris, sous les 169 $ à 190 $ que les voisins demandent sans spa"),
         ("Visiteurs du public", "7 par jour en 2027, 11 en 2028, 14 en 2029, 250 jours par année, à 59 $ en moyenne"),
         ("Massages", "520 séances en 2028 et 800 en 2029, données par la massothérapeute déjà en place au domaine et par des contractuels; l'auberge garde 40 % du prix de 115 $"),
