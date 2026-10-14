@@ -13,7 +13,7 @@ T, EF, P, S, R = M["T12"], M["EF"], M["PROJ"], M["SCENARIOS"], M["RENTA"]
 an3, an5 = P[2], P[4]
 
 HERO = dict(
-    eyebrow="Plan d'affaires · Namur, Petite‑Nation, Outaouais · 2027‑2028",
+    eyebrow="Plan d'affaires · Namur, Petite‑Nation · 2027‑2028",
     titre="Le Mini-Spa des Inconnus",
     sous="Un parcours thermal nordique au pied d'un manoir victorien, ouvert aux voyageurs de l'auberge comme aux visiteurs d'un jour, à moins d'une heure trente de Gatineau, d'Ottawa et de Montréal.",
     puces=[("445", "réservations en 12 mois"), (argent(T["revenus"]), "de revenus réalisés"), ("+45 %", "été 2026 sur été 2025"), (argent(M["TOTAL"]), "d'investissement en trois phases")],
