@@ -101,6 +101,7 @@ export const ADHESION_MIN = Math.min(...ADHESIONS.filter((a) => a.prix > 0).map(
 export const PRODUITS: Produit[] = [
   {
     id: 'coffre',
+    icone: `${IMG}/studio/icones/coffre.webp`,
     rayon: 'gratuit',
     nom: 'Le Coffre des Inconnus',
     ligne: 'L’argent expliqué aux enfants, une pièce à la fois',
@@ -117,6 +118,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'pai-sho',
+    icone: `${IMG}/studio/icones/pai-sho.webp`,
     rayon: 'gratuit',
     nom: 'Pai Sho',
     ligne: 'Un jeu de table en bois, en trois dimensions',
@@ -238,6 +240,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'cv',
+    icone: `${IMG}/studio/icones/cv.webp`,
     rayon: 'gratuit',
     nom: 'Le Créateur de CV',
     ligne: 'Un CV sobre ou un CV d’artiste, sur la même fiche',
@@ -251,6 +254,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'influencer-studio',
+    icone: `${IMG}/studio/icones/influencer-studio.webp`,
     rayon: 'abonnement',
     nom: 'Influencer Studio',
     ligne: 'Vous parlez à votre iPhone, le Mac monte la vidéo',
@@ -263,6 +267,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'feuille-de-service',
+    icone: `${IMG}/studio/icones/feuille-de-service.webp`,
     rayon: 'abonnement',
     nom: 'La Feuille de service',
     ligne: 'Une journée de tournage réglée sur une seule page',
@@ -277,6 +282,7 @@ export const PRODUITS: Produit[] = [
   {
     /* l'outil bâti pour One Grand Film dans Google AI Studio (« Vexel - OGF Timeline ») */
     id: 'trame',
+    icone: `${IMG}/studio/icones/trame.webp`,
     rayon: 'abonnement',
     nom: 'La Trame',
     ligne: 'Votre film, scène par scène, sur la ligne du temps',
@@ -292,6 +298,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'guilde',
+    icone: `${IMG}/studio/icones/guilde.webp`,
     rayon: 'payant',
     nom: 'La Guilde',
     ligne: 'Sept employés IA dans un même bureau, sur votre Mac',
@@ -308,6 +315,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'guichet',
+    icone: `${IMG}/studio/icones/guichet.webp`,
     rayon: 'payant',
     nom: 'Le Guichet',
     ligne: 'L’espace où vos clients ouvrent et suivent leur dossier',
@@ -323,6 +331,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'sillage',
+    icone: `${IMG}/studio/icones/sillage.webp`,
     rayon: 'payant',
     nom: 'Sillage',
     ligne: 'Ce que vos visiteurs font vraiment sur votre site',
@@ -338,6 +347,7 @@ export const PRODUITS: Produit[] = [
   },
   {
     id: 'grimoire',
+    icone: `${IMG}/studio/icones/grimoire.webp`,
     rayon: 'payant',
     nom: 'Le Grimoire',
     ligne: 'Votre carnet de bord en livre de quêtes',
