@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-14",
+        title_fr: "La clé de voûte",
+        title_en: "The keystone",
+        body_fr: "Les bâtisseurs de cathédrales posaient leurs pierres sur un échafaudage de bois qu'on appelle un cintre, parce qu'une arche en construction ne tient pas toute seule : chaque pierre penchée attend les autres, et l'ensemble resterait au sol sans ce support provisoire. Tout change au moment où la clé de voûte descend à sa place, cette dernière pierre taillée pour le sommet, qui verrouille l'arche d'un coup et renvoie le poids de chacune vers ses voisines. On retirait alors le bois, et la voûte tenait pour des siècles précisément par ce qui aurait dû la faire tomber, son propre poids. J'aime que les constructions les plus durables du monde soient passées par des mois où elles semblaient ne tenir à rien, soutenues par des planches que personne n'admirerait jamais. Nous jugeons souvent nos projets à mi-chemin comme s'ils devaient déjà tenir seuls, et nous prenons pour une faiblesse le fait qu'ils aient encore besoin d'appuis. Les vieilles arches racontent autre chose : il existe un âge de la construction où dépendre du bois est la seule manière d'arriver à la pierre. Quelle clé manque encore à mon arche, et quel échafaudage suis-je trop pressé de retirer?",
+        body_en: "The cathedral builders laid their stones on a wooden scaffold called centering, because an arch under construction cannot stand on its own: each leaning stone waits for the others, and the whole would rest on the ground without that temporary support. Everything changes the moment the keystone is lowered into place, that last stone cut for the summit, which locks the arch at once and sends the weight of each stone toward its neighbours. The wood was then taken away, and the vault stood for centuries precisely through what should have brought it down, its own weight. I love that the most lasting constructions in the world passed through months when they seemed to be held up by nothing, resting on planks nobody would ever admire. We often judge our half-built projects as if they should already stand alone, and we take it for a weakness that they still need support. The old arches tell another story: there is an age of building when depending on the wood is the only way to reach the stone. Which key is still missing from my arch, and which scaffolding am I too eager to take away?",
+    },
+    {
         date: "2026-10-12",
         title_fr: "Les braises sous la cendre",
         title_en: "The banked embers",
