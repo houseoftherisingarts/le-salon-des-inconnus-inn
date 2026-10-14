@@ -35,7 +35,7 @@ AUJOURDHUI = dict(
         (argent(EF[2025][0]), "Revenus 2025", f"après {argent(EF[2023][0])} en 2023 et {argent(EF[2024][0])} en 2024"),
         ("5 acres", "De jardins et de forêt", "lot 4 674 756, Namur, Petite-Nation"),
     ],
-    graphique=dict(titre="Revenus mensuels de janvier 2025 à septembre 2026", sous="Revenus d'hébergement encaissés, par mois de réception; les séjours de décembre 2024 sont comptés en janvier 2025, le mois où l'argent est entré. Juillet et août 2026 dépassent chacun le meilleur mois de 2025."),
+    graphique=dict(titre="Revenus mensuels, 2025 et 2026", sous="Revenus d'hébergement encaissés, par mois de réception; les séjours de décembre 2024 sont comptés en janvier 2025, le mois où l'argent est entré. Juillet et août 2026 dépassent chacun le meilleur mois de 2025."),
 )
 
 PROJET = dict(

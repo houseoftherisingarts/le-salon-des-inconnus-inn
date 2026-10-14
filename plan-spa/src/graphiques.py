@@ -39,7 +39,7 @@ def mensuel(th=SOMBRE, w=1200, h=380):
         if v >= 13000:
             out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["police"]}">{k(v)}</text>')
         if mo == "01":
-            out.append(f'<text x="{ml + i*bw + 2:.1f}" y="{h-6}" fill="{th["texte"]}" font-size="13.5" font-family="Cinzel, serif" letter-spacing="2">{an}</text>')
+            out.append(f'<text x="{ml + i*bw + 2:.1f}" y="{h-6}" fill="{th["texte"]}" font-size="13.5" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="600" letter-spacing="1.5">{an}</text>')
     out.append("</svg>")
     legende = [("2026", th["accent"]), ("2025", th["muet"])]
     return "".join(out), legende
@@ -62,8 +62,8 @@ def revenus_empiles(th=SOMBRE, w=1200, h=420):
             bh = ph * v / vmax; y = mt + ph - ph * (cum + v) / vmax
             out.append(f'<rect class="bar" x="{x:.1f}" y="{y+1:.1f}" width="{ww:.1f}" height="{max(bh-2,0):.1f}" rx="{3 if j==len(SOURCES)-1 or cum+v==r["revenus"] else 0}" fill="{th["serie"][j]}" data-tip="{r["annee"]} · {nom} · {argent(v)}"><title>{r["annee"]} {nom} : {argent(v)}</title></rect>')
             cum += v
-        out.append(f'<text x="{x+ww/2:.1f}" y="{mt + ph - ph*cum/vmax - 8:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13" font-family="Prata, serif">{argent(cum)}</text>')
-        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Cinzel, serif" letter-spacing="2">{r["annee"]}</text>')
+        out.append(f'<text x="{x+ww/2:.1f}" y="{mt + ph - ph*cum/vmax - 8:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="700">{argent(cum)}</text>')
+        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="600" letter-spacing="1.5">{r["annee"]}</text>')
     out.append("</svg>")
     legende = [(nom, th["serie"][j]) for j, (cle, nom) in enumerate(SOURCES)]
     return "".join(out), legende
@@ -82,7 +82,7 @@ def ebitda_dette(th=SOMBRE, w=1200, h=360):
             bh = ph * v / vmax; x = x0 + j * (ww + 4); y = mt + ph - bh
             out.append(f'<rect class="bar" x="{x:.1f}" y="{y:.1f}" width="{ww:.1f}" height="{bh:.1f}" rx="3" fill="{c}" data-tip="{r["annee"]} · {nom} · {argent(v)}"><title>{r["annee"]} {nom} : {argent(v)}</title></rect>')
             out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["police"]}">{k(v)}</text>')
-        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Cinzel, serif" letter-spacing="2">{r["annee"]}</text>')
+        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="600" letter-spacing="1.5">{r["annee"]}</text>')
         out.append(f'<text x="{x0+ww+2:.1f}" y="{h-4}" text-anchor="middle" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">couverture {str(r["dscr"]).replace(".", ",")}×</text>')
     out.append("</svg>")
     return "".join(out), [("Bénéfice d'exploitation", c1), ("Service de la dette", c2)]

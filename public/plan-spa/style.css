@@ -403,3 +403,25 @@ table.postes tr.total td,table.fin tr.total td{font-size:19px}
   .prose.lettrine>p:first-child::first-letter{font-size:3.3em}
   table.postes,table.fin{font-size:15.5px}
 }
+
+/* ---- Full editorial, ordre d'Alex du 14 octobre 2026 : aucun serif sur les titres. Schibsted Grotesk porte tout, Prata et Cinzel sortent de la page (le PDF garde son canon). ---- */
+:root{--display:'Schibsted Grotesk','Lato',system-ui,sans-serif}
+h1,h2,h3,.display{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:.98;font-feature-settings:"ss01"}
+h1{font-weight:800;letter-spacing:-.04em;line-height:.94}
+h2{font-weight:700;letter-spacing:-.03em}
+h3{font-weight:700;letter-spacing:-.02em}
+.citation{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.22}
+.jalon .t,.site .l b,.scen .rendement b{font-family:var(--display);font-weight:700;letter-spacing:-.015em}
+.prose.lettrine>p:first-child::first-letter{font-family:var(--display);font-weight:800;font-size:3.9em;line-height:.74;padding:.08em .12em 0 0;letter-spacing:0}
+/* gros chiffres : grotesque grasse, tabulaire, sans les espacements posés pour Prata */
+.tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.rupture .grand,.puce b,.onglets button b,table.postes tr.total td,table.fin tr.total td{font-family:var(--display);font-weight:700;font-variant-numeric:lining-nums tabular-nums;word-spacing:normal;letter-spacing:-.025em}
+.tuile .chiffre,.phase .montant,.scen .somme,.rupture .grand{font-weight:800;letter-spacing:-.035em}
+.puce b{font-size:16.5px;letter-spacing:-.01em}
+.onglets button b{font-size:15.5px;letter-spacing:-.01em;word-spacing:normal}
+table.postes tr.total td,table.fin tr.total td{font-weight:600;letter-spacing:-.01em}
+/* étiquettes en capitales : la même grotesque, chasse serrée en graisse moyenne */
+.eyebrow,#pre .marque .nom,header.barre .logo,header.barre nav a,header.barre .pdf,.hero .defile,.tuile .etiquette,.mosaique figcaption,.compare .tag,.compare-legende b,.onglets button,.phase .montant small,table.postes th,table.fin th,.gain .k,.scen .badge,.scen .rendement span,.site .l u,.jalon .q,.risque .k,.citation + .sig,footer .marque b,footer .k,.btn{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.16em}
+.eyebrow{letter-spacing:.2em}
+.phase .montant small,.gain .v small,.tuile .chiffre small,.rupture .grand small,.scen .somme small{font-family:var(--display);font-weight:600;letter-spacing:.16em;word-spacing:normal}
+header.barre .logo,#pre .marque .nom,footer .marque b{letter-spacing:.2em}
+.puce{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.16em}
