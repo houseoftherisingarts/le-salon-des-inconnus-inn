@@ -52,6 +52,11 @@ assert TOTAL == 530000, TOTAL
 PRIX = dict(acces_semaine=55, acces_fds=65, acces_moyen=59, soiree=42, massage60=115, part_massage=0.40,
             chambre_actuelle=138, chambre_spa=175, manoir_nuit=1050, retraite_nuit=1600)
 
+# ---------- prévisionnel de Premium Booking (gestionnaire de l'auberge depuis octobre 2026), Canva du 29 août 2026 : revenu d'hébergement sans taxes ni ménage, réaliste puis optimiste
+PB = dict(solo=(135000, 148500), an1=(150388, 165427), an2=(165427, 181970), date="29 août 2026")
+# règle d'Alex (14 octobre 2026) : quand le chiffre de Premium Booking dépasse celui du modèle, c'est le sien qu'on prend. An 1 = 2027 (150 388 $ contre 140 400 $); dès 2028 le modèle est plus haut (198 000 $) et il reste.
+PB_HEB = {2027: PB["an1"][0]}
+
 # ---------- hypothèses d'exploitation par année (An 1 = 2027 : chantier, bains ouverts en novembre)
 ANNEES = [2027, 2028, 2029, 2030, 2031]
 HYP = dict(
@@ -87,7 +92,7 @@ def annuite(capital, taux, n):
 def projeter(hyp=HYP, fin=FIN, phases=(1, 2, 3)):
     rows = []
     for i, an in enumerate(ANNEES):
-        heb = hyp["nuits"][i] * hyp["adr"][i]
+        heb = max(hyp["nuits"][i] * hyp["adr"][i], PB_HEB.get(an, 0))
         acces = hyp["visites_jour"][i] * hyp["jours_ouverts"][i] * PRIX["acces_moyen"]
         mass = hyp["massages"][i] * PRIX["massage60"] * PRIX["part_massage"]
         cafe = hyp["cafe"][i] * MARGE_CAFE
@@ -152,7 +157,7 @@ for k, r in RENTA.items():
     r["retour_ans"] = round(cout / r["contribution"], 1)
     r["cout"] = cout
 
-M = dict(T12=T12, EF=EF, INTERIM=INTERIM_2026, UNITES=UNITES, DETTE=DETTE_ACTUELLE, PHASES=PHASES, TOTAL=TOTAL, PRIX=PRIX,
+M = dict(PB=PB, T12=T12, EF=EF, INTERIM=INTERIM_2026, UNITES=UNITES, DETTE=DETTE_ACTUELLE, PHASES=PHASES, TOTAL=TOTAL, PRIX=PRIX,
          HYP=HYP, OPEX=OPEX, FIN=FIN, PROJ=PROJ, SCENARIOS=SCENARIOS, RENTA=RENTA, ANNEES=ANNEES,
          annuite_bdc=round(annuite(FIN["bdc"], FIN["taux"], FIN["amort"])))
 
