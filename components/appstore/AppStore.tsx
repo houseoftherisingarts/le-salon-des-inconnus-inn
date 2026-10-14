@@ -78,7 +78,7 @@ function Icone({ p, taille }: { p: Produit; taille: number }) {
   const style = { '--t1': p.teinte[0], '--t2': p.teinte[1], width: taille, height: taille } as CSSProperties;
   return (
     <span className="as-icone" style={style} aria-hidden>
-      {TRACES[p.id] ? <Glyphe nom={p.id} taille={Math.round(taille * 0.5)} /> : <b>{p.nom.replace(/^L[ae’'] ?/, '').charAt(0)}</b>}
+      {p.icone ? <img src={p.icone} alt="" /> : TRACES[p.id] ? <Glyphe nom={p.id} taille={Math.round(taille * 0.5)} /> : <b>{p.nom.replace(/^L[ae’'] ?/, '').charAt(0)}</b>}
     </span>
   );
 }
@@ -88,8 +88,10 @@ function Icone({ p, taille }: { p: Produit; taille: number }) {
 const prevenir = (p: Produit, quoi: string) =>
   `mailto:${COURRIEL}?subject=${encodeURIComponent(`App Store : ${p.nom}${quoi ? ` (${quoi})` : ''}`)}`;
 
+const JEUX = PRODUITS.filter((p) => p.categorie === 'Jeux');
+
 function libellePilule(p: Produit, connecte: boolean) {
-  if (p.rayon === 'gratuit') return p.lien ? (connecte ? 'Ouvrir' : 'Obtenir') : 'Bientôt';
+  if (p.rayon === 'gratuit') return p.lien ? (connecte && !p.sansCompte ? 'Ouvrir' : 'Obtenir') : 'Bientôt';
   if (p.rayon === 'abonnement') return 'Inclus';
   return p.prix?.unique ? formatPrix(p.prix.unique) : 'Bientôt';
 }
@@ -130,7 +132,7 @@ export function AppStore({ marque, connecte, seConnecter, ouvrirStudio, accueil 
   /* Obtenir agit tout de suite sur une app gratuite; ailleurs, la pilule ouvre la fiche */
   const agir = (p: Produit) => {
     if (p.rayon === 'gratuit' && p.lien) {
-      if (connecte) window.open(p.lien, '_blank', 'noopener');
+      if (connecte || p.sansCompte) window.open(p.lien, '_blank', 'noopener');
       else seConnecter();
       return;
     }
@@ -198,6 +200,13 @@ export function AppStore({ marque, connecte, seConnecter, ouvrirStudio, accueil 
             <h1 className="as-grand-titre">Découvrir</h1>
             <p className="as-chapeau">{BOUTIQUE.sous}</p>
             <ALaUne produits={PRODUITS.filter((p) => p.alaune && p.image)} ouvrir={setOuverte} />
+            {/* les jeux ont leur étagère à eux sur Découvrir, comme au Play Store; le rayon Gratuites les garde tous */}
+            <section className="as-etagere">
+              <div className="as-etagere-tete">
+                <h2>Jeux de table, gratuits et hors ligne</h2>
+              </div>
+              <Liste produits={JEUX} connecte={connecte} ouvrir={setOuverte} agir={agir} />
+            </section>
             {RAYONS.map((r) => (
               <section key={r.id} className="as-etagere">
                 <div className="as-etagere-tete">
@@ -206,7 +215,7 @@ export function AppStore({ marque, connecte, seConnecter, ouvrirStudio, accueil 
                     Tout voir
                   </button>
                 </div>
-                <Liste produits={produitsDuRayon(r.id)} connecte={connecte} ouvrir={setOuverte} agir={agir} />
+                <Liste produits={produitsDuRayon(r.id).filter((p) => p.categorie !== 'Jeux')} connecte={connecte} ouvrir={setOuverte} agir={agir} />
               </section>
             ))}
           </>
@@ -370,7 +379,16 @@ function Fiche({ p, connecte, fermer, seConnecter, ouvrirStudio }: {
 
   const prix = p.prix?.[mode];
   let action: ReactNode;
-  if (p.rayon === 'gratuit' && p.lien) {
+  if (p.rayon === 'gratuit' && p.lien && p.sansCompte) {
+    action = (
+      <>
+        <a className="as-bouton" href={p.lien} target="_blank" rel="noreferrer noopener">
+          Obtenir <Glyphe nom="sortie" taille={15} />
+        </a>
+        <span className="as-action-note">Sans compte. Le jeu s’installe depuis sa page et se joue ensuite hors ligne.</span>
+      </>
+    );
+  } else if (p.rayon === 'gratuit' && p.lien) {
     action = connecte ? (
       <a className="as-bouton" href={p.lien} target="_blank" rel="noreferrer noopener">
         Ouvrir <Glyphe nom="sortie" taille={15} />

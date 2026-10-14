@@ -42,6 +42,10 @@ export type Produit = {
   plateformes?: string;
   teinte: [string, string];
   alaune?: boolean;
+  /** icône d'app en image (carrée); sans elle, la tuile prend la teinte et un glyphe */
+  icone?: string;
+  /** gratuit sans compte : Obtenir ouvre le lien tout de suite (les jeux de table installables) */
+  sansCompte?: boolean;
 };
 
 const IMG = 'https://vexelwebstudio.com/previews';
@@ -126,6 +130,111 @@ export const PRODUITS: Produit[] = [
     plateformes: 'Web',
     teinte: ['#e0b07a', '#7c4a21'],
     alaune: true,
+  },
+  /* Les jeux de table (13 octobre 2026) : six apps autonomes, sans compte, installables et jouables
+     hors ligne, bâties dans ~/Documents/Websites/jeux-de-table et servies sous /jeux/<id>/. */
+  {
+    id: 'hnefatafl',
+    rayon: 'gratuit',
+    nom: 'Hnefatafl',
+    ligne: 'Le jeu de table des Vikings, un roi contre une armée',
+    texte:
+      'Le roi part du trône, au centre du plateau, et cherche à gagner un coin avec ses défenseurs pendant que des assaillants deux fois plus nombreux tentent de l’enfermer. Vous prenez le camp qui vous plaît contre une maison qui compte dix niveaux, du Marmiton au Connétable, ou vous jouez à deux sur le même appareil, avec des pièces d’ivoire sculpté dans l’esprit des pièces de Lewis.',
+    etat: 'Gratuit, sans compte',
+    image: `${IMG}/studio/jeux/hnefatafl.webp`,
+    alt: 'Le plateau de hnefatafl et ses pièces d’ivoire sculpté',
+    icone: 'https://vexelwebstudio.com/jeux/hnefatafl/icon-192.png',
+    lien: 'https://vexelwebstudio.com/jeux/hnefatafl/',
+    categorie: 'Jeux',
+    plateformes: 'iPhone, Android, Mac, Windows',
+    teinte: ['#e9d5a1', '#5b3a1e'],
+    alaune: true,
+    sansCompte: true,
+  },
+  {
+    id: 'merelle',
+    rayon: 'gratuit',
+    nom: 'La Mérelle',
+    ligne: 'Le jeu des moulins, gravé sur un banc de cloître',
+    texte:
+      'Chaque joueur pose ses neuf pions puis les déplace pour aligner trois pièces, et chaque moulin formé retire un pion à l’adversaire jusqu’à ce qu’il n’en reste que deux. Les moines de tilleul peint s’affrontent sur une pierre gravée comme celles qu’on trouve encore sur les bancs des cloîtres, contre la maison ou à deux.',
+    etat: 'Gratuit, sans compte',
+    image: `${IMG}/studio/jeux/merelle.webp`,
+    alt: 'Le plateau de mérelle gravé dans la pierre et ses pions en moines de bois',
+    icone: 'https://vexelwebstudio.com/jeux/merelle/icon-192.png',
+    lien: 'https://vexelwebstudio.com/jeux/merelle/',
+    categorie: 'Jeux',
+    plateformes: 'iPhone, Android, Mac, Windows',
+    teinte: ['#e7dcc4', '#6b5a43'],
+    sansCompte: true,
+  },
+  {
+    id: 'renard',
+    rayon: 'gratuit',
+    nom: 'Le Renard et les Oies',
+    ligne: 'Treize oies pour enfermer un seul renard',
+    texte:
+      'Le renard saute par-dessus les oies comme aux dames et peut en croquer plusieurs d’un seul élan, tandis que les oies, qui ne prennent jamais, avancent ensemble pour l’acculer. La règle suivie est la forme ancienne que les historiens tiennent pour authentique, celle des pièces achetées par Édouard IV, et les figurines de bois peint donnent à la partie un air de ferme.',
+    etat: 'Gratuit, sans compte',
+    image: `${IMG}/studio/jeux/renard.webp`,
+    alt: 'Le renard et les oies en bois peint sur leur planche',
+    icone: 'https://vexelwebstudio.com/jeux/renard/icon-192.png',
+    lien: 'https://vexelwebstudio.com/jeux/renard/',
+    categorie: 'Jeux',
+    plateformes: 'iPhone, Android, Mac, Windows',
+    teinte: ['#f4a261', '#7a3b12'],
+    sansCompte: true,
+  },
+  {
+    id: 'des',
+    rayon: 'gratuit',
+    nom: 'Les Dés du menteur',
+    ligne: 'Un jeu de bluff autour de la table d’une taverne',
+    texte:
+      'Chacun garde ses dés sous son gobelet et annonce combien de faces il croit voir sur toute la table, en montant toujours d’un cran, jusqu’à ce qu’un convive crie au menteur. Les convives assis autour de vous bluffent à leur façon, et celui qui perd la manche laisse un dé derrière lui.',
+    etat: 'Gratuit, sans compte',
+    image: `${IMG}/studio/jeux/des.webp`,
+    alt: 'La table de la taverne, les gobelets et les convives des Dés du menteur',
+    icone: 'https://vexelwebstudio.com/jeux/des/icon-192.png',
+    lien: 'https://vexelwebstudio.com/jeux/des/',
+    categorie: 'Jeux',
+    plateformes: 'iPhone, Android, Mac, Windows',
+    teinte: ['#d4a373', '#5e3023'],
+    sansCompte: true,
+  },
+  {
+    id: 'chouette',
+    rayon: 'gratuit',
+    nom: 'Le Cul de chouette',
+    ligne: 'Trois dés, deux chouettes et le cul, jusqu’à 343',
+    texte:
+      'Le jeu de dés de Kaamelott se joue ici selon le règlement que les joueurs ont fini par mettre par écrit, avec les chouettes, les velutes, les suites, le sirotage et sa mise, la grelottine et la bévue qui coûte dix points. Le premier qui atteint 343 l’emporte, et ce sont les convives de la taverne qui vous donnent la réplique.',
+    etat: 'Gratuit, sans compte',
+    image: `${IMG}/studio/jeux/chouette.webp`,
+    alt: 'Les trois dés du Cul de chouette sur la table de la taverne',
+    icone: 'https://vexelwebstudio.com/jeux/chouette/icon-192.png',
+    lien: 'https://vexelwebstudio.com/jeux/chouette/',
+    categorie: 'Jeux',
+    plateformes: 'iPhone, Android, Mac, Windows',
+    teinte: ['#c9a227', '#4a3410'],
+    sansCompte: true,
+  },
+  {
+    id: 'tarot',
+    rayon: 'gratuit',
+    nom: 'Le Tarot de Marseille',
+    ligne: 'Une lame, trois lames ou la croix celtique',
+    texte:
+      'Vous posez votre question, le paquet se mélange une seule fois et une lame sur deux sort renversée, puis chaque carte se retourne sur un tapis de velours avec sa lecture, à l’endroit comme à l’envers. Le tirage reste honnête du début à la fin, et la bougie posée au coin du tapis veille sur la séance.',
+    etat: 'Gratuit, sans compte',
+    image: `${IMG}/studio/jeux/tarot.webp`,
+    alt: 'Un tirage en croix celtique sur le tapis de velours',
+    icone: 'https://vexelwebstudio.com/jeux/tarot/icon-192.png',
+    lien: 'https://vexelwebstudio.com/jeux/tarot/',
+    categorie: 'Jeux',
+    plateformes: 'iPhone, Android, Mac, Windows',
+    teinte: ['#b5838d', '#3d1f2b'],
+    sansCompte: true,
   },
   {
     id: 'cv',
