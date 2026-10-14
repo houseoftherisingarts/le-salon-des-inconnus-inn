@@ -5,9 +5,9 @@ import json
 from modele import M
 
 SOMBRE = dict(serie=["#b58c2f", "#1fa39b", "#b5602c", "#7d6bd0", "#6f9a3c"], axe="rgba(251,247,239,.38)", grille="rgba(255,255,255,.08)",
-              texte="#f3e5ab", accent="#c5a059", muet="#5f574a", police="Lato, sans-serif")
+              texte="#f3e5ab", accent="#c5a059", muet="#5f574a", police="Schibsted Grotesk, Lato, sans-serif", etiquette="Schibsted Grotesk, Lato, sans-serif", etiquette_graisse="600", etiquette_espace="1.5", chiffre="Schibsted Grotesk, Lato, sans-serif", chiffre_graisse="700")
 CLAIR = dict(serie=["#9a7224", "#0a9189", "#9c4f22", "#6a56c2", "#5e8530"], axe="#8A6B33", grille="rgba(42,31,14,.12)",
-             texte="#2A1F0E", accent="#B08A3E", muet="#cbbb95", police="Lato, sans-serif")
+             texte="#2A1F0E", accent="#B08A3E", muet="#cbbb95", police="Lato, sans-serif", etiquette="Cinzel, serif", etiquette_graisse="400", etiquette_espace="2", chiffre="Prata, serif", chiffre_graisse="400")
 
 # Hostaway ne tient le registre que depuis décembre 2024 ; les deux janviers sont posés à 10 000 $ sur l'ordre d'Alex
 # du 14 octobre 2026 (décembre 2024 encaissé en janvier 2025, et revenus hors Hostaway en janvier 2026).
@@ -39,7 +39,7 @@ def mensuel(th=SOMBRE, w=1200, h=380):
         if v >= 13000:
             out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["police"]}">{k(v)}</text>')
         if mo == "01":
-            out.append(f'<text x="{ml + i*bw + 2:.1f}" y="{h-6}" fill="{th["texte"]}" font-size="13.5" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="600" letter-spacing="1.5">{an}</text>')
+            out.append(f'<text x="{ml + i*bw + 2:.1f}" y="{h-6}" fill="{th["texte"]}" font-size="13.5" font-family="{th["etiquette"]}" font-weight="{th["etiquette_graisse"]}" letter-spacing="{th["etiquette_espace"]}">{an}</text>')
     out.append("</svg>")
     legende = [("2026", th["accent"]), ("2025", th["muet"])]
     return "".join(out), legende
@@ -62,8 +62,8 @@ def revenus_empiles(th=SOMBRE, w=1200, h=420):
             bh = ph * v / vmax; y = mt + ph - ph * (cum + v) / vmax
             out.append(f'<rect class="bar" x="{x:.1f}" y="{y+1:.1f}" width="{ww:.1f}" height="{max(bh-2,0):.1f}" rx="{3 if j==len(SOURCES)-1 or cum+v==r["revenus"] else 0}" fill="{th["serie"][j]}" data-tip="{r["annee"]} · {nom} · {argent(v)}"><title>{r["annee"]} {nom} : {argent(v)}</title></rect>')
             cum += v
-        out.append(f'<text x="{x+ww/2:.1f}" y="{mt + ph - ph*cum/vmax - 8:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="700">{argent(cum)}</text>')
-        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="600" letter-spacing="1.5">{r["annee"]}</text>')
+        out.append(f'<text x="{x+ww/2:.1f}" y="{mt + ph - ph*cum/vmax - 8:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13" font-family="{th["chiffre"]}" font-weight="{th["chiffre_graisse"]}">{argent(cum)}</text>')
+        out.append(f'<text x="{x+ww/2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["etiquette"]}" font-weight="{th["etiquette_graisse"]}" letter-spacing="{th["etiquette_espace"]}">{r["annee"]}</text>')
     out.append("</svg>")
     legende = [(nom, th["serie"][j]) for j, (cle, nom) in enumerate(SOURCES)]
     return "".join(out), legende
@@ -82,7 +82,7 @@ def ebitda_dette(th=SOMBRE, w=1200, h=360):
             bh = ph * v / vmax; x = x0 + j * (ww + 4); y = mt + ph - bh
             out.append(f'<rect class="bar" x="{x:.1f}" y="{y:.1f}" width="{ww:.1f}" height="{bh:.1f}" rx="3" fill="{c}" data-tip="{r["annee"]} · {nom} · {argent(v)}"><title>{r["annee"]} {nom} : {argent(v)}</title></rect>')
             out.append(f'<text x="{x+ww/2:.1f}" y="{y-7:.1f}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["police"]}">{k(v)}</text>')
-        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="Schibsted Grotesk, Lato, sans-serif" font-weight="600" letter-spacing="1.5">{r["annee"]}</text>')
+        out.append(f'<text x="{x0+ww+2:.1f}" y="{h-mb+20}" text-anchor="middle" fill="{th["texte"]}" font-size="13.5" font-family="{th["etiquette"]}" font-weight="{th["etiquette_graisse"]}" letter-spacing="{th["etiquette_espace"]}">{r["annee"]}</text>')
         out.append(f'<text x="{x0+ww+2:.1f}" y="{h-4}" text-anchor="middle" fill="{th["axe"]}" font-size="13.5" font-family="{th["police"]}">couverture {str(r["dscr"]).replace(".", ",")}×</text>')
     out.append("</svg>")
     return "".join(out), [("Bénéfice d'exploitation", c1), ("Service de la dette", c2)]

@@ -17,7 +17,7 @@ def ps(paras, cls="prose"):
     return f'<div class="{cls}">' + "".join(f"<p>{e(p)}</p>" for p in paras) + "</div>"
 
 def fig(titre, sous, svg, legende, cls=""):
-    return f'<div class="verre fig {cls}"><div class="fig-titre"><h3>{e(titre)}</h3></div><div class="fig-sous">{e(sous)}</div>{svg}{G.legende_html(legende)}<div class="tip" aria-hidden="true"></div></div>'
+    return f'<div class="verre fig {cls}"><div class="fig-titre"><h3>{e(titre)}</h3></div><div class="fig-sous">{e(sous)}</div><div class="fig-corps defilant">{svg}</div>{G.legende_html(legende)}<div class="tip" aria-hidden="true"></div></div>'
 
 def hero():
     puces = "".join(f'<span class="puce"><b>{e(v)}</b>{e(l)}</span>' for v, l in C.HERO["puces"])

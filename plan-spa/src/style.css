@@ -425,3 +425,18 @@ table.postes tr.total td,table.fin tr.total td{font-weight:600;letter-spacing:-.
 .phase .montant small,.gain .v small,.tuile .chiffre small,.rupture .grand small,.scen .somme small{font-family:var(--display);font-weight:600;letter-spacing:.16em;word-spacing:normal}
 header.barre .logo,#pre .marque .nom,footer .marque b{letter-spacing:.2em}
 .puce{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.16em}
+/* Full editorial, tour 2 : une seule famille partout, DÉFILER hors des pastilles, voile sur les graphiques en mobile */
+:root{--interface:'Schibsted Grotesk','Lato',system-ui,sans-serif}
+.hero .puces{max-width:calc(100% - 170px)}
+@media (max-width:720px){
+  .hero .puces{max-width:none}
+  .fig.defilant{padding-right:0}
+}
+body{font-family:var(--lecture)}
+/* Full editorial, tour 3 : axes des graphiques dans la même famille; le voile mobile ne touche que le corps du graphique, pas son titre */
+.axe text{font-family:var(--interface)}
+.fig-corps{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:720px){
+  .fig{overflow:visible}
+  .fig-corps{margin:0 -26px;padding:0 26px}
+}
