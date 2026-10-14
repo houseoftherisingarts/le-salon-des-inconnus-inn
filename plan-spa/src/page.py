@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """La page interactive (press kit) : HTML complet, à chiffrer ensuite par _encrypt.py."""
-import html
+import html, re
 from modele import M
 import contenu as C
 import graphiques as G
 
-e = html.escape
+_NB = re.compile(r"(\d)[ \u202f\u00a0]([%$])")
+def e(t):
+    """Échappe et pose l'espace fine insécable entre un nombre et son % ou $ (jamais de % orphelin en début de ligne)."""
+    return _NB.sub("\\1\u202f\\2", html.escape(str(t)))
 argent, nombre = C.argent, C.nombre
 P, R, S = M["PROJ"], M["RENTA"], M["SCENARIOS"]
 PDF_NOM = "mini-spa-des-inconnus-plan-2027-k7x2.pdf"
@@ -288,5 +291,6 @@ def page():
 <header class="barre"><div class="col"><a class="logo" href="#haut"><img src="media/logo.png" alt=""><span>Le Mini-Spa des Inconnus</span></a><nav>{nav}</nav><a class="pdf" href="{PDF_NOM}" download>PDF</a></div></header>
 <main>{corps}</main>
 <script>{SCRIPT}</script>
+<script>document.querySelectorAll('.defilant').forEach(d=>{{const f=()=>d.classList.toggle('fin-de-course',d.scrollLeft+d.clientWidth>=d.scrollWidth-2);d.addEventListener('scroll',f,{{passive:true}});f()}})</script>
 </body>
 </html>'''

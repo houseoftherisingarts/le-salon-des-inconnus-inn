@@ -355,3 +355,12 @@ table.postes tr.total td,table.fin tr.total td{font-size:20px}
   .prose.lettrine>p:first-child::first-letter{font-size:3em}
   table.postes,table.fin{font-size:16.5px}
 }
+
+/* Tour 2 de la passe éditoriale : crénage des 1 de Prata, indice de défilement des tableaux en mobile */
+.tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.rupture .grand,.puce b{letter-spacing:.012em}
+.prose,.lead,.hero .sous,.gain p,.carte p,.jalon p,.risque p,table.postes,table.fin{font-variant-numeric:lining-nums proportional-nums}
+table.postes,table.fin{font-variant-numeric:lining-nums tabular-nums}
+@media (max-width:720px){
+  .defilant{position:relative;mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+  .defilant.fin-de-course{mask-image:none;-webkit-mask-image:none}
+}
