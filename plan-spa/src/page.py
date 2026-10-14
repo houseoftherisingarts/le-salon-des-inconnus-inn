@@ -190,6 +190,29 @@ def financement():
   </div>
 </section>'''
 
+def solidite():
+    So = C.SOLIDITE
+    th = "".join(f"<th>{e(h)}</th>" for h in So["colonnes"])
+    lignes = []
+    for i, sc in enumerate(M["SENS"]):
+        r = sc["rows"]
+        lignes.append(f'<tr class="{"base" if i == 0 else ""}"><td>{e(sc["nom"])}<small>{e(sc["note"])}</small></td><td>{C.dec(r[1]["dscr"])}×</td><td>{C.dec(r[2]["dscr"])}×</td><td>{C.dec(r[3]["dscr"])}×</td><td>{C.signe(r[2]["flux"])}</td></tr>')
+    garanties = "".join(f'<div class="verre risque"><div><div class="k">{e(k)}</div></div><p>{e(v)}</p></div>' for k, v in So["garanties"])
+    equipe = "".join(f'<div class="verre membre"><p class="eyebrow">{e(r)}</p><h3>{e(n)}</h3><p>{e(t)}</p></div>' for n, r, t in So["equipe"])
+    return f'''<section id="solidite">
+  <div class="col">
+    <div class="titre rev"><p class="eyebrow">{e(So["eyebrow"])}</p><h2>{e(So["titre"])}</h2><p class="lead">{e(So["lead"])}</p></div>
+    <div class="verre rev" style="padding:26px;overflow:auto"><table class="sens"><thead><tr>{th}</tr></thead><tbody>{"".join(lignes)}</tbody></table></div>
+    <div class="rev" style="margin-top:34px">{ps(So["prose"])}</div>
+    <div style="height:56px"></div>
+    <p class="eyebrow rev">{e(So["garanties_titre"])}</p>
+    <div class="risques rev">{garanties}</div>
+    <div style="height:56px"></div>
+    <p class="eyebrow rev">{e(So["equipe_titre"])}</p>
+    <div class="equipe rev">{equipe}</div>
+  </div>
+</section>'''
+
 def partenaires():
     Pa = C.PARTENAIRES
     sites = "".join(f'<a class="site" href="{u}" target="_blank" rel="noopener"><img src="media/{img}" alt="{e(t)}" loading="lazy"><div class="l"><b>{e(t)}</b><span>{e(d)}</span><u>{e(u.replace("https://", "").replace("www.", ""))}</u></div></a>' for t, d, u, img in Pa["sites"])
@@ -240,7 +263,7 @@ def pied():
   <div class="col colophon"><span>Le Mini-Spa des Inconnus · Plan d'affaires · Octobre 2026</span><span>Préparé par Vexel, le studio web du Salon des Inconnus</span></div>
 </footer>'''
 
-NAV = [("auberge", "L'auberge"), ("projet", "Le projet"), ("avant-apres", "Avant / après"), ("phases", "Les phases"), ("marche", "Le marché"), ("chiffres", "Les chiffres"), ("financement", "Financement"), ("partenaires", "Partenaires"), ("calendrier", "Calendrier")]
+NAV = [("auberge", "L'auberge"), ("projet", "Le projet"), ("avant-apres", "Avant / après"), ("phases", "Les phases"), ("marche", "Le marché"), ("chiffres", "Les chiffres"), ("financement", "Financement"), ("solidite", "Solidité"), ("partenaires", "Partenaires"), ("calendrier", "Calendrier")]
 
 SCRIPT = r'''
 (function(){
@@ -359,7 +382,7 @@ SCRIPT_SURVOL = r"""
 
 def page():
     nav = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in NAV)
-    corps = hero() + aujourdhui() + projet() + survol() + avant_apres() + phases() + marche() + chiffres() + financement() + partenaires() + calendrier() + fermeture() + pied()
+    corps = hero() + aujourdhui() + projet() + survol() + avant_apres() + phases() + marche() + chiffres() + financement() + solidite() + partenaires() + calendrier() + fermeture() + pied()
     return _NB.sub("\\1\u202f\\2", f'''<!DOCTYPE html>
 <html lang="fr">
 <head>

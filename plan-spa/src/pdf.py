@@ -218,6 +218,18 @@ def financement():
 <h3>{e(F["montage_titre"])}</h3><table><tbody>{montage}<tr class="total"><td>Total du projet</td><td class="n">{argent(M["TOTAL"])}</td></tr></tbody></table>
 {ps(prose)}'''
 
+def solidite():
+    So = C.SOLIDITE
+    th = "".join(f'<th class="{"" if i == 0 else "n"}">{e(h)}</th>' for i, h in enumerate(So["colonnes"]))
+    lignes = "".join(f'<tr><td>{e(sc["nom"])}<small>{e(sc["note"])}</small></td><td class="n">{C.dec(sc["rows"][1]["dscr"])}×</td><td class="n">{C.dec(sc["rows"][2]["dscr"])}×</td><td class="n">{C.dec(sc["rows"][3]["dscr"])}×</td><td class="n">{C.signe(sc["rows"][2]["flux"])}</td></tr>' for sc in M["SENS"])
+    garanties = "".join(f'<div><div class="k">{e(k)}</div>{e(v)}</div>' for k, v in So["garanties"])
+    equipe = "".join(f'<div><div class="k">{e(n)} · {e(r)}</div>{e(t)}</div>' for n, r, t in So["equipe"])
+    return f'''<p class="eyebrow">{e(So["eyebrow"])}</p><h2>{e(So["titre"])}</h2><div class="filet"></div><p>{e(So["lead"])}</p>
+<table style="font-size:10.2pt"><thead><tr>{th}</tr></thead><tbody>{lignes}</tbody></table>
+{ps(So["prose"])}
+<h3>{e(So["garanties_titre"])}</h3><div class="prevu">{garanties}</div>
+<h3 style="margin-top:10pt">{e(So["equipe_titre"])}</h3><div class="prevu">{equipe}</div>'''
+
 def partenaires_calendrier():
     Pa, Ca = C.PARTENAIRES, C.CALENDRIER
     sites = "".join(f'<div><img src="media/{img}" alt=""><b>{e(t)}</b><span>{e(d)}</span><u>{e(u.replace("https://", ""))}</u></div>' for t, d, u, img in [(Pa["mapchef"]["titre"], "Marc-Alexis Pepin, chef consultant", Pa["mapchef"]["url"], Pa["mapchef"]["image"])] + Pa["sites"][:2])
@@ -243,6 +255,6 @@ def document():
         pages.append((f"aa{i}", pg, ""))
     for p in M["PHASES"]:
         pages.append((f"phase{p['id']}", phase_page(p), ""))
-    pages += [("marche", marche(), ""), ("chiffres", chiffres(), ""), ("projections", projections(), ""), ("financement", financement(), ""), ("partenaires", partenaires_calendrier(), ""), ("sources", prevu_sources(), "")]
+    pages += [("marche", marche(), ""), ("chiffres", chiffres(), ""), ("projections", projections(), ""), ("financement", financement(), ""), ("solidite", solidite(), ""), ("partenaires", partenaires_calendrier(), ""), ("sources", prevu_sources(), "")]
     corps = "".join(page(c, i + 1, cls) if k != "couverture" else f'<div class="page">{c}</div>' for i, (k, c, cls) in enumerate(pages))
     return f'<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>Le Mini-Spa des Inconnus · Plan d\'affaires</title><style>{CSS}</style></head><body>{corps}</body></html>'

@@ -184,6 +184,39 @@ CALENDRIER = dict(
     ],
 )
 
+def dec(x):
+    return f"{x:.2f}".replace(".", ",")
+
+def signe(n):
+    return argent(n).replace("-", "\u2212")
+
+GA = M["GARANTIES"]
+_s10, _s20, _taux, _retard = M["SENS"][1]["rows"], M["SENS"][2]["rows"], M["SENS"][3]["rows"], M["SENS"][4]["rows"]
+SOLIDITE = dict(
+    eyebrow="La solidité du dossier",
+    titre="Ce qui tient si l'année est moins bonne",
+    lead="Un prêteur ne finance pas le meilleur scénario, il finance celui qui traverse les mauvaises saisons. Le tableau refait les projections avec moins de visiteurs, un taux plus haut et une ouverture retardée, sans toucher aux autres hypothèses, et chaque ligne garde le service de la dette actuelle de la Banque Nationale.",
+    colonnes=("Scénario", "Couverture 2028", "Couverture 2029", "Couverture 2030", "Flux libre 2029"),
+    prose=[
+        f"À dix pour cent de moins sur toutes les sources de revenus, la couverture de la dette reste à {dec(_s10[1]['dscr'])} en 2028 et monte à {dec(_s10[2]['dscr'])} en 2029. À vingt pour cent de moins, l'année 2028 ne couvre pas seule : il manque {signe(-_s20[1]['flux'])}, que la marge de crédit d'exploitation de {argent(GA['marge_rbc'])} absorbe, et la couverture repasse {dec(_s20[2]['dscr'])} dès 2029, parce que les salaires du spa sont fixes pendant que les visites grimpent.",
+        f"Le taux et le calendrier pèsent moins que la fréquentation. Deux points de plus sur le prêt coûtent {argent(_taux[1]['service_total'] - P[1]['service_total'])} par année et laissent la couverture à {dec(_taux[1]['dscr'])} en 2028; une ouverture repoussée à mai 2028 la garde à {dec(_retard[1]['dscr'])}, parce que les salaires du spa commencent avec les bains et que l'hiver 2028-2029 arrive de toute façon.",
+    ],
+    garanties_titre="Les garanties",
+    garanties=[
+        ("L'immeuble", f"Le manoir et ses cinq acres valent autour de {argent(GA['valeur_avant'])} avant les travaux, pour une dette actuelle de {argent(M['DETTE']['solde'])}. Après le projet, la dette totale de {argent(GA['dette_apres'])} représente {GA['ratio']} % de la valeur avant travaux additionnée du coût du projet."),
+        ("Le rang", f"La Banque Nationale garde le premier rang pour {argent(M['DETTE']['solde'])}; le nouveau prêt prend le second rang sur l'immeuble, et les bassins, la filtration et les saunas peuvent porter une garantie mobilière distincte."),
+        ("Ce qui n'emprunte pas", f"La contribution de Tourisme Outaouais et la mise de fonds du promoteur, {argent(GA['sans_emprunt'])} ensemble, couvrent {GA['part_sans_emprunt']} % du projet sans dette."),
+        ("La réserve", f"La marge de crédit d'exploitation de {argent(GA['marge_rbc'])} reste disponible pour les écarts de saison, et le prêt porte des intérêts seulement pendant l'année de chantier."),
+    ],
+    equipe_titre="L'équipe",
+    equipe=[
+        ("Alex Turcot St-Laurent", "Direction", f"Propriétaire et aubergiste depuis 2021, administrateur unique de 9380-0589 Québec inc. Sous sa direction, les revenus de l'auberge sont passés de {argent(EF[2023][0])} à {argent(EF[2025][0])} en deux ans, sans investissement majeur."),
+        ("Premium Booking", "Gestion de l'hébergement", "Gestionnaire de l'auberge depuis octobre 2026 : réservations, tarification et service aux voyageurs, rémunéré à commission sur les revenus. Son prévisionnel 2027 sert de plancher aux projections d'hébergement."),
+        ("MapChef", "La table", "Marc-Alexis Pepin, chef consultant, conçoit la carte du café et des retraites avec les producteurs de la Petite-Nation."),
+        ("Les soins et les comptes", "Massothérapie et comptabilité", "Une massothérapeute pratique déjà au domaine et forme le noyau de l'offre de soins. Consultant EC inc. tient les états financiers annuels de l'entreprise depuis sa fondation."),
+    ],
+)
+
 PIED = dict(
     entreprise="9380-0589 Québec inc., exploitant Le Salon des Inconnus",
     adresse="826, Côte-à-Favier, Namur (Québec) J0V 1N0",

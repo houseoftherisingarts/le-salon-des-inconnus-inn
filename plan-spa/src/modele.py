@@ -89,10 +89,10 @@ assert FIN["bdc"] + FIN["pdto"] + FIN["mise_de_fonds"] == TOTAL
 def annuite(capital, taux, n):
     return capital * taux / (1 - (1 + taux) ** -n)
 
-def projeter(hyp=HYP, fin=FIN, phases=(1, 2, 3)):
+def projeter(hyp=HYP, fin=FIN, phases=(1, 2, 3), opex_t=OPEX, pb=PB_HEB):
     rows = []
     for i, an in enumerate(ANNEES):
-        heb = max(hyp["nuits"][i] * hyp["adr"][i], PB_HEB.get(an, 0))
+        heb = max(hyp["nuits"][i] * hyp["adr"][i], pb.get(an, 0))
         acces = hyp["visites_jour"][i] * hyp["jours_ouverts"][i] * PRIX["acces_moyen"]
         mass = hyp["massages"][i] * PRIX["massage60"] * PRIX["part_massage"]
         cafe = hyp["cafe"][i] * MARGE_CAFE
@@ -103,8 +103,8 @@ def projeter(hyp=HYP, fin=FIN, phases=(1, 2, 3)):
             heb = round(heb * 0.93)
         rev = heb + acces + mass + cafe + retr
         heb_add = max(0, heb - T12["revenus"])
-        opex = (OPEX["base"] + OPEX["var_hebergement"] * heb_add + OPEX["var_spa"] * acces + OPEX["energie_spa"][i]
-                + OPEX["labo_entretien"][i] + OPEX["assurances"][i] + OPEX["preposes"][i] + OPEX["direction"][i] + OPEX["equipe_cafe"][i] + OPEX["marketing"][i])
+        opex = (opex_t["base"] + opex_t["var_hebergement"] * heb_add + opex_t["var_spa"] * acces + opex_t["energie_spa"][i]
+                + opex_t["labo_entretien"][i] + opex_t["assurances"][i] + opex_t["preposes"][i] + opex_t["direction"][i] + opex_t["equipe_cafe"][i] + opex_t["marketing"][i])
         ebitda = rev - opex
         # An 1 : intérêts seulement (BDC, jusqu'à 36 mois possibles)
         if i == 0:
@@ -157,7 +157,28 @@ for k, r in RENTA.items():
     r["retour_ans"] = round(cout / r["contribution"], 1)
     r["cout"] = cout
 
-M = dict(PB=PB, T12=T12, EF=EF, INTERIM=INTERIM_2026, UNITES=UNITES, DETTE=DETTE_ACTUELLE, PHASES=PHASES, TOTAL=TOTAL, PRIX=PRIX,
+# ---------- sensibilité : les mêmes projections avec moins de visiteurs, un taux plus haut, une ouverture retardée (ce qu'un prêteur demande)
+def _k(l, c): return [round(v * c) for v in l]
+def _moins(c):
+    return dict(HYP, nuits=_k(HYP["nuits"], c), visites_jour=_k(HYP["visites_jour"], c), massages=_k(HYP["massages"], c),
+                cafe=_k(HYP["cafe"], c), retraites=_k(HYP["retraites"], c))
+_retard_hyp = dict(HYP, jours_ouverts=[0, 150, 250, 250, 250], massages=[0, 330, 800, 950, 1000], cafe=[0, 23000, 55000, 62000, 66000],
+                   retraites=[18000, 27000, 48000, 54000, 58000])
+_retard_opex = dict(OPEX, energie_spa=[0, 15000, 25000, 26000, 27000], labo_entretien=[0, 5600, 9500, 10000, 10500],
+                    preposes=[0, 39000, 86000, 92000, 95000], equipe_cafe=[0, 14000, 26000, 28000, 29000])
+SENS = [
+    dict(nom="Le plan", note="les hypothèses du document", rows=PROJ),
+    dict(nom="Dix pour cent de moins", note="nuits, visites, massages, café et retraites réduits de 10 %, sans le plancher de Premium Booking", rows=projeter(hyp=_moins(0.9), pb={})),
+    dict(nom="Vingt pour cent de moins", note="les mêmes postes réduits de 20 %", rows=projeter(hyp=_moins(0.8), pb={})),
+    dict(nom="Taux à 9,75 %", note="deux points de plus sur le prêt, tout le reste égal", rows=projeter(fin=dict(FIN, taux=0.0975))),
+    dict(nom="Ouverture en mai 2028", note="six mois de retard : l'hiver 2027-2028 est perdu, et les salaires du spa commencent avec lui", rows=projeter(hyp=_retard_hyp, opex_t=_retard_opex)),
+]
+GARANTIES = dict(valeur_avant=750000, dette_apres=DETTE_ACTUELLE["solde"] + FIN["bdc"], base_cout=750000 + TOTAL,
+                 marge_rbc=25000, sans_emprunt=FIN["pdto"] + FIN["mise_de_fonds"])
+GARANTIES["ratio"] = round(100 * GARANTIES["dette_apres"] / GARANTIES["base_cout"])
+GARANTIES["part_sans_emprunt"] = round(100 * GARANTIES["sans_emprunt"] / TOTAL)
+
+M = dict(SENS=SENS, GARANTIES=GARANTIES, PB=PB, T12=T12, EF=EF, INTERIM=INTERIM_2026, UNITES=UNITES, DETTE=DETTE_ACTUELLE, PHASES=PHASES, TOTAL=TOTAL, PRIX=PRIX,
          HYP=HYP, OPEX=OPEX, FIN=FIN, PROJ=PROJ, SCENARIOS=SCENARIOS, RENTA=RENTA, ANNEES=ANNEES,
          annuite_bdc=round(annuite(FIN["bdc"], FIN["taux"], FIN["amort"])))
 
