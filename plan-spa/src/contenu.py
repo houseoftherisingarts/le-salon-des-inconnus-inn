@@ -49,6 +49,22 @@ PROJET = dict(
     ],
 )
 
+SURVOL = dict(
+    eyebrow="Le domaine vu du ciel",
+    titre="Le spa se pose dans la clairière",
+    lead="La photo est réelle, prise au-dessus du manoir cet automne. Au fil du défilement, les installations de la phase 1 viennent prendre leur place dans la clairière, à l'échelle, sans toucher à la maison.",
+    # (titre, ligne, index du poste dans PHASES[0], points (x, y, rayon)), coordonnées normalisées sur l'image survol-apres; le premier point porte le marqueur
+    etapes=[
+        ("Le sauna finlandais", "Dix places en cèdre et un poêle commercial certifié CSA, posés à l'orée de la clairière, la cheminée tournée vers la forêt.", 2, [(0.333, 0.815, 0.065)]),
+        ("Les deux bains chauds", "Deux cuves de cèdre tenues à 40 °C, le rebord en pierre, et la vapeur qui monte dès les premiers froids d'octobre.", 0, [(0.405, 0.886, 0.055), (0.511, 0.883, 0.055)]),
+        ("Le bain froid", "Un bassin de pierre et de cèdre à 12 °C l'été, glacé l'hiver, à trois pas des bains chauds pour fermer le cycle chaud-froid.", 1, [(0.502, 0.933, 0.032)]),
+        ("Le sauna vapeur à l'eucalyptus", "Un hammam maçonné à 46 °C sous la charpente de bois, qui abrite aussi les baigneurs de la neige et de la pluie entre deux bassins.", 3, [(0.475, 0.812, 0.06)]),
+        ("Les terrasses et les passerelles", "Les terrasses de cèdre, les douches extérieures et les lanternes qui relient les bassins en un seul parcours, du vestiaire au bain froid.", 5, [(0.445, 0.873, 0.17), (0.372, 0.848, 0.03), (0.457, 0.838, 0.03), (0.462, 0.912, 0.03)]),
+    ],
+    fin=("Phase 1", "Le cœur thermal", "Les bains ouvrent en novembre 2027, et la maison, elle, ne bouge pas : tout se pose autour d'elle, dans la clairière qui existe déjà."),
+)
+
+
 AVANT_APRES = dict(
     eyebrow="Avant et après",
     titre="Les mêmes lieux, vus en 2028",

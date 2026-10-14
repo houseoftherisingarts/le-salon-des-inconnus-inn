@@ -464,3 +464,41 @@ table.postes tr.total td,table.fin tr.total td{font-weight:500;letter-spacing:-.
 .tuile{padding-right:24px}
 .carte h3,.scen h3,.gain h3,.risque h3,.phase h3{font-weight:600}
 @media (max-width:720px){.hero .eyebrow{font-size:10.5px;letter-spacing:.13em;line-height:1.5}}
+
+/* ---- Le domaine vu du ciel : scrollytelling sur la photo de drone (14 octobre 2026). Deux images, un canvas, les installations de la phase 1 se révèlent au défilement. ---- */
+.survol{padding:0;height:460vh;height:460svh;position:relative}
+.survol .colle{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--nuit-2);isolation:isolate}
+.survol canvas{position:absolute;inset:0;display:block;opacity:0;transition:opacity 1.2s var(--sortie)}
+.survol.pret canvas{opacity:1}
+.survol .repli{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:46% 80%;display:none}
+.survol.statique .repli{display:block}
+.survol.statique canvas{display:none}
+.survol .voile{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,.62),rgba(5,5,5,0) 38%,rgba(5,5,5,0) 72%,rgba(5,5,5,.45))}
+.survol .entete{position:absolute;left:0;right:0;top:clamp(96px,15vh,150px);transition:opacity .7s var(--sortie),transform .7s var(--sortie)}
+.survol .entete.efface{opacity:0;transform:translateY(-14px);pointer-events:none}
+.survol .entete h2{font-size:clamp(34px,4.4vw,66px);max-width:17ch;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.survol .entete .lead{margin-top:20px;max-width:52ch;color:var(--texte);text-shadow:0 1px 18px rgba(0,0,0,.7)}
+.survol .etapes{position:absolute;right:clamp(20px,4vw,64px);top:clamp(96px,14vh,140px);width:min(440px,calc(100% - 40px));pointer-events:none}
+.survol .etape{position:absolute;right:0;top:0;width:100%;padding:26px 28px 24px;background:var(--verre);border:1px solid var(--verre-bord);border-radius:var(--r);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 30px 80px rgba(0,0,0,.4);opacity:0;transform:translateY(16px);transition:opacity .55s var(--sortie),transform .55s var(--sortie)}
+.survol .etape.vu{opacity:1;transform:none}
+.survol .etape .num{font-family:var(--display);font-weight:500;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--or)}
+.survol .etape h3{font-size:clamp(22px,1.9vw,28px);margin-top:10px;font-weight:600}
+.survol .etape p{margin:12px 0 0;font-size:15.5px;line-height:1.55;color:var(--texte)}
+.survol .etape .cout{margin-top:16px;font-family:var(--display);font-weight:500;font-size:26px;letter-spacing:-.03em;color:var(--or-2);font-variant-numeric:tabular-nums;font-feature-settings:"tnum","cv11","ss01"}
+.survol .etape.fin{border-color:rgba(197,160,89,.55)}
+.survol .jauge{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.08)}
+.survol .jauge i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--or),var(--or-2));transform:scaleX(0);transform-origin:left}
+.survol.statique .etapes{position:static;width:auto;padding:24px;display:grid;gap:12px;pointer-events:auto}
+.survol.statique .etape{position:static;opacity:1;transform:none}
+@media (max-width:720px){
+  .survol{height:420svh}
+  .survol .entete{top:86px}
+  .survol .voile{background:linear-gradient(180deg,rgba(5,5,5,.7),rgba(5,5,5,0) 42%,rgba(5,5,5,0) 78%,rgba(5,5,5,.22))}
+  .survol .entete h2{font-size:30px;max-width:16ch}
+  .survol .entete .lead{font-size:15px;margin-top:14px}
+  .survol .etapes{right:16px;left:16px;top:84px;width:auto}
+  .survol .etape{padding:18px 18px 16px}
+  .survol .etape h3{font-size:20px}
+  .survol .etape p{font-size:14px}
+  .survol .etape .cout{font-size:22px;margin-top:12px}
+}

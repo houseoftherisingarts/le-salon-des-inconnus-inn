@@ -64,6 +64,27 @@ def projet():
   </div>
 </section>'''
 
+def survol():
+    """Le domaine vu du ciel : la vraie photo de drone, et les installations de la phase 1 qui se posent au fil du défilement (canvas scrubbé, deux images)."""
+    V = C.SURVOL
+    postes = M["PHASES"][0]["postes"]
+    etapes = []
+    for i, (titre, ligne, poste, _pts) in enumerate(V["etapes"]):
+        etapes.append(f'<div class="etape" data-i="{i}"><div class="num">0{i+1}</div><h3>{e(titre)}</h3><p>{e(ligne)}</p><div class="cout">{argent(postes[poste][2])}</div></div>')
+    pts = ";".join("|".join(f"{x},{y},{r}" for x, y, r in ps_) for _, _, _, ps_ in V["etapes"])
+    fin = V["fin"]
+    return f'''<section class="survol" id="survol" data-points="{pts}">
+  <div class="colle">
+    <canvas aria-hidden="true"></canvas>
+    <img class="repli" src="media/survol-apres.webp" alt="Le domaine vu du ciel avec les installations de la phase 1" loading="lazy">
+    <div class="voile" aria-hidden="true"></div>
+    <div class="col entete"><p class="eyebrow">{e(V["eyebrow"])}</p><h2>{e(V["titre"])}</h2><p class="lead">{e(V["lead"])}</p></div>
+    <div class="etapes">{"".join(etapes)}<div class="etape fin" data-i="{len(etapes)}"><div class="num">{e(fin[0])}</div><h3>{e(fin[1])}</h3><p>{e(fin[2])}</p><div class="cout">{argent(M["PHASES"][0]["cout"])}</div></div></div>
+    <div class="jauge" aria-hidden="true"><i></i></div>
+  </div>
+</section>'''
+
+
 def avant_apres():
     A = C.AVANT_APRES
     items = []
@@ -262,9 +283,72 @@ SCRIPT = r'''
 })();
 '''
 
+SCRIPT_SURVOL = r"""
+(function(){
+  var sec=document.getElementById('survol'); if(!sec) return;
+  var cv=sec.querySelector('canvas'), colle=sec.querySelector('.colle'), entete=sec.querySelector('.entete'), jauge=sec.querySelector('.jauge i');
+  var etapes=[].slice.call(sec.querySelectorAll('.etape'));
+  var reduit=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(reduit||!cv.getContext){sec.classList.add('statique');etapes.forEach(function(x){x.classList.add('vu')});return;}
+  var pts=sec.getAttribute('data-points').split(';').map(function(s){return s.split('|').map(function(q){var a=q.split(',').map(Number);return {x:a[0],y:a[1],r:a[2]}})});
+  var N=pts.length, DEBUT=0.08, PAS=0.15, DUREE=0.12;
+  var mob=window.innerWidth<=720, suffixe='';
+  var avant=new Image(), apres=new Image(), prets=0;
+  avant.src='media/survol-avant'+suffixe+'.webp'; apres.src='media/survol-apres'+suffixe+'.webp';
+  avant.onload=apres.onload=function(){prets++; if(prets===2){sec.classList.add('pret');dessine(true)}};
+  var ctx=cv.getContext('2d'), off=document.createElement('canvas'), octx=off.getContext('2d'), masque=document.createElement('canvas'), mctx=masque.getContext('2d');
+  var cible=0, cour=0, actif=false, W=0, H=0, dpr=1, derniere=-1;
+  function taille(){dpr=Math.min(2,window.devicePixelRatio||1);var b=colle.getBoundingClientRect();W=Math.round(b.width);H=Math.round(b.height);
+    [cv,off,masque].forEach(function(c){c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)});cv.style.width=W+'px';cv.style.height=H+'px';derniere=-1;}
+  function sortie(t){return 1-Math.pow(1-Math.max(0,Math.min(1,t)),5)}
+  function progres(){var r=sec.getBoundingClientRect();var course=sec.offsetHeight-window.innerHeight;return course>0?Math.max(0,Math.min(1,-r.top/course)):0}
+  function cadre(p){
+    var iw=avant.naturalWidth, ih=avant.naturalHeight; var z=mob?1+0.05*p:1+0.34*sortie(p/0.4);
+    var s=Math.max(W/iw,H/ih)*z; var dw=iw*s, dh=ih*s;
+    var fx=mob?0.43:0.46, fy=0.86;
+    var ox=W/2-fx*dw, oy=H/2-fy*dh; ox=Math.min(0,Math.max(W-dw,ox)); oy=Math.min(0,Math.max(H-dh,oy));
+    return {s:s,ox:ox,oy:oy,dw:dw,dh:dh};
+  }
+  function dessine(force){
+    if(prets<2||!W) return; var p=cour; if(!force&&Math.abs(p-derniere)<0.0005) return; derniere=p;
+    var c=cadre(p); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+    ctx.drawImage(avant,c.ox,c.oy,c.dw,c.dh);
+    mctx.setTransform(dpr,0,0,dpr,0,0); mctx.clearRect(0,0,W,H); var tout=0, ks=[];
+    for(var i=0;i<N;i++){ks[i]=sortie((p-(DEBUT+i*PAS))/DUREE);}
+    mctx.globalCompositeOperation='source-over';
+    for(var i=0;i<N;i++){var k=ks[i]; if(k<=0) continue; tout++;
+      pts[i].forEach(function(q){var x=c.ox+q.x*c.dw, y=c.oy+q.y*c.dh, R=q.r*c.dw*k+1;
+      var g=mctx.createRadialGradient(x,y,0,x,y,R); g.addColorStop(0,'rgba(0,0,0,1)'); g.addColorStop(0.5,'rgba(0,0,0,1)'); g.addColorStop(1,'rgba(0,0,0,0)');
+      mctx.fillStyle=g; mctx.beginPath(); mctx.arc(x,y,R,0,Math.PI*2); mctx.fill();});}
+    /* les installations à venir restent cachées : on perce leur zone dans le masque, et le trou se referme à mesure qu'elles se révèlent */
+    mctx.globalCompositeOperation='destination-out';
+    for(var i=0;i<N;i++){var k2=ks[i]; if(k2>=1) continue;
+      pts[i].forEach(function(q){if(q.r>0.1) return; var x=c.ox+q.x*c.dw, y=c.oy+q.y*c.dh, R=Math.min(q.r,0.065)*c.dw*(1-k2)*0.95+1;
+      var g=mctx.createRadialGradient(x,y,0,x,y,R); g.addColorStop(0,'rgba(0,0,0,1)'); g.addColorStop(0.6,'rgba(0,0,0,1)'); g.addColorStop(1,'rgba(0,0,0,0)');
+      mctx.fillStyle=g; mctx.beginPath(); mctx.arc(x,y,R,0,Math.PI*2); mctx.fill();});}
+    if(tout){octx.setTransform(dpr,0,0,dpr,0,0); octx.globalCompositeOperation='source-over'; octx.clearRect(0,0,W,H); octx.drawImage(apres,c.ox,c.oy,c.dw,c.dh);
+      octx.globalCompositeOperation='destination-in'; octx.drawImage(masque,0,0,W,H); ctx.drawImage(off,0,0,W,H);}
+    var act=-1; for(var j=0;j<N;j++){if(p>=DEBUT+j*PAS) act=j;} if(p>=DEBUT+N*PAS-0.02) act=N;
+    if(act>=0&&act<N){var q=pts[act][0], X=c.ox+q.x*c.dw, Y=c.oy+q.y*c.dh, tt=(p-(DEBUT+act*PAS))/DUREE, a=Math.min(1,tt*2);
+      ctx.strokeStyle='rgba(217,185,120,'+(0.9*a)+')'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(X,Y,14,0,Math.PI*2); ctx.stroke();
+      ctx.fillStyle='rgba(243,229,171,'+a+')'; ctx.beginPath(); ctx.arc(X,Y,3.5,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='rgba(217,185,120,'+(0.35*a)+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.arc(X,Y,26,0,Math.PI*2); ctx.stroke();}
+    etapes.forEach(function(el,i){el.classList.toggle('vu',i===act)});
+    entete.classList.toggle('efface',p>0.05); jauge.style.transform='scaleX('+p+')';
+  }
+  function boucle(){cour+=(cible-cour)*0.16; if(Math.abs(cible-cour)<0.0004) cour=cible; dessine(false); if(actif) requestAnimationFrame(boucle);}
+  function surScroll(){cible=progres()}
+  window.addEventListener('scroll',surScroll,{passive:true}); window.addEventListener('resize',function(){taille();surScroll();dessine(true)});
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(en){var av=actif;actif=en.isIntersecting;if(actif&&!av){surScroll();requestAnimationFrame(boucle)}})},{rootMargin:'20% 0px'}).observe(sec);}
+  else {actif=true;requestAnimationFrame(boucle)}
+  taille(); surScroll(); cour=cible;
+})();
+"""
+
+
 def page():
     nav = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in NAV)
-    corps = hero() + aujourdhui() + projet() + avant_apres() + phases() + marche() + chiffres() + financement() + partenaires() + calendrier() + fermeture() + pied()
+    corps = hero() + aujourdhui() + projet() + survol() + avant_apres() + phases() + marche() + chiffres() + financement() + partenaires() + calendrier() + fermeture() + pied()
     return _NB.sub("\\1\u202f\\2", f'''<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -291,6 +375,7 @@ def page():
 <header class="barre"><div class="col"><a class="logo" href="#haut"><img src="media/logo.png" alt=""><span>Le Mini-Spa des Inconnus</span></a><nav>{nav}</nav><a class="pdf" href="{PDF_NOM}" download>PDF</a></div></header>
 <main>{corps}</main>
 <script>{SCRIPT}</script>
+<script>{SCRIPT_SURVOL}</script>
 <script>document.querySelectorAll('.defilant').forEach(d=>{{const f=()=>d.classList.toggle('fin-de-course',d.scrollLeft+d.clientWidth>=d.scrollWidth-2);d.addEventListener('scroll',f,{{passive:true}});f()}})</script>
 </body>
 </html>''')
