@@ -273,7 +273,7 @@ def page():
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Le Mini-Spa des Inconnus · Plan d'affaires</title>
 <link rel="icon" href="media/logo.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v={int(__import__("time").time())}">
 <style>
 .phases-cartes{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}}
 .phase-carte{{border:1px solid #c9a565;border-radius:15px;padding:24px 26px;background:rgba(255,255,255,.35)}}

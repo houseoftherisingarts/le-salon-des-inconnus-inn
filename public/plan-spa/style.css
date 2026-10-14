@@ -372,3 +372,8 @@ table.postes tr.total td,table.fin tr.total td,.rupture .grand{letter-spacing:.0
 
 /* Tour 3 bis : les groupes de milliers respirent dans les gros chiffres Prata */
 .tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.puce b,.onglets button b,.rupture .grand{word-spacing:.18em}
+
+/* Tour 4 : milliers et 1 de Prata, dernier réglage */
+.tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.puce b{word-spacing:.3em;letter-spacing:.05em}
+.onglets button b{font-size:16.5px;word-spacing:.32em;letter-spacing:.07em}
+table.postes tr.total td,table.fin tr.total td{word-spacing:.22em;letter-spacing:.035em}
