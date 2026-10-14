@@ -545,3 +545,12 @@ table.sens tr:last-child td{border-bottom:0}
 .membre p{font-size:14.5px;color:var(--doux);margin:0;line-height:1.55}
 @media (max-width:900px){.equipe{grid-template-columns:1fr 1fr}}
 @media (max-width:720px){.equipe{grid-template-columns:1fr}table.sens{font-size:14px}table.sens td small{max-width:none}}
+
+/* ---- section Montage (14 octobre 2026) ---- */
+.etapes-m{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.etape-m{padding:24px 24px 26px}
+.etape-m h3{font-size:21px;margin:8px 0 10px}
+.etape-m p{font-size:14.5px;color:var(--doux);margin:0;line-height:1.55}
+.etape-m p.eyebrow{color:var(--or);margin:0}
+@media (max-width:900px){.etapes-m{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){.etapes-m{grid-template-columns:1fr}}

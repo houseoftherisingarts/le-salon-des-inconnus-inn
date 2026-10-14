@@ -244,6 +244,17 @@ def calendrier():
   </div>
 </section>'''
 
+def montage():
+    Mo = C.MONTAGE
+    cartes = "".join(f'<div class="verre etape-m"><p class="eyebrow">{e(n)} · {e(st)}</p><h3>{e(t)}</h3><p>{e(d)}</p></div>' for n, t, st, d in Mo["etapes"])
+    return f'''<section id="montage">
+  <div class="col">
+    <div class="titre rev"><p class="eyebrow">{e(Mo["eyebrow"])}</p><h2>{e(Mo["titre"])}</h2><p class="lead">{e(Mo["lead"])}</p></div>
+    <div class="etapes-m rev">{cartes}</div>
+    <p class="muted rev" style="margin-top:26px;font-size:14.5px;max-width:70ch">{e(Mo["note"])}</p>
+  </div>
+</section>'''
+
 def fermeture():
     return f'''<section class="plein" id="fin">
   <div class="fond"><img src="media/apres-hiver.jpg" alt="Le parcours thermal en hiver" loading="lazy"></div><div class="voile"></div>
@@ -263,7 +274,7 @@ def pied():
   <div class="col colophon"><span>Le Mini-Spa des Inconnus · Plan d'affaires · Octobre 2026</span><span>Préparé par Vexel, le studio web du Salon des Inconnus</span></div>
 </footer>'''
 
-NAV = [("auberge", "L'auberge"), ("projet", "Le projet"), ("avant-apres", "Avant / après"), ("phases", "Les phases"), ("marche", "Le marché"), ("chiffres", "Les chiffres"), ("financement", "Financement"), ("solidite", "Solidité"), ("partenaires", "Partenaires"), ("calendrier", "Calendrier")]
+NAV = [("auberge", "L'auberge"), ("projet", "Le projet"), ("avant-apres", "Avant / après"), ("phases", "Les phases"), ("marche", "Le marché"), ("chiffres", "Les chiffres"), ("financement", "Financement"), ("solidite", "Solidité"), ("partenaires", "Partenaires"), ("calendrier", "Calendrier"), ("montage", "Montage")]
 
 SCRIPT = r'''
 (function(){
@@ -382,7 +393,7 @@ SCRIPT_SURVOL = r"""
 
 def page():
     nav = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in NAV)
-    corps = hero() + aujourdhui() + projet() + survol() + avant_apres() + phases() + marche() + chiffres() + financement() + solidite() + partenaires() + calendrier() + fermeture() + pied()
+    corps = hero() + aujourdhui() + projet() + survol() + avant_apres() + phases() + marche() + chiffres() + financement() + solidite() + partenaires() + calendrier() + montage() + fermeture() + pied()
     return _NB.sub("\\1\u202f\\2", f'''<!DOCTYPE html>
 <html lang="fr">
 <head>

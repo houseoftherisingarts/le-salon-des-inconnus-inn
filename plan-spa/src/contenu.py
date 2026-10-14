@@ -217,6 +217,28 @@ SOLIDITE = dict(
     ],
 )
 
+_bnc_4 = round((246118.10 * (0.04 / 12) / (1 - (1 + 0.04 / 12) ** -240) + 201.08) * 12)
+MONTAGE = dict(
+    eyebrow="Le montage financier",
+    titre="Le montage, étape par étape",
+    lead=f"La demande porte sur le plan complet de {argent(M['TOTAL'])}, et les scénarios L'essentiel et La vision restent au dossier pour que chaque prêteur choisisse l'ampleur. Voici où en est chaque source, dans l'ordre où elles entrent dans le montage.",
+    etapes=[
+        ("Étape 1", "Banque Nationale, premier rang", "En cours",
+         f"L'hypothèque actuelle de {argent(M['DETTE']['solde'])} reste au premier rang. Son refinancement à 4 % est en cours et ramènerait le service de {argent(M['DETTE']['service_annuel'])} à {argent(_bnc_4)} par année; les projections gardent le service d'aujourd'hui."),
+        ("Étape 2", "BDC, prêt immobilier commercial", "Demande déposée à l'automne 2026",
+         f"{argent(M['FIN']['bdc'])} amortis sur 20 ans, intérêts seulement pendant le chantier, second rang sur l'immeuble et garantie mobilière sur les équipements. Lettre d'intention visée avant le 15 décembre 2026."),
+        ("Étape 3", "Tourisme Outaouais, PDTO 2025-2027", "Dépôt au prochain appel de projets",
+         f"Contribution non remboursable de {argent(M['FIN']['pdto'])}, catégorie Hébergement, versée sur réclamation après les dépenses."),
+        ("Étape 4", "Investissement Québec, PADAT", "Dépôt avant le 31 décembre 2026",
+         "Prêt ou garantie de prêt jusqu'à 50 % des dépenses admissibles, amorti jusqu'à 25 ans avec trois ans de moratoire de capital, en complément ou en garantie du prêt principal."),
+        ("Étape 5", "MRC de Papineau, FLI et FLS", "Complément",
+         "Fonds local d'investissement jusqu'à 150 000 $ et fonds local de solidarité jusqu'à 100 000 $, en second rang, selon ce que les étapes 2 à 4 laissent à couvrir."),
+        ("Étape 6", "Mise de fonds", "Confirmée",
+         f"{argent(M['FIN']['mise_de_fonds'])} d'apport familial, auxquels s'ajoutent les honoraires de plan et d'études déjà engagés."),
+    ],
+    note="Les aides publiques réunies ne dépassent pas la moitié des dépenses admissibles; le prêt principal et la mise de fonds portent le reste.",
+)
+
 PIED = dict(
     entreprise="9380-0589 Québec inc., exploitant Le Salon des Inconnus",
     adresse="826, Côte-à-Favier, Namur (Québec) J0V 1N0",

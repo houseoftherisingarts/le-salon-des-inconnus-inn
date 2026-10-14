@@ -239,6 +239,13 @@ def partenaires_calendrier():
 <div class="sites">{sites}</div>
 <p class="eyebrow" style="margin-top:14pt">{e(Ca["eyebrow"])}</p><h2 style="font-size:14pt">{e(Ca["titre"])}</h2><div class="jalons">{jalons}</div>'''
 
+def montage():
+    Mo = C.MONTAGE
+    cartes = "".join(f'<div class="jalon"><div class="q">{e(n)} · {e(st)}</div><div class="t">{e(t)}</div>{e(d)}</div>' for n, t, st, d in Mo["etapes"])
+    return f'''<p class="eyebrow">{e(Mo["eyebrow"])}</p><h2>{e(Mo["titre"])}</h2><div class="filet"></div><p>{e(Mo["lead"])}</p>
+<div class="jalons" style="grid-template-columns:1fr 1fr;gap:10pt 16pt;margin-top:8pt">{cartes}</div>
+<p style="font-size:10.4pt;margin-top:10pt">{e(Mo["note"])}</p>'''
+
 def prevu_sources():
     Ca, Pi = C.CALENDRIER, C.PIED
     prevu = "".join(f'<div><div class="k">{e(k)}</div>{e(v)}</div>' for k, v in Ca["prevu"])
@@ -255,6 +262,6 @@ def document():
         pages.append((f"aa{i}", pg, ""))
     for p in M["PHASES"]:
         pages.append((f"phase{p['id']}", phase_page(p), ""))
-    pages += [("marche", marche(), ""), ("chiffres", chiffres(), ""), ("projections", projections(), ""), ("financement", financement(), ""), ("solidite", solidite(), ""), ("partenaires", partenaires_calendrier(), ""), ("sources", prevu_sources(), "")]
+    pages += [("marche", marche(), ""), ("chiffres", chiffres(), ""), ("projections", projections(), ""), ("financement", financement(), ""), ("solidite", solidite(), ""), ("partenaires", partenaires_calendrier(), ""), ("montage", montage(), ""), ("sources", prevu_sources(), "")]
     corps = "".join(page(c, i + 1, cls) if k != "couverture" else f'<div class="page">{c}</div>' for i, (k, c, cls) in enumerate(pages))
     return f'<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>Le Mini-Spa des Inconnus · Plan d\'affaires</title><style>{CSS}</style></head><body>{corps}</body></html>'
