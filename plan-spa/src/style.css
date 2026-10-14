@@ -463,3 +463,4 @@ table.postes tr.total td,table.fin tr.total td{font-weight:500;letter-spacing:-.
 .tuile .chiffre{font-size:clamp(36px,3.3vw,52px)}
 .tuile{padding-right:24px}
 .carte h3,.scen h3,.gain h3,.risque h3,.phase h3{font-weight:600}
+@media (max-width:720px){.hero .eyebrow{font-size:10.5px;letter-spacing:.13em;line-height:1.5}}
