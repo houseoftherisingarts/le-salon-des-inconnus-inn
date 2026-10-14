@@ -319,3 +319,39 @@ section{scroll-margin-top:84px;padding:clamp(64px,7.5vw,112px) 0}
 .phase .corps>.gains{align-content:start}
 .sites .l u{text-transform:none;letter-spacing:.02em;word-break:normal;overflow-wrap:anywhere}
 #partenaires .deux{align-items:start}
+
+
+/* ---- Passe éditoriale du 14 octobre 2026 : Cormorant pour tout ce qui se lit, Lato pour l'interface, Prata et Cinzel inchangés ---- */
+@font-face{font-family:'Cormorant';font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/cormorant.woff2) format('woff2')}
+:root{--lecture:'Cormorant','Cormorant Garamond',Georgia,serif;--interface:'Lato',system-ui,sans-serif}
+body{font-kerning:normal;text-rendering:optimizeLegibility}
+h1,h2,h3,.display,.citation{text-wrap:balance}
+.hero h1{letter-spacing:-.022em;line-height:1.02}
+.titre h2,.plein h2{letter-spacing:-.018em}
+.eyebrow{margin-bottom:16px}
+.hero .sous,.lead{font-family:var(--lecture);font-weight:500;font-size:clamp(21px,1.8vw,28px);line-height:1.42;letter-spacing:.004em;text-wrap:pretty;color:var(--texte)}
+.hero .sous{max-width:50ch}
+.lead{max-width:56ch;margin-top:22px}
+.prose{font-family:var(--lecture);font-weight:500;font-size:clamp(19.5px,1.4vw,22px);line-height:1.52;letter-spacing:.003em;max-width:58ch;text-wrap:pretty;font-variant-numeric:lining-nums proportional-nums;color:var(--texte)}
+.prose p{margin:0 0 1em}
+.prose strong{font-weight:600;color:var(--creme)}
+.prose.lettrine>p:first-child::first-letter{font-family:'Prata',serif;font-size:3.35em;line-height:.78;float:left;padding:.1em .14em 0 0;color:var(--or-2)}
+.gain p,.carte p,.jalon p,.risque p,.compare-legende{font-family:var(--lecture);font-weight:500;font-size:17px;line-height:1.5;letter-spacing:.003em;text-wrap:pretty}
+.gain p{font-size:17.5px}
+.carte p{color:var(--texte)}
+.scen ul{font-family:var(--lecture);font-weight:500;font-size:17px}
+.scen .note,.scen>p{font-family:var(--lecture);font-weight:500;font-size:17px;line-height:1.5}
+table.postes,table.fin{font-family:var(--lecture);font-weight:500;font-size:17.5px;font-variant-numeric:lining-nums tabular-nums}
+table.postes td small{font-family:var(--interface);font-weight:400;font-size:13.5px;line-height:1.45;margin-top:4px}
+table.fin tr.sous td{font-size:16px}
+table.postes tr.total td,table.fin tr.total td{font-size:20px}
+.tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.rupture .grand{font-variant-numeric:lining-nums tabular-nums}
+.tuile .note,.site .l span,.fig .fig-sous,.fig .legende,footer p,footer .colophon{font-family:var(--interface)}
+.fig .fig-sous{font-family:var(--lecture);font-weight:500;font-size:16.5px;line-height:1.45;max-width:70ch}
+.fig .fig-titre h3{font-size:22px}
+@media (max-width:720px){
+  .prose{font-size:18.5px;line-height:1.5;max-width:100%}
+  .hero .sous,.lead{font-size:20px}
+  .prose.lettrine>p:first-child::first-letter{font-size:3em}
+  table.postes,table.fin{font-size:16.5px}
+}

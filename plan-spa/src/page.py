@@ -39,7 +39,7 @@ def aujourdhui():
     return f'''<section id="auberge">
   <div class="col">
     <div class="titre rev"><p class="eyebrow">{e(A["eyebrow"])}</p><h2>{e(A["titre"])}</h2></div>
-    <div class="deux"><div class="rev">{ps(A["prose"])}</div><div class="grille g2">{tuiles}</div></div>
+    <div class="deux"><div class="rev">{ps(A["prose"], "prose lettrine")}</div><div class="grille g2">{tuiles}</div></div>
     <div style="height:48px"></div>
     <div class="rev">{fig(A["graphique"]["titre"], A["graphique"]["sous"], svg, leg)}</div>
     <div style="height:48px"></div>
@@ -55,7 +55,7 @@ def projet():
     <p class="eyebrow rev">{e(Pr["eyebrow"])}</p>
     <div class="deux" style="align-items:center">
       <div class="rev"><div class="grand">{e(Pr["grand"])}</div><h2 style="font-size:clamp(28px,3.2vw,46px);margin-top:18px">{e(Pr["titre"])}</h2></div>
-      <div class="rev d1">{ps(Pr["prose"])}</div>
+      <div class="rev d1">{ps(Pr["prose"], "prose lettrine")}</div>
     </div>
     <div class="phases-cartes rev d2">{cartes}</div>
   </div>
@@ -88,7 +88,7 @@ def phases():
         gains = f'''<div class="gains">
   <div class="verre gain"><div class="k">Revenus additionnels à maturité</div><div class="v">{argent(r["revenus"])}<small> / an</small></div><p>{e(r["texte"])}</p></div>
   <div class="verre gain"><div class="k">Contribution annuelle</div><div class="v">{argent(r["contribution"])}</div><p>après les charges propres à la phase, soit un retour sur l'investissement en {str(r["retour_ans"]).replace(".", ",")} ans</p></div>
-  <div class="verre gain"><div class="k">Plus-value</div><p style="font-size:15px;color:var(--texte);margin-top:0">{e(t["plus_value"])}</p></div>
+  <div class="verre gain"><div class="k">Plus-value</div><p style="color:var(--texte);margin-top:0">{e(t["plus_value"])}</p></div>
 </div>'''
         blocs.append(f'''<div class="phase {"actif" if p["id"]==1 else ""}" data-phase="{p["id"]}">
   <div class="entete"><div><p class="eyebrow">Phase {p["id"]} · {e(p["annee"])}</p><h3>{e(p["nom"])}</h3></div><div class="montant">{argent(p["cout"])}<small>Coût estimé, imprévus compris</small></div></div>
@@ -109,7 +109,7 @@ def marche():
     return f'''<section id="marche">
   <div class="col">
     <div class="titre rev"><p class="eyebrow">{e(Ma["eyebrow"])}</p><h2>{e(Ma["titre"])}</h2></div>
-    <div class="deux rev"><div>{ps(Ma["prose"][:2])}</div><div>{ps(Ma["prose"][2:])}</div></div>
+    <div class="deux rev"><div>{ps(Ma["prose"][:2], "prose lettrine")}</div><div>{ps(Ma["prose"][2:])}</div></div>
     <div style="height:40px"></div>
     <div class="cartes rev">{cartes}</div>
   </div>
