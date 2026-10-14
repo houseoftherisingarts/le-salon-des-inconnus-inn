@@ -369,3 +369,6 @@ table.postes,table.fin{font-variant-numeric:lining-nums tabular-nums}
 .tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.puce b{letter-spacing:.04em}
 .onglets button b{letter-spacing:.05em;font-size:15.5px}
 table.postes tr.total td,table.fin tr.total td,.rupture .grand{letter-spacing:.025em}
+
+/* Tour 3 bis : les groupes de milliers respirent dans les gros chiffres Prata */
+.tuile .chiffre,.phase .montant,.scen .somme,.gain .v,.puce b,.onglets button b,.rupture .grand{word-spacing:.18em}
