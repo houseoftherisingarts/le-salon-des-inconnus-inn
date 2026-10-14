@@ -20,6 +20,7 @@ PHASES = [
         ("Terrasses de cèdre, passerelles, douches extérieures, éclairage", "Le parcours thermal entre les bassins", 30000),
         ("Vestiaire, douches et casiers", "Aménagés dans la dépendance existante", 20000),
         ("Honoraires d'architecte et d'ingénieur, permis, analyses d'eau", "", 16000),
+        ("Embauche et formation de l'équipe, salaires des trois premiers mois", "Préposés aux bassins, accueil et entretien, formés et payés avant le premier client", 30000),
         ("Imprévus (10 %)", "", 25600),
     ]),
     dict(id=2, nom="La maison", annee="2027-2028", postes=[
@@ -36,16 +37,16 @@ PHASES = [
 for p in PHASES:
     p["cout"] = sum(x[2] for x in p["postes"])
 TOTAL = sum(p["cout"] for p in PHASES)
-assert TOTAL == 533600, TOTAL  # ponytail: ajusté à la main ci-dessous pour tomber à 500 000 $
-# Arrondis : les imprévus se recalculent pour un total rond de 500 000 $.
-PHASES[0]["postes"][-1] = ("Imprévus (10 %)", "", 25000); PHASES[0]["cout"] = 281000
+assert TOTAL == 563600, TOTAL  # ajusté à la main ci-dessous pour tomber à 530 000 $
+# Arrondis : les imprévus se recalculent pour un total rond de 530 000 $.
+PHASES[0]["postes"][-1] = ("Imprévus (10 %)", "", 25000); PHASES[0]["cout"] = 311000
 PHASES[1]["postes"][-1] = ("Imprévus (10 %)", "", 11000); PHASES[1]["cout"] = 131000
 PHASES[2]["postes"] = [("Pavillon de détente quatre saisons de 400 pi²", "Foyer de pierre, verrière sur les jardins, tisanerie", 58000),
                        ("Aires de détente et jardins", "Sentiers, hamacs, chaises longues, plantations, éclairage", 22000),
                        ("Imprévus (10 %)", "", 8000)]
 PHASES[2]["cout"] = 88000
 TOTAL = sum(p["cout"] for p in PHASES)
-assert TOTAL == 500000, TOTAL
+assert TOTAL == 530000, TOTAL
 
 # ---------- prix
 PRIX = dict(acces_semaine=55, acces_fds=65, acces_moyen=59, soiree=42, massage60=115, part_massage=0.40,
@@ -72,11 +73,12 @@ OPEX = dict(
     assurances=[0, 7000, 7000, 7200, 7400],
     preposes=[6000, 62000, 86000, 92000, 95000],  # préposés d'accueil et d'entretien des bassins, charges comprises
     direction=[0, 36000, 42000, 45000, 48000],    # rémunération de la direction (Alex est payé en dividendes aujourd'hui)
+    equipe_cafe=[0, 22000, 26000, 28000, 29000],  # personnel salarié du café et de l'accueil ; rien n'est fait en régie par la famille
     marketing=[6000, 14000, 14000, 12000, 12000],
 )
 
-# ---------- financement (scénario recommandé : 500 000 $)
-FIN = dict(bdc=390000, taux=0.0775, amort=20, pdto=90000, mise_de_fonds=20000)
+# ---------- financement (scénario recommandé : 530 000 $)
+FIN = dict(bdc=420000, taux=0.0775, amort=20, pdto=90000, mise_de_fonds=20000)
 assert FIN["bdc"] + FIN["pdto"] + FIN["mise_de_fonds"] == TOTAL
 
 def annuite(capital, taux, n):
@@ -97,7 +99,7 @@ def projeter(hyp=HYP, fin=FIN, phases=(1, 2, 3)):
         rev = heb + acces + mass + cafe + retr
         heb_add = max(0, heb - T12["revenus"])
         opex = (OPEX["base"] + OPEX["var_hebergement"] * heb_add + OPEX["var_spa"] * acces + OPEX["energie_spa"][i]
-                + OPEX["labo_entretien"][i] + OPEX["assurances"][i] + OPEX["preposes"][i] + OPEX["direction"][i] + OPEX["marketing"][i])
+                + OPEX["labo_entretien"][i] + OPEX["assurances"][i] + OPEX["preposes"][i] + OPEX["direction"][i] + OPEX["equipe_cafe"][i] + OPEX["marketing"][i])
         ebitda = rev - opex
         # An 1 : intérêts seulement (BDC, jusqu'à 36 mois possibles)
         if i == 0:
@@ -123,14 +125,14 @@ def scenario(nom, montant, phases, bdc, pdto, mise, note):
                 revenus_an5=rows[4]["revenus"], flux_an5=rows[4]["flux"])
 
 SCENARIOS = [
-    scenario("L'essentiel", 281000, (1,), 221000, 50000, 10000, "La phase 1 seule : le parcours thermal ouvre, la maison et les jardins attendent."),
-    scenario("Le plan complet", 500000, (1, 2, 3), FIN["bdc"], FIN["pdto"], FIN["mise_de_fonds"], "Les trois phases en dix-huit mois : le spa, la maison et les jardins."),
-    scenario("La vision", 620000, (1, 2, 3), 510000, 90000, 20000, "Le plan complet, plus deux chalets-spa de deux places au bord des jardins."),
+    scenario("L'essentiel", 311000, (1,), 251000, 50000, 10000, "La phase 1 seule : le parcours thermal ouvre, la maison et les jardins attendent."),
+    scenario("Le plan complet", 530000, (1, 2, 3), FIN["bdc"], FIN["pdto"], FIN["mise_de_fonds"], "Les trois phases en dix-huit mois : le spa, la maison et les jardins."),
+    scenario("La vision", 650000, (1, 2, 3), 540000, 90000, 20000, "Le plan complet, plus deux chalets-spa de deux places au bord des jardins."),
 ]
 # « La vision » : deux unités de plus, 120 000 $, 300 nuits de plus à 235 $ à partir de l'an 3
 v = SCENARIOS[2]
 hv = dict(HYP, nuits=[720, 900, 1350, 1500, 1580])
-rows_v = projeter(hyp=hv, fin=dict(FIN, bdc=510000))
+rows_v = projeter(hyp=hv, fin=dict(FIN, bdc=540000))
 v.update(revenus_an3=rows_v[2]["revenus"], ebitda_an3=rows_v[2]["ebitda"], flux_an3=rows_v[2]["flux"], dscr_an3=rows_v[2]["dscr"],
          revenus_an5=rows_v[4]["revenus"], flux_an5=rows_v[4]["flux"])
 

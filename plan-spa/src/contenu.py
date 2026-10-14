@@ -15,7 +15,7 @@ an3, an5 = P[2], P[4]
 HERO = dict(
     eyebrow="Plan d'affaires · Namur, Petite-Nation, Outaouais · 2027-2028",
     titre="Le Mini-Spa des Inconnus",
-    sous="Un parcours thermal nordique au pied d'un manoir victorien, ouvert aux voyageurs de l'auberge comme aux visiteurs d'un jour, à moins de deux heures de Gatineau, d'Ottawa et de Montréal.",
+    sous="Un parcours thermal nordique au pied d'un manoir victorien, ouvert aux voyageurs de l'auberge comme aux visiteurs d'un jour, à moins d'une heure trente de Gatineau, d'Ottawa et de Montréal.",
     puces=[("445", "réservations en 12 mois"), (argent(T["revenus"]), "de revenus réalisés"), ("+45 %", "été 2026 sur été 2025"), (argent(M["TOTAL"]), "d'investissement en trois phases")],
 )
 
@@ -23,7 +23,7 @@ AUJOURDHUI = dict(
     eyebrow="Ce qui existe déjà",
     titre="Une auberge qui a doublé en deux ans",
     prose=[
-        "Le Salon des Inconnus occupe depuis 2014 un manoir victorien du 826, Côte-à-Favier, à Namur, sur cinq acres de jardins et de forêt dans la Petite-Nation. La société 9380-0589 Québec inc. l'exploite comme auberge d'artistes, avec quatre chambres dans la maison, une yourte, des mini-maisons et un autobus aménagé, soit neuf unités que les voyageurs réservent par Airbnb, Booking, Expedia et le site de l'auberge. L'établissement détient le permis CITQ 209613, valide jusqu'au 31 août 2027.",
+        "Le Salon des Inconnus occupe depuis 2021 un manoir victorien du 826, Côte-à-Favier, à Namur, sur cinq acres de jardins et de forêt dans la Petite-Nation. La société 9380-0589 Québec inc. l'exploite comme auberge d'artistes, avec quatre chambres dans la maison, une yourte, des mini-maisons et un autobus aménagé, soit neuf unités que les voyageurs réservent par Airbnb, Booking, Expedia et le site de l'auberge. L'établissement détient le permis CITQ 209613, valide jusqu'au 31 août 2027.",
         f"Les états financiers racontent une courbe simple : {argent(EF[2023][0])} de revenus en 2023, {argent(EF[2024][0])} en 2024, {argent(EF[2025][0])} en 2025, et une année 2026 qui dépasse déjà la précédente à l'intérim. Sur les douze derniers mois, le système de réservation compte {T['reservations']} réservations et {T['nuits']} nuits vendues pour {argent(T['revenus'])}, à un prix moyen de {T['adr']} $ la nuit. L'été 2026 a rapporté {argent(T['ete2026'])} contre {argent(T['ete2025'])} l'été précédent, une hausse de 45 % obtenue sans ajouter une seule unité.",
         "Un prêteur lira dans ces chiffres une demande réelle qui grandit plus vite que l'offre. L'aubergiste y lit autre chose : neuf unités occupées un cinquième de l'année laissent une marge immense, parce que chaque point d'occupation gagné rapporte sans rien coûter de plus. Le spa est l'outil qui transforme cette marge en revenu, et il donne à l'auberge un produit à vendre aux gens qui ne dorment pas sur place.",
     ],
@@ -35,7 +35,7 @@ AUJOURDHUI = dict(
         (argent(EF[2025][0]), "Revenus 2025", f"après {argent(EF[2023][0])} en 2023 et {argent(EF[2024][0])} en 2024"),
         ("5 acres", "De jardins et de forêt", "lot 4 674 756, Namur, Petite-Nation"),
     ],
-    graphique=dict(titre="Revenus mensuels de janvier 2025 à septembre 2026", sous="Réservations encaissées, par mois d'arrivée. Les trois mois d'été 2026 dépassent chacun le meilleur mois de 2025."),
+    graphique=dict(titre="Revenus mensuels de janvier 2025 à septembre 2026", sous="Revenus d'hébergement encaissés, par mois de réception; les séjours de décembre 2024 sont comptés en janvier 2025, le mois où l'argent est entré. Juillet et août 2026 dépassent chacun le meilleur mois de 2025."),
 )
 
 PROJET = dict(
@@ -65,7 +65,7 @@ AVANT_APRES = dict(
 
 PHASES_TEXTE = {
     1: dict(
-        intro="Le cœur thermal est la phase qui crée le produit. Dès qu'elle ouvre, l'auberge vend quelque chose qu'elle ne vendait pas : l'accès aux bains, à 55 $ en semaine et 65 $ la fin de semaine, aux visiteurs de passage comme aux clients des chambres, dont le tarif monte avec l'accès compris. Les massothérapeutes contractuels s'installent dans la foulée, parce que le massage pèse 46 % des revenus d'un spa québécois selon l'Association québécoise des spas.",
+        intro="Le cœur thermal est la phase qui crée le produit. Dès qu'elle ouvre, l'auberge vend quelque chose qu'elle ne vendait pas : l'accès aux bains, à 55 $ en semaine et 65 $ la fin de semaine, aux visiteurs de passage comme aux clients des chambres, dont le tarif monte avec l'accès compris. Une massothérapeute pratique déjà au domaine, et le parcours thermal lui donne une salle, une clientèle qui sort des bains et une pratique beaucoup plus aisée; d'autres massothérapeutes contractuels s'ajoutent dans la foulée, parce que le massage pèse 46 % des revenus d'un spa québécois selon l'Association québécoise des spas.",
         plus_value="Le domaine passe d'auberge à destination. L'accès aux bains se vend 250 jours par année, l'hiver devient une saison pleine, et le prix des chambres monte de 184 $ à 235 $ la nuit en trois ans parce que l'accès au parcours thermal est compris.",
     ),
     2: dict(
@@ -104,9 +104,9 @@ CHIFFRES = dict(
         ("Nuits vendues", f"{T['nuits']} aujourd'hui, 720 en 2027, 1 050 en 2029, 1 200 en 2031, soit 37 % d'occupation sur neuf unités"),
         ("Prix moyen de la nuit", f"{T['adr']} $ aujourd'hui, 235 $ en 2029 avec l'accès aux bains compris, sous les 169 $ à 190 $ que les voisins demandent sans spa"),
         ("Visiteurs du public", "7 par jour en 2027, 11 en 2028, 14 en 2029, 250 jours par année, à 59 $ en moyenne"),
-        ("Massages", "520 séances en 2028 et 800 en 2029, données par des massothérapeutes contractuels; l'auberge garde 40 % du prix de 115 $"),
+        ("Massages", "520 séances en 2028 et 800 en 2029, données par la massothérapeute déjà en place au domaine et par des contractuels; l'auberge garde 40 % du prix de 115 $"),
         ("Café et retraites", "Un café à 35 % de marge, et des retraites qui passent de 18 000 $ à 48 000 $ en trois ans"),
-        ("Charges", "Préposés à 86 000 $ en 2029, charges comprises, rémunération de la direction, énergie des bassins à 25 000 $, analyses de laboratoire aux deux semaines, marketing"),
+        ("Charges", "Toute la main-d'œuvre est salariée : préposés aux bassins à 86 000 $ en 2029, charges comprises, personnel du café et de l'accueil à 26 000 $, rémunération de la direction; puis l'énergie des bassins à 25 000 $, les analyses de laboratoire aux deux semaines et le marketing"),
     ],
     graphique1=dict(titre="Revenus projetés par source, 2027 à 2031", sous="Le graphique empile les cinq sources de revenus, de l'hébergement jusqu'aux retraites."),
     graphique2=dict(titre="Bénéfice d'exploitation et service de la dette", sous="Le bénéfice avant intérêts, impôts et amortissement couvre la dette totale, ancienne et nouvelle, dès 2028."),
@@ -120,7 +120,7 @@ FINANCEMENT = dict(
     montage=[
         ("Prêt BDC pour terrains et bâtiments commerciaux", argent(M["FIN"]["bdc"]), "amortissement sur 20 ans, intérêts seulement pendant le chantier de 2027, garantie sur l'immeuble"),
         ("Tourisme Outaouais, PDTO 2025-2027, catégorie Hébergement", argent(M["FIN"]["pdto"]), "contribution non remboursable, plafonnée à 90 000 $ et à 25 % des coûts admissibles"),
-        ("Mise de fonds du promoteur", argent(M["FIN"]["mise_de_fonds"]), "honoraires de plan et d'études déjà engagés, travaux en régie"),
+        ("Mise de fonds du promoteur", argent(M["FIN"]["mise_de_fonds"]), "honoraires de plan et d'études déjà engagés, liquidités de l'entreprise"),
     ],
     prose=[
         f"L'annuité du prêt BDC s'établit à {argent(M['annuite_bdc'])} au taux de 7,75 % sur vingt ans. La dette actuelle du domaine, {argent(M['DETTE']['solde'])} à la Banque Nationale, reste en place et son service de {argent(M['DETTE']['service_annuel'])} par année est compris dans les projections. Le bénéfice d'exploitation couvre l'ensemble {P[1]['dscr']} fois en 2028 et {an3['dscr']} fois en 2029.",
@@ -160,10 +160,10 @@ CALENDRIER = dict(
     prevu=[
         ("L'eau", "Les bassins publics suivent le règlement Q-2, r. 39 : filtration en continu, dosage automatique, analyses en laboratoire accrédité aux deux semaines, registre affiché. Le budget de la phase 1 comprend ces systèmes et le plan d'exploitation nomme un préposé formé."),
         ("Le zonage", "L'ouverture au public d'un spa et d'un café se confirme auprès de la municipalité de Namur avant le premier dessin, et le projet se dépose aux programmes seulement une fois l'usage attesté."),
-        ("Les coûts", "Chaque poste reçoit trois soumissions avant le chantier, et chaque phase porte 10 % d'imprévus. Les phases 2 et 3 attendent que la phase 1 encaisse."),
+        ("Les coûts", "Chaque poste reçoit trois soumissions avant le chantier et comprend la main-d'œuvre de l'entrepreneur, parce que le domaine ne fait aucun travail en régie; chaque phase porte 10 % d'imprévus, et les phases 2 et 3 attendent que la phase 1 encaisse."),
         ("La saison", "Un spa nordique vend d'abord l'hiver, ce qui est la saison creuse de l'auberge aujourd'hui. Le projet remplit les mois que les chambres remplissent le moins."),
-        ("Les gens", "Les massothérapeutes travaillent à contrat, les préposés viennent du village, et la famille tient déjà l'accueil, la cuisine et l'entretien depuis 2014."),
-        ("L'exploitant", "Douze ans d'exploitation continue, un permis CITQ en règle, des avis publics sur quatre plateformes et des revenus qui doublent sans investissement : le projet s'appuie sur une entreprise qui tourne."),
+        ("Les gens", "Le spa crée l'équivalent de trois emplois à temps plein à Namur, préposés aux bassins, accueil et personnel du café, en plus de la direction, et tous ces gens sont salariés : l'investissement de départ comprend leur embauche, leur formation et leurs trois premiers mois de salaire, et les projections portent leur paie chaque année. Les massothérapeutes, dont celle qui pratique déjà au domaine, travaillent à contrat."),
+        ("L'exploitant", "Cinq ans d'exploitation continue depuis 2021, un permis CITQ en règle, des avis publics sur quatre plateformes et des revenus qui doublent sans investissement : le projet s'appuie sur une entreprise qui tourne."),
     ],
 )
 
