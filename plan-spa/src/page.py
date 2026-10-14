@@ -265,7 +265,7 @@ SCRIPT = r'''
 def page():
     nav = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in NAV)
     corps = hero() + aujourdhui() + projet() + avant_apres() + phases() + marche() + chiffres() + financement() + partenaires() + calendrier() + fermeture() + pied()
-    return f'''<!DOCTYPE html>
+    return _NB.sub("\\1\u202f\\2", f'''<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -293,4 +293,4 @@ def page():
 <script>{SCRIPT}</script>
 <script>document.querySelectorAll('.defilant').forEach(d=>{{const f=()=>d.classList.toggle('fin-de-course',d.scrollLeft+d.clientWidth>=d.scrollWidth-2);d.addEventListener('scroll',f,{{passive:true}});f()}})</script>
 </body>
-</html>'''
+</html>''')
