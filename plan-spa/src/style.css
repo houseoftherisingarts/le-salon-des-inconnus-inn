@@ -322,8 +322,8 @@ section{scroll-margin-top:84px;padding:clamp(64px,7.5vw,112px) 0}
 
 
 /* ---- Passe éditoriale du 14 octobre 2026 : Cormorant pour tout ce qui se lit, Lato pour l'interface, Prata et Cinzel inchangés ---- */
-@font-face{font-family:'Cormorant';font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/cormorant.woff2) format('woff2')}
-:root{--lecture:'Cormorant','Cormorant Garamond',Georgia,serif;--interface:'Lato',system-ui,sans-serif}
+@font-face{font-family:'Schibsted Grotesk';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/schibsted.woff2) format('woff2')}
+:root{--lecture:'Schibsted Grotesk','Lato',system-ui,sans-serif;--interface:'Lato',system-ui,sans-serif}
 body{font-kerning:normal;text-rendering:optimizeLegibility}
 h1,h2,h3,.display,.citation{text-wrap:balance}
 .hero h1{letter-spacing:-.022em;line-height:1.02}
@@ -384,3 +384,21 @@ table.postes tr.total td,table.fin tr.total td{word-spacing:.22em;letter-spacing
 /* Tour 6 : l'espacement des gros montants ne déteint pas sur leurs légendes */
 .phase .montant small,.gain .v small,.tuile .chiffre small,.rupture .grand small,.scen .somme small{word-spacing:normal;letter-spacing:.24em}
 .gain .v small,.tuile .chiffre small,.rupture .grand small{letter-spacing:0}
+
+/* ---- 14 octobre 2026, suite : Cormorant remplacée par Schibsted Grotesk, grotesque éditoriale (ordre d'Alex) ---- */
+.hero .sous,.lead{font-weight:400;font-size:clamp(19px,1.55vw,24px);line-height:1.5;letter-spacing:-.004em}
+.prose{font-weight:400;font-size:clamp(17.5px,1.22vw,19.5px);line-height:1.62;letter-spacing:-.004em;max-width:62ch}
+.prose strong{font-weight:600}
+.prose.lettrine>p:first-child::first-letter{font-size:3.6em;line-height:.8;padding:.06em .14em 0 0}
+.gain p,.carte p,.jalon p,.risque p,.compare-legende,.scen ul,.scen .note,.scen>p{font-weight:400;font-size:15.5px;line-height:1.58;letter-spacing:-.003em}
+.gain p{font-size:16px}
+table.postes,table.fin{font-weight:400;font-size:16px;letter-spacing:-.003em}
+table.fin tr.sous td{font-size:14.5px}
+table.postes tr.total td,table.fin tr.total td{font-size:19px}
+.fig .fig-sous{font-weight:400;font-size:15px;line-height:1.5}
+@media (max-width:720px){
+  .prose{font-size:17px;line-height:1.6}
+  .hero .sous,.lead{font-size:18.5px}
+  .prose.lettrine>p:first-child::first-letter{font-size:3.3em}
+  table.postes,table.fin{font-size:15.5px}
+}
