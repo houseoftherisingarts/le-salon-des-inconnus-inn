@@ -302,10 +302,21 @@ SCRIPT_SURVOL = r"""
     [cv,off,masque].forEach(function(c){c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)});cv.style.width=W+'px';cv.style.height=H+'px';derniere=-1;}
   function sortie(t){return 1-Math.pow(1-Math.max(0,Math.min(1,t)),5)}
   function progres(){var r=sec.getBoundingClientRect();var course=sec.offsetHeight-window.innerHeight;return course>0?Math.max(0,Math.min(1,-r.top/course)):0}
+  /* foyer : sur mobile, la caméra glisse d'une installation à l'autre (point principal de chaque étape), puis recule sur la vue d'ensemble */
+  var VUE={x:0.385,y:0.78};
+  function centre(i){var s=pts[i],x=0,y=0;s.forEach(function(q){x+=q.x;y+=q.y});return {x:x/s.length,y:y/s.length}}
+  function foyer(p){
+    var u=(p-DEBUT)/PAS, k=sortie(p/DEBUT), fin=sortie((p-(DEBUT+(N-1)*PAS+DUREE))/0.1);
+    var c0=centre(0); if(u<=0) return {x:VUE.x+(c0.x-VUE.x)*k, y:VUE.y+(c0.y-VUE.y)*k, k:k, fin:0};
+    var i=Math.min(N-1,Math.floor(u)), j=Math.min(N-1,i+1), t=sortie((u-i-0.72)/0.28), a=centre(i), b=centre(j);
+    var x=a.x+(b.x-a.x)*t, y=a.y+(b.y-a.y)*t;
+    return {x:x+(VUE.x-x)*fin, y:y+(VUE.y-y)*fin, k:1-fin, fin:fin};
+  }
   function cadre(p){
-    var iw=avant.naturalWidth, ih=avant.naturalHeight; var z=mob?1+0.05*p:1+0.34*sortie(p/0.4);
+    var iw=avant.naturalWidth, ih=avant.naturalHeight; var f=foyer(p);
+    var z=mob?1:1+0.22*sortie(p/0.4)*(1-0.5*f.fin);
     var s=Math.max(W/iw,H/ih)*z; var dw=iw*s, dh=ih*s;
-    var fx=mob?0.43:0.46, fy=0.86;
+    var fx=mob?f.x:0.45, fy=mob?f.y:0.78;
     var ox=W/2-fx*dw, oy=H/2-fy*dh; ox=Math.min(0,Math.max(W-dw,ox)); oy=Math.min(0,Math.max(H-dh,oy));
     return {s:s,ox:ox,oy:oy,dw:dw,dh:dh};
   }

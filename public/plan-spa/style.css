@@ -502,3 +502,31 @@ table.postes tr.total td,table.fin tr.total td{font-weight:500;letter-spacing:-.
   .survol .etape p{font-size:14px}
   .survol .etape .cout{font-size:22px;margin-top:12px}
 }
+
+/* ---- Titres vraiment éditoriaux, ordre d'Alex du 14 octobre 2026 : Fraunces, la serif des titres de krystinestlaurent.ca, en graisse normale et optique 144, grands et serrés. Inter garde la lecture, les chiffres et les étiquettes. Jamais d'italique. ---- */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:300 600;font-display:swap;src:url(fonts/fraunces.woff2) format('woff2')}
+:root{--titre:'Fraunces',Georgia,'Times New Roman',serif}
+h1,h2,h3,.display,.citation,.survol .entete h2,.survol .etape h3,.carte h3,.scen h3,.gain h3,.risque h3,.phase h3,.jalon .t,.site .l b{font-family:var(--titre);font-weight:400;font-variation-settings:"opsz" 144;font-feature-settings:"kern","liga";letter-spacing:-.015em}
+h1{font-weight:400;letter-spacing:-.025em;line-height:.96}
+h2{font-weight:400;letter-spacing:-.02em;line-height:1.0}
+h3,.survol .etape h3,.carte h3,.scen h3,.gain h3,.risque h3,.phase h3{font-weight:500;letter-spacing:-.01em;line-height:1.1;font-variation-settings:"opsz" 48}
+.jalon .t,.site .l b{font-weight:500;letter-spacing:-.005em;font-variation-settings:"opsz" 36}
+.citation{font-weight:400;letter-spacing:-.01em;line-height:1.24;font-variation-settings:"opsz" 72}
+.prose.lettrine>p:first-child::first-letter{font-family:var(--titre);font-weight:400;font-size:4.1em;line-height:.78;padding:.05em .14em 0 0;font-variation-settings:"opsz" 144}
+.hero h1{font-size:clamp(50px,8vw,132px);max-width:13ch}
+.titre h2{font-size:clamp(38px,5.2vw,76px);max-width:16ch}
+.survol .entete h2{font-size:clamp(38px,5vw,74px)}
+.survol .etape h3{font-size:clamp(25px,2.1vw,31px)}
+.carte h3,.scen h3,.gain h3,.risque h3,.phase h3{font-size:1.12em}
+.titre .eyebrow,.survol .entete .eyebrow{margin-bottom:22px}
+@media (max-width:720px){
+  .hero h1{font-size:clamp(42px,12vw,66px)}
+  .titre h2{font-size:clamp(34px,9.6vw,44px)}
+  .survol .entete h2{font-size:33px;max-width:15ch}
+  .survol .etape h3{font-size:22px}
+}
+
+/* Retouches après verdict Fraunces : étiquette du survol plus franche, approche des grands titres un peu desserrée */
+.survol .entete .eyebrow{color:var(--or-2);text-shadow:0 1px 14px rgba(0,0,0,.9),0 0 2px rgba(0,0,0,.8)}
+h1{letter-spacing:-.018em}
+h2,.survol .entete h2{letter-spacing:-.012em}

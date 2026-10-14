@@ -24,8 +24,8 @@ AUJOURDHUI = dict(
     titre="Une auberge qui a doublé en deux ans",
     prose=[
         "Le Salon des Inconnus occupe depuis 2021 un manoir victorien du 826, Côte-à-Favier, à Namur, sur cinq acres de jardins et de forêt dans la Petite-Nation. La société 9380-0589 Québec inc. l'exploite comme auberge d'artistes, avec quatre chambres dans la maison, une yourte, des mini-maisons et un autobus aménagé, soit neuf unités que les voyageurs réservent par Airbnb, Booking, Expedia et le site de l'auberge. L'établissement détient le permis CITQ 209613, valide jusqu'au 31 août 2027.",
-        f"Les états financiers racontent une courbe simple : {argent(EF[2023][0])} de revenus en 2023, {argent(EF[2024][0])} en 2024, {argent(EF[2025][0])} en 2025, et une année 2026 qui dépasse déjà la précédente à l'intérim. Sur les douze derniers mois, le système de réservation compte {T['reservations']} réservations et {T['nuits']} nuits vendues pour {argent(T['revenus'])}, à un prix moyen de {T['adr']} $ la nuit. L'été 2026 a rapporté {argent(T['ete2026'])} contre {argent(T['ete2025'])} l'été précédent, une hausse de 45 % obtenue sans ajouter une seule unité.",
-        "Un prêteur lira dans ces chiffres une demande réelle qui grandit plus vite que l'offre. L'aubergiste y lit autre chose : neuf unités occupées un cinquième de l'année laissent une marge immense, parce que chaque point d'occupation gagné rapporte sans rien coûter de plus. Le spa est l'outil qui transforme cette marge en revenu, et il donne à l'auberge un produit à vendre aux gens qui ne dorment pas sur place.",
+        f"Les états financiers racontent une courbe simple : {argent(EF[2023][0])} de revenus en 2023, {argent(EF[2024][0])} en 2024, {argent(EF[2025][0])} en 2025, et une année 2026 qui dépasse déjà la précédente à l'intérim. Sur les douze derniers mois, le système de réservation compte {T['reservations']} réservations et {T['nuits']} nuits vendues pour {argent(T['revenus'])}, à un prix moyen de {T['adr']} $ la nuit. L'été 2026 a rapporté {argent(T['ete2026'])} contre {argent(T['ete2025'])} l'été précédent, une hausse de 45 % obtenue sans ajouter une seule unité.",
+        "Un prêteur lira dans ces chiffres une demande réelle qui grandit plus vite que l'offre. L'aubergiste y lit autre chose : neuf unités occupées un cinquième de l'année laissent une marge immense, parce que chaque point d'occupation gagné rapporte sans rien coûter de plus. Le spa est l'outil qui transforme cette marge en revenu, et il donne à l'auberge un produit à vendre aux gens qui ne dorment pas sur place.",
     ],
     tuiles=[
         (argent(T["revenus"]), "Revenus réalisés", "12 derniers mois, système de réservation Hostaway"),
@@ -43,36 +43,36 @@ PROJET = dict(
     grand=argent(M["TOTAL"]),
     titre="Un spa nordique à l'échelle d'un manoir",
     prose=[
-        "Le modèle existe déjà, à Lévis. Le Sento Spa a installé un parcours thermal d'inspiration japonaise autour d'une villa victorienne de 1904, à Breakeyville, et il vend l'accès à ses bains entre 44 $ et 59 $ depuis plus de dix ans. Le Salon des Inconnus possède la même matière première : une maison ancienne qui a du caractère, des jardins, la forêt tout autour, et une clientèle qui vient déjà chercher le calme.",
+        "Le modèle existe déjà, à Lévis. Le Sento Spa a installé un parcours thermal d'inspiration japonaise autour d'une villa victorienne de 1904, à Breakeyville, et il vend l'accès à ses bains entre 44 $ et 59 $ depuis plus de dix ans. Le Salon des Inconnus possède la même matière première : une maison ancienne qui a du caractère, des jardins, la forêt tout autour, et une clientèle qui vient déjà chercher le calme.",
         "Le projet ajoute au domaine deux bains chauds en cèdre sous des pavillons de bois, un bain froid, un sauna sec finlandais et un sauna vapeur à l'eucalyptus, reliés par des terrasses de cèdre. La maison suit, avec quatre salles de bain refaites façon spa et vingt fenêtres de bois sur mesure, pour que l'intérieur tienne la promesse de l'extérieur. Les jardins ferment la marche avec des aires de détente et un pavillon quatre saisons.",
-        "Le café et les bains ouvrent au public. Un couple de Gatineau qui monte pour la journée, une famille de Montebello, un groupe de Montréal en route vers Tremblant : tous trouvent à Namur ce qui n'existe encore nulle part dans la Petite-Nation, un spa nordique à taille humaine avec une table tenue par un chef.",
+        "Le café et les bains ouvrent au public. Un couple de Gatineau qui monte pour la journée, une famille de Montebello, un groupe de Montréal en route vers Tremblant : tous trouvent à Namur ce qui n'existe encore nulle part dans la Petite-Nation, un spa nordique à taille humaine avec une table tenue par un chef.",
     ],
 )
 
 SURVOL = dict(
     eyebrow="Le domaine vu du ciel",
     titre="Le spa se pose dans la clairière",
-    lead="La photo est réelle, prise au-dessus du manoir cet automne. Au fil du défilement, les installations de la phase 1 viennent prendre leur place dans la clairière, à l'échelle, sans toucher à la maison.",
+    lead="La photo est réelle, prise au-dessus du manoir cet automne. Au fil du défilement, les installations de la phase 1 viennent prendre leur place autour de la maison, chacune à l'endroit prévu, à l'échelle, sans toucher au manoir.",
     # (titre, ligne, index du poste dans PHASES[0], points (x, y, rayon)), coordonnées normalisées sur l'image survol-apres; le premier point porte le marqueur
     etapes=[
-        ("Le sauna finlandais", "Dix places en cèdre et un poêle commercial certifié CSA, posés à l'orée de la clairière, la cheminée tournée vers la forêt.", 2, [(0.333, 0.815, 0.065)]),
-        ("Les deux bains chauds", "Deux cuves de cèdre tenues à 40 °C, le rebord en pierre, et la vapeur qui monte dès les premiers froids d'octobre.", 0, [(0.405, 0.886, 0.055), (0.511, 0.883, 0.055)]),
-        ("Le bain froid", "Un bassin de pierre et de cèdre à 12 °C l'été, glacé l'hiver, à trois pas des bains chauds pour fermer le cycle chaud-froid.", 1, [(0.502, 0.933, 0.032)]),
-        ("Le sauna vapeur à l'eucalyptus", "Un hammam maçonné à 46 °C sous la charpente de bois, qui abrite aussi les baigneurs de la neige et de la pluie entre deux bassins.", 3, [(0.475, 0.812, 0.06)]),
-        ("Les terrasses et les passerelles", "Les terrasses de cèdre, les douches extérieures et les lanternes qui relient les bassins en un seul parcours, du vestiaire au bain froid.", 5, [(0.445, 0.873, 0.17), (0.372, 0.848, 0.03), (0.457, 0.838, 0.03), (0.462, 0.912, 0.03)]),
+        ("Le sauna finlandais", "Dix places en cèdre et un poêle commercial certifié CSA, posés au creux de la clairière à gauche de la serre, avec la cheminée tournée vers la forêt.", 2, [(0.264, 0.682, 0.072)]),
+        ("Les deux bains chauds", "Deux cuves de cèdre tenues à 40 °C, le rebord en pierre, l'une au-dessus de la serre et l'autre à l'ombre du grand arbre, tout près de la maison.", 0, [(0.405, 0.662, 0.048), (0.593, 0.702, 0.048)]),
+        ("Le bain froid", "Un bassin de pierre et de cèdre à 12 °C l'été, glacé l'hiver, posé sur sa terrasse en contrebas du manoir pour fermer le cycle chaud-froid.", 1, [(0.522, 0.905, 0.05)]),
+        ("Le sauna vapeur à l'eucalyptus", "Un hammam maçonné à 46 °C sous la charpente de bois, bâti à la place de l'ancienne grange entre la serre et la maison, et qui abrite aussi les baigneurs de la neige et de la pluie.", 3, [(0.506, 0.696, 0.062)]),
+        ("Les terrasses et les passerelles", "Les terrasses de cèdre, les douches extérieures et les lanternes qui relient les bassins en un seul parcours, du vestiaire au bain froid.", 5, [(0.497, 0.92, 0.13)]),
     ],
-    fin=("Phase 1", "Le cœur thermal", "Les bains ouvrent en novembre 2027, et la maison, elle, ne bouge pas : tout se pose autour d'elle, dans la clairière qui existe déjà."),
+    fin=("Phase 1", "Le cœur thermal", "Les bains ouvrent en novembre 2027, et la maison, elle, ne bouge pas : tout se pose autour d'elle, dans la clairière qui existe déjà."),
 )
 
 
 AVANT_APRES = dict(
     eyebrow="Avant et après",
     titre="Les mêmes lieux, vus en 2028",
-    lead="Chaque image de droite part d'une photo réelle du domaine prise cette année. Les rendus montrent l'intention : la maison reste la même, et les installations viennent se poser autour d'elle.",
+    lead="Chaque image de droite part d'une photo réelle du domaine prise cette année. Les rendus montrent l'intention : la maison reste la même, et les installations viennent se poser autour d'elle.",
     items=[
         ("hiver", "Le bain à remous actuel, hiver 2026", "Deux bains de cèdre sous pavillon, bain froid de pierre, passerelles", "Phase 1"),
         ("ete", "Le jardin derrière la maison, été 2026", "Le parcours thermal en été, hamacs et chaises longues", "Phases 1 et 3"),
-        ("bain", "Une salle de bain partagée du manoir", "La même pièce façon spa : douche vitrée, carrelage vert, murs blancs", "Phase 2"),
+        ("bain", "Une salle de bain partagée du manoir", "La même pièce façon spa : douche vitrée, carrelage vert, murs blancs", "Phase 2"),
         ("saunas", "La clairière de la yourte", "Le sauna finlandais et le sauna vapeur à l'eucalyptus", "Phase 1"),
         ("jardins", "Les jardins et les hémérocalles", "Le pavillon quatre saisons et les aires de détente", "Phase 3"),
         ("maison", "La façade, automne 2026", "Vingt fenêtres de bois neuves, la maison éclairée à l'heure bleue", "Phase 2"),
@@ -81,7 +81,7 @@ AVANT_APRES = dict(
 
 PHASES_TEXTE = {
     1: dict(
-        intro="Le cœur thermal est la phase qui crée le produit. Dès qu'elle ouvre, l'auberge vend quelque chose qu'elle ne vendait pas : l'accès aux bains, à 55 $ en semaine et 65 $ la fin de semaine, aux visiteurs de passage comme aux clients des chambres, dont le tarif monte avec l'accès compris. Une massothérapeute pratique déjà au domaine, et le parcours thermal lui donne une salle, une clientèle qui sort des bains et une pratique beaucoup plus aisée; d'autres massothérapeutes contractuels s'ajoutent dans la foulée, parce que le massage pèse 46 % des revenus d'un spa québécois selon l'Association québécoise des spas.",
+        intro="Le cœur thermal est la phase qui crée le produit. Dès qu'elle ouvre, l'auberge vend quelque chose qu'elle ne vendait pas : l'accès aux bains, à 55 $ en semaine et 65 $ la fin de semaine, aux visiteurs de passage comme aux clients des chambres, dont le tarif monte avec l'accès compris. Une massothérapeute pratique déjà au domaine, et le parcours thermal lui donne une salle, une clientèle qui sort des bains et une pratique beaucoup plus aisée; d'autres massothérapeutes contractuels s'ajoutent dans la foulée, parce que le massage pèse 46 % des revenus d'un spa québécois selon l'Association québécoise des spas.",
         plus_value="Le domaine passe d'auberge à destination. L'accès aux bains se vend 250 jours par année, l'hiver devient une saison pleine, et le prix des chambres monte de 184 $ à 235 $ la nuit en trois ans parce que l'accès au parcours thermal est compris.",
     ),
     2: dict(
@@ -99,8 +99,8 @@ MARCHE = dict(
     titre="Un marché qui paie de 44 $ à 155 $",
     prose=[
         "Les spas nordiques du Québec affichent leurs prix, et ils tiennent. Le Nordik de Chelsea, à une heure de Namur, demande 99 $ en semaine et 107 $ la fin de semaine et reçoit près de 230 000 visiteurs par année. Le Scandinave de Mont-Tremblant monte jusqu'à 155 $. Les spas de taille humaine, le Sento à Lévis et le Kōena à Gatineau, vendent l'entrée entre 39 $ et 64 $. Le Salon des Inconnus se place à 55 $ en semaine et 65 $ la fin de semaine, sous les grands spas et au-dessus des petits, avec le manoir et la table en plus.",
-        "La Petite-Nation ne compte aucun spa nordique commercial, ni à Montebello, ni à Saint-André-Avellin, ni au Lac-Simon. La région, elle, se porte bien : l'Outaouais affiche un taux d'occupation de 60,8 % en 2024, contre 49 % dans les Laurentides, et ses nuitées réservées ont progressé d'environ 9 % au premier trimestre de 2025. Au bureau d'accueil de Montebello, le plus proche de Namur, 57 % des visiteurs viennent du Québec, 15,7 % arrivent de l'Ontario et un quart vient de l'international.",
-        "Le touriste du bien-être dépense 175 % de plus que le touriste moyen, selon le Global Wellness Institute. Dans l'étude de l'Association québécoise des spas, un spa moyen reçoit 42 clients par jour de semaine et 57 le week-end, à 92 $ de dépense moyenne. Les projections de ce plan comptent 14 visiteurs par jour à la troisième année : le tiers d'un spa moyen, pour un domaine qui n'a pas de concurrent à moins d'une heure.",
+        "La Petite-Nation ne compte aucun spa nordique commercial, ni à Montebello, ni à Saint-André-Avellin, ni au Lac-Simon. La région, elle, se porte bien : l'Outaouais affiche un taux d'occupation de 60,8 % en 2024, contre 49 % dans les Laurentides, et ses nuitées réservées ont progressé d'environ 9 % au premier trimestre de 2025. Au bureau d'accueil de Montebello, le plus proche de Namur, 57 % des visiteurs viennent du Québec, 15,7 % arrivent de l'Ontario et un quart vient de l'international.",
+        "Le touriste du bien-être dépense 175 % de plus que le touriste moyen, selon le Global Wellness Institute. Dans l'étude de l'Association québécoise des spas, un spa moyen reçoit 42 clients par jour de semaine et 57 le week-end, à 92 $ de dépense moyenne. Les projections de ce plan comptent 14 visiteurs par jour à la troisième année : le tiers d'un spa moyen, pour un domaine qui n'a pas de concurrent à moins d'une heure.",
     ],
     cartes=[
         ("Sento Spa, Lévis", "44 $ à 59 $", "Une villa victorienne de 1904 qui a reçu un onsen de pierre, des cuves de cèdre, un hammam à l'eucalyptus et un café. C'est le modèle de ce plan.", "sentospa.com/tarifs", "https://www.sentospa.com/tarifs"),
@@ -115,14 +115,14 @@ MARCHE = dict(
 CHIFFRES = dict(
     eyebrow="Les chiffres",
     titre="Cinq ans de projections",
-    lead="Les projections partent des chiffres réels de 2026 et avancent avec des hypothèses prudentes, écrites noir sur blanc. L'année 2027 est l'année du chantier : les bains ouvrent en novembre, et la BDC ne demande que les intérêts pendant les travaux.",
+    lead="Les projections partent des chiffres réels de 2026 et avancent avec des hypothèses prudentes, écrites noir sur blanc. L'année 2027 est l'année du chantier : les bains ouvrent en novembre, et la BDC ne demande que les intérêts pendant les travaux.",
     hypotheses=[
         ("Nuits vendues", f"{T['nuits']} aujourd'hui, 720 en 2027, 1 050 en 2029, 1 200 en 2031, soit 37 % d'occupation sur neuf unités"),
         ("Prix moyen de la nuit", f"{T['adr']} $ aujourd'hui, 235 $ en 2029 avec l'accès aux bains compris, sous les 169 $ à 190 $ que les voisins demandent sans spa"),
         ("Visiteurs du public", "7 par jour en 2027, 11 en 2028, 14 en 2029, 250 jours par année, à 59 $ en moyenne"),
         ("Massages", "520 séances en 2028 et 800 en 2029, données par la massothérapeute déjà en place au domaine et par des contractuels; l'auberge garde 40 % du prix de 115 $"),
         ("Café et retraites", "Un café à 35 % de marge, et des retraites qui passent de 18 000 $ à 48 000 $ en trois ans"),
-        ("Charges", "Toute la main-d'œuvre est salariée : préposés aux bassins à 86 000 $ en 2029, charges comprises, personnel du café et de l'accueil à 26 000 $, rémunération de la direction; puis l'énergie des bassins à 25 000 $, les analyses de laboratoire aux deux semaines et le marketing"),
+        ("Charges", "Toute la main-d'œuvre est salariée : préposés aux bassins à 86 000 $ en 2029, charges comprises, personnel du café et de l'accueil à 26 000 $, rémunération de la direction; puis l'énergie des bassins à 25 000 $, les analyses de laboratoire aux deux semaines et le marketing"),
     ],
     graphique1=dict(titre="Revenus projetés par source, 2027 à 2031", sous="Le graphique empile les cinq sources de revenus, de l'hébergement jusqu'aux retraites."),
     graphique2=dict(titre="Bénéfice d'exploitation et service de la dette", sous="Le bénéfice avant intérêts, impôts et amortissement couvre la dette totale, ancienne et nouvelle, dès 2028."),
@@ -154,7 +154,7 @@ PARTENAIRES = dict(
     ),
     outaouais=dict(
         titre="Tourisme Outaouais",
-        prose="Le projet répond à trois priorités du Programme de développement touristique de l'Outaouais 2025-2027 : hausser le niveau de qualité d'un hébergement existant, bâtir une offre hivernale qui résiste aux saisons, et ajouter une expérience de nature et de patrimoine dans la Petite-Nation. La demande sera déposée dans la catégorie Hébergement, avec ce plan et les soumissions des fournisseurs en appui.",
+        prose="Le projet répond à trois priorités du Programme de développement touristique de l'Outaouais 2025-2027 : hausser le niveau de qualité d'un hébergement existant, bâtir une offre hivernale qui résiste aux saisons, et ajouter une expérience de nature et de patrimoine dans la Petite-Nation. La demande sera déposée dans la catégorie Hébergement, avec ce plan et les soumissions des fournisseurs en appui.",
     ),
     sites=[
         ("Le Salon des Inconnus", "L'auberge, les chambres, la yourte et le manoir entier", "https://www.lesalondesinconnus.com", "salon.jpg"),
@@ -174,12 +174,12 @@ CALENDRIER = dict(
     ],
     prevu_titre="Ce que le plan a prévu",
     prevu=[
-        ("L'eau", "Les bassins publics suivent le règlement Q-2, r. 39 : filtration en continu, dosage automatique, analyses en laboratoire accrédité aux deux semaines, registre affiché. Le budget de la phase 1 comprend ces systèmes et le plan d'exploitation nomme un préposé formé."),
+        ("L'eau", "Les bassins publics suivent le règlement Q-2, r. 39 : filtration en continu, dosage automatique, analyses en laboratoire accrédité aux deux semaines, registre affiché. Le budget de la phase 1 comprend ces systèmes et le plan d'exploitation nomme un préposé formé."),
         ("Le zonage", "L'ouverture au public d'un spa et d'un café se confirme auprès de la municipalité de Namur avant le premier dessin, et le projet se dépose aux programmes seulement une fois l'usage attesté."),
         ("Les coûts", "Chaque poste reçoit trois soumissions avant le chantier et comprend la main-d'œuvre de l'entrepreneur, parce que le domaine ne fait aucun travail en régie; chaque phase porte 10 % d'imprévus, et les phases 2 et 3 attendent que la phase 1 encaisse."),
         ("La saison", "Un spa nordique vend d'abord l'hiver, ce qui est la saison creuse de l'auberge aujourd'hui. Le projet remplit les mois que les chambres remplissent le moins."),
-        ("Les gens", "Le spa crée l'équivalent de trois emplois à temps plein à Namur, préposés aux bassins, accueil et personnel du café, en plus de la direction, et tous ces gens sont salariés : l'investissement de départ comprend leur embauche, leur formation et leurs trois premiers mois de salaire, et les projections portent leur paie chaque année. Les massothérapeutes, dont celle qui pratique déjà au domaine, travaillent à contrat."),
-        ("L'exploitant", "Cinq ans d'exploitation continue depuis 2021, un permis CITQ en règle, des avis publics sur quatre plateformes et des revenus qui doublent sans investissement : le projet s'appuie sur une entreprise qui tourne."),
+        ("Les gens", "Le spa crée l'équivalent de trois emplois à temps plein à Namur, préposés aux bassins, accueil et personnel du café, en plus de la direction, et tous ces gens sont salariés : l'investissement de départ comprend leur embauche, leur formation et leurs trois premiers mois de salaire, et les projections portent leur paie chaque année. Les massothérapeutes, dont celle qui pratique déjà au domaine, travaillent à contrat."),
+        ("L'exploitant", "Cinq ans d'exploitation continue depuis 2021, un permis CITQ en règle, des avis publics sur quatre plateformes et des revenus qui doublent sans investissement : le projet s'appuie sur une entreprise qui tourne."),
     ],
 )
 
