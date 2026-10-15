@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-15",
+        title_fr: "La trame",
+        title_en: "The weft",
+        body_fr: "Sur un métier à tisser, les fils de chaîne sont tendus en premier, des centaines de fils parallèles qui ne se toucheront jamais entre eux. Un fil de trame passe ensuite, perpendiculaire, et le tissu naît à chaque croisement : avant son passage, il n'y avait que des lignes côte à côte, aussi solitaires que des voyageurs dans un même wagon. Les tisserands savent qu'un fil seul casse au premier accroc, tandis que la même fibre, croisée mille fois avec d'autres, habille des générations. J'y pense quand des inconnus s'assoient à la même table : chacun arrive comme un fil tendu dans sa propre direction, avec des projets parallèles à ceux du voisin. Il suffit parfois d'une soirée pour que la trame passe, une conversation qui traverse toutes ces vies d'un coup et les noue au passage. Rien ne force les fils à se croiser, et pourtant aucun tissu n'est jamais né autrement. Qui passera la trame dans ma semaine, et de quelles vies parallèles suis-je moi-même en train de faire une étoffe?",
+        body_en: "On a loom, the warp threads are stretched first, hundreds of parallel lines that will never touch one another. Then a weft thread passes through, perpendicular to them, and the cloth is born at every crossing: before it came, there were only strands lying side by side, as solitary as travellers in the same train car. Weavers know that a single thread snaps at the first snag, while the same fibre, crossed a thousand times with others, can clothe generations. I think of this when strangers sit down at the same table: each one arrives like a thread stretched in its own direction, with plans running parallel to the neighbour's. Sometimes one evening is enough for the weft to pass, a conversation that runs across all those lives at once and ties them together on its way. Nothing forces the threads to cross, and yet no cloth has ever been born any other way. Who will pass the weft through my week, and whose parallel lives am I quietly weaving into cloth?",
+    },
+    {
         date: "2026-10-14",
         title_fr: "La clé de voûte",
         title_en: "The keystone",
