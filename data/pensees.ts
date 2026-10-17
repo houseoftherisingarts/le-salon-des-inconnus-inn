@@ -13,6 +13,13 @@ export interface Pensee {
 
 export const PENSEES: Pensee[] = [
     {
+        date: "2026-10-17",
+        title_fr: "La pierre à faux",
+        title_en: "The whetstone",
+        body_fr: "Les faucheurs d'autrefois portaient à la ceinture un étui de corne où trempait la pierre à affûter. Plusieurs fois par heure, le meilleur d'entre eux se redressait pour passer la pierre sur le fil. Les pressés continuaient d'abattre leur andain sans lever la tête. Au bout du champ, celui qui s'était arrêté le plus souvent avait presque toujours fauché le plus d'herbe; une lame vive travaille là où une lame morte se contente de frapper. Les anciens le résumaient d'une phrase : la pierre fauche autant que la faux. Nous tenons souvent nos pauses pour du temps volé à l'ouvrage, et nous nous obstinons sur des lames émoussées en appelant cela du courage. Le champ ne compte pourtant pas les heures; il compte les gestes qui coupent. Où est ma pierre à faux, et depuis quand n'ai-je pas redressé mon fil?",
+        body_en: "The mowers of old carried at their belt a horn sheath where a whetstone soaked. Several times an hour, the best of them would straighten up to draw the stone along the edge. The hurried ones kept hacking at their swath without lifting their heads. At the far end of the field, the one who had stopped most often had almost always cut the most grass; a keen blade works where a dull one merely strikes. The elders summed it up in a single sentence: the stone mows as much as the scythe. We often treat our pauses as time stolen from the work, then press on with blunted blades and call that courage. Yet the field does not count the hours; it counts the strokes that cut. Where is my whetstone, and how long since I last trued my edge?",
+    },
+    {
         date: "2026-10-15",
         title_fr: "La trame",
         title_en: "The weft",
